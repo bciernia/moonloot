@@ -1,0 +1,41 @@
+using System;
+using UnityEngine;
+
+public class PlayerHealth : MonoBehaviour, IDamageable
+{
+    [Header("Configuration")]
+    [SerializeField] private PlayerStats _playerStats;
+
+    private PlayerAnimations _playerAnimations;
+
+    private void Awake()
+    {
+        _playerAnimations = GetComponent<PlayerAnimations>();
+    }
+
+    private void Start()
+    {
+        if (_playerStats.HP <= 0)
+        {
+            PlayerDead();
+        }
+    }
+
+    public void TakeDamage(float amount)
+    {
+        if (_playerStats.HP <= 0) return;
+        
+        _playerStats.HP -= amount;
+        DamageManager.Instance.ShowDamageText(amount, transform);
+        if (_playerStats.HP <= 0f)
+        {
+            _playerStats.HP = 0;
+            PlayerDead();    
+        }
+    }
+
+    private void PlayerDead()    
+    {
+        _playerAnimations.SetDeathAnimation();
+    }
+}
