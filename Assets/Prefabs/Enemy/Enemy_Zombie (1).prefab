@@ -39,7 +39,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.82, y: -0.1571517, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2125977456771570462}
@@ -161,8 +161,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0011771818, y: 0.0029429595}
-  m_Radius: 0.049933165
+  m_Offset: {x: 0.008211613, y: 0.07328534}
+  m_Radius: 0.5352956
 --- !u!95 &186190068752938527
 Animator:
   serializedVersion: 7
@@ -266,8 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dd3b4664e84be4fb2bde28d580c505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2
-  stopRange: 0.5
 --- !u!114 &5111199820460113778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,7 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89de7c81120d85a4c8b19bb1e63368e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 0.5
   playerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -296,8 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a8634ea993541d293052ab55a48ce1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 2
-  timeBetweenAttack: 3
+  _timer: 0
 --- !u!114 &2428412282715648331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9d9d38550877040b2fdf3b092f9f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
+  _enemyStats: {fileID: 11400000, guid: d30cf40f1d408a944ac5d6f6dc761816, type: 2}
 --- !u!114 &3929694939860016129
 MonoBehaviour:
   m_ObjectHideFlags: 0
