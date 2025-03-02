@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerExp : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     private void Update()
     {

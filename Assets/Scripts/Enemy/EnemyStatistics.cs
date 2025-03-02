@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyStatistics : MonoBehaviour, IDamageable
 {
     [Header("Config")]
-    [SerializeField] private EnemyStats _enemyStats;
+    [SerializeField] private EnemyStatsSO _enemyStats;
 
     public float CurrentHP { get; private set; }
     public float ExpForEnemy { get; private set; }

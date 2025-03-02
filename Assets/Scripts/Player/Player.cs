@@ -4,9 +4,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [Header("Configuration")] [SerializeField]
-    private PlayerStats _playerStats;
+    private PlayerStatsSO _playerStats;
 
-    public PlayerStats PlayerStats => _playerStats;
+    public PlayerStatsSO PlayerStats => _playerStats;
 
     private PlayerAnimations _playerAnimations;
     

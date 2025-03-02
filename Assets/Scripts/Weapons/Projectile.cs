@@ -3,7 +3,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed;
-
+    
     public Vector3 Direction { get; set; }
 
     public float Damage { get; set; }
@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         other.GetComponent<IDamageable>()?.TakeDamage(Damage);
+        other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         Destroy(gameObject);
     }
 }

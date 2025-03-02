@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private Weapon weapon;
+    [SerializeField] private WeaponSO weapon;
     
     public Transform firePoint;
     public GameObject slashEffect;
