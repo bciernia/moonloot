@@ -7,6 +7,7 @@ public class EnemyAnimator : MonoBehaviour
     private readonly int isMoving = Animator.StringToHash("IsMoving");
     private readonly int dead = Animator.StringToHash("Dead");
     private readonly int attack = Animator.StringToHash("Attack");
+    private readonly int damaged = Animator.StringToHash("Damaged");
     
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -51,5 +52,10 @@ public class EnemyAnimator : MonoBehaviour
     public void SetAttackAnimation()
     {
         _animator.SetTrigger(attack);
+    }
+    
+    public void SetDamagedAnimation()
+    {
+        _animator.SetTrigger(damaged);
     }
 }
