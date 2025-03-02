@@ -6,13 +6,14 @@ public class ActionAttack : FSMAction
     private EnemyStatistics _enemyStatistics;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
-    public float _timer;
+    private DecisionAttackRange _decisionAttackRange;
     
     private void Awake()
     {
         _enemyBrain = GetComponent<EnemyBrain>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemyStatistics = GetComponent<EnemyStatistics>();
+        _decisionAttackRange = GetComponent<DecisionAttackRange>();
     }
 
     public override void Act()
@@ -24,17 +25,17 @@ public class ActionAttack : FSMAction
     {
         if (!_enemyBrain.Player) return;
 
-        _timer -= Time.deltaTime;
-
-        if (_timer <= 0f)
+        if (_enemyBrain.CanAttack())
         {
             _enemyAnimator.SetAttackAnimation();
-            _timer = _enemyStatistics.TimeBetweenAttacks;
+            _enemyBrain.ResetAttackCooldown();
         } 
     }
 
     public void DealDmgToPlayer()
     {
+        if (!_decisionAttackRange.PlayerInAttackRange()) return; 
+        
         var player = _enemyBrain.Player.GetComponent<IDamageable>();
         player.TakeDamage(_enemyStatistics.Damage);
     }

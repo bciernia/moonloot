@@ -19,7 +19,7 @@ public class DecisionAttackRange : FSMDecision
         return PlayerInAttackRange();
     }
 
-    private bool PlayerInAttackRange()
+    public bool PlayerInAttackRange()
     {
         if (!_enemyBrain.Player) return false;
         var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, _enemyStatistics.AttackRange, playerMask);
