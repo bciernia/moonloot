@@ -38,5 +38,13 @@ public class ActionAttack : FSMAction
         
         var player = _enemyBrain.Player.GetComponent<IDamageable>();
         player.TakeDamage(_enemyStatistics.Damage);
+
+        KnockBackPlayer();
+    }
+
+    private void KnockBackPlayer()
+    {
+        var playerKnockBack = _enemyBrain.Player.GetComponent<KnockBack>();
+        playerKnockBack.GetKnockedBack(transform, 5f);
     }
 }

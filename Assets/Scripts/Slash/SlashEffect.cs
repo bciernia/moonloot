@@ -9,7 +9,7 @@ public class SlashEffect: MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isTriggered;
     
-    public Weapon weapon;
+    public WeaponSO weapon;
     public float speed = 3f;
     private Transform parent;
     

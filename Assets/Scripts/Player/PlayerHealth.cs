@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour, IDamageable
 {
     [Header("Configuration")]
-    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     private PlayerAnimations _playerAnimations;
 

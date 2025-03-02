@@ -2,10 +2,10 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEditor;
 using UnityEngine;
 
-[CustomEditor(typeof(PlayerStats))]
+[CustomEditor(typeof(PlayerStatsSO))]
 public class PlayerStatsEditor : Editor
 {
-    private PlayerStats StatsTarget => target as PlayerStats;
+    private PlayerStatsSO StatsTarget => target as PlayerStatsSO;
 
     public override void OnInspectorGUI()
     {

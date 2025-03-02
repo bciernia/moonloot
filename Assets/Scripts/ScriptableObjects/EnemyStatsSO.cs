@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyStats_", menuName = "Enemy Stats")]
-public class EnemyStats : ScriptableObject
+public class EnemyStatsSO : ScriptableObject
 {
     [Header("Configuration")]
     public float MaxHP;

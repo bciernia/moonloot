@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerMana : MonoBehaviour
 {
     [Header("Configuration")]
-    [SerializeField] private PlayerStats _playerStats;
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     public float CurrentMana { get; private set; }
 
