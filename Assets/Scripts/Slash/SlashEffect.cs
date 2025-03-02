@@ -1,49 +1,69 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class SlashEffect: MonoBehaviour
 {
     private readonly int weaponType = Animator.StringToHash("WeaponType");
     
-    private Rigidbody2D rb;
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
-    private bool isTriggered;
+    private Rigidbody2D _rb;
+    private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
+    private BoxCollider2D _boxCollider;
+    private bool _isTriggered;
     
     public WeaponSO weapon;
     public float speed = 3f;
-    private Transform parent;
+    private Transform _parent;
     
     private void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        isTriggered = AttackManager.Instance.IsTriggered;
+        _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<Animator>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _isTriggered = AttackManager.Instance.IsTriggered;
+        _boxCollider = GetComponent<BoxCollider2D>();
 
-        spriteRenderer.flipY = isTriggered;
-        rb.linearVelocity = transform.right;
-        animator.speed = speed;
-        animator.SetFloat(weaponType, (int)weapon.WeaponType);
+        _spriteRenderer.flipY = _isTriggered;
+        _rb.linearVelocity = transform.right;
+        _animator.speed = speed;
+        _animator.SetFloat(weaponType, (int)weapon.WeaponType);
+        if(!weapon.ProjectilePrefab) SetBoxCollider(weapon.SlashSize, weapon.SlashOffset);
+    }
+
+    private void SetBoxCollider(Vector2 weaponColliderSize, Vector2 weaponColliderOffset)
+    {
+        _boxCollider.size = weaponColliderSize;
+        _boxCollider.offset = weaponColliderOffset;
+    }
+
+    public void EnableCollider()
+    {
+        _boxCollider.enabled = true;
+    }
+    
+    public void DisableCollider()
+    {
+        _boxCollider.enabled = false;
     }
     
     public void SetParent(Transform newParent)
     {
-        parent = newParent;
+        _parent = newParent;
     }
 
     private void Update()
     {
-        if (parent != null)
+        if (_parent != null)
         {
-            transform.position = parent.position;
-            transform.rotation = parent.rotation;
+            transform.position = _parent.position;
+            transform.rotation = _parent.rotation;
         }
     }
 
     private void SetIsTriggered()
     {
-        isTriggered = !isTriggered;
-        AttackManager.Instance.IsTriggered = isTriggered;
+        _isTriggered = !_isTriggered;
+        AttackManager.Instance.IsTriggered = _isTriggered;
     }
 
     private void FireProjectile()
@@ -57,5 +77,11 @@ public class SlashEffect: MonoBehaviour
     {
         SetIsTriggered();
         Destroy(gameObject);
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
+        other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
     }
 } 
