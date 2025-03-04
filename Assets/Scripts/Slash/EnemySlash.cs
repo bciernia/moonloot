@@ -1,13 +1,13 @@
-﻿using UnityEngine;
 
-public class SlashEffect: MonoBehaviour
+using UnityEngine;
+
+public class EnemySlash : MonoBehaviour
 {
     private readonly int weaponType = Animator.StringToHash("WeaponType");
     
     private Rigidbody2D _rb;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    private BoxCollider2D _boxCollider;
     private bool _isTriggered;
     
     public WeaponSO weapon;
@@ -18,39 +18,27 @@ public class SlashEffect: MonoBehaviour
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _isTriggered = AttackManager.Instance.IsTriggered;
-        _boxCollider = GetComponent<BoxCollider2D>();
 
         _spriteRenderer.flipY = _isTriggered;
         _rb.linearVelocity = transform.right;
         _animator.speed = speed;
         _animator.SetFloat(weaponType, (int)weapon.WeaponType);
-        if(!weapon.ProjectilePrefab) SetBoxCollider(weapon.SlashSize, weapon.SlashOffset);
     }
 
-    private void SetBoxCollider(Vector2 weaponColliderSize, Vector2 weaponColliderOffset)
-    {
-        _boxCollider.size = weaponColliderSize;
-        _boxCollider.offset = weaponColliderOffset;
-    }
-
-    public void EnableCollider()
-    {
-        _boxCollider.enabled = true;
-    }
-    
-    public void DisableCollider()
-    {
-        _boxCollider.enabled = false;
-    }
-    
     public void SetParent(Transform newParent)
     {
         _parent = newParent;
     }
 
+    public void SetShooter(GameObject shooter)
+    {
+        _shooter = shooter;
+    }
+    
     private void Update()
     {
         if (_parent != null)
@@ -65,17 +53,12 @@ public class SlashEffect: MonoBehaviour
         _isTriggered = !_isTriggered;
         AttackManager.Instance.IsTriggered = _isTriggered;
     }
-    
-    public void SetShooter(GameObject shooter)
-    {
-        _shooter = shooter;
-    }
 
     private void FireProjectile()
     {
         var projectile = Instantiate(weapon.ProjectilePrefab, transform.position, transform.rotation);
         projectile.Shooter = _shooter;
-        projectile.IsEnemy = false;
+        projectile.IsEnemy = true;
         projectile.Direction = Vector3.right;
         projectile.Damage = weapon.Damage;
     }
@@ -85,10 +68,4 @@ public class SlashEffect: MonoBehaviour
         SetIsTriggered();
         Destroy(gameObject);
     }
-    
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
-        other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
-    }
-} 
+}
