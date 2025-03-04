@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 241723396916423700}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,9 +73,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingLayerID: 569395403
+  m_SortingLayer: 3
+  m_SortingOrder: 0
   m_Sprite: {fileID: 765154081351103428, guid: 4145c96e77e9e7544932eb7f03655527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 1566175022435997431}
   - component: {fileID: 2228523388610871302}
   - component: {fileID: 7291916914314275798}
+  - component: {fileID: 2020320902685088516}
   m_Layer: 6
   m_Name: Enemy_Zombie_Patrol
   m_TagString: Enemy
@@ -124,7 +125,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.28, y: -0.1571517, z: 0}
-  m_LocalScale: {x: 12, y: 12, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7166014530137369959}
@@ -173,7 +174,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
   m_SortingLayer: 3
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 2085919176084871402, guid: e259c5a58765d874999027e71a0f8183, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -219,8 +220,8 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0011771818, y: 0.0029429595}
-  m_Radius: 0.049933165
+  m_Offset: {x: 0.0011774302, y: 0.06296331}
+  m_Radius: 0.51008993
 --- !u!50 &8424413386095978996
 Rigidbody2D:
   serializedVersion: 5
@@ -370,3 +371,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5665e60e05ee1aa4dab999f69a6d32cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2020320902685088516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490316543278559033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9891d750ac3c40739abb417776374bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackTime: 0.2

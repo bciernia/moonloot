@@ -63,6 +63,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         else
         {
             DamageManager.Instance.ShowDamageText(amount, transform);
+            _enemyAnimator.SetDamagedAnimation();
         }
     }
 }

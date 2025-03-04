@@ -34,6 +34,7 @@ public class PlayerAttack : MonoBehaviour
         
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
         var slash = slashObject.GetComponent<SlashEffect>();
+        slash.SetShooter(gameObject);
         
         CreateSlashEffect(slash);
     }
