@@ -5,6 +5,7 @@ public class DecisionDetectPlayer : FSMDecision
 {
     [SerializeField] public float range;
     [SerializeField] public LayerMask playerMask;
+    [SerializeField] public LayerMask obstacleMask;
 
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
@@ -27,12 +28,19 @@ public class DecisionDetectPlayer : FSMDecision
         if (playerCollider)
         {
             _enemyBrain.Player = playerCollider.transform;
-            _enemyAnimator.SetIsMoving(true);
             var directionToEnemy = (_enemyBrain.Player.position - _enemyBrain.transform.position).normalized;
-            _enemyAnimator.SetMoveAnimation(new Vector2(directionToEnemy.x, directionToEnemy.y));
-            return true;
-        }
+            var distanceToPlayer = Vector2.Distance(_enemyBrain.transform.position, playerCollider.transform.position);
 
+            var hit = Physics2D.Raycast(_enemyBrain.transform.position, directionToEnemy, distanceToPlayer, obstacleMask);
+
+            if (!hit.collider)
+            {
+                _enemyAnimator.SetIsMoving(true);
+                _enemyAnimator.SetMoveAnimation(new Vector2(directionToEnemy.x, directionToEnemy.y));
+                return true;
+            }
+        }
+        
         _enemyBrain.Player = null;
         return false;
     }

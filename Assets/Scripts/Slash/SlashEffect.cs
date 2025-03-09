@@ -27,6 +27,7 @@ public class SlashEffect: MonoBehaviour
         _rb.linearVelocity = transform.right;
         _animator.speed = speed;
         _animator.SetFloat(weaponType, (int)weapon.WeaponType);
+
         if(!weapon.ProjectilePrefab) SetBoxCollider(weapon.SlashSize, weapon.SlashOffset);
     }
 
@@ -88,6 +89,10 @@ public class SlashEffect: MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.gameObject == _shooter) return;
+        
+        if (weapon.ProjectilePrefab) return; 
+        
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
     }

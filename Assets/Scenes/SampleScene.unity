@@ -622,7 +622,7 @@ GameObject:
   - component: {fileID: 501724640}
   - component: {fileID: 501724642}
   - component: {fileID: 501724641}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1997,7 +1997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e3ec4f24d5d09b4ea50c2ccbdd25637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: b8fc6f44ccab18545b0f957ff0924937, type: 2}
+  weapon: {fileID: 11400000, guid: 6b5245e7a929351459dbae96a4929aef, type: 2}
   firePoint: {fileID: 709567114}
   slashEffect: {fileID: 5993898103221808422, guid: b3de9448dd153334e92670ada89da227, type: 3}
 --- !u!58 &1680952851
@@ -2465,9 +2465,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Orc
       objectReference: {fileID: 0}
+    - target: {fileID: 3202980762219922541, guid: 23b4b374bd8d25b409fa63eca35616af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3693072803607386888, guid: 23b4b374bd8d25b409fa63eca35616af, type: 3}
       propertyPath: range
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693072803607386888, guid: 23b4b374bd8d25b409fa63eca35616af, type: 3}
+      propertyPath: obstacleMask.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 3821778879328544901, guid: 23b4b374bd8d25b409fa63eca35616af, type: 3}
       propertyPath: 'states.Array.data[2].Actions.Array.data[0]'
