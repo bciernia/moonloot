@@ -3,6 +3,8 @@
 public class SlashEffect: MonoBehaviour
 {
     private readonly int weaponType = Animator.StringToHash("WeaponType");
+
+    [SerializeField] private GameObject bloodParticle;
     
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -95,5 +97,11 @@ public class SlashEffect: MonoBehaviour
         
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
+        
+        if (bloodParticle != null)
+        {
+            var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
+            blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
+        }
     }
 } 
