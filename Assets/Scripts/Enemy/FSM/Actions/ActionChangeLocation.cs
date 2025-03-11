@@ -1,37 +1,26 @@
-using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-public class ActionWander : FSMAction
+public class ActionRetreat : FSMAction
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float wanderTime;
-    [SerializeField] private Vector2 moveRange;
-
-    private EnemyStatistics _enemyStatistics;
-    
-    private Vector3 movePosition;
-    private float timer;
-
     private EnemyAnimator _enemyAnimator;
+    private EnemyStatistics _enemyStatistics;
+    public Vector2 destinationRange;
+    private Vector3 movePosition;
 
+    private float timer;
+    private readonly float changeLocationTime = .5f;
     private void Awake()
     {
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemyStatistics = GetComponent<EnemyStatistics>();
-    }
-    
-    private void Start()
-    {
-        GetNewDestination();
     }
 
     public override void Act()
     {
         timer -= Time.deltaTime;
         var moveDirection = (movePosition - transform.position).normalized;
-        var movement = moveDirection * (_enemyStatistics.Speed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, movePosition) >= 1f)
+        var movement = moveDirection * (_enemyStatistics.ChaseSpeed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, movePosition) >= .25f)
         {
             _enemyAnimator.FlipSpriteXOff();
             _enemyAnimator.SetIsMoving(true);
@@ -43,28 +32,18 @@ public class ActionWander : FSMAction
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetIsMoving(false);
         }
-
+        
         if (timer <= 0f)
         {
             GetNewDestination();
-            timer = wanderTime;
+            timer = changeLocationTime;
         }
     }
-
+    
     private void GetNewDestination()
     {
-        var randomX = Random.Range(-moveRange.x, moveRange.x);
-        var randomY = Random.Range(-moveRange.y, moveRange.y);
+        var randomX = Random.Range(-destinationRange.x, destinationRange.x);
+        var randomY = Random.Range(-destinationRange.y, destinationRange.y);
         movePosition = transform.position + new Vector3(randomX, randomY);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (moveRange != Vector2.zero)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(transform.position, moveRange * 2f);
-            Gizmos.DrawLine(transform.position, movePosition);
-        }
     }
 }
