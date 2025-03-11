@@ -5,18 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRangedAttack.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRangedAttack.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemyAim.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemyAim.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemySlash.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemySlash.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedAttack.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedAttack.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Slash/Slash.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Slash/Slash.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SampleScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyBrain.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyBrain.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +36,18 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/159e93278e4e4fc48f4fc0b0dd9e43073e000/4d/ff0f7fdf/Graph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/84f0d810adef4e6c8deab33e4ae93f7c1dec00/6a/14ad043b/Object.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/947c566dcd374e379abfce2ae0b65eaf2f200/6a/64d2149e/Rigidbody2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/947c566dcd374e379abfce2ae0b65eaf2f200/f1/877253bf/BoxCollider2D.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionChangeLocation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation/IK/Editor/IKEditorManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation/IK/Editor/IKGizmos.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.animation/IK/Editor/Inspectors/CCDSolver2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.aseprite/Editor/AsepriteImportData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.aseprite/Editor/AsepriteImporter.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.aseprite/Editor/Common/ImagePacker/ImagePackNode.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.psdimporter/Editor/PSDImportData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.spriteshape/Editor/SpriteShapeControllerEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.burst/Runtime/Intrinsics/v256.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal/Samples~/URPRenderGraphSamples/Blit w. FrameData/BlitRendererFeature.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui/Editor/TMP/PropertyDrawers/TMP_CharacterPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui/Editor/TMP/PropertyDrawers/TMP_MarkToMarkAdjustmentRecordPropertyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
@@ -64,6 +65,7 @@
   &quot;keyToString&quot;: {
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.35358256&quot;,
     &quot;git-widget-placeholder&quot;: &quot;fight-system&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -107,10 +109,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23436">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="23436" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -131,7 +133,11 @@
       <workItem from="1740915027305" duration="1034000" />
       <workItem from="1741032965931" duration="2338000" />
       <workItem from="1741108748734" duration="2247000" />
-      <workItem from="1741122311699" duration="2567000" />
+      <workItem from="1741122311699" duration="2683000" />
+      <workItem from="1741470900172" duration="1065000" />
+      <workItem from="1741509033175" duration="3653000" />
+      <workItem from="1741555366894" duration="2559000" />
+      <workItem from="1741709006624" duration="5700000" />
     </task>
     <servers />
   </component>
@@ -153,47 +159,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs</url>
-          <line>46</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\FSM\Actions\ActionAttack.cs" containingFunctionPresentation="Method 'KnockBackPlayer'">
-            <startOffsets>
-              <option value="1158" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1225" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs</url>
-          <line>17</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemySelector.cs" containingFunctionPresentation="Method 'EnemySelectedCallback'">
-            <startOffsets>
-              <option value="370" />
-            </startOffsets>
-            <endOffsets>
-              <option value="403" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs</url>
-          <line>19</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemySelector.cs" containingFunctionPresentation="Method 'EnemySelectedCallback'">
-            <startOffsets>
-              <option value="426" />
-            </startOffsets>
-            <endOffsets>
-              <option value="457" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
-          <line>90</line>
+          <line>95</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
             <startOffsets>
               <option value="-1" />
@@ -203,71 +170,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs</url>
-          <line>33</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Weapons\Projectile.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
-            <startOffsets>
-              <option value="865" />
-            </startOffsets>
-            <endOffsets>
-              <option value="919" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/EnemySlash.cs</url>
-          <line>33</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\EnemySlash.cs" containingFunctionPresentation="Method 'SetParent'">
-            <startOffsets>
-              <option value="948" />
-            </startOffsets>
-            <endOffsets>
-              <option value="968" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/EnemySlash.cs</url>
-          <line>59</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\EnemySlash.cs" containingFunctionPresentation="Method 'FireProjectile'">
-            <startOffsets>
-              <option value="1553" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1583" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs</url>
-          <line>31</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Weapons\Projectile.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
-            <startOffsets>
-              <option value="807" />
-            </startOffsets>
-            <endOffsets>
-              <option value="839" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="21" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs</url>
-          <line>16</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Weapons\Projectile.cs" containingFunctionPresentation="Method 'Start'">
-            <startOffsets>
-              <option value="389" />
-            </startOffsets>
-            <endOffsets>
-              <option value="446" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="24" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
