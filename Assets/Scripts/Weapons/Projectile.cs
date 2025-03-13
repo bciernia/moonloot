@@ -38,7 +38,8 @@ public class Projectile : MonoBehaviour
         //Knockbackthrust przenieść do właściwości pocisku
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         
-        if (bloodParticle != null)
+        //Zrobić particle dla innych materiałów (drewno/kamień)
+        if (bloodParticle != null && !other.gameObject.CompareTag("Environment"))
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
