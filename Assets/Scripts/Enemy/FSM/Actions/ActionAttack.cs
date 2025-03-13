@@ -8,12 +8,16 @@ public class ActionAttack : FSMAction
     private EnemyAnimator _enemyAnimator;
     private DecisionAttackRange _decisionAttackRange;
     
+    private bool HasAttacked { get; set; }
+    
     private void Awake()
     {
         _enemyBrain = GetComponent<EnemyBrain>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemyStatistics = GetComponent<EnemyStatistics>();
         _decisionAttackRange = GetComponent<DecisionAttackRange>();
+
+        HasAttacked = false;
     }
 
     public override void Act()
@@ -29,16 +33,19 @@ public class ActionAttack : FSMAction
         {
             _enemyAnimator.SetAttackAnimation();
             _enemyBrain.ResetAttackCooldown();
+            HasAttacked = false;
         } 
     }
 
     public void DealDmgToPlayer()
     {
-        if (!_decisionAttackRange.PlayerInAttackRange()) return; 
+        if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked) return; 
         
         var player = _enemyBrain.Player.GetComponent<IDamageable>();
         player.TakeDamage(_enemyStatistics.Damage);
 
+        HasAttacked = true;
+        
         KnockBackPlayer();
     }
 
