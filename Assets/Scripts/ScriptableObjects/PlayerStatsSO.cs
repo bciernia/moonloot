@@ -12,6 +12,10 @@ public class PlayerStatsSO : ScriptableObject
     [Header("Mana")] public float MP;
     public float MaxMP;
     
+    [Header("Mana")] public float Stamina;
+    public float MaxStamina;
+    
+    
     [Header("EXP")] public float Exp;
     public float NextLevelExp;
     public float InitialNextLevelExp;
