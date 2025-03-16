@@ -11,11 +11,11 @@ public class WeaponSO : ScriptableObject
     
     public float Damage;
     public float timeBetweenAttack;
+
+    public float RequiredStamina;
     
     [Header("Projectile")]
     public Projectile ProjectilePrefab;
     public float RequiredMana;
     public float AmmunitionAmount;
-    
-    
 }

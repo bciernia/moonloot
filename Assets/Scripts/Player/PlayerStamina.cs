@@ -7,7 +7,7 @@ public class PlayerStamina : MonoBehaviour
     private Player player;
     private PlayerMovement playerMovement;
 
-    private float CurrentStamina { get; set; }
+    public float CurrentStamina { get; set; }
 
     private float timer = 0f;
     private const float delayAmount = 1f;
@@ -42,6 +42,7 @@ public class PlayerStamina : MonoBehaviour
         CurrentStamina = player.PlayerStats.Stamina;
     }
 
+    //TODO uzyte po wypiciu potki
     public void RecoverStamina(float amount)
     {
         player.PlayerStats.Stamina += amount;
@@ -49,6 +50,7 @@ public class PlayerStamina : MonoBehaviour
         CurrentStamina = player.PlayerStats.Stamina;
     }
     
+    //TODO otrzymanie obrażeń jakiegoś zaklęcia czy stanu
     private void DecreaseStamina()
     {
         timer += Time.deltaTime;

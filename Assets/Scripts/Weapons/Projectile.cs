@@ -39,7 +39,7 @@ public class Projectile : MonoBehaviour
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         
         //Zrobić particle dla innych materiałów (drewno/kamień)
-        if (bloodParticle != null && !other.gameObject.CompareTag("Environment"))
+        if (bloodParticle != null && !other.gameObject.CompareTag(TagTypes.Environment))
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
