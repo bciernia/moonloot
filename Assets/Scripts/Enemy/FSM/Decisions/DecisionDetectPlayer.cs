@@ -33,12 +33,12 @@ public class DecisionDetectPlayer : FSMDecision
 
             var hit = Physics2D.Raycast(_enemyBrain.transform.position, directionToEnemy, distanceToPlayer, obstacleMask);
 
-            if (!hit.collider)
-            {
+            // if (!hit.collider)
+            // {
                 _enemyAnimator.SetIsMoving(true);
                 _enemyAnimator.SetMoveAnimation(new Vector2(directionToEnemy.x, directionToEnemy.y));
                 return true;
-            }
+            // }
         }
         
         _enemyBrain.Player = null;
