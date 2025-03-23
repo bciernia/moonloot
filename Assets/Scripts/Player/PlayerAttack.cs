@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private bool canAttack = true;
     private PlayerMana _playerMana;
     private PlayerStamina _playerStamina;
+    public TextMeshProUGUI _weaponName;
     
     private SlashEffect _slash;
 
@@ -27,6 +29,8 @@ public class PlayerAttack : MonoBehaviour
         {
             Attack();
         }
+        //TODO Do wywalenia/przeniesienia
+        _weaponName.text = $"Weapon: {weapon.name.Split("_")[1]}";
     }
 
     private void Attack()

@@ -20,8 +20,9 @@ public class PlayerStatsSO : ScriptableObject
     public float NextLevelExp;
     public float InitialNextLevelExp;
     [Range(1f, 100f)] public float ExpMultiplier;
-    
 
+    public WeaponSO CurrentWeapon;
+    
     public void ResetPlayerStats()
     {
         HP = MaxHP;
