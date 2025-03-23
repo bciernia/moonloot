@@ -8,7 +8,7 @@ public class EnemyBrain : MonoBehaviour
 
     private EnemyStatistics _enemyStatistics;
     
-    private FSMState CurrentState { get; set; }
+    public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
 

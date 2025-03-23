@@ -53,7 +53,7 @@ public class ActionWander : FSMAction
 
     private void GetNewDestination()
     {
-        var attempts = 10; 
+        const int attempts = 10;
 
         for (var  i = 0; i < attempts; i++)
         {

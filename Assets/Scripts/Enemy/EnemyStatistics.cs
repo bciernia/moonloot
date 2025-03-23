@@ -58,6 +58,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _enemyBrain.enabled = false;
             _circleCollider.enabled = false;
             
+            //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
+            
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
         else
