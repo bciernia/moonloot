@@ -1,10 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ActionRangedAttack : FSMAction
 {
     public Transform firePoint;
     public GameObject slashEffect;
-    [SerializeField] private WeaponSO weapon;
+    [SerializeField] private Weapon _weapon;
     
     private EnemyBrain _enemyBrain;
     

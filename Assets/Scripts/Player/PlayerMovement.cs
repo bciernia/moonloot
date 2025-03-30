@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private PlayerStamina playerStamina;
 
 
-private void Awake()
+    private void Awake()
     {
         _player = GetComponent<Player>();
         _actions = new PlayerActions();

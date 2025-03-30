@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 
 public class SelectionManager : MonoBehaviour
@@ -6,7 +7,8 @@ public class SelectionManager : MonoBehaviour
     public static event Action<EnemyBrain> OnEnemySelectedEvent;
     public static event Action OnNoSelectionEvent;
     
-    [SerializeField] private LayerMask enemyMask;
+    [SerializeField] private LayerMask _enemyMask;
+    [SerializeField] private TextMeshProUGUI _enemyName;
 
     private Camera mainCamera;
 
@@ -24,7 +26,7 @@ public class SelectionManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            var hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, enemyMask);
+            var hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, _enemyMask);
 
             if (hit.collider)
             {

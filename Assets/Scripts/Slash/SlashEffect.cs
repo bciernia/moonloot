@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SlashEffect: MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class SlashEffect: MonoBehaviour
     private BoxCollider2D _boxCollider;
     private bool _isTriggered;
     
-    public WeaponSO weapon;
+    public Weapon weapon;
     public float speed = 3f;
     private Transform _parent;
     private GameObject _shooter;

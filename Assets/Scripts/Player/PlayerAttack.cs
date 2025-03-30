@@ -1,18 +1,19 @@
-using System;
 using UnityEngine;
 using System.Collections;
-using TMPro;
+using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private WeaponSO weapon;
-    
+    [FormerlySerializedAs("weapon")] [SerializeField] private Weapon _weapon;
+    [SerializeField] private PlayerStatsSO _playerStats;
+
     public Transform firePoint;
     public GameObject slashEffect;
     private float attackCooldown;
     private bool canAttack = true;
     private PlayerMana _playerMana;
     private PlayerStamina _playerStamina;
+    private PlayerActions _actions;
     
     private SlashEffect _slash;
 
@@ -20,19 +21,14 @@ public class PlayerAttack : MonoBehaviour
     {
         _playerMana = GetComponent<PlayerMana>();
         _playerStamina = GetComponent<PlayerStamina>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && canAttack)
-        {
-            Attack();
-        }
+        _actions = new PlayerActions();
     }
 
     private void Attack()
     {
-        var canPerformAttack = CanPerformAttack(weapon.RequiredMana, weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
+        if (!canAttack) return;
+        
+        var canPerformAttack = CanPerformAttack(_weapon.RequiredMana, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
         
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
@@ -61,7 +57,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void CreateSlashEffect(SlashEffect slash)
     {
-        slash.weapon = weapon;
+        slash.weapon = _weapon;
         slash.SetParent(firePoint);
         attackCooldown = slash.weapon.timeBetweenAttack;
         StartCoroutine(AttackCooldown());
@@ -72,5 +68,23 @@ public class PlayerAttack : MonoBehaviour
         canAttack = false; 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+    }
+
+    public void EquipWeapon(Weapon newItemWeapon)
+    {
+        _weapon = newItemWeapon;
+        _playerStats.TotalDamage = _playerStats.BaseDamage + _weapon.Damage;
+    }
+    
+    private void OnEnable()
+    {
+        _actions.Enable();
+        _actions.Attack.BaseAttack.performed += ctx => Attack();
+    }
+
+    private void OnDisable()
+    {
+        _actions.Attack.BaseAttack.performed -= ctx => Attack();
+        _actions.Disable();
     }
 }
