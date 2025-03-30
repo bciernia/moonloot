@@ -2,16 +2,9 @@
 using TMPro;
 using UnityEngine;
 
-public class DamageManager : MonoBehaviour
+public class DamageManager : Singleton<DamageManager>
 {
-    public static DamageManager Instance;
-    
     [SerializeField] private DamageText damageTextPrefab;
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     public void ShowDamageText(float damageAmount, Transform parent)
     {

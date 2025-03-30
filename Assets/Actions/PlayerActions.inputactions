@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "aa207d4b-a31f-4953-a32c-170de2542c50",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -70,6 +79,73 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "9ea546d2-f493-4bf6-bdff-e5435466cec1",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "2460bde0-09e9-4f72-828f-56fc6fb19e8d",
+            "actions": [
+                {
+                    "name": "OpenCloseStatsPanel",
+                    "type": "Button",
+                    "id": "bed65bb5-a2e5-4fba-b4b3-b1d73b5079a4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "78327a23-e655-42e0-9a5f-a8abfb4fce1c",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenCloseStatsPanel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Attack",
+            "id": "0e08295e-d4d5-492f-b82c-ff3d7df788fb",
+            "actions": [
+                {
+                    "name": "BaseAttack",
+                    "type": "Button",
+                    "id": "c78c89e0-8060-4d97-aa1d-3a9ea0e57af9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ffd473bf-8a61-40c4-9cfe-562c864c3cbb",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BaseAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

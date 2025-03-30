@@ -38,4 +38,16 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         _playerAnimations.SetDeathAnimation();
     }
+
+    public void RestoreHealth(float amount)
+    {
+        _playerStats.HP += amount;
+
+        _playerStats.HP = Mathf.Min(_playerStats.HP, _playerStats.MaxHP);
+    }
+    
+    public bool CanRestoreHealth()
+    {
+        return _playerStats.HP > 0 && _playerStats.HP < _playerStats.MaxHP;
+    }
 }

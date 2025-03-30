@@ -35,6 +35,6 @@ public class DecisionAttackRange : FSMDecision
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, _enemyStatistics.AttackRange);
+        //Gizmos.DrawWireSphere(transform.position, _enemyStatistics.AttackRange);
     }
 }

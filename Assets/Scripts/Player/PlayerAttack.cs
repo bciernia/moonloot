@@ -1,35 +1,34 @@
-using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private WeaponSO weapon;
-    
+    [FormerlySerializedAs("weapon")] [SerializeField] private Weapon _weapon;
+    [SerializeField] private PlayerStatsSO _playerStats;
+
     public Transform firePoint;
     public GameObject slashEffect;
     private float attackCooldown;
     private bool canAttack = true;
-    private PlayerMana playerMana;
+    private PlayerMana _playerMana;
+    private PlayerStamina _playerStamina;
+    private PlayerActions _actions;
     
     private SlashEffect _slash;
 
     private void Awake()
     {
-        playerMana = GetComponent<PlayerMana>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0) && canAttack)
-        {
-            Attack();
-        }
+        _playerMana = GetComponent<PlayerMana>();
+        _playerStamina = GetComponent<PlayerStamina>();
+        _actions = new PlayerActions();
     }
 
     private void Attack()
     {
-        var canPerformAttack = CanPerformAttack(weapon.RequiredMana, playerMana.CurrentMana);
+        if (!canAttack) return;
+        
+        var canPerformAttack = CanPerformAttack(_weapon.RequiredMana, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
         
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
@@ -39,25 +38,26 @@ public class PlayerAttack : MonoBehaviour
         CreateSlashEffect(slash);
     }
 
-    private bool CanPerformAttack(float requiredMana, float availableMana)
+    private bool CanPerformAttack(float requiredMana, float requiredStamina, float availableMana, float availableStamina)
     {
-        if (requiredMana == 0)
+        if (availableStamina < requiredStamina)
         {
-            return true;
+            return false;
         }
         
-        if (availableMana >= requiredMana)
+        if (requiredMana > 0 && availableMana <= 0)
         {
-            playerMana.UseMana(requiredMana);
-            return true;
+            return false;
         }
-
-        return false;
+        
+        _playerMana.UseMana(requiredMana);
+        _playerStamina.UseStamina(requiredStamina);
+        return true;
     }
 
     private void CreateSlashEffect(SlashEffect slash)
     {
-        slash.weapon = weapon;
+        slash.weapon = _weapon;
         slash.SetParent(firePoint);
         attackCooldown = slash.weapon.timeBetweenAttack;
         StartCoroutine(AttackCooldown());
@@ -68,5 +68,23 @@ public class PlayerAttack : MonoBehaviour
         canAttack = false; 
         yield return new WaitForSeconds(attackCooldown);
         canAttack = true;
+    }
+
+    public void EquipWeapon(Weapon newItemWeapon)
+    {
+        _weapon = newItemWeapon;
+        _playerStats.TotalDamage = _playerStats.BaseDamage + _weapon.Damage;
+    }
+    
+    private void OnEnable()
+    {
+        _actions.Enable();
+        _actions.Attack.BaseAttack.performed += ctx => Attack();
+    }
+
+    private void OnDisable()
+    {
+        _actions.Attack.BaseAttack.performed -= ctx => Attack();
+        _actions.Disable();
     }
 }

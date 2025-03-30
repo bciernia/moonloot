@@ -23,6 +23,8 @@ GameObject:
   - component: {fileID: 2643764006718510344}
   - component: {fileID: 3239572568804598025}
   - component: {fileID: 8892359068374341829}
+  - component: {fileID: 5553143421817459615}
+  - component: {fileID: 9188036346047358896}
   m_Layer: 6
   m_Name: Enemy_Wolf
   m_TagString: Enemy
@@ -38,7 +40,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2250188740682068015}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.64, y: -1.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -255,6 +257,9 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 128
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &5497696368425104024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +350,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockBackTime: 0.2
+--- !u!114 &5553143421817459615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42f2131ef0d74b69aa7e8a7cf1022e47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9188036346047358896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8989b43f0ec2a40b2e45eb78260ef7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationRange: {x: 3, y: 3}
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0

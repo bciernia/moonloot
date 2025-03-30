@@ -53,9 +53,22 @@ public class ActionWander : FSMAction
 
     private void GetNewDestination()
     {
-        var randomX = Random.Range(-moveRange.x, moveRange.x);
-        var randomY = Random.Range(-moveRange.y, moveRange.y);
-        movePosition = transform.position + new Vector3(randomX, randomY);
+        const int attempts = 10;
+
+        for (var  i = 0; i < attempts; i++)
+        {
+            var randomX = Random.Range(-moveRange.x, moveRange.x);
+            var randomY = Random.Range(-moveRange.y, moveRange.y);
+            var potentialPosition = transform.position + new Vector3(randomX, randomY);
+
+            var hit = Physics2D.OverlapCircle(potentialPosition, 0.5f); 
+
+            if (hit == null || hit.CompareTag(TagTypes.Environment) == false)
+            {
+                movePosition = potentialPosition;
+                return;
+            }
+        }
     }
 
     private void OnDrawGizmos()

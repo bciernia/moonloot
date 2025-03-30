@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Configuration")]
-    [SerializeField] private float speed;
+    [Header("Configuration")] [SerializeField]
+    private float speed;
 
     private PlayerActions _actions;
     private Rigidbody2D _rb2D;
@@ -11,28 +11,66 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveDirection;
     private PlayerAnimations _playerAnimations;
 
+    [SerializeField] private float staminaTimer = 0f;
+    [SerializeField] private float staminaDecreaseTime = .125f;
+
+    private const float sprintSpeed = 2f;
+
+    public bool IsSprinting { get; private set; }
+
+    
+    private PlayerStamina playerStamina;
+
+
     private void Awake()
     {
         _player = GetComponent<Player>();
         _actions = new PlayerActions();
         _rb2D = GetComponent<Rigidbody2D>();
         _playerAnimations = GetComponent<PlayerAnimations>();
+        playerStamina = GetComponent<PlayerStamina>();
     }
 
     private void Update()
     {
         ReadMovement();
+        Sprint();
     }
 
     private void FixedUpdate()
     {
         Move();
     }
-
+    
     private void Move()
     {
         if (_player.PlayerStats.HP <= 0) return;
-        _rb2D.MovePosition(_rb2D.position + _moveDirection * (speed * Time.fixedDeltaTime));
+        _rb2D.MovePosition(_rb2D.position + _moveDirection * (GetMovementSpeed(IsSprinting) * Time.fixedDeltaTime));
+    }
+    
+    private void Sprint()
+    {
+        if (!_actions.Movement.Sprint.IsPressed() || _player.PlayerStats.Stamina <= 0f)
+        {
+            IsSprinting = false;
+            staminaTimer = 0f;
+            return;
+        }
+
+        IsSprinting = true;
+
+        staminaTimer += Time.deltaTime;
+
+        if (staminaTimer >= staminaDecreaseTime)
+        {
+            playerStamina.UseStamina(1f); 
+            staminaTimer -= staminaDecreaseTime;
+        }
+    }
+
+    private float GetMovementSpeed(bool isSprinting)
+    {
+        return isSprinting ? speed * sprintSpeed : speed;
     }
 
     private void ReadMovement()

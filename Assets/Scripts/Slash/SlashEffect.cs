@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SlashEffect: MonoBehaviour
 {
     private readonly int weaponType = Animator.StringToHash("WeaponType");
+
+    [SerializeField] private GameObject bloodParticle;
     
     private Rigidbody2D _rb;
     private Animator _animator;
@@ -10,7 +13,7 @@ public class SlashEffect: MonoBehaviour
     private BoxCollider2D _boxCollider;
     private bool _isTriggered;
     
-    public WeaponSO weapon;
+    public Weapon weapon;
     public float speed = 3f;
     private Transform _parent;
     private GameObject _shooter;
@@ -95,5 +98,11 @@ public class SlashEffect: MonoBehaviour
         
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
+        
+        if (bloodParticle != null)
+        {
+            var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
+            blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
+        }
     }
 } 
