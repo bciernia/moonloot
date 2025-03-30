@@ -32,8 +32,20 @@ public class ActionChase : FSMAction
     {
         if (!_enemyBrain.Player) return;
 
-        _navMeshAgent.SetDestination(_enemyBrain.Player.position);
-        
+        var distanceToPlayer = Vector3.Distance(transform.position, _enemyBrain.Player.position);
+    
+        if (distanceToPlayer > _enemyStatistics.StopRange)
+        {
+            _navMeshAgent.isStopped = false;
+            _navMeshAgent.SetDestination(_enemyBrain.Player.position);
+            _enemyAnimator.SetIsMoving(true);
+        }
+        else
+        {
+            _navMeshAgent.isStopped = true;
+            _enemyAnimator.SetIsMoving(false);
+        }
+
         _enemyAnimator.FlipSpriteXOff();
         //
         // var dirToPlayer = _enemyBrain.Player.position - transform.position;
