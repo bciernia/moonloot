@@ -18,7 +18,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _manaTMP;
     [SerializeField] private TextMeshProUGUI _staminaTMP;
-    [SerializeField] private TextMeshProUGUI _weaponTMP;
 
     private void Update()
     {
@@ -36,11 +35,8 @@ public class UIManager : MonoBehaviour
         _staminaBar.fillAmount = Mathf.Lerp(_staminaBar.fillAmount, _playerStatsSo.Stamina / _playerStatsSo.MaxStamina,
             10f * Time.deltaTime);
         
-        _levelTMP.text = $"Level {_playerStatsSo.Level}";
         _healthTMP.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMP.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
         _staminaTMP.text = $"{_playerStatsSo.Stamina}/{_playerStatsSo.MaxStamina}";
-
-        _weaponTMP.text = $"xD";
     }
 }
