@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     
     public PlayerHealth PlayerHealth { get; private set; }
     public PlayerMana PlayerMana { get; private set; }
+    public PlayerAttack PlayerAttack { get; private set; }
     
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
     {
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerMana = GetComponent<PlayerMana>();
+        PlayerAttack = GetComponent<PlayerAttack>();
         _playerAnimations = GetComponent<PlayerAnimations>();
     }
 

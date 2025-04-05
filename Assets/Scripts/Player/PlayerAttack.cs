@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Serialization;
@@ -22,6 +23,11 @@ public class PlayerAttack : MonoBehaviour
         _playerMana = GetComponent<PlayerMana>();
         _playerStamina = GetComponent<PlayerStamina>();
         _actions = new PlayerActions();
+    }
+
+    private void Start()
+    {
+        WeaponManager.Instance.EquipWeapon(_weapon);
     }
 
     private void Attack()
