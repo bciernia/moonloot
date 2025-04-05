@@ -21,6 +21,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
     private EnemySelector _enemySelector;
+    private Rigidbody2D _rb2D;
 
     private void Awake()
     {
@@ -28,6 +29,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         _enemyBrain = GetComponent<EnemyBrain>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemySelector = GetComponent<EnemySelector>();
+        _rb2D = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
@@ -56,11 +58,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _enemyAnimator.SetDeadAnimation();
             
             _enemyBrain.enabled = false;
-            _circleCollider.enabled = false;
+            // _circleCollider.enabled = false;
+            _rb2D.bodyType = RigidbodyType2D.Static;
             
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
-            
-            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
         else
         {
