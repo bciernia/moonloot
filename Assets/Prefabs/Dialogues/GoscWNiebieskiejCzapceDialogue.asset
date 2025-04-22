@@ -1,0 +1,322 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-1624177211874511765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Blue Hat Guy
+    - id: 1
+      language: en
+      text: Good morning adventurer! How can I help you?
+    - id: 2
+      language: en
+      text: I have secret for you
+    - id: 3
+      language: en
+      text: Nothing, see you!
+    - id: 4
+      language: en
+      text: Noice!!!!!
+    - id: 5
+      language: en
+      text: Ahhh, bye then...
+  - counter: 6
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+  - counter: 6
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: GoscWNiebieskiejCzapceDialogue
+  m_EditorClassIdentifier: 
+  version: 1.5.0
+  nodes:
+  - rid: 3976831522522268155
+  - rid: 3976831522522268156
+  - rid: 3976831522522268157
+  - rid: 3976831522522268158
+  - rid: 3976831522522268159
+  - rid: 3976831522522268160
+  - rid: 3976831522522268161
+  translationLibrary: {fileID: -1624177211874511765}
+  maxID: 556
+  references:
+    version: 2
+    RefIds:
+    - rid: 3976831522522268155
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 07000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 672.5072
+        yPosition: 326.97644
+        entryPointName: 
+    - rid: 3976831522522268156
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 5
+          attachedIds: 6f0100009e010000
+          ownerId: 4
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2395.9438
+        yPosition: 480.10138
+        exitPointName: 
+    - rid: 3976831522522268157
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 6
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7
+          attachedIds: 03000000
+          ownerId: 6
+          connectionType: 1
+        outputs:
+        - id: 8
+          attachedIds: 0f000000
+          ownerId: 6
+          connectionType: 1
+        width: 268
+        height: 145.85938
+        xPosition: 891.9447
+        yPosition: 335.49207
+        items:
+        - rid: 3976831522522268162
+        characterName: Blue Hat Guy
+        icon: 
+    - rid: 3976831522522268158
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 14
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 15
+          attachedIds: 08000000
+          ownerId: 14
+          connectionType: 1
+        - id: 16
+          attachedIds: 
+          ownerId: 14
+          connectionType: 7
+        - id: 18
+          attachedIds: 
+          ownerId: 14
+          connectionType: 7
+        outputs:
+        - id: 17
+          attachedIds: 20000000
+          ownerId: 14
+          connectionType: 1
+        - id: 19
+          attachedIds: 9d010000
+          ownerId: 14
+          connectionType: 1
+        width: 228
+        height: 136
+        xPosition: 1321.3275
+        yPosition: 457.79346
+        items:
+        - rid: 3976831522522268163
+        - rid: 3976831522522268164
+    - rid: 3976831522522268159
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 31
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 32
+          attachedIds: 11000000
+          ownerId: 31
+          connectionType: 1
+        - id: 33
+          attachedIds: 
+          ownerId: 31
+          connectionType: 5
+        - id: 34
+          attachedIds: 
+          ownerId: 31
+          connectionType: 9
+        - id: 35
+          attachedIds: 
+          ownerId: 31
+          connectionType: 9
+        - id: 36
+          attachedIds: 
+          ownerId: 31
+          connectionType: 9
+        outputs:
+        - id: 37
+          attachedIds: 
+          ownerId: 31
+          connectionType: 9
+        - id: 38
+          attachedIds: 6e010000
+          ownerId: 31
+          connectionType: 1
+        width: 200
+        height: 323.12503
+        xPosition: 1679.0774
+        yPosition: 178.29356
+        triggeredClassName: QuestCompletion
+        triggeredMethodName: CompleteObjective
+        methodSignature: CompleteObjective()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3976831522522268160
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 365
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 366
+          attachedIds: 26000000
+          ownerId: 365
+          connectionType: 1
+        outputs:
+        - id: 367
+          attachedIds: 05000000
+          ownerId: 365
+          connectionType: 1
+        width: 268
+        height: 145.85938
+        xPosition: 1971.2646
+        yPosition: 330.4811
+        items:
+        - rid: 3976831522522268165
+        characterName: Blue Hat Guy
+        icon: 
+    - rid: 3976831522522268161
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 412
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 413
+          attachedIds: 13000000
+          ownerId: 412
+          connectionType: 1
+        outputs:
+        - id: 414
+          attachedIds: 05000000
+          ownerId: 412
+          connectionType: 1
+        width: 268
+        height: 145.85938
+        xPosition: 1624.3898
+        yPosition: 610.1685
+        items:
+        - rid: 3976831522522268166
+        characterName: Blue Hat Guy
+        icon: 
+    - rid: 3976831522522268162
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good morning adventurer! How can I help you?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3976831522522268163
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I have secret for you
+    - rid: 3976831522522268164
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nothing, see you!
+    - rid: 3976831522522268165
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Noice!!!!!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3976831522522268166
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ahhh, bye then...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
