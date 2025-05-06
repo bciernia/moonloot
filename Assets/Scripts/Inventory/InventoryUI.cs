@@ -104,9 +104,6 @@ public class InventoryUI : Singleton<InventoryUI>
     private void OnDisable()
     {
         InventorySlot.OnSlotSelectedEvent -= SlotSelectedCallback;
-        // if (_descriptionPanel.activeSelf)
-        // {
-        //     _descriptionPanel.SetActive(false);
-        // }
+        _descriptionPanel.SetActive(false);
     }
 }

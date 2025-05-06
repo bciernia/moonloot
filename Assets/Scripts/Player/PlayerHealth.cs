@@ -50,4 +50,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         return _playerStats.HP > 0 && _playerStats.HP < _playerStats.MaxHP;
     }
+
+    public float GetPlayerCurrentHealth()
+    {
+        return _playerStats.HP;
+    }
 }

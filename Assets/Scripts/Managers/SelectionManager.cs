@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -8,14 +9,31 @@ public class SelectionManager : MonoBehaviour
     public static event Action OnNoSelectionEvent;
     
     [SerializeField] private LayerMask _enemyMask;
-    [SerializeField] private TextMeshProUGUI _enemyName;
+    //[SerializeField] private TextMeshProUGUI _enemyName;
 
     private Camera mainCamera;
 
     private void Awake()
     {
-        mainCamera = Camera.main;
+        SetMainCamera();
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetMainCamera();
+    }
+
+    private void SetMainCamera() => mainCamera = Camera.main;
 
     private void Update()
     {
@@ -28,8 +46,6 @@ public class SelectionManager : MonoBehaviour
         {
             var hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, Mathf.Infinity, _enemyMask);
 
-            Debug.Log($"Hit: {hit.collider}");
-            
             if (hit.collider)
             {
                 var enemy = hit.collider.GetComponent<EnemyBrain>();

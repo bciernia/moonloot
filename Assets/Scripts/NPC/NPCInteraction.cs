@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class NPCInteraction : MonoBehaviour
+public class NPCInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] public GameObject _interactionBox;
     
@@ -10,6 +10,7 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             DialogueManager.Instance.NPCSelected = this;
+            FindFirstObjectByType<InteractionManager>().SetInteractable(this);
             _interactionBox.SetActive(true);
         }
     }
@@ -19,7 +20,13 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             DialogueManager.Instance.NPCSelected = null;
+            FindFirstObjectByType<InteractionManager>().ClearInteractable();
             _interactionBox.SetActive(false);
         }
+    }
+
+    public void Interact()
+    {
+        DialogueManager.Instance.StartDialogue(); 
     }
 }

@@ -17,12 +17,12 @@ public class DialogueManager : Singleton<DialogueManager>
         _player = GameObject.FindWithTag("Player");
     }
 
-    private void Start()
-    {
-        _playerActions.Dialogue.Interact.performed += ctx => StartDialogue();
-    }
-
-    private void StartDialogue()
+    // public void Start()
+    // {
+    //     _playerActions.Dialogue.Interact.performed += ctx => StartDialogue();
+    // }
+    
+    public void StartDialogue()
     {
         if (_dialogueStarted) return;
 

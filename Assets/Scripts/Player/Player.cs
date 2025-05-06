@@ -13,6 +13,9 @@ public class Player : MonoBehaviour
     public PlayerHealth PlayerHealth { get; private set; }
     public PlayerMana PlayerMana { get; private set; }
     public PlayerAttack PlayerAttack { get; private set; }
+
+    public static Player instance;
+    public string areaTransitionName;
     
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;
@@ -23,6 +26,20 @@ public class Player : MonoBehaviour
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();
         _playerAnimations = GetComponent<PlayerAnimations>();
+    }
+
+    private void Start()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()

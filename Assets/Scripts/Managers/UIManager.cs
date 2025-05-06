@@ -31,7 +31,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statsLevelTMP;
     [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
-    [Header("Stats Panel")] 
+    [Header("Equipment Panel")] 
     [SerializeField] private GameObject _equipmentPanel;
     
     [Header("Enemy info")]
