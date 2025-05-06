@@ -1,0 +1,434 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Teddy
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 8697208974171177159
+  - rid: 8697208974171177160
+  - rid: 8697208974171177161
+  - rid: 8697208974171177162
+  - rid: 8697208974171177163
+  - rid: 8697208974171177164
+  - rid: 8697208974171177165
+  - rid: 8697208974171177166
+  - rid: 8697208974171177167
+  - rid: 8697208974171177168
+  - rid: 8697208974171177169
+  translationLibrary: {fileID: 5992619571985998768}
+  maxID: 146
+  references:
+    version: 2
+    RefIds:
+    - rid: 8697208974171177159
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 402.94153
+        yPosition: 485.43573
+        entryPointName: 
+    - rid: 8697208974171177160
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        - id: 6
+          attachedIds: 
+          ownerId: 4
+          connectionType: 9
+        - id: 7
+          attachedIds: 
+          ownerId: 4
+          connectionType: 9
+        - id: 8
+          attachedIds: 
+          ownerId: 4
+          connectionType: 9
+        - id: 9
+          attachedIds: 
+          ownerId: 4
+          connectionType: 9
+        outputs:
+        - id: 10
+          attachedIds: 5b000000
+          ownerId: 4
+          connectionType: 8
+        - id: 11
+          attachedIds: 8e020000
+          ownerId: 4
+          connectionType: 1
+        width: 200
+        height: 320.00037
+        xPosition: 676.8023
+        yPosition: 631.07214
+        triggeredClassName: EasyTalk.Demo.RockCollectionControls
+        triggeredMethodName: GetNumRocksCollected
+        methodSignature: GetNumRocksCollected():int
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 2
+        objectTagOrName: 
+    - rid: 8697208974171177161
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 42
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 43
+          attachedIds: 92020000
+          ownerId: 42
+          connectionType: 1
+        outputs:
+        - id: 44
+          attachedIds: 0c030000
+          ownerId: 42
+          connectionType: 1
+        width: 339.05408
+        height: 177.7716
+        xPosition: 1470.294
+        yPosition: 1124.2179
+        items:
+        - rid: 8697208974171177170
+        - rid: 8697208974171177171
+        characterName: Teddy
+    - rid: 8697208974171177162
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 45
+        name: VARIABLE
+        nodeType: 26
+        inputs: []
+        outputs:
+        - id: 46
+          attachedIds: 90020000
+          ownerId: 45
+          connectionType: 4
+        width: 170
+        height: 130
+        xPosition: 928.4319
+        yPosition: 1264.2909
+        variableName: burgers
+        variableValue: 129
+        resetOnEntry: 0
+    - rid: 8697208974171177163
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 47
+        name: VARIABLE
+        nodeType: 26
+        inputs: []
+        outputs:
+        - id: 48
+          attachedIds: 68020000
+          ownerId: 47
+          connectionType: 4
+        width: 170
+        height: 130
+        xPosition: 672.3178
+        yPosition: 1194.833
+        variableName: rocksCollected
+        variableValue: 0
+        resetOnEntry: 0
+    - rid: 8697208974171177164
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 89
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 90
+          attachedIds: 
+          ownerId: 89
+          connectionType: 1
+        - id: 91
+          attachedIds: 0a000000
+          ownerId: 89
+          connectionType: 8
+        outputs:
+        - id: 92
+          attachedIds: 
+          ownerId: 89
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 979.13727
+        yPosition: 735.0063
+        variableName: rocksCollected
+        variableValue: 
+    - rid: 8697208974171177165
+      type: {class: MathNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 614
+        name: MATH
+        nodeType: 22
+        inputs:
+        - id: 615
+          attachedIds: 
+          ownerId: 614
+          connectionType: 1
+        - id: 616
+          attachedIds: 30000000
+          ownerId: 614
+          connectionType: 8
+        - id: 617
+          attachedIds: 
+          ownerId: 614
+          connectionType: 8
+        outputs:
+        - id: 618
+          attachedIds: 8f020000
+          ownerId: 614
+          connectionType: 8
+        - id: 619
+          attachedIds: 
+          ownerId: 614
+          connectionType: 1
+        width: 166
+        height: 140
+        xPosition: 936.11444
+        yPosition: 1096.9684
+        operation: 3
+        valueA: 
+        valueB: 649
+    - rid: 8697208974171177166
+      type: {class: MathNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 653
+        name: MATH
+        nodeType: 22
+        inputs:
+        - id: 654
+          attachedIds: 0b000000
+          ownerId: 653
+          connectionType: 1
+        - id: 655
+          attachedIds: 6a020000
+          ownerId: 653
+          connectionType: 8
+        - id: 656
+          attachedIds: 2e000000
+          ownerId: 653
+          connectionType: 8
+        outputs:
+        - id: 657
+          attachedIds: ed020000
+          ownerId: 653
+          connectionType: 8
+        - id: 658
+          attachedIds: 2b000000
+          ownerId: 653
+          connectionType: 1
+        width: 166
+        height: 140
+        xPosition: 1203.9653
+        yPosition: 972.4521
+        operation: 2
+        valueA: 
+        valueB: 
+    - rid: 8697208974171177167
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 740
+        name: VARIABLE
+        nodeType: 26
+        inputs: []
+        outputs:
+        - id: 741
+          attachedIds: 
+          ownerId: 740
+          connectionType: 4
+        width: 170
+        height: 130
+        xPosition: 1182.5381
+        yPosition: 1262.541
+        variableName: burgersEarned
+        variableValue: 0
+        resetOnEntry: 0
+    - rid: 8697208974171177168
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 747
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 748
+          attachedIds: 
+          ownerId: 747
+          connectionType: 1
+        - id: 749
+          attachedIds: 91020000
+          ownerId: 747
+          connectionType: 8
+        outputs:
+        - id: 750
+          attachedIds: 
+          ownerId: 747
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 1449.8253
+        yPosition: 847.01746
+        variableName: burgersEarned
+        variableValue: 
+    - rid: 8697208974171177169
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 779
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 780
+          attachedIds: 2c000000
+          ownerId: 779
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1948.433
+        yPosition: 1355.6683
+        exitPointName: 
+    - rid: 8697208974171177170
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You have (@rocksCollected) rocks so far.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177171
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Your share of the burgers right now is (@burgersEarned).
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &5992619571985998768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Teddy
+    - id: 1
+      language: en
+      text: You have (@rocksCollected) rocks so far.
+    - id: 2
+      language: en
+      text: Your share of the burgers right now is (@burgersEarned).
+  - counter: 3
+    languageCode: ar
+    translations:
+    - id: 0
+      language: ar
+      text: "\u062F\u0645\u064A\u0629"
+    - id: 1
+      language: ar
+      text: "\u0644\u062F\u064A\u0643 \u0635\u062E\u0648\u0631 (@rocksCollected)
+        \u062D\u062A\u0649 \u0627\u0644\u0622\u0646."
+    - id: 2
+      language: ar
+      text: "\u062D\u0635\u062A\u0643 \u0645\u0646 \u0627\u0644\u0628\u0631\u062C\u0631
+        \u0627\u0644\u0622\u0646 \u0647\u064A (@burgersEarned)."
+  - counter: 3
+    languageCode: zh-CN
+    translations:
+    - id: 0
+      language: zh-CN
+      text: "\u6CF0\u8FEA\u718A"
+    - id: 1
+      language: zh-CN
+      text: "\u5230\u76EE\u524D\u4E3A\u6B62\u4F60\u5DF2\u7ECF\u6709(@rocksCollected)
+        \u77F3\u5934\u4E86\u3002"
+    - id: 2
+      language: zh-CN
+      text: "\u60A8\u73B0\u5728\u7684\u6C49\u5821\u4EFD\u989D\u662F (@burgersEarned)\u3002"
+  - counter: 3
+    languageCode: de
+    translations:
+    - id: 0
+      language: de
+      text: Teddy
+    - id: 1
+      language: de
+      text: Sie haben bisher (@rocksCollected) Steine.
+    - id: 2
+      language: de
+      text: "Ihr Anteil an den Burgern betr\xE4gt derzeit (@burgersEarned)."
+  - counter: 3
+    languageCode: hi
+    translations:
+    - id: 0
+      language: hi
+      text: "\u091F\u0947\u0921\u0940"
+    - id: 1
+      language: hi
+      text: "\u0905\u092C \u0924\u0915 \u0906\u092A\u0915\u0947 \u092A\u093E\u0938
+        (@rocksCollected) \u091A\u091F\u094D\u091F\u093E\u0928\u0947\u0902 \u0939\u0948\u0902\u0964"
+    - id: 2
+      language: hi
+      text: "\u0905\u092D\u0940 \u092C\u0930\u094D\u0917\u0930 \u0915\u093E \u0906\u092A\u0915\u093E
+        \u0939\u093F\u0938\u094D\u0938\u093E (@burgersEarned) \u0939\u0948\u0964"
+  - counter: 3
+    languageCode: ja
+    translations:
+    - id: 0
+      language: ja
+      text: "\u30C6\u30C7\u30A3"
+    - id: 1
+      language: ja
+      text: "\u3053\u308C\u307E\u3067\u306B (@rocksCollected) \u500B\u306E\u5CA9\u77F3\u3092\u5165\u624B\u3057\u307E\u3057\u305F\u3002"
+    - id: 2
+      language: ja
+      text: "\u3042\u306A\u305F\u306E\u4ECA\u306E\u30CF\u30F3\u30D0\u30FC\u30AC\u30FC\u306E\u30B7\u30A7\u30A2\u306F
+        (@burgersEarned) \u3067\u3059\u3002"
+  - counter: 3
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: Osito de peluche
+    - id: 1
+      language: es
+      text: Tienes (@rocksCollected) rocas hasta ahora.
+    - id: 2
+      language: es
+      text: Tu parte de las hamburguesas en este momento es (@burgersEarned).

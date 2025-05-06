@@ -1,0 +1,531 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Demo2
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 8697208991011045648
+  - rid: 8697208991011045649
+  - rid: 8697208991011045650
+  - rid: 8697208991011045651
+  - rid: 8697208991011045652
+  - rid: 8697208991011045653
+  - rid: 8697208991011045654
+  - rid: 8697208991011045655
+  - rid: 8697208991011045656
+  - rid: 8697208991011045657
+  - rid: 8697208991011045658
+  translationLibrary: {fileID: 7671195982500543773}
+  maxID: 680
+  references:
+    version: 2
+    RefIds:
+    - rid: 8697208991011045648
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 20.264359
+        yPosition: 86.60083
+        entryPointName: 
+    - rid: 8697208991011045649
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 4a000000
+          ownerId: 4
+          connectionType: 1
+        width: 518.6444
+        height: 435.86877
+        xPosition: 249.84558
+        yPosition: 189.35394
+        items:
+        - rid: 8697208991011045659
+        - rid: 8697208991011045660
+        - rid: 8697208991011045661
+        - rid: 8697208991011045662
+        - rid: 8697208991011045663
+        - rid: 8697208991011045664
+        characterName: Jimmy
+    - rid: 8697208991011045650
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 8
+          attachedIds: 21010000
+          ownerId: 7
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2656.852
+        yPosition: 1481.3707
+        exitPointName: 
+    - rid: 8697208991011045651
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 73
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 74
+          attachedIds: 060000004f010000
+          ownerId: 73
+          connectionType: 1
+        - id: 75
+          attachedIds: 
+          ownerId: 73
+          connectionType: 7
+        - id: 77
+          attachedIds: 
+          ownerId: 73
+          connectionType: 7
+        - id: 79
+          attachedIds: 
+          ownerId: 73
+          connectionType: 7
+        - id: 321
+          attachedIds: 
+          ownerId: 73
+          connectionType: 7
+        outputs:
+        - id: 76
+          attachedIds: 52000000
+          ownerId: 73
+          connectionType: 1
+        - id: 78
+          attachedIds: 60000000
+          ownerId: 73
+          connectionType: 1
+        - id: 80
+          attachedIds: 6c000000
+          ownerId: 73
+          connectionType: 1
+        - id: 322
+          attachedIds: 20010000
+          ownerId: 73
+          connectionType: 1
+        width: 258
+        height: 212
+        xPosition: 971.7208
+        yPosition: 661.9136
+        items:
+        - rid: 8697208991011045665
+        - rid: 8697208991011045666
+        - rid: 8697208991011045667
+        - rid: 8697208991011045668
+    - rid: 8697208991011045652
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 81
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 82
+          attachedIds: 4c000000
+          ownerId: 81
+          connectionType: 1
+        outputs:
+        - id: 83
+          attachedIds: 23010000
+          ownerId: 81
+          connectionType: 1
+        width: 919.85547
+        height: 232.83203
+        xPosition: 1542.5531
+        yPosition: 198.1766
+        items:
+        - rid: 8697208991011045669
+        - rid: 8697208991011045670
+        - rid: 8697208991011045671
+        - rid: 8697208991011045672
+        characterName: Jimmy
+    - rid: 8697208991011045653
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 95
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 96
+          attachedIds: 4e000000
+          ownerId: 95
+          connectionType: 1
+        outputs:
+        - id: 97
+          attachedIds: 23010000
+          ownerId: 95
+          connectionType: 1
+        width: 925.03125
+        height: 334.09763
+        xPosition: 1536.3519
+        yPosition: 525.00665
+        items:
+        - rid: 8697208991011045673
+        - rid: 8697208991011045674
+        - rid: 8697208991011045675
+        - rid: 8697208991011045676
+        characterName: Jimmy
+    - rid: 8697208991011045654
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 107
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 108
+          attachedIds: 50000000
+          ownerId: 107
+          connectionType: 1
+        outputs:
+        - id: 109
+          attachedIds: 23010000
+          ownerId: 107
+          connectionType: 1
+        width: 923.46875
+        height: 372.09763
+        xPosition: 1528.9691
+        yPosition: 943.22906
+        items:
+        - rid: 8697208991011045677
+        - rid: 8697208991011045678
+        - rid: 8697208991011045679
+        - rid: 8697208991011045680
+        - rid: 8697208991011045681
+        characterName: Jimmy
+    - rid: 8697208991011045655
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 287
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 288
+          attachedIds: 42010000
+          ownerId: 287
+          connectionType: 1
+        outputs:
+        - id: 289
+          attachedIds: 08000000
+          ownerId: 287
+          connectionType: 1
+        width: 868.6482
+        height: 204.69128
+        xPosition: 1516.8345
+        yPosition: 1434.1957
+        items:
+        - rid: 8697208991011045682
+        - rid: 8697208991011045683
+        characterName: 
+    - rid: 8697208991011045656
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 290
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 291
+          attachedIds: 53000000610000006d000000
+          ownerId: 290
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 3042.9548
+        yPosition: 777.4463
+        key: questions
+    - rid: 8697208991011045657
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 331
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 332
+          attachedIds: 4e010000
+          ownerId: 331
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: 136.43713
+        yPosition: 931.9425
+        key: questions
+    - rid: 8697208991011045658
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 333
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 334
+          attachedIds: 4c010000
+          ownerId: 333
+          connectionType: 1
+        outputs:
+        - id: 335
+          attachedIds: 4a000000
+          ownerId: 333
+          connectionType: 1
+        width: 268
+        height: 163.75
+        xPosition: 467.37457
+        yPosition: 782.4503
+        items:
+        - rid: 8697208991011045684
+        characterName: Jimmy
+    - rid: 8697208991011045659
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: In this demo you can see how simple it is to set up a working dialogue.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045660
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: All you need is a <color=green>Dialogue Asset</color>, a <color=green>Dialogue
+          Display</color>, and a <color=green>Dialogue Controller</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045661
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: A <color=green>Dialogue Asset</color> contains the lines of dialogue
+          and any special logic for your conversations.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045662
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=green>Dialogue Display</color> shows the lines of dialogue
+          to the player in the UI, as well as options when appropriate.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045663
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: And the <color=green>Dialogue Controller</color> is used to initiate
+          playback of your dialogue from a <color=green>Dialogue Asset</color>. It
+          handles all of the nodes and logic for navigating the <color=green>Dialogue
+          Asset</color> and telling the <color=green>Dialogue Display</color> what's
+          going on.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045664
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Would you like to learn more about any of these?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045665
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Dialogue Assets
+    - rid: 8697208991011045666
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Dialogue Displays
+    - rid: 8697208991011045667
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Dialogue Controllers
+    - rid: 8697208991011045668
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good to go!
+    - rid: 8697208991011045669
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: A <color=green>Dialogue Asset</color> contains the lines of dialogue
+          and any special logic for your conversations.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045670
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You edit <color=green>Dialogue Assets</color> in the EasyTalk Node
+          Editor.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045671
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You can add lines of dialogue, player dialogue options, and advanced
+          logic into <color=green>Dialogue Assets</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045672
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Once you have your <color=green>Dialogue Asset</color>, you just assign
+          it to a <color=green>Dialogue Controller</color> which handles the logic
+          and dialogue flow during runtime.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045673
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The easiest way to get started with EasyTalk is to use the <color=green>Dialogue
+          Display</color> prefabs located in <color=#AAAAFF>"Prefabs/Dialogue Display
+          UI/Screenspace UI"</color>. Each of these provides a different layout for
+          how lines of dialogue and options are shown to the player.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045674
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: To show dialogue to the player, you really only need one Screen-Space
+          Dialogue Display, but if you want to have different ones for different
+          characters or scenarios, EasyTalk supports that too. In this demo, we're
+          using the <color=#AAAAFF>Dialogue_UI_Directional_Arrow_Long</color> prefab
+          as our <color=green>Dialogue Display</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045675
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You can also display lines of dialogue in World-Space canvases (a.k.a.
+          speech bubbles), which can be seen in Demo1 and Demo3.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045676
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Speech Bubbles are not fully blown <color=green>Dialogue Displays</color>,
+          since they don't support showing options. When using speech bubbles, a
+          regular Screen-Space Dialogue Display just switches the <color=green>Conversation
+          Display</color> it's using to the speech bubble for displaying lines of
+          dialogue, but options are still displayed by the Screen-Space display.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045677
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: A typical setup is to have a <color=green>Dialogue Controller</color>
+          for each character, along with a <color=green>Dialogue Asset</color>, but
+          you can actually have one controller for multiple characters, or multiple
+          characters in a <color=green>Dialogue Asset</color>, or both.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045678
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: When you press the "Play" button, the <color=yellow>PlayDialogue()</color>
+          method is called on the <color=green>Dialogue Controller</color>, starting
+          playback of the <color=green>Dialogue Asset</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045679
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=green>Dialogue Controller</color> will automatically search
+          for a <color=green>Dialogue Display</color> to use if one isn't set.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045680
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You can also easily automatically play dialogue when the player enters
+          a trigger collider of a character by using an <color=green>Area Dialogue
+          Controller</color> component. To learn more about that, look at Demo1 and
+          Demo3, or you can read the documentation.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045681
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: <color=green>Dialogue Controllers</color> and <color=green>Dialogue
+          Assets</color> can be used in other creative ways to send events about
+          dialogue playback to other components and scripts, but that's beyond the
+          scope of this demo.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045682
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Beyond everything we talked about, if you need more custom functionality
+          EasyTalk also makes it easy to build your own types of displays and components
+          which respond to dialogue events.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045683
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: If you want to learn more about <color=green>Dialogue Assets</color>,
+          <color=green>Dialogue Displays</color>, or <color=green>Dialogue Controllers</color>,
+          check out the documentation or other demos!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208991011045684
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What do you wanna know about?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &7671195982500543773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets: []
