@@ -99,11 +99,44 @@ public class InventoryUI : Singleton<InventoryUI>
     private void OnEnable()
     {
         InventorySlot.OnSlotSelectedEvent += SlotSelectedCallback;
+
+        if (_slotList.Count == 0)
+        {
+            InitInventory();
+        }
+
+        RefreshInventory();
     }
 
     private void OnDisable()
     {
         InventorySlot.OnSlotSelectedEvent -= SlotSelectedCallback;
         _descriptionPanel.SetActive(false);
+        CurrentSlot = null;
+
+        foreach (var slot in _slotList)
+        {
+            if (slot != null)
+            {
+                slot.ShowSlotInformation(false);
+            }
+        }
+    }
+    
+    private void RefreshInventory()
+    {
+        var inventoryItems = Inventory.Instance.InventoryItems;
+    
+        for (int i = 0; i < _slotList.Count; i++)
+        {
+            if (i < inventoryItems.Length)
+            {
+                DrawItem(inventoryItems[i], i);
+            }
+            else
+            {
+                DrawItem(null, i);
+            }
+        }
     }
 }
