@@ -1,0 +1,199 @@
+Box
+{
+	background-color: rgba(0,0,0,0);
+}
+
+Label
+{
+	-unity-font-style: bold;
+}
+
+TextElement
+{
+	-unity-font-style: bold;
+}
+
+TextField
+{
+	min-height: 24px;
+	align-self: stretch;
+	flex-basis: 0;
+	height: auto;
+}
+
+ETTextField
+{
+	min-height: 24px;
+	align-self: stretch;
+	flex-basis: 0;
+	height: auto;
+}
+
+.node-textfield-placeholder-label
+{
+	position: absolute;
+	left: 2px;
+	right: 0px;
+	top: 5px;
+	bottom: 0px;
+}
+
+TextInput
+{
+	color: #FFFFFF;
+	background-color: #571D1D;
+}
+
+#top-edge-panning-box 
+{
+	width: 100%;
+	position: absolute;
+	top: 0px;
+	height: 32px;
+}
+
+#bottom-edge-panning-box
+{
+	width: 100%;
+	position: absolute;
+	bottom: 0px;
+	height: 32px;
+}
+
+#left-edge-panning-box
+{
+	height: 100%;
+	position: absolute;
+	left: 0px;
+	width: 32px;
+}
+
+#right-edge-panning-box
+{
+	height: 100%;
+	position: absolute;
+	right: 0px;
+	width: 32px;
+}
+
+ETEditableDropdown
+{
+	background-color: #574A1D;
+	border-bottom-color: #000000;
+	border-top-color: #000000;
+	border-left-color: #000000;
+	border-right-color: #000000;
+	cursor: text;
+	height: 26;
+}
+
+ETEditableDropdown > ETTextField
+{
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 4px;
+	margin-right: 8px;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	cursor: text;
+}
+
+ETEditableDropdown > ETTextField > TextInput
+{
+	border-bottom-color: rgba(0,0,0,0);
+	border-top-color: rgba(0,0,0,0);
+	border-left-color: rgba(0,0,0,0);
+	border-right-color: rgba(0,0,0,0);
+	background-color: rgba(0,0,0,0);
+}
+
+.editable-dropdown-field
+{
+	position: absolute;
+	margin-right: 8px;
+}
+
+.editable-dropdown-button
+{
+	background-image: resource("images/buttons/dropdown-arrow");
+	width: 20px;
+	height: 20px;
+}
+
+.language-label 
+{
+	/*-unity-font: resource('Fonts/arial');*/
+	/*-unity-font-definition: resource('Fonts/arial');*/
+	align-self: center;
+	padding-left: 4px;
+}
+
+.language-toggle > VisualElement > VisualElement
+{
+	border-top-color: gray;
+	border-bottom-color: gray;
+	border-left-color: gray;
+	border-right-color: gray;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-right-width: 1px;
+}
+
+.localization-panel
+{
+	position: absolute;
+	width: 300px;
+	right: 20px;
+	top: 5%;
+	bottom: 5%;
+	background-color: rgba(0,0,0,0.5);
+}
+
+.settings-panel
+{
+	position: absolute;
+	left: 20px;
+	top: 40px;
+	height: 50%;
+	width: 200px;
+	background-color: rgba(70,70,70,0.9);
+}
+
+.settings-content-panel
+{
+	flex-shrink: 1;
+	flex-grow: 1;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-top: 8px;
+}
+
+.settings-content-panel > ScrollView
+{
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.settings-toggle > Label
+{
+	-unity-text-align: middle-right;
+	flex-grow: 1;
+}
+
+.settings-toggle > VisualElement
+{
+	flex-grow: 0;
+}
+
+.settings-foldout
+{
+	flex-shrink: 0;
+}
+
+.settings-foldout > Toggle
+{
+	color: #59FF59;
+}

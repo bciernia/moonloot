@@ -1,0 +1,1449 @@
+.node-label
+{
+	color: #000000;
+	height: 32px;
+	width: 100%;
+	font-size: 18px;
+	-unity-text-align: middle-center;
+	margin-top: 6px;
+	flex-shrink: 0;
+	flex-direction: column;
+	margin-bottom: auto;
+	padding-bottom: 12px;
+	-unity-font-style: bold;
+	/*-unity-font: resource('Fonts/Protocol');
+	-unity-font-definition: none;*/
+}
+
+.node 
+{
+	-unity-background-image-tint-color: #FF0000;
+	-unity-slice-scale: 0.5px;
+	background-image: resource('images/components/node_box_light_transparent');
+	background-color: rgba(0,0,0,0);
+	width: 400px;
+	height: 200px;
+	position: absolute;
+	align-items: center;
+	align-content: flex-start;
+	justify-content: center;
+	flex-direction: column;
+	flex-grow: 1;
+	padding-bottom: 0px;
+}
+
+.node-input-panel
+{
+	background-color: rgba(0,0,0,0);
+	align-items: flex-start;
+	flex-direction: column;
+	flex-grow: 0;
+	flex-shrink: 0;
+	justify-content: center;
+	position: relative;
+	margin-left: 4px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	width: 24px;
+	height: auto;
+}
+
+.node-input 
+{
+	background-image: resource('images/ports/node_port');
+	position: relative;
+	background-color: rgba(0,0,0,0);
+	width: 20px;
+	height: 20px;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	justify-content: center;
+	-unity-background-image-tint-color: #00FF00;
+}
+
+.node-output-panel
+{
+	background-color: rgba(0,0,0,0);
+	align-items: flex-end;
+	flex-direction: column;
+	flex-grow: 0;
+	flex-shrink: 0;
+	justify-content: center;
+	position: relative;
+	margin-right: 4px;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	width: 24px;
+	height: auto;
+}
+
+.node-output 
+{
+	background-image: resource('images/ports/node_port');
+	position: relative;
+	background-color: rgba(0,0,0,0);
+	width: 20px;
+	height: 20px;
+	margin-bottom: 2px;
+	margin-top: 2px;
+	justify-content: center;
+	-unity-background-image-tint-color: #FF0000;
+}
+
+.input-output-label
+{
+	position: absolute;
+	align-self: center;
+	justify-content: center;
+	padding-left: 0px;
+	padding-right: 0px;
+	font-size: 10px;
+	color: #FFFFFF;
+	-unity-font-style: bold;
+	-unity-text-align: middle-center;
+}
+
+.in-out-any
+{
+	background-image: resource('images/ports/node_port_asterisk');
+	-unity-background-image-tint-color: #000000;
+}
+
+.in-out-dialogue-flow
+{
+	background-image: resource('images/ports/node_port_d');
+	-unity-background-image-tint-color: #93A200;
+}
+
+.in-out-bool
+{
+	background-image: resource('images/ports/node_port_b');
+	-unity-background-image-tint-color: #DE99FF;
+}
+
+.in-out-float
+{
+	background-image: resource('images/ports/node_port_f');
+	-unity-background-image-tint-color: #FF6000;
+}
+
+.in-out-int
+{
+	background-image: resource('images/ports/node_port_i');
+	-unity-background-image-tint-color: #6BFF00;
+}
+
+.in-out-string
+{
+	background-image: resource('images/ports/node_port_s');
+	-unity-background-image-tint-color: #00ADFF;
+}
+
+.in-out-special
+{
+	background-image: resource('images/ports/node_port_dollar');
+	-unity-background-image-tint-color: #FF0010;
+}
+
+.in-out-option-filter
+{
+	background-image: resource('images/ports/node_port_gear2');
+	-unity-background-image-tint-color: #00EEFF;
+}
+
+.in-out-value
+{
+	background-image: resource('images/ports/node_port_value');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-number
+{
+	background-image: resource('images/ports/node_port_number');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-dialogue-true-flow
+{
+	background-image: resource('images/ports/node_port_dialogue_true');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-dialogue-false-flow
+{
+	background-image: resource('images/ports/node_port_dialogue_false');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-any-connected
+{
+	background-image: resource('images/ports/node_port_asterisk-connected');
+	-unity-background-image-tint-color: #000000;
+}
+
+.in-out-dialogue-flow-connected
+{
+	background-image: resource('images/ports/node_port_d-connected');
+	-unity-background-image-tint-color: #93A200;
+}
+
+.in-out-bool-connected
+{
+	background-image: resource('images/ports/node_port_b-connected');
+	-unity-background-image-tint-color: #DE99FF;
+}
+
+.in-out-float-connected
+{
+	background-image: resource('images/ports/node_port_f-connected');
+	-unity-background-image-tint-color: #FF6000;
+}
+
+.in-out-int-connected
+{
+	background-image: resource('images/ports/node_port_i-connected');
+	-unity-background-image-tint-color: #6BFF00;
+}
+
+.in-out-string-connected
+{
+	background-image: resource('images/ports/node_port_s-connected');
+	-unity-background-image-tint-color: #00ADFF;
+}
+
+.in-out-special-connected
+{
+	background-image: resource('images/ports/node_port_dollar-connected');
+	-unity-background-image-tint-color: #FF0010;
+}
+
+.in-out-option-filter-connected
+{
+	background-image: resource('images/ports/node_port_gear2-connected');
+	-unity-background-image-tint-color: #00EEFF;
+}
+
+.in-out-value-connected
+{
+	background-image: resource('images/ports/node_port_value-connected');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-number-connected
+{
+	background-image: resource('images/ports/node_port_number-connected');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-dialogue-true-flow-connected
+{
+	background-image: resource('images/ports/node_port_dialogue_true-connected');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.in-out-dialogue-false-flow-connected
+{
+	background-image: resource('images/ports/node_port_dialogue_false-connected');
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.node-connected
+{
+	background-image: resource('images/ports/node_port2-connected');
+}
+
+.node-disconnected
+{
+	background-image: resource('images/ports/node_port');
+}
+
+.node-content
+{
+	background-color: rgba(0,0,0,0);
+	align-items: center;
+	flex-direction: row;
+	flex-grow: 1;
+	flex-shrink: 1;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+}
+
+.node-content-panel
+{
+	background-color: rgba(0,0,0,0);
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	align-items: stretch;
+	align-content: center;
+	flex-grow: 1;
+	flex-shrink: 1;
+	justify-content: center;
+	position: relative;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.node-content-panel-with-inputs-and-outputs
+{
+	/*flex-basis: 100%;*/
+	flex-direction: row;
+	flex-grow: 1;
+	padding-left: 2px;
+	padding-right: 2px;
+	padding-bottom: 6px;
+}
+
+.node-content-panel-with-inputs
+{
+	align-items: flex-start;
+	flex-direction: row;
+	flex-grow: 1;
+	padding-right: 6px;
+	padding-bottom: 0px;
+}
+
+.node-content-panel-with-outputs
+{
+	align-items: flex-end;
+	flex-direction: row;
+	flex-grow: 1;
+	padding-left: 6px;
+	padding-bottom: 6px;
+}
+
+.node-content-panel-without-inputs-or-outputs
+{
+	align-items: center;
+	flex-direction: row;
+	flex-grow: 1;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+
+.list-node-item
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	flex-direction: row;
+	align-self: center;
+	align-items: flex-start;
+	flex-shrink: 1;
+	flex-grow: 1;
+	background-color: rgba(0,0,0,0);
+}
+
+.vertical-resize-handle 
+{
+	cursor: resize-vertical;
+	opacity: 0;
+}
+
+.horizontal-resize-handle 
+{
+	cursor: resize-horizontal;
+	opacity: 0;
+}
+
+.top-resize-handle
+{
+	width: 60%;
+	height: 6px;
+	position: absolute;
+	top: 0px;
+	align-self: center;
+	margin-bottom: auto;
+	margin-top: auto;
+}
+
+.bottom-resize-handle
+{
+	width: 60%;
+	height: 6px;
+	position: absolute;
+	bottom: 0px;
+	align-self: center;
+	margin-bottom: auto;
+	margin-top: auto;
+}
+
+.left-resize-handle
+{
+	width: 6px;
+	height: 60%;
+	position: absolute;
+	align-self: flex-start;
+}
+
+.right-resize-handle
+{
+	width: 6px;
+	height: 60%;
+	position: absolute;
+	align-self: flex-end;
+}
+
+.node-text-area
+{
+	flex-grow: 1;
+	flex-shrink: 1;
+	color: #FFFFFF;
+	height: auto;
+}
+
+.node-test-content 
+{
+	background-color: rgba(0,0,0,0);
+	align-items: center;
+	flex-direction: row;
+	flex-grow: 1;
+	flex-shrink: 1;
+	justify-content: center;
+	position: relative;
+	width: 100%;
+}
+
+.node-line
+{
+	opacity: 0;
+	position: absolute;
+}
+
+.entry-node
+{
+	/*width: 110px;
+	height: 75px;*/
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #00FF2C;
+}
+
+.entry-label
+{
+	color: #FFFFFF;
+}
+
+.entry-line
+{
+	color: #00FF00;
+}
+
+.entry-field
+{
+	color: #35B23D;
+}
+
+.entry-field > TextInput
+{
+	color: #9FFF97;
+	background-color: #0E3D00;
+}
+
+.story-node
+{
+	-unity-background-image-tint-color: #FF7B00;
+}
+
+.story-line
+{
+	color: #FF7B00;
+}
+
+.story-text-input
+{
+	background-color: #571D1D;
+}
+
+.story-text-area
+{
+	white-space: normal;
+}
+
+.story-text-area > TextInput 
+{
+	color: #FFBE7A;
+}
+
+.story-text-area > Label
+{
+	color: #A67543;
+}
+
+.exit-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #FF3E00;
+}
+
+.exit-label
+{
+	color: #FFFFFF;
+}
+
+.exit-line
+{
+	color: #FF4768;
+}
+
+.exit-field > TextInput
+{
+	color: #FFA8A8;
+	background-color: #410C0C;
+}
+
+.exit-field
+{
+	color: #A43131;
+}
+
+.list-node
+{
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.list-line
+{
+	color: #FFFFFF;
+}
+
+.option-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #B25DFF;
+	padding-bottom: 6px;
+}
+
+.option-line
+{
+	color: #9E00FF;
+}
+
+.option-field
+{
+	align-self: stretch;
+	min-height: 24px;
+	flex-basis: auto;
+	height: auto;
+	white-space: normal;
+}
+
+.option-field > TextInput
+{
+	color: #E8DAFF;
+	background-color: #2B163F;
+}
+
+.option-field > Label
+{
+	color: #9F79F3;
+}
+
+.option-label 
+{
+	color: #E790FF;
+}
+
+.option-modifier-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #D98E8A;
+}
+
+.option-modifier-line
+{
+	color: #D98E8A;
+}
+
+.option-modifier-selectable-toggle
+{
+	align-self: center;
+	flex-direction: row-reverse;
+}
+
+.option-modifer-selectable-toggle > Label
+{
+	color: #E3AD6E;
+	flex-grow: 1;
+	padding-left: 4px;
+}
+
+.option-modifier-selectable-label
+{
+	color: #E3AD6E;
+	flex-grow: 1;
+	align-self: center;
+}
+
+.option-modifier-text-label
+{
+	color: #E3AD6E;
+	align-self: flex-start;
+}
+
+.option-modifier-displayed-toggle 
+{
+	align-self: center;
+	flex-direction: row-reverse;
+}
+
+.option-modifier-displayed-toggle > Label
+{
+	color: #E3AD6E;
+	flex-grow: 0;
+	padding-left: 4px;
+}
+
+.option-modifier-displayed-label
+{
+	color: #E3AD6E;
+	flex-grow: 1;
+	align-self: center;
+}
+
+.trigger-script-node
+{
+	-unity-background-image-tint-color: #FFC200;
+}
+
+.trigger-script-line
+{
+	color: #FFFF3D;
+}
+
+.trigger-script-field
+{
+	align-self: stretch;
+	max-height: 32px;
+}
+
+.trigger-script-field > TextInput
+{
+	color: #EAE88E;
+	background-color: #634204;
+}
+
+.trigger-script-field > Label
+{
+	color: #EAE88E;
+}
+
+.trigger-script-tag-field
+{
+	align-self: flex-start;
+	max-height: 32px;
+	flex-grow: 1;
+	padding-left: 32px;
+}
+
+.trigger-script-tag-field > TextInput
+{
+	color: #EAE88E;
+	background-color: #634204;
+}
+
+.trigger-script-tag-field > Label
+{
+	color: #EAE88E;
+	padding-left: 35px;
+}
+
+
+.trigger-script-enum-field
+{
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.trigger-script-enum-field > VisualElement
+{
+	background-color: #634204;
+}
+
+.trigger-script-enum-field > VisualElement > PopupTextElement
+{
+	color: #EAE88E;
+}
+
+.trigger-script-enum-field > VisualElement > TextElement
+{
+	color: #FF5353;
+}
+
+.trigger-script-label
+{
+	color: #EAE88E;
+}
+
+.script-condition-node
+{
+	-unity-background-image-tint-color: #DF00FF;
+}
+
+.script-condition-line
+{
+	color: #FB37FF;
+}
+
+.conversation-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #D9CA32;
+}
+
+.conversation-line
+{
+	color: #FFFF40;
+}
+
+.conversation-line-item
+{
+	flex-direction: row;
+	align-self: center;
+	align-items: flex-start;
+	flex-shrink: 1;
+	flex-grow: 1;
+	background-color: rgba(0,0,0,0);
+}
+
+.conversation-text-input
+{
+	align-self: stretch;
+	white-space: normal;
+}
+
+.conversation-text-input > TextInput
+{
+	color: #FFF0B4;
+	background-color: #635608;
+}
+
+.conversation-text-input > Label 
+{
+	color: #C8A825;
+}
+
+.append-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #D9CA32;
+}
+
+.append-line
+{
+	color: #FFFF40;
+}
+
+.jump-in-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #39FFF1;
+}
+
+.jump-in-line
+{
+	color: #6EFFFF;
+}
+
+.jump-out-node 
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #39FFF1;
+}
+
+.jump-out-line
+{
+	color: #6EFFFF;
+}
+
+.jump-text-field > Label
+{
+	color: #3DC2DB;
+}
+
+.jump-text-field > TextInput
+{
+	color: #7CFDFF;
+	background-color: #1D4E57;
+}
+
+.random-choice-node
+{
+	-unity-background-image-tint-color: #00A4FF;
+}
+
+.random-choice-line
+{
+	color: #25A8FF;
+}
+
+#random-node-remove-item-button 
+{
+	align-self: flex-end;
+}
+
+.sequence-node
+{
+	-unity-background-image-tint-color: #00A4FF;
+}
+
+.sequence-line
+{
+	color: #25A8FF;
+}
+
+#sequence-node-remove-item-button 
+{
+	align-self: flex-end;
+}
+
+.flow-text-field > TextInput
+{
+	color: #BDEDFF;
+	background-color: #1C5E8E;
+}
+
+.flow-text-field > Label
+{
+	color: #57A0CB;
+}
+
+.flow-label
+{
+	color: #88DFFF;
+}
+
+.path-select-node 
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #00A4FF;
+}
+
+.path-select-line
+{
+	color: #25A8FF;
+}
+
+.path-select-label
+{
+	color: #5EBBE5;
+}
+
+.wait-node 
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #00A4FF;
+}
+
+.wait-line
+{
+	color: #25A8FF;
+}
+
+.pause-node 
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #00A4FF;
+}
+
+.pause-line
+{
+	color: #25A8FF;
+}
+
+.logic-enum-field > VisualElement
+{
+	background-color: #5E2A5E;
+}
+
+.logic-enum-field > VisualElement > TextElement
+{
+	color: #F083FF;
+}
+
+.bool-logic-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.bool-logic-line
+{
+	color: #EB2EAE;
+}
+
+.bool-logic-type-field
+{
+	align-self: flex-start;
+}
+
+.logic-text-input > TextInput
+{
+	color: #F1CCFF;
+	background-color: #712574;
+}
+
+.logic-text-input > Label
+{
+	color: #BE42E3;
+}
+
+.math-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.math-line
+{
+	color: #EB2EAE;
+}
+
+#math-operation-type-field
+{
+	padding-right: 24px;
+	align-self: stretch;
+}
+
+#math-text-input
+{
+	align-self: stretch;
+	flex-grow: 1;
+}
+
+#math-text-input > TextInput
+{
+	background-color: #571D40;
+}
+
+.compare-numbers-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.compare-numbers-line
+{
+	color: #EB2EAE;
+}
+
+.number-comparison-type-field
+{
+	align-self: stretch;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding-right: 20px;
+}
+
+.compare-numbers-text-input > TextInput
+{
+	align-self: stretch;
+    padding-right: 20px;
+}
+
+.compare-strings-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.compare-strings-node-line
+{
+	color: #EB2EAE;
+}
+
+.string-comparison-type-field
+{
+	align-self: stretch;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	padding-right: 20px;
+}
+
+.compare-strings-text-input > TextInput
+{
+	align-self: stretch;
+    padding-right: 20px;
+}
+
+.string-concat-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.logic-label
+{
+	color: #EB2EAE;
+}
+
+.string-concat-item
+{
+	padding-top: 0px;
+	padding-bottom: 0px;
+	flex-direction: row;
+	align-self: center;
+	align-items: flex-start;
+	flex-shrink: 1;
+	flex-grow: 1;
+	background-color: rgba(0,0,0,0);
+}
+
+.value-select-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.value-select-line
+{
+	color: #EB2EAE;
+}
+
+.conditional-value-node
+{
+	-unity-background-image-tint-color: #EB2EAE;
+}
+
+.conditional-value-line
+{
+	color: #EB2EAE;
+}
+
+.variable-text-input > TextInput
+{
+	color: #FFFFFF;
+	background-color: #000000;
+}
+
+.reset-variable-label
+{
+	color: #FFFFFF;
+	padding-left: 4px;
+}
+
+.bool-variable-node
+{
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.bool-enum-field > VisualElement
+{
+	background-color: #000000;
+}
+
+.float-variable-node
+{
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.int-variable-node
+{
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.string-variable-node
+{
+	-unity-background-image-tint-color: #FFFFFF;
+}
+
+.set-variable-node 
+{
+	-unity-background-image-tint-color: #7EBEFF;
+}
+
+.set-variable-line
+{
+	color: #7EBEFF;
+}
+
+.set-variable-input
+{
+	align-self: flex-start;
+	align-items: flex-start;
+}
+
+.set-variable-input > TextInput
+{
+	color: #BBF0FF;
+	background-color: #19263C;
+}
+
+.set-variable-input > Label
+{
+	color: #6194A9;
+}
+
+.set-variable-label 
+{
+	color: #8DD3FF
+}
+
+.set-variable-dropdown
+{
+	align-self: flex-start;
+	align-items: flex-start;
+	flex-grow: 0;
+	align-self: stretch;
+}
+
+.set-variable-dropdown > VisualElement
+{
+	background-color: #1F304D;
+}
+
+.set-variable-dropdown > VisualElement > PopupTextElement
+{
+	color: #94E2FF;
+	-unity-font-style: bold;
+}
+
+.get-variable-node
+{
+	-unity-background-image-tint-color: #7EBEFF;
+}
+
+.get-variable-line
+{
+	color: #7EBEFF;
+}
+
+.get-variable-dropdown
+{
+	flex-direction: row;
+	align-self: flex-start;
+	flex-grow: 1;
+}
+
+.get-variable-dropdown > VisualElement
+{
+	background-color: #1F304D;
+}
+
+.get-variable-dropdown > VisualElement > PopupTextElement
+{
+	color: #94E2FF;
+	-unity-font-style: bold;
+}
+
+.add-item-button
+{
+	width: 16px;
+	height: 16px;
+	background-image: resource('images/buttons/add_item_button_green');
+	left: 8px;
+	top: 8px;
+	position: absolute;
+	align-self: flex-start;
+	-unity-background-image-tint-color: #DDDDDD;
+}
+
+.remove-item-button
+{
+	width: 16px;
+	height: 16px;
+	background-image: resource('images/buttons/remove_item_button_black');
+	background-color: rgba(0,0,0,0);
+	left: 8px;
+	top: 0px;
+	flex-grow: 0;
+	flex-shrink: 0;
+	position: relative;
+	align-self: center;
+	-unity-background-image-tint-color: #DDDDDD;
+    margin-left: -4px;
+    margin-right: 12px;
+}
+
+.settings-button
+{
+	width: 12px;
+	height: 12px;
+	background-image: resource('images/buttons/settings_button');
+	right: 8px;
+	top: 10px;
+	position: absolute;
+	align-self: flex-end;
+	-unity-background-image-tint-color: #000000;
+}
+
+.audio-clip-zone
+{
+	background-image: resource('images/buttons/audio_icon');
+	background-size: 70%;
+	background-color: rgba(0,0,0,0.4);
+	-unity-background-image-tint-color: #656565;
+	margin-top: 2px;
+	flex-shrink: 0;
+	width: 24px;
+	height: 24px;
+	opacity: 0.7;
+	align-self: center;
+}
+
+.audio-clip-zone-playable
+{
+	background-image: resource('images/buttons/play_button');
+	-unity-background-image-tint-color: #39CD6F;
+}
+
+.audio-clip-zone-playing
+{
+	background-image: resource('images/buttons/stop_button');
+	-unity-background-image-tint-color: #CC5839;
+}
+
+.character-dropdown
+{
+	height: 26px;
+	background-color: #352A00;
+}
+
+.character-dropdown > ETTextField
+{
+	position: absolute;
+	left: -2px;
+	right: 14px;
+}
+
+.character-dropdown > ETTextField > TextInput
+{
+	color: #9FFF4C;
+	background-color: rgba(0,0,0,0);
+	border-top-color: rgba(0,0,0,0);
+	border-bottom-color: rgba(0,0,0,0);
+	border-left-color: rgba(0,0,0,0);
+	border-right-color: rgba(0,0,0,0);
+}
+
+.character-dropdown > ETNodeButton
+{
+	-unity-background-image-tint-color: #FADF00;
+}
+
+.ai-node
+{
+	background-image: resource('images/components/node_box_light_transparent');
+	-unity-background-image-tint-color: #7FFFD3;
+}
+
+.ai-label 
+{
+	color: #73FFCD;
+	padding-left: 4px;
+	margin-top: 4px;
+	flex-grow: 1;
+}
+
+.ai-dropdown
+{
+	height: 26px;
+	background-color: #1D5746;
+}
+
+.ai-dropdown > ETTextField
+{
+	color: #139164;
+	position: absolute;
+	left: -2px;
+	right: 14px;
+}
+
+.ai-dropdown > ETTextField > TextInput
+{
+	color: #AAFFEE;
+	background-color: rgba(0,0,0,0);
+	border-top-color: rgba(0,0,0,0);
+	border-bottom-color: rgba(0,0,0,0);
+	border-left-color: rgba(0,0,0,0);
+	border-right-color: rgba(0,0,0,0);
+}
+
+.ai-dropdown > ETNodeButton
+{
+	-unity-background-image-tint-color: #40FFDD;
+}
+
+.ai-text-input
+{
+	align-self: stretch;
+	white-space: normal;
+}
+
+.ai-text-input > TextInput
+{
+	background-color: #1D5746;
+	color: #AAFFEE;
+}
+
+.ai-text-input > Label
+{
+	color: #139164;
+}
+
+.ai-line
+{
+	color: #1AFFAF;
+}
+
+.ai-enum-field > VisualElement
+{
+	background-color: #074B3C;
+}
+
+.ai-enum-field > VisualElement > TextElement
+{
+	color: #7BF3CC;
+}
+
+.input-node
+{
+	background-image: resource('images/components/node_box_inverse4');
+	-unity-background-image-tint-color: #FF4334;
+}
+
+.input-line
+{
+	color: #DD4477;
+}
+
+.input-node > Label
+{
+	color: #FFA369;
+}
+
+.input-text-input
+{
+	align-self: stretch;
+	white-space: normal;
+}
+
+.input-text-input > TextInput
+{
+	background-color: #6C2600;
+	color: #FFF0B4;
+}
+
+.input-text-input > Label
+{
+	color: #C1663F;
+}
+
+.display-node
+{
+	background-image: resource('images/components/node_box_inverse4');
+	-unity-background-image-tint-color: #8600FF;
+}
+
+.display-line
+{
+	color: #8600FF;
+}
+
+.display-node > Label
+{
+	color: #D588FF;
+}
+
+.display-text-input
+{
+	align-self: stretch;
+	white-space: normal;
+}
+
+.display-text-input > TextInput
+{
+	background-color: #45146A;
+	color: #D4A8FF;
+}
+
+.display-text-input > Label
+{
+	color: #8D54C3;
+}
+
+.display-dropdown > VisualElement
+{
+	background-color: #6000AE;
+}
+
+.display-dropdown > VisualElement > TextElement
+{
+	color: #DDC2FF;
+}
+
+.display-dropdown > VisualElement > PopupTextElement
+{
+	color: #DDC2FF;
+}
+
+.display-foldout
+{
+	color: #C181FF;
+}
+
+.show-node-toggle > Label
+{
+	color: #DDC2FF; 
+}
+
+.show-node-toggle > VisualElement
+{
+	justify-content: flex-end;
+	padding-right: 2px;
+}
+
+.show-node-toggle > VisualElement > VisualElement
+{
+	border-top-width: 1px;
+	border-top-color: #B97AF6;
+	border-left-width: 1px;
+	border-left-color: #B97AF6;
+	border-bottom-width: 1px;
+	border-bottom-color: #B97AF6;
+	border-right-width: 1px;
+	border-right-color: #B97AF6;
+}
+
+.goto-node
+{
+	background-image: resource('images/components/node_box_inverse4');
+	-unity-background-image-tint-color: #00A2FF;
+}
+
+.goto-line
+{
+	color: #00A2FF;
+}
+
+.goto-node > Label
+{
+	color: #69FF51;
+}
+
+.goto-text-input
+{
+	align-self: stretch;
+	white-space: normal;
+}
+
+.goto-text-input > TextInput
+{
+	background-color: #004974;
+	color: #A8E1FF;
+}
+
+.goto-text-input > Label
+{
+	color: #488187;
+	padding-left: 8px;
+}
+
+.goto-dropdown > VisualElement
+{
+	background-color: #005F8A;
+}
+
+.goto-dropdown > VisualElement > TextElement
+{
+	color: #C2EFFF;
+}
+
+.goto-dropdown > VisualElement > PopupTextElement
+{
+	color: #C2EFFF;
+}

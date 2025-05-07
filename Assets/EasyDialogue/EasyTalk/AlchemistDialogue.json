@@ -1,0 +1,502 @@
+{
+    "version": "1.5.0",
+    "nodes": [
+        {
+            "rid": 1000
+        },
+        {
+            "rid": 1001
+        },
+        {
+            "rid": 1002
+        },
+        {
+            "rid": 1003
+        },
+        {
+            "rid": 1004
+        },
+        {
+            "rid": 1005
+        },
+        {
+            "rid": 1006
+        },
+        {
+            "rid": 1007
+        }
+    ],
+    "translationLibrary": {
+        "instanceID": 0
+    },
+    "maxID": 2800,
+    "references": {
+        "version": 2,
+        "RefIds": [
+            {
+                "rid": 1000,
+                "type": {
+                    "class": "EntryNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 2,
+                    "name": "ENTRY",
+                    "nodeType": 1,
+                    "inputs": [],
+                    "outputs": [
+                        {
+                            "id": 3,
+                            "attachedIds": [
+                                5
+                            ],
+                            "ownerId": 2,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 110.0,
+                    "height": 75.0,
+                    "xPosition": 274.618408203125,
+                    "yPosition": 221.76519775390626,
+                    "entryPointName": ""
+                }
+            },
+            {
+                "rid": 1001,
+                "type": {
+                    "class": "ConversationNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 4,
+                    "name": "CONVERSATION",
+                    "nodeType": 3,
+                    "inputs": [
+                        {
+                            "id": 5,
+                            "attachedIds": [
+                                3
+                            ],
+                            "ownerId": 4,
+                            "connectionType": 1
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "id": 6,
+                            "attachedIds": [
+                                13
+                            ],
+                            "ownerId": 4,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 268.0,
+                    "height": 140.0,
+                    "xPosition": 553.040283203125,
+                    "yPosition": 228.32769775390626,
+                    "items": [
+                        {
+                            "rid": 1008
+                        }
+                    ],
+                    "characterName": "Alchemist",
+                    "icon": ""
+                }
+            },
+            {
+                "rid": 1002,
+                "type": {
+                    "class": "OptionNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 12,
+                    "name": "OPTION",
+                    "nodeType": 4,
+                    "inputs": [
+                        {
+                            "id": 13,
+                            "attachedIds": [
+                                6
+                            ],
+                            "ownerId": 12,
+                            "connectionType": 1
+                        },
+                        {
+                            "id": 14,
+                            "attachedIds": [],
+                            "ownerId": 12,
+                            "connectionType": 7
+                        },
+                        {
+                            "id": 16,
+                            "attachedIds": [],
+                            "ownerId": 12,
+                            "connectionType": 7
+                        },
+                        {
+                            "id": 29,
+                            "attachedIds": [],
+                            "ownerId": 12,
+                            "connectionType": 7
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "id": 15,
+                            "attachedIds": [
+                                57
+                            ],
+                            "ownerId": 12,
+                            "connectionType": 1
+                        },
+                        {
+                            "id": 17,
+                            "attachedIds": [],
+                            "ownerId": 12,
+                            "connectionType": 1
+                        },
+                        {
+                            "id": 30,
+                            "attachedIds": [
+                                93
+                            ],
+                            "ownerId": 12,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 228.0,
+                    "height": 173.0,
+                    "xPosition": 838.621826171875,
+                    "yPosition": 371.0450744628906,
+                    "items": [
+                        {
+                            "rid": 1009
+                        },
+                        {
+                            "rid": 1010
+                        },
+                        {
+                            "rid": 1011
+                        }
+                    ]
+                }
+            },
+            {
+                "rid": 1003,
+                "type": {
+                    "class": "ConversationNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 56,
+                    "name": "CONVERSATION",
+                    "nodeType": 3,
+                    "inputs": [
+                        {
+                            "id": 57,
+                            "attachedIds": [
+                                15,
+                                133
+                            ],
+                            "ownerId": 56,
+                            "connectionType": 1
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "id": 58,
+                            "attachedIds": [
+                                65
+                            ],
+                            "ownerId": 56,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 268.0,
+                    "height": 140.0,
+                    "xPosition": 1994.7841796875,
+                    "yPosition": 387.98974609375,
+                    "items": [
+                        {
+                            "rid": 1012
+                        }
+                    ],
+                    "characterName": "Alchemist",
+                    "icon": ""
+                }
+            },
+            {
+                "rid": 1004,
+                "type": {
+                    "class": "ExitNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 64,
+                    "name": "EXIT",
+                    "nodeType": 2,
+                    "inputs": [
+                        {
+                            "id": 65,
+                            "attachedIds": [
+                                58
+                            ],
+                            "ownerId": 64,
+                            "connectionType": 1
+                        }
+                    ],
+                    "outputs": [],
+                    "width": 110.0,
+                    "height": 75.0,
+                    "xPosition": 2332.734375,
+                    "yPosition": 410.1280822753906,
+                    "exitPointName": ""
+                }
+            },
+            {
+                "rid": 1005,
+                "type": {
+                    "class": "ConversationNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 69,
+                    "name": "CONVERSATION",
+                    "nodeType": 3,
+                    "inputs": [
+                        {
+                            "id": 70,
+                            "attachedIds": [],
+                            "ownerId": 69,
+                            "connectionType": 1
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "id": 71,
+                            "attachedIds": [
+                                129
+                            ],
+                            "ownerId": 69,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 268.0,
+                    "height": 140.0,
+                    "xPosition": 1457.3837890625,
+                    "yPosition": 674.3180541992188,
+                    "items": [
+                        {
+                            "rid": 1013
+                        }
+                    ],
+                    "characterName": "Alchemist",
+                    "icon": ""
+                }
+            },
+            {
+                "rid": 1006,
+                "type": {
+                    "class": "ExitNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 92,
+                    "name": "EXIT",
+                    "nodeType": 2,
+                    "inputs": [
+                        {
+                            "id": 93,
+                            "attachedIds": [
+                                30
+                            ],
+                            "ownerId": 92,
+                            "connectionType": 1
+                        }
+                    ],
+                    "outputs": [],
+                    "width": 110.0,
+                    "height": 75.0,
+                    "xPosition": 1002.0166015625,
+                    "yPosition": 597.1630249023438,
+                    "exitPointName": ""
+                }
+            },
+            {
+                "rid": 1007,
+                "type": {
+                    "class": "OptionNode",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "nodeId": 128,
+                    "name": "OPTION",
+                    "nodeType": 4,
+                    "inputs": [
+                        {
+                            "id": 129,
+                            "attachedIds": [
+                                71
+                            ],
+                            "ownerId": 128,
+                            "connectionType": 1
+                        },
+                        {
+                            "id": 130,
+                            "attachedIds": [],
+                            "ownerId": 128,
+                            "connectionType": 7
+                        },
+                        {
+                            "id": 132,
+                            "attachedIds": [],
+                            "ownerId": 128,
+                            "connectionType": 7
+                        }
+                    ],
+                    "outputs": [
+                        {
+                            "id": 133,
+                            "attachedIds": [
+                                57
+                            ],
+                            "ownerId": 128,
+                            "connectionType": 1
+                        },
+                        {
+                            "id": 135,
+                            "attachedIds": [],
+                            "ownerId": 128,
+                            "connectionType": 1
+                        }
+                    ],
+                    "width": 228.0,
+                    "height": 138.5,
+                    "xPosition": 1807.354736328125,
+                    "yPosition": 599.908447265625,
+                    "items": [
+                        {
+                            "rid": 1014
+                        },
+                        {
+                            "rid": 1015
+                        }
+                    ]
+                }
+            },
+            {
+                "rid": 1008,
+                "type": {
+                    "class": "ConversationItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "Hello! What do you want?",
+                    "audioClip": {
+                        "instanceID": 0
+                    },
+                    "audioClipFile": "",
+                    "audioAssetID": 0
+                }
+            },
+            {
+                "rid": 1009,
+                "type": {
+                    "class": "OptionItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "How are you?"
+                }
+            },
+            {
+                "rid": 1010,
+                "type": {
+                    "class": "OptionItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "I want new quest!"
+                }
+            },
+            {
+                "rid": 1011,
+                "type": {
+                    "class": "OptionItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "Nothing, bye!"
+                }
+            },
+            {
+                "rid": 1012,
+                "type": {
+                    "class": "ConversationItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "Great thanks.",
+                    "audioClip": {
+                        "instanceID": 0
+                    },
+                    "audioClipFile": "",
+                    "audioAssetID": 0
+                }
+            },
+            {
+                "rid": 1013,
+                "type": {
+                    "class": "ConversationItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "Ok, take it! Good luck!",
+                    "audioClip": {
+                        "instanceID": 0
+                    },
+                    "audioClipFile": "",
+                    "audioAssetID": 0
+                }
+            },
+            {
+                "rid": 1014,
+                "type": {
+                    "class": "OptionItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "How are you?"
+                }
+            },
+            {
+                "rid": 1015,
+                "type": {
+                    "class": "OptionItem",
+                    "ns": "EasyTalk.Nodes.Common",
+                    "asm": "games.okitoki.EasyTalk"
+                },
+                "data": {
+                    "text": "Nothing, bye!"
+                }
+            }
+        ]
+    }
+}

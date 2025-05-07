@@ -1,0 +1,67 @@
+.background-grid 
+{
+	position: absolute;
+	flex-grow: 1;
+	width: 100%;
+	height: 100%;
+}
+
+.node-view
+{
+	background-color: rgba(0,0,0,0);
+	width: 100%;
+	height: 100%;
+	flex-grow: 1;
+	flex-shrink: 0;
+}
+
+.toolbar-menu
+{
+	color: #FFE34C
+}
+
+#volume-slider
+{
+	min-width: 160px;
+	margin-left: 60px;
+}
+
+#volume-slider > Label
+{
+	min-width: 0;
+	color: #00EFFF;
+}
+
+#volume-slider > VisualElement > VisualElement > #unity-tracker
+{
+	background-color: #007279;
+}
+
+#volume-slider > VisualElement > VisualElement > #unity-dragger
+{
+	background-color: #00EFFF;
+}
+
+.autosave-toggle > Label
+{
+	color: #99FFC3;
+}
+
+.autosave-toggle > VisualElement > #unity-checkmark
+{
+	-unity-background-image-tint-color: #32FFBF
+}
+
+#toggle-label-only > VisualElement
+{
+	display: none;
+}
+
+.current-file-status-label
+{
+	position: absolute;
+	right: 0px;
+	margin-right: 4px;
+	align-self: center;
+	color: #00FF00;
+}

@@ -1,0 +1,504 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Demo3
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 6835721498067206150
+  - rid: 6835721498067206151
+  - rid: 6835721498067206152
+  - rid: 6835721498067206153
+  - rid: 6835721498067206154
+  - rid: 6835721498067206155
+  - rid: 6835721498067206156
+  - rid: 6835721498067206157
+  - rid: 6835721498067206158
+  - rid: 6835721498067206159
+  - rid: 6835721498067206160
+  - rid: 6835721498067206161
+  - rid: 6835721498067206162
+  - rid: 6835721498067206163
+  - rid: 6835721498067206164
+  translationLibrary: {fileID: 4959469474573881412}
+  maxID: 3035
+  references:
+    version: 2
+    RefIds:
+    - rid: 6835721498067206150
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1001
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1002
+          attachedIds: 24040000
+          ownerId: 1001
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 207.18114
+        yPosition: 120.34125
+        entryPointName: red
+    - rid: 6835721498067206151
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1003
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1004
+          attachedIds: f0030000
+          ownerId: 1003
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 194.98114
+        yPosition: 270.79126
+        entryPointName: blue
+    - rid: 6835721498067206152
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1005
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1006
+          attachedIds: 42040000
+          ownerId: 1005
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 204.68115
+        yPosition: -76.90875
+        entryPointName: green
+    - rid: 6835721498067206153
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1007
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1008
+          attachedIds: ec0300003b040000
+          ownerId: 1007
+          connectionType: 1
+        outputs:
+        - id: 1009
+          attachedIds: 03040000
+          ownerId: 1007
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 430.06647
+        yPosition: 285.48856
+        items:
+        - rid: 6835721498067206165
+        characterName: blue
+    - rid: 6835721498067206154
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1026
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1027
+          attachedIds: f1030000
+          ownerId: 1026
+          connectionType: 1
+        outputs:
+        - id: 1028
+          attachedIds: 0f040000
+          ownerId: 1026
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 830.31635
+        yPosition: 286.7386
+        items:
+        - rid: 6835721498067206166
+        characterName: blue
+    - rid: 6835721498067206155
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1038
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1039
+          attachedIds: 04040000
+          ownerId: 1038
+          connectionType: 1
+        outputs:
+        - id: 1040
+          attachedIds: 31040000
+          ownerId: 1038
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1247.8164
+        yPosition: 286.7386
+        items:
+        - rid: 6835721498067206167
+        characterName: blue
+    - rid: 6835721498067206156
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1054
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1055
+          attachedIds: 43040000
+          ownerId: 1054
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 900.8155
+        yPosition: -70.29912
+        exitPointName: 
+    - rid: 6835721498067206157
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1059
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1060
+          attachedIds: ea030000
+          ownerId: 1059
+          connectionType: 1
+        outputs:
+        - id: 1061
+          attachedIds: 2c040000
+          ownerId: 1059
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 433.57712
+        yPosition: 82.33899
+        items:
+        - rid: 6835721498067206168
+        characterName: red
+    - rid: 6835721498067206158
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1067
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1068
+          attachedIds: 25040000
+          ownerId: 1067
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 843.5145
+        yPosition: 103.2765
+        exitPointName: 
+    - rid: 6835721498067206159
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1072
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 1073
+          attachedIds: 10040000
+          ownerId: 1072
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 1639.225
+        yPosition: 304.60336
+        key: blue
+    - rid: 6835721498067206160
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1082
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 1083
+          attachedIds: f0030000
+          ownerId: 1082
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: 174.22513
+        yPosition: 393.47833
+        key: blue
+    - rid: 6835721498067206161
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1089
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1090
+          attachedIds: ee030000
+          ownerId: 1089
+          connectionType: 1
+        outputs:
+        - id: 1091
+          attachedIds: 1f040000
+          ownerId: 1089
+          connectionType: 1
+        width: 341.60004
+        height: 140
+        xPosition: 440.1626
+        yPosition: -112.271614
+        items:
+        - rid: 6835721498067206169
+        characterName: green
+    - rid: 6835721498067206162
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1654
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1655
+          attachedIds: 79060000
+          ownerId: 1654
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 222.26678
+        yPosition: -754.1089
+        entryPointName: yellow
+    - rid: 6835721498067206163
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1656
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1657
+          attachedIds: 77060000
+          ownerId: 1656
+          connectionType: 1
+        outputs:
+        - id: 1658
+          attachedIds: 89060000
+          ownerId: 1656
+          connectionType: 1
+        width: 1027.3046
+        height: 706.73425
+        xPosition: 556.10455
+        yPosition: -1094.5071
+        items:
+        - rid: 6835721498067206170
+        - rid: 6835721498067206171
+        - rid: 6835721498067206172
+        - rid: 6835721498067206173
+        - rid: 6835721498067206174
+        - rid: 6835721498067206175
+        - rid: 6835721498067206176
+        - rid: 6835721498067206177
+        - rid: 6835721498067206178
+        - rid: 6835721498067206179
+        - rid: 6835721498067206180
+        - rid: 6835721498067206181
+        characterName: 
+    - rid: 6835721498067206164
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1672
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1673
+          attachedIds: 7a060000
+          ownerId: 1672
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1971.8574
+        yPosition: -700.2819
+        exitPointName: 
+    - rid: 6835721498067206165
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: '[target:blue1]1'
+        audioClip: {fileID: 8300000, guid: 1e467a4aaaaff0a499fbfc4be4c71157, type: 3}
+        audioClipFile: Assets/Okitoki Games/EasyTalk/Demo/Sounds/voice_1.wav
+        audioAssetID: 46900
+    - rid: 6835721498067206166
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: '[target:blue2]2'
+        audioClip: {fileID: 8300000, guid: 12aed63a52394da47bf39ec414cea115, type: 3}
+        audioClipFile: Assets/Okitoki Games/EasyTalk/Demo/Sounds/voice_2.wav
+        audioAssetID: 46904
+    - rid: 6835721498067206167
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: '[target:blue3]3'
+        audioClip: {fileID: 8300000, guid: 2c5c4d2800c65c74aa73095a88c684a1, type: 3}
+        audioClipFile: Assets/Okitoki Games/EasyTalk/Demo/Sounds/voice_3.wav
+        audioAssetID: 46908
+    - rid: 6835721498067206168
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yep, you're in the red zone.
+        audioClip: {fileID: 8300000, guid: 24adc78b783e76e40897a6c327f49e86, type: 3}
+        audioClipFile: Assets/Okitoki Games/EasyTalk/Demo/Sounds/redzone.wav
+        audioAssetID: 46896
+    - rid: 6835721498067206169
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You're in the green zone.
+        audioClip: {fileID: 8300000, guid: 0cb3e8d960a29ec4a807d92c3c7b6a2d, type: 3}
+        audioClipFile: Assets/Okitoki Games/EasyTalk/Demo/Sounds/greenzone.wav
+        audioAssetID: 46892
+    - rid: 6835721498067206170
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: This demo shows how <color=green>Area Dialogue Controllers</color>
+          can be used to automatically play dialogue when a player enters an area.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206171
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: All of the zones in this demo use the same <color=green>Dialogue Asset</color>,
+          Demo3, but target different Entry Points. You can see the Entry Point under
+          <color=#AAAAFF>"Activation Settings"</color> in the <color=green>Area Dialogue
+          Controller</color> component for each zone object in the Hierarchy.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206172
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The Activator setting is set to the collider of the player. Whichever
+          collider this is set to activates the dialogue whenever it enters the trigger
+          collider of the controller.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206173
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=green>Green Zone</color> uses the Entry Point, 'green' to
+          enter dialogue playback and its also set to target the conversation display
+          which has a <color=green>Display ID</color> of 'green'. That conversation
+          display is in the Screen-Space Dialogue Display called <color=#AAAAFF>Dialogue_UI_Scroll_LeftVertical_Internal_Bottom.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206174
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=green>Green Zone</color>vontroller also has two Controller
+          Events, one which turns sets the <color=green>Dialogue Display</color>
+          to use the <color=green>Continue Display</color> when the player enters
+          the green zone, and one that turns the <color=green>Continue Display</color>
+          usage off when the player leaves the green zone.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206175
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=red>Red Zone</color> uses the Entry Point 'red' and targets
+          a World-Space Conversation Display (a.k.a. Speech Bubble).
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206176
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Instead of setting the name of the conversation display to target in
+          the Red Zone, the display has been set explicitly. We could also have set
+          the target to 'red' instead and it would still work, since the <color=green>Display
+          ID</color> of the <color=#AAAAFF>RED_WorldSpace_ConvoDisplay_Full</color>
+          object is 'red'.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206177
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: The <color=#8888FF>Blue Zone</color> uses the 'blue' Entry Point. It
+          loops endlessly displaying, 1, 2, and 3, but displays each on a different
+          World-Space conversation display.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206178
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It does this by using the 'target' tags in the lines of dialogue in
+          the <color=green>Dialogue Asset</color>. Each target tag tells the system
+          to switch conversation displays to the one with the provided <color=green>Display
+          ID</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206179
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: In most cases, it's preferable NOT to use the 'target' tags, but instead
+          to use the <color=#AAAAFF>'Switch Convo Display on Character Change'</color>
+          setting on the Screen-Space dialogue display, which will look for a display
+          with the same <color=green>Display ID</color> as the character name, making
+          it unecessary to manually set a target on each line of dialogue.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206180
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Lastly, in the <color=#8888FF>Blue Zone's</color> Activatoion Settings,
+          you will see that the Deactivation Mode ise set to <color=green>'FINISH_PLAYING'</color>.
+          This means even after the the player leaves the trigger area, the dialogue
+          will continue playing until an EXIT node is reached.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6835721498067206181
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Since the blue dialogue plays endlessly and never reaches an EXIT node,
+          once activated, it will play until the Screen-Space Dialogue Display it's
+          using is told by a <color=green>Dialogue Controller</color> to use another
+          <color=green>Conversation Display</color>.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &4959469474573881412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets: []

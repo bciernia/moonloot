@@ -17,10 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private const float sprintSpeed = 2f;
 
     public bool IsSprinting { get; private set; }
-
     
     private PlayerStamina playerStamina;
-
 
     private void Awake()
     {

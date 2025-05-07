@@ -1,0 +1,222 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: TaxiIntro
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 8697208974171177153
+  - rid: 8697208974171177154
+  - rid: 8697208974171177155
+  - rid: 8697208974171177156
+  translationLibrary: {fileID: 1425960230958823535}
+  maxID: 17
+  references:
+    version: 2
+    RefIds:
+    - rid: 8697208974171177153
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 97.438965
+        yPosition: 214.82039
+        entryPointName: 
+    - rid: 8697208974171177154
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 17000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 442.35602
+        yPosition: 287.0969
+        items:
+        - rid: 8697208974171177157
+        characterName: Taxi Driver
+    - rid: 8697208974171177155
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 8
+          attachedIds: 18000000
+          ownerId: 7
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1344.6226
+        yPosition: 624.9436
+        exitPointName: 
+    - rid: 8697208974171177156
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 22
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 23
+          attachedIds: 06000000
+          ownerId: 22
+          connectionType: 1
+        outputs:
+        - id: 24
+          attachedIds: 08000000
+          ownerId: 22
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 887.9418
+        yPosition: 450.98074
+        items:
+        - rid: 8697208974171177158
+        characterName: 
+    - rid: 8697208974171177157
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Time for you to get out.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177158
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What!?! Wait!!! This isn't my sto-
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &1425960230958823535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Taxi Driver
+    - id: 1
+      language: en
+      text: Time for you to get out.
+    - id: 2
+      language: en
+      text: What!?! Wait!!! This isn't my sto-
+  - counter: 3
+    languageCode: ar
+    translations:
+    - id: 0
+      language: ar
+      text: "\u0633\u0627\u0626\u0642 \u0633\u064A\u0627\u0631\u0629 \u0623\u062C\u0631\u0629"
+    - id: 1
+      language: ar
+      text: "\u0627\u0644\u0648\u0642\u062A \u0628\u0627\u0644\u0646\u0633\u0628\u0629
+        \u0644\u0643 \u0644\u0644\u062E\u0631\u0648\u062C."
+    - id: 2
+      language: ar
+      text: "\u0645\u0627\u0630\u0627!\u061F! \u0627\u0646\u062A\u0638\u0631!!! \u0647\u0630\u0627
+        \u0644\u064A\u0633 \u0645\u0643\u0627\u0646\u064A -"
+  - counter: 3
+    languageCode: zh-CN
+    translations:
+    - id: 0
+      language: zh-CN
+      text: "\u51FA\u79DF\u8F66\u53F8\u673A"
+    - id: 1
+      language: zh-CN
+      text: "\u4F60\u8BE5\u79BB\u5F00\u4E86\u3002"
+    - id: 2
+      language: zh-CN
+      text: "\u4EC0\u4E48\uFF01\uFF1F\uFF01\u7B49\u4E00\u4E0B\uFF01\u8FD9\u4E0D\u662F\u6211\u7684\u2014\u2014"
+  - counter: 3
+    languageCode: de
+    translations:
+    - id: 0
+      language: de
+      text: Taxifahrer
+    - id: 1
+      language: de
+      text: "Es ist Zeit f\xFCr dich, rauszugehen."
+    - id: 2
+      language: de
+      text: Was!?! Warte!!! Das ist nicht meine Geschichte-
+  - counter: 3
+    languageCode: hi
+    translations:
+    - id: 0
+      language: hi
+      text: "\u091F\u0948\u0915\u094D\u0938\u0940 \u0921\u094D\u0930\u093E\u0907\u0935\u0930"
+    - id: 1
+      language: hi
+      text: "\u0905\u092C \u0906\u092A\u0915\u0947 \u092C\u093E\u0939\u0930 \u0928\u093F\u0915\u0932\u0928\u0947
+        \u0915\u093E \u0938\u092E\u092F \u0906 \u0917\u092F\u093E \u0939\u0948\u0964"
+    - id: 2
+      language: hi
+      text: "\u0915\u094D\u092F\u093E!?! \u0930\u0941\u0915\u094B!!! \u092F\u0939
+        \u092E\u0947\u0930\u0940 \u0915\u0939\u093E\u0928\u0940 \u0928\u0939\u0940\u0902
+        \u0939\u0948-"
+  - counter: 3
+    languageCode: ja
+    translations:
+    - id: 0
+      language: ja
+      text: "\u30BF\u30AF\u30B7\u30FC\u30C9\u30E9\u30A4\u30D0\u30FC"
+    - id: 1
+      language: ja
+      text: "\u51FA\u3066\u884C\u304F\u6642\u9593\u3060\u3088\u3002"
+    - id: 2
+      language: ja
+      text: "\u4F55\u3067\u3059\u3063\u3066\uFF01\uFF1F\u5F85\u3063\u3066\uFF01\uFF01\uFF01\u3053\u308C\u306F\u79C1\u306E\u30B9\u30C8\u30FC..."
+  - counter: 3
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: Conductor de taxi
+    - id: 1
+      language: es
+      text: Es hora de que salgas.
+    - id: 2
+      language: es
+      text: "\xA1\xBF\xA1Qu\xE9!?! \xA1\xA1\xA1Esperar!!! Esta no es mi es-"

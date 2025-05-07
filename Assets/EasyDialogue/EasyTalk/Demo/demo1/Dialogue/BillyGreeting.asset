@@ -1,0 +1,427 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: BillyGreeting
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 8697208974171177225
+  - rid: 8697208974171177226
+  - rid: 8697208974171177227
+  - rid: 8697208974171177228
+  - rid: 8697208974171177229
+  - rid: 8697208974171177230
+  - rid: 8697208974171177231
+  - rid: 8697208974171177232
+  translationLibrary: {fileID: 8174037007940445363}
+  maxID: 90
+  references:
+    version: 2
+    RefIds:
+    - rid: 8697208974171177225
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 8c000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -602.1196
+        yPosition: 45.4719
+        entryPointName: 
+    - rid: 8697208974171177226
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 8d000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 41000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 144
+        xPosition: 78.5689
+        yPosition: -27.016006
+        items:
+        - rid: 8697208974171177233
+        characterName: Billy
+    - rid: 8697208974171177227
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20
+          attachedIds: 98000000
+          ownerId: 19
+          connectionType: 1
+        outputs:
+        - id: 21
+          attachedIds: 41000000
+          ownerId: 19
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 80.66335
+        yPosition: 590.8982
+        items:
+        - rid: 8697208974171177234
+        characterName: Billy
+    - rid: 8697208974171177228
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 22
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 23
+          attachedIds: 97000000
+          ownerId: 22
+          connectionType: 1
+        outputs:
+        - id: 24
+          attachedIds: 41000000
+          ownerId: 22
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 80.66337
+        yPosition: 436.60135
+        items:
+        - rid: 8697208974171177235
+        characterName: Billy
+    - rid: 8697208974171177229
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 25
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 26
+          attachedIds: 96000000
+          ownerId: 25
+          connectionType: 1
+        outputs:
+        - id: 27
+          attachedIds: 41000000
+          ownerId: 25
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 78.71023
+        yPosition: 286.2108
+        items:
+        - rid: 8697208974171177236
+        characterName: Billy
+    - rid: 8697208974171177230
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 28
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 29
+          attachedIds: 8e000000
+          ownerId: 28
+          connectionType: 1
+        outputs:
+        - id: 30
+          attachedIds: 41000000
+          ownerId: 28
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 76.757126
+        yPosition: 133.86703
+        items:
+        - rid: 8697208974171177237
+        characterName: Billy
+    - rid: 8697208974171177231
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 64
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 65
+          attachedIds: 060000001e000000180000001b00000015000000
+          ownerId: 64
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 719.3904
+        yPosition: 348.2292
+        exitPointName: 
+    - rid: 8697208974171177232
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 139
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 140
+          attachedIds: 03000000
+          ownerId: 139
+          connectionType: 1
+        outputs:
+        - id: 141
+          attachedIds: 05000000
+          ownerId: 139
+          connectionType: 1
+        - id: 142
+          attachedIds: 1d000000
+          ownerId: 139
+          connectionType: 1
+        - id: 150
+          attachedIds: 1a000000
+          ownerId: 139
+          connectionType: 1
+        - id: 151
+          attachedIds: 17000000
+          ownerId: 139
+          connectionType: 1
+        - id: 152
+          attachedIds: 14000000
+          ownerId: 139
+          connectionType: 1
+        width: 160
+        height: 226
+        xPosition: -322.12646
+        yPosition: 212.77766
+        items:
+        - rid: 8697208974171177238
+        - rid: 8697208974171177239
+        - rid: 8697208974171177240
+        - rid: 8697208974171177241
+        - rid: 8697208974171177242
+    - rid: 8697208974171177233
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What's up.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177234
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Keepin' busy?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177235
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Back already?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177236
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: How's it goin'?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177237
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hey.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177238
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177239
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177240
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177241
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177242
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+--- !u!114 &8174037007940445363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Billy
+    - id: 1
+      language: en
+      text: What's up.
+    - id: 2
+      language: en
+      text: Keepin' busy?
+    - id: 3
+      language: en
+      text: Back already?
+    - id: 4
+      language: en
+      text: How's it goin'?
+    - id: 5
+      language: en
+      text: Hey.
+  - counter: 6
+    languageCode: de
+    translations:
+    - id: 0
+      language: de
+      text: Billy
+    - id: 1
+      language: de
+      text: Was ist los.
+    - id: 2
+      language: de
+      text: "Besch\xE4ftigt bleiben?"
+    - id: 3
+      language: de
+      text: "Bereits zur\xFCck?"
+    - id: 4
+      language: de
+      text: "Wie l\xE4ufts?"
+    - id: 5
+      language: de
+      text: Hey.
+  - counter: 6
+    languageCode: ar
+    translations:
+    - id: 0
+      language: ar
+      text: "\u0628\u064A\u0644\u064A"
+    - id: 1
+      language: ar
+      text: "\u0645\u0627 \u0623\u062E\u0628\u0627\u0631\u0643."
+    - id: 2
+      language: ar
+      text: "\u0647\u0644 \u062A\u0628\u0642\u0649 \u0645\u0634\u063A\u0648\u0644\u0627\u064B\u061F"
+    - id: 3
+      language: ar
+      text: "\u0638\u0647\u0631 \u0628\u0627\u0644\u0641\u0639\u0644\u061F"
+    - id: 4
+      language: ar
+      text: "\u0643\u064A\u0641 \u0627\u0644\u062D\u0627\u0644'\u061F"
+    - id: 5
+      language: ar
+      text: "\u064A\u0627."
+  - counter: 6
+    languageCode: zh-CN
+    translations:
+    - id: 0
+      language: zh-CN
+      text: "\u6BD4\u5229"
+    - id: 1
+      language: zh-CN
+      text: "\u8FD9\u662F\u600E\u4E48\u56DE\u4E8B\u3002"
+    - id: 2
+      language: zh-CN
+      text: "\u5F88\u5FD9\u5417\uFF1F"
+    - id: 3
+      language: zh-CN
+      text: "\u56DE\u6765\u4E86\u5417\uFF1F"
+    - id: 4
+      language: zh-CN
+      text: "\u8FD1\u51B5\u5982\u4F55'\uFF1F"
+    - id: 5
+      language: zh-CN
+      text: "\u563F\u3002"
+  - counter: 6
+    languageCode: hi
+    translations:
+    - id: 0
+      language: hi
+      text: "\u092C\u0940\u0932\u094D\u0932\u0940"
+    - id: 1
+      language: hi
+      text: "\u0915\u094D\u092F\u093E \u091A\u0932 \u0930\u0939\u093E \u0939\u0948\u0964"
+    - id: 2
+      language: hi
+      text: "\u0935\u094D\u092F\u0938\u094D\u0924 \u0930\u0939\u0924\u0947 \u0939\u0948\u0902?"
+    - id: 3
+      language: hi
+      text: "\u0935\u093E\u092A\u0938 \u0906 \u0917\u092F\u0947?"
+    - id: 4
+      language: hi
+      text: "\u092F\u0939 \u0915\u0948\u0938\u0947 \u091A\u0932 \u0930\u0939\u093E
+        \u0939\u0948'?"
+    - id: 5
+      language: hi
+      text: "\u0905\u0930\u0947\u0964"
+  - counter: 6
+    languageCode: ja
+    translations:
+    - id: 0
+      language: ja
+      text: "\u30D3\u30EA\u30FC"
+    - id: 1
+      language: ja
+      text: "\u3069\u3046\u3057\u305F\u306E\u3002"
+    - id: 2
+      language: ja
+      text: "\u5FD9\u3057\u3044\u3067\u3059\u304B\uFF1F"
+    - id: 3
+      language: ja
+      text: "\u3082\u3046\u623B\u3063\u305F\u306E\uFF1F"
+    - id: 4
+      language: ja
+      text: "\u5143\u6C17'\uFF1F"
+    - id: 5
+      language: ja
+      text: "\u304A\u3044\u3002"
+  - counter: 6
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: Porra
+    - id: 1
+      language: es
+      text: "Qu\xE9 pasa."
+    - id: 2
+      language: es
+      text: "\xBFTe mantienes ocupado?"
+    - id: 3
+      language: es
+      text: "\xBFYa volviste?"
+    - id: 4
+      language: es
+      text: "Qu\xE9 tal'?"
+    - id: 5
+      language: es
+      text: Ey.

@@ -7,6 +7,7 @@ public class Weapon : ScriptableObject
     public WeaponType WeaponType;
     public Vector2 SlashSize;
     public Vector2 SlashOffset;
+    public Sprite Icon;
     
     public float Damage;
     public float timeBetweenAttack;

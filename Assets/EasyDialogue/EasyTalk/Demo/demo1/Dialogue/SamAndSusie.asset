@@ -1,0 +1,503 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: SamAndSusie
+  m_EditorClassIdentifier: 
+  version: 1.0.0
+  nodes:
+  - rid: 8697208974171177134
+  - rid: 8697208974171177135
+  - rid: 8697208974171177136
+  - rid: 8697208974171177137
+  - rid: 8697208974171177138
+  - rid: 8697208974171177139
+  - rid: 8697208974171177140
+  - rid: 8697208974171177141
+  - rid: 8697208974171177142
+  - rid: 8697208974171177143
+  translationLibrary: {fileID: 7042537832270587092}
+  maxID: 49
+  references:
+    version: 2
+    RefIds:
+    - rid: 8697208974171177134
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 1b000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 628.63226
+        yPosition: 825.22797
+        entryPointName: 
+    - rid: 8697208974171177135
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 09000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 4c000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1588.5353
+        yPosition: 653.98987
+        items:
+        - rid: 8697208974171177144
+        characterName: Susie
+    - rid: 8697208974171177136
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8
+          attachedIds: 1c000000
+          ownerId: 7
+          connectionType: 1
+        outputs:
+        - id: 9
+          attachedIds: 05000000
+          ownerId: 7
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1148.9396
+        yPosition: 653.43463
+        items:
+        - rid: 8697208974171177145
+        characterName: Sam
+    - rid: 8697208974171177137
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 15
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 16
+          attachedIds: 1d000000
+          ownerId: 15
+          connectionType: 1
+        outputs:
+        - id: 17
+          attachedIds: 13000000
+          ownerId: 15
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1142.8036
+        yPosition: 877.5283
+        items:
+        - rid: 8697208974171177146
+        characterName: Susie
+    - rid: 8697208974171177138
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 18
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19
+          attachedIds: 11000000
+          ownerId: 18
+          connectionType: 1
+        outputs:
+        - id: 20
+          attachedIds: 4c000000
+          ownerId: 18
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1588.6268
+        yPosition: 863.65063
+        items:
+        - rid: 8697208974171177147
+        characterName: Sam
+    - rid: 8697208974171177139
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 26
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 27
+          attachedIds: 0300000031000000
+          ownerId: 26
+          connectionType: 1
+        outputs:
+        - id: 28
+          attachedIds: 08000000
+          ownerId: 26
+          connectionType: 1
+        - id: 29
+          attachedIds: 10000000
+          ownerId: 26
+          connectionType: 1
+        - id: 47
+          attachedIds: 3f000000
+          ownerId: 26
+          connectionType: 1
+        width: 160
+        height: 162
+        xPosition: 856.7983
+        yPosition: 794.05756
+        items:
+        - rid: 8697208974171177148
+        - rid: 8697208974171177149
+        - rid: 8697208974171177150
+    - rid: 8697208974171177140
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 48
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 49
+          attachedIds: 1b000000
+          ownerId: 48
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: 616.46783
+        yPosition: 1003.7032
+        key: loop
+    - rid: 8697208974171177141
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 59
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 60
+          attachedIds: 40000000
+          ownerId: 59
+          connectionType: 1
+        outputs:
+        - id: 61
+          attachedIds: 4c000000
+          ownerId: 59
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1586.8921
+        yPosition: 1073.5518
+        items:
+        - rid: 8697208974171177151
+        characterName: Susie
+    - rid: 8697208974171177142
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 62
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 63
+          attachedIds: 2f000000
+          ownerId: 62
+          connectionType: 1
+        outputs:
+        - id: 64
+          attachedIds: 3c000000
+          ownerId: 62
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1146.273
+        yPosition: 1073.5516
+        items:
+        - rid: 8697208974171177152
+        characterName: Sam
+    - rid: 8697208974171177143
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 75
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 76
+          attachedIds: 06000000140000003d000000
+          ownerId: 75
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 2285.5513
+        yPosition: 903.64685
+        key: loop
+    - rid: 8697208974171177144
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Pong
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177145
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ping
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177146
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ding
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177147
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Dong
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177148
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177149
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177150
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+    - rid: 8697208974171177151
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Bong
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8697208974171177152
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Bing
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &7042537832270587092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 8
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Susie
+    - id: 1
+      language: en
+      text: Pong
+    - id: 2
+      language: en
+      text: Sam
+    - id: 3
+      language: en
+      text: Ping
+    - id: 4
+      language: en
+      text: Ding
+    - id: 5
+      language: en
+      text: Dong
+    - id: 6
+      language: en
+      text: Bong
+    - id: 7
+      language: en
+      text: Bing
+  - counter: 8
+    languageCode: ar
+    translations:
+    - id: 0
+      language: ar
+      text: "\u0633\u0648\u0632\u064A"
+    - id: 1
+      language: ar
+      text: "\u0628\u0648\u0646\u063A"
+    - id: 2
+      language: ar
+      text: "\u0633\u0627\u0645"
+    - id: 3
+      language: ar
+      text: "\u0628\u064A\u0646\u063A"
+    - id: 4
+      language: ar
+      text: "\u062F\u064A\u0646\u063A"
+    - id: 5
+      language: ar
+      text: "\u062F\u0648\u0646\u063A"
+    - id: 6
+      language: ar
+      text: "\u0628\u0648\u0646\u063A"
+    - id: 7
+      language: ar
+      text: "\u0628\u0646\u062C"
+  - counter: 8
+    languageCode: zh-CN
+    translations:
+    - id: 0
+      language: zh-CN
+      text: "\u82CF\u897F"
+    - id: 1
+      language: zh-CN
+      text: "\u4E52\u4E53"
+    - id: 2
+      language: zh-CN
+      text: "\u5C71\u59C6"
+    - id: 3
+      language: zh-CN
+      text: "\u5E73"
+    - id: 4
+      language: zh-CN
+      text: "\u9F0E"
+    - id: 5
+      language: zh-CN
+      text: "\u8463"
+    - id: 6
+      language: zh-CN
+      text: "\u5949"
+    - id: 7
+      language: zh-CN
+      text: "\u5FC5\u5E94"
+  - counter: 8
+    languageCode: de
+    translations:
+    - id: 0
+      language: de
+      text: Susie
+    - id: 1
+      language: de
+      text: Pong
+    - id: 2
+      language: de
+      text: Sam
+    - id: 3
+      language: de
+      text: Klingeln
+    - id: 4
+      language: de
+      text: Ding
+    - id: 5
+      language: de
+      text: Dong
+    - id: 6
+      language: de
+      text: Bong
+    - id: 7
+      language: de
+      text: Bing
+  - counter: 8
+    languageCode: hi
+    translations:
+    - id: 0
+      language: hi
+      text: "\u0938\u0941\u0938\u0940"
+    - id: 1
+      language: hi
+      text: "\u092A\u093E\u0902\u0917"
+    - id: 2
+      language: hi
+      text: "\u0938\u0948\u092E"
+    - id: 3
+      language: hi
+      text: "\u0917\u0941\u0928\u0917\u0941\u0928\u093E\u0939\u091F"
+    - id: 4
+      language: hi
+      text: "\u091D\u0902\u0915\u093E\u0930"
+    - id: 5
+      language: hi
+      text: "\u0932\u093F\u0902\u0917"
+    - id: 6
+      language: hi
+      text: "\u092C\u094B\u0902\u0917"
+    - id: 7
+      language: hi
+      text: "\u092C\u093F\u0902\u0917"
+  - counter: 8
+    languageCode: ja
+    translations:
+    - id: 0
+      language: ja
+      text: "\u30B9\u30FC\u30B8\u30FC"
+    - id: 1
+      language: ja
+      text: "\u30DD\u30F3"
+    - id: 2
+      language: ja
+      text: "\u30B5\u30E0"
+    - id: 3
+      language: ja
+      text: "\u30D4\u30F3"
+    - id: 4
+      language: ja
+      text: "\u30C7\u30A3\u30F3"
+    - id: 5
+      language: ja
+      text: "\u30C9\u30F3"
+    - id: 6
+      language: ja
+      text: "\u30DC\u30F3"
+    - id: 7
+      language: ja
+      text: "\u30D3\u30F3\u30B0"
+  - counter: 8
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: susie
+    - id: 1
+      language: es
+      text: Apestar
+    - id: 2
+      language: es
+      text: Sam
+    - id: 3
+      language: es
+      text: Silbido
+    - id: 4
+      language: es
+      text: Timbre
+    - id: 5
+      language: es
+      text: Polla
+    - id: 6
+      language: es
+      text: bong
+    - id: 7
+      language: es
+      text: Bing

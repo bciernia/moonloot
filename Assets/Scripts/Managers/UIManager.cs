@@ -31,6 +31,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _statsLevelTMP;
     [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
+    [Header("Equipment Panel")] 
+    [SerializeField] private GameObject _equipmentPanel;
+    
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
@@ -48,6 +51,13 @@ public class UIManager : MonoBehaviour
         {
             UpdateStatsPanel();
         }
+    }
+
+    private void OpenCloseEquipmentPanel()
+    {
+        _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
+        InventoryUI.Instance.CurrentSlot = null;
+        InventoryUI.Instance.DescriptionPanel.SetActive(false);
     }
 
     private void UpdatePlayerUI()
@@ -75,12 +85,14 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         _actions.UI.OpenCloseStatsPanel.performed += _ => OpenCloseStatsPanel();
+        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
         _actions.Enable();
     }
 
     private void OnDisable()
     {
         _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenCloseStatsPanel();
+        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
         _actions.Disable();
     }
 }

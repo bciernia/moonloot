@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 266df1f1a69816b4bb1420cf1cb7f62c, type: 3}
+  m_Name: PaddedMansion
+  m_EditorClassIdentifier: 
+  conversationStyle:
+    convoImageStyles:
+    - enabled: 1
+      sprite: {fileID: 21300000, guid: 8464e9fa6dd862442b439b6ae2f50ff4, type: 3}
+      color: {r: 0.23584908, g: 0.23584908, b: 0.23584908, a: 1}
+      imageType: 2
+      pixelsPerUnit: 3.86
+    - enabled: 1
+      sprite: {fileID: 21300000, guid: ac1f8924e37dbec41806643ae2304dbb, type: 3}
+      color: {r: 1, g: 0, b: 0, a: 0.7176471}
+      imageType: 0
+      pixelsPerUnit: 5.51
+    - enabled: 1
+      sprite: {fileID: 21300000, guid: 468ff30ec4a03584c842d2cd067ea699, type: 3}
+      color: {r: 0.4245283, g: 0.16868734, b: 0.10212708, a: 0.21176471}
+      imageType: 2
+      pixelsPerUnit: 5.7
+    - enabled: 0
+      sprite: {fileID: 21300000, guid: d1160d31bd8eb72499f064d0eb7e02e0, type: 3}
+      color: {r: 1, g: 0.557886, b: 0.48584908, a: 0.34117648}
+      imageType: 1
+      pixelsPerUnit: 5.92
+    convoTextStyle:
+      enabled: 1
+      tmpFont: {fileID: 11400000, guid: e1dc57cdeaa64da4e80a181ca4637c38, type: 2}
+      font: {fileID: 12800000, guid: f2304091e43a0b248a596894be14b5c4, type: 3}
+      color: {r: 1, g: 0.9766877, b: 0.8254717, a: 1}
+      fontSize: 40
+      autoSizeFont: 1
+      minFontSize: 12
+      maxFontSize: 40
+    characterNameStyle:
+      textStyleSettings:
+        enabled: 1
+        tmpFont: {fileID: 11400000, guid: e1dc57cdeaa64da4e80a181ca4637c38, type: 2}
+        font: {fileID: 12800000, guid: f2304091e43a0b248a596894be14b5c4, type: 3}
+        color: {r: 1, g: 0.89955074, b: 0.6839622, a: 1}
+        fontSize: 40
+        autoSizeFont: 1
+        minFontSize: 8
+        maxFontSize: 40
+      imageStyleSettings:
+        enabled: 1
+        sprite: {fileID: 21300000, guid: b9bb55d65124b0d4fb8573272b5ea614, type: 3}
+        color: {r: 0.047169805, g: 0.047169805, b: 0.047169805, a: 1}
+        imageType: 0
+        pixelsPerUnit: 1
+  optionStyle:
+    optionPanelImageStyles:
+    - enabled: 0
+      sprite: {fileID: 21300000, guid: 4054a3ed4ddf2f04c811acbd7222b7bd, type: 3}
+      color: {r: 0.3962264, g: 0.057938762, b: 0.057938762, a: 1}
+      imageType: 0
+      pixelsPerUnit: 6.21
+    - enabled: 0
+      sprite: {fileID: 21300000, guid: cb22b451acad224438df078f58b1ec07, type: 3}
+      color: {r: 0.13207549, g: 0.025542898, b: 0.025542898, a: 1}
+      imageType: 2
+      pixelsPerUnit: 2.95
+    optionButtonStyle:
+      imageStyleSettings:
+        enabled: 1
+        sprite: {fileID: 0}
+        color: {r: 0.20754719, g: 0.036222856, b: 0.036222856, a: 1}
+        imageType: 1
+        pixelsPerUnit: 12.11
+      buttonStyleSettings:
+        normalImageColor: {r: 0.20754719, g: 0.036222856, b: 0.036222856, a: 1}
+        highlightedImageColor: {r: 0.355, g: 0.080584995, b: 0.080584995, a: 1}
+        pressedImageColor: {r: 0.099, g: 0.016811319, b: 0.016811319, a: 1}
+        disabledImageColor: {r: 0.241, g: 0.241, b: 0.241, a: 1}
+        normalTextColor: {r: 1, g: 0.9764706, b: 0.8235294, a: 1}
+        highlightedTextColor: {r: 1, g: 0.990566, b: 0.9292453, a: 1}
+        pressedTextColor: {r: 0.71599996, g: 0.6991529, b: 0.58964705, a: 1}
+        disabledTextColor: {r: 0.589, g: 0.589, b: 0.589, a: 1}
+      textStyleSettings:
+        enabled: 1
+        tmpFont: {fileID: 11400000, guid: e1dc57cdeaa64da4e80a181ca4637c38, type: 2}
+        font: {fileID: 12800000, guid: f2304091e43a0b248a596894be14b5c4, type: 3}
+        color: {r: 1, g: 0.9764706, b: 0.8235294, a: 1}
+        fontSize: 35.8
+        autoSizeFont: 1
+        minFontSize: 8
+        maxFontSize: 40
+      hoverSound: {fileID: 8300000, guid: b4bb7c567558db243a10fcbc23e13d76, type: 3}
+    directionalStyle:
+      mainImageColor: {r: 0.20784314, g: 0.03529412, b: 0.03529412, a: 1}
+      normalColor: {r: 0.20784314, g: 0.03529412, b: 0.03529412, a: 1}
+      highlightColor: {r: 0.35686275, g: 0.08235294, b: 0.08235294, a: 1}
+      pressedColor: {r: 0.09803922, g: 0.015686275, b: 0.015686275, a: 1}
+      disabledColor: {r: 0.23921569, g: 0.23921569, b: 0.23921569, a: 1}
+  continueStyle:
+    imageStyleSettings:
+      enabled: 1
+      sprite: {fileID: 21300000, guid: b3c2f8afea2544c488723b6ce75fa654, type: 3}
+      color: {r: 0.2735849, g: 0.014195444, b: 0.014195444, a: 1}
+      imageType: 1
+      pixelsPerUnit: 1
+    buttonStyleSettings:
+      normalImageColor: {r: 0.2735849, g: 0.014195444, b: 0.014195444, a: 1}
+      highlightedImageColor: {r: 0.4339623, g: 0.01842292, b: 0.01842292, a: 1}
+      pressedImageColor: {r: 0.14901961, g: 0, b: 0, a: 1}
+      disabledImageColor: {r: 0.284, g: 0.284, b: 0.284, a: 1}
+      normalTextColor: {r: 1, g: 0.9764706, b: 0.8235294, a: 1}
+      highlightedTextColor: {r: 1, g: 0.99215686, b: 0.92941177, a: 1}
+      pressedTextColor: {r: 0.7176471, g: 0.69803923, b: 0.5882353, a: 1}
+      disabledTextColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+    textStyleSettings:
+      enabled: 1
+      tmpFont: {fileID: 11400000, guid: e1dc57cdeaa64da4e80a181ca4637c38, type: 2}
+      font: {fileID: 12800000, guid: f2304091e43a0b248a596894be14b5c4, type: 3}
+      color: {r: 1, g: 0.9764706, b: 0.8235294, a: 1}
+      fontSize: 40
+      autoSizeFont: 1
+      minFontSize: 8
+      maxFontSize: 40

@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SelectionManager : MonoBehaviour
 {
@@ -8,14 +9,31 @@ public class SelectionManager : MonoBehaviour
     public static event Action OnNoSelectionEvent;
     
     [SerializeField] private LayerMask _enemyMask;
-    [SerializeField] private TextMeshProUGUI _enemyName;
+    //[SerializeField] private TextMeshProUGUI _enemyName;
 
     private Camera mainCamera;
 
     private void Awake()
     {
-        mainCamera = Camera.main;
+        SetMainCamera();
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SetMainCamera();
+    }
+
+    private void SetMainCamera() => mainCamera = Camera.main;
 
     private void Update()
     {
@@ -33,9 +51,18 @@ public class SelectionManager : MonoBehaviour
                 var enemy = hit.collider.GetComponent<EnemyBrain>();
                 if (!enemy) return;
                 var enemyHealth = enemy.GetComponent<EnemyStatistics>();
-                if (enemyHealth.CurrentHP <= 0) return;
-                
-                OnEnemySelectedEvent?.Invoke(enemy);
+                    Debug.Log("Enemy");
+                if (enemyHealth.CurrentHP <= 0)
+                {
+                    Debug.Log("Enemy1");
+                    var enemyLoot = enemy.GetComponent<EnemyLoot>();
+                    LootManager.Instance.ShowLoot(enemyLoot);
+                }
+                else
+                {
+                    Debug.Log("Enemy2");
+                    OnEnemySelectedEvent?.Invoke(enemy);
+                }
             }
             else
             {
