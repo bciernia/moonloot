@@ -19,15 +19,36 @@ public class InventorySlot : MonoBehaviour
         OnSlotSelectedEvent?.Invoke(Index);
     }
 
+    private void Awake()
+    {
+        if (_itemIcon == null || _itemQuantityTMP == null)
+        {
+            Debug.LogWarning($"InventorySlot: UI elements not assigned in the Inspector for slot index {Index}. Assign them to avoid null reference exceptions.");
+        }
+    }
+
     public void UpdateSlot(InventoryItem item)
     {
-        _itemIcon.sprite = item.Icon;
-        _itemQuantityTMP.text = item.Quantity.ToString();
+        if (_itemIcon == null || _itemQuantityTMP == null) return;
+
+        if (item != null)
+        {
+            _itemIcon.sprite = item.Icon;
+            _itemQuantityTMP.text = item.Quantity.ToString();
+            ShowSlotInformation(true);
+        }
+        else
+        {
+            ShowSlotInformation(false);
+        }
     }
 
     public void ShowSlotInformation(bool value)
     {
-        _itemIcon.gameObject.SetActive(value);
-        _quantityContainer.gameObject.SetActive(value);
+        if (_itemIcon != null && _quantityContainer != null)
+        {
+            _itemIcon.gameObject.SetActive(value);
+            _quantityContainer.gameObject.SetActive(value);
+        }
     }
 }

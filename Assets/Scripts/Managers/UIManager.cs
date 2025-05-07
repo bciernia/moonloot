@@ -57,7 +57,10 @@ public class UIManager : MonoBehaviour
     {
         _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
         InventoryUI.Instance.CurrentSlot = null;
-        InventoryUI.Instance.DescriptionPanel.SetActive(false);
+        if (InventoryUI.Instance.DescriptionPanel.activeSelf)
+        {
+            InventoryUI.Instance.DescriptionPanel.SetActive(false);
+        }
     }
 
     private void UpdatePlayerUI()
