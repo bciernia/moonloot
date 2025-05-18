@@ -3,7 +3,6 @@ using UnityEngine.Tilemaps;
 
 public class ItemInteraction : MonoBehaviour, IInteractable
 {
-    [SerializeField] private GameObject _interactionBox;
     [SerializeField] private InventoryItem _inventoryItem;
     [SerializeField] private ParticleSystem pickupParticles;
 
@@ -12,7 +11,6 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             FindFirstObjectByType<InteractionManager>().SetInteractable(this);
-            _interactionBox.SetActive(true);
         }
     }
     
@@ -21,7 +19,6 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             FindFirstObjectByType<InteractionManager>().ClearInteractable();
-            _interactionBox.SetActive(false);
         }
     }
 
@@ -31,6 +28,8 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         TriggerParticles();
         Destroy(gameObject);
     }
+
+    public string GetInteractionText() => $"Get: {_inventoryItem.Name}";
 
     private void TriggerParticles()
     {

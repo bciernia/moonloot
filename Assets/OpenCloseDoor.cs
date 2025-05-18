@@ -5,8 +5,8 @@ public class OpenCloseDoor : MonoBehaviour, IInteractable
 {
     [SerializeField] private Sprite ClosedDoorSprite;
     [SerializeField] private Sprite OpenedDoorSprite;
-    [SerializeField] public GameObject _interactionBox;
-
+    [SerializeField] private string ConnectedRoom;
+    
     private SpriteRenderer _spriteRenderer;
     private CircleCollider2D _collider2D;
     
@@ -24,7 +24,6 @@ public class OpenCloseDoor : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             FindFirstObjectByType<InteractionManager>().SetInteractable(this);
-            _interactionBox.SetActive(true);
         }
     }
     
@@ -33,7 +32,6 @@ public class OpenCloseDoor : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             FindFirstObjectByType<InteractionManager>().ClearInteractable();
-            _interactionBox.SetActive(false);
         }
     }
 
@@ -53,4 +51,6 @@ public class OpenCloseDoor : MonoBehaviour, IInteractable
             _collider2D.enabled = true;
         }
     }
+
+    public string GetInteractionText() => $"Open: {ConnectedRoom}";
 }
