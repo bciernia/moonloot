@@ -15,9 +15,14 @@ public class Inventory : Singleton<Inventory>
 
     public InventoryItem[] InventoryItems => _inventoryItems;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        _inventoryItems = new InventoryItem[_inventorySize];
+    }
+
     private void Start()
     {
-        _inventoryItems = new InventoryItem[_inventorySize];
         VerifyItemsForDraw();
     }
 
