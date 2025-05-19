@@ -1,9 +1,12 @@
+using TMPro;
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
     private PlayerActions _playerActions;
-    private IInteractable currentInteractable;
+    private IInteractable _currentInteractable;
+    [SerializeField] private GameObject _interactionBox;
+    [SerializeField] private TextMeshProUGUI _interactionBoxTMP;
 
     private void Awake()
     {
@@ -14,22 +17,26 @@ public class InteractionManager : MonoBehaviour
 
     private void Interact()
     {
-        currentInteractable?.Interact();
+        _currentInteractable?.Interact();
     }
 
     public void SetInteractable(IInteractable interactable)
     {
-        currentInteractable = interactable;
+        _currentInteractable = interactable;
+        _interactionBox.SetActive(true);
+        _interactionBoxTMP.text = interactable.GetInteractionText();
     }
 
     public void ClearInteractable()
     {
-        if (currentInteractable != null)
+        if (_currentInteractable != null)
         {
-            currentInteractable = null;
+            _currentInteractable = null;
+            _interactionBox.SetActive(false);
+            _interactionBoxTMP.text = null;
         }
     }
-
+    
     private void OnEnable() => _playerActions.Enable();
     private void OnDisable() => _playerActions.Disable();
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class DialogueManager : Singleton<DialogueManager>
 {
     public NPCInteraction NPCSelected { get; set; }
-    
+
+    public bool IsInConversation { get; set; }
     private bool _dialogueStarted;
     private PlayerActions _playerActions;
     private GameObject _player;
@@ -34,7 +35,7 @@ public class DialogueManager : Singleton<DialogueManager>
         }
         
         _dialogueStarted = true;
-        NPCSelected._interactionBox.SetActive(false);
+        // NPCSelected._interactionBox.SetActive(false);
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         SetCharacterInFrontOfNpc();
@@ -53,10 +54,10 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         _player.GetComponent<PlayerMovement>().enabled = true;
 
-        if (NPCSelected != null)
-        {
-            NPCSelected._interactionBox.SetActive(true);
-        }
+        // if (NPCSelected != null)
+        // {
+             // NPCSelected._interactionBox.SetActive(true);
+        // }
         
         _dialogueStarted = false;
 

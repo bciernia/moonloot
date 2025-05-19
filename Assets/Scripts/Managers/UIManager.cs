@@ -53,15 +53,16 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void OpenCloseEquipmentPanel()
-    {
-        _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
-        InventoryUI.Instance.CurrentSlot = null;
-        if (InventoryUI.Instance.DescriptionPanel.activeSelf)
-        {
-            InventoryUI.Instance.DescriptionPanel.SetActive(false);
-        }
-    }
+    //Do wywalenia, zmieniono na pokazywanie eq z ShowHideUI
+    // private void OpenCloseEquipmentPanel()
+    // {
+    //     _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
+    //     InventoryUI.Instance.CurrentSlot = null;
+    //     if (InventoryUI.Instance.DescriptionPanel.activeSelf)
+    //     {
+    //         InventoryUI.Instance.DescriptionPanel.SetActive(false);
+    //     }
+    // }
 
     private void UpdatePlayerUI()
     {
@@ -88,14 +89,14 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         _actions.UI.OpenCloseStatsPanel.performed += _ => OpenCloseStatsPanel();
-        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
+        // _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
         _actions.Enable();
     }
 
     private void OnDisable()
     {
         _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenCloseStatsPanel();
-        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
+        //_actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
         _actions.Disable();
     }
 }

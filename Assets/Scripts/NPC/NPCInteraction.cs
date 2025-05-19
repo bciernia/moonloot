@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NPCInteraction : MonoBehaviour, IInteractable
 {
-    [SerializeField] public GameObject _interactionBox;
+    [SerializeField] private string NpcName; 
     
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -11,7 +11,6 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         {
             DialogueManager.Instance.NPCSelected = this;
             FindFirstObjectByType<InteractionManager>().SetInteractable(this);
-            _interactionBox.SetActive(true);
         }
     }
     
@@ -21,7 +20,6 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         {
             DialogueManager.Instance.NPCSelected = null;
             FindFirstObjectByType<InteractionManager>().ClearInteractable();
-            _interactionBox.SetActive(false);
         }
     }
 
@@ -29,4 +27,6 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     {
         DialogueManager.Instance.StartDialogue(); 
     }
+
+    public string GetInteractionText() => $"Talk to: {NpcName}";
 }
