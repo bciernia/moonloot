@@ -10,5 +10,6 @@ public enum InteractableType
 {
     NPC,
     Item,
-    Door
+    Door,
+    RoadSign
 }
