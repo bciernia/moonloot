@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public interface IInteractable
 {
     void Interact();
@@ -8,5 +10,6 @@ public enum InteractableType
 {
     NPC,
     Item,
-    Door
+    Door,
+    RoadSign
 }
