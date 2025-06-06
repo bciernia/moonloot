@@ -9,7 +9,7 @@ public class SelectionManager : MonoBehaviour
     public static event Action OnNoSelectionEvent;
     
     [SerializeField] private LayerMask _enemyMask;
-    //[SerializeField] private TextMeshProUGUI _enemyName;
+    [SerializeField] private GameObject _npcInfoManager;
 
     private Camera mainCamera;
 
@@ -51,22 +51,30 @@ public class SelectionManager : MonoBehaviour
                 var enemy = hit.collider.GetComponent<EnemyBrain>();
                 if (!enemy) return;
                 var enemyHealth = enemy.GetComponent<EnemyStatistics>();
-                    Debug.Log("Enemy");
+
                 if (enemyHealth.CurrentHP <= 0)
                 {
-                    Debug.Log("Enemy1");
                     var enemyLoot = enemy.GetComponent<EnemyLoot>();
-                    LootManager.Instance.ShowLoot(enemyLoot);
+                    LootManager.Instance.ShowLoot(enemyHealth.Name ,enemyLoot);
+
+                    _npcInfoManager.SetActive(false);
+                    NPCInfoManager.Instance.HideNpcInfo();
                 }
                 else
                 {
-                    Debug.Log("Enemy2");
                     OnEnemySelectedEvent?.Invoke(enemy);
+                    _npcInfoManager.SetActive(true);
+                    NPCInfoManager.Instance.ShowNpcInfo(enemyHealth);
                 }
             }
             else
             {
                 OnNoSelectionEvent?.Invoke();
+
+                if (!_npcInfoManager.activeSelf) return;
+                
+                _npcInfoManager.SetActive(false);
+                NPCInfoManager.Instance.HideNpcInfo();
             }
         }
     }

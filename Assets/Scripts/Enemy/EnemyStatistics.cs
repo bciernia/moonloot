@@ -6,7 +6,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
 
+    public string Name { get; private set; }
+    public string Description { get; private set; }
     public float CurrentHP { get; private set; }
+    public float MaxHP { get; private set; }
     public float ExpForEnemy { get; private set; }
     public bool IsMelee { get; private set; }
     public float AttackRange { get; set; }
@@ -34,7 +37,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
 
     private void Start()
     {
+        Name = _enemyStats.Name;
+        Description = _enemyStats.Description;
         CurrentHP = _enemyStats.MaxHP;
+        MaxHP = _enemyStats.MaxHP;
         ExpForEnemy = _enemyStats.Exp;
         IsMelee = _enemyStats.IsMelee;
         AttackRange = _enemyStats.AttackRange;
