@@ -58,12 +58,12 @@ public class DialogueManager : Singleton<DialogueManager>
         // {
              // NPCSelected._interactionBox.SetActive(true);
         // }
+
+        NPCSelected.EnableMovement();
         
         _dialogueStarted = false;
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
-        
-        
         
         dialogueController.onStop.RemoveListener(EndDialogue);
     }

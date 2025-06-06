@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInfoManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInfoManager.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Zombie.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Zombie.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/ForestLevel.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/ForestLevel.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StartScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StartScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/SelectionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/SelectionManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInteraction.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +35,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/602a3498007b420db1df67bbc5b580d934e00/28/4e422e65/Animator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/84f0d810adef4e6c8deab33e4ae93f7c1dec00/6a/14ad043b/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/84f0d810adef4e6c8deab33e4ae93f7c1dec00/87/fa47b6e8/Component.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/89527d299cb64ba88f87240781b415e51ea400/33/f2c03570/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/89527d299cb64ba88f87240781b415e51ea400/56/c01f5053/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/947c566dcd374e379abfce2ae0b65eaf2f200/6a/64d2149e/Rigidbody2D.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/947c566dcd374e379abfce2ae0b65eaf2f200/f1/877253bf/BoxCollider2D.cs" root0="SKIP_HIGHLIGHTING" />
@@ -215,7 +209,7 @@
       <workItem from="1747924224970" duration="5199000" />
       <workItem from="1747945151957" duration="1344000" />
       <workItem from="1748194231228" duration="3534000" />
-      <workItem from="1749206597466" duration="8194000" />
+      <workItem from="1749206597466" duration="13440000" />
     </task>
     <servers />
   </component>
@@ -247,19 +241,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
-          <line>98</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
-            <startOffsets>
-              <option value="-1" />
-            </startOffsets>
-            <endOffsets>
-              <option value="-1" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionAllyFighting.cs</url>
           <line>21</line>
@@ -313,32 +294,6 @@
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/Inventory.cs</url>
-          <line>32</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\Inventory.cs" containingFunctionPresentation="Method 'Update'">
-            <startOffsets>
-              <option value="743" />
-            </startOffsets>
-            <endOffsets>
-              <option value="764" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/InventorySlot.cs</url>
-          <line>31</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\InventorySlot.cs" containingFunctionPresentation="Method 'UpdateSlot'">
-            <startOffsets>
-              <option value="830" />
-            </startOffsets>
-            <endOffsets>
-              <option value="880" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
           <line>58</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'OpenCloseEquipmentPanel'">
@@ -350,19 +305,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="40" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/InventoryUI.cs</url>
-          <line>85</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\InventoryUI.cs" containingFunctionPresentation="Method 'ShowItemDescription'">
-            <startOffsets>
-              <option value="2203" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2256" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
@@ -389,19 +331,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="43" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/EasyDialogue/EasyTalk/Runtime/Scripts/controller/NodeHandler.cs</url>
-          <line>851</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\EasyDialogue\EasyTalk\Runtime\Scripts\controller\NodeHandler.cs" containingFunctionPresentation="Method 'Translate'">
-            <startOffsets>
-              <option value="35865" />
-            </startOffsets>
-            <endOffsets>
-              <option value="35978" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="46" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/InventoryUI.cs</url>
@@ -441,6 +370,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs</url>
+          <line>63</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemyAnimator.cs" containingFunctionPresentation="Method 'SetNpcPositionForDialogue'">
+            <startOffsets>
+              <option value="1639" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1699" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="60" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
