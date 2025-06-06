@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class NPCMovement : MonoBehaviour
@@ -6,22 +8,22 @@ public class NPCMovement : MonoBehaviour
     [Header("Config")]
     [SerializeField] private float moveSpeed;
 
-    private readonly int moveX = Animator.StringToHash("MoveX");
-    private readonly int moveY = Animator.StringToHash("MoveY");
-
     private Waypoint _waypoint;
-    private Animator _animator;
+    private EnemyAnimator _enemyAnimator;
     private Vector3 _previousPos;
     private int _currentPointIndex;
+    private bool isWaiting = false;
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>();
+        _enemyAnimator = GetComponent<EnemyAnimator>();
         _waypoint = GetComponent<Waypoint>();
     }
 
     private void Update()
     {
+        if (isWaiting) return;
+        
         var nextPosition = _waypoint.GetPosition(_currentPointIndex);
         UpdateMoveValues(nextPosition);
         transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
@@ -29,6 +31,8 @@ public class NPCMovement : MonoBehaviour
         {
             _previousPos = nextPosition;
             _currentPointIndex = (_currentPointIndex + 1) % _waypoint.Points.Length;
+
+            StartCoroutine(WaitOnPoint());
         }
     }
     
@@ -41,7 +45,15 @@ public class NPCMovement : MonoBehaviour
         if (_previousPos.x < nextPosition.x && _previousPos.y > nextPosition.y) direction = new Vector2(1f, -1f);
         if (_previousPos.x > nextPosition.x && _previousPos.y > nextPosition.y) direction = new Vector2(-1f, -1f);
         
-        _animator.SetFloat(moveX, direction.x);
-        _animator.SetFloat(moveY, direction.y);
+        _enemyAnimator.SetMoveAnimation(new Vector2(direction.x, direction.y));
+        _enemyAnimator.SetIsMoving(true);
+    }
+
+    private IEnumerator WaitOnPoint()
+    {
+        isWaiting = true;
+        _enemyAnimator.SetIsMoving(false);
+        yield return new WaitForSeconds(3f);
+        isWaiting = false;
     }
 }

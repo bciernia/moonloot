@@ -62,6 +62,9 @@ public class DialogueManager : Singleton<DialogueManager>
         _dialogueStarted = false;
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
+        
+        
+        
         dialogueController.onStop.RemoveListener(EndDialogue);
     }
 
