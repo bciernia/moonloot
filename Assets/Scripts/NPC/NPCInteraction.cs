@@ -44,41 +44,15 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         enemyAnimator.SetNpcPositionForDialogue(player.transform.position, gameObject.transform.position);
     }
 
-    private void DisableNpcMovement()
+    private void SetNpcMovementEnabled(bool isEnabled)
     {
-        if (_enemyBrain)
-        {
-            _enemyBrain.enabled = false;
-        }
-        
-        if (_waypoint)
-        {
-            _waypoint.enabled = false;
-        }
-        
-        if (_npcMovement)
-        {
-            _npcMovement.enabled = false;
-        }
+        if (_enemyBrain) _enemyBrain.enabled = isEnabled;
+        if (_waypoint) _waypoint.enabled = isEnabled;
+        if (_npcMovement) _npcMovement.enabled = isEnabled;
     }
 
-    public void EnableMovement()
-    {
-        if (_enemyBrain)
-        {
-            _enemyBrain.enabled = true;
-        }
-        
-        if (_waypoint)
-        {
-            _waypoint.enabled = true;
-        }
-        
-        if (_npcMovement)
-        {
-            _npcMovement.enabled = true;
-        }
-    }
+    private void DisableNpcMovement() => SetNpcMovementEnabled(false);
+    public void EnableNpcMovement() => SetNpcMovementEnabled(true);
 
     public string GetInteractionText() => $"Talk to: {NpcName}";
 }
