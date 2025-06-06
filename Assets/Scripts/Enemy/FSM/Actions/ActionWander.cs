@@ -33,14 +33,14 @@ public class ActionWander : FSMAction
         var movement = moveDirection * (_enemyStatistics.Speed * Time.deltaTime);
         if (Vector3.Distance(transform.position, movePosition) >= 1f)
         {
-            _enemyAnimator.FlipSpriteXOff();
+            // _enemyAnimator.FlipSpriteXOff();
             _enemyAnimator.SetIsMoving(true);
             _enemyAnimator.SetMoveAnimation(new Vector2(moveDirection.x, moveDirection.y));
             transform.Translate(movement);
         }
         else
         {
-            _enemyAnimator.TryFlipSpriteX();
+            // _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetIsMoving(false);
         }
 
