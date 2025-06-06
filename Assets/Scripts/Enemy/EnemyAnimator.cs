@@ -58,4 +58,16 @@ public class EnemyAnimator : MonoBehaviour
     {
         _animator.SetTrigger(damaged);
     }
+
+    public void SetNpcPositionForDialogue(Vector2 playerPosition, Vector2 npcPosition)
+    {
+        var dirToPlayer = (playerPosition - npcPosition).normalized;
+        Vector2 faceDirection;
+
+        faceDirection.x = dirToPlayer.x > 0 ? 1 : -1;
+        faceDirection.y = dirToPlayer.y > 0 ? 1 : -1;
+
+        SetMoveAnimation(faceDirection);
+        SetIsMoving(false);
+    }
 }
