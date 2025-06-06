@@ -15,7 +15,6 @@ public class EnemySelector : MonoBehaviour
 
     private void EnemySelectedCallback(EnemyBrain enemySelected)
     {
-        Debug.Log("Sel");
         if (enemySelected == _enemyBrain)
         {
             selectorSprite.SetActive(true);

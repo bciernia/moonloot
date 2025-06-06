@@ -3,6 +3,10 @@
 [CreateAssetMenu(fileName = "EnemyStats_", menuName = "Enemy Stats")]
 public class EnemyStatsSO : ScriptableObject
 {
+    [Header("Basic information")] 
+    public string Name = "EMPTY_NAME";
+    [TextArea] public string Description = "EMPTY_DESCRIPTION";
+    
     [Header("Configuration")]
     public float MaxHP;
     public float Exp;
