@@ -24,7 +24,10 @@ public class NPCInteraction : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        DialogueManager.Instance.StartDialogue(); 
+        DialogueManager.Instance.StartDialogue();
+        var waypoint = GetComponent<Waypoint>();
+
+        waypoint.enabled = false;
     }
 
     public string GetInteractionText() => $"Talk to: {NpcName}";

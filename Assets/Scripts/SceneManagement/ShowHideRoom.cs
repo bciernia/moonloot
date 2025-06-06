@@ -6,14 +6,22 @@ public class ShowHideRoom : MonoBehaviour
 {
     private SpriteRenderer _spriteRenderer;
     private Coroutine _fadeCoroutine;
-    private TextMeshProUGUI _text;
+    private BoxCollider2D _collider;
 
     [SerializeField] private float fadeDuration = 1f;
+    [SerializeField] private Transform spriteVisual;
+    [SerializeField] private TextMeshPro _text;
 
     private void Awake()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _text = GetComponentInChildren<TextMeshProUGUI>();
+        _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        _text = GetComponentInChildren<TextMeshPro>();
+        _collider = GetComponent<BoxCollider2D>();
+    }
+
+    private void Start()
+    {
+        FitSpriteToCollider();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -56,7 +64,24 @@ public class ShowHideRoom : MonoBehaviour
 
             yield return null;
         }
+
         _spriteRenderer.color = new Color(spriteStartColor.r, spriteStartColor.g, spriteStartColor.b, targetAlpha);
         _text.color = new Color(textStartColor.r, textStartColor.g, textStartColor.b, targetAlpha);
+    }
+
+    private void FitSpriteToCollider()
+    {
+        if (_spriteRenderer.sprite == null) return;
+
+        Vector2 spriteSize = _spriteRenderer.sprite.bounds.size;
+        Vector2 colliderSize = _collider.size;
+
+        Vector3 newScale = new Vector3(
+            colliderSize.x / spriteSize.x,
+            colliderSize.y / spriteSize.y,
+            1f
+        );
+
+        spriteVisual.localScale = newScale;
     }
 }
