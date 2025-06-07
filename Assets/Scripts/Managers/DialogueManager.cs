@@ -59,7 +59,7 @@ public class DialogueManager : Singleton<DialogueManager>
              // NPCSelected._interactionBox.SetActive(true);
         // }
 
-        NPCSelected.EnableMovement();
+        NPCSelected.EnableNpcMovement();
         
         _dialogueStarted = false;
 

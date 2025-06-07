@@ -20,6 +20,9 @@ public class PlayerMovement : MonoBehaviour
     
     private PlayerStamina playerStamina;
 
+    public bool limitToCameraView;
+    private Camera mainCamera;
+    
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         _rb2D = GetComponent<Rigidbody2D>();
         _playerAnimations = GetComponent<PlayerAnimations>();
         playerStamina = GetComponent<PlayerStamina>();
+        mainCamera = Camera.main;
     }
 
     private void Update()
@@ -43,7 +47,10 @@ public class PlayerMovement : MonoBehaviour
     private void Move()
     {
         if (_player.PlayerStats.HP <= 0) return;
-        _rb2D.MovePosition(_rb2D.position + _moveDirection * (GetMovementSpeed(IsSprinting) * Time.fixedDeltaTime));
+
+        var newPosition = _rb2D.position + _moveDirection * (GetMovementSpeed(IsSprinting) * Time.fixedDeltaTime);
+
+        _rb2D.MovePosition(newPosition);
     }
     
     private void Sprint()
