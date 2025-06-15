@@ -4,7 +4,7 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour
 {
     [SerializeField] private List<Quest> _quest;
-
+    
     //Used in dialogues in Trigger Script nodes
     public void GiveQuest(int id = 0)
     {

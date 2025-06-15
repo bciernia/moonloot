@@ -57,8 +57,8 @@ public class SelectionManager : MonoBehaviour
                     var enemyLoot = enemy.GetComponent<EnemyLoot>();
                     LootManager.Instance.ShowLoot(enemyHealth.Name ,enemyLoot);
 
+                    NPCInfoManager.Instance?.HideNpcInfo();
                     _npcInfoManager.SetActive(false);
-                    NPCInfoManager.Instance.HideNpcInfo();
                 }
                 else
                 {

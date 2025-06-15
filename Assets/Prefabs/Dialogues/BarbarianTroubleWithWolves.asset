@@ -1,0 +1,1989 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: BarbarianTroubleWithWolves
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 2406609200015737178
+  - rid: 2406609200015737179
+  - rid: 2406609200015737180
+  - rid: 2406609200015737181
+  - rid: 2406609200015737182
+  - rid: 2406609200015737183
+  - rid: 2406609200015737184
+  - rid: 2406609200015737185
+  - rid: 2406609200015737186
+  - rid: 2406609200015737187
+  - rid: 2406609200015737188
+  - rid: 2406609200015737189
+  - rid: 2406609200015737190
+  - rid: 2406609200015737191
+  - rid: 2406609200015737192
+  - rid: 2406609200015737193
+  - rid: 2406609200015737194
+  - rid: 2406609200015737195
+  - rid: 2406609200015737196
+  - rid: 2406609200015737197
+  - rid: 2406609200015737198
+  - rid: 2406609200015737199
+  - rid: 2406609200015737200
+  - rid: 2406609200015737201
+  - rid: 2406609200015737202
+  - rid: 2406609200015737203
+  - rid: 2406609200015737204
+  - rid: 2406609200015737205
+  - rid: 2406609200015737206
+  - rid: 2406609200015737207
+  - rid: 2406609200015737208
+  - rid: 2406609200015737209
+  - rid: 2406609200015737210
+  - rid: 2406609200015737211
+  - rid: 2406609200015737212
+  - rid: 2406609200015737213
+  - rid: 2406609200015737214
+  - rid: 2406609200015737215
+  - rid: 2406609200015737216
+  - rid: 2406609200015737217
+  - rid: 2406609200015737218
+  - rid: 2406609200015737219
+  translationLibrary: {fileID: 5460683875279709600}
+  maxID: 22045
+  references:
+    version: 2
+    RefIds:
+    - rid: 2406609200015737178
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 26
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 27
+          attachedIds: bb270000
+          ownerId: 26
+          connectionType: 1
+        outputs:
+        - id: 28
+          attachedIds: 6d1c0000
+          ownerId: 26
+          connectionType: 1
+        width: 268
+        height: 197.83716
+        xPosition: 2233.6462
+        yPosition: 2817.629
+        items:
+        - rid: 2406609200015737220
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737179
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 460
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 461
+          attachedIds: 22070000
+          ownerId: 460
+          connectionType: 1
+        outputs:
+        - id: 462
+          attachedIds: e2010000
+          ownerId: 460
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1864.2545
+        yPosition: 3301.352
+        items:
+        - rid: 2406609200015737221
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737180
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 481
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 482
+          attachedIds: ce010000
+          ownerId: 481
+          connectionType: 1
+        outputs:
+        - id: 483
+          attachedIds: 58050000
+          ownerId: 481
+          connectionType: 1
+        width: 268
+        height: 254.06226
+        xPosition: 2268.7852
+        yPosition: 3175.4927
+        items:
+        - rid: 2406609200015737222
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737181
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1367
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1368
+          attachedIds: e3010000
+          ownerId: 1367
+          connectionType: 1
+        - id: 1369
+          attachedIds: 
+          ownerId: 1367
+          connectionType: 8
+        - id: 1370
+          attachedIds: 
+          ownerId: 1367
+          connectionType: 9
+        - id: 1371
+          attachedIds: 
+          ownerId: 1367
+          connectionType: 9
+        - id: 1372
+          attachedIds: 
+          ownerId: 1367
+          connectionType: 9
+        outputs:
+        - id: 1373
+          attachedIds: 
+          ownerId: 1367
+          connectionType: 9
+        - id: 1374
+          attachedIds: f9030000
+          ownerId: 1367
+          connectionType: 1
+        width: 200
+        height: 321.2499
+        xPosition: 2631.3716
+        yPosition: 3184.4277
+        triggeredClassName: QuestGiver
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737182
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1673
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1674
+          attachedIds: ff030000
+          ownerId: 1673
+          connectionType: 1
+        outputs:
+        - id: 1675
+          attachedIds: f64d0000
+          ownerId: 1673
+          connectionType: 1
+        width: 268
+        height: 250
+        xPosition: 3203.8364
+        yPosition: 3179.2058
+        items:
+        - rid: 2406609200015737223
+        - rid: 2406609200015737224
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737183
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1016
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1017
+          attachedIds: 5e050000
+          ownerId: 1016
+          connectionType: 1
+        - id: 1018
+          attachedIds: 
+          ownerId: 1016
+          connectionType: 5
+        - id: 1019
+          attachedIds: 
+          ownerId: 1016
+          connectionType: 9
+        - id: 1020
+          attachedIds: 
+          ownerId: 1016
+          connectionType: 9
+        - id: 1021
+          attachedIds: 
+          ownerId: 1016
+          connectionType: 9
+        outputs:
+        - id: 1022
+          attachedIds: 
+          ownerId: 1016
+          connectionType: 9
+        - id: 1023
+          attachedIds: 8a060000
+          ownerId: 1016
+          connectionType: 1
+        width: 200
+        height: 338.75
+        xPosition: 2929.477
+        yPosition: 3180.144
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: SetEntryId
+        methodSignature: SetEntryId(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 3
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737184
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1821
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 1822
+          attachedIds: 45420000
+          ownerId: 1821
+          connectionType: 1
+        - id: 1823
+          attachedIds: 44420000
+          ownerId: 1821
+          connectionType: 2
+        - id: 1824
+          attachedIds: 
+          ownerId: 1821
+          connectionType: 2
+        outputs:
+        - id: 1825
+          attachedIds: 
+          ownerId: 1821
+          connectionType: 2
+        - id: 1826
+          attachedIds: cd010000
+          ownerId: 1821
+          connectionType: 10
+        - id: 1827
+          attachedIds: 6c070000
+          ownerId: 1821
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 1598.918
+        yPosition: 3332.314
+        logicOperation: 0
+    - rid: 2406609200015737185
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1872
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1873
+          attachedIds: 43420000
+          ownerId: 1872
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1126.1536
+        yPosition: 3328.1313
+        entryPointName: 2
+    - rid: 2406609200015737186
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1899
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 1900
+          attachedIds: 23070000
+          ownerId: 1899
+          connectionType: 1
+        outputs:
+        - id: 1901
+          attachedIds: 8a070000
+          ownerId: 1899
+          connectionType: 1
+        - id: 1902
+          attachedIds: 98070000
+          ownerId: 1899
+          connectionType: 1
+        - id: 19365
+          attachedIds: a74b0000
+          ownerId: 1899
+          connectionType: 1
+        width: 160
+        height: 203.75
+        xPosition: 1822.2898
+        yPosition: 3521.4468
+        items:
+        - rid: 2406609200015737225
+        - rid: 2406609200015737226
+        - rid: 2406609200015737227
+    - rid: 2406609200015737187
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1929
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1930
+          attachedIds: 6d070000
+          ownerId: 1929
+          connectionType: 1
+        outputs:
+        - id: 1931
+          attachedIds: 
+          ownerId: 1929
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2130.58
+        yPosition: 3516.4998
+        items:
+        - rid: 2406609200015737228
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737188
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1943
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1944
+          attachedIds: 6e070000
+          ownerId: 1943
+          connectionType: 1
+        outputs:
+        - id: 1945
+          attachedIds: 
+          ownerId: 1943
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2145.8887
+        yPosition: 3671.6365
+        items:
+        - rid: 2406609200015737229
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737189
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3611
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3612
+          attachedIds: 6e1c0000
+          ownerId: 3611
+          connectionType: 1
+        - id: 3613
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 5
+        - id: 3614
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 9
+        - id: 3615
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 9
+        - id: 3616
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 9
+        outputs:
+        - id: 3617
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 9
+        - id: 3618
+          attachedIds: 
+          ownerId: 3611
+          connectionType: 1
+        width: 200
+        height: 338.75
+        xPosition: 2978.3193
+        yPosition: 2742.248
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: SetEntryId
+        methodSignature: SetEntryId(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737190
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7276
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7277
+          attachedIds: 1c000000
+          ownerId: 7276
+          connectionType: 1
+        outputs:
+        - id: 7278
+          attachedIds: 1c0e0000
+          ownerId: 7276
+          connectionType: 1
+        width: 268
+        height: 206.40625
+        xPosition: 2578.1157
+        yPosition: 2851.8052
+        items:
+        - rid: 2406609200015737230
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737191
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10169
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 10170
+          attachedIds: 072b0000
+          ownerId: 10169
+          connectionType: 1
+        outputs:
+        - id: 10171
+          attachedIds: 1b000000
+          ownerId: 10169
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1794.6157
+        yPosition: 2881.2876
+        items:
+        - rid: 2406609200015737231
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737192
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 11014
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 11015
+          attachedIds: ba270000
+          ownerId: 11014
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1495.4907
+        yPosition: 2835.6626
+        entryPointName: 1
+    - rid: 2406609200015737193
+      type: {class: GetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 16962
+        name: GET VARIABLE
+        nodeType: 28
+        inputs:
+        - id: 16963
+          attachedIds: 51070000
+          ownerId: 16962
+          connectionType: 1
+        outputs:
+        - id: 16964
+          attachedIds: 1f070000
+          ownerId: 16962
+          connectionType: 2
+        - id: 16965
+          attachedIds: 1e070000
+          ownerId: 16962
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 1313.0038
+        yPosition: 3329.3743
+        variableName: beKindForBarbarian
+    - rid: 2406609200015737194
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 18359
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 18360
+          attachedIds: ba470000
+          ownerId: 18359
+          connectionType: 1
+        width: 115
+        height: 75
+        xPosition: 1036.695
+        yPosition: 3838.115
+        entryPointName: 3
+    - rid: 2406609200015737195
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 18361
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 18362
+          attachedIds: b8470000
+          ownerId: 18361
+          connectionType: 1
+        outputs:
+        - id: 18363
+          attachedIds: 
+          ownerId: 18361
+          connectionType: 1
+        width: 268
+        height: 226
+        xPosition: 1255.7028
+        yPosition: 3855.4958
+        items:
+        - rid: 2406609200015737232
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737196
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19366
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19367
+          attachedIds: a54b0000
+          ownerId: 19366
+          connectionType: 1
+        outputs:
+        - id: 19368
+          attachedIds: 
+          ownerId: 19366
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2145.916
+        yPosition: 3848.986
+        items:
+        - rid: 2406609200015737233
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737197
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19957
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19958
+          attachedIds: 8b060000
+          ownerId: 19957
+          connectionType: 1
+        outputs:
+        - id: 19959
+          attachedIds: fe4d0000
+          ownerId: 19957
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3539.5596
+        yPosition: 3183.3677
+        items:
+        - rid: 2406609200015737234
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737198
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19965
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19966
+          attachedIds: f74d0000
+          ownerId: 19965
+          connectionType: 1
+        outputs:
+        - id: 19967
+          attachedIds: 064e0000
+          ownerId: 19965
+          connectionType: 1
+        width: 268
+        height: 142.5
+        xPosition: 3912.6172
+        yPosition: 3184.2905
+        items:
+        - rid: 2406609200015737235
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737199
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19973
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19974
+          attachedIds: ff4d0000
+          ownerId: 19973
+          connectionType: 1
+        outputs:
+        - id: 19975
+          attachedIds: 134e0000
+          ownerId: 19973
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 4286.3667
+        yPosition: 3189.2905
+        items:
+        - rid: 2406609200015737236
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737200
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19986
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19987
+          attachedIds: 074e0000
+          ownerId: 19986
+          connectionType: 1
+        outputs:
+        - id: 19988
+          attachedIds: 1b4e0000
+          ownerId: 19986
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 4611.3667
+        yPosition: 3196.7905
+        items:
+        - rid: 2406609200015737237
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737201
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 19994
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 19995
+          attachedIds: 144e0000
+          ownerId: 19994
+          connectionType: 1
+        outputs:
+        - id: 19996
+          attachedIds: 234e0000
+          ownerId: 19994
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 4973.8667
+        yPosition: 3194.2905
+        items:
+        - rid: 2406609200015737238
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737202
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20002
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20003
+          attachedIds: 1c4e0000
+          ownerId: 20002
+          connectionType: 1
+        outputs:
+        - id: 20004
+          attachedIds: 334e0000
+          ownerId: 20002
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 5386.3667
+        yPosition: 3204.2905
+        items:
+        - rid: 2406609200015737239
+        characterName: Narrator
+        icon: 
+    - rid: 2406609200015737203
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20018
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 20019
+          attachedIds: 244e0000
+          ownerId: 20018
+          connectionType: 1
+        - id: 20020
+          attachedIds: 
+          ownerId: 20018
+          connectionType: 7
+        - id: 20022
+          attachedIds: 
+          ownerId: 20018
+          connectionType: 7
+        - id: 20035
+          attachedIds: 
+          ownerId: 20018
+          connectionType: 7
+        outputs:
+        - id: 20021
+          attachedIds: b0520000
+          ownerId: 20018
+          connectionType: 1
+        - id: 20023
+          attachedIds: 664e0000
+          ownerId: 20018
+          connectionType: 1
+        - id: 20036
+          attachedIds: 7e4e0000
+          ownerId: 20018
+          connectionType: 1
+        width: 228
+        height: 374
+        xPosition: 5738.6167
+        yPosition: 3171.7905
+        items:
+        - rid: 2406609200015737240
+        - rid: 2406609200015737241
+        - rid: 2406609200015737242
+    - rid: 2406609200015737204
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20037
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20038
+          attachedIds: b1520000
+          ownerId: 20037
+          connectionType: 1
+        outputs:
+        - id: 20039
+          attachedIds: 904e0000
+          ownerId: 20037
+          connectionType: 1
+        width: 268
+        height: 284.93726
+        xPosition: 6512.4854
+        yPosition: 2926.4653
+        items:
+        - rid: 2406609200015737243
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737205
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20045
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20046
+          attachedIds: 964e0000
+          ownerId: 20045
+          connectionType: 1
+        outputs:
+        - id: 20047
+          attachedIds: 564e0000
+          ownerId: 20045
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 7686.562
+        yPosition: 2949.7166
+        items:
+        - rid: 2406609200015737244
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737206
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20053
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20054
+          attachedIds: 4f4e0000
+          ownerId: 20053
+          connectionType: 1
+        outputs:
+        - id: 20055
+          attachedIds: 5e4e0000
+          ownerId: 20053
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 8075.312
+        yPosition: 2950.9666
+        items:
+        - rid: 2406609200015737245
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737207
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20061
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20062
+          attachedIds: 574e0000
+          ownerId: 20061
+          connectionType: 1
+        outputs:
+        - id: 20063
+          attachedIds: 
+          ownerId: 20061
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 8520.469
+        yPosition: 2940.654
+        items:
+        - rid: 2406609200015737246
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737208
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20069
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20070
+          attachedIds: 374e0000
+          ownerId: 20069
+          connectionType: 1
+        outputs:
+        - id: 20071
+          attachedIds: 694e0000
+          ownerId: 20069
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 6139.331
+        yPosition: 3301.5498
+        items:
+        - rid: 2406609200015737247
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737209
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20072
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20073
+          attachedIds: 674e0000
+          ownerId: 20072
+          connectionType: 1
+        outputs:
+        - id: 20074
+          attachedIds: 764e0000
+          ownerId: 20072
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 6732.4893
+        yPosition: 3260.9663
+        items:
+        - rid: 2406609200015737248
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737210
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20085
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20086
+          attachedIds: 6a4e00007f4e0000
+          ownerId: 20085
+          connectionType: 1
+        outputs:
+        - id: 20087
+          attachedIds: 56500000
+          ownerId: 20085
+          connectionType: 1
+        width: 268
+        height: 145.85938
+        xPosition: 7093.2783
+        yPosition: 3367.3281
+        items:
+        - rid: 2406609200015737249
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737211
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20093
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20094
+          attachedIds: 444e0000
+          ownerId: 20093
+          connectionType: 1
+        outputs:
+        - id: 20095
+          attachedIds: 764e0000
+          ownerId: 20093
+          connectionType: 1
+        width: 268
+        height: 210
+        xPosition: 6274.5254
+        yPosition: 3492.2358
+        items:
+        - rid: 2406609200015737250
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737212
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20111
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 20112
+          attachedIds: 474e0000
+          ownerId: 20111
+          connectionType: 1
+        - id: 20113
+          attachedIds: 
+          ownerId: 20111
+          connectionType: 5
+        - id: 20114
+          attachedIds: 
+          ownerId: 20111
+          connectionType: 9
+        - id: 20115
+          attachedIds: 
+          ownerId: 20111
+          connectionType: 9
+        - id: 20116
+          attachedIds: 
+          ownerId: 20111
+          connectionType: 9
+        outputs:
+        - id: 20117
+          attachedIds: 
+          ownerId: 20111
+          connectionType: 9
+        - id: 20118
+          attachedIds: 4e4e0000
+          ownerId: 20111
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 7369.4937
+        yPosition: 2916.1277
+        triggeredClassName: ItemGiver
+        triggeredMethodName: GiveItemToPlayer
+        methodSignature: GiveItemToPlayer()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737213
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20565
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 20566
+          attachedIds: 774e0000
+          ownerId: 20565
+          connectionType: 1
+        - id: 20567
+          attachedIds: 
+          ownerId: 20565
+          connectionType: 9
+        - id: 20568
+          attachedIds: 
+          ownerId: 20565
+          connectionType: 9
+        - id: 20569
+          attachedIds: 
+          ownerId: 20565
+          connectionType: 9
+        - id: 20570
+          attachedIds: 
+          ownerId: 20565
+          connectionType: 9
+        outputs:
+        - id: 20571
+          attachedIds: 
+          ownerId: 20565
+          connectionType: 9
+        - id: 20572
+          attachedIds: 9c510000
+          ownerId: 20565
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 7419.4995
+        yPosition: 3416.3484
+        triggeredClassName: ItemGiver
+        triggeredMethodName: GiveItemToPlayer
+        methodSignature: GiveItemToPlayer()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737214
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20891
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 20892
+          attachedIds: 5c500000
+          ownerId: 20891
+          connectionType: 1
+        outputs:
+        - id: 20893
+          attachedIds: 
+          ownerId: 20891
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 7879.2783
+        yPosition: 3410.1028
+        items:
+        - rid: 2406609200015737251
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737215
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 21167
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 21168
+          attachedIds: 354e0000
+          ownerId: 21167
+          connectionType: 1
+        outputs:
+        - id: 21169
+          attachedIds: 464e0000
+          ownerId: 21167
+          connectionType: 1
+        width: 268
+        height: 225.9375
+        xPosition: 6166.7363
+        yPosition: 2999.553
+        items:
+        - rid: 2406609200015737252
+        characterName: Narrator
+        icon: 
+    - rid: 2406609200015737216
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 21719
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 21720
+          attachedIds: da540000
+          ownerId: 21719
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 984.2953
+        yPosition: 4302.04
+        entryPointName: 4
+    - rid: 2406609200015737217
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 21721
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 21722
+          attachedIds: d8540000
+          ownerId: 21721
+          connectionType: 1
+        outputs:
+        - id: 21723
+          attachedIds: e2540000
+          ownerId: 21721
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1198.264
+        yPosition: 4302.743
+        items:
+        - rid: 2406609200015737253
+        characterName: Jimbo
+        icon: 
+    - rid: 2406609200015737218
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 21729
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 21730
+          attachedIds: db540000
+          ownerId: 21729
+          connectionType: 1
+        outputs:
+        - id: 21731
+          attachedIds: 
+          ownerId: 21729
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1598.8722
+        yPosition: 4300.7417
+        items:
+        - rid: 2406609200015737254
+        characterName: Scared barbarian
+        icon: 
+    - rid: 2406609200015737219
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 21737
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 21738
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 1
+        - id: 21739
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 9
+        - id: 21740
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 9
+        - id: 21741
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 9
+        - id: 21742
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 9
+        outputs:
+        - id: 21743
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 9
+        - id: 21744
+          attachedIds: 
+          ownerId: 21737
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1948.3905
+        yPosition: 4232.599
+        triggeredClassName: 
+        triggeredMethodName: 
+        methodSignature: 
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609200015737220
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "\rI have no problem with anyone"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737221
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Are you sure?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737222
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Okay, maybe I have small problem with those tiny creatures.
+
+'
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737223
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Kill those monsters! There are 3 wolves. '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737224
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: They are looking like zombies sometimes, but it might be a bug.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737225
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2406609200015737226
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2406609200015737227
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2406609200015737228
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Leave me alone...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737229
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I'm done with fighting.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737230
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Okay, sorry for bothering your mighty head
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737231
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hey, i've heard that you may have some problem with wolves in forest?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737232
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Did you complete the task?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737233
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Please, leave me...
+
+'
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737234
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Okay great... But...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737235
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You have this great sword and you said that you won't fight anymore
+          so...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737236
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: So you want my sword? If yes, just say it.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737237
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Well, yes
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737238
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: There is no chance, but I can give you a wolf slayer. A spear whose
+          owner was the most powerful slayer of wolf-like creatures in the forests.
+          Of course, for a certain fee I can give it to you....
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737239
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Do you want "Wolf slayer spear"? '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737240
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Fuck it, give it to me. *(pay 50gp)*\r"
+    - rid: 2406609200015737241
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nah, I preferred the sword so will thank you.
+    - rid: 2406609200015737242
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'I don''t have enough money...
+
+'
+    - rid: 2406609200015737243
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Wow thanks, I didn't expect you to take this worthless.... I mean magical
+          and invincible spear. Returns not accepted because.... It was used. Yes,
+          it was used.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737244
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Wait, but you said this weapon is...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737245
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It is the best! Unfortunately, you have a task, and now with this weapon
+          you can complete it twice as fast.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737246
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ehhh, okay then. See you soon.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737247
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: For real? You really think that you can beat them without my mighty
+          spear?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737248
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Well... yes?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737249
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Well, I was going to give it to you anyway
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737250
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ohh, you poor man, I understand you. I once knew a white-haired warrior
+          who was also robbed while drinking.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737251
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good luck my friend!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737252
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: '*(you gave him 50gp)*'
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737253
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Wolves are dead
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609200015737254
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Great! As promised, here are three potatoes. See you around!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &4229996323889778789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 16
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Player
+    - id: 1
+      language: en
+      text: Hey, i've heard that you may have some problem with wolves in forest?
+    - id: 2
+      language: en
+      text: Scared barbarian
+    - id: 3
+      language: en
+      text: "\rI have no problem with anyone"
+    - id: 4
+      language: en
+      text: Okay, sorry for bothering your mighty head
+    - id: 5
+      language: en
+      text: Are you sure?
+    - id: 6
+      language: en
+      text: 'Okay, maybe I have small problem with those tiny creatures.
+
+'
+    - id: 7
+      language: en
+      text: 'Kill those monsters! There are 3 wolves. '
+    - id: 8
+      language: en
+      text: They are looking like zombies sometimes, but it might be a bug.
+    - id: 9
+      language: en
+      text: Test
+    - id: 10
+      language: en
+      text: Did you killed them?
+    - id: 11
+      language: en
+      text: Leave me alone...
+    - id: 12
+      language: en
+      text: I'm done with fighting.
+    - id: 13
+      language: en
+      text: Jimbo
+    - id: 14
+      language: en
+      text: Did you complete the task?
+    - id: 15
+      language: en
+      text: 'Please, leave me...
+
+'
+  - counter: 16
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+    - id: 6
+      language: es
+      text: 
+    - id: 7
+      language: es
+      text: 
+    - id: 8
+      language: es
+      text: 
+    - id: 9
+      language: es
+      text: 
+    - id: 10
+      language: es
+      text: 
+    - id: 11
+      language: es
+      text: 
+    - id: 12
+      language: es
+      text: 
+    - id: 13
+      language: es
+      text: 
+    - id: 14
+      language: es
+      text: 
+    - id: 15
+      language: es
+      text: 
+  - counter: 16
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+    - id: 6
+      language: fr
+      text: 
+    - id: 7
+      language: fr
+      text: 
+    - id: 8
+      language: fr
+      text: 
+    - id: 9
+      language: fr
+      text: 
+    - id: 10
+      language: fr
+      text: 
+    - id: 11
+      language: fr
+      text: 
+    - id: 12
+      language: fr
+      text: 
+    - id: 13
+      language: fr
+      text: 
+    - id: 14
+      language: fr
+      text: 
+    - id: 15
+      language: fr
+      text: 
+--- !u!114 &5460683875279709600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 35
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Scared barbarian
+    - id: 1
+      language: en
+      text: "\rI have no problem with anyone"
+    - id: 2
+      language: en
+      text: Jimbo
+    - id: 3
+      language: en
+      text: Are you sure?
+    - id: 4
+      language: en
+      text: 'Okay, maybe I have small problem with those tiny creatures.
+
+'
+    - id: 5
+      language: en
+      text: 'Kill those monsters! There are 3 wolves. '
+    - id: 6
+      language: en
+      text: They are looking like zombies sometimes, but it might be a bug.
+    - id: 7
+      language: en
+      text: Leave me alone...
+    - id: 8
+      language: en
+      text: I'm done with fighting.
+    - id: 9
+      language: en
+      text: Okay, sorry for bothering your mighty head
+    - id: 10
+      language: en
+      text: Hey, i've heard that you may have some problem with wolves in forest?
+    - id: 11
+      language: en
+      text: Did you complete the task?
+    - id: 12
+      language: en
+      text: 'Please, leave me...
+
+'
+    - id: 13
+      language: en
+      text: Okay great... But...
+    - id: 14
+      language: en
+      text: You have this great sword and you said that you won't fight anymore so...
+    - id: 15
+      language: en
+      text: So you want my sword? If yes, just say it.
+    - id: 16
+      language: en
+      text: Well, yes
+    - id: 17
+      language: en
+      text: There is no chance, but I can give you a wolf slayer. A spear whose owner
+        was the most powerful slayer of wolf-like creatures in the forests. Of course,
+        for a certain fee I can give it to you....
+    - id: 18
+      language: en
+      text: Narrator
+    - id: 19
+      language: en
+      text: 'Do you want "Wolf slayer spear"? '
+    - id: 20
+      language: en
+      text: "Fuck it, give it to me. *(pay 50gp)*\r"
+    - id: 21
+      language: en
+      text: Nah, I preferred the sword so will thank you.
+    - id: 22
+      language: en
+      text: 'I don''t have enough money...
+
+'
+    - id: 23
+      language: en
+      text: Wow thanks, I didn't expect you to take this worthless.... I mean magical
+        and invincible spear. Returns not accepted because.... It was used. Yes,
+        it was used.
+    - id: 24
+      language: en
+      text: Wait, but you said this weapon is...
+    - id: 25
+      language: en
+      text: It is the best! Unfortunately, you have a task, and now with this weapon
+        you can complete it twice as fast.
+    - id: 26
+      language: en
+      text: Ehhh, okay then. See you soon.
+    - id: 27
+      language: en
+      text: For real? You really think that you can beat them without my mighty spear?
+    - id: 28
+      language: en
+      text: Well... yes?
+    - id: 29
+      language: en
+      text: Well, I was going to give it to you anyway
+    - id: 30
+      language: en
+      text: Ohh, you poor man, I understand you. I once knew a white-haired warrior
+        who was also robbed while drinking.
+    - id: 31
+      language: en
+      text: Good luck my friend!
+    - id: 32
+      language: en
+      text: '*(you gave him 50gp)*'
+    - id: 33
+      language: en
+      text: Wolves are dead
+    - id: 34
+      language: en
+      text: Great! As promised, here are three potatoes. See you around!
+  - counter: 35
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+    - id: 6
+      language: es
+      text: 
+    - id: 7
+      language: es
+      text: 
+    - id: 8
+      language: es
+      text: 
+    - id: 9
+      language: es
+      text: 
+    - id: 10
+      language: es
+      text: 
+    - id: 11
+      language: es
+      text: 
+    - id: 12
+      language: es
+      text: 
+    - id: 13
+      language: es
+      text: 
+    - id: 14
+      language: es
+      text: 
+    - id: 15
+      language: es
+      text: 
+    - id: 16
+      language: es
+      text: 
+    - id: 17
+      language: es
+      text: 
+    - id: 18
+      language: es
+      text: 
+    - id: 19
+      language: es
+      text: 
+    - id: 20
+      language: es
+      text: 
+    - id: 21
+      language: es
+      text: 
+    - id: 22
+      language: es
+      text: 
+    - id: 23
+      language: es
+      text: 
+    - id: 24
+      language: es
+      text: 
+    - id: 25
+      language: es
+      text: 
+    - id: 26
+      language: es
+      text: 
+    - id: 27
+      language: es
+      text: 
+    - id: 28
+      language: es
+      text: 
+    - id: 29
+      language: es
+      text: 
+    - id: 30
+      language: es
+      text: 
+    - id: 31
+      language: es
+      text: 
+    - id: 32
+      language: es
+      text: 
+    - id: 33
+      language: es
+      text: 
+    - id: 34
+      language: es
+      text: 
+  - counter: 35
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+    - id: 6
+      language: fr
+      text: 
+    - id: 7
+      language: fr
+      text: 
+    - id: 8
+      language: fr
+      text: 
+    - id: 9
+      language: fr
+      text: 
+    - id: 10
+      language: fr
+      text: 
+    - id: 11
+      language: fr
+      text: 
+    - id: 12
+      language: fr
+      text: 
+    - id: 13
+      language: fr
+      text: 
+    - id: 14
+      language: fr
+      text: 
+    - id: 15
+      language: fr
+      text: 
+    - id: 16
+      language: fr
+      text: 
+    - id: 17
+      language: fr
+      text: 
+    - id: 18
+      language: fr
+      text: 
+    - id: 19
+      language: fr
+      text: 
+    - id: 20
+      language: fr
+      text: 
+    - id: 21
+      language: fr
+      text: 
+    - id: 22
+      language: fr
+      text: 
+    - id: 23
+      language: fr
+      text: 
+    - id: 24
+      language: fr
+      text: 
+    - id: 25
+      language: fr
+      text: 
+    - id: 26
+      language: fr
+      text: 
+    - id: 27
+      language: fr
+      text: 
+    - id: 28
+      language: fr
+      text: 
+    - id: 29
+      language: fr
+      text: 
+    - id: 30
+      language: fr
+      text: 
+    - id: 31
+      language: fr
+      text: 
+    - id: 32
+      language: fr
+      text: 
+    - id: 33
+      language: fr
+      text: 
+    - id: 34
+      language: fr
+      text: 

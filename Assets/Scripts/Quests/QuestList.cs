@@ -47,7 +47,7 @@ public class QuestList : MonoBehaviour
     {
         foreach (var status in _statuses)
         {
-            if (status.GetQuest() == quest) return status ;
+            if (status.GetQuest() == quest) return status;
         }
 
         return null;

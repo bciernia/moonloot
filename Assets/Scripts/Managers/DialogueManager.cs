@@ -1,4 +1,3 @@
-using System;
 using EasyTalk.Controller;
 using UnityEngine;
 
@@ -6,10 +5,11 @@ public class DialogueManager : Singleton<DialogueManager>
 {
     public NPCInteraction NPCSelected { get; set; }
 
-    public bool IsInConversation { get; set; }
     private bool _dialogueStarted;
     private PlayerActions _playerActions;
     private GameObject _player;
+
+    public static bool DialogueInProgress => Instance != null && Instance._dialogueStarted;
 
     protected override void Awake()
     {
@@ -18,11 +18,6 @@ public class DialogueManager : Singleton<DialogueManager>
         _player = GameObject.FindWithTag("Player");
     }
 
-    // public void Start()
-    // {
-    //     _playerActions.Dialogue.Interact.performed += ctx => StartDialogue();
-    // }
-    
     public void StartDialogue()
     {
         if (_dialogueStarted) return;
@@ -33,17 +28,18 @@ public class DialogueManager : Singleton<DialogueManager>
             playerDialogueController.PlayDialogue();
             return;
         }
-        
+
         _dialogueStarted = true;
-        // NPCSelected._interactionBox.SetActive(false);
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         SetCharacterInFrontOfNpc();
-    
+
+        var entryId = NPCSelected.GetComponent<DialogueEntrySetter>().GetEntryId();
+        Debug.Log(entryId);
         dialogueController.onStop.AddListener(EndDialogue);
-        dialogueController.PlayDialogue();
+        dialogueController.PlayDialogue(entryId);
     }
-    
+
     private void SetCharacterInFrontOfNpc()
     {
         _player.GetComponent<PlayerMovement>().enabled = false;
@@ -54,18 +50,22 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         _player.GetComponent<PlayerMovement>().enabled = true;
 
-        // if (NPCSelected != null)
-        // {
-             // NPCSelected._interactionBox.SetActive(true);
-        // }
+        if (NPCSelected != null)
+        {
+            NPCSelected.EnableNpcMovement();
+        }
 
-        NPCSelected.EnableNpcMovement();
-        
         _dialogueStarted = false;
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
-        
         dialogueController.onStop.RemoveListener(EndDialogue);
+
+        FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
+    }
+
+    public bool IsDialogueRunning()
+    {
+        return _dialogueStarted;
     }
 
     private void OnEnable()
