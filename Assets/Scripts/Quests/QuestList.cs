@@ -43,6 +43,13 @@ public class QuestList : MonoBehaviour
         }
     }
 
+    public bool IsObjectiveCompleted(Quest quest, string objective)
+    {
+        var questStatus = GetQuestStatus(quest);
+
+        return questStatus.IsObjectiveComplete(objective);
+    }
+    
     private QuestStatus GetQuestStatus(Quest quest)
     {
         foreach (var status in _statuses)
@@ -52,4 +59,6 @@ public class QuestList : MonoBehaviour
 
         return null;
     }
+    
+    
 }

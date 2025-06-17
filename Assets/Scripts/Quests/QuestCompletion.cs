@@ -19,4 +19,10 @@ public class QuestCompletion : MonoBehaviour
         var questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
         questList.CompleteObjective(quest, objective);
     }
+    
+    public bool IsObjectiveCompleted(string objectiveName)
+    {
+        var questStatus = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
+        return questStatus.IsObjectiveCompleted(quest, objectiveName);
+    }
 }

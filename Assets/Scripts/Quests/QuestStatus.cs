@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
+using Update = Unity.VisualScripting.Update;
 
 public class QuestStatus
 {

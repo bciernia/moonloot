@@ -35,22 +35,6 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
         }
     }
 
-    // private void Update()
-    // {
-    //     UnblockArea();
-    // }
-    //
-    // private void UnblockArea()
-    // {
-    //     if (enemiesInZone.Any(enemyStats => enemyStats.CurrentHP > 0)) return;
-    //     
-    //     if (_questCompletion.Quest)
-    //     {
-    //         _questCompletion.CompleteObjective();
-    //     }
-    //     UnblockExitFromArea();
-    // }
-
     private IEnumerator UnblockAreaRoutine()
     {
         while (true)
@@ -62,29 +46,13 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
                     _questCompletion.CompleteObjective();
                 }
 
-                Debug.Log("Test");
-                
                 UnblockExitFromArea();
-                yield break; // Kończymy coroutine po wykonaniu zadania
+                yield break;
             }
-            Debug.Log("Test2");
 
-            yield return new WaitForSeconds(0.5f); // Odczekaj pół sekundy przed kolejnym sprawdzeniem
+            yield return new WaitForSeconds(0.5f); 
         }
     }
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    //     if (!other.CompareTag("Player")) return;
-    //     MoveCameraToPoint();
-    //     BlockExitFromArea();
-    // }
-    //
-    // private void OnTriggerExit2D(Collider2D other)
-    // {
-    //     if (!other.CompareTag("Player")) return;
-    //     MoveCameraToPlayer();
-    // }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -93,7 +61,6 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
         MoveCameraToPoint();
         BlockExitFromArea();
 
-        // Uruchom coroutine tylko raz
         if (_unblockCheckCoroutine == null)
         {
             _unblockCheckCoroutine = StartCoroutine(UnblockAreaRoutine());
@@ -106,7 +73,6 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
     
         MoveCameraToPlayer();
 
-        // Zatrzymaj coroutine, jeśli gracz wychodzi z areny
         if (_unblockCheckCoroutine != null)
         {
             StopCoroutine(_unblockCheckCoroutine);
