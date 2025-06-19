@@ -24,7 +24,10 @@ public class NPCInfoManager : Singleton<NPCInfoManager>
 
     public void HideNpcInfo()
     {
-        _npcInfoPanel.SetActive(false);        
+        if (_npcInfoPanel.activeSelf)
+        {
+            _npcInfoPanel.SetActive(false);        
+        }
     }
 
     private void UpdateNpcUI()

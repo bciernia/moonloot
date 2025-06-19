@@ -43,13 +43,22 @@ public class QuestList : MonoBehaviour
         }
     }
 
+    public bool IsObjectiveCompleted(Quest quest, string objective)
+    {
+        var questStatus = GetQuestStatus(quest);
+
+        return questStatus.IsObjectiveComplete(objective);
+    }
+    
     private QuestStatus GetQuestStatus(Quest quest)
     {
         foreach (var status in _statuses)
         {
-            if (status.GetQuest() == quest) return status ;
+            if (status.GetQuest() == quest) return status;
         }
 
         return null;
     }
+    
+    
 }

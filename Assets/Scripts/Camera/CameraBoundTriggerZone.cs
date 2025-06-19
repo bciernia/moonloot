@@ -1,69 +1,50 @@
-using System;
-using System.Collections;
 using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraBoundTriggerZone : MonoBehaviour
 {
     [SerializeField] private Transform targetFocusPoint;
-    [SerializeField] private GameObject upColliderGameObject;
-    [SerializeField] private GameObject downColliderGameObject;
-    [SerializeField] private GameObject leftColliderGameObject;
-    [SerializeField] private GameObject rightColliderGameObject;
-    
-    private CinemachineCamera vcam;
+    public float moveSpeed = 3f;
+    private Transform playerTransform;
+    private Transform currentTarget;
 
+    private CinemachineCamera virtualCamera;
+    private Transform cameraFollowTransform;
+    private Transform cameraTargetTransform;
     private void Start()
     {
-        vcam = FindObjectOfType<CinemachineCamera>();
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        currentTarget = playerTransform;
+
+        virtualCamera = FindObjectOfType<CinemachineCamera>();
+
+        var camTargetObj = new GameObject("CameraTarget");
+        cameraTargetTransform = camTargetObj.transform;
+        cameraTargetTransform.position = playerTransform.position;
+
+        virtualCamera.Follow = cameraTargetTransform;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            UnblockExitFromArea();
-        }
+        if (cameraTargetTransform == null || currentTarget == null) return;
+
+        cameraTargetTransform.position = Vector3.Lerp(
+            cameraTargetTransform.position,
+            currentTarget.position,
+            Time.deltaTime * moveSpeed
+        );
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        MoveCameraToPoint();
-        BlockExitFromArea();
+        currentTarget = targetFocusPoint;
     }
-    
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        MoveCameraToPlayer();
-    }
-
-    private void MoveCameraToPoint()
-    {
-        vcam.Target.TrackingTarget = targetFocusPoint;
-    }
-
-    private void MoveCameraToPlayer()
-    {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        vcam.Target.TrackingTarget = player.transform;
-    }
-
-    private void BlockExitFromArea()
-    {
-        upColliderGameObject.SetActive(true);
-        downColliderGameObject.SetActive(true);
-        leftColliderGameObject.SetActive(true);
-        rightColliderGameObject.SetActive(true);
-    }
-
-    private void UnblockExitFromArea()
-    {
-        upColliderGameObject.SetActive(false);
-        downColliderGameObject.SetActive(false);
-        leftColliderGameObject.SetActive(false);
-        rightColliderGameObject.SetActive(false);
+        currentTarget = playerTransform;
     }
 }
