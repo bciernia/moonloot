@@ -35,7 +35,6 @@ public class DialogueManager : Singleton<DialogueManager>
         SetCharacterInFrontOfNpc();
 
         var entryId = NPCSelected.GetComponent<DialogueEntrySetter>().GetEntryId();
-        Debug.Log(entryId);
         dialogueController.onStop.AddListener(EndDialogue);
         dialogueController.PlayDialogue(entryId);
     }

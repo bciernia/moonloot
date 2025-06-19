@@ -101,7 +101,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.125, y: 1.125}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -235,6 +235,7 @@ MonoBehaviour:
   speed: 3
   staminaTimer: 0
   staminaDecreaseTime: 0.125
+  limitToCameraView: 0
 --- !u!114 &4771859706471597872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +530,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _npcInfoPanel: {fileID: 5460334605925405190}
+  _healthBar: {fileID: 0}
+  _npcName: {fileID: 0}
 --- !u!1 &7322552871072060262
 GameObject:
   m_ObjectHideFlags: 0
@@ -688,7 +691,7 @@ Transform:
   m_GameObject: {fileID: 8405619252578174031}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -738,7 +741,7 @@ SpriteRenderer:
   m_SortingLayerID: 1719086049
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: -3212958198958416875, guid: 33fcc99529462604285a88044f6b2498, type: 3}
+  m_Sprite: {fileID: -6792467119959897407, guid: 6a64054b893e3c8498751e7886d4eed6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -1,6 +1,607 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1539741667501248494
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: CipciaWithWhiteHairDialogue
+  m_EditorClassIdentifier: 
+  version: 1.5.0
+  nodes:
+  - rid: 2406609250502574170
+  - rid: 2406609250502574171
+  - rid: 2406609250502574172
+  - rid: 2406609250502574173
+  - rid: 2406609250502574174
+  - rid: 2406609250502574175
+  - rid: 2406609250502574176
+  - rid: 2406609250502574177
+  - rid: 2406609250502574178
+  - rid: 2406609250502574179
+  - rid: 2406609250502574180
+  - rid: 2406609250502574181
+  - rid: 2406609250502574182
+  - rid: 2406609250502574183
+  - rid: 2406609250502574184
+  - rid: 2406609250502574185
+  translationLibrary: {fileID: 1516550118491367209}
+  maxID: 11573
+  references:
+    version: 2
+    RefIds:
+    - rid: 2406609250502574170
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 17.11845
+        yPosition: 226.7652
+        entryPointName: 1
+    - rid: 2406609250502574171
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 0d000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 193.04034
+        yPosition: 224.5777
+        items:
+        - rid: 2406609250502574186
+        characterName: White hair cipcia
+        icon: 
+    - rid: 2406609250502574172
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 12
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 13
+          attachedIds: 06000000
+          ownerId: 12
+          connectionType: 1
+        - id: 14
+          attachedIds: 
+          ownerId: 12
+          connectionType: 7
+        - id: 16
+          attachedIds: 750c0000
+          ownerId: 12
+          connectionType: 7
+        - id: 29
+          attachedIds: 
+          ownerId: 12
+          connectionType: 7
+        outputs:
+        - id: 15
+          attachedIds: 69130000
+          ownerId: 12
+          connectionType: 1
+        - id: 17
+          attachedIds: 46000000
+          ownerId: 12
+          connectionType: 1
+        - id: 30
+          attachedIds: 5d000000
+          ownerId: 12
+          connectionType: 1
+        width: 302
+        height: 173
+        xPosition: 830.1843
+        yPosition: 337.67007
+        items:
+        - rid: 2406609250502574187
+        - rid: 2406609250502574188
+        - rid: 2406609250502574189
+    - rid: 2406609250502574173
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 56
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 57
+          attachedIds: 850000006f130000
+          ownerId: 56
+          connectionType: 1
+        outputs:
+        - id: 58
+          attachedIds: b91b0000
+          ownerId: 56
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1911.4093
+        yPosition: 392.67725
+        items:
+        - rid: 2406609250502574190
+        characterName: Alchemist
+        icon: 
+    - rid: 2406609250502574174
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 64
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 65
+          attachedIds: bc1b0000081c00002b1c0000
+          ownerId: 64
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 4155.9375
+        yPosition: 527.15924
+        exitPointName: 
+    - rid: 2406609250502574175
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 69
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 70
+          attachedIds: 11000000
+          ownerId: 69
+          connectionType: 1
+        outputs:
+        - id: 71
+          attachedIds: 81000000
+          ownerId: 69
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1278.3838
+        yPosition: 706.31805
+        items:
+        - rid: 2406609250502574191
+        characterName: Alchemist
+        icon: 
+    - rid: 2406609250502574176
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 92
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 93
+          attachedIds: 1e000000
+          ownerId: 92
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1029.2197
+        yPosition: 711.3661
+        exitPointName: 
+    - rid: 2406609250502574177
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 128
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 129
+          attachedIds: 47000000
+          ownerId: 128
+          connectionType: 1
+        - id: 130
+          attachedIds: 
+          ownerId: 128
+          connectionType: 7
+        - id: 132
+          attachedIds: 
+          ownerId: 128
+          connectionType: 7
+        outputs:
+        - id: 133
+          attachedIds: 39000000
+          ownerId: 128
+          connectionType: 1
+        - id: 135
+          attachedIds: 
+          ownerId: 128
+          connectionType: 1
+        width: 228
+        height: 138.5
+        xPosition: 1594.3547
+        yPosition: 627.90845
+        items:
+        - rid: 2406609250502574192
+        - rid: 2406609250502574193
+    - rid: 2406609250502574178
+      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3185
+        name: OPTION_FILTER
+        nodeType: 13
+        inputs:
+        - id: 3186
+          attachedIds: 
+          ownerId: 3185
+          connectionType: 5
+        - id: 3187
+          attachedIds: 
+          ownerId: 3185
+          connectionType: 2
+        - id: 3188
+          attachedIds: 
+          ownerId: 3185
+          connectionType: 2
+        outputs:
+        - id: 3189
+          attachedIds: 10000000
+          ownerId: 3185
+          connectionType: 7
+        width: 150
+        height: 145
+        xPosition: 535.3508
+        yPosition: 454.38852
+        isDisplayed: 0
+        isSelectable: 0
+    - rid: 2406609250502574179
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4968
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4969
+          attachedIds: 0f000000
+          ownerId: 4968
+          connectionType: 1
+        - id: 4970
+          attachedIds: 
+          ownerId: 4968
+          connectionType: 8
+        - id: 4971
+          attachedIds: 
+          ownerId: 4968
+          connectionType: 9
+        - id: 4972
+          attachedIds: 
+          ownerId: 4968
+          connectionType: 9
+        - id: 4973
+          attachedIds: 
+          ownerId: 4968
+          connectionType: 9
+        outputs:
+        - id: 4974
+          attachedIds: 
+          ownerId: 4968
+          connectionType: 9
+        - id: 4975
+          attachedIds: 39000000
+          ownerId: 4968
+          connectionType: 1
+        width: 200
+        height: 321.2499
+        xPosition: 1367.4333
+        yPosition: 260.8625
+        triggeredClassName: QuestGiver
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609250502574180
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7096
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 7097
+          attachedIds: 3a000000
+          ownerId: 7096
+          connectionType: 1
+        - id: 7098
+          attachedIds: 
+          ownerId: 7096
+          connectionType: 7
+        - id: 7099
+          attachedIds: 
+          ownerId: 7096
+          connectionType: 7
+        outputs:
+        - id: 7100
+          attachedIds: 41000000
+          ownerId: 7096
+          connectionType: 1
+        - id: 7101
+          attachedIds: e31b0000
+          ownerId: 7096
+          connectionType: 1
+        width: 228
+        height: 138.5
+        xPosition: 2454.4392
+        yPosition: 504.37866
+        items:
+        - rid: 2406609250502574194
+        - rid: 2406609250502574195
+    - rid: 2406609250502574181
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7138
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7139
+          attachedIds: bd1b0000
+          ownerId: 7138
+          connectionType: 1
+        outputs:
+        - id: 7140
+          attachedIds: 051c0000
+          ownerId: 7138
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2751.3486
+        yPosition: 636.39
+        items:
+        - rid: 2406609250502574196
+        characterName: Alchemist
+        icon: 
+    - rid: 2406609250502574182
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7172
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 7173
+          attachedIds: e41b0000
+          ownerId: 7172
+          connectionType: 1
+        - id: 7174
+          attachedIds: 
+          ownerId: 7172
+          connectionType: 7
+        - id: 7175
+          attachedIds: 
+          ownerId: 7172
+          connectionType: 7
+        outputs:
+        - id: 7176
+          attachedIds: 41000000
+          ownerId: 7172
+          connectionType: 1
+        - id: 7177
+          attachedIds: 5e1c0000
+          ownerId: 7172
+          connectionType: 1
+        width: 228
+        height: 138.5
+        xPosition: 3154.4778
+        yPosition: 607.8636
+        items:
+        - rid: 2406609250502574197
+        - rid: 2406609250502574198
+    - rid: 2406609250502574183
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7209
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7210
+          attachedIds: 641c0000
+          ownerId: 7209
+          connectionType: 1
+        outputs:
+        - id: 7211
+          attachedIds: 41000000
+          ownerId: 7209
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3761.103
+        yPosition: 714.1751
+        items:
+        - rid: 2406609250502574199
+        characterName: Alchemist
+        icon: 
+    - rid: 2406609250502574184
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7261
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 7262
+          attachedIds: 091c0000
+          ownerId: 7261
+          connectionType: 1
+        - id: 7263
+          attachedIds: 
+          ownerId: 7261
+          connectionType: 8
+        - id: 7264
+          attachedIds: 
+          ownerId: 7261
+          connectionType: 9
+        - id: 7265
+          attachedIds: 
+          ownerId: 7261
+          connectionType: 9
+        - id: 7266
+          attachedIds: 
+          ownerId: 7261
+          connectionType: 9
+        outputs:
+        - id: 7267
+          attachedIds: 
+          ownerId: 7261
+          connectionType: 9
+        - id: 7268
+          attachedIds: 2a1c0000
+          ownerId: 7261
+          connectionType: 1
+        width: 200
+        height: 321.2499
+        xPosition: 3454.8677
+        yPosition: 715.6826
+        triggeredClassName: QuestGiver
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609250502574185
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10734
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 10735
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 1
+        - id: 10736
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 9
+        - id: 10737
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 9
+        - id: 10738
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 9
+        - id: 10739
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 9
+        outputs:
+        - id: 10740
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 9
+        - id: 10741
+          attachedIds: 
+          ownerId: 10734
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1973.7876
+        yPosition: 653.9713
+        triggeredClassName: 
+        triggeredMethodName: 
+        methodSignature: 
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 2406609250502574186
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hello, are you looking for some quests?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609250502574187
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Give me quest
+    - rid: 2406609250502574188
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: This option is hidden
+    - rid: 2406609250502574189
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nothing, bye!
+    - rid: 2406609250502574190
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good luck!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609250502574191
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Ok, take it! Good luck!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609250502574192
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: How are you?
+    - rid: 2406609250502574193
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nothing, bye!
+    - rid: 2406609250502574194
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I will do my best!
+    - rid: 2406609250502574195
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's not enough for me!
+    - rid: 2406609250502574196
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: So you want second task?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2406609250502574197
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nah, one will be enough
+    - rid: 2406609250502574198
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's not enough for me!
+    - rid: 2406609250502574199
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's should be enough for now. Come later for new adventures!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &1516550118491367209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -203,604 +804,3 @@ MonoBehaviour:
     - id: 20
       language: fr
       text: 
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
-  m_Name: CipciaWithWhiteHairDialogue
-  m_EditorClassIdentifier: 
-  version: 1.5.0
-  nodes:
-  - rid: 7577191327750684758
-  - rid: 7577191327750684759
-  - rid: 7577191327750684760
-  - rid: 7577191327750684761
-  - rid: 7577191327750684762
-  - rid: 7577191327750684763
-  - rid: 7577191327750684764
-  - rid: 7577191327750684765
-  - rid: 7577191327750684766
-  - rid: 7577191327750684767
-  - rid: 7577191327750684768
-  - rid: 7577191327750684769
-  - rid: 7577191327750684770
-  - rid: 7577191327750684771
-  - rid: 7577191327750684772
-  - rid: 7577191327750684773
-  translationLibrary: {fileID: -1539741667501248494}
-  maxID: 11376
-  references:
-    version: 2
-    RefIds:
-    - rid: 7577191327750684758
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 2
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 3
-          attachedIds: 05000000
-          ownerId: 2
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: 17.11845
-        yPosition: 226.7652
-        entryPointName: 
-    - rid: 7577191327750684759
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 5
-          attachedIds: 03000000
-          ownerId: 4
-          connectionType: 1
-        outputs:
-        - id: 6
-          attachedIds: 0d000000
-          ownerId: 4
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 193.04034
-        yPosition: 224.5777
-        items:
-        - rid: 7577191327750684774
-        characterName: White hair cipcia
-        icon: 
-    - rid: 7577191327750684760
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 12
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 13
-          attachedIds: 06000000
-          ownerId: 12
-          connectionType: 1
-        - id: 14
-          attachedIds: 
-          ownerId: 12
-          connectionType: 7
-        - id: 16
-          attachedIds: 750c0000
-          ownerId: 12
-          connectionType: 7
-        - id: 29
-          attachedIds: 
-          ownerId: 12
-          connectionType: 7
-        outputs:
-        - id: 15
-          attachedIds: 69130000
-          ownerId: 12
-          connectionType: 1
-        - id: 17
-          attachedIds: 46000000
-          ownerId: 12
-          connectionType: 1
-        - id: 30
-          attachedIds: 5d000000
-          ownerId: 12
-          connectionType: 1
-        width: 302
-        height: 173
-        xPosition: 830.1843
-        yPosition: 337.67007
-        items:
-        - rid: 7577191327750684775
-        - rid: 7577191327750684776
-        - rid: 7577191327750684777
-    - rid: 7577191327750684761
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 56
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 57
-          attachedIds: 850000006f130000
-          ownerId: 56
-          connectionType: 1
-        outputs:
-        - id: 58
-          attachedIds: b91b0000
-          ownerId: 56
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 1911.4093
-        yPosition: 392.67725
-        items:
-        - rid: 7577191327750684778
-        characterName: Alchemist
-        icon: 
-    - rid: 7577191327750684762
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 64
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 65
-          attachedIds: bc1b0000081c00002b1c0000
-          ownerId: 64
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: 4155.9375
-        yPosition: 527.15924
-        exitPointName: 
-    - rid: 7577191327750684763
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 69
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 70
-          attachedIds: 11000000
-          ownerId: 69
-          connectionType: 1
-        outputs:
-        - id: 71
-          attachedIds: 81000000
-          ownerId: 69
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 1278.3838
-        yPosition: 706.31805
-        items:
-        - rid: 7577191327750684779
-        characterName: Alchemist
-        icon: 
-    - rid: 7577191327750684764
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 92
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 93
-          attachedIds: 1e000000
-          ownerId: 92
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: 1029.2197
-        yPosition: 711.3661
-        exitPointName: 
-    - rid: 7577191327750684765
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 128
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 129
-          attachedIds: 47000000
-          ownerId: 128
-          connectionType: 1
-        - id: 130
-          attachedIds: 
-          ownerId: 128
-          connectionType: 7
-        - id: 132
-          attachedIds: 
-          ownerId: 128
-          connectionType: 7
-        outputs:
-        - id: 133
-          attachedIds: 39000000
-          ownerId: 128
-          connectionType: 1
-        - id: 135
-          attachedIds: 
-          ownerId: 128
-          connectionType: 1
-        width: 228
-        height: 138.5
-        xPosition: 1594.3547
-        yPosition: 627.90845
-        items:
-        - rid: 7577191327750684780
-        - rid: 7577191327750684781
-    - rid: 7577191327750684766
-      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3185
-        name: OPTION_FILTER
-        nodeType: 13
-        inputs:
-        - id: 3186
-          attachedIds: 
-          ownerId: 3185
-          connectionType: 5
-        - id: 3187
-          attachedIds: 
-          ownerId: 3185
-          connectionType: 2
-        - id: 3188
-          attachedIds: 
-          ownerId: 3185
-          connectionType: 2
-        outputs:
-        - id: 3189
-          attachedIds: 10000000
-          ownerId: 3185
-          connectionType: 7
-        width: 150
-        height: 145
-        xPosition: 535.3508
-        yPosition: 454.38852
-        isDisplayed: 0
-        isSelectable: 0
-    - rid: 7577191327750684767
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4968
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 4969
-          attachedIds: 0f000000
-          ownerId: 4968
-          connectionType: 1
-        - id: 4970
-          attachedIds: 
-          ownerId: 4968
-          connectionType: 8
-        - id: 4971
-          attachedIds: 
-          ownerId: 4968
-          connectionType: 9
-        - id: 4972
-          attachedIds: 
-          ownerId: 4968
-          connectionType: 9
-        - id: 4973
-          attachedIds: 
-          ownerId: 4968
-          connectionType: 9
-        outputs:
-        - id: 4974
-          attachedIds: 
-          ownerId: 4968
-          connectionType: 9
-        - id: 4975
-          attachedIds: 39000000
-          ownerId: 4968
-          connectionType: 1
-        width: 200
-        height: 321.2499
-        xPosition: 1367.4333
-        yPosition: 260.8625
-        triggeredClassName: QuestGiver
-        triggeredMethodName: GiveQuest
-        methodSignature: GiveQuest(int)
-        parameterTypes:
-        - int
-        parameterValues:
-        - 0
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 7577191327750684768
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7096
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 7097
-          attachedIds: 3a000000
-          ownerId: 7096
-          connectionType: 1
-        - id: 7098
-          attachedIds: 
-          ownerId: 7096
-          connectionType: 7
-        - id: 7099
-          attachedIds: 
-          ownerId: 7096
-          connectionType: 7
-        outputs:
-        - id: 7100
-          attachedIds: 41000000
-          ownerId: 7096
-          connectionType: 1
-        - id: 7101
-          attachedIds: e31b0000
-          ownerId: 7096
-          connectionType: 1
-        width: 228
-        height: 138.5
-        xPosition: 2454.4392
-        yPosition: 504.37866
-        items:
-        - rid: 7577191327750684782
-        - rid: 7577191327750684783
-    - rid: 7577191327750684769
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7138
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 7139
-          attachedIds: bd1b0000
-          ownerId: 7138
-          connectionType: 1
-        outputs:
-        - id: 7140
-          attachedIds: 051c0000
-          ownerId: 7138
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 2751.3486
-        yPosition: 636.39
-        items:
-        - rid: 7577191327750684784
-        characterName: Alchemist
-        icon: 
-    - rid: 7577191327750684770
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7172
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 7173
-          attachedIds: e41b0000
-          ownerId: 7172
-          connectionType: 1
-        - id: 7174
-          attachedIds: 
-          ownerId: 7172
-          connectionType: 7
-        - id: 7175
-          attachedIds: 
-          ownerId: 7172
-          connectionType: 7
-        outputs:
-        - id: 7176
-          attachedIds: 41000000
-          ownerId: 7172
-          connectionType: 1
-        - id: 7177
-          attachedIds: 5e1c0000
-          ownerId: 7172
-          connectionType: 1
-        width: 228
-        height: 138.5
-        xPosition: 3154.4778
-        yPosition: 607.8636
-        items:
-        - rid: 7577191327750684785
-        - rid: 7577191327750684786
-    - rid: 7577191327750684771
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7209
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 7210
-          attachedIds: 641c0000
-          ownerId: 7209
-          connectionType: 1
-        outputs:
-        - id: 7211
-          attachedIds: 41000000
-          ownerId: 7209
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 3761.103
-        yPosition: 714.1751
-        items:
-        - rid: 7577191327750684787
-        characterName: Alchemist
-        icon: 
-    - rid: 7577191327750684772
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7261
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 7262
-          attachedIds: 091c0000
-          ownerId: 7261
-          connectionType: 1
-        - id: 7263
-          attachedIds: 
-          ownerId: 7261
-          connectionType: 8
-        - id: 7264
-          attachedIds: 
-          ownerId: 7261
-          connectionType: 9
-        - id: 7265
-          attachedIds: 
-          ownerId: 7261
-          connectionType: 9
-        - id: 7266
-          attachedIds: 
-          ownerId: 7261
-          connectionType: 9
-        outputs:
-        - id: 7267
-          attachedIds: 
-          ownerId: 7261
-          connectionType: 9
-        - id: 7268
-          attachedIds: 2a1c0000
-          ownerId: 7261
-          connectionType: 1
-        width: 200
-        height: 321.2499
-        xPosition: 3454.8677
-        yPosition: 715.6826
-        triggeredClassName: QuestGiver
-        triggeredMethodName: GiveQuest
-        methodSignature: GiveQuest(int)
-        parameterTypes:
-        - int
-        parameterValues:
-        - 1
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 7577191327750684773
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 10734
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 10735
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 1
-        - id: 10736
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 9
-        - id: 10737
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 9
-        - id: 10738
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 9
-        - id: 10739
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 9
-        outputs:
-        - id: 10740
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 9
-        - id: 10741
-          attachedIds: 
-          ownerId: 10734
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 1973.7876
-        yPosition: 653.9713
-        triggeredClassName: 
-        triggeredMethodName: 
-        methodSignature: 
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 7577191327750684774
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Hello, are you looking for some quests?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 7577191327750684775
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Give me quest
-    - rid: 7577191327750684776
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: This option is hidden
-    - rid: 7577191327750684777
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Nothing, bye!
-    - rid: 7577191327750684778
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Good luck!
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 7577191327750684779
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Ok, take it! Good luck!
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 7577191327750684780
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: How are you?
-    - rid: 7577191327750684781
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Nothing, bye!
-    - rid: 7577191327750684782
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: I will do my best!
-    - rid: 7577191327750684783
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: It's not enough for me!
-    - rid: 7577191327750684784
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: So you want second task?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 7577191327750684785
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Nah, one will be enough
-    - rid: 7577191327750684786
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: It's not enough for me!
-    - rid: 7577191327750684787
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: It's should be enough for now. Come later for new adventures!
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
