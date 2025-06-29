@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIInventoryPage : MonoBehaviour
@@ -8,6 +9,7 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] private RectTransform contentPanel;
     [SerializeField] private UIInventoryDescription itemDescription;
     [SerializeField] private MouseFollower mouseFollower;
+    [SerializeField] private TextMeshProUGUI goldAmountTMP;
     private List<UIInventoryItem> listOfUiItems = new List<UIInventoryItem>();
 
     private int currentlyDraggedItemIndex = -1;
@@ -159,5 +161,10 @@ public class UIInventoryPage : MonoBehaviour
             item.ResetData();
             item.Deselect();
         }
+    }
+
+    public void UpdateGoldAmount(int goldAmount)
+    {
+        goldAmountTMP.text = $"Gold: {goldAmount}";
     }
 }

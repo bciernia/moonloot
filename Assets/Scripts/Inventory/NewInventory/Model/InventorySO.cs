@@ -13,7 +13,7 @@ public class InventorySO : ScriptableObject
     [field: SerializeField]
     public int Size { get; private set; } = 10;
 
-    public int Gold { get; private set; } = 50;
+    public int Gold { get; set; } = 50;
 
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
     
@@ -26,24 +26,9 @@ public class InventorySO : ScriptableObject
         }
     }
 
-    public void ChangeGoldAmount(int amount)
-    {
-        if (amount * -1 > Gold)
-        {
-            Debug.Log("you don't have enough money");
-        }
-        
-        Gold += amount;
-    }
-    
+
     public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
     {
-        if (item is GoldItemSO)
-        {
-            ChangeGoldAmount(quantity);
-            return quantity;
-        }
-        
         if (!item.IsStackable)
         {
             for (int i = 0; i < inventoryItems.Count; i++)

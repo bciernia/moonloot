@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Inventory.NewInventory.Model;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class InventoryController : Singleton<InventoryController>
@@ -22,15 +24,35 @@ public class InventoryController : Singleton<InventoryController>
         PrepareInventoryData();
     }
 
+    public void ChangeGoldAmount(GoldItemSO gold)
+    {
+        var goldAmount = gold.Amount;
+        
+        if (goldAmount * -1 > inventoryData.Gold)
+        {
+            Debug.Log("you don't have enough money");
+            return;
+        }
+        
+        inventoryData.Gold += goldAmount;
+
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+    }
+    
     public void AddItem(InventoryItem item)
     {
+        if (item.item is GoldItemSO goldItem)
+        {
+            ChangeGoldAmount(goldItem);
+            return;
+        }
+        
         inventoryData.AddItem(item);
     }
     
     private void PrepareInventoryData()
     {
         inventoryData.Initialize();
-        Debug.Log("a");
         inventoryData.OnInventoryUpdated += UpdateInventoryUI;
         foreach (var item in initialItems)
         {
@@ -47,6 +69,7 @@ public class InventoryController : Singleton<InventoryController>
         {
             inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
         }
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
     }
 
     private void PrepareUI()
@@ -74,7 +97,7 @@ public class InventoryController : Singleton<InventoryController>
         var destroyableItem = inventoryItem.item as IDestroyableItem;
         if (destroyableItem != null)
         {
-            inventoryUI.AddAction("Drop", () => DropItem(itemIndex, 1));
+            inventoryUI.AddAction("Drop one", () => DropItem(itemIndex, 1));
             inventoryUI.AddAction("Drop all", () => DropItem(itemIndex, inventoryItem.quantity));
         }
     }
@@ -90,7 +113,6 @@ public class InventoryController : Singleton<InventoryController>
             for (var i = 0; i < quantity; i++)
             {
                 Instantiate(itemToDrop, playerTransform.position, Quaternion.identity);
-                
             }
         }
     }
@@ -161,23 +183,4 @@ public class InventoryController : Singleton<InventoryController>
 
         return sb.ToString();
     }
-
-    // private void Update()
-    // {
-    //     if (Input.GetKeyDown(KeyCode.I))
-    //     {
-    //         if (inventoryUI.isActiveAndEnabled == false)
-    //         {
-    //             inventoryUI.Show();
-    //             foreach (var item in inventoryData.GetCurrentInventoryState())
-    //             {
-    //                 inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             inventoryUI.Hide();
-    //         }
-    //     }
-    // }
 }
