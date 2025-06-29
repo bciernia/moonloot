@@ -7,6 +7,6 @@ public class ItemGiver : MonoBehaviour
 
     public void GiveItemToPlayer()
     {
-        Inventory.Instance.AddItem(itemToGive, quantity);
+        Debug.Log(itemToGive.item.name);
     }   
 }

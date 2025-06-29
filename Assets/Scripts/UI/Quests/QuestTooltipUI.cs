@@ -43,7 +43,7 @@ public class QuestTooltipUI : MonoBehaviour
             {
                 rewardText += reward.number + " ";
             }
-            rewardText += reward.item.Name;
+            rewardText += reward.item.item.Name;
         }
 
         if (rewardText == "")

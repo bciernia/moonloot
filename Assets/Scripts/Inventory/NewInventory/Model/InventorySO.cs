@@ -1,30 +1,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Inventory.NewInventory.Model;
 using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
 public class InventorySO : ScriptableObject
 {
-    [SerializeField] private List<InventoryItemm> inventoryItems;
+    [SerializeField] private List<InventoryItem> inventoryItems;
     
     [field: SerializeField]
     public int Size { get; private set; } = 10;
 
-    public event Action<Dictionary<int, InventoryItemm>> OnInventoryUpdated; 
+    public int Gold { get; private set; } = 50;
+
+    public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
     
     public void Initialize()
     {
-        inventoryItems = new List<InventoryItemm>();
+        inventoryItems = new List<InventoryItem>();
         for (var i = 0; i < Size; i++)
         {
-            inventoryItems.Add(InventoryItemm.GetEmptyItem());
+            inventoryItems.Add(InventoryItem.GetEmptyItem());
         }
     }
 
-    public int AddItem(ItemSO item, int quantity)
+    public void ChangeGoldAmount(int amount)
     {
+        if (amount * -1 > Gold)
+        {
+            Debug.Log("you don't have enough money");
+        }
+        
+        Gold += amount;
+    }
+    
+    public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
+    {
+        if (item is GoldItemSO)
+        {
+            ChangeGoldAmount(quantity);
+            return quantity;
+        }
+        
         if (!item.IsStackable)
         {
             for (int i = 0; i < inventoryItems.Count; i++)
@@ -36,7 +55,7 @@ public class InventorySO : ScriptableObject
 
                 while (quantity > 0 && !IsInventoryFull())
                 {
-                    quantity -= AddItemToFirstFreeSlot(item, 1);
+                    quantity -= AddItemToFirstFreeSlot(item, 1, itemState);
                 }
                 
                 InformAboutChange();
@@ -50,12 +69,13 @@ public class InventorySO : ScriptableObject
         return quantity;
     }
 
-    private int AddItemToFirstFreeSlot(ItemSO item, int quantity)
+    private int AddItemToFirstFreeSlot(ItemSO item, int quantity, List<ItemParameter> itemState = null)
     {
-        var newItem = new InventoryItemm()
+        var newItem = new InventoryItem()
         {
             item = item,
-            quantity = quantity
+            quantity = quantity,
+            itemState = new List<ItemParameter>(itemState ?? item.DefaultParametersList)
         };
 
         for (int i = 0; i < inventoryItems.Count; i++)
@@ -107,14 +127,14 @@ public class InventorySO : ScriptableObject
         return quantity;
     }
 
-    public void AddItem(InventoryItemm item)
+    public void AddItem(InventoryItem item)
     {
         AddItem(item.item, item.quantity);
     }
 
-    public Dictionary<int, InventoryItemm> GetCurrentInventoryState()
+    public Dictionary<int, InventoryItem> GetCurrentInventoryState()
     {
-        Dictionary<int, InventoryItemm> returnValue = new Dictionary<int, InventoryItemm>();
+        Dictionary<int, InventoryItem> returnValue = new Dictionary<int, InventoryItem>();
 
         for (var i = 0; i < inventoryItems.Count; i++)
         {
@@ -126,7 +146,7 @@ public class InventorySO : ScriptableObject
         return returnValue;
     }
 
-    public InventoryItemm GetItemAt(int itemIndex) => inventoryItems[itemIndex];
+    public InventoryItem GetItemAt(int itemIndex) => inventoryItems[itemIndex];
 
     public void SwapItems(int itemIndex1, int itemIndex2)
     {
@@ -138,30 +158,49 @@ public class InventorySO : ScriptableObject
     {
         OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
     }
+
+    public void RemoveItem(int itemIndex, int amount)
+    {
+        if (inventoryItems.Count > itemIndex)
+        {
+            if (inventoryItems[itemIndex].IsEmpty) return;
+
+            var reminder = inventoryItems[itemIndex].quantity - amount;
+            if (reminder <= 0)
+                inventoryItems[itemIndex] = InventoryItem.GetEmptyItem();
+            else
+                inventoryItems[itemIndex] = inventoryItems[itemIndex].ChangeQuantity(reminder);
+            
+            InformAboutChange();
+        }
+    }
 }
 
 [Serializable]
-public struct InventoryItemm
+public struct InventoryItem
 {
     public int quantity;
     public ItemSO item;
+    public List<ItemParameter> itemState;
     public bool IsEmpty => item == null;
 
-    public InventoryItemm ChangeQuantity(int newQuantity)
+    public InventoryItem ChangeQuantity(int newQuantity)
     {
-        return new InventoryItemm()
+        return new InventoryItem()
         {
             item = item,
-            quantity = newQuantity
+            quantity = newQuantity,
+            itemState = new List<ItemParameter>(itemState)
         };
     }
 
-    public static InventoryItemm GetEmptyItem()
+    public static InventoryItem GetEmptyItem()
     {
-        return new InventoryItemm()
+        return new InventoryItem()
         {
             item = null,
-            quantity = 0
+            quantity = 0,
+            itemState = new List<ItemParameter>()
         };
     }
 }

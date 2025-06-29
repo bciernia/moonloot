@@ -1,72 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1133821976168976497
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3129593501818858577}
-  - component: {fileID: 698815682435808950}
-  - component: {fileID: 8960708906813936824}
-  m_Layer: 0
-  m_Name: InventoryManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3129593501818858577
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133821976168976497}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8677820375361216353}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &698815682435808950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133821976168976497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d89fa7f736af5f54496f4054eccc6352, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inventorySize: 20
-  _inventoryItems: []
-  testItem: {fileID: 11400000, guid: 9976a4ccac2cea144b6c70cbba26c67f, type: 2}
---- !u!114 &8960708906813936824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1133821976168976497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d56e9ab80e941ce89d338e376a398ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inventoryPanel: {fileID: 0}
-  _slotPrefab: {fileID: 5520747249109107829, guid: 9dbf37918cd555a469c5ec0d2f73dee7, type: 3}
-  _container: {fileID: 0}
-  _descriptionPanel: {fileID: 0}
-  _itemIcon: {fileID: 0}
-  _itemName: {fileID: 0}
-  _itemDescription: {fileID: 0}
 --- !u!1 &1482965583404056091
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +127,6 @@ Transform:
   - {fileID: 1945275370520865500}
   - {fileID: 368892739396994622}
   - {fileID: 7778129078106997328}
-  - {fileID: 3129593501818858577}
   - {fileID: 4323657320857817920}
   - {fileID: 2199752791770489038}
   - {fileID: 4764482760219055548}
@@ -382,6 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fbba6c8e2a842a28de0fbdb626c8f24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interactionBox: {fileID: 0}
+  _interactionBoxTMP: {fileID: 0}
 --- !u!1 &6642684215228747526
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,7 +408,7 @@ MonoBehaviour:
   _enemyMask:
     serializedVersion: 2
     m_Bits: 64
-  _enemyName: {fileID: 0}
+  _npcInfoManager: {fileID: 0}
 --- !u!1 &7230096221442776237
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,6 +456,7 @@ MonoBehaviour:
   _lootPanel: {fileID: 0}
   _lootButtonPrefab: {fileID: 5192360317680247750, guid: 02f6beec4c9894d4e9813fcbe329ae9f, type: 3}
   _container: {fileID: 0}
+  _enemyName: {fileID: 0}
 --- !u!1 &7258255677784993994
 GameObject:
   m_ObjectHideFlags: 0

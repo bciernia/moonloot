@@ -38,7 +38,7 @@ public class QuestList : MonoBehaviour
     {
         foreach (var reward in quest.GetRewards())
         {
-            Inventory.Instance.AddItem(reward.item, reward.number);
+            InventoryController.Instance.AddItem(new InventoryItem() { item = reward.item.item, quantity = reward.number});
             //TODO sprawdzić czy są miejsca w eq, jak nie ma to wyrzucić przedmioty na ziemię.
         }
     }
