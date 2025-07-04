@@ -29,6 +29,8 @@ public class EnemyLoot : MonoBehaviour
             }
         }
     }
+
+    public bool IsLootEmpty() => Items.Count == 0;
 }
 
 [Serializable]

@@ -4,6 +4,8 @@ using UnityEngine;
 public class DialogueManager : Singleton<DialogueManager>
 {
     public NPCInteraction NPCSelected { get; set; }
+    [SerializeField] public GameObject PlayerUI;
+    [SerializeField] public GameObject PlayerSpeechBubble;
 
     private bool _dialogueStarted;
     private PlayerActions _playerActions;
@@ -21,6 +23,8 @@ public class DialogueManager : Singleton<DialogueManager>
     public void StartDialogue()
     {
         if (_dialogueStarted) return;
+        PlayerUI.SetActive(false);
+        PlayerSpeechBubble.SetActive(true);
 
         if (!NPCSelected)
         {
@@ -30,11 +34,15 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         _dialogueStarted = true;
-
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         SetCharacterInFrontOfNpc();
 
-        var entryId = NPCSelected.GetComponent<DialogueEntrySetter>().GetEntryId();
+        var npcDialogueEntrySetter = NPCSelected.GetComponent<DialogueEntrySetter>();
+        var entryId = "";
+        if (npcDialogueEntrySetter)
+        {
+            entryId = npcDialogueEntrySetter.GetEntryId();
+        }
         dialogueController.onStop.AddListener(EndDialogue);
         dialogueController.PlayDialogue(entryId);
     }
@@ -55,6 +63,8 @@ public class DialogueManager : Singleton<DialogueManager>
         }
 
         _dialogueStarted = false;
+        PlayerUI.SetActive(true);
+        PlayerSpeechBubble.SetActive(false);
 
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         dialogueController.onStop.RemoveListener(EndDialogue);

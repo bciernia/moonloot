@@ -1,0 +1,385 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Man_Citizen_1
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 2047955915233034909
+  - rid: 2047955915233034910
+  - rid: 2047955915233034911
+  - rid: 2047955915233034912
+  - rid: 2047955915233034913
+  - rid: 2047955915233034914
+  - rid: 2047955915233034915
+  - rid: 2047955915233034916
+  translationLibrary: {fileID: 7584442386279594914}
+  maxID: 228
+  references:
+    version: 2
+    RefIds:
+    - rid: 2047955915233034909
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 23000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1595.4644
+        yPosition: 2974.797
+        entryPointName: 
+    - rid: 2047955915233034910
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 34
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 35
+          attachedIds: 03000000
+          ownerId: 34
+          connectionType: 1
+        outputs:
+        - id: 36
+          attachedIds: 31000000
+          ownerId: 34
+          connectionType: 1
+        - id: 37
+          attachedIds: 72000000
+          ownerId: 34
+          connectionType: 1
+        - id: 45
+          attachedIds: 5a000000
+          ownerId: 34
+          connectionType: 1
+        - id: 46
+          attachedIds: 88000000
+          ownerId: 34
+          connectionType: 1
+        - id: 47
+          attachedIds: ad000000
+          ownerId: 34
+          connectionType: 1
+        width: 160
+        height: 226
+        xPosition: 1884.4501
+        yPosition: 2986.053
+        items:
+        - rid: 2047955915233034917
+        - rid: 2047955915233034918
+        - rid: 2047955915233034919
+        - rid: 2047955915233034920
+        - rid: 2047955915233034921
+    - rid: 2047955915233034911
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 48
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 49
+          attachedIds: 24000000
+          ownerId: 48
+          connectionType: 1
+        outputs:
+        - id: 50
+          attachedIds: 
+          ownerId: 48
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2451.8132
+        yPosition: 2661.819
+        items:
+        - rid: 2047955915233034922
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034912
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 89
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 90
+          attachedIds: 2d000000
+          ownerId: 89
+          connectionType: 1
+        outputs:
+        - id: 91
+          attachedIds: 
+          ownerId: 89
+          connectionType: 1
+        width: 268
+        height: 220
+        xPosition: 2619.7734
+        yPosition: 3117.146
+        items:
+        - rid: 2047955915233034923
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034913
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 101
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 102
+          attachedIds: 73000000
+          ownerId: 101
+          connectionType: 1
+        outputs:
+        - id: 103
+          attachedIds: 
+          ownerId: 101
+          connectionType: 1
+        width: 268
+        height: 200
+        xPosition: 3134.4924
+        yPosition: 2880.8506
+        items:
+        - rid: 2047955915233034924
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034914
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 113
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 114
+          attachedIds: 25000000
+          ownerId: 113
+          connectionType: 1
+        outputs:
+        - id: 115
+          attachedIds: 66000000
+          ownerId: 113
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2583.9395
+        yPosition: 2933.2212
+        items:
+        - rid: 2047955915233034925
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034915
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 135
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 136
+          attachedIds: 2e000000
+          ownerId: 135
+          connectionType: 1
+        outputs:
+        - id: 137
+          attachedIds: 
+          ownerId: 135
+          connectionType: 1
+        width: 268
+        height: 220
+        xPosition: 2739.22
+        yPosition: 3390.7375
+        items:
+        - rid: 2047955915233034926
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034916
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 172
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 173
+          attachedIds: 2f000000
+          ownerId: 172
+          connectionType: 1
+        outputs:
+        - id: 174
+          attachedIds: 
+          ownerId: 172
+          connectionType: 1
+        width: 268
+        height: 220
+        xPosition: 2368.5771
+        yPosition: 3640.3513
+        items:
+        - rid: 2047955915233034927
+        characterName: Greg
+        icon: 
+    - rid: 2047955915233034917
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034918
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034919
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034920
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034921
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034922
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "They say a dragon was seen in the south... but that\u2019s probably
+          just old Mirk after too much mead."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034923
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "There\u2019s a tavern three days from here where no one speaks \u2014
+          only hand signs and grunts. Best ale I\u2019ve ever had."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034924
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: or just fall on your face.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034925
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "They say if you walk around the old oak tree backwards at midnight,
+          you\u2019ll see your future... "
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034926
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Somewhere past the marshes, there\u2019s a tree that sings lullabies.
+          Creepy ones."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034927
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: My cousin swears he saw a knight riding a giant boar. Either that,
+          or he drank too much mushroom wine.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &7584442386279594914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 7
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Greg
+    - id: 1
+      language: en
+      text: "They say a dragon was seen in the south... but that\u2019s probably
+        just old Mirk after too much mead."
+    - id: 2
+      language: en
+      text: "There\u2019s a tavern three days from here where no one speaks \u2014
+        only hand signs and grunts. Best ale I\u2019ve ever had."
+    - id: 3
+      language: en
+      text: or just fall on your face.
+    - id: 4
+      language: en
+      text: "They say if you walk around the old oak tree backwards at midnight,
+        you\u2019ll see your future... "
+    - id: 5
+      language: en
+      text: "Somewhere past the marshes, there\u2019s a tree that sings lullabies.
+        Creepy ones."
+    - id: 6
+      language: en
+      text: My cousin swears he saw a knight riding a giant boar. Either that, or
+        he drank too much mushroom wine.
+  - counter: 7
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+    - id: 6
+      language: es
+      text: 
+  - counter: 7
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+    - id: 6
+      language: fr
+      text: 

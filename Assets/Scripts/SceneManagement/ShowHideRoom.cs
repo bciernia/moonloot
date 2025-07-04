@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,12 +11,11 @@ public class ShowHideRoom : MonoBehaviour
 
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private Transform spriteVisual;
-    [SerializeField] private TextMeshPro _text;
+    [SerializeField] public TextMeshPro _text;
 
     private void Awake()
     {
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        _text = GetComponentInChildren<TextMeshPro>();
         _collider = GetComponent<BoxCollider2D>();
     }
 

@@ -38,6 +38,19 @@ public class InventoryController : Singleton<InventoryController>
 
         inventoryUI.UpdateGoldAmount(inventoryData.Gold);
     }
+
+    public void ChangeGoldAmount(int goldAmount)
+    {
+        if (goldAmount * -1 > inventoryData.Gold)
+        {
+            Debug.Log("you don't have enough money");
+            return;
+        }
+        
+        inventoryData.Gold += goldAmount;
+
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+    }
     
     public void AddItem(InventoryItem item)
     {

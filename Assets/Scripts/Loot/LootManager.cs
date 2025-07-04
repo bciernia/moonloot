@@ -10,13 +10,12 @@ public class LootManager : Singleton<LootManager>
     [SerializeField] private LootButton _lootButtonPrefab;
     [SerializeField] private Transform _container;
     [SerializeField] private TextMeshProUGUI _enemyName;
-
     
     public void ShowLoot(string enemyName, EnemyLoot enemyLoot)
     {
         if (IsLootEmpty(enemyLoot.Items))
         {
-            //TODO character has to say that this enemy is empty
+            //TODO character has to say that this enemy/chest is empty
             Debug.Log("No items in loot");
 
             return;
