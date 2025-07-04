@@ -23,9 +23,12 @@ public class WeaponManager: Singleton<WeaponManager>
         }
 
         _weapon = weaponItem;
-        _itemCurrentState = new List<ItemParameter>(itemState);
+        if (itemState != null)
+        {
+            _itemCurrentState = new List<ItemParameter>(itemState);
+        }
+
         ModifyParameters();
-        
         EquipWeapon(_weapon);
     }
 
