@@ -1,0 +1,340 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4732224549745607451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Georgia
+    - id: 1
+      language: en
+      text: You call that armor? Looks like something my aunt would hang laundry
+        on.
+    - id: 2
+      language: en
+      text: "Men say they\u2019re brave until a spider walks across their ale."
+    - id: 3
+      language: en
+      text: These cobblestones do more damage to my feet than any battlefield.
+    - id: 4
+      language: en
+      text: I once saw a raven deliver a message to the castle. Black wings, red
+        seal. Gave me chills.
+    - id: 5
+      language: en
+      text: "If I had a coin for every hero claiming to slay dragons, I\u2019d own
+        a dragon."
+  - counter: 6
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+  - counter: 6
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Woman_Citizen_1
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 2047955915233034928
+  - rid: 2047955915233034929
+  - rid: 2047955915233034930
+  - rid: 2047955915233034931
+  - rid: 2047955915233034932
+  - rid: 2047955915233034933
+  - rid: 2047955915233034934
+  translationLibrary: {fileID: -4732224549745607451}
+  maxID: 172
+  references:
+    version: 2
+    RefIds:
+    - rid: 2047955915233034928
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 2848.3696
+        yPosition: 3486.252
+        entryPointName: 
+    - rid: 2047955915233034929
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 0c000000
+          ownerId: 4
+          connectionType: 1
+        - id: 7
+          attachedIds: 1a000000
+          ownerId: 4
+          connectionType: 1
+        - id: 8
+          attachedIds: 3c000000
+          ownerId: 4
+          connectionType: 1
+        - id: 9
+          attachedIds: 4d000000
+          ownerId: 4
+          connectionType: 1
+        - id: 10
+          attachedIds: 59000000
+          ownerId: 4
+          connectionType: 1
+        width: 160
+        height: 226
+        xPosition: 2995.993
+        yPosition: 3468.9226
+        items:
+        - rid: 2047955915233034935
+        - rid: 2047955915233034936
+        - rid: 2047955915233034937
+        - rid: 2047955915233034938
+        - rid: 2047955915233034939
+    - rid: 2047955915233034930
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 11
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 12
+          attachedIds: 06000000
+          ownerId: 11
+          connectionType: 1
+        outputs:
+        - id: 13
+          attachedIds: 
+          ownerId: 11
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3967.5107
+        yPosition: 3363.0088
+        items:
+        - rid: 2047955915233034940
+        characterName: Georgia
+        icon: 
+    - rid: 2047955915233034931
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 25
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 26
+          attachedIds: 07000000
+          ownerId: 25
+          connectionType: 1
+        outputs:
+        - id: 27
+          attachedIds: 
+          ownerId: 25
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3849.137
+        yPosition: 3614.4678
+        items:
+        - rid: 2047955915233034941
+        characterName: Georgia
+        icon: 
+    - rid: 2047955915233034932
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 59
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 60
+          attachedIds: 08000000
+          ownerId: 59
+          connectionType: 1
+        outputs:
+        - id: 61
+          attachedIds: 
+          ownerId: 59
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3879.9233
+        yPosition: 3746.4092
+        items:
+        - rid: 2047955915233034942
+        characterName: Georgia
+        icon: 
+    - rid: 2047955915233034933
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 77
+          attachedIds: 09000000
+          ownerId: 76
+          connectionType: 1
+        outputs:
+        - id: 78
+          attachedIds: 
+          ownerId: 76
+          connectionType: 1
+        width: 268
+        height: 141.37427
+        xPosition: 3666.5605
+        yPosition: 3840.4124
+        items:
+        - rid: 2047955915233034943
+        characterName: Georgia
+        icon: 
+    - rid: 2047955915233034934
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 88
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 89
+          attachedIds: 0a000000
+          ownerId: 88
+          connectionType: 1
+        outputs:
+        - id: 90
+          attachedIds: 
+          ownerId: 88
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3545.7793
+        yPosition: 3985.4375
+        items:
+        - rid: 2047955915233034944
+        characterName: Georgia
+        icon: 
+    - rid: 2047955915233034935
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034936
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034937
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034938
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034939
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 2047955915233034940
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You call that armor? Looks like something my aunt would hang laundry
+          on.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034941
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Men say they\u2019re brave until a spider walks across their ale."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034942
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: These cobblestones do more damage to my feet than any battlefield.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034943
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I once saw a raven deliver a message to the castle. Black wings, red
+          seal. Gave me chills.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 2047955915233034944
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "If I had a coin for every hero claiming to slay dragons, I\u2019d
+          own a dragon."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

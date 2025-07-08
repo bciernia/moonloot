@@ -1,14 +1,22 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+using Inventory.NewInventory.Model;
+using UnityEditor.UIElements;
 using UnityEngine;
 
-public class InventoryController : Singleton<Inventory>
+public class InventoryController : Singleton<InventoryController>
 {
     [SerializeField] private UIInventoryPage inventoryUI;
 
     [SerializeField] public InventorySO inventoryData;
 
-    public List<InventoryItemm> initialItems = new List<InventoryItemm>();
+    public List<InventoryItem> initialItems = new List<InventoryItem>();
+
+    [SerializeField] private AudioClip audioClip;
+    [SerializeField] private AudioSource audioSource;
+
+    [SerializeField] private Transform playerTransform;
 
     private void Start()
     {
@@ -16,6 +24,45 @@ public class InventoryController : Singleton<Inventory>
         PrepareInventoryData();
     }
 
+    public void ChangeGoldAmount(GoldItemSO gold)
+    {
+        var goldAmount = gold.Amount;
+        
+        if (goldAmount * -1 > inventoryData.Gold)
+        {
+            Debug.Log("you don't have enough money");
+            return;
+        }
+        
+        inventoryData.Gold += goldAmount;
+
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+    }
+
+    public void ChangeGoldAmount(int goldAmount)
+    {
+        if (goldAmount * -1 > inventoryData.Gold)
+        {
+            Debug.Log("you don't have enough money");
+            return;
+        }
+        
+        inventoryData.Gold += goldAmount;
+
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+    }
+    
+    public void AddItem(InventoryItem item)
+    {
+        if (item.item is GoldItemSO goldItem)
+        {
+            ChangeGoldAmount(goldItem);
+            return;
+        }
+        
+        inventoryData.AddItem(item);
+    }
+    
     private void PrepareInventoryData()
     {
         inventoryData.Initialize();
@@ -28,13 +75,14 @@ public class InventoryController : Singleton<Inventory>
         }
     }
 
-    private void UpdateInventoryUI(Dictionary<int, InventoryItemm> inventoryState)
+    private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
     {
         inventoryUI.ResetAllData();
         foreach (var item in inventoryState)
         {
             inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
         }
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
     }
 
     private void PrepareUI()
@@ -48,9 +96,64 @@ public class InventoryController : Singleton<Inventory>
 
     private void HandleItemActionRequest(int itemIndex)
     {
+        var inventoryItem = inventoryData.GetItemAt(itemIndex);
         
+        if (inventoryItem.IsEmpty) return;
+
+        var itemAction = inventoryItem.item as IItemAction;
+        if (itemAction != null)
+        {
+            inventoryUI.ShowItemAction(itemIndex);
+            inventoryUI.AddAction(itemAction.ActionName, () => PerformAction(itemIndex));
+        }
+
+        var destroyableItem = inventoryItem.item as IDestroyableItem;
+        if (destroyableItem != null)
+        {
+            inventoryUI.AddAction("Drop one", () => DropItem(itemIndex, 1));
+            inventoryUI.AddAction("Drop all", () => DropItem(itemIndex, inventoryItem.quantity));
+        }
     }
 
+    private void DropItem(int itemIndex, int quantity)
+    {
+        var itemToDrop = inventoryData.GetItemAt(itemIndex).item.ItemToDrop;
+        inventoryData.RemoveItem(itemIndex, quantity);
+        inventoryUI.ResetSelection();
+        if(audioSource) audioSource.PlayOneShot(audioClip);
+        if (itemToDrop && playerTransform)
+        {
+            for (var i = 0; i < quantity; i++)
+            {
+                Instantiate(itemToDrop, playerTransform.position, Quaternion.identity);
+            }
+        }
+    }
+
+    public void PerformAction(int itemIndex)
+    {
+        var inventoryItem = inventoryData.GetItemAt(itemIndex);
+        var isActionPerformed = false;
+        
+        if (inventoryItem.IsEmpty) return;
+
+        var itemAction = inventoryItem.item as IItemAction;
+        if (itemAction != null)
+        {
+            isActionPerformed = itemAction.PerformAction(gameObject, inventoryItem.itemState);
+        }
+
+        if (!isActionPerformed) return;
+        
+        var destroyableItem = inventoryItem.item as IDestroyableItem;
+        if (destroyableItem != null)
+        {
+            inventoryData.RemoveItem(itemIndex, 1);
+            if(audioSource) audioSource.PlayOneShot(itemAction.actionSfx);
+            if(inventoryData.GetItemAt(itemIndex).IsEmpty) inventoryUI.ResetSelection();
+        }
+    }
+    
     private void HandleDragging(int itemIndex)
     {
         var item = inventoryData.GetItemAt(itemIndex);
@@ -73,25 +176,24 @@ public class InventoryController : Singleton<Inventory>
             return;
         }
         var item = inventoryItem.item;
-        inventoryUI.UpdateDescription(itemIndex, item.Image, item.Name, item.Description);
+        var description = PrepareDescription(inventoryItem);
+        inventoryUI.UpdateDescription(itemIndex, item.Image, item.Name, description);
     }
 
-    private void Update()
+    private string PrepareDescription(InventoryItem inventoryItem)
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        var sb = new StringBuilder();
+        sb.Append(inventoryItem.item.Description);
+        sb.AppendLine();
+        for (var i = 0; i < inventoryItem.itemState.Count; i++)
         {
-            if (inventoryUI.isActiveAndEnabled == false)
-            {
-                inventoryUI.Show();
-                foreach (var item in inventoryData.GetCurrentInventoryState())
-                {
-                    inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
-                }
-            }
-            else
-            {
-                inventoryUI.Hide();
-            }
+            sb.Append($"{inventoryItem.itemState[i].itemParameter.ParameterName}: " +
+                      $"{inventoryItem.itemState[i].value} / " +
+                      
+                      $"{inventoryItem.item.DefaultParametersList[i].value}");
+            sb.AppendLine();
         }
+
+        return sb.ToString();
     }
 }

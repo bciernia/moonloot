@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [FormerlySerializedAs("weapon")] [SerializeField] private Weapon _weapon;
+    [FormerlySerializedAs("weapon")] [SerializeField] private WeaponItemSO _weapon;
     [SerializeField] private PlayerStatsSO _playerStats;
 
     public Transform firePoint;
@@ -27,7 +27,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        WeaponManager.Instance.EquipWeapon(_weapon);
+        WeaponManager.Instance.SetWeapon(_weapon, null);
     }
 
     private void Attack()
@@ -76,7 +76,7 @@ public class PlayerAttack : MonoBehaviour
         canAttack = true;
     }
 
-    public void EquipWeapon(Weapon newItemWeapon)
+    public void EquipWeapon(WeaponItemSO newItemWeapon)
     {
         _weapon = newItemWeapon;
         _playerStats.TotalDamage = _playerStats.BaseDamage + _weapon.Damage;

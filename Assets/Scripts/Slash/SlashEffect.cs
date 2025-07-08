@@ -13,7 +13,7 @@ public class SlashEffect: MonoBehaviour
     private BoxCollider2D _boxCollider;
     private bool _isTriggered;
     
-    public Weapon weapon;
+    public WeaponItemSO weapon;
     public float speed = 3f;
     private Transform _parent;
     private GameObject _shooter;
