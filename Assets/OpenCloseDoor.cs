@@ -1,22 +1,24 @@
 using System;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class OpenCloseDoor : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Sprite ClosedDoorSprite;
-    [SerializeField] private Sprite OpenedDoorSprite;
-    [SerializeField] private string ConnectedRoom;
+    [SerializeField] private DoorsSO DoorsSO;
     
     private SpriteRenderer _spriteRenderer;
     private CircleCollider2D _collider2D;
+    private DoorsSO _doors;
     
     private bool AreOpened { get; set; }
+    private bool AreLocked { get; set; }
     
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<CircleCollider2D>();
         AreOpened = false;
+        AreLocked = DoorsSO.KeyToOpen != null;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -38,19 +40,34 @@ public class OpenCloseDoor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (AreLocked)
+        {
+            if (!InventoryController.Instance.UseItemById(DoorsSO.KeyToOpen.Id))
+            {
+                return;
+            }
+
+            AreLocked = false;
+        }
+        
         AreOpened = !AreOpened;
 
         if (AreOpened)
         {
-            _spriteRenderer.sprite = OpenedDoorSprite;
+            _spriteRenderer.sprite = DoorsSO.OpenedDoorSprite;
             _collider2D.enabled = false;
         }
         else
         {
-            _spriteRenderer.sprite = ClosedDoorSprite;
+            _spriteRenderer.sprite = DoorsSO.ClosedDoorSprite;
             _collider2D.enabled = true;
         }
+        
+        FindFirstObjectByType<InteractionManager>().RefreshInteractable(this);
     }
 
-    public string GetInteractionText() => $"Open: {ConnectedRoom}";
+    public string GetInteractionText()
+    {
+        return AreLocked ? $"Need key: {DoorsSO.ConnectedRoom}" : AreOpened ? $"Close: {DoorsSO.ConnectedRoom}" : $"Open: {DoorsSO.ConnectedRoom}";
+    }
 }

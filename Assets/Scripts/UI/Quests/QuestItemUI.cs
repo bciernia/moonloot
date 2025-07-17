@@ -13,6 +13,11 @@ public class QuestItemUI : MonoBehaviour
         Status = status;
         _title.text = status.GetQuest().GetTitle();
         _progress.text = $"{status.GetCompletedCount()} / {status.GetQuest().GetObjectivesCount()}";
+        if (status.GetCompletedCount() == status.GetQuest().GetObjectivesCount())
+        {
+            _title.fontStyle = FontStyles.Strikethrough;
+            _progress.fontStyle = FontStyles.Strikethrough;
+        }
     }
 
     public QuestStatus GetQuestStatus()

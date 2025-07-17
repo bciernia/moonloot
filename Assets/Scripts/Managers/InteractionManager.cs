@@ -37,6 +37,12 @@ public class InteractionManager : MonoBehaviour
         }
     }
     
+    public void RefreshInteractable(IInteractable interactable)
+    {
+        ClearInteractable();
+        SetInteractable(interactable);
+    }
+    
     private void OnEnable() => _playerActions.Enable();
     private void OnDisable() => _playerActions.Disable();
 }
