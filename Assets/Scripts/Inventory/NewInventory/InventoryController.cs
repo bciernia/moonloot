@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Text;
 using Inventory.NewInventory.Model;
-using UnityEditor.UIElements;
 using UnityEngine;
 
 public class InventoryController : Singleton<InventoryController>
@@ -24,7 +22,7 @@ public class InventoryController : Singleton<InventoryController>
         PrepareInventoryData();
     }
 
-    public void ChangeGoldAmount(GoldItemSO gold)
+    private void ChangeGoldAmount(GoldItemSO gold)
     {
         var goldAmount = gold.Amount;
         
@@ -195,5 +193,10 @@ public class InventoryController : Singleton<InventoryController>
         }
 
         return sb.ToString();
+    }
+
+    public bool UseItemById(int itemId)
+    {
+        return inventoryData.FindItemById(itemId);
     }
 }

@@ -159,6 +159,23 @@ public class InventorySO : ScriptableObject
             InformAboutChange();
         }
     }
+
+    public bool FindItemById(int itemId)
+    {
+        for (var i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i].IsEmpty)
+                continue;
+
+            if (inventoryItems[i].item.Id == itemId)
+            {
+                RemoveItem(i, 1);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 [Serializable]
