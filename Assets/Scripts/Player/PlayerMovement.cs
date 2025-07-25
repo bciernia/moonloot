@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -16,8 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     private const float sprintSpeed = 2f;
 
-    public bool IsSprinting { get; private set; }
-    
     private PlayerStamina playerStamina;
 
     public bool limitToCameraView;
@@ -36,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         ReadMovement();
-        Sprint();
     }
 
     private void FixedUpdate()
@@ -48,34 +46,24 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_player.PlayerStats.HP <= 0) return;
 
-        var newPosition = _rb2D.position + _moveDirection * (GetMovementSpeed(IsSprinting) * Time.fixedDeltaTime);
+        var newPosition = _rb2D.position + _moveDirection * ( speed * Time.fixedDeltaTime );
 
         _rb2D.MovePosition(newPosition);
     }
     
-    private void Sprint()
+    public void ApplyDash(float dashAmount, float duration)
     {
-        if (!_actions.Movement.Sprint.IsPressed() || _player.PlayerStats.Stamina <= 0f)
-        {
-            IsSprinting = false;
-            staminaTimer = 0f;
-            return;
-        }
-
-        IsSprinting = true;
-
-        staminaTimer += Time.deltaTime;
-
-        if (staminaTimer >= staminaDecreaseTime)
-        {
-            playerStamina.UseStamina(1f); 
-            staminaTimer -= staminaDecreaseTime;
-        }
+        StartCoroutine(DashCoroutine(dashAmount, duration));
     }
 
-    private float GetMovementSpeed(bool isSprinting)
+    private IEnumerator DashCoroutine(float dashAmount, float duration)
     {
-        return isSprinting ? speed * sprintSpeed : speed;
+        var originalSpeed = speed;
+        speed += dashAmount;
+
+        yield return new WaitForSeconds(duration);
+
+        speed = originalSpeed;
     }
 
     private void ReadMovement()
