@@ -2,11 +2,13 @@ using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
     [FormerlySerializedAs("weapon")] [SerializeField] private WeaponItemSO _weapon;
     [SerializeField] private PlayerStatsSO _playerStats;
+    [SerializeField] private Image cooldownImage;
 
     public Transform firePoint;
     public GameObject slashEffect;
@@ -72,7 +74,18 @@ public class PlayerAttack : MonoBehaviour
     private IEnumerator AttackCooldown()
     {
         canAttack = false; 
-        yield return new WaitForSeconds(attackCooldown);
+        var elapsed = 0f;
+
+        cooldownImage.fillAmount = 0f;
+
+        while (elapsed < attackCooldown)
+        {
+            elapsed += Time.deltaTime;
+            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / attackCooldown);
+            yield return null;
+        }
+
+        cooldownImage.fillAmount = 1f;
         canAttack = true;
     }
 

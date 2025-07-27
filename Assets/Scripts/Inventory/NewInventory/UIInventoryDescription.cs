@@ -8,7 +8,7 @@ public class UIInventoryDescription : MonoBehaviour
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text title;
     [SerializeField] private TMP_Text description;
-
+    
     private void Awake()
     {
         ResetDescription();

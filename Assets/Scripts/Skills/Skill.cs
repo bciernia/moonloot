@@ -11,6 +11,7 @@ public class Skill : ScriptableObject
     public float ManaCost;
     public Sprite Icon;
     public bool IsInUse;
+    public GameObject SkillBtn;
 
     public virtual void Activate(GameObject user) {}
 }
