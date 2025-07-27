@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c791d1c9b46c1ea4396bf6fdbdf31952, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerUI: {fileID: 0}
+  PlayerSpeechBubble: {fileID: 0}
 --- !u!1 &1779513055182608045
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +135,7 @@ Transform:
   - {fileID: 6835389026958847432}
   - {fileID: 6982993810105831001}
   - {fileID: 1730892963468312038}
+  - {fileID: 6212664498611844464}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2774350592269432152
@@ -225,6 +228,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponIcon: {fileID: 0}
   _weaponManaTMP: {fileID: 0}
+  _weapon: {fileID: 0}
+  _inventoryData: {fileID: 0}
+  _parametersToModify: []
+  _itemCurrentState: []
 --- !u!1 &4847281621163548676
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,6 +277,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5035096080699904585, guid: de0c3b882566db242a127f50817d2172, type: 3}
+--- !u!1 &6280160532446173636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6212664498611844464}
+  - component: {fileID: 16308968950870564}
+  m_Layer: 0
+  m_Name: SkillsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6212664498611844464
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6280160532446173636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &16308968950870564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6280160532446173636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04da88b9d994cb94a8142b2a0a2e68f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills: []
+  user: {fileID: 0}
 --- !u!1 &6295005901928153037
 GameObject:
   m_ObjectHideFlags: 0
@@ -504,10 +557,8 @@ MonoBehaviour:
   _playerStatsSo: {fileID: 11400000, guid: a43e26c59625d144f85766c4107ab012, type: 2}
   _healthBar: {fileID: 0}
   _manaBar: {fileID: 0}
-  _staminaBar: {fileID: 0}
   _healthTMP: {fileID: 0}
   _manaTMP: {fileID: 0}
-  _staminaTMP: {fileID: 0}
   _statsPanel: {fileID: 0}
   _statsLevelTMP: {fileID: 0}
   _statsDamageTMP: {fileID: 0}

@@ -19,12 +19,12 @@ public class UIManager : MonoBehaviour
     [Header("Bars")]
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _manaBar;
-    [SerializeField] private Image _staminaBar;
+    // [SerializeField] private Image _staminaBar;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _manaTMP;
-    [SerializeField] private TextMeshProUGUI _staminaTMP;
+    // [SerializeField] private TextMeshProUGUI _staminaTMP;
 
     [Header("Stats Panel")] 
     [SerializeField] private GameObject _statsPanel;
@@ -72,12 +72,8 @@ public class UIManager : MonoBehaviour
         _manaBar.fillAmount = Mathf.Lerp(_manaBar.fillAmount, _playerStatsSo.MP / _playerStatsSo.MaxMP,
             10f * Time.deltaTime);
         
-        _staminaBar.fillAmount = Mathf.Lerp(_staminaBar.fillAmount, _playerStatsSo.Stamina / _playerStatsSo.MaxStamina,
-            10f * Time.deltaTime);
-        
         _healthTMP.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMP.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
-        _staminaTMP.text = $"{_playerStatsSo.Stamina}/{_playerStatsSo.MaxStamina}";
     }
 
     private void UpdateStatsPanel()

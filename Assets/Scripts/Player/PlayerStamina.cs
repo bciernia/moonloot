@@ -25,14 +25,14 @@ public class PlayerStamina : MonoBehaviour
 
     private void Update()
     {
-        RecoverStamina();
+        // RecoverStamina();
     }
 
     private void RecoverStamina()
     {
         if (!(CurrentStamina < player.PlayerStats.MaxStamina)) return;
 
-        if (playerMovement.IsSprinting) return;
+        // if (playerMovement.IsSprinting) return;
         
         timer += Time.deltaTime;
         if (!(timer >= delayAmount)) return;
