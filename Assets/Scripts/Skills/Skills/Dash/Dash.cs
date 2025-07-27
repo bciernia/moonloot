@@ -1,16 +1,14 @@
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Dash_", menuName = "Skill/Dash")]
 public class Dash : Skill
 {
+    [Header("Dash configuration")]
     public float dashVelocity;
 
-    public override void Activate()
+    public override void Activate(GameObject user)
     {
-        var player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null) return;
-
-        var movement = player.GetComponent<PlayerMovement>();
+        var movement = user.GetComponent<PlayerMovement>();
         if (movement == null) return;
 
         movement.ApplyDash(dashVelocity, ActiveTime);
