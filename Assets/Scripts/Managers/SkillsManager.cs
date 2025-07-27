@@ -53,7 +53,6 @@ public class SkillsManager : Singleton<SkillsManager>
                         entry.skill.Activate(user);
                         entry.state = SkillState.active;
                         entry.activeTimer = entry.skill.ActiveTime;
-                        entry.cooldownImage.fillAmount = 0f;
                     }
                     break;
 
@@ -61,6 +60,12 @@ public class SkillsManager : Singleton<SkillsManager>
                     if (entry.activeTimer > 0)
                     {
                         entry.activeTimer -= Time.deltaTime;
+                        
+                        if (entry.skill.ActiveTime > 0)
+                        {
+                            var progress = entry.activeTimer / entry.skill.ActiveTime;
+                            entry.cooldownImage.fillAmount = progress;
+                        }
                     }
                     else
                     {
