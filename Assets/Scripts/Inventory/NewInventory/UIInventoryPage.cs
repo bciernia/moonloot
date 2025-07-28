@@ -12,6 +12,8 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] private TextMeshProUGUI goldAmountTMP;
     private List<UIInventoryItem> listOfUiItems = new List<UIInventoryItem>();
 
+    [SerializeField] private UIInventoryItem WeaponSlot;
+
     private int currentlyDraggedItemIndex = -1;
 
     public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;
@@ -39,6 +41,10 @@ public class UIInventoryPage : MonoBehaviour
             uiItem.OnItemDroppedOn += HandleSwap;
             uiItem.OnItemEndDrag += HandleEndDrag;
         }
+
+        WeaponSlot.OnItemBeginDrag += HandleBeginDrag;
+        WeaponSlot.OnItemDroppedOn += HandleSwap;
+        WeaponSlot.OnItemEndDrag += HandleEndDrag;
     }
 
     public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
@@ -68,8 +74,9 @@ public class UIInventoryPage : MonoBehaviour
     private void HandleSwap(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1)
+        if (index == -1 && inventoryItemUi.CompareTag("EquippedItem"))
         {
+            InventoryController.Instance.PerformAction(currentlyDraggedItemIndex);
             return;
         }            
         

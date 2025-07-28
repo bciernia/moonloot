@@ -16,6 +16,8 @@ public class InventoryController : Singleton<InventoryController>
 
     [SerializeField] private Transform playerTransform;
 
+    [SerializeField] private EquippedItemsManager equippedItemsManager;
+    
     private void Start()
     {
         PrepareUI();

@@ -49,7 +49,7 @@ public class WeaponManager: Singleton<WeaponManager>
         }
     }
     
-    public void EquipWeapon(WeaponItemSO weapon)
+    private void EquipWeapon(WeaponItemSO weapon)
     {
         _weaponIcon.sprite = weapon.Image;
         _weaponIcon.gameObject.SetActive(true);
@@ -65,5 +65,6 @@ public class WeaponManager: Singleton<WeaponManager>
         }
 
         GameManager.Instance.Player.PlayerAttack.EquipWeapon(weapon);
+        EquippedItemsManager.Instance.SetItemAsEquipped(weapon);
     }
 }
