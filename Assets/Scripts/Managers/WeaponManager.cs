@@ -15,9 +15,11 @@ public class WeaponManager: Singleton<WeaponManager>
     [SerializeField] private InventorySO _inventoryData;
     [SerializeField] private List<ItemParameter> _parametersToModify, _itemCurrentState;
 
+    [SerializeField] private WeaponItemSO fists;
+
     public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState)
     {
-        if (weaponItem != null)
+        if (weaponItem != null && _weapon != null)
         {
             _inventoryData.AddItem(_weapon, 1, _itemCurrentState);
         }
@@ -49,8 +51,13 @@ public class WeaponManager: Singleton<WeaponManager>
         }
     }
     
-    public void EquipWeapon(WeaponItemSO weapon)
+    private void EquipWeapon(WeaponItemSO weapon)
     {
+        if (weapon == null)
+        {
+            weapon = fists;
+        }
+        
         _weaponIcon.sprite = weapon.Image;
         _weaponIcon.gameObject.SetActive(true);
 
@@ -65,5 +72,6 @@ public class WeaponManager: Singleton<WeaponManager>
         }
 
         GameManager.Instance.Player.PlayerAttack.EquipWeapon(weapon);
+        EquippedItemsManager.Instance.SetItemAsEquipped(weapon);
     }
 }

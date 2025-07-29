@@ -18,6 +18,6 @@ public class UISkillBtn : MonoBehaviour
 
     public void SetDesc()
     {
-        _uiSkillDescription.SetDescription(Skill.Icon, Skill.Name, Skill.Description);
+        _uiSkillDescription.SetDescription(Skill);
     }
 }

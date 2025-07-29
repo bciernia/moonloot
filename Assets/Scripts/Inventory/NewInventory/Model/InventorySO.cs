@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Inventory.NewInventory.Model;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -135,7 +133,10 @@ public class InventorySO : ScriptableObject
 
     public void SwapItems(int itemIndex1, int itemIndex2)
     {
-        (inventoryItems[itemIndex1], inventoryItems[itemIndex2]) = (inventoryItems[itemIndex2], inventoryItems[itemIndex1]);
+        if (itemIndex1 != -1 && itemIndex2 != -1)
+        {
+            (inventoryItems[itemIndex1], inventoryItems[itemIndex2]) = (inventoryItems[itemIndex2], inventoryItems[itemIndex1]);
+        }
         InformAboutChange();
     }
 

@@ -7,7 +7,7 @@ public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     [CanBeNull] private static LTDescr delay;
     public string header;
     
-    [Multiline]
+    [TextArea]
     public string content;
     
     public void OnPointerEnter(PointerEventData eventData)

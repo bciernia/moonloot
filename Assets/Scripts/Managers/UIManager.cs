@@ -53,17 +53,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Do wywalenia, zmieniono na pokazywanie eq z ShowHideUI
-    // private void OpenCloseEquipmentPanel()
-    // {
-    //     _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
-    //     InventoryUI.Instance.CurrentSlot = null;
-    //     if (InventoryUI.Instance.DescriptionPanel.activeSelf)
-    //     {
-    //         InventoryUI.Instance.DescriptionPanel.SetActive(false);
-    //     }
-    // }
-
     private void UpdatePlayerUI()
     {
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
