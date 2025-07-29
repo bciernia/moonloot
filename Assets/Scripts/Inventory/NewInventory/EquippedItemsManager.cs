@@ -1,82 +1,82 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EquippedItemsManager : Singleton<EquippedItemsManager>
 {
-    [SerializeField] private Image WeaponImage;
-    [SerializeField] private Image RingImage;
-    [SerializeField] private Image BraceletImage;
-    [SerializeField] private Image NecklaceImage;
-    [SerializeField] private Image ShoesImage;
-    [SerializeField] private Image HelmetImage;
-    [SerializeField] private Image ArmorImage;
-    [SerializeField] private Image AmmunitionImage;
+    public List<UIInventoryItem> EquippedItemsSlots = new List<UIInventoryItem>();
+    public List<InventoryItem> EquippedItems = new List<InventoryItem>();
+    
+    [SerializeField] private UIInventoryItem WeaponSlot;
 
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
     {
         base.Awake();
-        
-        SetImageSlot(WeaponImage, EquippedItemsManagerSo._weapon.Image);
-        SetImageSlot(RingImage);
-        SetImageSlot(BraceletImage);
-        SetImageSlot(NecklaceImage);
-        SetImageSlot(ShoesImage);
-        SetImageSlot(HelmetImage);
-        SetImageSlot(ArmorImage);
-        SetImageSlot(AmmunitionImage);
-    }
 
+        EquippedItemsSlots.Add(WeaponSlot);
+        
+        if (EquippedItems.Count == 0)
+            EquippedItems.Add(InventoryItem.GetEmptyItem());
+    }
     public void SetItemAsEquipped(ItemSO item)
     {
-        EquippedItemsManagerSo._weapon = (WeaponItemSO)item;
-        SetEquippedWeaponImage(item.Image, ItemType.Weapon);
+        SetEquippedItemByType(item, ItemType.Weapon);
     }
     
-    private void SetEquippedWeaponImage(Sprite sprite, ItemType itemType)
+    private void SetEquippedItemByType(ItemSO item, ItemType itemType)
     {
         switch (itemType)
         {
             case ItemType.Weapon:
-                SetImageSlot(WeaponImage, sprite);
+                SetItem(WeaponSlot, item);
                 break;
             case ItemType.Ammunition:
-                AmmunitionImage.sprite = sprite;
                 break;
             case ItemType.Ring:
-                RingImage.sprite = sprite;
                 break;
             case ItemType.Bracelet:
-                BraceletImage.sprite = sprite;
                 break;
             case ItemType.Necklace:
-                NecklaceImage.sprite = sprite;
                 break;
             case ItemType.Shoes:
-                ShoesImage.sprite = sprite;
                 break;
             case ItemType.Helmet:
-                HelmetImage.sprite = sprite;
                 break;
             case ItemType.Armor:
-                ArmorImage.sprite = sprite;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null);
         }
     }
 
-    private void SetImageSlot(Image imageSlot, Sprite sprite = null)
+    private void SetItem(UIInventoryItem slotToSet, ItemSO item)
     {
-        if (sprite == null)
+        SetItemInSlot(slotToSet, item);
+        SetItemInList(item);
+    } 
+    
+    private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item)
+    {
+        if (item == null)
         {
-            imageSlot.gameObject.SetActive(false);
-            return;
+            slotToSet.ResetData();
         }
-        
-        imageSlot.gameObject.SetActive(true);
-        imageSlot.sprite = sprite;
+        else
+        {
+            slotToSet.SetData(item.Image, 1);
+        }
+    }
+
+    private void SetItemInList(ItemSO item)
+    {
+        EquippedItems[0] = new InventoryItem()
+        {
+            item = item,
+            quantity = 1,
+            itemState = new List<ItemParameter>(),
+        };
     }
 }

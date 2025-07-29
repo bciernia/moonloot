@@ -25,6 +25,8 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     [field: SerializeField]
     public float RequiredMana;
 
+    [field: SerializeField] private WeaponItemSO defaultWeapon;
+
     [field: SerializeField] public float AmmunitionAmount;
     
     
@@ -41,5 +43,11 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
         }
 
         return false;
+    }
+
+    public void UnequipWeapon(GameObject character)
+    {
+        var weaponSystem = character.transform.parent.GetComponentInChildren<WeaponManager>();
+        weaponSystem.SetWeapon(defaultWeapon, null);
     }
 }

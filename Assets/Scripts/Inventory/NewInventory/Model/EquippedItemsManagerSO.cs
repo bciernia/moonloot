@@ -1,7 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EquippedItems_")]
 public class EquippedItemsManagerSO : ScriptableObject
 {
-    public WeaponItemSO _weapon;
+    public List<InventoryItem> test;
+    public InventoryItem _weapon;
 }

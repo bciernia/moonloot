@@ -1,6 +1,5 @@
 using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -59,7 +58,8 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (empty)
+        var isItemEquipped = eventData.pointerEnter.CompareTag("EquippedItem");
+        if (empty && !isItemEquipped)
             return;
         OnItemBeginDrag?.Invoke(this);
     }

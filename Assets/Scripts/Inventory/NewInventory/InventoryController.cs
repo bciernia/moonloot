@@ -17,6 +17,7 @@ public class InventoryController : Singleton<InventoryController>
     [SerializeField] private Transform playerTransform;
 
     [SerializeField] private EquippedItemsManager equippedItemsManager;
+    [SerializeField] private EquippedItemsManagerSO equippedItemsManagerSo;
     
     private void Start()
     {
@@ -156,7 +157,17 @@ public class InventoryController : Singleton<InventoryController>
     
     private void HandleDragging(int itemIndex)
     {
-        var item = inventoryData.GetItemAt(itemIndex);
+        InventoryItem item;
+
+        if (itemIndex == -1)
+        {
+            item = equippedItemsManager.EquippedItems[0];
+        }
+        else
+        {
+            item = inventoryData.GetItemAt(itemIndex);
+        }
+        
         if (item.IsEmpty) return;
 
         inventoryUI.CreateDraggedItem(item.item.Image, item.quantity);
@@ -164,12 +175,45 @@ public class InventoryController : Singleton<InventoryController>
     
     private void HandleSwapItems(int itemIndex_1, int itemIndex_2)
     {
+        if (itemIndex_1 == -1 || itemIndex_2 == -1)
+        {
+            var inventoryItem = inventoryData.GetItemAt(itemIndex_2);
+            if (inventoryItem.IsEmpty)
+            {
+                var item = equippedItemsManager.EquippedItems[0];
+
+                //TODO zmienić na typ, żeby nie porównywać po nazwie
+                if (item.item.Name == "Fists") return;
+                
+                equippedItemsManager.EquippedItems[0] = InventoryItem.GetEmptyItem();
+                equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[0].item);
+                
+                var t = (WeaponItemSO)item.item;
+                t.UnequipWeapon(gameObject);
+                
+                AddItem(item);
+            }
+            else
+            {
+                PerformAction(itemIndex_2);
+            }            
+        }
+        
         inventoryData.SwapItems(itemIndex_1, itemIndex_2);
     }
     
     private void HandleDescriptionRequest(int itemIndex)
     {
-        var inventoryItem = inventoryData.GetItemAt(itemIndex);
+        InventoryItem inventoryItem;
+        if (itemIndex == -1)
+        {
+            inventoryItem = equippedItemsManager.EquippedItems[0];
+        }
+        else
+        {
+            inventoryItem = inventoryData.GetItemAt(itemIndex);
+        }
+        
         if (inventoryItem.IsEmpty)
         {
             inventoryUI.ResetSelection();

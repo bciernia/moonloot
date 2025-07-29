@@ -20,6 +20,8 @@ public class UIInventoryPage : MonoBehaviour
     public event Action<int, int> OnSwapItems;
 
     [SerializeField] private UIItemActionPanel actionPanel;
+
+    [SerializeField] private EquippedItemsManager equippedItemsManager;
     
     private void Awake()
     {
@@ -35,16 +37,20 @@ public class UIInventoryPage : MonoBehaviour
             uiItem.transform.SetParent(contentPanel);
             uiItem.transform.localScale = new Vector3(1,1,1);
             listOfUiItems.Add(uiItem);
-            uiItem.OnLeftMouseBtnClick +=  HandleItemSelection;
+            uiItem.OnLeftMouseBtnClick += HandleItemSelection;
             uiItem.OnRightMouseBtnClick += HandleShowItemActions;
             uiItem.OnItemBeginDrag += HandleBeginDrag;
             uiItem.OnItemDroppedOn += HandleSwap;
             uiItem.OnItemEndDrag += HandleEndDrag;
         }
 
-        WeaponSlot.OnItemBeginDrag += HandleBeginDrag;
-        WeaponSlot.OnItemDroppedOn += HandleSwap;
-        WeaponSlot.OnItemEndDrag += HandleEndDrag;
+        foreach (var uiItem in equippedItemsManager.EquippedItemsSlots)
+        {
+            uiItem.OnLeftMouseBtnClick += HandleItemSelection;
+            uiItem.OnItemBeginDrag += HandleBeginDrag;
+            uiItem.OnItemDroppedOn += HandleSwap;
+            uiItem.OnItemEndDrag += HandleEndDrag;
+        }
     }
 
     public void UpdateData(int itemIndex, Sprite itemImage, int itemQuantity)
@@ -58,7 +64,7 @@ public class UIInventoryPage : MonoBehaviour
     private void HandleShowItemActions(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1)
+        if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
         {
             return;
         }            
@@ -93,7 +99,7 @@ public class UIInventoryPage : MonoBehaviour
     private void HandleBeginDrag(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1)
+        if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
         currentlyDraggedItemIndex = index;
         HandleItemSelection(inventoryItemUi);
@@ -109,7 +115,7 @@ public class UIInventoryPage : MonoBehaviour
     private void HandleItemSelection(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1)
+        if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
         OnDescriptionRequested?.Invoke(index);
     }
@@ -143,6 +149,11 @@ public class UIInventoryPage : MonoBehaviour
         {
             uiInventoryItem.Deselect();
         }
+
+        foreach (var uiEquippedItemsSlots in equippedItemsManager.EquippedItemsSlots)
+        {
+            uiEquippedItemsSlots.Deselect();
+        }
         
         actionPanel.Toggle(false);
     }
@@ -158,7 +169,15 @@ public class UIInventoryPage : MonoBehaviour
     {
         itemDescription.SetDescription(itemImage, itemName, description);
         DeselectAllItems();
-        listOfUiItems[itemIndex].Select();
+
+        if (itemIndex == -1)
+        {
+            equippedItemsManager.EquippedItemsSlots[0].Select();
+        }
+        else
+        {
+            listOfUiItems[itemIndex].Select();
+        }
     }
 
     public void ResetAllData()
@@ -167,6 +186,11 @@ public class UIInventoryPage : MonoBehaviour
         {
             item.ResetData();
             item.Deselect();
+        }
+        
+        foreach (var uiEquippedItemsSlots in equippedItemsManager.EquippedItemsSlots)
+        {
+            uiEquippedItemsSlots.Deselect();
         }
     }
 

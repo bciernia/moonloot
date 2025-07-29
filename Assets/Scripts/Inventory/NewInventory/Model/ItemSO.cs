@@ -26,6 +26,9 @@ public abstract class ItemSO : ScriptableObject
     
     [field: SerializeField]
     public GameObject ItemToDrop { get; set; }
+
+    [field: SerializeField]
+    public ItemType ItemType { get; private set; } = ItemType.Junk;
 }
 
 [Serializable]
