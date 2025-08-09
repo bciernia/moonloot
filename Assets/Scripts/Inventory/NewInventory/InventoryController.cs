@@ -227,8 +227,9 @@ public class InventoryController : Singleton<InventoryController>
     private string PrepareDescription(InventoryItem inventoryItem)
     {
         var sb = new StringBuilder();
-        sb.Append(inventoryItem.item.Description);
+        GetDescriptionByType(sb, inventoryItem);
         sb.AppendLine();
+        sb.Append(inventoryItem.item.Description);
         for (var i = 0; i < inventoryItem.itemState.Count; i++)
         {
             sb.Append($"{inventoryItem.itemState[i].itemParameter.ParameterName}: " +
@@ -239,6 +240,22 @@ public class InventoryController : Singleton<InventoryController>
         }
 
         return sb.ToString();
+    }
+
+    private void GetDescriptionByType(StringBuilder sb, InventoryItem inventoryItem)
+    {
+        switch (inventoryItem.item.ItemType)
+        {
+            case ItemType.Weapon:
+                sb.Append(((WeaponItemSO)inventoryItem.item).GetStatsDescription());
+                break;
+            case ItemType.Edible:
+                sb.Append(((EdibleItemSO)inventoryItem.item).GetStatsDescription());
+                break;
+            default:
+                sb.Append(inventoryItem.item.GetStatsDescription());
+                break;
+        }
     }
 
     public bool UseItemById(int itemId)

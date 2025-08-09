@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using UnityEngine;
 
 public class Skill : ScriptableObject
@@ -12,6 +13,7 @@ public class Skill : ScriptableObject
     public Sprite Icon;
     public bool IsInUse;
     public GameObject SkillBtn;
+    public bool HasEffectIcon = true;
 
     public virtual void Activate(GameObject user) {}
 }

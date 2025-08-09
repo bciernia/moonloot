@@ -28,8 +28,20 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     [field: SerializeField] private WeaponItemSO defaultWeapon;
 
     [field: SerializeField] public float AmmunitionAmount;
-    
-    
+
+    public override string GetStatsDescription()
+    {
+        var description = $"Damage: {Damage} \n";
+        description += $"Attack cooldown: {timeBetweenAttack} \n";
+        
+        if (RequiredMana > 0)
+        {
+            description += $"Required mana: {RequiredMana} \n";
+        }
+        
+        return description;
+    }
+
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
     {

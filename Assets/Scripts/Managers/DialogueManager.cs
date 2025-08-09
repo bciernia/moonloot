@@ -32,7 +32,7 @@ public class DialogueManager : Singleton<DialogueManager>
             playerDialogueController.PlayDialogue();
             return;
         }
-
+        
         _dialogueStarted = true;
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         SetCharacterInFrontOfNpc();

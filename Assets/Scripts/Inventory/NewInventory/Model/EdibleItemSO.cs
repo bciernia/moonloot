@@ -11,6 +11,8 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
     [SerializeField] private float HealthValue;
 
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
+
+    public override string GetStatsDescription() => $"Health: {HealthValue} \n";
     
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
     {
