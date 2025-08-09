@@ -9,7 +9,7 @@ public class Quest : ScriptableObject
     [SerializeField] private string _description;
     [SerializeField] private List<Reward> _rewards = new List<Reward>();
     [SerializeField] private List<Objective> _objectives = new List<Objective>();
-
+    
     [System.Serializable]
     public class Reward
     {
