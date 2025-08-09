@@ -1,6 +1,671 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-1415741357162495733
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Bartender
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 1523350325141963733
+  - rid: 1523350325141963734
+  - rid: 1523350325141963735
+  - rid: 1523350325141963736
+  - rid: 1523350325141963737
+  - rid: 1523350325141963738
+  - rid: 1523350325141963739
+  - rid: 1523350325141963740
+  - rid: 1523350325141963741
+  - rid: 1523350325141963742
+  - rid: 1523350325141963743
+  - rid: 1523350325141963744
+  - rid: 1523350325141963745
+  - rid: 1523350325141963746
+  - rid: 1523350325141963747
+  - rid: 1523350325141963748
+  - rid: 1523350325141963749
+  - rid: 1523350325141963750
+  - rid: 1523350325141963751
+  translationLibrary: {fileID: 7584897069484490361}
+  maxID: 3361
+  references:
+    version: 2
+    RefIds:
+    - rid: 1523350325141963733
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: a1000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -3937.4712
+        yPosition: -1008.60443
+        entryPointName: 
+    - rid: 1523350325141963734
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 05010000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 25000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 293.12494
+        xPosition: -3096.0317
+        yPosition: -918.4541
+        items:
+        - rid: 1523350325141963752
+        characterName: Jimbo
+        icon: 
+    - rid: 1523350325141963735
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 12
+        name: VARIABLE
+        nodeType: 24
+        inputs: []
+        outputs:
+        - id: 13
+          attachedIds: 
+          ownerId: 12
+          connectionType: 2
+        width: 170
+        height: 150
+        xPosition: -3258.3257
+        yPosition: -1319.2982
+        variableName: talkedAboutBarbarian
+        variableValue: False
+        resetOnEntry: 0
+        isGlobal: 0
+    - rid: 1523350325141963736
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 36
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 37
+          attachedIds: 06000000
+          ownerId: 36
+          connectionType: 1
+        outputs:
+        - id: 38
+          attachedIds: 2d000000
+          ownerId: 36
+          connectionType: 1
+        width: 268
+        height: 225.9375
+        xPosition: -2726.6855
+        yPosition: -993.11694
+        items:
+        - rid: 1523350325141963753
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963737
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 44
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 45
+          attachedIds: 26000000
+          ownerId: 44
+          connectionType: 1
+        outputs:
+        - id: 46
+          attachedIds: 7d050000
+          ownerId: 44
+          connectionType: 1
+        width: 268
+        height: 257.49994
+        xPosition: -2237.4683
+        yPosition: -972.7427
+        items:
+        - rid: 1523350325141963754
+        characterName: Jimbo
+        icon: 
+    - rid: 1523350325141963738
+      type: {class: GetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 160
+        name: GET VARIABLE
+        nodeType: 28
+        inputs:
+        - id: 161
+          attachedIds: 03000000
+          ownerId: 160
+          connectionType: 1
+        outputs:
+        - id: 162
+          attachedIds: 01010000
+          ownerId: 160
+          connectionType: 2
+        - id: 163
+          attachedIds: 00010000
+          ownerId: 160
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -3713.286
+        yPosition: -984.2051
+        variableName: talkedAboutBarbarian
+    - rid: 1523350325141963739
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 255
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 256
+          attachedIds: a3000000
+          ownerId: 255
+          connectionType: 1
+        - id: 257
+          attachedIds: a2000000
+          ownerId: 255
+          connectionType: 2
+        - id: 258
+          attachedIds: 
+          ownerId: 255
+          connectionType: 2
+        outputs:
+        - id: 259
+          attachedIds: 
+          ownerId: 255
+          connectionType: 2
+        - id: 260
+          attachedIds: 
+          ownerId: 255
+          connectionType: 10
+        - id: 261
+          attachedIds: 05000000
+          ownerId: 255
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -3408.631
+        yPosition: -1005.8367
+        logicOperation: 0
+    - rid: 1523350325141963740
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1404
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1405
+          attachedIds: 2e000000720600004c0600005a060000660600005a080000710c0000
+          ownerId: 1404
+          connectionType: 1
+        outputs:
+        - id: 1406
+          attachedIds: a5050000
+          ownerId: 1404
+          connectionType: 1
+        width: 268
+        height: 150
+        xPosition: -1181.8705
+        yPosition: -891.4516
+        items:
+        - rid: 1523350325141963755
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963741
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1444
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 1445
+          attachedIds: 7e050000
+          ownerId: 1444
+          connectionType: 1
+        - id: 1446
+          attachedIds: 
+          ownerId: 1444
+          connectionType: 7
+        - id: 1448
+          attachedIds: 
+          ownerId: 1444
+          connectionType: 7
+        - id: 1450
+          attachedIds: 
+          ownerId: 1444
+          connectionType: 7
+        outputs:
+        - id: 1447
+          attachedIds: 47060000
+          ownerId: 1444
+          connectionType: 1
+        - id: 1449
+          attachedIds: cb070000
+          ownerId: 1444
+          connectionType: 1
+        - id: 1451
+          attachedIds: 9b0c0000
+          ownerId: 1444
+          connectionType: 1
+        width: 228
+        height: 387.74994
+        xPosition: -735.3318
+        yPosition: -1015.8445
+        items:
+        - rid: 1523350325141963756
+        - rid: 1523350325141963757
+        - rid: 1523350325141963758
+    - rid: 1523350325141963742
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1606
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 1607
+          attachedIds: a7050000
+          ownerId: 1606
+          connectionType: 1
+        outputs:
+        - id: 1608
+          attachedIds: 4b060000
+          ownerId: 1606
+          connectionType: 1
+        - id: 1609
+          attachedIds: 59060000
+          ownerId: 1606
+          connectionType: 1
+        - id: 1681
+          attachedIds: 65060000
+          ownerId: 1606
+          connectionType: 1
+        - id: 1682
+          attachedIds: 71060000
+          ownerId: 1606
+          connectionType: 1
+        width: 160
+        height: 299.46875
+        xPosition: -1987.9224
+        yPosition: -1601.0441
+        items:
+        - rid: 1523350325141963759
+        - rid: 1523350325141963760
+        - rid: 1523350325141963761
+        - rid: 1523350325141963762
+    - rid: 1523350325141963743
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1610
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1611
+          attachedIds: 48060000
+          ownerId: 1610
+          connectionType: 1
+        outputs:
+        - id: 1612
+          attachedIds: 7d050000
+          ownerId: 1610
+          connectionType: 1
+        width: 268
+        height: 192.73438
+        xPosition: -1557.1569
+        yPosition: -1822.2174
+        items:
+        - rid: 1523350325141963763
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963744
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1624
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1625
+          attachedIds: 49060000
+          ownerId: 1624
+          connectionType: 1
+        outputs:
+        - id: 1626
+          attachedIds: 7d050000
+          ownerId: 1624
+          connectionType: 1
+        width: 268
+        height: 206.87512
+        xPosition: -1572.4537
+        yPosition: -1570.9445
+        items:
+        - rid: 1523350325141963764
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963745
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1636
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1637
+          attachedIds: 91060000
+          ownerId: 1636
+          connectionType: 1
+        outputs:
+        - id: 1638
+          attachedIds: 7d050000
+          ownerId: 1636
+          connectionType: 1
+        width: 268
+        height: 182.5
+        xPosition: -1562.2194
+        yPosition: -1309.0173
+        items:
+        - rid: 1523350325141963765
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963746
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1648
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1649
+          attachedIds: 92060000
+          ownerId: 1648
+          connectionType: 1
+        outputs:
+        - id: 1650
+          attachedIds: 7d050000
+          ownerId: 1648
+          connectionType: 1
+        width: 268
+        height: 186.87506
+        xPosition: -1552.063
+        yPosition: -1104.3298
+        items:
+        - rid: 1523350325141963766
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963747
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1994
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1995
+          attachedIds: a9050000
+          ownerId: 1994
+          connectionType: 1
+        outputs:
+        - id: 1996
+          attachedIds: d3070000
+          ownerId: 1994
+          connectionType: 1
+        width: 268
+        height: 207.0625
+        xPosition: -1854.5201
+        yPosition: -579.3751
+        items:
+        - rid: 1523350325141963767
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963748
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2002
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 2003
+          attachedIds: cc070000
+          ownerId: 2002
+          connectionType: 1
+        - id: 2004
+          attachedIds: 
+          ownerId: 2002
+          connectionType: 7
+        - id: 2137
+          attachedIds: 
+          ownerId: 2002
+          connectionType: 7
+        outputs:
+        - id: 2005
+          attachedIds: ce090000
+          ownerId: 2002
+          connectionType: 1
+        - id: 2138
+          attachedIds: 7d050000
+          ownerId: 2002
+          connectionType: 1
+        width: 228
+        height: 222.68741
+        xPosition: -1437.7867
+        yPosition: -547.8584
+        items:
+        - rid: 1523350325141963768
+        - rid: 1523350325141963769
+    - rid: 1523350325141963749
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2509
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 2510
+          attachedIds: d5070000
+          ownerId: 2509
+          connectionType: 1
+        - id: 2511
+          attachedIds: 
+          ownerId: 2509
+          connectionType: 5
+        - id: 2512
+          attachedIds: 
+          ownerId: 2509
+          connectionType: 9
+        - id: 2513
+          attachedIds: 
+          ownerId: 2509
+          connectionType: 9
+        - id: 2514
+          attachedIds: 
+          ownerId: 2509
+          connectionType: 9
+        outputs:
+        - id: 2515
+          attachedIds: 
+          ownerId: 2509
+          connectionType: 9
+        - id: 2516
+          attachedIds: 700c0000
+          ownerId: 2509
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: -1068.4536
+        yPosition: -632.1752
+        triggeredClassName: ItemGiver
+        triggeredMethodName: GiveItemToPlayer
+        methodSignature: GiveItemToPlayer()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1523350325141963750
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3183
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3184
+          attachedIds: d4090000
+          ownerId: 3183
+          connectionType: 1
+        outputs:
+        - id: 3185
+          attachedIds: 7d050000
+          ownerId: 3183
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -798.3165
+        yPosition: -529.68164
+        items:
+        - rid: 1523350325141963770
+        characterName: Bartender
+        icon: 
+    - rid: 1523350325141963751
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3226
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3227
+          attachedIds: ab050000
+          ownerId: 3226
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -313.31946
+        yPosition: -731.63885
+        exitPointName: 
+    - rid: 1523350325141963752
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hello, i've heard that someone from your village has problem to solve.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963753
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Welcome to my inn, traveler. I see that good Viridan helped you to
+          come to our town. Yes, you are right, there is old barbarian who need help.
+          He lives in old brown house, to the north from inn. '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963754
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Great, i will visit him.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963755
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Do you need something more?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963756
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Were there any rumors going around?
+    - rid: 1523350325141963757
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I want something to eat.
+    - rid: 1523350325141963758
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: See you.
+    - rid: 1523350325141963759
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1523350325141963760
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1523350325141963761
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1523350325141963762
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1523350325141963763
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Someone dug up the Black Knight\u2019s grave in the old cemetery\u2026
+          but the coffin was empty."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963764
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Bob, an old miner, swears something\u2019s glowing deep in the abandoned
+          mine \u2014 not gold, something brighter. He hasn\u2019t been seen since"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963765
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "The wizard across the river is looking for someone to bring him \u2018something
+          living\u2026 and cursed.\u2019 Best not to ask why..."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963766
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "An innkeeper up north says something scratches at his doors every
+          night\u2026 but the rooms are always empty."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963767
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: We have pumpkins. Would you like to buy some?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1523350325141963768
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yes, please. *10gp*
+    - rid: 1523350325141963769
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I can't afford it, I'll come back when I get some gold.
+    - rid: 1523350325141963770
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Here you are.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &7584897069484490361
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,7 +679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalLanguage: en
   translationSets:
-  - counter: 12
+  - counter: 34
     languageCode: en
     translations:
     - id: 0
@@ -60,7 +725,79 @@ MonoBehaviour:
     - id: 11
       language: en
       text: Why are we still here?
-  - counter: 12
+    - id: 12
+      language: en
+      text: Hello, i've heard that someone from your village has problem to solve.
+    - id: 13
+      language: en
+      text: 'Welcome to my inn, traveler. I see that good Viridan helped you to come
+        to our town. Yes, you are right, there is old barbarian who need help. He
+        lives in old brown house, to the north from inn. '
+    - id: 14
+      language: en
+      text: Great, i will visit him.
+    - id: 15
+      language: en
+      text: Do you need something more?
+    - id: 16
+      language: en
+      text: Were there any rumors going around?
+    - id: 17
+      language: en
+      text: I want something to eat.
+    - id: 18
+      language: en
+      text: See you.
+    - id: 19
+      language: en
+      text: "Someone dug up the Black Knight\u2019s grave in the old cemetery\u2026
+        but the coffin was empty."
+    - id: 20
+      language: en
+      text: "Bob, an old miner, swears something\u2019s glowing deep in the abandoned
+        mine \u2014 not gold, something brighter. He hasn\u2019t been seen since"
+    - id: 21
+      language: en
+      text: "The wizard across the river is looking for someone to bring him \u2018something
+        living\u2026 and cursed.\u2019 Best not to ask why..."
+    - id: 22
+      language: en
+      text: "An innkeeper up north says something scratches at his doors every night\u2026
+        but the rooms are always empty."
+    - id: 23
+      language: en
+      text: We have potatoes, turnip and corn.
+    - id: 24
+      language: en
+      text: Give me potato.
+    - id: 25
+      language: en
+      text: Turnip sounds good.
+    - id: 26
+      language: en
+      text: I'd like some corn, please.
+    - id: 27
+      language: en
+      text: Give me potato. *2gp*
+    - id: 28
+      language: en
+      text: Turnip sounds good. *3gp*
+    - id: 29
+      language: en
+      text: I'd like some corn, please. *5gp*
+    - id: 30
+      language: en
+      text: I can't afford it, I'll come back when I get some gold.
+    - id: 31
+      language: en
+      text: We have pumpkins. Would you like to buy some?
+    - id: 32
+      language: en
+      text: Yes, please. *10gp*
+    - id: 33
+      language: en
+      text: Here you are.
+  - counter: 34
     languageCode: es
     translations:
     - id: 0
@@ -99,7 +836,73 @@ MonoBehaviour:
     - id: 11
       language: es
       text: 
-  - counter: 12
+    - id: 12
+      language: es
+      text: 
+    - id: 13
+      language: es
+      text: 
+    - id: 14
+      language: es
+      text: 
+    - id: 15
+      language: es
+      text: 
+    - id: 16
+      language: es
+      text: 
+    - id: 17
+      language: es
+      text: 
+    - id: 18
+      language: es
+      text: 
+    - id: 19
+      language: es
+      text: 
+    - id: 20
+      language: es
+      text: 
+    - id: 21
+      language: es
+      text: 
+    - id: 22
+      language: es
+      text: 
+    - id: 23
+      language: es
+      text: 
+    - id: 24
+      language: es
+      text: 
+    - id: 25
+      language: es
+      text: 
+    - id: 26
+      language: es
+      text: 
+    - id: 27
+      language: es
+      text: 
+    - id: 28
+      language: es
+      text: 
+    - id: 29
+      language: es
+      text: 
+    - id: 30
+      language: es
+      text: 
+    - id: 31
+      language: es
+      text: 
+    - id: 32
+      language: es
+      text: 
+    - id: 33
+      language: es
+      text: 
+  - counter: 34
     languageCode: fr
     translations:
     - id: 0
@@ -138,381 +941,69 @@ MonoBehaviour:
     - id: 11
       language: fr
       text: 
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
-  m_Name: Bartender
-  m_EditorClassIdentifier: 
-  version: 1.5.1
-  nodes:
-  - rid: 2047955915233035103
-  - rid: 2047955915233035104
-  - rid: 2047955915233035105
-  - rid: 2047955915233035106
-  - rid: 2047955915233035107
-  - rid: 2047955915233035108
-  - rid: 2047955915233035109
-  - rid: 2047955915233035110
-  - rid: 2047955915233035111
-  - rid: 2047955915233035112
-  - rid: 2047955915233035113
-  translationLibrary: {fileID: -1415741357162495733}
-  maxID: 1073
-  references:
-    version: 2
-    RefIds:
-    - rid: 2047955915233035103
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 2
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 3
-          attachedIds: a1000000
-          ownerId: 2
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: -3568.7214
-        yPosition: -944.542
-        entryPointName: 
-    - rid: 2047955915233035104
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 5
-          attachedIds: 05010000
-          ownerId: 4
-          connectionType: 1
-        outputs:
-        - id: 6
-          attachedIds: 25000000
-          ownerId: 4
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: -2888.2192
-        yPosition: -932.5165
-        items:
-        - rid: 2047955915233035114
-        characterName: Jimbo
-        icon: 
-    - rid: 2047955915233035105
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 12
-        name: VARIABLE
-        nodeType: 24
-        inputs: []
-        outputs:
-        - id: 13
-          attachedIds: 
-          ownerId: 12
-          connectionType: 2
-        width: 170
-        height: 150
-        xPosition: -3258.3257
-        yPosition: -1319.2982
-        variableName: talkedAboutBarbarian
-        variableValue: False
-        resetOnEntry: 0
-        isGlobal: 0
-    - rid: 2047955915233035106
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 36
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 37
-          attachedIds: 06000000
-          ownerId: 36
-          connectionType: 1
-        outputs:
-        - id: 38
-          attachedIds: 2d000000
-          ownerId: 36
-          connectionType: 1
-        width: 268
-        height: 225.9375
-        xPosition: -2511.0605
-        yPosition: -1000.9294
-        items:
-        - rid: 2047955915233035115
-        characterName: Bartender
-        icon: 
-    - rid: 2047955915233035107
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 44
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 45
-          attachedIds: 26000000
-          ownerId: 44
-          connectionType: 1
-        outputs:
-        - id: 46
-          attachedIds: 60000000
-          ownerId: 44
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: -2100.9058
-        yPosition: -975.8677
-        items:
-        - rid: 2047955915233035116
-        characterName: Jimbo
-        icon: 
-    - rid: 2047955915233035108
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 95
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 96
-          attachedIds: 2e000000
-          ownerId: 95
-          connectionType: 1
-        - id: 97
-          attachedIds: 
-          ownerId: 95
-          connectionType: 7
-        - id: 99
-          attachedIds: 
-          ownerId: 95
-          connectionType: 7
-        outputs:
-        - id: 98
-          attachedIds: 
-          ownerId: 95
-          connectionType: 1
-        - id: 100
-          attachedIds: 79000000
-          ownerId: 95
-          connectionType: 1
-        width: 228
-        height: 241
-        xPosition: -1653.0782
-        yPosition: -1022.08813
-        items:
-        - rid: 2047955915233035117
-        - rid: 2047955915233035118
-    - rid: 2047955915233035109
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 120
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 121
-          attachedIds: 64000000
-          ownerId: 120
-          connectionType: 1
-        outputs:
-        - id: 122
-          attachedIds: 81000000
-          ownerId: 120
-          connectionType: 1
-        width: 268
-        height: 283.74994
-        xPosition: -1247.6962
-        yPosition: -888.97516
-        items:
-        - rid: 2047955915233035119
-        characterName: Narrator
-        icon: 
-    - rid: 2047955915233035110
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 128
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 129
-          attachedIds: 7a000000
-          ownerId: 128
-          connectionType: 1
-        - id: 130
-          attachedIds: 
-          ownerId: 128
-          connectionType: 7
-        - id: 132
-          attachedIds: 
-          ownerId: 128
-          connectionType: 7
-        outputs:
-        - id: 131
-          attachedIds: 
-          ownerId: 128
-          connectionType: 1
-        - id: 133
-          attachedIds: 
-          ownerId: 128
-          connectionType: 1
-        width: 228
-        height: 398.7162
-        xPosition: -676.9564
-        yPosition: -880.6128
-        items:
-        - rid: 2047955915233035120
-        - rid: 2047955915233035121
-    - rid: 2047955915233035111
-      type: {class: GetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 160
-        name: GET VARIABLE
-        nodeType: 28
-        inputs:
-        - id: 161
-          attachedIds: 03000000
-          ownerId: 160
-          connectionType: 1
-        outputs:
-        - id: 162
-          attachedIds: 01010000
-          ownerId: 160
-          connectionType: 2
-        - id: 163
-          attachedIds: 00010000
-          ownerId: 160
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: -3400.7861
-        yPosition: -982.6426
-        variableName: talkedAboutBarbarian
-    - rid: 2047955915233035112
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 255
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 256
-          attachedIds: a3000000
-          ownerId: 255
-          connectionType: 1
-        - id: 257
-          attachedIds: a2000000
-          ownerId: 255
-          connectionType: 2
-        - id: 258
-          attachedIds: 
-          ownerId: 255
-          connectionType: 2
-        outputs:
-        - id: 259
-          attachedIds: 
-          ownerId: 255
-          connectionType: 2
-        - id: 260
-          attachedIds: 
-          ownerId: 255
-          connectionType: 10
-        - id: 261
-          attachedIds: 05000000
-          ownerId: 255
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: -3096.1313
-        yPosition: -1004.2742
-        logicOperation: 0
-    - rid: 2047955915233035113
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 378
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 379
-          attachedIds: 
-          ownerId: 378
-          connectionType: 1
-        outputs:
-        - id: 380
-          attachedIds: 
-          ownerId: 378
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: -2836.5198
-        yPosition: -1202.7316
-        items:
-        - rid: 2047955915233035122
-        characterName: Jimbo
-        icon: 
-    - rid: 2047955915233035114
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Hello! I'm looking for new adventures, but your board outside inn is
-          empty. Have you heard of any work in the area?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 2047955915233035115
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Welcome to my inn, traveler. I see that good Viridan helped you to
-          come to our town. Unfortunetly, all quests are done. There was another
-          traveler, mighty barbarian with great sword any mighty head, who did all
-          of them.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 2047955915233035116
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Damn, here we go again... So what, should we go to next town?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 2047955915233035117
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Ask him again, maybe we can talk to this barbarian? Maybe he has some
-          job to do?
-    - rid: 2047955915233035118
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Okay then, say goodbye and let's move on.
-    - rid: 2047955915233035119
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Are you sure? I think we should go to that barbarian. Maybe we can
-          train with him or something? As a patron, you should do everything you
-          can to make sure your man trains and gains fame.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 2047955915233035120
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: You again? We don't need your help. Trust me, I know what I am doing.
-    - rid: 2047955915233035121
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Maybe you are right. Hey Jimbo, ask him about this barbarian, where
-          he is, what is his name, everything.
-    - rid: 2047955915233035122
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Why are we still here?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
+    - id: 12
+      language: fr
+      text: 
+    - id: 13
+      language: fr
+      text: 
+    - id: 14
+      language: fr
+      text: 
+    - id: 15
+      language: fr
+      text: 
+    - id: 16
+      language: fr
+      text: 
+    - id: 17
+      language: fr
+      text: 
+    - id: 18
+      language: fr
+      text: 
+    - id: 19
+      language: fr
+      text: 
+    - id: 20
+      language: fr
+      text: 
+    - id: 21
+      language: fr
+      text: 
+    - id: 22
+      language: fr
+      text: 
+    - id: 23
+      language: fr
+      text: 
+    - id: 24
+      language: fr
+      text: 
+    - id: 25
+      language: fr
+      text: 
+    - id: 26
+      language: fr
+      text: 
+    - id: 27
+      language: fr
+      text: 
+    - id: 28
+      language: fr
+      text: 
+    - id: 29
+      language: fr
+      text: 
+    - id: 30
+      language: fr
+      text: 
+    - id: 31
+      language: fr
+      text: 
+    - id: 32
+      language: fr
+      text: 
+    - id: 33
+      language: fr
+      text: 

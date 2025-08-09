@@ -437,7 +437,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 418530714944685441}
   inventoryData: {fileID: 11400000, guid: 9d20f1d97fcf7614a8155cbb085d9c9d, type: 2}
-  initialItems: []
+  initialItems:
+  - quantity: 1
+    item: {fileID: 11400000, guid: bdfe8e4136cf41146bb53fccef43cf7b, type: 2}
+    itemState: []
+  - quantity: 3
+    item: {fileID: 11400000, guid: 56aab7206fee9e24593ce13c45bf0ac1, type: 2}
+    itemState: []
   audioClip: {fileID: 8300000, guid: 8c4534bc5967f7f418e0f6ae250a2b44, type: 3}
   audioSource: {fileID: 0}
   playerTransform: {fileID: 3640270890684053759}
@@ -2383,6 +2389,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -455
       objectReference: {fileID: 0}
+    - target: {fileID: 838018057758327645, guid: 51160a98f304142448adea906b02e116, type: 3}
+      propertyPath: m_text
+      value: F
+      objectReference: {fileID: 0}
     - target: {fileID: 838284312488012878, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -2454,6 +2464,10 @@ PrefabInstance:
     - target: {fileID: 1067467763049823657, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -62.865
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309162992666903611, guid: 51160a98f304142448adea906b02e116, type: 3}
+      propertyPath: m_Name
+      value: Effects_Container
       objectReference: {fileID: 0}
     - target: {fileID: 1514772365408085971, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3057,7 +3071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5193662315873910841, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_Value
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5219732936120887845, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3569,7 +3583,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7475711866827264158, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7501016256543978002, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3614,6 +3628,10 @@ PrefabInstance:
     - target: {fileID: 7648189829284983841, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_SizeDelta.x
       value: -17
+      objectReference: {fileID: 0}
+    - target: {fileID: 7663922277319289072, guid: 51160a98f304142448adea906b02e116, type: 3}
+      propertyPath: m_Name
+      value: Effect
       objectReference: {fileID: 0}
     - target: {fileID: 7694001257488769713, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_AnchorMax.y

@@ -29,6 +29,8 @@ public abstract class ItemSO : ScriptableObject
 
     [field: SerializeField]
     public ItemType ItemType { get; private set; } = ItemType.Junk;
+
+    public virtual string GetStatsDescription() => "";
 }
 
 [Serializable]
