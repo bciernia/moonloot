@@ -31,6 +31,9 @@ public abstract class ItemSO : ScriptableObject
     public ItemType ItemType { get; private set; } = ItemType.Junk;
 
     public virtual string GetStatsDescription() => "";
+
+    public int BuyPrice = 0;
+    public int SellPrice = 0;
 }
 
 [Serializable]
