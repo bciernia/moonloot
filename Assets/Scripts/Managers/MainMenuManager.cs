@@ -5,7 +5,7 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("StartScene");
+        SceneManager.LoadScene("StartScene", LoadSceneMode.Single);
     }
 
     public void ExitGame()
@@ -15,6 +15,11 @@ public class MainMenuManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
+    }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
     
 }
