@@ -1,4 +1,6 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class QuestListUI : MonoBehaviour
 {
@@ -18,6 +20,11 @@ public class QuestListUI : MonoBehaviour
         foreach (var status in _questList.GetStatuses())
         {
             var uiInstance = Instantiate(_questItem, transform);
+            var button = uiInstance.GetComponent<Button>();
+            if (button != null && status.IsComplete())
+            {
+                button.image.color = Color.green;
+            }
             uiInstance.Setup(status);
         }
     }
