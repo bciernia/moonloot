@@ -6,16 +6,11 @@ using UnityEngine;
 public class InventoryController : Singleton<InventoryController>
 {
     [SerializeField] private UIInventoryPage inventoryUI;
-
     [SerializeField] public InventorySO inventoryData;
-
     public List<InventoryItem> initialItems = new List<InventoryItem>();
-
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private AudioSource audioSource;
-
     [SerializeField] private Transform playerTransform;
-
     [SerializeField] private EquippedItemsManager equippedItemsManager;
     [SerializeField] private EquippedItemsManagerSO equippedItemsManagerSo;
     
@@ -24,7 +19,7 @@ public class InventoryController : Singleton<InventoryController>
         PrepareUI();
         PrepareInventoryData();
     }
-
+    
     private void ChangeGoldAmount(GoldItemSO gold)
     {
         var goldAmount = gold.Amount;
@@ -61,8 +56,14 @@ public class InventoryController : Singleton<InventoryController>
             return;
         }
         
-        inventoryData.AddItem(item);
+        inventoryData.AddItem(item, item.quantity);
     }
+
+    public void PrepareSellerInventoryData(InventorySO sellerInventory)
+    {
+        UpdateSellerInventoryUI(sellerInventory.GetCurrentInventoryState());
+        sellerInventory.OnInventoryUpdated += UpdateSellerInventoryUI;
+    }   
     
     private void PrepareInventoryData()
     {
@@ -72,10 +73,20 @@ public class InventoryController : Singleton<InventoryController>
         {
             if(item.IsEmpty) continue;
             
-            inventoryData.AddItem(item);
+            inventoryData.AddItem(item, item.quantity);
         }
     }
 
+    private void UpdateSellerInventoryUI(Dictionary<int, InventoryItem> inventoryState)
+    {
+        ShopManager.Instance.ResetAllData();
+        foreach (var item in inventoryState)
+        {
+            ShopManager.Instance.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
+        }
+        ShopManager.Instance.inventoryPage.UpdateSellerGoldAmount(ShopManager.Instance.SellerInventory.Gold);
+    }
+    
     private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
     {
         inventoryUI.ResetAllData();
@@ -95,7 +106,7 @@ public class InventoryController : Singleton<InventoryController>
         inventoryUI.OnItemActionRequested += HandleItemActionRequest;
     }
 
-    private void HandleItemActionRequest(int itemIndex)
+    public void HandleItemActionRequest(int itemIndex)
     {
         var inventoryItem = inventoryData.GetItemAt(itemIndex);
         
@@ -154,8 +165,8 @@ public class InventoryController : Singleton<InventoryController>
             if(inventoryData.GetItemAt(itemIndex).IsEmpty) inventoryUI.ResetSelection();
         }
     }
-    
-    private void HandleDragging(int itemIndex)
+
+    public void HandleDragging(int itemIndex, bool isPlayerItem)
     {
         InventoryItem item;
 
@@ -163,17 +174,21 @@ public class InventoryController : Singleton<InventoryController>
         {
             item = equippedItemsManager.EquippedItems[0];
         }
-        else
+        else if (isPlayerItem)
         {
             item = inventoryData.GetItemAt(itemIndex);
+        }
+        else
+        {
+            item = ShopManager.Instance.SellerInventory.GetItemAt(itemIndex);
         }
         
         if (item.IsEmpty) return;
 
         inventoryUI.CreateDraggedItem(item.item.Image, item.quantity);
     }
-    
-    private void HandleSwapItems(int itemIndex_1, int itemIndex_2)
+
+    public void HandleSwapItems(int itemIndex_1, int itemIndex_2)
     {
         if (itemIndex_1 == -1 || itemIndex_2 == -1)
         {
@@ -202,16 +217,22 @@ public class InventoryController : Singleton<InventoryController>
         inventoryData.SwapItems(itemIndex_1, itemIndex_2);
     }
     
-    private void HandleDescriptionRequest(int itemIndex)
+    public void HandleDescriptionRequest(int itemIndex, bool isPlayerItem = true)
     {
+        var isInPlayerEquipment = true;
         InventoryItem inventoryItem;
         if (itemIndex == -1)
         {
             inventoryItem = equippedItemsManager.EquippedItems[0];
         }
-        else
+        else if(isPlayerItem)
         {
             inventoryItem = inventoryData.GetItemAt(itemIndex);
+        }
+        else
+        {
+            inventoryItem = ShopManager.Instance.SellerInventory.GetItemAt(itemIndex);
+            isInPlayerEquipment = false;
         }
         
         if (inventoryItem.IsEmpty)
@@ -220,24 +241,29 @@ public class InventoryController : Singleton<InventoryController>
             return;
         }
         var item = inventoryItem.item;
-        var description = PrepareDescription(inventoryItem);
-        inventoryUI.UpdateDescription(itemIndex, item.Image, item.Name, description);
+        var description = PrepareDescription(inventoryItem, isInPlayerEquipment);
+        inventoryUI.UpdateDescription(itemIndex, isPlayerItem, item.Image, item.Name, description);
     }
 
-    private string PrepareDescription(InventoryItem inventoryItem)
+    private string PrepareDescription(InventoryItem inventoryItem, bool isInPlayerEquipment)
     {
         var sb = new StringBuilder();
         GetDescriptionByType(sb, inventoryItem);
-        sb.AppendLine();
-        sb.Append(inventoryItem.item.Description);
+        sb.Append(isInPlayerEquipment
+            ? $"Sell price: {inventoryItem.item.SellPrice}"
+            : $"Buy price: {inventoryItem.item.BuyPrice}");
         for (var i = 0; i < inventoryItem.itemState.Count; i++)
         {
+            sb.AppendLine();
             sb.Append($"{inventoryItem.itemState[i].itemParameter.ParameterName}: " +
                       $"{inventoryItem.itemState[i].value} / " +
                       
                       $"{inventoryItem.item.DefaultParametersList[i].value}");
-            sb.AppendLine();
         }
+        
+        sb.AppendLine();
+        sb.AppendLine();
+        sb.Append(inventoryItem.item.Description);
 
         return sb.ToString();
     }

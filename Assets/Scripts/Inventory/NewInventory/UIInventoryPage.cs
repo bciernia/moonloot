@@ -1,22 +1,33 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+
+internal enum ItemDraggedFrom {
+    Player,
+    Shop
+}
 
 public class UIInventoryPage : MonoBehaviour
 {
     [SerializeField] private UIInventoryItem itemPrefab;
     [SerializeField] private RectTransform contentPanel;
+    [SerializeField] private RectTransform shopPanel;
     [SerializeField] private UIInventoryDescription itemDescription;
     [SerializeField] private MouseFollower mouseFollower;
     [SerializeField] private TextMeshProUGUI goldAmountTMP;
+    [SerializeField] private TextMeshProUGUI sellerGoldAmountTMP;
     private List<UIInventoryItem> listOfUiItems = new List<UIInventoryItem>();
 
     [SerializeField] private UIInventoryItem WeaponSlot;
 
     private int currentlyDraggedItemIndex = -1;
 
-    public event Action<int> OnDescriptionRequested, OnItemActionRequested, OnStartDragging;
+    private ItemDraggedFrom itemDraggedFrom = ItemDraggedFrom.Player;
+
+    public event Action<int> OnItemActionRequested;
+    public event Action<int, bool> OnDescriptionRequested, OnStartDragging;
     public event Action<int, int> OnSwapItems;
 
     [SerializeField] private UIItemActionPanel actionPanel;
@@ -36,7 +47,9 @@ public class UIInventoryPage : MonoBehaviour
             var uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
             uiItem.transform.SetParent(contentPanel);
             uiItem.transform.localScale = new Vector3(1,1,1);
+            uiItem.tag = "PlayerItem";
             listOfUiItems.Add(uiItem);
+            
             uiItem.OnLeftMouseBtnClick += HandleItemSelection;
             uiItem.OnRightMouseBtnClick += HandleShowItemActions;
             uiItem.OnItemBeginDrag += HandleBeginDrag;
@@ -61,7 +74,7 @@ public class UIInventoryPage : MonoBehaviour
         }
     }
 
-    private void HandleShowItemActions(UIInventoryItem inventoryItemUi)
+    public void HandleShowItemActions(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
         if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
@@ -72,21 +85,41 @@ public class UIInventoryPage : MonoBehaviour
         OnItemActionRequested?.Invoke(index);
     }
 
-    private void HandleEndDrag(UIInventoryItem inventoryItemUi)
+    public void HandleEndDrag(UIInventoryItem inventoryItemUi)
     {
         ResetDraggedItem();
     }
 
-    private void HandleSwap(UIInventoryItem inventoryItemUi)
+    public void HandleSwap(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1 && inventoryItemUi.CompareTag("EquippedItem"))
+        var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
+
+        if (itemDraggedFrom == ItemDraggedFrom.Shop && (inventoryItemUi.CompareTag("EquippedItem") || inventoryItemUi.CompareTag("PlayerItem")))
+        {
+            var itemToBuy = ShopManager.Instance.SellerInventory.GetItemAt(currentlyDraggedItemIndex);
+            ShopManager.Instance.BuyItem(itemToBuy, currentlyDraggedItemIndex);
+            return;
+        }
+        
+        if (itemDraggedFrom == ItemDraggedFrom.Player && inventoryItemUi.CompareTag("ShopItem"))
+        {
+            var itemToSell = InventoryController.Instance.inventoryData.GetItemAt(currentlyDraggedItemIndex);
+            ShopManager.Instance.SellItem(itemToSell, currentlyDraggedItemIndex);
+            return;
+        }
+        
+        if (index == -1 && indexOfSellerItem == -1 && inventoryItemUi.CompareTag("EquippedItem"))
         {
             InventoryController.Instance.PerformAction(currentlyDraggedItemIndex);
             return;
-        }            
+        }   
         
-        OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+        if (index != -1)
+        {
+            OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+        }
+        
         HandleItemSelection(inventoryItemUi);
     }
 
@@ -96,14 +129,33 @@ public class UIInventoryPage : MonoBehaviour
         currentlyDraggedItemIndex = -1;
     }
 
-    private void HandleBeginDrag(UIInventoryItem inventoryItemUi)
+    public void HandleBeginDrag(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
+        var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
+        if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
-        currentlyDraggedItemIndex = index;
+
+        if (index != -1)
+        {
+            currentlyDraggedItemIndex = index;
+            itemDraggedFrom = ItemDraggedFrom.Player;
+        } 
+        else if (indexOfSellerItem != -1)
+        {
+            currentlyDraggedItemIndex = indexOfSellerItem;
+            itemDraggedFrom = ItemDraggedFrom.Shop;
+        }
+        
         HandleItemSelection(inventoryItemUi);
-        OnStartDragging?.Invoke(index);
+        if (index != -1)
+        {
+            OnStartDragging?.Invoke(index, true);
+        }
+        else
+        {
+            OnStartDragging?.Invoke(indexOfSellerItem, false);
+        }
     }
 
     public void CreateDraggedItem(Sprite sprite, int quantity)
@@ -112,14 +164,24 @@ public class UIInventoryPage : MonoBehaviour
         mouseFollower.SetData(sprite, quantity);
     }
 
-    private void HandleItemSelection(UIInventoryItem inventoryItemUi)
+    public void HandleItemSelection(UIInventoryItem inventoryItemUi)
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
-        if (index == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
+        var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
+        if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
-        OnDescriptionRequested?.Invoke(index);
-    }
+        
 
+        if (indexOfSellerItem != -1)
+        {
+            OnDescriptionRequested?.Invoke(indexOfSellerItem, false);
+        }
+        else
+        {
+            OnDescriptionRequested?.Invoke(index, true);
+        } 
+    }
+    
     public void Show()
     {
         gameObject.SetActive(true);
@@ -149,6 +211,11 @@ public class UIInventoryPage : MonoBehaviour
         {
             uiInventoryItem.Deselect();
         }
+        
+        foreach (var uiSellerInventoryItem in ShopManager.Instance.listOfSellerItems)
+        {
+            uiSellerInventoryItem.Deselect();
+        }
 
         foreach (var uiEquippedItemsSlots in equippedItemsManager.EquippedItemsSlots)
         {
@@ -165,7 +232,7 @@ public class UIInventoryPage : MonoBehaviour
         ResetDraggedItem();
     }
 
-    public void UpdateDescription(int itemIndex, Sprite itemImage, string itemName, string description)
+    public void UpdateDescription(int itemIndex, bool isPlayerItem, Sprite itemImage, string itemName, string description)
     {
         itemDescription.SetDescription(itemImage, itemName, description);
         DeselectAllItems();
@@ -174,9 +241,13 @@ public class UIInventoryPage : MonoBehaviour
         {
             equippedItemsManager.EquippedItemsSlots[0].Select();
         }
-        else
+        else if (isPlayerItem)
         {
             listOfUiItems[itemIndex].Select();
+        }
+        else
+        {
+            ShopManager.Instance.listOfSellerItems[itemIndex].Select();
         }
     }
 
@@ -185,6 +256,11 @@ public class UIInventoryPage : MonoBehaviour
         foreach (var item in listOfUiItems)
         {
             item.ResetData();
+            item.Deselect();
+        }
+        
+        foreach (var item in ShopManager.Instance.listOfSellerItems)
+        {
             item.Deselect();
         }
         
@@ -197,5 +273,10 @@ public class UIInventoryPage : MonoBehaviour
     public void UpdateGoldAmount(int goldAmount)
     {
         goldAmountTMP.text = $"Gold: {goldAmount}";
+    }
+    
+    public void UpdateSellerGoldAmount(int goldAmount)
+    {
+        sellerGoldAmountTMP.text = $"Gold: {goldAmount}";
     }
 }

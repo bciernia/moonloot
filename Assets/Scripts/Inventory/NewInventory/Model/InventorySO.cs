@@ -6,11 +6,12 @@ using UnityEngine;
 [CreateAssetMenu]
 public class InventorySO : ScriptableObject
 {
-    [SerializeField] private List<InventoryItem> inventoryItems;
+    [SerializeField] public List<InventoryItem> inventoryItems;
     
     [field: SerializeField]
     public int Size { get; private set; } = 10;
 
+    [field: SerializeField]
     public int Gold { get; set; } = 50;
 
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
@@ -23,7 +24,6 @@ public class InventorySO : ScriptableObject
             inventoryItems.Add(InventoryItem.GetEmptyItem());
         }
     }
-
 
     public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
     {
@@ -110,9 +110,9 @@ public class InventorySO : ScriptableObject
         return quantity;
     }
 
-    public void AddItem(InventoryItem item)
+    public void AddItem(InventoryItem item, int quantity)
     {
-        AddItem(item.item, item.quantity);
+        AddItem(item.item, quantity);
     }
 
     public Dictionary<int, InventoryItem> GetCurrentInventoryState()
