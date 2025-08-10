@@ -47,16 +47,24 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
         Reward.text = GetRewardText(quest);
         
         ObjectiveContainer.DetachChildren();
+        
         foreach (var objective in quest.GetObjectives())
         {
-            var prefab = _objectiveInCompletePrefab;
-            if (questStatus.IsObjectiveComplete(objective.reference))
+            bool isComplete = questStatus.IsObjectiveComplete(objective.reference);
+
+            if (isComplete)
             {
-                prefab = _objectivePrefab;
+                var objectiveInstance = Instantiate(_objectivePrefab, ObjectiveContainer);
+                var objectiveText = objectiveInstance.GetComponentInChildren<TextMeshProUGUI>();
+                objectiveText.text = objective.description;
             }
-            var objectiveInstance = Instantiate(prefab, ObjectiveContainer);
-            var objectiveText = objectiveInstance.GetComponentInChildren<TextMeshProUGUI>();
-            objectiveText.text = objective.description;
+            else
+            {
+                var objectiveInstance = Instantiate(_objectiveInCompletePrefab, ObjectiveContainer);
+                var objectiveText = objectiveInstance.GetComponentInChildren<TextMeshProUGUI>();
+                objectiveText.text = objective.description;
+                break;
+            }
         }
     }
     
