@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public PlayerAttack PlayerAttack { get; private set; }
 
     public static Player instance;
+    public string areaTransitionName;
     
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;

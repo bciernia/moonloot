@@ -10,13 +10,13 @@ public class QuestList : MonoBehaviour
     
     public void AddQuest(Quest quest)
     {
-        if (HasQuest(quest)) return;
+        if (IsQuestInQuestList(quest)) return;
         var newStatus = new QuestStatus(quest);
         _statuses.Add(newStatus);
         onUpdate?.Invoke();
     }
 
-    private bool HasQuest(Quest quest) => GetQuestStatus(quest) != null;
+    public bool IsQuestInQuestList(Quest quest) => GetQuestStatus(quest) != null;
 
     public IEnumerable<QuestStatus> GetStatuses()
     {
@@ -59,6 +59,4 @@ public class QuestList : MonoBehaviour
 
         return null;
     }
-    
-    
 }
