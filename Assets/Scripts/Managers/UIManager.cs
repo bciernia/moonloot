@@ -33,6 +33,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Equipment Panel")] 
     [SerializeField] private GameObject _equipmentPanel;
+    [SerializeField] private Image _healthBarEq;
+    [SerializeField] private Image _manaBarEq;
+    // [SerializeField] private Image _staminaBar;
+    [SerializeField] private TextMeshProUGUI _healthTMPEq;
+    [SerializeField] private TextMeshProUGUI _manaTMPEq;
     
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
@@ -63,6 +68,15 @@ public class UIManager : MonoBehaviour
         
         _healthTMP.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMP.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
+        
+        _healthBarEq.fillAmount = Mathf.Lerp(_healthBarEq.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
+            10f * Time.deltaTime);
+        
+        _manaBarEq.fillAmount = Mathf.Lerp(_manaBarEq.fillAmount, _playerStatsSo.MP / _playerStatsSo.MaxMP,
+            10f * Time.deltaTime);
+        
+        _healthTMPEq.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
+        _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
     }
 
     private void UpdateStatsPanel()

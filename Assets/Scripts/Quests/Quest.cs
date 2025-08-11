@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Quest")]
@@ -48,6 +49,19 @@ public class Quest : ScriptableObject
     public IEnumerable<Reward> GetRewards()
     {
         return _rewards;
+    }
+
+    public string GetRewardDescription()
+    {
+        var sb = new StringBuilder();
+        foreach (var reward in _rewards)
+        {
+            if(reward.number > 1) sb.Append($"{reward.number} ");
+            sb.Append($"{reward.item.item.Name}");
+            sb.AppendLine();
+        }
+
+        return sb.ToString();
     }
 
     public bool HasObjective(string objectiveRef)
