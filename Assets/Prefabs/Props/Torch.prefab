@@ -76,7 +76,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1691784247
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -8553596595128423742, guid: fd3e40b8f1b3f5241912b6f09f032d39, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -187,7 +187,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1691784247
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: 6085510052961881874, guid: 02e7bc81f71c54c45829ba33e5074ea3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -213,9 +213,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light2D: {fileID: 3279998372988172259}
-  blinkSpeed: 5
-  intensityMin: 0.2
-  intensityMax: 1
+  baseIntensity: 1
+  innerRadiusIntensity: 2
+  flickerAmount: 0.3
+  flickerSpeed: 5
 --- !u!1 &7813343240848235013
 GameObject:
   m_ObjectHideFlags: 0
