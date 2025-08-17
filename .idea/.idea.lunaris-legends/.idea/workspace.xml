@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/CharacterType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/CharacterType.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Props/Torch.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Props/Torch.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MainMenu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (3).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (3).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (4).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (4).png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (6).png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/MainMenu/pixil-frame-0 (6).png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StartScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StartScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -452,6 +452,7 @@
       <workItem from="1754811472671" duration="3310000" />
       <workItem from="1754928241591" duration="7526000" />
       <workItem from="1755098504183" duration="11734000" />
+      <workItem from="1755447340427" duration="495000" />
     </task>
     <servers />
   </component>
@@ -575,32 +576,6 @@
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestList.cs</url>
-          <line>28</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestList.cs" containingFunctionPresentation="Method 'CompleteObjective'">
-            <startOffsets>
-              <option value="719" />
-            </startOffsets>
-            <endOffsets>
-              <option value="755" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/Quest.cs</url>
-          <line>68</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\Quest.cs" containingFunctionPresentation="Method 'HasObjective'">
-            <startOffsets>
-              <option value="1533" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1571" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs</url>
           <line>35</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'CompleteObjective'">
@@ -612,19 +587,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="73" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestList.cs</url>
-          <line>49</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestList.cs" containingFunctionPresentation="Method 'IsObjectiveCompleted'">
-            <startOffsets>
-              <option value="1351" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1401" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="74" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs</url>
@@ -833,6 +795,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs</url>
+          <line>58</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemyStatistics.cs" containingFunctionPresentation="Method 'TakeDamage'">
+            <startOffsets>
+              <option value="1990" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2010" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="191" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
+          <line>100</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
+            <startOffsets>
+              <option value="2668" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2729" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="192" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

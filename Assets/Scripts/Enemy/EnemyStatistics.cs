@@ -5,7 +5,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
-
+    [SerializeField] public CharacterType CharacterType = CharacterType.Enemy;
+    
     public string Name { get; private set; }
     public string Description { get; private set; }
     public float CurrentHP { get; private set; }
@@ -19,7 +20,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     public float Speed { get; set; }
     public float ChaseSpeed { get; set; }
     public float StopRange { get; private set; }
-    
+
+
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
