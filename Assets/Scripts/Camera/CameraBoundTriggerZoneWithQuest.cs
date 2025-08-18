@@ -41,7 +41,8 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
         {
             if (enemiesInZone.All(enemy => enemy.CurrentHP <= 0))
             {
-                if (_questCompletion.Quest)
+                if (  _questCompletion.Quest)
+                // if ( GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>().HasPlayerQuest(_questCompletion.Quest) && _questCompletion.Quest)
                 {
                     _questCompletion.CompleteObjective();
                 }

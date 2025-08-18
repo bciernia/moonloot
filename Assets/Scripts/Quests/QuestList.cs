@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestList : MonoBehaviour
@@ -26,11 +29,16 @@ public class QuestList : MonoBehaviour
     public void CompleteObjective(Quest quest, string objective)
     {
         var status = GetQuestStatus(quest);
-        status.CompleteObjective(objective);
-        if (status.IsComplete())
+        
+        if (status != null)
         {
-            GiveReward(quest);
+            status.CompleteObjective(objective);
+            if (status.IsComplete())
+            {
+                GiveReward(quest);
+            }
         }
+        
         onUpdate?.Invoke();
     }
 
@@ -50,6 +58,7 @@ public class QuestList : MonoBehaviour
         return questStatus.IsObjectiveComplete(objective);
     }
     
+    [CanBeNull]
     private QuestStatus GetQuestStatus(Quest quest)
     {
         foreach (var status in _statuses)
@@ -59,4 +68,6 @@ public class QuestList : MonoBehaviour
 
         return null;
     }
+
+    public bool HasPlayerQuest(Quest quest) => _statuses.Any(status => status.GetQuest().GetTitle() == quest.GetTitle());
 }
