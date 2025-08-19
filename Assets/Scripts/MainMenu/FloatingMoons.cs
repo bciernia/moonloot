@@ -3,7 +3,8 @@ using UnityEngine.Rendering.Universal; // Light2D
 
 public class FloatingMoonsArc : MonoBehaviour
 {
-    public float speed = 1f;               
+    public float speed = .5f;               
+    public float rotationSpeed = 10f;               
     public float maxLightIntensity = 15f;  
     public GameObject[] moons;             
 
@@ -59,6 +60,8 @@ public class FloatingMoonsArc : MonoBehaviour
         moonPos.z = 1f;
         moon.transform.position = moonPos;
 
+        moon.transform.Rotate(Vector3.back, rotationSpeed * Time.deltaTime);
+        
         var lightIntensity = 0f;
         if (t <= 0.5f)
             lightIntensity = Mathf.Lerp(0f, maxLightIntensity, t / 0.5f);
@@ -66,7 +69,6 @@ public class FloatingMoonsArc : MonoBehaviour
             lightIntensity = Mathf.Lerp(maxLightIntensity, 0f, (t - 0.5f) / 0.5f);
         SetMoonLightIntensity(moonLight, lightIntensity);
 
-        // --- Koniec animacji ---
         if (t >= 1f)
         {
             moon.SetActive(false);
