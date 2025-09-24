@@ -4,8 +4,13 @@ using UnityEngine;
 public class QuestGiver : MonoBehaviour
 {
     [SerializeField] private List<Quest> _quest;
-    
-    //Used in dialogues in Trigger Script nodes
+
+    public Quest GetQuest(int questIndex = 0)
+    {
+        return _quest[questIndex];
+    }
+
+//Used in dialogues in Trigger Script nodes
     public void GiveQuest(int id = 0)
     {
         var questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();

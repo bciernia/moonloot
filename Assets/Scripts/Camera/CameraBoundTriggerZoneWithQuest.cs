@@ -12,6 +12,7 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
     [SerializeField] private GameObject leftColliderGameObject;
     [SerializeField] private GameObject rightColliderGameObject;
     [SerializeField] private List<EnemyStatistics> enemiesInZone;
+    [SerializeField] private string QuestObjectiveToComplete;
     
     private CinemachineCamera _virtualCamera;
 
@@ -41,10 +42,10 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
         {
             if (enemiesInZone.All(enemy => enemy.CurrentHP <= 0))
             {
-                if (  _questCompletion.Quest)
+                if (_questCompletion.Quest)
                 // if ( GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>().HasPlayerQuest(_questCompletion.Quest) && _questCompletion.Quest)
                 {
-                    _questCompletion.CompleteObjective();
+                    _questCompletion.CompleteObjective(QuestObjectiveToComplete);
                 }
 
                 UnblockExitFromArea();

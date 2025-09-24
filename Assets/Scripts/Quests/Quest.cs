@@ -10,6 +10,7 @@ public class Quest : ScriptableObject
     [SerializeField][TextArea] private string _description;
     [SerializeField] private List<Reward> _rewards = new List<Reward>();
     [SerializeField] private List<Objective> _objectives = new List<Objective>();
+    [SerializeField] private ItemSO _itemInQuest;
     
     [System.Serializable]
     public class Reward
@@ -50,6 +51,8 @@ public class Quest : ScriptableObject
     {
         return _rewards;
     }
+
+    public string GetQuestItemName() => _itemInQuest.Name;
 
     public string GetRewardDescription()
     {

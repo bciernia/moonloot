@@ -4,7 +4,6 @@ using UnityEngine;
 public class QuestCompletion : MonoBehaviour
 {
     [SerializeField] private Quest quest;
-    [SerializeField] private string objective;
 
     public Quest Quest { get; private set; }
 
@@ -14,10 +13,10 @@ public class QuestCompletion : MonoBehaviour
     }
 
     //Used in dialogue nodes
-    public void CompleteObjective()
+    public void CompleteObjective(string objectiveNumber)
     {
         var questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
-        questList.CompleteObjective(quest, objective);
+        questList.CompleteObjective(quest, objectiveNumber);
     }
     
     public bool IsObjectiveCompleted(string objectiveName)

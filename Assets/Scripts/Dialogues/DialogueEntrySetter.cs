@@ -1,18 +1,21 @@
 using System;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class DialogueEntrySetter : MonoBehaviour
 {
-    [SerializeField] private string DialogueEntryId;
+    public string NpcName { get; private set; }
 
-    private string EntryId { get; set; }
-    
-    public void SetEntryId(string entryId)
+    private void Awake()
     {
-        DialogueEntryId = entryId;
-        EntryId = DialogueEntryId;
+        NpcName = gameObject.name;
     }
 
-    public string GetEntryId() => EntryId ?? DialogueEntryId;
+    public void UpdateDialogueEntry([CanBeNull] string npcName, string dialogueEntryId)
+    {
+        DialogueEntryManager.Instance.UpdateNpcDialogueEntry(npcName ?? NpcName, dialogueEntryId);
+    }
+
+    public string GetEntryId() => DialogueEntryManager.Instance.GetDialogueEntryIdByNpcName(NpcName);
 }

@@ -177,6 +177,47 @@ public class InventorySO : ScriptableObject
 
         return false;
     }
+
+    public bool FindItemByName(string itemName)
+    {
+        for (var i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i].IsEmpty)
+                continue;
+
+            if (inventoryItems[i].item.Name == itemName)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool TryRemoveQuestItems(string itemName, int quantity)
+    {
+        for (var i = 0; i < inventoryItems.Count; i++)
+        {
+            if (inventoryItems[i].IsEmpty)
+                continue;
+
+            if (inventoryItems[i].item.Name == itemName)
+            {
+                if (inventoryItems[i].quantity >= quantity)
+                {
+                    RemoveItem(i, quantity);
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    public void RemoveItemByName(string itemName, int amount)
+    {
+        
+    }
 }
 
 [Serializable]

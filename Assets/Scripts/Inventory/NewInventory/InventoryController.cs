@@ -284,8 +284,8 @@ public class InventoryController : Singleton<InventoryController>
         }
     }
 
-    public bool UseItemById(int itemId)
-    {
-        return inventoryData.FindItemById(itemId);
-    }
+    public bool UseItemById(int itemId) => inventoryData.FindItemById(itemId);
+
+    public bool HasUserQuestItem(string itemName) =>  inventoryData.FindItemByName(itemName);
+    public bool TryRemoveQuestItems(string itemName, int quantity) =>  inventoryData.TryRemoveQuestItems(itemName, quantity);
 }

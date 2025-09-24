@@ -13,6 +13,16 @@ MonoBehaviour:
   m_Name: Quest_ClearTheDruidMeadow
   m_EditorClassIdentifier: 
   _name: Clear the druid meadow
-  _description: 
-  _rewards: []
-  _objectives: []
+  _description: 'Druid meadow needs to be cleared. '
+  _rewards:
+  - number: 3
+    item:
+      quantity: 2
+      item: {fileID: 11400000, guid: 52602d9a80a8d7743b26ab8e0bc44d9b, type: 2}
+      itemState: []
+  _objectives:
+  - reference: 1
+    description: Clear meadow
+  - reference: 2
+    description: Find 8 awakening herbs and bring them back to Norfaren
+  _itemInQuest: {fileID: 11400000, guid: 0fc290cf4ee1d9d46bcdfefe2375ab14, type: 2}

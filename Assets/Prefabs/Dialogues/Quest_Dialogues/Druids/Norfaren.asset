@@ -1,0 +1,830 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8419038114711350965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 12
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Druid
+    - id: 1
+      language: en
+      text: Hi!
+    - id: 2
+      language: en
+      text: Norfaren
+    - id: 3
+      language: en
+      text: Did you finished?
+    - id: 4
+      language: en
+      text: aa
+    - id: 5
+      language: en
+      text: ttt
+    - id: 6
+      language: en
+      text: ww
+    - id: 7
+      language: en
+      text: fff
+    - id: 8
+      language: en
+      text: "Musisz znale\u017A\u0107 zio\u0142a!"
+    - id: 9
+      language: en
+      text: "Super, ale masz za ma\u0142o zi\xF3l."
+    - id: 10
+      language: en
+      text: Udalo sie!!
+    - id: 11
+      language: en
+      text: "Dzi\u0119ki za pomoc moj ty bohaterze!!"
+  - counter: 12
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+    - id: 6
+      language: es
+      text: 
+    - id: 7
+      language: es
+      text: 
+    - id: 8
+      language: es
+      text: 
+    - id: 9
+      language: es
+      text: 
+    - id: 10
+      language: es
+      text: 
+    - id: 11
+      language: es
+      text: 
+  - counter: 12
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+    - id: 6
+      language: fr
+      text: 
+    - id: 7
+      language: fr
+      text: 
+    - id: 8
+      language: fr
+      text: 
+    - id: 9
+      language: fr
+      text: 
+    - id: 10
+      language: fr
+      text: 
+    - id: 11
+      language: fr
+      text: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Norfaren
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 1804900571780219528
+  - rid: 1804900571780219529
+  - rid: 1804900571780219530
+  - rid: 1804900571780219531
+  - rid: 1804900571780219532
+  - rid: 1804900571780219533
+  - rid: 1804900571780219534
+  - rid: 1804900571780219535
+  - rid: 1804900571780219536
+  - rid: 1804900571780219537
+  - rid: 1804900571780219538
+  - rid: 1804900571780219539
+  - rid: 1804900571780219540
+  - rid: 1804900571780219541
+  - rid: 1804900571780219542
+  - rid: 1804900571780219543
+  - rid: 1804900571780219544
+  - rid: 1804900571780219545
+  - rid: 1804900571780219546
+  - rid: 1804900571780219547
+  translationLibrary: {fileID: -8419038114711350965}
+  maxID: 12805
+  references:
+    version: 2
+    RefIds:
+    - rid: 1804900571780219528
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: ea030000
+          ownerId: 2
+          connectionType: 1
+        width: 123
+        height: 75
+        xPosition: 3786.7046
+        yPosition: 1252.4442
+        entryPointName: 0
+    - rid: 1804900571780219529
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1001
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1002
+          attachedIds: 03000000
+          ownerId: 1001
+          connectionType: 1
+        outputs:
+        - id: 1003
+          attachedIds: 06060000
+          ownerId: 1001
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 4018.5498
+        yPosition: 1243.5922
+        items:
+        - rid: 1804900571780219548
+        characterName: Druid
+        icon: 
+    - rid: 1804900571780219530
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1009
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1010
+          attachedIds: 44090000
+          ownerId: 1009
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 3772.9248
+        yPosition: 1730.0922
+        entryPointName: 1
+    - rid: 1804900571780219531
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1032
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1033
+          attachedIds: 0c060000
+          ownerId: 1032
+          connectionType: 1
+        - id: 1034
+          attachedIds: 
+          ownerId: 1032
+          connectionType: 8
+        - id: 1035
+          attachedIds: 
+          ownerId: 1032
+          connectionType: 9
+        - id: 1036
+          attachedIds: 
+          ownerId: 1032
+          connectionType: 9
+        - id: 1037
+          attachedIds: 
+          ownerId: 1032
+          connectionType: 9
+        outputs:
+        - id: 1038
+          attachedIds: 
+          ownerId: 1032
+          connectionType: 9
+        - id: 1039
+          attachedIds: b5050000
+          ownerId: 1032
+          connectionType: 1
+        width: 200
+        height: 321.5625
+        xPosition: 4705.828
+        yPosition: 1244.938
+        triggeredClassName: QuestGiver
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219532
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1460
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1461
+          attachedIds: 0f040000
+          ownerId: 1460
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 5032.3896
+        yPosition: 1401.4877
+        exitPointName: 
+    - rid: 1804900571780219533
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1541
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1542
+          attachedIds: eb030000
+          ownerId: 1541
+          connectionType: 1
+        - id: 1543
+          attachedIds: 
+          ownerId: 1541
+          connectionType: 5
+        - id: 1544
+          attachedIds: 
+          ownerId: 1541
+          connectionType: 5
+        - id: 1545
+          attachedIds: 
+          ownerId: 1541
+          connectionType: 9
+        - id: 1546
+          attachedIds: 
+          ownerId: 1541
+          connectionType: 9
+        outputs:
+        - id: 1547
+          attachedIds: 
+          ownerId: 1541
+          connectionType: 9
+        - id: 1548
+          attachedIds: 09040000
+          ownerId: 1541
+          connectionType: 1
+        width: 200
+        height: 321.5625
+        xPosition: 4405.7534
+        yPosition: 1266.8435
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string,string)
+        parameterTypes:
+        - string
+        - string
+        parameterValues:
+        - Norfaren
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219534
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2371
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 2372
+          attachedIds: f2030000
+          ownerId: 2371
+          connectionType: 1
+        outputs:
+        - id: 2373
+          attachedIds: f00b0000
+          ownerId: 2371
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 3978.4268
+        yPosition: 1795.8351
+        items:
+        - rid: 1804900571780219549
+        characterName: Norfaren
+        icon: 
+    - rid: 1804900571780219535
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3055
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3056
+          attachedIds: 45090000
+          ownerId: 3055
+          connectionType: 1
+        - id: 3057
+          attachedIds: 
+          ownerId: 3055
+          connectionType: 5
+        - id: 3058
+          attachedIds: 
+          ownerId: 3055
+          connectionType: 9
+        - id: 3059
+          attachedIds: 
+          ownerId: 3055
+          connectionType: 9
+        - id: 3060
+          attachedIds: 
+          ownerId: 3055
+          connectionType: 9
+        outputs:
+        - id: 3061
+          attachedIds: c3130000
+          ownerId: 3055
+          connectionType: 2
+        - id: 3062
+          attachedIds: c2130000
+          ownerId: 3055
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 4346.052
+        yPosition: 1807.3975
+        triggeredClassName: DialogueQuestHelper
+        triggeredMethodName: HasPlayerQuestItem
+        methodSignature: HasPlayerQuestItem():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219536
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5057
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 5058
+          attachedIds: f60b0000
+          ownerId: 5057
+          connectionType: 1
+        - id: 5059
+          attachedIds: f50b0000
+          ownerId: 5057
+          connectionType: 2
+        - id: 5060
+          attachedIds: 
+          ownerId: 5057
+          connectionType: 2
+        outputs:
+        - id: 5061
+          attachedIds: 
+          ownerId: 5057
+          connectionType: 2
+        - id: 5062
+          attachedIds: aa1e0000
+          ownerId: 5057
+          connectionType: 10
+        - id: 5063
+          attachedIds: 6a160000
+          ownerId: 5057
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 4664.2026
+        yPosition: 2019.075
+        logicOperation: 0
+    - rid: 1804900571780219537
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5737
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5738
+          attachedIds: c7130000
+          ownerId: 5737
+          connectionType: 1
+        outputs:
+        - id: 5739
+          attachedIds: d6160000
+          ownerId: 5737
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 5001.0913
+        yPosition: 2203.854
+        items:
+        - rid: 1804900571780219550
+        characterName: Norfaren
+        icon: 
+    - rid: 1804900571780219538
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5845
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 5846
+          attachedIds: 6b160000dc290000
+          ownerId: 5845
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 6672.527
+        yPosition: 2195.0664
+        exitPointName: 
+    - rid: 1804900571780219539
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7849
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 7850
+          attachedIds: c6130000
+          ownerId: 7849
+          connectionType: 1
+        - id: 7851
+          attachedIds: 
+          ownerId: 7849
+          connectionType: 8
+        - id: 7852
+          attachedIds: 
+          ownerId: 7849
+          connectionType: 9
+        - id: 7853
+          attachedIds: 
+          ownerId: 7849
+          connectionType: 9
+        - id: 7854
+          attachedIds: 
+          ownerId: 7849
+          connectionType: 9
+        outputs:
+        - id: 7855
+          attachedIds: a11f0000
+          ownerId: 7849
+          connectionType: 2
+        - id: 7856
+          attachedIds: a01f0000
+          ownerId: 7849
+          connectionType: 1
+        width: 200
+        height: 335.62488
+        xPosition: 5003.549
+        yPosition: 1783.9362
+        triggeredClassName: DialogueQuestHelper
+        triggeredMethodName: TryRemoveQuestItems
+        methodSignature: TryRemoveQuestItems(int):bool
+        parameterTypes:
+        - int
+        parameterValues:
+        - 8
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219540
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8095
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 8096
+          attachedIds: b01e0000
+          ownerId: 8095
+          connectionType: 1
+        - id: 8097
+          attachedIds: af1e0000
+          ownerId: 8095
+          connectionType: 2
+        - id: 8098
+          attachedIds: 
+          ownerId: 8095
+          connectionType: 2
+        outputs:
+        - id: 8099
+          attachedIds: 
+          ownerId: 8095
+          connectionType: 2
+        - id: 8100
+          attachedIds: f3270000
+          ownerId: 8095
+          connectionType: 10
+        - id: 8101
+          attachedIds: 7e200000
+          ownerId: 8095
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 5332.563
+        yPosition: 1953.7551
+        logicOperation: 0
+    - rid: 1804900571780219541
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8317
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8318
+          attachedIds: a51f0000
+          ownerId: 8317
+          connectionType: 1
+        outputs:
+        - id: 8319
+          attachedIds: 
+          ownerId: 8317
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 5667.544
+        yPosition: 2040.6301
+        items:
+        - rid: 1804900571780219551
+        characterName: Norfaren
+        icon: 
+    - rid: 1804900571780219542
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10226
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 10227
+          attachedIds: a41f0000
+          ownerId: 10226
+          connectionType: 1
+        - id: 10228
+          attachedIds: 
+          ownerId: 10226
+          connectionType: 5
+        - id: 10229
+          attachedIds: 
+          ownerId: 10226
+          connectionType: 9
+        - id: 10230
+          attachedIds: 
+          ownerId: 10226
+          connectionType: 9
+        - id: 10231
+          attachedIds: 
+          ownerId: 10226
+          connectionType: 9
+        outputs:
+        - id: 10232
+          attachedIds: 
+          ownerId: 10226
+          connectionType: 9
+        - id: 10233
+          attachedIds: 8e290000
+          ownerId: 10226
+          connectionType: 1
+        width: 200
+        height: 321.5625
+        xPosition: 5657.8735
+        yPosition: 1644.7211
+        triggeredClassName: QuestCompletion
+        triggeredMethodName: CompleteObjective
+        methodSignature: CompleteObjective(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219543
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10637
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 10638
+          attachedIds: f9270000
+          ownerId: 10637
+          connectionType: 1
+        outputs:
+        - id: 10639
+          attachedIds: d6290000
+          ownerId: 10637
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 6029.326
+        yPosition: 1947.7238
+        items:
+        - rid: 1804900571780219552
+        characterName: Norfaren
+        icon: 
+    - rid: 1804900571780219544
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10709
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 10710
+          attachedIds: 8f290000
+          ownerId: 10709
+          connectionType: 1
+        - id: 10711
+          attachedIds: 
+          ownerId: 10709
+          connectionType: 5
+        - id: 10712
+          attachedIds: 
+          ownerId: 10709
+          connectionType: 5
+        - id: 10713
+          attachedIds: 
+          ownerId: 10709
+          connectionType: 9
+        - id: 10714
+          attachedIds: 
+          ownerId: 10709
+          connectionType: 9
+        outputs:
+        - id: 10715
+          attachedIds: 
+          ownerId: 10709
+          connectionType: 9
+        - id: 10716
+          attachedIds: d6160000
+          ownerId: 10709
+          connectionType: 1
+        width: 200
+        height: 321.5625
+        xPosition: 6426.5093
+        yPosition: 1762.1759
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string,string)
+        parameterTypes:
+        - string
+        - string
+        parameterValues:
+        - Norfaren
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1804900571780219545
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10988
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 10989
+          attachedIds: ef2a0000
+          ownerId: 10988
+          connectionType: 1
+        width: 214.6875
+        height: 75
+        xPosition: 3707.2234
+        yPosition: 2618.3289
+        entryPointName: 2
+    - rid: 1804900571780219546
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10990
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 10991
+          attachedIds: ed2a0000
+          ownerId: 10990
+          connectionType: 1
+        outputs:
+        - id: 10992
+          attachedIds: f72a0000
+          ownerId: 10990
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 4184.7705
+        yPosition: 2529.1606
+        items:
+        - rid: 1804900571780219553
+        characterName: Norfaren
+        icon: 
+    - rid: 1804900571780219547
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10998
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 10999
+          attachedIds: f02a0000
+          ownerId: 10998
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 4634.0825
+        yPosition: 2572.598
+        exitPointName: 
+    - rid: 1804900571780219548
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hi!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900571780219549
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Did you finished?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900571780219550
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Musisz znale\u017A\u0107 zio\u0142a!"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900571780219551
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Super, ale masz za ma\u0142o zi\xF3l."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900571780219552
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Udalo sie!!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900571780219553
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Dzi\u0119ki za pomoc moj ty bohaterze!!"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
