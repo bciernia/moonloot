@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     
     public void ApplyDash(float dashAmount, float duration)
     {
+        if (_moveDirection == Vector2.zero) return;
         StartCoroutine(DashCoroutine(dashAmount, duration));
     }
 
@@ -65,6 +66,16 @@ public class PlayerMovement : MonoBehaviour
 
         speed = originalSpeed;
     }
+    
+    // private IEnumerator DashCoroutine(float dashAmount, float duration)
+    // {
+    //     var originalSpeed = speed;
+    //     speed += dashAmount;
+    //
+    //     yield return new WaitForSeconds(duration);
+    //
+    //     speed = originalSpeed;
+    // }
 
     private void ReadMovement()
     {
