@@ -1,5 +1,91 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7963865700059558411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 7
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Kaelen
+    - id: 1
+      language: en
+      text: Shhh.... Shhh....
+    - id: 2
+      language: en
+      text: Li
+    - id: 3
+      language: en
+      text: "Li\u015B\u0107..... U"
+    - id: 4
+      language: en
+      text: "Li\u015B\u0107... U\u015Bmiech... Nie zwierz\u0119... "
+    - id: 5
+      language: en
+      text: 'Zzz... Zzz... '
+    - id: 6
+      language: en
+      text: "dZi\u0119ki za pobudke!"
+  - counter: 7
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+    - id: 4
+      language: es
+      text: 
+    - id: 5
+      language: es
+      text: 
+    - id: 6
+      language: es
+      text: 
+  - counter: 7
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+    - id: 4
+      language: fr
+      text: 
+    - id: 5
+      language: fr
+      text: 
+    - id: 6
+      language: fr
+      text: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,9 +99,233 @@ MonoBehaviour:
   m_Name: Kaelen
   m_EditorClassIdentifier: 
   version: 1.5.1
-  nodes: []
-  translationLibrary: {fileID: 0}
-  maxID: 0
+  nodes:
+  - rid: 1804900593460052443
+  - rid: 1804900593460052444
+  - rid: 1804900593460052445
+  - rid: 1804900593460052446
+  - rid: 1804900593460052447
+  - rid: 1804900593460052448
+  - rid: 1804900593460052449
+  - rid: 1804900593460052450
+  translationLibrary: {fileID: -7963865700059558411}
+  maxID: 1168
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 1804900593460052443
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1001
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1002
+          attachedIds: ec030000
+          ownerId: 1001
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 168.45164
+        yPosition: 144.0876
+        entryPointName: 0
+    - rid: 1804900593460052444
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1003
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 1004
+          attachedIds: ea030000
+          ownerId: 1003
+          connectionType: 1
+        outputs:
+        - id: 1005
+          attachedIds: f7030000
+          ownerId: 1003
+          connectionType: 1
+        - id: 1006
+          attachedIds: ff030000
+          ownerId: 1003
+          connectionType: 1
+        - id: 1083
+          attachedIds: 39040000
+          ownerId: 1003
+          connectionType: 1
+        width: 160
+        height: 162
+        xPosition: 381.90173
+        yPosition: 172.33755
+        items:
+        - rid: 1804900593460052451
+        - rid: 1804900593460052452
+        - rid: 1804900593460052453
+    - rid: 1804900593460052445
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1014
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1015
+          attachedIds: ed030000
+          ownerId: 1014
+          connectionType: 1
+        outputs:
+        - id: 1016
+          attachedIds: 
+          ownerId: 1014
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 720.3854
+        yPosition: -47.982807
+        items:
+        - rid: 1804900593460052454
+        characterName: Kaelen
+        icon: 
+    - rid: 1804900593460052446
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1022
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1023
+          attachedIds: ee030000
+          ownerId: 1022
+          connectionType: 1
+        outputs:
+        - id: 1024
+          attachedIds: 
+          ownerId: 1022
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 705.5233
+        yPosition: 147.23318
+        items:
+        - rid: 1804900593460052455
+        characterName: Kaelen
+        icon: 
+    - rid: 1804900593460052447
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1080
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1081
+          attachedIds: 3b040000
+          ownerId: 1080
+          connectionType: 1
+        outputs:
+        - id: 1082
+          attachedIds: 
+          ownerId: 1080
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 670.5233
+        yPosition: 318.48315
+        items:
+        - rid: 1804900593460052456
+        characterName: Kaelen
+        icon: 
+    - rid: 1804900593460052448
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1116
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1117
+          attachedIds: 5f040000
+          ownerId: 1116
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 80.0181
+        yPosition: 652.94025
+        entryPointName: 1
+    - rid: 1804900593460052449
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1118
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1119
+          attachedIds: 5d040000
+          ownerId: 1118
+          connectionType: 1
+        outputs:
+        - id: 1120
+          attachedIds: 67040000
+          ownerId: 1118
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 425.82275
+        yPosition: 654.62
+        items:
+        - rid: 1804900593460052457
+        characterName: Kaelen
+        icon: 
+    - rid: 1804900593460052450
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1126
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1127
+          attachedIds: 60040000
+          ownerId: 1126
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 946.68494
+        yPosition: 709.3847
+        exitPointName: 
+    - rid: 1804900593460052451
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1804900593460052452
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1804900593460052453
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 1804900593460052454
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Shhh.... Shhh....
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900593460052455
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Li\u015B\u0107... U\u015Bmiech... Nie zwierz\u0119... "
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900593460052456
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Zzz... Zzz... '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1804900593460052457
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "dZi\u0119ki za pobudke!"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
