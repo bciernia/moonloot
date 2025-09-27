@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
     [SerializeField] private string initState;
-    [SerializeField] private FSMState[] states ;
+    [SerializeField] public FSMState[] states ;
 
     private EnemyStatistics _enemyStatistics;
     
@@ -65,5 +66,11 @@ public class EnemyBrain : MonoBehaviour
     public void ResetAttackCooldown()
     {
         AttackCooldown = _enemyStatistics.TimeBetweenAttacks;
+    }
+
+    public void LetEnemyAttackPlayer()
+    {
+        var state = states.First(x => x.ID == "Chase");
+        state.Transitions[1].TrueState = "Attack";
     }
 }

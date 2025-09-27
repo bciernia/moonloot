@@ -61,14 +61,14 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
-            
+
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
             
             _enemyBrain.enabled = false;
             // _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
-            
+
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
         else
