@@ -11,6 +11,4 @@ public class EnemyRelationship : MonoBehaviour
     {
         IsFriendly = isFriendly;
     }
-    
-    
 }

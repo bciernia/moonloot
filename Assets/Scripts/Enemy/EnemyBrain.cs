@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
@@ -12,6 +13,8 @@ public class EnemyBrain : MonoBehaviour
     public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
+
+    private readonly string EnemyLayerMask = "Enemy";
 
     private void Awake()
     {
@@ -72,5 +75,17 @@ public class EnemyBrain : MonoBehaviour
     {
         var state = states.First(x => x.ID == "Chase");
         state.Transitions[1].TrueState = "Attack";
+        SetEnemyLayer();
+    }
+
+    public void SetEnemyLayer()
+    {
+        var layerIndex = LayerMask.NameToLayer(EnemyLayerMask);
+        if (layerIndex == -1)
+        {
+            Debug.Log("Layer not found");
+            return;
+        }
+        gameObject.layer = layerIndex;
     }
 }

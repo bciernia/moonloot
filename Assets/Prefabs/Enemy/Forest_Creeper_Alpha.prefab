@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8013698357373125687}
   - component: {fileID: 1727090846665868796}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -118,9 +118,14 @@ GameObject:
   - component: {fileID: 619082099784213098}
   - component: {fileID: 8878059315171743947}
   - component: {fileID: 888181845675717884}
-  m_Layer: 0
+  - component: {fileID: 4713351986519379261}
+  - component: {fileID: 2367122581805037710}
+  - component: {fileID: 6678819415588681490}
+  - component: {fileID: 917164640192625264}
+  - component: {fileID: 8266861545861141059}
+  m_Layer: 10
   m_Name: Forest_Creeper_Alpha
-  m_TagString: NPC
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,7 +352,7 @@ MonoBehaviour:
     - {fileID: 228659718339890564}
     Transitions:
     - Decision: {fileID: 327640788523570941}
-      TrueState: 
+      TrueState: Chase
       FalseState: 
   - ID: Chase
     Actions:
@@ -357,6 +362,16 @@ MonoBehaviour:
       TrueState: 
       FalseState: Wander
     - Decision: {fileID: 8546173141655940257}
+      TrueState: Dialogue
+      FalseState: 
+  - ID: Dialogue
+    Actions:
+    - {fileID: 4713351986519379261}
+    Transitions:
+    - Decision: {fileID: 2367122581805037710}
+      TrueState: Wander
+      FalseState: 
+    - Decision: {fileID: 6678819415588681490}
       TrueState: Attack
       FalseState: 
   - ID: Attack
@@ -531,7 +546,7 @@ NavMeshAgent:
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0.75
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -684,7 +699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17b468997f4fd6a4388c7df665e1dcfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IsFriendly: 1
+  IsFriendly: 0
 --- !u!114 &888181845675717884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -698,6 +713,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NpcName: Creeper Alpha
+--- !u!114 &4713351986519379261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3053377266547924495e625664e92ffb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2367122581805037710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 215416a869b94d1a87e7f960e7f1a8cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6678819415588681490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17fd5f7961447be94c3d2d537f27ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &917164640192625264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2f036dc6e4e1af46a9918e1b5368f9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8266861545861141059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a52acd89601ff44ab2e1fd7300d14a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 5345297387919059945, guid: a7aa9dc7bfbdb3241925cab35f261616, type: 3}
+  wallSpacing: 1
+  arenaWidth: 28
+  arenaHeight: 16
+  _arenaCreators: []
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0
@@ -708,7 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1027564408412106335}
   - component: {fileID: 1259902942174006190}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Selection_0 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -21,9 +21,12 @@ public class DecisionNegativeDialogueFinish : FSMDecision
             var state = _enemyBrain.states.First(x => x.ID == "Chase");
             state.Transitions[1].TrueState = "Attack";
             _npcInteraction.enabled = false;
+            _enemyBrain.SetEnemyLayer();
             return true;
         }
 
         return false;
     }
+    
+    
 }
