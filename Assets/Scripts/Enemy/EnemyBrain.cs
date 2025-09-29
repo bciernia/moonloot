@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
     [SerializeField] private string initState;
-    [SerializeField] private FSMState[] states ;
+    [SerializeField] public FSMState[] states ;
 
     private EnemyStatistics _enemyStatistics;
     
     public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
+
+    private readonly string EnemyLayerMask = "Enemy";
 
     private void Awake()
     {
@@ -65,5 +69,23 @@ public class EnemyBrain : MonoBehaviour
     public void ResetAttackCooldown()
     {
         AttackCooldown = _enemyStatistics.TimeBetweenAttacks;
+    }
+
+    public void LetEnemyAttackPlayer()
+    {
+        var state = states.First(x => x.ID == "Chase");
+        state.Transitions[1].TrueState = "Attack";
+        SetEnemyLayer();
+    }
+
+    public void SetEnemyLayer()
+    {
+        var layerIndex = LayerMask.NameToLayer(EnemyLayerMask);
+        if (layerIndex == -1)
+        {
+            Debug.Log("Layer not found");
+            return;
+        }
+        gameObject.layer = layerIndex;
     }
 }

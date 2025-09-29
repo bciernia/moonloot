@@ -9,6 +9,7 @@ public class SelectionManager : MonoBehaviour
     public static event Action OnNoSelectionEvent;
     
     [SerializeField] private LayerMask _enemyMask;
+    [SerializeField] private LayerMask _npcMask;
     [SerializeField] private GameObject _npcInfoManager;
 
     private Camera mainCamera;

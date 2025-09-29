@@ -60,16 +60,15 @@ public class DialogueManager : Singleton<DialogueManager>
         if (NPCSelected != null)
         {
             NPCSelected.EnableNpcMovement();
+            var dialogueController = NPCSelected.GetComponent<DialogueController>();
+            dialogueController.onStop.RemoveListener(EndDialogue);
         }
-
+        
         _dialogueStarted = false;
         PlayerUI.SetActive(true);
         PlayerSpeechBubble.SetActive(false);
 
-        var dialogueController = NPCSelected.GetComponent<DialogueController>();
-        dialogueController.onStop.RemoveListener(EndDialogue);
-
-        FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
+        // FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
     }
 
     public bool IsDialogueRunning()

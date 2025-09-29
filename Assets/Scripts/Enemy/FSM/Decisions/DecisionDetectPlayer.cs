@@ -1,6 +1,5 @@
-using System;
 using UnityEngine;
-using UnityEngine.AI; // Dodaj import dla NavMeshAgent
+using UnityEngine.AI;
 
 public class DecisionDetectPlayer : FSMDecision
 {
@@ -13,12 +12,14 @@ public class DecisionDetectPlayer : FSMDecision
     private EnemyAnimator _enemyAnimator;
     private NavMeshAgent _navMeshAgent;
     private float _stopFocusTimer;
+    private EnemyRelationship _enemyRelationship;
 
     private void Awake()
     {
         _enemyBrain = GetComponent<EnemyBrain>();
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
+        _enemyRelationship = GetComponent<EnemyRelationship>();
     }
 
     public override bool Decide()
@@ -29,8 +30,8 @@ public class DecisionDetectPlayer : FSMDecision
     private bool DetectPlayer()
     {
         var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, range, playerMask);
-
-        if (playerCollider)
+        
+        if (playerCollider && !_enemyRelationship.IsCharacterFriendly())
         {
             _enemyBrain.Player = playerCollider.transform;
             var directionToEnemy = (_enemyBrain.Player.position - _enemyBrain.transform.position).normalized;
