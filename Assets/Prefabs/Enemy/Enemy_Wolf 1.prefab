@@ -27,6 +27,7 @@ GameObject:
   - component: {fileID: 9188036346047358896}
   - component: {fileID: 218567731359414165}
   - component: {fileID: 7210183766043189842}
+  - component: {fileID: -1486976733086686679}
   m_Layer: 6
   m_Name: Enemy_Wolf 1
   m_TagString: Enemy
@@ -315,6 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: d30cf40f1d408a944ac5d6f6dc761816, type: 2}
+  CharacterType: 1
 --- !u!114 &2643764006718510344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,21 +417,46 @@ MonoBehaviour:
   _expDrop: 50
   _dropItems:
   - Name: Health Potion
-    Item: {fileID: 11400000, guid: 3247c8d1550f8d044812a6f72334ae9f, type: 2}
+    Item:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
     Quantity: 3
     DropChance: 100
   - Name: Health Potion - 50%
-    Item: {fileID: 11400000, guid: 3247c8d1550f8d044812a6f72334ae9f, type: 2}
+    Item:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
     Quantity: 7
     DropChance: 50
   - Name: Key
-    Item: {fileID: 11400000, guid: baac9a282d350ee42bd1d2cfb79620e1, type: 2}
+    Item:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
     Quantity: 1
     DropChance: 33
   - Name: Spear
-    Item: {fileID: 11400000, guid: 9976a4ccac2cea144b6c70cbba26c67f, type: 2}
+    Item:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
     Quantity: 1
     DropChance: 12
+--- !u!114 &-1486976733086686679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b468997f4fd6a4388c7df665e1dcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsFriendly: 0
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0

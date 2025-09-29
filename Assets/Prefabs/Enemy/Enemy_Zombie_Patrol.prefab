@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 765154081351103428, guid: 4145c96e77e9e7544932eb7f03655527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 2228523388610871302}
   - component: {fileID: 7291916914314275798}
   - component: {fileID: 2020320902685088516}
+  - component: {fileID: -6127623889304736570}
   m_Layer: 6
   m_Name: Enemy_Zombie_Patrol
   m_TagString: Enemy
@@ -173,7 +174,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 2085919176084871402, guid: e259c5a58765d874999027e71a0f8183, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,6 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: d30cf40f1d408a944ac5d6f6dc761816, type: 2}
+  CharacterType: 1
 --- !u!114 &7291916914314275798
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,3 +386,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   knockBackTime: 0.2
+--- !u!114 &-6127623889304736570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490316543278559033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b468997f4fd6a4388c7df665e1dcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsFriendly: 0

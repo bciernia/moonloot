@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 488658925948666738}
   - component: {fileID: 382939111198418580}
   - component: {fileID: 8907570454467601712}
+  - component: {fileID: 196499136940899199}
   m_Layer: 6
   m_Name: Enemy_Orc
   m_TagString: Enemy
@@ -179,7 +180,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: -3911695846229201503, guid: dc1a1f2eea16516429f779a65af51ddd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -359,6 +360,7 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 512
+  FocusTime: 3
 --- !u!114 &7207730593185335178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,6 +413,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: d69240e8e5fd3c44d8730dc5d62f0a43, type: 2}
+  CharacterType: 1
 --- !u!114 &2502125778541354374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -463,7 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firePoint: {fileID: 4706784035631974133}
   slashEffect: {fileID: 5993898103221808422, guid: 14825c5dd76573d4583043487f3588c1, type: 3}
-  weapon: {fileID: 11400000, guid: 6b5245e7a929351459dbae96a4929aef, type: 2}
+  _weapon: {fileID: 0}
 --- !u!114 &382939111198418580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +492,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationRange: {x: 3, y: 3}
+--- !u!114 &196499136940899199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202980762219922541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17b468997f4fd6a4388c7df665e1dcfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsFriendly: 0
 --- !u!1 &5246752043382856679
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +626,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 765154081351103428, guid: 4145c96e77e9e7544932eb7f03655527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

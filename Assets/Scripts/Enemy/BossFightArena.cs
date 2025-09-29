@@ -10,9 +10,11 @@ public class BossFightArena : MonoBehaviour
     [SerializeField] private float wallSpacing = 1f;
     [SerializeField] private int arenaWidth = 10;
     [SerializeField] private int arenaHeight = 6;
+    [SerializeField] private List<EnemyStatistics> _arenaCreators = new();
+    [SerializeField] private List<GameObject> enemiesToSpawnInside = new();
+    [SerializeField] private int numberOfEnemiesToSpawn = 0;
 
     private readonly List<GameObject> spawnedWalls = new();
-    [SerializeField] private List<EnemyStatistics> _arenaCreators = new();
     private Vector2Int arenaSize;
 
     private Coroutine _unblockCheckCoroutine;
@@ -60,6 +62,26 @@ public class BossFightArena : MonoBehaviour
 
             spawnedWalls.Add(Instantiate(wallPrefab, leftPos, Quaternion.identity, arenaContainer.transform));
             spawnedWalls.Add(Instantiate(wallPrefab, rightPos, Quaternion.identity, arenaContainer.transform));
+        }
+        
+        if (enemiesToSpawnInside.Count > 0 && numberOfEnemiesToSpawn > 0)
+        {
+            for (var i = 0; i < numberOfEnemiesToSpawn; i++)
+            {
+                var prefab = enemiesToSpawnInside[Random.Range(0, enemiesToSpawnInside.Count)];
+                
+                var spawnX = Random.Range(center.x - halfX + 1, center.x + halfX - 1);
+                var spawnY = Random.Range(center.y - halfY + 1, center.y + halfY - 1);
+                var spawnPos = new Vector3(spawnX, spawnY, 0f);
+    
+                var enemyGO = Instantiate(prefab, spawnPos, Quaternion.identity);
+                
+                var enemyStats = enemyGO.GetComponent<EnemyStatistics>();
+                if (enemyStats != null)
+                {
+                    _arenaCreators.Add(enemyStats);
+                }
+            }
         }
 
         if (_arenaCreators != null && _arenaCreators.Count > 0 && _unblockCheckCoroutine == null)
