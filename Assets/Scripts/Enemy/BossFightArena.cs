@@ -17,11 +17,14 @@ public class BossFightArena : MonoBehaviour
 
     private Coroutine _unblockCheckCoroutine;
     private GameObject arenaContainer;
+    
+    private QuestCompletion _questCompletion;
 
     private void Awake()
     {
         arenaSize = new Vector2Int(arenaWidth, arenaHeight);
         _arenaCreators.Add(gameObject.GetComponent<EnemyStatistics>());
+        _questCompletion = GetComponent<QuestCompletion>();
     }
 
     /// <summary>
@@ -108,11 +111,21 @@ public class BossFightArena : MonoBehaviour
 
             if (allDead && _arenaCreators.Count > 0)
             {
+                if (_questCompletion && _questCompletion.Quest)
+                {
+                    CompleteObjective("1");
+                }
+                
                 DestroyArena();
                 yield break;
             }
 
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    private void CompleteObjective(string objectiveToComplete)
+    {
+        _questCompletion.CompleteObjective(objectiveToComplete);
     }
 }

@@ -30,7 +30,7 @@ public class DecisionDetectPlayer : FSMDecision
     private bool DetectPlayer()
     {
         var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, range, playerMask);
-
+        
         if (playerCollider && !_enemyRelationship.IsCharacterFriendly())
         {
             _enemyBrain.Player = playerCollider.transform;

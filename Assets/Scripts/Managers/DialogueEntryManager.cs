@@ -2,6 +2,7 @@ using System.Collections.Generic;
 
 public class DialogueEntryManager : Singleton<DialogueEntryManager>
 {
+    //TODO Uwzględnić przy zapisie
     private readonly Dictionary<string, string> NpcDialogueEntryDictionary = new();
 
     public void UpdateNpcDialogueEntry(string npcName, string dialogueEntryId)
