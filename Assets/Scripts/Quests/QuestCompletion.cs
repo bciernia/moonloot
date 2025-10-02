@@ -7,21 +7,30 @@ public class QuestCompletion : MonoBehaviour
 
     public Quest Quest { get; private set; }
 
+    public delegate void ObjectiveCompletedHandler(string objectiveId);
+    public event ObjectiveCompletedHandler OnObjectiveCompleted;
+    
     private void Awake()
     {
         Quest = quest;
     }
 
     //Used in dialogue nodes
-    public void CompleteObjective(string objectiveNumber)
+    public void CompleteObjective(string objectiveName)
     {
-        var questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
-        questList.CompleteObjective(quest, objectiveNumber);
+        var questList = GetPlayerQuestList();
+        questList.CompleteObjective(quest, objectiveName);
+        OnObjectiveCompleted?.Invoke(objectiveName);
     }
     
     public bool IsObjectiveCompleted(string objectiveName)
     {
-        var questStatus = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
-        return questStatus.IsObjectiveCompleted(quest, objectiveName);
+        var questList = GetPlayerQuestList();
+        return questList.IsObjectiveCompleted(quest, objectiveName);
+    }
+
+    private QuestList GetPlayerQuestList()
+    {
+        return GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
     }
 }

@@ -63,7 +63,7 @@ public class EnemySlash : MonoBehaviour
         projectile.Direction = Vector3.right;
         projectile.Damage = weapon.Damage;
     }
-
+    
     public void DestroySelf()
     {
         SetIsTriggered();
