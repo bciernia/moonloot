@@ -6,8 +6,6 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private GameObject bloodParticle;
     
-    private Collider2D _collider;
-    
     public Vector3 Direction { get; set; }
     public float Damage { get; set; }
     public GameObject Shooter { get; set; }
