@@ -113,7 +113,7 @@ Transform:
   m_GameObject: {fileID: 1177222618921255456}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: -0.12, y: -1.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -199,9 +199,11 @@ GameObject:
   - component: {fileID: 1715937386030645471}
   - component: {fileID: 4746076273354249246}
   - component: {fileID: 1740924542581311431}
+  - component: {fileID: 577978133636899619}
   - component: {fileID: 7475801587414571362}
   - component: {fileID: 4454510053797355144}
   - component: {fileID: 6977176301354124048}
+  - component: {fileID: 3699996021177694888}
   m_Layer: 6
   m_Name: Spectre
   m_TagString: Enemy
@@ -397,11 +399,24 @@ MonoBehaviour:
     - Decision: {fileID: 4963057285390877222}
       TrueState: Attack
       FalseState: 
+    - Decision: {fileID: 577978133636899619}
+      TrueState: SpecialAttack
+      FalseState: 
   - ID: Attack
     Actions:
     - {fileID: 6762262939215429380}
     Transitions:
     - Decision: {fileID: 4963057285390877222}
+      TrueState: 
+      FalseState: Chase
+    - Decision: {fileID: 577978133636899619}
+      TrueState: SpecialAttack
+      FalseState: 
+  - ID: SpecialAttack
+    Actions:
+    - {fileID: 3699996021177694888}
+    Transitions:
+    - Decision: {fileID: 577978133636899619}
       TrueState: 
       FalseState: Chase
 --- !u!114 &4983618408681676499
@@ -490,7 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f9d9d38550877040b2fdf3b092f9f7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyStats: {fileID: 11400000, guid: d30cf40f1d408a944ac5d6f6dc761816, type: 2}
+  _enemyStats: {fileID: 11400000, guid: ef03e180cdaaf4e4aaff0d3e557f90ae, type: 2}
   CharacterType: 1
 --- !u!114 &5498566439200998105
 MonoBehaviour:
@@ -555,6 +570,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationRange: {x: 3, y: 3}
+--- !u!114 &577978133636899619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581277466367944902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 754249e61fa04665844462a7adf8d5c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &7475801587414571362
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -632,3 +659,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsFriendly: 0
+--- !u!114 &3699996021177694888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3581277466367944902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 856a8f9c4c6f5cb4184c932155cb481f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

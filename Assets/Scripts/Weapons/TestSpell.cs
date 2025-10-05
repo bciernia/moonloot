@@ -11,6 +11,7 @@ public class TestSpell : MonoBehaviour
             var mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mouseWorldPos.z = 0;
 
-            Instantiate(Spell, mouseWorldPos, Quaternion.identity);        }       
+            Instantiate(Spell, mouseWorldPos, Quaternion.identity);        
+        }       
     }
 }

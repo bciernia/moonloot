@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyStatistics : MonoBehaviour, IDamageable
@@ -20,7 +21,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     public float Speed { get; set; }
     public float ChaseSpeed { get; set; }
     public float StopRange { get; private set; }
-
+    public float SpecialAttackTimeInterval { get; set; }
+    public float MaxAttackTimeInterval { get; private set; }
+    public List<GameObject> SpecialAttacks { get; private set; }
 
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
@@ -52,6 +55,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         Speed = _enemyStats.Speed;
         ChaseSpeed = _enemyStats.ChaseSpeed;
         StopRange = _enemyStats.StopRange;
+        SpecialAttackTimeInterval = _enemyStats.SpecialAttackTimeInterval;
+        MaxAttackTimeInterval = _enemyStats.MaxAttackTimeInterval;
+        SpecialAttacks = _enemyStats.SpecialAttacks;
     }
 
     public void TakeDamage(float amount)

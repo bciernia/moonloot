@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyStats_", menuName = "Enemy Stats")]
 public class EnemyStatsSO : ScriptableObject
@@ -20,4 +21,9 @@ public class EnemyStatsSO : ScriptableObject
     [Header("Chasing")]
     public float ChaseSpeed;
     public float StopRange;
+    
+    [Header("Special attacks")]
+    public float SpecialAttackTimeInterval;
+    public float MaxAttackTimeInterval;
+    public List<GameObject> SpecialAttacks;
 }

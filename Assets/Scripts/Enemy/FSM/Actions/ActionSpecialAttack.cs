@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class ActionSpecialAttack : MonoBehaviour
+public class ActionSpecialAttack : FSMAction
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private EnemyStatistics _enemyStatistics;
+    
+    private void Awake()
     {
-        
+        _enemyStatistics = GetComponent<EnemyStatistics>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Act()
     {
-        
+        Debug.Log("SPELL");
+        var player = GameObject.FindGameObjectWithTag("Player");
+        Instantiate(_enemyStatistics.SpecialAttacks[0], player.transform.position, Quaternion.identity);        
     }
 }
