@@ -20,7 +20,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             DialogueManager.Instance.NPCSelected = this;
-            FindFirstObjectByType<InteractionManager>().SetInteractable(this);
+            FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
         }
     }
     
@@ -29,7 +29,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             DialogueManager.Instance.NPCSelected = null;
-            FindFirstObjectByType<InteractionManager>().ClearInteractable();
+            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
         }
     }
 

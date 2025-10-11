@@ -15,7 +15,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().SetInteractable(this);
+            FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
         }
     }
     
@@ -23,7 +23,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().ClearInteractable();
+            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
         }
     }
     

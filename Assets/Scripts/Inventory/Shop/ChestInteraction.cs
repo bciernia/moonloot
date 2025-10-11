@@ -8,7 +8,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().SetInteractable(this);
+            FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
         }
     }
     
@@ -16,7 +16,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().ClearInteractable();
+            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
         }
     }
     

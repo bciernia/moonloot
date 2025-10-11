@@ -5,14 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/SellersInventories/SellerInventory.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/SellersInventories/SellerInventory.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/OpenCloseDoor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/OpenCloseDoor.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/SellerInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/SellerInteraction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Loot/ChestLoot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Loot/ChestLoot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/InteractionManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/InteractionManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/SceneManagement/RoadSignInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/SceneManagement/RoadSignInteraction.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,6 +229,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/UGUI/EventSystem/InputModuleTests/FakeBaseInput.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/UGUI/InputField/TouchInputFieldTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/DraggableWindow.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/OpenCloseDoor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerUILoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SO/Effects/EffectSO.cs" root0="FORCE_HIGHLIGHTING" />
@@ -236,6 +240,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedSpecialAction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/ItemInteraction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
@@ -246,6 +251,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CursorManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/DialogueManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/GameMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/InteractionManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PlayerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -587,10 +593,10 @@
           <line>40</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\OpenCloseDoor.cs" containingFunctionPresentation="Method 'Interact'">
             <startOffsets>
-              <option value="1018" />
+              <option value="1032" />
             </startOffsets>
             <endOffsets>
-              <option value="1032" />
+              <option value="1046" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="85" />
@@ -717,10 +723,10 @@
           <line>24</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\Shop\ChestInteraction.cs" containingFunctionPresentation="Method 'Interact'">
             <startOffsets>
-              <option value="589" />
+              <option value="603" />
             </startOffsets>
             <endOffsets>
-              <option value="652" />
+              <option value="666" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="233" />
