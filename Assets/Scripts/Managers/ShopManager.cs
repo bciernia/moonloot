@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Inventory.NewInventory.Model;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -101,8 +102,16 @@ public class ShopManager : Singleton<ShopManager>
             InventoryController.Instance.ChangeGoldAmount(-itemToBuy.item.BuyPrice);
             SellerInventory.Gold += itemToBuy.item.BuyPrice;
         }
-        
-        InventoryController.Instance.inventoryData.AddItem(itemToBuy, 1);
+
+        if (itemToBuy.item.ItemType == ItemType.Gold)
+        {
+            InventoryController.Instance.ChangeGoldAmount(((GoldItemSO)itemToBuy.item).Amount);
+        }
+        else
+        {
+            InventoryController.Instance.inventoryData.AddItem(itemToBuy, 1);
+        }
+
         SellerInventory.RemoveItem(itemIndex, 1);
     }
 

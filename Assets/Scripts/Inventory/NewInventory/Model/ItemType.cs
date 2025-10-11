@@ -10,5 +10,6 @@ public enum ItemType
     Armor,
     Edible,
     Usable,
+    Gold,
     Junk
 }
