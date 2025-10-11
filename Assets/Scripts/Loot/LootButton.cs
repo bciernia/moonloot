@@ -15,15 +15,15 @@ public class LootButton : MonoBehaviour
     public void ConfigLootButton(DropItem dropItem)
     {
         ItemLoaded = dropItem;
-        _itemIcon.sprite = dropItem.Item.item.Image;
-        _itemName.text = dropItem.Item.item.Name;
+        // _itemIcon.sprite = dropItem.Item.item.Image;
+        // _itemName.text = dropItem.Item.item.Name;
         _itemQuantity.text = $"x{dropItem.Quantity.ToString()}";
     }
 
     public void CollectItem()
     {
         if (ItemLoaded == null) return;
-        InventoryController.Instance.AddItem(new InventoryItem(){item = ItemLoaded.Item.item, quantity = ItemLoaded.Quantity});
+        // InventoryController.Instance.AddItem(new InventoryItem(){item = ItemLoaded.Item.item, quantity = ItemLoaded.Quantity});
         ItemLoaded.PickedItem = true;
         Destroy(gameObject);
     }
