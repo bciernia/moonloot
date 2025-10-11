@@ -19,7 +19,9 @@ public class LootDropMover : MonoBehaviour
             var t = elapsed / duration;
             t = Mathf.SmoothStep(0, 1, t);
 
-            transform.position = Vector3.Lerp(startPos, targetPosition, t);
+            var horizontal = Vector3.Lerp(startPos, targetPosition, t);
+            var height = Mathf.Sin(t * Mathf.PI) * 0.3f;
+            transform.position = horizontal + Vector3.up * height;
             yield return null;
         }
 
