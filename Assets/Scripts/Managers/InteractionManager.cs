@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class InteractionManager : MonoBehaviour
 {
     private PlayerActions _playerActions;
+    private readonly List<IInteractable> _nearbyInteractables = new List<IInteractable>();
     private IInteractable _currentInteractable;
+    
+    [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _interactionBox;
     [SerializeField] private TextMeshProUGUI _interactionBoxTMP;
 
