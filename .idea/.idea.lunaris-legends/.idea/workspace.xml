@@ -5,16 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionCanPerformSpecialAttack.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionCanPerformSpecialAttack.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Undead/Spectre.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Undead/Spectre.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/Bars/Minifantasy_GuiBars.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/Bars/Minifantasy_GuiBars.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Orc_Ranged.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Orc_Ranged.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionSpecialAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionSpecialAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/TestSpell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/TestSpell.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Spectre.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Spectre.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -229,10 +226,12 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/UGUI/InputField/TouchInputFieldTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/DraggableWindow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerUILoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SO/Effects/EffectSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/TestDialogueWithPatron.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRetreat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionStartDialogue.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedSpecialAction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
@@ -281,7 +280,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.17445482&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;enemy-skills&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;ui-v4&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -480,6 +479,8 @@
       <workItem from="1759416394967" duration="3071000" />
       <workItem from="1759431442449" duration="1355000" />
       <workItem from="1759653742623" duration="6070000" />
+      <workItem from="1759765225496" duration="3155000" />
+      <workItem from="1760199031005" duration="855000" />
     </task>
     <servers />
   </component>
@@ -745,6 +746,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs</url>
+          <line>47</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemySelector.cs" containingFunctionPresentation="Method 'SetSelectorAndHpVisibility'">
+            <startOffsets>
+              <option value="1134" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1135" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="231" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

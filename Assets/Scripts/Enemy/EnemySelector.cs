@@ -6,6 +6,8 @@ public class EnemySelector : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private GameObject selectorSprite;
 
+    [SerializeField] private GameObject hpCanvas;
+
     private EnemyBrain _enemyBrain;
 
     private void Awake()
@@ -17,17 +19,17 @@ public class EnemySelector : MonoBehaviour
     {
         if (enemySelected == _enemyBrain)
         {
-            selectorSprite.SetActive(true);
+            SetSelectorAndHpVisibility(true);
         }
         else
         {
-            selectorSprite.SetActive(false);
+            SetSelectorAndHpVisibility(false);
         }
     }
 
     public void NoSelectionCallback()
     {
-        selectorSprite.SetActive(false);
+        SetSelectorAndHpVisibility(false);
     }
     
     private void OnEnable()
@@ -40,5 +42,15 @@ public class EnemySelector : MonoBehaviour
     {
         SelectionManager.OnEnemySelectedEvent -= EnemySelectedCallback;
         SelectionManager.OnNoSelectionEvent -= NoSelectionCallback;
+    }
+
+    private void SetSelectorAndHpVisibility(bool isSelected)
+    {
+        selectorSprite.SetActive(isSelected);
+
+        // if (hpCanvas != null)
+        // {
+            // hpCanvas.SetActive(isSelected);
+        // }
     }
 }
