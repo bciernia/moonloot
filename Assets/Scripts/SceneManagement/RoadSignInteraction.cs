@@ -10,7 +10,7 @@ namespace SceneManagement
         
         public void Interact()
         {
-            FindFirstObjectByType<InteractionManager>().ClearInteractable();
+            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
             areaExit.ExitArea();
         }
 
@@ -23,7 +23,7 @@ namespace SceneManagement
                 var interactionManager = FindFirstObjectByType<InteractionManager>();
                 if (interactionManager != null)
                 {
-                    interactionManager.SetInteractable(this);
+                    interactionManager.RegisterInteractable(this);
                 }
             }
         }

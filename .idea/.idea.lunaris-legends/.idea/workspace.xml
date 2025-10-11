@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Undead/Spectre/Die.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Enemy/Undead/Spectre/Die.anim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/Bars/Minifantasy_GuiBars.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/Bars/Minifantasy_GuiBars.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/PlayerUI.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Spectre.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/EnemyStats/EnemyStats_Spectre.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Wolf/Wolf_Death.anim" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Animations/Enemy/Wolf/Wolf_Death.anim" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Beasts/Wolf/WolfDie.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Beasts/Wolf/WolfDie.png.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -226,20 +222,20 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Tests/Runtime/UGUI/InputField/TouchInputFieldTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/DraggableWindow.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PlayerUILoader.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Prefabs/Enemy/Enemy_Wolf.prefab" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SO/Effects/EffectSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/TestDialogueWithPatron.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRetreat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionStartDialogue.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedSpecialAction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/ItemType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIItemActionPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Loot/ChestLoot.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Loot/LootDropMover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/CursorManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/DialogueManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/GameMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -263,6 +259,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/TestSpell.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SetMainCameraToUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Scripts/NavMeshComponents.asmdef" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@7fe8299111a7/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@35104b1b69f5/Editor/2D/Shadows/ShadowProvider/ShadowShape2DProvider_ProperyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -280,7 +277,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.17445482&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;ui-v4&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;looting-and-item-drop&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -332,10 +329,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="25428">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="25428" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -481,6 +478,7 @@
       <workItem from="1759653742623" duration="6070000" />
       <workItem from="1759765225496" duration="3155000" />
       <workItem from="1760199031005" duration="1468000" />
+      <workItem from="1760219588055" duration="3867000" />
     </task>
     <servers />
   </component>
@@ -583,10 +581,10 @@
           <line>40</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\OpenCloseDoor.cs" containingFunctionPresentation="Method 'Interact'">
             <startOffsets>
-              <option value="1018" />
+              <option value="1032" />
             </startOffsets>
             <endOffsets>
-              <option value="1032" />
+              <option value="1046" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="85" />
@@ -618,45 +616,6 @@
           <option name="timeStamp" value="168" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>216</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
-            <startOffsets>
-              <option value="6962" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7012" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="169" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryPage.cs</url>
-          <line>122</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\UIInventoryPage.cs" containingFunctionPresentation="Method 'HandleSwap'">
-            <startOffsets>
-              <option value="4299" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4336" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="176" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>58</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'AddItem'">
-            <startOffsets>
-              <option value="1649" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1692" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="189" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs</url>
           <line>42</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\QuestTableManager.cs" containingFunctionPresentation="Method 'PrepareQuestTable'">
@@ -668,19 +627,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="190" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>288</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HasUserQuestItem'">
-            <startOffsets>
-              <option value="9500" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9548" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueQuestHelper.cs</url>
@@ -748,17 +694,56 @@
           <option name="timeStamp" value="230" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySelector.cs</url>
-          <line>47</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemySelector.cs" containingFunctionPresentation="Method 'SetSelectorAndHpVisibility'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
+          <line>27</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'InitializeShop'">
             <startOffsets>
-              <option value="1134" />
+              <option value="982" />
             </startOffsets>
             <endOffsets>
-              <option value="1135" />
+              <option value="1016" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="231" />
+          <option name="timeStamp" value="232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs</url>
+          <line>24</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\Shop\ChestInteraction.cs" containingFunctionPresentation="Method 'Interact'">
+            <startOffsets>
+              <option value="603" />
+            </startOffsets>
+            <endOffsets>
+              <option value="666" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="233" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
+          <line>105</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'BuyItem'">
+            <startOffsets>
+              <option value="3798" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3843" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs</url>
+          <line>68</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\EnemyStatistics.cs" containingFunctionPresentation="Method 'TakeDamage'">
+            <startOffsets>
+              <option value="2513" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2532" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="235" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

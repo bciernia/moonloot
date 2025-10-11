@@ -1,15 +1,8 @@
 using UnityEngine;
 
-public class SellerInteraction : MonoBehaviour, IInteractable
+public class ChestInteraction : MonoBehaviour, IInteractable
 {
-    [SerializeField] public InventorySO SellerInventory;
-
-    private EnemyStatistics _enemyStatistics;
-
-    private void Awake()
-    {
-        _enemyStatistics = GetComponent<EnemyStatistics>();
-    }
+    [SerializeField] public InventorySO ChestLoot;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,11 +22,11 @@ public class SellerInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
-        ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, true);
+        ShopManager.Instance.InitializeShop(ChestLoot, "Chest", false);
     }
 
     public string GetInteractionText()
     {
-        return "Open shop";
+        return "Open chest";
     }
 }

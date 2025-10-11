@@ -10,7 +10,7 @@ public class TaskTableInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().SetInteractable(this);
+            FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
         }
     }
     
@@ -18,7 +18,7 @@ public class TaskTableInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().ClearInteractable();
+            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
         }
     }
     

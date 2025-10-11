@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     private EnemyAnimator _enemyAnimator;
     private EnemySelector _enemySelector;
     private Rigidbody2D _rb2D;
+    private EnemyLoot _enemyLoot;
 
     private void Awake()
     {
@@ -38,6 +40,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _enemySelector = GetComponent<EnemySelector>();
         _rb2D = GetComponent<Rigidbody2D>();
+        _enemyLoot = GetComponent<EnemyLoot>();
     }
 
     private void Start()
@@ -74,6 +77,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _enemyBrain.enabled = false;
             // _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
+            
+            _enemyLoot.DropItems();
+
+            StartCoroutine(HandleDeathAnimation());
 
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
@@ -82,5 +89,13 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             DamageManager.Instance.ShowDamageText(amount, transform);
             _enemyAnimator.SetDamagedAnimation();
         }
+    }
+    
+    private IEnumerator HandleDeathAnimation()
+    {
+        var deathAnimLength = 1f;
+        yield return new WaitForSeconds(deathAnimLength);
+
+        Destroy(gameObject);
     }
 }
