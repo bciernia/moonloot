@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -78,8 +79,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _rb2D.bodyType = RigidbodyType2D.Static;
             
             _enemyLoot.DropItems();
-            
-            Destroy(gameObject);
+
+            StartCoroutine(HandleDeathAnimation());
 
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
@@ -88,5 +89,13 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             DamageManager.Instance.ShowDamageText(amount, transform);
             _enemyAnimator.SetDamagedAnimation();
         }
+    }
+    
+    private IEnumerator HandleDeathAnimation()
+    {
+        var deathAnimLength = 1f;
+        yield return new WaitForSeconds(deathAnimLength);
+
+        Destroy(gameObject);
     }
 }
