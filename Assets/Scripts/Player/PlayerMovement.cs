@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float staminaTimer = 0f;
     [SerializeField] private float staminaDecreaseTime = .125f;
+    [SerializeField] private PlayerAim playerAim;
 
     private const float sprintSpeed = 2f;
 
@@ -35,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         ReadMovement();
+        ReadAim();
     }
 
     private void FixedUpdate()
@@ -89,6 +91,13 @@ public class PlayerMovement : MonoBehaviour
         
         _playerAnimations.SetIsMovingAnimation(true);
         _playerAnimations.SetMoveAnimation(_moveDirection);
+    }
+    
+    private void ReadAim()
+    {
+        var aimDirection = _actions.Movement.Aim.ReadValue<Vector2>();
+        if (playerAim != null)
+            playerAim.UpdateAim(aimDirection);
     }
 
     private void OnEnable()

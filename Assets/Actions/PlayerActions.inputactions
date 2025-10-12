@@ -15,13 +15,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sprint",
-                    "type": "Button",
-                    "id": "aa207d4b-a31f-4953-a32c-170de2542c50",
-                    "expectedControlType": "",
+                    "name": "Aim",
+                    "type": "Value",
+                    "id": "0d83b817-9674-4fcb-b616-c53d866b63f5",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -81,15 +81,59 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "9ea546d2-f493-4bf6-bdff-e5435466cec1",
-                    "path": "<Keyboard>/leftShift",
+                    "name": "2D Vector",
+                    "id": "694c3982-18ee-471d-89db-abe8061cb957",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sprint",
-                    "isComposite": false,
+                    "action": "Aim",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "5830c73a-073e-4910-802b-3c010a1e3a5d",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "6653a4bb-45c3-49e1-bf85-3003e8799728",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "4598ddc6-bb62-46d1-a803-062fa24e61db",
+                    "path": "<Keyboard>/leftArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "8818aa57-460a-40d1-9510-cce2cb925b73",
+                    "path": "<Keyboard>/rightArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
@@ -160,7 +204,7 @@
                     "name": "",
                     "id": "ffd473bf-8a61-40c4-9cfe-562c864c3cbb",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "BaseAttack",
@@ -222,7 +266,7 @@
             "id": "7b2f1bde-fa21-4c91-a4db-b9d82e54ec7a",
             "actions": [
                 {
-                    "name": "SkillQ",
+                    "name": "Skill1",
                     "type": "Button",
                     "id": "643c3e6f-42b0-45b1-bf53-6d53981dcb23",
                     "expectedControlType": "",
@@ -231,9 +275,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SkillE",
+                    "name": "Skill2",
                     "type": "Button",
                     "id": "760280a4-eaa6-43af-aa6e-93abdaeb2b20",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skill3",
+                    "type": "Button",
+                    "id": "c085e391-627a-4a4e-b35d-55cf6addf947",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -244,22 +297,33 @@
                 {
                     "name": "",
                     "id": "ebb5ab0f-63bf-464e-845a-99dab32b6e87",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SkillQ",
+                    "action": "Skill1",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "f3bf12aa-f83e-4a93-8864-77e7b44d9ab1",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/k",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SkillE",
+                    "action": "Skill2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82dcdf2e-1b97-41c4-97bf-08fa4fcf87f3",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skill3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
