@@ -14,7 +14,7 @@ public class EnemyBrain : MonoBehaviour
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
 
-    private readonly string EnemyLayerMask = "Enemy";
+    private readonly string EnemyLayerMaskAndTagName = "Enemy";
 
     private void Awake()
     {
@@ -80,12 +80,17 @@ public class EnemyBrain : MonoBehaviour
 
     public void SetEnemyLayer()
     {
-        var layerIndex = LayerMask.NameToLayer(EnemyLayerMask);
+        var layerIndex = LayerMask.NameToLayer(EnemyLayerMaskAndTagName);
         if (layerIndex == -1)
         {
             Debug.Log("Layer not found");
             return;
         }
         gameObject.layer = layerIndex;
+    }
+
+    public void SetEnemyTag()
+    {
+        gameObject.tag = EnemyLayerMaskAndTagName;
     }
 }

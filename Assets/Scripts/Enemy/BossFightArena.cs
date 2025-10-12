@@ -13,12 +13,14 @@ public class BossFightArena : Singleton<BossFightArena>
     private GameObject arenaContainer;
     
     private List<EnemyStatistics> ArenaCreators { get; set; }
+    private List<EnemyStatistics> EnemiesToSpawnInside { get; set; }
     
     private GameObject ArenaCreator { get; set; }
 
     protected void Start()
     {
         ArenaCreators = new List<EnemyStatistics>();
+        EnemiesToSpawnInside = new List<EnemyStatistics>();
     }
     
     public void CreateArena(GameObject arenaCreator, GameObject wallPrefab, int arenaWidth, int arenaHeight,
@@ -26,6 +28,7 @@ public class BossFightArena : Singleton<BossFightArena>
     {
         ArenaCreator = arenaCreator;
         ArenaCreators.Add(arenaCreator.GetComponent<EnemyStatistics>());
+        EnemiesToSpawnInside.ForEach(enemy => EnemiesToSpawnInside.Add(enemy));
         arenaSize = new Vector2Int(arenaWidth, arenaHeight);
         arenaContainer = new GameObject("Arena");
         arenaContainer.transform.position = transform.position;

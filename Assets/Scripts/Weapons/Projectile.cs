@@ -30,7 +30,7 @@ public class Projectile : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest")) return;
+        if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest") || other.gameObject.CompareTag("NPC")) return;
 
         other.GetComponent<IDamageable>()?.TakeDamage(Damage);
         //Knockbackthrust przenieść do właściwości pocisku
