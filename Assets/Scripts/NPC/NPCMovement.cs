@@ -22,7 +22,7 @@ public class NPCMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isWaiting) return;
+        if (isWaiting || !_waypoint.HasAnyWaypoints) return;
         
         var nextPosition = _waypoint.GetPosition(_currentPointIndex);
         UpdateMoveValues(nextPosition);

@@ -39,8 +39,11 @@ public class EnemyLoot : MonoBehaviour
     {
         foreach (var item in Items)
         {
+            if (!item.ItemToDrop) continue;
+
             for (var i = 0; i < item.Quantity; i++)
             {
+                
                 var dropPosition = FindFreeDropPosition();
                 var drop = Instantiate(item.ItemToDrop, transform.position, Quaternion.identity);
                 

@@ -1,6 +1,641 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7973688270735531624
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Forest_Demon
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 3986855832823267740
+  - rid: 3986855832823267741
+  - rid: 3986855832823267742
+  - rid: 3986855832823267743
+  - rid: 3986855832823267744
+  - rid: 3986855832823267745
+  - rid: 3986855832823267746
+  - rid: 3986855832823267747
+  - rid: 3986855832823267748
+  - rid: 3986855832823267749
+  - rid: 3986855832823267750
+  - rid: 3986855832823267751
+  - rid: 3986855832823267752
+  - rid: 3986855832823267753
+  - rid: 3986855832823267754
+  - rid: 3986855832823267755
+  translationLibrary: {fileID: 1016438189977751503}
+  maxID: 20562
+  references:
+    version: 2
+    RefIds:
+    - rid: 3986855832823267740
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 505.90173
+        yPosition: 251.04019
+        entryPointName: 0
+    - rid: 3986855832823267741
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 08000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 727.7017
+        yPosition: 215.3402
+        items:
+        - rid: 3986855832823267756
+        characterName: Forest demon
+        icon: 
+    - rid: 3986855832823267742
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 8
+          attachedIds: 06000000
+          ownerId: 7
+          connectionType: 1
+        - id: 9
+          attachedIds: 
+          ownerId: 7
+          connectionType: 7
+        - id: 11
+          attachedIds: 
+          ownerId: 7
+          connectionType: 7
+        outputs:
+        - id: 10
+          attachedIds: 32000000
+          ownerId: 7
+          connectionType: 1
+        - id: 12
+          attachedIds: e4010000
+          ownerId: 7
+          connectionType: 1
+        width: 228
+        height: 178.96875
+        xPosition: 1158.4011
+        yPosition: 204.89938
+        items:
+        - rid: 3986855832823267757
+        - rid: 3986855832823267758
+    - rid: 3986855832823267743
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 954
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 955
+          attachedIds: 3e0d0000
+          ownerId: 954
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 541.32
+        yPosition: 790.3928
+        entryPointName: 1
+    - rid: 3986855832823267744
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3266
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3267
+          attachedIds: f6030000610a0000
+          ownerId: 3266
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2467.6975
+        yPosition: 138.36555
+        exitPointName: 
+    - rid: 3986855832823267745
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3389
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3390
+          attachedIds: bb030000
+          ownerId: 3389
+          connectionType: 1
+        outputs:
+        - id: 3391
+          attachedIds: bf0d0000
+          ownerId: 3389
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 858.52844
+        yPosition: 753.8147
+        items:
+        - rid: 3986855832823267759
+        characterName: Forest demon
+        icon: 
+    - rid: 3986855832823267746
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3397
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3398
+          attachedIds: c30d0000f9380000
+          ownerId: 3397
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2718.876
+        yPosition: 982.11536
+        exitPointName: 
+    - rid: 3986855832823267747
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3518
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 3519
+          attachedIds: 3f0d0000
+          ownerId: 3518
+          connectionType: 1
+        - id: 3520
+          attachedIds: 
+          ownerId: 3518
+          connectionType: 7
+        - id: 3521
+          attachedIds: 
+          ownerId: 3518
+          connectionType: 7
+        outputs:
+        - id: 3522
+          attachedIds: bd2f0000
+          ownerId: 3518
+          connectionType: 1
+        - id: 3523
+          attachedIds: 460d0000
+          ownerId: 3518
+          connectionType: 1
+        width: 228
+        height: 178.96875
+        xPosition: 1233.7395
+        yPosition: 737.03735
+        items:
+        - rid: 3986855832823267760
+        - rid: 3986855832823267761
+    - rid: 3986855832823267748
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 49
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 50
+          attachedIds: 0a000000
+          ownerId: 49
+          connectionType: 1
+        - id: 51
+          attachedIds: 
+          ownerId: 49
+          connectionType: 9
+        - id: 52
+          attachedIds: 
+          ownerId: 49
+          connectionType: 9
+        - id: 53
+          attachedIds: 
+          ownerId: 49
+          connectionType: 9
+        - id: 54
+          attachedIds: 
+          ownerId: 49
+          connectionType: 9
+        outputs:
+        - id: 55
+          attachedIds: 
+          ownerId: 49
+          connectionType: 9
+        - id: 56
+          attachedIds: f0030000
+          ownerId: 49
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1541.4996
+        yPosition: -163.48834
+        triggeredClassName: ActionStartDialogue
+        triggeredMethodName: SetPositiveDialogueFinish
+        methodSignature: SetPositiveDialogueFinish()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267749
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1007
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1008
+          attachedIds: 38000000
+          ownerId: 1007
+          connectionType: 1
+        - id: 1009
+          attachedIds: 
+          ownerId: 1007
+          connectionType: 5
+        - id: 1010
+          attachedIds: 
+          ownerId: 1007
+          connectionType: 5
+        - id: 1011
+          attachedIds: 
+          ownerId: 1007
+          connectionType: 9
+        - id: 1012
+          attachedIds: 
+          ownerId: 1007
+          connectionType: 9
+        outputs:
+        - id: 1013
+          attachedIds: 
+          ownerId: 1007
+          connectionType: 9
+        - id: 1014
+          attachedIds: c30c0000
+          ownerId: 1007
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 2031.6985
+        yPosition: -236.52585
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string,string)
+        parameterTypes:
+        - string
+        - string
+        parameterValues:
+        - Forest Demon
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267750
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2650
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 2651
+          attachedIds: 07450000
+          ownerId: 2650
+          connectionType: 1
+        - id: 2652
+          attachedIds: 
+          ownerId: 2650
+          connectionType: 2
+        - id: 2653
+          attachedIds: 
+          ownerId: 2650
+          connectionType: 9
+        - id: 2654
+          attachedIds: 
+          ownerId: 2650
+          connectionType: 9
+        - id: 2655
+          attachedIds: 
+          ownerId: 2650
+          connectionType: 9
+        outputs:
+        - id: 2656
+          attachedIds: 
+          ownerId: 2650
+          connectionType: 9
+        - id: 2657
+          attachedIds: c30c0000
+          ownerId: 2650
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 2183.0103
+        yPosition: 218.36557
+        triggeredClassName: EnemyRelationship
+        triggeredMethodName: SetCharacterFriendly
+        methodSignature: SetCharacterFriendly(bool)
+        parameterTypes:
+        - bool
+        parameterValues:
+        - false
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267751
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 483
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 484
+          attachedIds: 0c000000
+          ownerId: 483
+          connectionType: 1
+        - id: 485
+          attachedIds: 
+          ownerId: 483
+          connectionType: 9
+        - id: 486
+          attachedIds: 
+          ownerId: 483
+          connectionType: 9
+        - id: 487
+          attachedIds: 
+          ownerId: 483
+          connectionType: 9
+        - id: 488
+          attachedIds: 
+          ownerId: 483
+          connectionType: 9
+        outputs:
+        - id: 489
+          attachedIds: 
+          ownerId: 483
+          connectionType: 9
+        - id: 490
+          attachedIds: 01450000
+          ownerId: 483
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1525.4706
+        yPosition: 242.61713
+        triggeredClassName: ActionStartDialogue
+        triggeredMethodName: SetNegativeDialogueFinish
+        methodSignature: SetNegativeDialogueFinish()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267752
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 12220
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 12221
+          attachedIds: c20d0000
+          ownerId: 12220
+          connectionType: 1
+        - id: 12222
+          attachedIds: 
+          ownerId: 12220
+          connectionType: 2
+        - id: 12223
+          attachedIds: 
+          ownerId: 12220
+          connectionType: 9
+        - id: 12224
+          attachedIds: 
+          ownerId: 12220
+          connectionType: 9
+        - id: 12225
+          attachedIds: 
+          ownerId: 12220
+          connectionType: 9
+        outputs:
+        - id: 12226
+          attachedIds: 
+          ownerId: 12220
+          connectionType: 9
+        - id: 12227
+          attachedIds: 654e0000
+          ownerId: 12220
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1776.6223
+        yPosition: 571.7951
+        triggeredClassName: EnemyRelationship
+        triggeredMethodName: SetCharacterFriendly
+        methodSignature: SetCharacterFriendly(bool)
+        parameterTypes:
+        - bool
+        parameterValues:
+        - false
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267753
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 14578
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 14579
+          attachedIds: 6b4e0000
+          ownerId: 14578
+          connectionType: 1
+        - id: 14580
+          attachedIds: 
+          ownerId: 14578
+          connectionType: 9
+        - id: 14581
+          attachedIds: 
+          ownerId: 14578
+          connectionType: 9
+        - id: 14582
+          attachedIds: 
+          ownerId: 14578
+          connectionType: 9
+        - id: 14583
+          attachedIds: 
+          ownerId: 14578
+          connectionType: 9
+        outputs:
+        - id: 14584
+          attachedIds: 
+          ownerId: 14578
+          connectionType: 9
+        - id: 14585
+          attachedIds: 460d0000
+          ownerId: 14578
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 2496.6223
+        yPosition: 588.3576
+        triggeredClassName: EnemyBrain
+        triggeredMethodName: LetEnemyAttackPlayer
+        methodSignature: LetEnemyAttackPlayer()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267754
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 17664
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 17665
+          attachedIds: ea010000
+          ownerId: 17664
+          connectionType: 1
+        - id: 17666
+          attachedIds: 
+          ownerId: 17664
+          connectionType: 9
+        - id: 17667
+          attachedIds: 
+          ownerId: 17664
+          connectionType: 9
+        - id: 17668
+          attachedIds: 
+          ownerId: 17664
+          connectionType: 9
+        - id: 17669
+          attachedIds: 
+          ownerId: 17664
+          connectionType: 9
+        outputs:
+        - id: 17670
+          attachedIds: 
+          ownerId: 17664
+          connectionType: 9
+        - id: 17671
+          attachedIds: 5b0a0000
+          ownerId: 17664
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1879.367
+        yPosition: 218.67615
+        triggeredClassName: BossFightArenaCreator
+        triggeredMethodName: CreateArena
+        methodSignature: CreateArena()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267755
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20068
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 20069
+          attachedIds: c32f0000
+          ownerId: 20068
+          connectionType: 1
+        - id: 20070
+          attachedIds: 
+          ownerId: 20068
+          connectionType: 9
+        - id: 20071
+          attachedIds: 
+          ownerId: 20068
+          connectionType: 9
+        - id: 20072
+          attachedIds: 
+          ownerId: 20068
+          connectionType: 9
+        - id: 20073
+          attachedIds: 
+          ownerId: 20068
+          connectionType: 9
+        outputs:
+        - id: 20074
+          attachedIds: 
+          ownerId: 20068
+          connectionType: 9
+        - id: 20075
+          attachedIds: f3380000
+          ownerId: 20068
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 2144.5552
+        yPosition: 597.03876
+        triggeredClassName: BossFightArenaCreator
+        triggeredMethodName: CreateArena
+        methodSignature: CreateArena()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986855832823267756
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Do you want fight?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986855832823267757
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I want to be your ally
+    - rid: 3986855832823267758
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Meadow must be clear. DIE!!!
+    - rid: 3986855832823267759
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Co\u015B potrzeba wariacie?"
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986855832823267760
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Tak, musze cie zniszczy\u0107."
+    - rid: 3986855832823267761
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nie, jest wszystko w pyte.
+--- !u!114 &1016438189977751503
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,638 +759,3 @@ MonoBehaviour:
     - id: 10
       language: fr
       text: 
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
-  m_Name: Forest_Demon
-  m_EditorClassIdentifier: 
-  version: 1.5.1
-  nodes:
-  - rid: 1804900656493363405
-  - rid: 1804900656493363406
-  - rid: 1804900656493363407
-  - rid: 1804900656493363408
-  - rid: 1804900656493363409
-  - rid: 1804900656493363410
-  - rid: 1804900656493363411
-  - rid: 1804900656493363412
-  - rid: 1804900656493363413
-  - rid: 1804900656493363414
-  - rid: 1804900656493363415
-  - rid: 1804900656493363416
-  - rid: 1804900656493363417
-  - rid: 1804900656493363418
-  - rid: 1804900656493363419
-  - rid: 1804900656493363420
-  translationLibrary: {fileID: -7973688270735531624}
-  maxID: 18233
-  references:
-    version: 2
-    RefIds:
-    - rid: 1804900656493363405
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 2
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 3
-          attachedIds: 05000000
-          ownerId: 2
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: 505.90173
-        yPosition: 251.04019
-        entryPointName: 0
-    - rid: 1804900656493363406
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 5
-          attachedIds: 03000000
-          ownerId: 4
-          connectionType: 1
-        outputs:
-        - id: 6
-          attachedIds: 08000000
-          ownerId: 4
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 727.7017
-        yPosition: 215.3402
-        items:
-        - rid: 1804900656493363421
-        characterName: Forest demon
-        icon: 
-    - rid: 1804900656493363407
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 7
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 8
-          attachedIds: 06000000
-          ownerId: 7
-          connectionType: 1
-        - id: 9
-          attachedIds: 
-          ownerId: 7
-          connectionType: 7
-        - id: 11
-          attachedIds: 
-          ownerId: 7
-          connectionType: 7
-        outputs:
-        - id: 10
-          attachedIds: 32000000
-          ownerId: 7
-          connectionType: 1
-        - id: 12
-          attachedIds: e4010000
-          ownerId: 7
-          connectionType: 1
-        width: 228
-        height: 178.96875
-        xPosition: 1158.4011
-        yPosition: 204.89938
-        items:
-        - rid: 1804900656493363422
-        - rid: 1804900656493363423
-    - rid: 1804900656493363408
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 954
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 955
-          attachedIds: 3e0d0000
-          ownerId: 954
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: 541.32
-        yPosition: 790.3928
-        entryPointName: 1
-    - rid: 1804900656493363409
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3266
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 3267
-          attachedIds: f6030000610a0000
-          ownerId: 3266
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: 2467.6975
-        yPosition: 138.36555
-        exitPointName: 
-    - rid: 1804900656493363410
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3389
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3390
-          attachedIds: bb030000
-          ownerId: 3389
-          connectionType: 1
-        outputs:
-        - id: 3391
-          attachedIds: bf0d0000
-          ownerId: 3389
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 858.52844
-        yPosition: 753.8147
-        items:
-        - rid: 1804900656493363424
-        characterName: Forest demon
-        icon: 
-    - rid: 1804900656493363411
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3397
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 3398
-          attachedIds: c30d0000f9380000
-          ownerId: 3397
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: 2718.876
-        yPosition: 982.11536
-        exitPointName: 
-    - rid: 1804900656493363412
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3518
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 3519
-          attachedIds: 3f0d0000
-          ownerId: 3518
-          connectionType: 1
-        - id: 3520
-          attachedIds: 
-          ownerId: 3518
-          connectionType: 7
-        - id: 3521
-          attachedIds: 
-          ownerId: 3518
-          connectionType: 7
-        outputs:
-        - id: 3522
-          attachedIds: bd2f0000
-          ownerId: 3518
-          connectionType: 1
-        - id: 3523
-          attachedIds: 460d0000
-          ownerId: 3518
-          connectionType: 1
-        width: 228
-        height: 178.96875
-        xPosition: 1233.7395
-        yPosition: 737.03735
-        items:
-        - rid: 1804900656493363425
-        - rid: 1804900656493363426
-    - rid: 1804900656493363413
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 49
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 50
-          attachedIds: 0a000000
-          ownerId: 49
-          connectionType: 1
-        - id: 51
-          attachedIds: 
-          ownerId: 49
-          connectionType: 9
-        - id: 52
-          attachedIds: 
-          ownerId: 49
-          connectionType: 9
-        - id: 53
-          attachedIds: 
-          ownerId: 49
-          connectionType: 9
-        - id: 54
-          attachedIds: 
-          ownerId: 49
-          connectionType: 9
-        outputs:
-        - id: 55
-          attachedIds: 
-          ownerId: 49
-          connectionType: 9
-        - id: 56
-          attachedIds: f0030000
-          ownerId: 49
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 1541.4996
-        yPosition: -163.48834
-        triggeredClassName: ActionStartDialogue
-        triggeredMethodName: SetPositiveDialogueFinish
-        methodSignature: SetPositiveDialogueFinish()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363414
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 1007
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 1008
-          attachedIds: 38000000
-          ownerId: 1007
-          connectionType: 1
-        - id: 1009
-          attachedIds: 
-          ownerId: 1007
-          connectionType: 5
-        - id: 1010
-          attachedIds: 
-          ownerId: 1007
-          connectionType: 5
-        - id: 1011
-          attachedIds: 
-          ownerId: 1007
-          connectionType: 9
-        - id: 1012
-          attachedIds: 
-          ownerId: 1007
-          connectionType: 9
-        outputs:
-        - id: 1013
-          attachedIds: 
-          ownerId: 1007
-          connectionType: 9
-        - id: 1014
-          attachedIds: c30c0000
-          ownerId: 1007
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 2031.6985
-        yPosition: -236.52585
-        triggeredClassName: DialogueEntrySetter
-        triggeredMethodName: UpdateDialogueEntry
-        methodSignature: UpdateDialogueEntry(string,string)
-        parameterTypes:
-        - string
-        - string
-        parameterValues:
-        - Forest Demon
-        - 1
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363415
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 2650
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 2651
-          attachedIds: 07450000
-          ownerId: 2650
-          connectionType: 1
-        - id: 2652
-          attachedIds: 
-          ownerId: 2650
-          connectionType: 2
-        - id: 2653
-          attachedIds: 
-          ownerId: 2650
-          connectionType: 9
-        - id: 2654
-          attachedIds: 
-          ownerId: 2650
-          connectionType: 9
-        - id: 2655
-          attachedIds: 
-          ownerId: 2650
-          connectionType: 9
-        outputs:
-        - id: 2656
-          attachedIds: 
-          ownerId: 2650
-          connectionType: 9
-        - id: 2657
-          attachedIds: c30c0000
-          ownerId: 2650
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 2183.0103
-        yPosition: 218.36557
-        triggeredClassName: EnemyRelationship
-        triggeredMethodName: SetCharacterFriendly
-        methodSignature: SetCharacterFriendly(bool)
-        parameterTypes:
-        - bool
-        parameterValues:
-        - false
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363416
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 483
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 484
-          attachedIds: 0c000000
-          ownerId: 483
-          connectionType: 1
-        - id: 485
-          attachedIds: 
-          ownerId: 483
-          connectionType: 9
-        - id: 486
-          attachedIds: 
-          ownerId: 483
-          connectionType: 9
-        - id: 487
-          attachedIds: 
-          ownerId: 483
-          connectionType: 9
-        - id: 488
-          attachedIds: 
-          ownerId: 483
-          connectionType: 9
-        outputs:
-        - id: 489
-          attachedIds: 
-          ownerId: 483
-          connectionType: 9
-        - id: 490
-          attachedIds: 01450000
-          ownerId: 483
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 1525.4706
-        yPosition: 242.61713
-        triggeredClassName: ActionStartDialogue
-        triggeredMethodName: SetNegativeDialogueFinish
-        methodSignature: SetNegativeDialogueFinish()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363417
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 12220
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 12221
-          attachedIds: c20d0000
-          ownerId: 12220
-          connectionType: 1
-        - id: 12222
-          attachedIds: 
-          ownerId: 12220
-          connectionType: 2
-        - id: 12223
-          attachedIds: 
-          ownerId: 12220
-          connectionType: 9
-        - id: 12224
-          attachedIds: 
-          ownerId: 12220
-          connectionType: 9
-        - id: 12225
-          attachedIds: 
-          ownerId: 12220
-          connectionType: 9
-        outputs:
-        - id: 12226
-          attachedIds: 
-          ownerId: 12220
-          connectionType: 9
-        - id: 12227
-          attachedIds: 72410000
-          ownerId: 12220
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 1776.6223
-        yPosition: 571.7951
-        triggeredClassName: EnemyRelationship
-        triggeredMethodName: SetCharacterFriendly
-        methodSignature: SetCharacterFriendly(bool)
-        parameterTypes:
-        - bool
-        parameterValues:
-        - false
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363418
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 14578
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 14579
-          attachedIds: 78410000
-          ownerId: 14578
-          connectionType: 1
-        - id: 14580
-          attachedIds: 
-          ownerId: 14578
-          connectionType: 9
-        - id: 14581
-          attachedIds: 
-          ownerId: 14578
-          connectionType: 9
-        - id: 14582
-          attachedIds: 
-          ownerId: 14578
-          connectionType: 9
-        - id: 14583
-          attachedIds: 
-          ownerId: 14578
-          connectionType: 9
-        outputs:
-        - id: 14584
-          attachedIds: 
-          ownerId: 14578
-          connectionType: 9
-        - id: 14585
-          attachedIds: 460d0000
-          ownerId: 14578
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 2614.122
-        yPosition: 588.3576
-        triggeredClassName: EnemyBrain
-        triggeredMethodName: LetEnemyAttackPlayer
-        methodSignature: LetEnemyAttackPlayer()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363419
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 16753
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 16754
-          attachedIds: c32f0000
-          ownerId: 16753
-          connectionType: 1
-        - id: 16755
-          attachedIds: 
-          ownerId: 16753
-          connectionType: 5
-        - id: 16756
-          attachedIds: 
-          ownerId: 16753
-          connectionType: 9
-        - id: 16757
-          attachedIds: 
-          ownerId: 16753
-          connectionType: 9
-        - id: 16758
-          attachedIds: 
-          ownerId: 16753
-          connectionType: 9
-        outputs:
-        - id: 16759
-          attachedIds: 
-          ownerId: 16753
-          connectionType: 9
-        - id: 16760
-          attachedIds: f3380000
-          ownerId: 16753
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 2129.0913
-        yPosition: 567.82245
-        triggeredClassName: BossFightArena
-        triggeredMethodName: CreateArena
-        methodSignature: CreateArena()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363420
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 17664
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 17665
-          attachedIds: ea010000
-          ownerId: 17664
-          connectionType: 1
-        - id: 17666
-          attachedIds: 
-          ownerId: 17664
-          connectionType: 9
-        - id: 17667
-          attachedIds: 
-          ownerId: 17664
-          connectionType: 9
-        - id: 17668
-          attachedIds: 
-          ownerId: 17664
-          connectionType: 9
-        - id: 17669
-          attachedIds: 
-          ownerId: 17664
-          connectionType: 9
-        outputs:
-        - id: 17670
-          attachedIds: 
-          ownerId: 17664
-          connectionType: 9
-        - id: 17671
-          attachedIds: 5b0a0000
-          ownerId: 17664
-          connectionType: 1
-        width: 200
-        height: 320
-        xPosition: 1879.367
-        yPosition: 218.67615
-        triggeredClassName: BossFightArena
-        triggeredMethodName: CreateArena
-        methodSignature: CreateArena()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 1804900656493363421
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Do you want fight?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 1804900656493363422
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: I want to be your ally
-    - rid: 1804900656493363423
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Meadow must be clear. DIE!!!
-    - rid: 1804900656493363424
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: "Co\u015B potrzeba wariacie?"
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 1804900656493363425
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: "Tak, musze cie zniszczy\u0107."
-    - rid: 1804900656493363426
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Nie, jest wszystko w pyte.

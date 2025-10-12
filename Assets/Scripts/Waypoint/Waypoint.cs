@@ -25,8 +25,8 @@ public class Waypoint : MonoBehaviour
         }
     }
 
-    public Vector3 GetPosition(int pointIndex)
-    {
-        return EntityPosition + points[pointIndex];
-    }
+    public Vector3 GetPosition(int pointIndex) => EntityPosition + points[pointIndex];
+
+    public bool HasAnyWaypoints => Points.Length > 0;
+
 }
