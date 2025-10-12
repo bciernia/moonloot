@@ -58,8 +58,8 @@ public class SkillsManager : Singleton<SkillsManager>
     {
         _actions.Enable();
 
-        _actions.Skills.SkillQ.performed += ctx => TryActivateSkill(0);
-        _actions.Skills.SkillE.performed += ctx => TryActivateSkill(1);
+        _actions.Skills.Skill1.performed += ctx => TryActivateSkill(0);
+        _actions.Skills.Skill2.performed += ctx => TryActivateSkill(1);
     }
 
     private void OnDisable()

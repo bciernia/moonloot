@@ -1,15 +1,21 @@
-using System;
 using UnityEngine;
 
 public class PlayerAim : MonoBehaviour
 {
-    public float rotateSpeed = 5f;
+    [SerializeField] private float rotateSpeed = 10f;
+    private Vector2 aimInput;
+    private Vector2 lastAimDirection = Vector2.right;
+
+    public void UpdateAim(Vector2 input)
+    {
+        if (input.sqrMagnitude > 0.01f)
+            lastAimDirection = input.normalized;
+    }
 
     private void Update()
     {
-        var direction = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        var rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
+        float angle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
+        Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 }
