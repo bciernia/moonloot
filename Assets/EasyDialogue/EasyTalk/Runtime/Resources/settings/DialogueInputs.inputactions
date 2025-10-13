@@ -67,6 +67,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MoveTextCursorRight",
+                    "type": "Button",
+                    "id": "3bacab1f-79b6-405e-94f2-0e5870964a4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MoveTextCursorLeft",
+                    "type": "Button",
+                    "id": "6a0480c7-b2f9-4e05-bdfe-c4df7a1ca147",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GotoNextTextCharacter",
+                    "type": "Button",
+                    "id": "58f74209-08d2-4d0e-a125-a0395be4931b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold,Tap,Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GotoLastTextCharacter",
+                    "type": "Button",
+                    "id": "ba505355-bb84-4026-9009-42f947068ed8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold,Tap,Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SubmitText",
+                    "type": "Button",
+                    "id": "63a9744b-4e64-404f-927b-7aedf3d93335",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -619,6 +664,116 @@
                     "action": "SelectOptionInYDirection",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d8239462-bea6-46e1-86ef-14cd4d9740ac",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "MoveTextCursorRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa47435d-0e0f-4104-ade7-b25b7814faa9",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "MoveTextCursorRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bfd33d7d-3af0-4c5a-9eb3-d824693c8011",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "MoveTextCursorLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cafb1181-da52-457e-a6cf-b15dea786d67",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "MoveTextCursorLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a2630dca-8809-4e96-bd1a-b992204268ad",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "GotoNextTextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e8e07371-1198-4d7c-b08c-7f88d37a3854",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "GotoNextTextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "13e38e57-5867-4ddb-8012-9c3a5d499748",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "GotoLastTextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e27b63b2-97cc-46d6-b57c-ac039a8b0e7c",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Dialogue System Controls",
+                    "action": "GotoLastTextCharacter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1fa031e4-54af-40f5-bbe9-641cf2d61b14",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SubmitText",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5674ca3c-6345-4d0e-9cb3-52925f42b7bc",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SubmitText",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

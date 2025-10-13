@@ -58,6 +58,16 @@ namespace EasyTalk.Nodes.Common
         public bool AutoPlay { get; set; } = false;
 
         /// <summary>
+        /// Gets or sets whether the line overrides the automatically calculated autoplay line delay.
+        /// </summary>
+        public bool OverrideAutoplayDelay { get; set; } = false;
+
+        /// <summary>
+        /// Gets or sets the delay to use for the line when it is autoplayed.
+        /// </summary>
+        public float AutoPlayDelay { get; set; } = 3.0f;
+
+        /// <summary>
         /// Gets or sets the minimal amount of time that the line of dialogue will be displayed when in AUTOPLAY mode (unless skipped).
         /// </summary>
         public float PlayTime { get; set; } = 0.0f;

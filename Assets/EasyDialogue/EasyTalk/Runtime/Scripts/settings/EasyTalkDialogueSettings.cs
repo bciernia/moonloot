@@ -1,7 +1,4 @@
-using EasyTalk.Character;
 using EasyTalk.Localization;
-using EasyTalk.Nodes.Variable;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EasyTalk.Settings
@@ -25,6 +22,13 @@ namespace EasyTalk.Settings
         [Tooltip("Overrides for fonts. These are used to switch fonts whenever the localized language is set to a language not supported by the current font.")]
         [SerializeField]
         protected LanguageFontOverrides languageFontOverrides;
+
+        /// <summary>
+        /// The set of language inputs used for text character inputs for each language when using a text input display.
+        /// </summary>
+        [Tooltip("Defines the character sets which are made available per-language when entering text on a text input display using a gamepad.")]
+        [SerializeField]
+        protected LanguageInputs languageInputs;
 
         /*[SerializeField]
         protected AISettings aiSettings;*/
@@ -57,6 +61,11 @@ namespace EasyTalk.Settings
         /// Gets the set of font overrides for localizable languages.
         /// </summary>
         public LanguageFontOverrides LanguageFontOverrides { get { return languageFontOverrides; } }
+
+        /// <summary>
+        /// Gets the set of language input characters defining which text characters are available for text input displays on a per-language basis.
+        /// </summary>
+        public LanguageInputs LanguageInputs { get { return languageInputs; } }
 
         /// <summary>
         /// Gets the translation evaluation mode for determining when to apply translations to dialogue text and options during dialogue playback.

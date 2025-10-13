@@ -68,11 +68,47 @@ namespace EasyTalk.Display
         /// </summary>
         [Tooltip("The name of the input action which triggers the selection of an option in a direction along a vertical axis. (This is typically only used for directional option displays)")]
         [SerializeField] private string selectOptionInYDirectionActionName = "SelectOptionInYDirection";
+
+        /// <summary>
+        /// The name of the action which will submit a player-entered string via a text input display and move on in the dialogue.
+        /// </summary>
+        [Tooltip("The name of the action which will submit a player-entered string via a text input display and move on in the dialogue.")]
+        [SerializeField] private string playerStringSubmissionActionName = "SubmitText";
+
+        /// <summary>
+        /// The name of the action which will move the text caret (cursor) to the right by one position when editing text in a text input display.
+        /// </summary>
+        [Tooltip("The name of the action which will move the text caret (cursor) to the right by one position when editing text in a text input display.")]
+        [SerializeField] private string moveTextCursorRightActionName = "MoveTextCursorRight";
+
+        /// <summary>
+        /// The name of the action which will move the text caret (cursor) to the left by one position when editing text in a text input display.
+        /// </summary>
+        [Tooltip("The name of the action which will move the text caret (cursor) to the left by one position when editing text in a text input display.")]
+        [SerializeField] private string moveTextCursorLeftActionName = "MoveTextCursorLeft";
+
+        /// <summary>
+        /// The name of the action which will change the current character to the next character in the input character list when editing text in a text input display.
+        /// </summary>
+        [Tooltip("The name of the action which will change the current character to the next character in the input character list when editing text in a text input display.")]
+        [SerializeField] private string gotoNextTextCharacterActionName = "GotoNextTextCharacter";
+
+        /// <summary>
+        /// The name of the action which will change the current character to the last character in the input character list when editing text in a text input display.
+        /// </summary>
+        [Tooltip("The name of the action which will change the current character to the last character in the input character list when editing text in a text input display.")]
+        [SerializeField] private string gotoLastTextCharacterActionName = "GotoLastTextCharacter";
 #else
         /// <summary>
         /// The name of the input which triggers the dialogue to continue (only applicable when dialogue is being displayed).
         /// </summary>
         [SerializeField] private string continueButtonName = "Submit";
+
+        /// <summary>
+        /// The name of the input which triggers the dialogue to submit a player's input string (from a text input display), when applicable.
+        /// </summary>
+        [Tooltip("The name of the input which triggers the dialogue to submit a player's input string (from a text input display), when applicable.")]
+        [SerializeField] private string playerStringSubmissionButtonName = "Submit";
 
         /// <summary>
         /// The name of the input which chooses the currently selected option (only applicable when options are being presented).
@@ -186,6 +222,11 @@ namespace EasyTalk.Display
                 SetUpExitConversationAction();
                 SetUpSelectOptionInXDirectionAction();
                 SetUpSelectOptionInYDirectionAction();
+                SetUpPlayerStringAction();
+                SetUpMoveTextCursorRightAction();
+                SetUpMoveTextCursorLeftAction();
+                SetUpGotoNextCharacterAction();
+                SetUpGotoLastCharacterAction();
             }
         }
 
@@ -316,6 +357,133 @@ namespace EasyTalk.Display
                 };
             }
         }
+
+        /// <summary>
+        /// Sets up the input action for submitting a player's string into a text input display.
+        /// </summary>
+        private void SetUpPlayerStringAction()
+        {
+            InputAction playerStringAction = inputActions.FindAction(playerStringSubmissionActionName);
+            if (playerStringAction != null)
+            {
+                playerStringAction.performed += delegate
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        inputDisplay.TextInputEntered();
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// Sets up the input action for moving the text input caret to the right by one character.
+        /// </summary>
+        private void SetUpMoveTextCursorRightAction()
+        {
+            InputAction moveCursorRightAction = inputActions.FindAction(moveTextCursorRightActionName);
+            if (moveCursorRightAction != null)
+            {
+                moveCursorRightAction.performed += delegate
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        inputDisplay.MoveCursorRight();
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// Sets up the input action for moving the text input caret to the left by one character.
+        /// </summary>
+        private void SetUpMoveTextCursorLeftAction()
+        {
+            InputAction moveCursorLeftAction = inputActions.FindAction(moveTextCursorLeftActionName);
+            if (moveCursorLeftAction != null)
+            {
+                moveCursorLeftAction.performed += delegate
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        inputDisplay.MoveCursorLeft();
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// Sets up the input action to change the character at the current caret/cursor location in a text display to whatever the next character is.
+        /// </summary>
+        private void SetUpGotoNextCharacterAction()
+        {
+            InputAction gotoNextCharacterAction = inputActions.FindAction(gotoNextTextCharacterActionName);
+            if (gotoNextCharacterAction != null)
+            {
+                gotoNextCharacterAction.performed += context =>
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        if (context.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction) 
+                        {
+                            inputDisplay.CycleNextCharacters();
+                        }
+                        else
+                        {
+                            inputDisplay.NextCharacter();
+                        }
+                    }
+                };
+
+                gotoNextCharacterAction.canceled += delegate
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        inputDisplay.StopCharacterCycling();
+                    }
+                };
+            }
+        }
+
+        /// <summary>
+        /// Sets up the input action to change the character at the current caret/cursor location in a text display to whatever the previous character is.
+        /// </summary>
+        private void SetUpGotoLastCharacterAction()
+        {
+            InputAction gotoLastCharacterAction = inputActions.FindAction(gotoLastTextCharacterActionName);
+            if (gotoLastCharacterAction != null)
+            {
+                gotoLastCharacterAction.performed += context =>
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        if (context.interaction is UnityEngine.InputSystem.Interactions.HoldInteraction)
+                        {
+                            inputDisplay.CycleLastCharacters();
+                        }
+                        else
+                        {
+                            inputDisplay.LastCharacter();
+                        }
+                    }
+                };
+
+                gotoLastCharacterAction.canceled += delegate
+                {
+                    TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                    if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                    {
+                        inputDisplay.StopCharacterCycling();
+                    }
+                };
+            }
+        }
 #endif
 
         /// <summary>
@@ -368,6 +536,9 @@ namespace EasyTalk.Display
                 HandleSelectNextOption(horizontal, vertical, axisActivationThreshold);
                 HandleSelectPreviousOption(horizontal, vertical, axisActivationThreshold);
                 HandleSelectOptionInDirection(horizontal, vertical, axisActivationThreshold);
+                HandleMoveTextCursor(dpadHorizontal);
+                HandleChangeTextCharacter(dpadVertical);
+                HandlePlayerTextSubmission();
             }
         }
 
@@ -615,6 +786,66 @@ namespace EasyTalk.Display
                     Debug.LogWarning("Encountered an error when attempting to read input for continue button. Make sure there is a button configured in the Input Manager named '" + continueButtonName + "'");
                 }
                 inputWarningSent = true;
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the player has pressed the button to submit text, and submits the player generated text, if applicable.
+        /// </summary>
+        private void HandlePlayerTextSubmission()
+        {
+            if (Input.GetButtonDown(playerStringSubmissionButtonName))
+            {
+                TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                {
+                    inputDisplay.TextInputEntered();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the player pressed a button to change the caret (cursor) position to edit the text on a text input display.
+        /// </summary>
+        private void HandleMoveTextCursor(float dpadHorizontal) 
+        {
+            if(Mathf.Abs(dpadHorizontal) > 0.0f) 
+            {
+                TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                {
+                    if(dpadHorizontal > 0.0f) 
+                    {
+                        inputDisplay.MoveCursorRight();
+                    }
+                    else
+                    {
+                        inputDisplay.MoveCursorLeft();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks to see if the player pressed a button to change the text input character being input into a text display.
+        /// </summary>
+
+        private void HandleChangeTextCharacter(float dpadVertical) 
+        {
+            if(Mathf.Abs(dpadVertical) > 0.0f) 
+            {
+                TextInputDisplay inputDisplay = dialogueDisplay.GetTextInputDisplay();
+                if (inputDisplay != null && inputDisplay.isActiveAndEnabled)
+                {
+                    if(dpadVertical > 0.0f) 
+                    {
+                        inputDisplay.NextCharacter();
+                    }
+                    else
+                    {
+                        inputDisplay.LastCharacter();
+                    }
+                }
             }
         }
 #endif

@@ -189,14 +189,14 @@ namespace EasyTalk.Controller
                 }
 
                 dialogueDisplay.SetActiveDialogueController(this);
-                nodeHandler.DialolgueSettings = dialogueDisplay.DialogueSettings;
+                nodeHandler.DialogueSettings = dialogueDisplay.DialogueSettings;
 
                 //If no Dialogue Registry was set on the controller, use the one from the dialogue display
                 if (dialogueRegistry == null && dialogueDisplay.DialogueSettings != null) { dialogueRegistry = dialogueDisplay.DialogueSettings.DialogueRegistry; }
-
-                //Initialize global variables on the node handler using the current dialogue registry, if there is one.
-                nodeHandler.InitializeGlobalVariables(dialogueRegistry);
             }
+
+            //Initialize global variables on the node handler using the current dialogue registry, if there is one.
+            nodeHandler.InitializeGlobalVariables(dialogueRegistry);
 
             isRunning = true;
 
@@ -357,14 +357,11 @@ namespace EasyTalk.Controller
         {
             base.OnDisplayLine(line);
 
-            if (currentCharacterName != null && line.OriginalCharacterName != null)
-            {
-                if ((currentCharacterName == null && line.OriginalCharacterName != null) ||
+            if ((currentCharacterName == null && line.OriginalCharacterName != null) ||
                     (currentCharacterName != null && line.OriginalCharacterName == null) ||
                     !currentCharacterName.Equals(line.OriginalCharacterName))
-                {
+            {
                     CharacterChanged(line.OriginalCharacterName);
-                }
             }
 
             ActivateKey(line);

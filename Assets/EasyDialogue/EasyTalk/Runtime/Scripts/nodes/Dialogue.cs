@@ -16,7 +16,7 @@ namespace EasyTalk.Nodes
         /// <summary>
         /// A string indicating the current version of EasyTalk in use.
         /// </summary>
-        public static string VERSION = "1.5.1";
+        public static string VERSION = "1.7.6";
 
         /// <summary>
         /// The version number of the dialogue asset.

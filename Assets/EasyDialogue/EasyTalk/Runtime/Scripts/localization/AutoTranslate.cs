@@ -79,7 +79,7 @@ namespace EasyTalk.Localization
         /// </summary>
         private void OnDestroy()
         {
-            EasyTalkGameState.Instance.onLanguageChanged += LanguageChanged;
+            EasyTalkGameState.Instance.onLanguageChanged -= LanguageChanged;
         }
 
         /// <summary>

@@ -103,7 +103,7 @@ namespace EasyTalk.Nodes.Logic
                         break;
                     case EasyTalk.Nodes.Logic.ValueOutputType.STRING:
                         //value = nodeHandler.TranslateText(valueString);
-                        nodeValues.TryAdd(FindOutputOfType(InputOutputType.STRING).ID, value);
+                        nodeValues.TryAdd(FindOutputOfType(InputOutputType.STRING).ID, valueString);
                         break;
                 }
             }

@@ -710,7 +710,7 @@ namespace EasyTalk.Display
         private IEnumerator SetConversationTextByCharacter(string text, float delay, bool append = false)
         {
             isPerItemDisplayOngoing = true;
-            int index = 1;
+            int index = 0;
             string currentString = "";
             string oldString = GetConversationText();
 
@@ -720,7 +720,6 @@ namespace EasyTalk.Display
             }
             else
             {
-                currentString += text[0];
                 SetConversationText(currentString);
             }            
 
@@ -783,12 +782,14 @@ namespace EasyTalk.Display
                     currentString += "" + text[index];
                 }
 
+                string tagStackString = "";
                 addedCharCount = 0;
                 foreach (TMPTag tag in tagStack)
                 {
                     string closeTag = "</" + tag.name + ">";
                     currentString += closeTag;
                     addedCharCount += closeTag.Length;
+                    tagStackString += tag.fullTagText + ", ";
                 }
 
                 SetConversationText(currentString);
@@ -889,6 +890,7 @@ namespace EasyTalk.Display
 
             if (onCharacterNameUpdated != null) { onCharacterNameUpdated.Invoke(); }
 
+            //Sets up the gibberish audio based on the character who is speaking.
             SetUpGibberishAudio(sourceName);
 
             foreach (ConversationDisplayListener listener in conversationDisplayListeners)

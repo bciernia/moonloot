@@ -652,6 +652,7 @@ namespace EasyTalk.Controller
                 line.Text = text;
                 line.PreTranslationText = untranslatedText;
 
+                if (tags.ContainsKey("append")) { line.TextDisplayMode = TextDisplayMode.APPEND; }
                 if (tags.ContainsKey("key")) { line.Key = (tags["key"] as KeyTag).keyValue; }
                 if (tags.ContainsKey("target")) { line.Target = (tags["target"] as TargetTag).target; }
                 if (tags.ContainsKey("id")) { line.ID = (tags["id"] as IDTag).id; }
@@ -664,7 +665,32 @@ namespace EasyTalk.Controller
                     line.IconID = nameTag.iconId;
                 }
 
-                line.TranslatedCharacterName = Translate(line.OriginalCharacterName);
+                if (tags.ContainsKey("autoplay")) 
+                { 
+                    line.AutoPlay = true;
+                    AutoplayTag autoplayTag = (tags["autoplay"] as AutoplayTag);
+
+                    if (autoplayTag.overrideDelay) 
+                    {
+                        line.OverrideAutoplayDelay = true;
+                        line.AutoPlayDelay = autoplayTag.delay;
+                    }
+                }
+
+                //Remove TextMeshPro tags from the character name before performing a translation, since the source/original name in the translation library is TMP tag free.
+                string tagFreeCharacterName = TMPTag.RemoveTags(line.OriginalCharacterName);
+
+                //Translate the character name. If the returned result is the same as the original, then we can just use the original character name (tags included).
+                string translatedCharacterName = Translate(tagFreeCharacterName);
+
+                if(translatedCharacterName.Equals(tagFreeCharacterName))
+                {
+                    line.TranslatedCharacterName = line.OriginalCharacterName;
+                }
+                else
+                {
+                    line.TranslatedCharacterName = translatedCharacterName;
+                }
             }
 
             return line;
@@ -849,14 +875,17 @@ namespace EasyTalk.Controller
             string finalText = text;
             preTranslationText = finalText;
 
-            if (dialogueSettings.TranslationEvaluationMode == TranslationEvaluationMode.TRANSLATE_BEFORE_VARIABLE_EVALUATION) { finalText = TranslateText(finalText); }
-
-            finalText = ReplaceVariablesInString(finalText);
-
-            if (dialogueSettings.TranslationEvaluationMode == TranslationEvaluationMode.TRANSLATE_AFTER_VARIABLE_EVALUATION)
+            if (dialogueSettings != null)
             {
-                preTranslationText = finalText;
-                finalText = TranslateText(finalText);
+                if (dialogueSettings.TranslationEvaluationMode == TranslationEvaluationMode.TRANSLATE_BEFORE_VARIABLE_EVALUATION) { finalText = TranslateText(finalText); }
+
+                finalText = ReplaceVariablesInString(finalText);
+
+                if (dialogueSettings.TranslationEvaluationMode == TranslationEvaluationMode.TRANSLATE_AFTER_VARIABLE_EVALUATION)
+                {
+                    preTranslationText = finalText;
+                    finalText = TranslateText(finalText);
+                }
             }
 
             return finalText;
@@ -1539,7 +1568,7 @@ namespace EasyTalk.Controller
         /// <summary>
         /// Gets or sets the Dialogue Settings used by the node handler.
         /// </summary>
-        public EasyTalkDialogueSettings DialolgueSettings
+        public EasyTalkDialogueSettings DialogueSettings
         {
             get { return dialogueSettings; }
             set { dialogueSettings = value; }
@@ -1562,11 +1591,20 @@ namespace EasyTalk.Controller
                 }
                 else if(dialogueSettings == null)
                 {
+#if UNITY_6000_0_OR_NEWER
+                    DialogueDisplay display = GameObject.FindFirstObjectByType<DialogueDisplay>(FindObjectsInactive.Include);
+#else
                     DialogueDisplay display = GameObject.FindObjectOfType<DialogueDisplay>(true);
-                    if(display != null && display.DialogueSettings != null && display.DialogueSettings.DialogueRegistry != null)
-                    {
-                        dialogueRegistry = display.DialogueSettings.DialogueRegistry;
-                    }
+#endif
+					if (display != null && display.DialogueSettings != null)
+					{
+						dialogueSettings = display.DialogueSettings;
+
+						if (display.DialogueSettings.DialogueRegistry != null)
+						{
+							dialogueRegistry = display.DialogueSettings.DialogueRegistry;
+						}
+					}
                 }
             }
             

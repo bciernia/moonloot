@@ -32,7 +32,7 @@ namespace EasyTalk.Editor.Nodes
             this.name = "Trigger Script Node";
             this.connectionLine.AddToClassList("trigger-script-line");
             this.resizeType = ResizeType.BOTH;
-            this.SetDimensions(200, 320);
+            this.SetDimensions(220, 320);
 
             this.style.alignItems = Align.FlexStart;
         }
@@ -561,19 +561,36 @@ namespace EasyTalk.Editor.Nodes
 
         public void SetupMethodDropdown()
         {
-            if(classTypeSelected == null) { return; }
+            if (classTypeSelected == null) { return; }
 
             methodDropdown.choices.Clear();
             methodDropdown.style.display = DisplayStyle.Flex;
             methodField.style.display = DisplayStyle.None;
 
-            List<string> methodNames = new List<string>();
+            List<string> methodNames = GetMethodSignatures(classTypeSelected);
 
-            MethodInfo[] methods = classTypeSelected.GetMethods();
+            methodDropdown.choices = methodNames;
+
+            if (methodDropdown.choices.Count > 0)
+            {
+                methodDropdown.value = methodDropdown.choices[0];
+            }
+            else
+            {
+                methodDropdown.value = null;
+            }
+        }
+
+        private List<string> GetMethodSignatures(Type classType)
+        {
+            MethodInfo[] methods = classType.GetMethods();
+
+            List<string> methodSignatures = new List<string>();
+            List<string> declaredSignatures = new List<string>();
 
             foreach (MethodInfo method in methods)
             {
-                if (method.IsAbstract || method.IsPrivate) { return; }
+                if (method.IsAbstract || method.IsPrivate) { return methodSignatures; }
 
                 //If the type isn't a MonoBehaviour, only allow static methods to be used since we have no way
                 //of looking up non-MonoBehaviour instances of objects.
@@ -613,20 +630,28 @@ namespace EasyTalk.Editor.Nodes
                     methodSig += ":" + ETUtils.GetSimplifiedStringForPrimitiveType(method.ReturnType);
                 }
 
-                if (valid) { methodNames.Add(methodSig); }
+                if (valid) 
+                {
+                    if (method.DeclaringType == classType)
+                    {
+                        declaredSignatures.Add(methodSig);
+                    }
+                    else
+                    {
+                        methodSignatures.Add(methodSig);
+                    }
+                }
             }
 
-            methodNames.Sort();
-            methodDropdown.choices = methodNames;
+            declaredSignatures.Sort();
+            methodSignatures.Sort();
 
-            if (methodDropdown.choices.Count > 0)
+            for(int i = declaredSignatures.Count-1; i >= 0; i--)
             {
-                methodDropdown.value = methodDropdown.choices[0];
+                methodSignatures.Insert(0, declaredSignatures[i]);
             }
-            else
-            {
-                methodDropdown.value = null;
-            }
+
+            return methodSignatures;
         }
 
         private bool IsTypeSupported(Type type)
@@ -820,6 +845,7 @@ namespace EasyTalk.Editor.Nodes
         {
             base.Layout();
             this.style.flexGrow = 0;
+			this.style.paddingRight = 32.0f;
         }
 
         protected override void CreateContent(VisualElement contentContainer)
@@ -850,6 +876,7 @@ namespace EasyTalk.Editor.Nodes
             tagOrNameField = new ETTextField("Enter Tag or Name...");
             tagOrNameField.AddToClassList("trigger-script-tag-field");
             tagOrNameField.style.display = DisplayStyle.None;
+			tagOrNameField.style.alignSelf = Align.Stretch;
             tagOrNameField.style.flexGrow = 1;
             tagOrNameField.style.paddingLeft = 32.0f;
             contentContainer.Add(tagOrNameField);

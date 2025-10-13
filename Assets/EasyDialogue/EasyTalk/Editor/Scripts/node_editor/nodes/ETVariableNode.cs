@@ -471,8 +471,14 @@ namespace EasyTalk.Editor.Nodes
             switch (variableType)
             {
                 case NodeVariableType.BOOL: return BoolValue;
-                case NodeVariableType.FLOAT: return float.Parse(Value);
-                case NodeVariableType.INT: return int.Parse(Value);
+                case NodeVariableType.FLOAT: 
+                    float floatValue = 0.0f; 
+                    float.TryParse(Value, out floatValue);
+                    return floatValue;
+                case NodeVariableType.INT: 
+                    int intValue = 0; 
+                    int.TryParse(Value, out intValue);
+                    return intValue;
                 case NodeVariableType.STRING: return Value;
             }
 
