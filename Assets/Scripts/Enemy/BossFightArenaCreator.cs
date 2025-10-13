@@ -10,6 +10,7 @@ public class BossFightArenaCreator : MonoBehaviour
     [SerializeField] private int arenaHeight = 6;
     [SerializeField] private List<GameObject> enemiesToSpawnInside = new();
     [SerializeField] private int numberOfEnemiesToSpawn = 0;
+    [SerializeField] private GameObject destroyAfterArenaFinish;
 
     private QuestCompletion _questCompletion;
 
@@ -34,7 +35,8 @@ public class BossFightArenaCreator : MonoBehaviour
             transform,
             enemiesToSpawnInside,
             numberOfEnemiesToSpawn,
-            _questCompletion
+            _questCompletion,
+            destroyAfterArenaFinish
         );
     }
 }

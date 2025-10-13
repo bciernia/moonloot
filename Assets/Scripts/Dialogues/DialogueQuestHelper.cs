@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Quest))]
 public class DialogueQuestHelper : MonoBehaviour
 {
     private Quest quest;

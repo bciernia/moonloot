@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class BossFightArena : Singleton<BossFightArena>
@@ -16,6 +17,7 @@ public class BossFightArena : Singleton<BossFightArena>
     private List<EnemyStatistics> EnemiesToSpawnInside { get; set; }
     
     private GameObject ArenaCreator { get; set; }
+    private GameObject DestroyAfterArenaFinish { get; set; }
 
     protected void Start()
     {
@@ -24,9 +26,10 @@ public class BossFightArena : Singleton<BossFightArena>
     }
     
     public void CreateArena(GameObject arenaCreator, GameObject wallPrefab, int arenaWidth, int arenaHeight,
-        Transform centerOfArena, List<GameObject> enemiesToSpawnInside, int numberOfEnemiesToSpawn, QuestCompletion questCompletion)
+        Transform centerOfArena, List<GameObject> enemiesToSpawnInside, int numberOfEnemiesToSpawn, QuestCompletion questCompletion, GameObject destroyAfterArenaFinish)
     {
         ArenaCreator = arenaCreator;
+        DestroyAfterArenaFinish = destroyAfterArenaFinish;
         ArenaCreators.Add(arenaCreator.GetComponent<EnemyStatistics>());
         EnemiesToSpawnInside.ForEach(enemy => EnemiesToSpawnInside.Add(enemy));
         arenaSize = new Vector2Int(arenaWidth, arenaHeight);
@@ -131,6 +134,7 @@ public class BossFightArena : Singleton<BossFightArena>
                 
                 DestroyArena();
                 DestroyArenaCreator();
+                DestroyObjectAfterFinishingArena();
                 yield break;
             }
 
@@ -141,5 +145,10 @@ public class BossFightArena : Singleton<BossFightArena>
     private void DestroyArenaCreator()
     {
         Destroy(ArenaCreator);
+    }
+
+    private void DestroyObjectAfterFinishingArena()
+    {
+        if (DestroyAfterArenaFinish) Destroy(DestroyAfterArenaFinish);
     }
 }
