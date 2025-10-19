@@ -117,16 +117,10 @@ GameObject:
   - component: {fileID: 7210183766043189842}
   - component: {fileID: 619082099784213098}
   - component: {fileID: 8878059315171743947}
-  - component: {fileID: 888181845675717884}
   - component: {fileID: 4713351986519379261}
-  - component: {fileID: 2367122581805037710}
-  - component: {fileID: 6678819415588681490}
-  - component: {fileID: 917164640192625264}
-  - component: {fileID: 4859603342803203965}
-  - component: {fileID: 5724408830471993439}
   m_Layer: 10
   m_Name: Creeper_Alpha
-  m_TagString: Enemy
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,7 +277,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -344,7 +338,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.6875
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -381,10 +375,10 @@ MonoBehaviour:
     Actions:
     - {fileID: 4713351986519379261}
     Transitions:
-    - Decision: {fileID: 2367122581805037710}
+    - Decision: {fileID: 0}
       TrueState: Wander
       FalseState: 
-    - Decision: {fileID: 6678819415588681490}
+    - Decision: {fileID: 0}
       TrueState: Attack
       FalseState: 
   - ID: Chase
@@ -696,19 +690,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsFriendly: 0
---- !u!114 &888181845675717884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d746152a8af349e092048163fea9435d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcName: Creeper Alpha
 --- !u!114 &4713351986519379261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -721,73 +702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3053377266547924495e625664e92ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2367122581805037710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215416a869b94d1a87e7f960e7f1a8cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6678819415588681490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17fd5f7961447be94c3d2d537f27ee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &917164640192625264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2f036dc6e4e1af46a9918e1b5368f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4859603342803203965
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 640d98c5b15a618459f8938498900c75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quest: {fileID: 11400000, guid: 93acd9e62f8876d489118f9d0faf5df2, type: 2}
---- !u!114 &5724408830471993439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff61b6176031edf458df64c5f6b7fb19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 5345297387919059945, guid: a7aa9dc7bfbdb3241925cab35f261616, type: 3}
-  arenaWidth: 26
-  arenaHeight: 19
-  enemiesToSpawnInside:
-  - {fileID: 0}
-  numberOfEnemiesToSpawn: 4
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0
