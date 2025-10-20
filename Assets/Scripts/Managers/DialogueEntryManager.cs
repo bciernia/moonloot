@@ -5,10 +5,10 @@ public class DialogueEntryManager : Singleton<DialogueEntryManager>
     //TODO Uwzględnić przy zapisie
     private readonly Dictionary<string, string> NpcDialogueEntryDictionary = new();
 
-    public void UpdateNpcDialogueEntry(string npcName, string dialogueEntryId)
+    public void UpdateNpcDialogueEntry(string dialogueEntryId, string gameObjectName)
     {
-        NpcDialogueEntryDictionary[npcName] = dialogueEntryId;
+        NpcDialogueEntryDictionary[gameObjectName] = dialogueEntryId;
     }
 
-    public string GetDialogueEntryIdByNpcName(string npcName) => NpcDialogueEntryDictionary.GetValueOrDefault(npcName, "0");
+    public string GetDialogueEntryIdByNpcName(string gameObjectName) => NpcDialogueEntryDictionary.GetValueOrDefault(gameObjectName, "0");
 }

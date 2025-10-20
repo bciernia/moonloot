@@ -5,17 +5,10 @@ using UnityEngine;
 
 public class DialogueEntrySetter : MonoBehaviour
 {
-    public string NpcName { get; private set; }
-
-    private void Awake()
+    public void UpdateDialogueEntry(string dialogueEntryId)
     {
-        NpcName = gameObject.name;
+        DialogueEntryManager.Instance.UpdateNpcDialogueEntry(dialogueEntryId, gameObject.name);
     }
 
-    public void UpdateDialogueEntry([CanBeNull] string npcName, string dialogueEntryId)
-    {
-        DialogueEntryManager.Instance.UpdateNpcDialogueEntry(npcName ?? NpcName, dialogueEntryId);
-    }
-
-    public string GetEntryId() => DialogueEntryManager.Instance.GetDialogueEntryIdByNpcName(NpcName);
+    public string GetEntryId() => DialogueEntryManager.Instance.GetDialogueEntryIdByNpcName(gameObject.name);
 }

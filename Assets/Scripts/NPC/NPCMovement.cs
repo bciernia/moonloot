@@ -13,6 +13,11 @@ public class NPCMovement : MonoBehaviour
     private Vector3 _previousPos;
     private int _currentPointIndex;
     private bool isWaiting = false;
+    
+    private bool isMovingToTarget = false;
+    private Vector3 targetPosition;
+    
+    public event Action OnDestinationReached;
 
     private void Awake()
     {
@@ -22,18 +27,16 @@ public class NPCMovement : MonoBehaviour
 
     private void Update()
     {
-        if (isWaiting || !_waypoint.HasAnyWaypoints) return;
-        
-        var nextPosition = _waypoint.GetPosition(_currentPointIndex);
-        UpdateMoveValues(nextPosition);
-        transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
-        if (Vector3.Distance(transform.position, nextPosition) < 0.2f)
-        {
-            _previousPos = nextPosition;
-            _currentPointIndex = (_currentPointIndex + 1) % _waypoint.Points.Length;
+        if (isWaiting) return;
 
-            StartCoroutine(WaitOnPoint());
+        if (isMovingToTarget)
+        {
+            MoveToTarget();
+            return;
         }
+
+        if (_waypoint == null || !_waypoint.HasAnyWaypoints) return;
+        PatrolBetweenWaypoints();
     }
     
 
@@ -55,5 +58,47 @@ public class NPCMovement : MonoBehaviour
         _enemyAnimator.SetIsMoving(false);
         yield return new WaitForSeconds(3f);
         isWaiting = false;
+    }
+    
+    private void PatrolBetweenWaypoints()
+    {
+        var nextPosition = _waypoint.GetPosition(_currentPointIndex);
+        UpdateMoveValues(nextPosition);
+        transform.position = Vector3.MoveTowards(transform.position, nextPosition, moveSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, nextPosition) < 0.2f)
+        {
+            _previousPos = nextPosition;
+            _currentPointIndex = (_currentPointIndex + 1) % _waypoint.Points.Length;
+            StartCoroutine(WaitOnPoint());
+        }
+    }
+
+    private void MoveToTarget()
+    {
+        UpdateMoveValues(targetPosition);
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+
+        if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
+        {
+            isMovingToTarget = false;
+            _enemyAnimator.SetIsMoving(false);
+            OnDestinationReached?.Invoke();
+        }
+    }
+    
+    public void MoveTo(Vector3 destination)
+    {
+        StopAllCoroutines();
+        isWaiting = false;
+        isMovingToTarget = true;
+        targetPosition = destination;
+    }
+    
+    private IEnumerator ReturnToPatrol()
+    {
+        yield return new WaitForSeconds(2f);
+        _currentPointIndex = 0;
+        isMovingToTarget = false;
     }
 }

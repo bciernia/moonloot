@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -7,11 +8,11 @@ public class DialogueFlags : MonoBehaviour
 {
     public void Add(string flag)
     {
-        DialogueFlagsManager.Instance.AddFlagToHashSet(flag);
+        DialogueFlagsManager.Instance.AddFlagToHashSet(flag.Trim());
     }
 
     public bool IsFlagAdded(string flag)
     {
-        return DialogueFlagsManager.Instance.IsFlagInHashSet(flag);
+        return DialogueFlagsManager.Instance.IsFlagInHashSet(flag.Trim());
     }
 }
