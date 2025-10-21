@@ -26,6 +26,8 @@ GameObject:
   - component: {fileID: 5553143421817459615}
   - component: {fileID: 9188036346047358896}
   - component: {fileID: 1482825991275150313}
+  - component: {fileID: -5853072504273615473}
+  - component: {fileID: 1791337058532796346}
   m_Layer: 6
   m_Name: Enemy_Invoker
   m_TagString: Enemy
@@ -328,6 +330,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectorSprite: {fileID: 8894086518035609629}
+  hpCanvas: {fileID: 0}
 --- !u!114 &3239572568804598025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -391,6 +394,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsFriendly: 0
+--- !u!195 &-5853072504273615473
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.6875
+  m_Speed: 3.5
+  m_Acceleration: 50
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0.75
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 1.125
+  m_BaseOffset: 0.5625
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1791337058532796346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2250188740682068015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07246b5011b34814a9541dc4e05bbe9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _expDrop: 0
+  _dropItems: []
+  dropRadius: 1
+  minDistanceBetweenDrops: 0.3
+  maxAttempts: 10
+  dropItemMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0

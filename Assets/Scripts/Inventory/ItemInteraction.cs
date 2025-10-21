@@ -1,3 +1,4 @@
+using Inventory.NewInventory.Model;
 using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour, IInteractable
@@ -38,4 +39,6 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         ps.Play();
         Destroy(ps.gameObject, main.duration + main.startLifetime.constantMax);     
     }
+
+    public ItemSO GetInventoryItem() => _inventoryItem;
 }

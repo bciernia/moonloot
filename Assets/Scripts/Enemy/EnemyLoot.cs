@@ -56,15 +56,12 @@ public class EnemyLoot : MonoBehaviour
                 {
                     drop.transform.position = dropPosition;
                 }
-                
-                var goldItem = item.ItemToDrop as GoldItemSO;
-                if (goldItem != null)
+
+                var itemSo = item.ItemToDrop.GetComponent<ItemInteraction>().GetInventoryItem();
+
+                if (itemSo is GoldItemSO)
                 {
-                    var pickup = drop.GetComponent<GoldPickup>();
-                    if (pickup != null)
-                    {
-                        pickup.Amount = Random.Range(goldItem.MinAmount, goldItem.MaxAmount);
-                    }
+                    
                 }
             }
         }

@@ -42,13 +42,23 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void RestoreHealth(float amount)
     {
         _playerStats.HP += amount;
-
         _playerStats.HP = Mathf.Min(_playerStats.HP, _playerStats.MaxHP);
+    }
+
+    public void RestoreMana(float amount)
+    {
+        _playerStats.MP += amount;
+        _playerStats.MP = Mathf.Min(_playerStats.MP, _playerStats.MaxMP);
     }
     
     public bool CanRestoreHealth()
     {
         return _playerStats.HP > 0 && _playerStats.HP < _playerStats.MaxHP;
+    }
+    
+    public bool CanRestoreMana()
+    {
+        return _playerStats.MP > 0 && _playerStats.MP < _playerStats.MaxMP;
     }
 
     public float GetPlayerCurrentHealth()
