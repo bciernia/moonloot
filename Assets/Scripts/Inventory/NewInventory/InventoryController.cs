@@ -18,6 +18,7 @@ public class InventoryController : Singleton<InventoryController>
     {
         PrepareUI();
         PrepareInventoryData();
+        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
     }
     
     private void ChangeGoldAmount(GoldItemSO gold)
