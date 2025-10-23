@@ -11,6 +11,7 @@ public class Quest : ScriptableObject
     [SerializeField] private List<Reward> _rewards = new List<Reward>();
     [SerializeField] private List<Objective> _objectives = new List<Objective>();
     [SerializeField] private ItemSO _itemInQuest;
+    [SerializeField] private List<Quest> _relatedQuests = new List<Quest>();
     
     [System.Serializable]
     public class Reward
@@ -37,20 +38,13 @@ public class Quest : ScriptableObject
         return _description;
     }
 
-    public int GetObjectivesCount()
-    {
-        return _objectives.Count;
-    }
+    public int GetObjectivesCount() => _objectives.Count;
 
-    public IEnumerable<Objective> GetObjectives()
-    {
-        return _objectives;
-    }
+    public IEnumerable<Objective> GetObjectives() => _objectives;
 
-    public IEnumerable<Reward> GetRewards()
-    {
-        return _rewards;
-    }
+    public IEnumerable<Reward> GetRewards() => _rewards;
+
+    public IEnumerable<Quest> GetRelatedQuests() =>  _relatedQuests;
 
     public string GetQuestItemName() => _itemInQuest.Name;
 

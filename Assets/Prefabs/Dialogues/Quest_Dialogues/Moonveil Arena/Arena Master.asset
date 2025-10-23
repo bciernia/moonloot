@@ -1,0 +1,607 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Arena Master
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 3986856043565547718
+  - rid: 3986856043565547719
+  - rid: 3986856043565547720
+  - rid: 3986856043565547721
+  - rid: 3986856043565547722
+  - rid: 3986856043565547723
+  - rid: 3986856043565547724
+  - rid: 3986856043565547725
+  - rid: 3986856043565547726
+  - rid: 3986856043565547727
+  - rid: 3986856043565547728
+  - rid: 3986856043565547729
+  - rid: 3986856043565547730
+  - rid: 3986856043565547731
+  - rid: 3986856043565547732
+  translationLibrary: {fileID: 2753800099546190396}
+  maxID: 4035
+  references:
+    version: 2
+    RefIds:
+    - rid: 3986856043565547718
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 12.402405
+        yPosition: 181.09698
+        entryPointName: 0
+    - rid: 3986856043565547719
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: d1040000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 210.3125
+        xPosition: 167.97699
+        yPosition: 181.88051
+        items:
+        - rid: 3986856043565547733
+        characterName: Vareth Dorne
+        icon: 
+    - rid: 3986856043565547720
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 34
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 35
+          attachedIds: d7040000970e0000
+          ownerId: 34
+          connectionType: 1
+        outputs:
+        - id: 36
+          attachedIds: 2b000000
+          ownerId: 34
+          connectionType: 1
+        width: 268
+        height: 192.79999
+        xPosition: 829.26404
+        yPosition: 213.21936
+        items:
+        - rid: 3986856043565547734
+        characterName: Vareth Dorne
+        icon: 
+    - rid: 3986856043565547721
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 42
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 43
+          attachedIds: 24000000
+          ownerId: 42
+          connectionType: 1
+        - id: 44
+          attachedIds: 
+          ownerId: 42
+          connectionType: 7
+        - id: 46
+          attachedIds: 
+          ownerId: 42
+          connectionType: 7
+        - id: 59
+          attachedIds: 
+          ownerId: 42
+          connectionType: 7
+        outputs:
+        - id: 45
+          attachedIds: 46000000
+          ownerId: 42
+          connectionType: 1
+        - id: 47
+          attachedIds: 9d020000
+          ownerId: 42
+          connectionType: 1
+        - id: 60
+          attachedIds: 80030000
+          ownerId: 42
+          connectionType: 1
+        width: 228
+        height: 242.79999
+        xPosition: 1203.264
+        yPosition: 206.2194
+        items:
+        - rid: 3986856043565547735
+        - rid: 3986856043565547736
+        - rid: 3986856043565547737
+    - rid: 3986856043565547722
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 69
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 70
+          attachedIds: 2d000000
+          ownerId: 69
+          connectionType: 1
+        - id: 71
+          attachedIds: 
+          ownerId: 69
+          connectionType: 8
+        - id: 72
+          attachedIds: 
+          ownerId: 69
+          connectionType: 9
+        - id: 73
+          attachedIds: 
+          ownerId: 69
+          connectionType: 9
+        - id: 74
+          attachedIds: 
+          ownerId: 69
+          connectionType: 9
+        outputs:
+        - id: 75
+          attachedIds: 
+          ownerId: 69
+          connectionType: 9
+        - id: 76
+          attachedIds: 8d040000
+          ownerId: 69
+          connectionType: 1
+        width: 220
+        height: 321
+        xPosition: 1635.5431
+        yPosition: -128.2987
+        triggeredClassName: ArenaTest
+        triggeredMethodName: CreateEnemiesSpawner
+        methodSignature: CreateEnemiesSpawner(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986856043565547723
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 668
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 669
+          attachedIds: 2f000000
+          ownerId: 668
+          connectionType: 1
+        - id: 670
+          attachedIds: 
+          ownerId: 668
+          connectionType: 8
+        - id: 671
+          attachedIds: 
+          ownerId: 668
+          connectionType: 9
+        - id: 672
+          attachedIds: 
+          ownerId: 668
+          connectionType: 9
+        - id: 673
+          attachedIds: 
+          ownerId: 668
+          connectionType: 9
+        outputs:
+        - id: 674
+          attachedIds: 
+          ownerId: 668
+          connectionType: 9
+        - id: 675
+          attachedIds: 8d040000
+          ownerId: 668
+          connectionType: 1
+        width: 220
+        height: 321
+        xPosition: 1634.2617
+        yPosition: 217.99817
+        triggeredClassName: ArenaTest
+        triggeredMethodName: CreateEnemiesSpawner
+        methodSignature: CreateEnemiesSpawner(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986856043565547724
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 895
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 896
+          attachedIds: 3c000000
+          ownerId: 895
+          connectionType: 1
+        - id: 897
+          attachedIds: 
+          ownerId: 895
+          connectionType: 8
+        - id: 898
+          attachedIds: 
+          ownerId: 895
+          connectionType: 9
+        - id: 899
+          attachedIds: 
+          ownerId: 895
+          connectionType: 9
+        - id: 900
+          attachedIds: 
+          ownerId: 895
+          connectionType: 9
+        outputs:
+        - id: 901
+          attachedIds: 
+          ownerId: 895
+          connectionType: 9
+        - id: 902
+          attachedIds: 8d040000
+          ownerId: 895
+          connectionType: 1
+        width: 220
+        height: 321
+        xPosition: 1632.5839
+        yPosition: 563.2758
+        triggeredClassName: ArenaTest
+        triggeredMethodName: CreateEnemiesSpawner
+        methodSignature: CreateEnemiesSpawner(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 3
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986856043565547725
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1164
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1165
+          attachedIds: 4c000000a302000086030000
+          ownerId: 1164
+          connectionType: 1
+        outputs:
+        - id: 1166
+          attachedIds: cc040000
+          ownerId: 1164
+          connectionType: 1
+        width: 268
+        height: 169.68747
+        xPosition: 2136.911
+        yPosition: 295.41095
+        items:
+        - rid: 3986856043565547738
+        characterName: Vareth Dorne
+        icon: 
+    - rid: 3986856043565547726
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1227
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1228
+          attachedIds: 8e040000
+          ownerId: 1227
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2565.911
+        yPosition: 346.6609
+        exitPointName: 
+    - rid: 3986856043565547727
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1232
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1233
+          attachedIds: 06000000
+          ownerId: 1232
+          connectionType: 1
+        - id: 1234
+          attachedIds: 
+          ownerId: 1232
+          connectionType: 5
+        - id: 1235
+          attachedIds: 
+          ownerId: 1232
+          connectionType: 9
+        - id: 1236
+          attachedIds: 
+          ownerId: 1232
+          connectionType: 9
+        - id: 1237
+          attachedIds: 
+          ownerId: 1232
+          connectionType: 9
+        outputs:
+        - id: 1238
+          attachedIds: 
+          ownerId: 1232
+          connectionType: 9
+        - id: 1239
+          attachedIds: 23000000
+          ownerId: 1232
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 525.7945
+        yPosition: 151.21869
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986856043565547728
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1595
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1596
+          attachedIds: 6c060000
+          ownerId: 1595
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -24.399624
+        yPosition: 579.3956
+        entryPointName: 1
+    - rid: 3986856043565547729
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1643
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1644
+          attachedIds: 3c060000
+          ownerId: 1643
+          connectionType: 1
+        - id: 1645
+          attachedIds: 
+          ownerId: 1643
+          connectionType: 8
+        - id: 1646
+          attachedIds: 
+          ownerId: 1643
+          connectionType: 9
+        - id: 1647
+          attachedIds: 
+          ownerId: 1643
+          connectionType: 9
+        - id: 1648
+          attachedIds: 
+          ownerId: 1643
+          connectionType: 9
+        outputs:
+        - id: 1649
+          attachedIds: 930e0000
+          ownerId: 1643
+          connectionType: 2
+        - id: 1650
+          attachedIds: 920e0000
+          ownerId: 1643
+          connectionType: 1
+        width: 220
+        height: 321
+        xPosition: 282.55356
+        yPosition: 557.9112
+        triggeredClassName: ArenaTest
+        triggeredMethodName: IsArenaStarted
+        methodSignature: IsArenaStarted():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 3986856043565547730
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3729
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3730
+          attachedIds: 72060000
+          ownerId: 3729
+          connectionType: 1
+        - id: 3731
+          attachedIds: 71060000
+          ownerId: 3729
+          connectionType: 2
+        - id: 3732
+          attachedIds: 
+          ownerId: 3729
+          connectionType: 2
+        outputs:
+        - id: 3733
+          attachedIds: 
+          ownerId: 3729
+          connectionType: 2
+        - id: 3734
+          attachedIds: 240f0000
+          ownerId: 3729
+          connectionType: 10
+        - id: 3735
+          attachedIds: 23000000
+          ownerId: 3729
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 581.01373
+        yPosition: 624.0673
+        logicOperation: 4
+    - rid: 3986856043565547731
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3875
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3876
+          attachedIds: 960e0000
+          ownerId: 3875
+          connectionType: 1
+        outputs:
+        - id: 3877
+          attachedIds: 390f0000
+          ownerId: 3875
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 867.6387
+        yPosition: 667.1923
+        items:
+        - rid: 3986856043565547739
+        characterName: Vareth Dorne
+        icon: 
+    - rid: 3986856043565547732
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3896
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3897
+          attachedIds: 250f0000
+          ownerId: 3896
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1256.0135
+        yPosition: 713.7548
+        exitPointName: 
+    - rid: 3986856043565547733
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Welcome to Moonveil Arena! This is demo, so you can test fight system
+          here.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986856043565547734
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Choose difficulty level and enter the arena!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986856043565547735
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Easy
+    - rid: 3986856043565547736
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Medium
+    - rid: 3986856043565547737
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hard
+    - rid: 3986856043565547738
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good luck! Stand on square and fight!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986856043565547739
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Go inside and fight!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &2753800099546190396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 8
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Vareth Dorne
+    - id: 1
+      language: en
+      text: Welcome to Moonveil Arena! This is demo, so you can test fight system
+        here.
+    - id: 2
+      language: en
+      text: Choose difficulty level and enter the arena!
+    - id: 3
+      language: en
+      text: Easy
+    - id: 4
+      language: en
+      text: Medium
+    - id: 5
+      language: en
+      text: Hard
+    - id: 6
+      language: en
+      text: Good luck! Stand on square and fight!
+    - id: 7
+      language: en
+      text: Go inside and fight!

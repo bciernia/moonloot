@@ -38,7 +38,7 @@ public class QuestTableManager : Singleton<QuestTableManager>
 
         for (var i = 0; i < count; i++)
         {
-            if (PlayerQuests.IsQuestInQuestList(questList[i])) continue;
+            if (PlayerQuests.HasPlayerQuest(questList[i])) continue;
             
             var cardGO = Instantiate(QuestCardPrefab, QuestPlacesOnBoard[i].transform);
             cardGO.transform.localPosition = Vector3.zero;

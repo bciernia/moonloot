@@ -1,4 +1,5 @@
 using EasyTalk.Utils;
+using TMPro;
 using UnityEngine;
 
 namespace EasyTalk.Display
@@ -49,6 +50,37 @@ namespace EasyTalk.Display
         {
             get { return lookAt; }
             set { lookAt = value; }
+        }
+
+        private void OnValidate()
+        {
+#if TEXTMESHPRO_INSTALLED
+            if (this.TMPCharacterNameText == null)
+            {
+                TMP_Text[] tmpTextComponents = GetComponentsInChildren<TMP_Text>(true);
+                foreach (TMP_Text txt in tmpTextComponents)
+                {
+                    if (txt.gameObject.name.Contains("CharacterName") && txt.gameObject.name.Contains("TMP"))
+                    {
+                        this.TMPCharacterNameText = txt;
+                        break;
+                    }
+                }
+            }
+
+            if (this.TMPConvoText == null)
+            {
+                TMP_Text[] tmpTextComponents = GetComponentsInChildren<TMP_Text>(true);
+                foreach (TMP_Text txt in tmpTextComponents)
+                {
+                    if (txt.gameObject.name.Contains("Conversation") && txt.gameObject.name.Contains("TMP"))
+                    {
+                        this.TMPConvoText = txt;
+                        break;
+                    }
+                }
+            }
+#endif
         }
     }
 }

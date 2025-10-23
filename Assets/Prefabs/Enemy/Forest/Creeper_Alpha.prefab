@@ -117,15 +117,10 @@ GameObject:
   - component: {fileID: 7210183766043189842}
   - component: {fileID: 619082099784213098}
   - component: {fileID: 8878059315171743947}
-  - component: {fileID: 888181845675717884}
   - component: {fileID: 4713351986519379261}
-  - component: {fileID: 2367122581805037710}
-  - component: {fileID: 6678819415588681490}
-  - component: {fileID: 917164640192625264}
-  - component: {fileID: 8266861545861141059}
   m_Layer: 10
   m_Name: Creeper_Alpha
-  m_TagString: Enemy
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -282,7 +277,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -343,7 +338,7 @@ NavMeshAgent:
   m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.6875
-  m_Speed: 3.5
+  m_Speed: 4
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -376,6 +371,16 @@ MonoBehaviour:
     - Decision: {fileID: 327640788523570941}
       TrueState: Chase
       FalseState: 
+  - ID: Dialogue
+    Actions:
+    - {fileID: 4713351986519379261}
+    Transitions:
+    - Decision: {fileID: 0}
+      TrueState: Wander
+      FalseState: 
+    - Decision: {fileID: 0}
+      TrueState: Attack
+      FalseState: 
   - ID: Chase
     Actions:
     - {fileID: 5497696368425104024}
@@ -385,16 +390,6 @@ MonoBehaviour:
       FalseState: Wander
     - Decision: {fileID: 8546173141655940257}
       TrueState: Dialogue
-      FalseState: 
-  - ID: Dialogue
-    Actions:
-    - {fileID: 4713351986519379261}
-    Transitions:
-    - Decision: {fileID: 2367122581805037710}
-      TrueState: Wander
-      FalseState: 
-    - Decision: {fileID: 6678819415588681490}
-      TrueState: Attack
       FalseState: 
   - ID: Attack
     Actions:
@@ -442,7 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c493ebd1f0867ce4f9cb16352e2131ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 15
   playerMask:
     serializedVersion: 2
     m_Bits: 128
@@ -504,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectorSprite: {fileID: 8894086518035609629}
+  hpCanvas: {fileID: 0}
 --- !u!114 &3239572568804598025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,33 +565,27 @@ MonoBehaviour:
   _expDrop: 50
   _dropItems:
   - Name: Health Potion
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 3
     DropChance: 100
   - Name: Health Potion - 50%
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 7
     DropChance: 50
   - Name: Key
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 1
     DropChance: 33
   - Name: Spear
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 1
     DropChance: 12
+  dropRadius: 1
+  minDistanceBetweenDrops: 0.3
+  maxAttempts: 10
+  dropItemMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &619082099784213098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -700,19 +690,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsFriendly: 0
---- !u!114 &888181845675717884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d746152a8af349e092048163fea9435d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcName: Creeper Alpha
 --- !u!114 &4713351986519379261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,59 +702,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3053377266547924495e625664e92ffb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2367122581805037710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215416a869b94d1a87e7f960e7f1a8cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6678819415588681490
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e17fd5f7961447be94c3d2d537f27ee2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &917164640192625264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a2f036dc6e4e1af46a9918e1b5368f9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8266861545861141059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2250188740682068015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a52acd89601ff44ab2e1fd7300d14a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallPrefab: {fileID: 5345297387919059945, guid: a7aa9dc7bfbdb3241925cab35f261616, type: 3}
-  wallSpacing: 1
-  arenaWidth: 28
-  arenaHeight: 16
-  _arenaCreators: []
 --- !u!1 &8894086518035609629
 GameObject:
   m_ObjectHideFlags: 0

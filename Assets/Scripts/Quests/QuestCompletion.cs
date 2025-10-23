@@ -1,4 +1,5 @@
 using System;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class QuestCompletion : MonoBehaviour
@@ -7,9 +8,6 @@ public class QuestCompletion : MonoBehaviour
 
     public Quest Quest { get; private set; }
 
-    public delegate void ObjectiveCompletedHandler(string objectiveId);
-    public event ObjectiveCompletedHandler OnObjectiveCompleted;
-    
     private void Awake()
     {
         Quest = quest;
@@ -20,7 +18,6 @@ public class QuestCompletion : MonoBehaviour
     {
         var questList = GetPlayerQuestList();
         questList.CompleteObjective(quest, objectiveName);
-        OnObjectiveCompleted?.Invoke(objectiveName);
     }
     
     public bool IsObjectiveCompleted(string objectiveName)

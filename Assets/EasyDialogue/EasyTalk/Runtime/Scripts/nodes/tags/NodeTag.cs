@@ -52,6 +52,14 @@ namespace EasyTalk.Nodes.Tags
                         tags.Add(tag.tagName, tag);
                     }
                 }
+                else
+                {
+                    NodeTag tag = CreateTag(tagText);
+                    if(tag != null && !tags.ContainsKey(tag.tagName))
+                    {
+                        tags.Add(tag.tagName, tag);
+                    }
+                }
             }
 
             return newText;
@@ -74,7 +82,7 @@ namespace EasyTalk.Nodes.Tags
                 (endIndex = newText.IndexOf(']', startIndex + 1)) != -1)
             {
                 newText = newText.Substring(0, startIndex) + newText.Substring(endIndex + 1);
-                startIndex = endIndex;
+                startIndex = 0;
             }
 
             return newText;
@@ -105,9 +113,29 @@ namespace EasyTalk.Nodes.Tags
                     string value = tagText.Substring(splitIndex + 1);
                     tag = CreateTag(tagName, value);
                 }
+                else
+                {
+                    tag = CreateTag(tagName);
+                }
             }
 
             return newText;
+        }
+
+        public static NodeTag CreateTag(string tagName)
+        {
+            NodeTag tag = null;
+
+            if(tagName.Equals("append"))
+            {
+                tag = new AppendTag();
+            }
+            else if(tagName.Equals("autoplay"))
+            {
+                tag = new AutoplayTag();
+            }
+
+            return tag;
         }
 
         /// <summary>
@@ -147,6 +175,12 @@ namespace EasyTalk.Nodes.Tags
             else if(tagName.Equals("id"))
             {
                 tag = new IDTag(value);
+            }
+            else if(tagName.Equals("autoplay"))
+            {
+                float delay = 1.0f;
+                float.TryParse(value, out delay);
+                tag = new AutoplayTag(delay);
             }
 
             return tag;

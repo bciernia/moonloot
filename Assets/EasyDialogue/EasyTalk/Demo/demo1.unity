@@ -1396,6 +1396,9 @@ MonoBehaviour:
   onExecuteAsyncNode:
     m_PersistentCalls:
       m_Calls: []
+  onAppendText:
+    m_PersistentCalls:
+      m_Calls: []
   onWaitingForNodeCompletion:
     m_PersistentCalls:
       m_Calls: []
@@ -5316,6 +5319,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 785022220}
     - target: {fileID: 8254460517085133017, guid: 003f29c985497514e939fc075d8634e8, type: 3}
+      propertyPath: conversationDisplayID
+      value: sam
+      objectReference: {fileID: 0}
+    - target: {fileID: 8254460517085133017, guid: 003f29c985497514e939fc075d8634e8, type: 3}
       propertyPath: onAreaExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1985360842}
@@ -5327,6 +5334,10 @@ PrefabInstance:
       propertyPath: onAreaEntered.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1124326397}
+    - target: {fileID: 8254460517085133017, guid: 003f29c985497514e939fc075d8634e8, type: 3}
+      propertyPath: onAreaExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6144,6 +6155,9 @@ MonoBehaviour:
   onExecuteAsyncNode:
     m_PersistentCalls:
       m_Calls: []
+  onAppendText:
+    m_PersistentCalls:
+      m_Calls: []
   onWaitingForNodeCompletion:
     m_PersistentCalls:
       m_Calls: []
@@ -6151,6 +6165,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   dialogue: {fileID: 11400000, guid: b0a66705cfd00084988866c5016f6286, type: 2}
+  dialogueRegistry: {fileID: 0}
   playbackType: 0
   useDialogueDisplay: 1
   dialogueDisplay: {fileID: 0}
@@ -7220,6 +7235,9 @@ MonoBehaviour:
   onExecuteAsyncNode:
     m_PersistentCalls:
       m_Calls: []
+  onAppendText:
+    m_PersistentCalls:
+      m_Calls: []
   onWaitingForNodeCompletion:
     m_PersistentCalls:
       m_Calls: []
@@ -7227,8 +7245,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   dialogue: {fileID: 11400000, guid: 074f715a82cea0a48831ff244775cc92, type: 2}
+  dialogueRegistry: {fileID: 0}
   playbackType: 0
-  useDialogueDisplay: 0
+  useDialogueDisplay: 1
   dialogueDisplay: {fileID: 0}
   conversationDisplay: {fileID: 0}
   conversationDisplayID: 

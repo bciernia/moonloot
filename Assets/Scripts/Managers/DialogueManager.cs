@@ -85,4 +85,5 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         _playerActions.Disable();
     }
+
 }

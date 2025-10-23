@@ -129,7 +129,7 @@ namespace EasyTalk.Nodes.Tags
                 (endIndex = newText.IndexOf('>', startIndex + 1)) != -1)
             {
                 newText = newText.Substring(0, startIndex) + newText.Substring(endIndex + 1);
-                startIndex = endIndex;
+                startIndex = 0;
             }
 
             return newText;

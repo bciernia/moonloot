@@ -7,9 +7,7 @@ using System.Threading;
 using UnityEditor;
 using UnityEngine;
 using System;
-using EasyTalk.Nodes.Common;
 using System.IO;
-using static UnityEditor.PlayerSettings.Switch;
 
 namespace EasyTalk.Editor.Utils
 {

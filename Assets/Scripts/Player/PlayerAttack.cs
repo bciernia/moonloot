@@ -29,7 +29,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Start()
     {
-        WeaponManager.Instance.SetWeapon(_weapon, null);
+        WeaponManager.Instance.SetWeapon(EquippedItemsManager.Instance.EquippedItems[0].item as WeaponItemSO, null);
     }
 
     private void Attack()

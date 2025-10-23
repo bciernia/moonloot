@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class QuestList : MonoBehaviour
 {
-    private List<QuestStatus> _statuses = new List<QuestStatus>();
+    private readonly List<QuestStatus> _statuses = new List<QuestStatus>();
 
     public event Action onUpdate;
+    public delegate void ObjectiveCompletedHandler(Quest quest, string objectiveId);
+    public event ObjectiveCompletedHandler OnObjectiveCompleted;
     
     public void AddQuest(Quest quest)
     {
@@ -33,6 +35,7 @@ public class QuestList : MonoBehaviour
         if (status != null)
         {
             status.CompleteObjective(objective);
+            OnObjectiveCompleted?.Invoke(quest, objective);
             if (status.IsComplete())
             {
                 GiveReward(quest);

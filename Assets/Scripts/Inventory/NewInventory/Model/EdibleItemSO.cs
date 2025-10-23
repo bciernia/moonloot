@@ -9,20 +9,29 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
     public string ActionName => "Consume";
 
     [SerializeField] private float HealthValue;
+    [SerializeField] private float ManaValue;
 
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
 
-    public override string GetStatsDescription() => $"Health: {HealthValue} \n";
+    public override string GetStatsDescription() => $"Health: {HealthValue} \nMana: {ManaValue} \n";
     
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
     {
+        var restoredStats = false;
+        
         if (GameManager.Instance.Player.PlayerHealth.CanRestoreHealth())
         {
             GameManager.Instance.Player.PlayerHealth.RestoreHealth(HealthValue);
-            return true;
+            restoredStats = true;
+        }
+        
+        if (GameManager.Instance.Player.PlayerHealth.CanRestoreMana())
+        {
+            GameManager.Instance.Player.PlayerHealth.RestoreMana(ManaValue);
+            restoredStats = true;
         }
 
-        return false;
+        return restoredStats;
     }
 }
 

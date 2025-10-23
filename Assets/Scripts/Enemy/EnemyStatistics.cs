@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +24,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     public float SpecialAttackTimeInterval { get; set; }
     public float MaxAttackTimeInterval { get; private set; }
     public List<GameObject> SpecialAttacks { get; private set; }
+    public bool IsBoss { get; private set; }
 
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
@@ -61,6 +61,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         SpecialAttackTimeInterval = _enemyStats.SpecialAttackTimeInterval;
         MaxAttackTimeInterval = _enemyStats.MaxAttackTimeInterval;
         SpecialAttacks = _enemyStats.SpecialAttacks;
+        IsBoss = _enemyStats.IsBoss;
     }
 
     public void TakeDamage(float amount)
@@ -73,7 +74,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
 
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
-            
+
             _enemyBrain.enabled = false;
             // _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
@@ -93,9 +94,12 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     
     private IEnumerator HandleDeathAnimation()
     {
-        var deathAnimLength = 1f;
+        const float deathAnimLength = 1f;
         yield return new WaitForSeconds(deathAnimLength);
 
-        Destroy(gameObject);
+        if (!IsBoss)
+        {
+            Destroy(gameObject);
+        }
     }
 }

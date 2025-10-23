@@ -360,7 +360,7 @@ namespace EasyTalk.Display
                 UseConversationDisplayForTarget(currentLine.Target);
             }
 
-            if (dialogueController.GetPlaybackType() == PlaybackType.AUTOPLAY)
+            if (dialogueController.GetPlaybackType() == PlaybackType.AUTOPLAY || currentLine.AutoPlay)
             {
                 //Reset the allowAutoContinue flag.
                 allowAutoContinue = true;
@@ -481,13 +481,26 @@ namespace EasyTalk.Display
             float startTime = Time.time;
             yield return WaitForDialogueAudioOrReading(lineToPlay, oldLine);
 
-            //Add an extra delay for how long the line of dialogue should be displayed.
-            yield return new WaitForSeconds(convoLineDelay);
-
-            //Wait for the minimum amount of time that a line of dialogue is meant to be displayed.
-            if (Time.time - startTime < minConvoTime)
+            //Add an extra delay for how long the line of dialogue should be displayed before continuing.
+            if (lineToPlay.OverrideAutoplayDelay)
             {
-                yield return new WaitForSeconds(minConvoTime - (Time.time - startTime));
+                //Use the setting from the "autoplay" tag.
+                yield return new WaitForSeconds(lineToPlay.AutoPlayDelay);
+            }
+            else
+            {
+                //Use the setting from the display.
+                yield return new WaitForSeconds(convoLineDelay);
+            }
+
+            //If the line doesn't override the delay time, we should also wait for the line delay and the minimum conversation time before continuing.
+            if (!lineToPlay.OverrideAutoplayDelay)
+            {
+                //Wait for the minimum amount of time that a line of dialogue is meant to be displayed.
+                if (Time.time - startTime < minConvoTime)
+                {
+                    yield return new WaitForSeconds(minConvoTime - (Time.time - startTime));
+                }
             }
 
             if (allowAutoContinue)

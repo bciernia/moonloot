@@ -9,7 +9,6 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     public List<InventoryItem> EquippedItems = new List<InventoryItem>();
     
     [SerializeField] private UIInventoryItem WeaponSlot;
-
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
@@ -20,7 +19,23 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         
         if (EquippedItems.Count == 0)
             EquippedItems.Add(InventoryItem.GetEmptyItem());
+        InitializeEquippedSlots();
     }
+
+    private void InitializeEquippedSlots()
+    {
+        var weaponItem = EquippedItems[0].item;
+
+        if (weaponItem != null && weaponItem != InventoryItem.GetEmptyItem().item)
+        {
+            WeaponSlot.SetData(weaponItem.Image, EquippedItems[0].quantity);
+        }
+        else
+        {
+            WeaponSlot.ResetData();
+        }
+    }
+    
     public void SetItemAsEquipped(ItemSO item)
     {
         SetEquippedItemByType(item, ItemType.Weapon);

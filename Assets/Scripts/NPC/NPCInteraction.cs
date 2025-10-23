@@ -47,7 +47,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private void SetNpcMovementEnabled(bool isEnabled)
     {
         if (_enemyBrain) _enemyBrain.enabled = isEnabled;
-        if (_waypoint) _waypoint.enabled = isEnabled;
+        if (_waypoint && _waypoint.HasAnyWaypoints) _waypoint.enabled = isEnabled;
         if (_npcMovement) _npcMovement.enabled = isEnabled;
     }
 

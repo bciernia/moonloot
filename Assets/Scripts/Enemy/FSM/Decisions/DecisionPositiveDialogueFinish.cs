@@ -20,9 +20,10 @@ public class DecisionPositiveDialogueFinish : FSMDecision
         {
             var state = _enemyBrain.states.First(x => x.ID == "Chase");
             state.Transitions[1].TrueState = string.Empty;
-            _enemyRelationship.SetCharacterFriendly(true);
+            _enemyRelationship.SetIsCharacterFriendly(true);
             return true;
         }
+        
         
         return false;
     }

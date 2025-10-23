@@ -16,6 +16,8 @@ namespace EasyTalk.Editor.Localization
 
         private static Vector2 scrollPos = Vector2.zero;
 
+        private static Translation selectedTranslation;
+
         public override void OnInspectorGUI()
         {
             TranslationLibrary library = (TranslationLibrary)target;
@@ -91,9 +93,11 @@ namespace EasyTalk.Editor.Localization
             if(languageFilter.Equals("ALL"))
             {
                 int counter = 0;
+
                 foreach(TranslationSet translationSet in library.translationSets)
                 {
-                    EditorGUI.DrawRect(EditorGUILayout.BeginVertical(), (counter % 2 == 0) ? colorA : colorB);
+                    Rect setArea = EditorGUILayout.BeginVertical();
+                    EditorGUI.DrawRect(setArea, (counter % 2 == 0) ? colorA : colorB);
                     EditorGUILayout.LabelField(translationSet.languageCode);
 
                     EditorGUI.indentLevel++;
@@ -112,6 +116,7 @@ namespace EasyTalk.Editor.Localization
 
             EditorGUILayout.EndScrollView();
         }
+
         private void ListTranslationsForSet(TranslationSet translationSet, TranslationLibrary library)
         {
             for (int i = 0; i < translationSet.translations.Count; i++)
@@ -126,12 +131,13 @@ namespace EasyTalk.Editor.Localization
                     }
                 }
 
-                EditorGUILayout.BeginHorizontal();
+                Rect itemRect = EditorGUILayout.BeginHorizontal();
 
-                bool removedTranslation = false;
+                Color textColor = new Color(0.8f, 0.8f, 0.8f);
+
                 if (translationSet.languageCode.Equals(library.originalLanguage))
                 {
-                    if ((removedTranslation = GUILayout.Button(new GUIContent("-"), GUILayout.MaxWidth(20.0f))))
+                    if (GUILayout.Button(new GUIContent("-"), GUILayout.MaxWidth(20.0f)))
                     {
                         //Remove the line from all translation sets.
                         translationSet.translations.RemoveAt(i);
@@ -146,30 +152,70 @@ namespace EasyTalk.Editor.Localization
                         }
 
                         EditorUtility.SetDirty(library);
-
                         i--;
                     }
                 }
 
-                if (!removedTranslation)
+                EditorGUILayout.LabelField(new GUIContent("" + translation.id), GUILayout.MaxWidth(50.0f));
+
+                if (translationSet.languageCode.Equals(library.originalLanguage))
                 {
-                    EditorGUILayout.LabelField(new GUIContent("" + translation.id), GUILayout.MaxWidth(50.0f));
+                    EditorGUI.BeginDisabledGroup(true);
+                }
 
-                    if (translationSet.languageCode.Equals(library.originalLanguage))
+                string translationText = EditorGUILayout.TextField(translation.text);
+                if (!translationText.Equals(translation.text))
+                {
+                    translation.text = translationText;
+                    EditorUtility.SetDirty(library);
+                }
+
+                if (translationSet.languageCode.Equals(library.originalLanguage))
+                {
+                    EditorGUI.EndDisabledGroup();
+                }
+
+                if (translationSet.languageCode.Equals(library.originalLanguage))
+                {
+                    if (i > 0)
                     {
-                        EditorGUI.BeginDisabledGroup(true);
+                        if (GUILayout.Button(new GUIContent("\u2191"), GUILayout.MaxWidth(20.0f)))
+                        {
+                            for (int n = 0; n < library.translationSets.Count; n++)
+                            {
+                                TranslationSet changedSet = library.translationSets[n];
+                                Translation changedTranslation = changedSet.translations[i];
+                                changedSet.translations.RemoveAt(i);
+                                changedSet.translations.Insert(i - 1, changedTranslation);
+                            }
+
+                            EditorUtility.SetDirty(library);
+                            i--;
+                        }
+                    }
+                    else
+                    {
+                        EditorGUILayout.LabelField(new GUIContent(""), GUILayout.MaxWidth(20.0f));
                     }
 
-                    string translationText = EditorGUILayout.TextField(translation.text);
-                    if (!translationText.Equals(translation.text))
+                    if (i < translationSet.translations.Count - 1)
                     {
-                        translation.text = translationText;
-                        EditorUtility.SetDirty(library);
-                    }
+                        if (GUILayout.Button(new GUIContent("\u2193"), GUILayout.MaxWidth(20.0f)))
+                        {
+                            for(int n = 0; n < library.translationSets.Count; n++)
+                            {
+                                TranslationSet changedSet = library.translationSets[n];
+                                Translation changedTranslation = changedSet.translations[i];
+                                changedSet.translations.RemoveAt(i);
+                                changedSet.translations.Insert(i + 1, changedTranslation);
+                            }
 
-                    if (translationSet.languageCode.Equals(library.originalLanguage))
+                            EditorUtility.SetDirty(library);
+                        }
+                    }
+                    else
                     {
-                        EditorGUI.EndDisabledGroup();
+                        EditorGUILayout.LabelField(new GUIContent(""), GUILayout.MaxWidth(20.0f));
                     }
                 }
 
@@ -188,6 +234,18 @@ namespace EasyTalk.Editor.Localization
             library.SetOriginalLanguage(language.ToString().ToLower());
 
             EditorUtility.SetDirty(library);
+        }
+    }
+
+    public class TranslationLineDisplayRect
+    {
+        public Rect rect;
+        public Translation translation;
+
+        public TranslationLineDisplayRect(Rect rect, Translation translation)
+        {
+            this.rect = rect;
+            this.translation = translation;
         }
     }
 }

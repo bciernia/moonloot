@@ -1,48 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using JetBrains.Annotations;
 using UnityEngine;
 
-public class BossFightArena : MonoBehaviour
+public class BossFightArena : Singleton<BossFightArena>
 {
-    [Header("Arena Settings")]
-    [SerializeField] private GameObject wallPrefab;
-    [SerializeField] private float wallSpacing = 1f;
-    [SerializeField] private int arenaWidth = 10;
-    [SerializeField] private int arenaHeight = 6;
-    [SerializeField] private List<EnemyStatistics> _arenaCreators = new();
-    [SerializeField] private List<GameObject> enemiesToSpawnInside = new();
-    [SerializeField] private int numberOfEnemiesToSpawn = 0;
-
+    private readonly float wallSpacing = 1f;
+    
     private readonly List<GameObject> spawnedWalls = new();
     private Vector2Int arenaSize;
 
     private Coroutine _unblockCheckCoroutine;
     private GameObject arenaContainer;
     
-    private QuestCompletion _questCompletion;
+    private List<EnemyStatistics> ArenaCreators { get; set; }
+    private List<EnemyStatistics> EnemiesToSpawnInside { get; set; }
+    
+    private GameObject ArenaCreator { get; set; }
+    private GameObject DestroyAfterArenaFinish { get; set; }
 
-    private void Awake()
+    protected void Start()
     {
-        arenaSize = new Vector2Int(arenaWidth, arenaHeight);
-        _arenaCreators.Add(gameObject.GetComponent<EnemyStatistics>());
-        _questCompletion = GetComponent<QuestCompletion>();
+        ArenaCreators = new List<EnemyStatistics>();
+        EnemiesToSpawnInside = new List<EnemyStatistics>();
     }
-
-    /// <summary>
-    /// Tworzy ściany wokół obiektu (pozycja = środek areny).
-    /// Uruchamia też monitoring żywotności wrogów (jeśli lista _arenaCreators nie jest pusta).
-    ///
-    /// Do użycia w dialogach.
-    /// </summary>
-    public void CreateArena()
+    
+    public void CreateArena(GameObject arenaCreator, GameObject wallPrefab, int arenaWidth, int arenaHeight,
+        Transform centerOfArena, List<GameObject> enemiesToSpawnInside, int numberOfEnemiesToSpawn, QuestCompletion questCompletion, GameObject destroyAfterArenaFinish)
     {
-        if (wallPrefab == null) return;
-
+        ArenaCreator = arenaCreator;
+        DestroyAfterArenaFinish = destroyAfterArenaFinish;
+        ArenaCreators.Add(arenaCreator.GetComponent<EnemyStatistics>());
+        EnemiesToSpawnInside.ForEach(enemy => EnemiesToSpawnInside.Add(enemy));
+        arenaSize = new Vector2Int(arenaWidth, arenaHeight);
         arenaContainer = new GameObject("Arena");
         arenaContainer.transform.position = transform.position;
-        
-        var center = transform.position;
+
+        var center = centerOfArena.position;
         var halfX = arenaSize.x / 2f;
         var halfY = arenaSize.y / 2f;
 
@@ -79,14 +73,14 @@ public class BossFightArena : MonoBehaviour
                 var enemyStats = enemyGO.GetComponent<EnemyStatistics>();
                 if (enemyStats != null)
                 {
-                    _arenaCreators.Add(enemyStats);
+                    ArenaCreators.Add(enemyStats);
                 }
             }
         }
 
-        if (_arenaCreators != null && _arenaCreators.Count > 0 && _unblockCheckCoroutine == null)
+        if (ArenaCreators != null && ArenaCreators.Count > 0 && _unblockCheckCoroutine == null)
         {
-            _unblockCheckCoroutine = StartCoroutine(UnblockAreaRoutine());
+            _unblockCheckCoroutine = StartCoroutine(UnblockAreaRoutine(questCompletion));
         }
     }
 
@@ -110,9 +104,9 @@ public class BossFightArena : MonoBehaviour
         }
     }
 
-    private IEnumerator UnblockAreaRoutine()
+    private IEnumerator UnblockAreaRoutine(QuestCompletion questCompletion)
     {
-        while (_arenaCreators == null || _arenaCreators.Count == 0)
+        while (ArenaCreators == null || ArenaCreators.Count == 0)
         {
             yield return null;
         }
@@ -121,9 +115,9 @@ public class BossFightArena : MonoBehaviour
         {
             var allDead = true;
 
-            for (var i = 0; i < _arenaCreators.Count; i++)
+            for (var i = 0; i < ArenaCreators.Count; i++)
             {
-                var enemy = _arenaCreators[i];
+                var enemy = ArenaCreators[i];
                 if (enemy != null && enemy.CurrentHP > 0)
                 {
                     allDead = false; 
@@ -131,14 +125,16 @@ public class BossFightArena : MonoBehaviour
                 }
             }
 
-            if (allDead && _arenaCreators.Count > 0)
+            if (allDead && ArenaCreators.Count > 0)
             {
-                if (_questCompletion && _questCompletion.Quest)
+                if (questCompletion && questCompletion.Quest)
                 {
-                    CompleteObjective("1");
+                    questCompletion.CompleteObjective("1");
                 }
                 
                 DestroyArena();
+                DestroyArenaCreator();
+                DestroyObjectAfterFinishingArena();
                 yield break;
             }
 
@@ -146,8 +142,13 @@ public class BossFightArena : MonoBehaviour
         }
     }
 
-    private void CompleteObjective(string objectiveToComplete)
+    private void DestroyArenaCreator()
     {
-        _questCompletion.CompleteObjective(objectiveToComplete);
+        Destroy(ArenaCreator);
+    }
+
+    private void DestroyObjectAfterFinishingArena()
+    {
+        if (DestroyAfterArenaFinish) Destroy(DestroyAfterArenaFinish);
     }
 }

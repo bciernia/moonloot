@@ -57,7 +57,7 @@ public class UIInventoryPage : MonoBehaviour
             uiItem.OnItemEndDrag += HandleEndDrag;
         }
 
-        foreach (var uiItem in equippedItemsManager.EquippedItemsSlots)
+        foreach (var uiItem in EquippedItemsManager.Instance.EquippedItemsSlots)
         {
             uiItem.OnLeftMouseBtnClick += HandleItemSelection;
             uiItem.OnItemBeginDrag += HandleBeginDrag;

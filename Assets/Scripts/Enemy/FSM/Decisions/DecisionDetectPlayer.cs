@@ -13,6 +13,7 @@ public class DecisionDetectPlayer : FSMDecision
     private NavMeshAgent _navMeshAgent;
     private float _stopFocusTimer;
     private EnemyRelationship _enemyRelationship;
+    private EnemyStatistics _enemyStatistics;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class DecisionDetectPlayer : FSMDecision
         _enemyAnimator = GetComponent<EnemyAnimator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _enemyRelationship = GetComponent<EnemyRelationship>();
+        _enemyStatistics = GetComponent<EnemyStatistics>();
     }
 
     public override bool Decide()
@@ -29,7 +31,7 @@ public class DecisionDetectPlayer : FSMDecision
 
     private bool DetectPlayer()
     {
-        var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, range, playerMask);
+        var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, _enemyStatistics.DetectRange , playerMask);
         
         if (playerCollider && !_enemyRelationship.IsCharacterFriendly())
         {

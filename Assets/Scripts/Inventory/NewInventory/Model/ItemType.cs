@@ -11,5 +11,6 @@ public enum ItemType
     Edible,
     Usable,
     Gold,
+    Book,
     Junk
 }

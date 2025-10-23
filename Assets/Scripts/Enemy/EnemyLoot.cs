@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Inventory.NewInventory.Model;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -39,11 +40,13 @@ public class EnemyLoot : MonoBehaviour
     {
         foreach (var item in Items)
         {
+            if (!item.ItemToDrop) continue;
+
             for (var i = 0; i < item.Quantity; i++)
             {
                 var dropPosition = FindFreeDropPosition();
                 var drop = Instantiate(item.ItemToDrop, transform.position, Quaternion.identity);
-                
+
                 var mover = drop.GetComponent<LootDropMover>();
                 if (mover != null)
                 {
@@ -52,6 +55,13 @@ public class EnemyLoot : MonoBehaviour
                 else
                 {
                     drop.transform.position = dropPosition;
+                }
+
+                var itemSo = item.ItemToDrop.GetComponent<ItemInteraction>().GetInventoryItem();
+
+                if (itemSo is GoldItemSO)
+                {
+                    
                 }
             }
         }
