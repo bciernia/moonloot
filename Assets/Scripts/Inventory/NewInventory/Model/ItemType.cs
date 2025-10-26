@@ -12,5 +12,6 @@ public enum ItemType
     Usable,
     Gold,
     Book,
+    Materials,
     Junk
 }

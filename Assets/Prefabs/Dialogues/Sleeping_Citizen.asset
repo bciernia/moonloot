@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Sleeping_Citizen
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 3986856136165819068
+  - rid: 3986856136165819069
+  - rid: 3986856136165819070
+  translationLibrary: {fileID: 6928878206076209147}
+  maxID: 1026
+  references:
+    version: 2
+    RefIds:
+    - rid: 3986856136165819068
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1001
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1002
+          attachedIds: ec030000
+          ownerId: 1001
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 598.61743
+        yPosition: 273.19803
+        entryPointName: 
+    - rid: 3986856136165819069
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1003
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1004
+          attachedIds: ea030000
+          ownerId: 1003
+          connectionType: 1
+        outputs:
+        - id: 1005
+          attachedIds: f4030000
+          ownerId: 1003
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 885.5861
+        yPosition: 290.79492
+        items:
+        - rid: 3986856136165819071
+        characterName: Sleeping citizen
+        icon: 
+    - rid: 3986856136165819070
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1011
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1012
+          attachedIds: ed030000
+          ownerId: 1011
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1351.1891
+        yPosition: 329.36774
+        exitPointName: 
+    - rid: 3986856136165819071
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Zzz...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &6928878206076209147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 2
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Sleeping citizen
+    - id: 1
+      language: en
+      text: Zzz...

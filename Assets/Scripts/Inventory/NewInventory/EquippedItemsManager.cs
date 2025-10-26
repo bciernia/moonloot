@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EquippedItemsManager : Singleton<EquippedItemsManager>
 {
@@ -9,6 +8,7 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     public List<InventoryItem> EquippedItems = new List<InventoryItem>();
     
     [SerializeField] private UIInventoryItem WeaponSlot;
+    [SerializeField] private UIInventoryItem ArmorSlot;
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
@@ -16,6 +16,7 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         base.Awake();
 
         EquippedItemsSlots.Add(WeaponSlot);
+        EquippedItemsSlots.Add(ArmorSlot);
         
         if (EquippedItems.Count == 0)
             EquippedItems.Add(InventoryItem.GetEmptyItem());
@@ -24,21 +25,27 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 
     private void InitializeEquippedSlots()
     {
-        var weaponItem = EquippedItems[0].item;
+        InitializeSlot(EquippedItems[0], WeaponSlot);
+        InitializeSlot(EquippedItems[1], ArmorSlot);
+    }
 
-        if (weaponItem != null && weaponItem != InventoryItem.GetEmptyItem().item)
+    private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
+    {
+        var itemToSet = equippedItem.item;
+        
+        if (itemToSet != null && itemToSet != InventoryItem.GetEmptyItem().item)
         {
-            WeaponSlot.SetData(weaponItem.Image, EquippedItems[0].quantity);
+            slot.SetData(itemToSet.Image, equippedItem.quantity);
         }
         else
         {
-            WeaponSlot.ResetData();
+            slot.ResetData();
         }
     }
     
-    public void SetItemAsEquipped(ItemSO item)
+    public void SetItemAsEquipped(ItemSO item, ItemType itemType)
     {
-        SetEquippedItemByType(item, ItemType.Weapon);
+        SetEquippedItemByType(item, itemType);
     }
     
     private void SetEquippedItemByType(ItemSO item, ItemType itemType)
@@ -46,7 +53,10 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         switch (itemType)
         {
             case ItemType.Weapon:
-                SetItem(WeaponSlot, item);
+                SetItem(WeaponSlot, item, 0);
+                break;
+            case ItemType.Armor:
+                SetItem(ArmorSlot, item, 1);
                 break;
             case ItemType.Ammunition:
                 break;
@@ -60,17 +70,15 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
                 break;
             case ItemType.Helmet:
                 break;
-            case ItemType.Armor:
-                break;
             default:
-                throw new ArgumentOutOfRangeException(nameof(itemType), itemType, null);
+                throw new ArgumentOutOfRangeException(nameof(item.ItemType), item.ItemType, null);
         }
     }
 
-    private void SetItem(UIInventoryItem slotToSet, ItemSO item)
+    private void SetItem(UIInventoryItem slotToSet, ItemSO item, int slotIndex)
     {
         SetItemInSlot(slotToSet, item);
-        SetItemInList(item);
+        SetItemInList(item, slotIndex);
     } 
     
     private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item)
@@ -84,10 +92,10 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
             slotToSet.SetData(item.Image, 1);
         }
     }
-
-    private void SetItemInList(ItemSO item)
+    
+    private void SetItemInList(ItemSO item, int slotIndex)
     {
-        EquippedItems[0] = new InventoryItem()
+        EquippedItems[slotIndex] = new InventoryItem()
         {
             item = item,
             quantity = 1,
