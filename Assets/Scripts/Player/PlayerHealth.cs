@@ -24,9 +24,11 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public void TakeDamage(float amount)
     {
         if (_playerStats.HP <= 0) return;
+
+        var reducedDamage = Math.Max(amount - _playerStats.DamageResistance, 1); 
         
-        _playerStats.HP -= amount;
-        DamageManager.Instance.ShowDamageText(amount, transform);
+        _playerStats.HP -= reducedDamage;
+        DamageManager.Instance.ShowDamageText(reducedDamage, transform);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;

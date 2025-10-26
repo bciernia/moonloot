@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2086115862957715290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 0
+    languageCode: en
+    translations: []
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Staldirk
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 3986856156215115776
+  - rid: 3986856156215115777
+  translationLibrary: {fileID: -2086115862957715290}
+  maxID: 22
+  references:
+    version: 2
+    RefIds:
+    - rid: 3986856156215115776
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 2145.6238
+        yPosition: 3031.802
+        entryPointName: 
+    - rid: 3986856156215115777
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 12
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 13
+          attachedIds: 
+          ownerId: 12
+          connectionType: 1
+        outputs:
+        - id: 14
+          attachedIds: 
+          ownerId: 12
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2490.384
+        yPosition: 3027.9192
+        items:
+        - rid: 3986856156215115778
+        characterName: 
+        icon: 
+    - rid: 3986856156215115778
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
