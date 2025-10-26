@@ -67,6 +67,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     public void TakeDamage(float amount)
     {
         CurrentHP -= amount;
+        DamageManager.Instance.ShowDamageText(amount, transform);
 
         if (CurrentHP <= 0)
         {
@@ -87,7 +88,6 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         }
         else
         {
-            DamageManager.Instance.ShowDamageText(amount, transform);
             _enemyAnimator.SetDamagedAnimation();
         }
     }

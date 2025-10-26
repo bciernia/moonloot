@@ -39,7 +39,7 @@ public class PlayerStatsSO : ScriptableObject
 
     public void UpdatePlayerResistances(float damageResistance, float magicResistance)
     {
-        DamageResistance += damageResistance;
-        MagicResistance += magicResistance;
+        DamageResistance = damageResistance;
+        MagicResistance = magicResistance;
     }
 }

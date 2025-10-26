@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class ArmorManager : Singleton<ArmorManager>
@@ -44,12 +45,15 @@ public class ArmorManager : Singleton<ArmorManager>
     
     private void EquipArmor(ArmorItemSO armor)
     {
+        GameManager.Instance.Player.PlayerStats.UpdatePlayerResistances(armor?.DamageResistance ?? 0, armor?.MagicResistance ?? 0);
+        PlayerStatisticsManager.Instance.SetDmgResistance(armor?.DamageResistance ?? 0);
+        PlayerStatisticsManager.Instance.SetMagicResistance(armor?.MagicResistance ?? 0);
+        
         if (armor == null)
         {
             return;
         }
 
-        GameManager.Instance.Player.PlayerStats.UpdatePlayerResistances(armor.DamageResistance, armor.MagicResistance);
         EquippedItemsManager.Instance.SetItemAsEquipped(armor, ItemType.Armor);
     }
 }

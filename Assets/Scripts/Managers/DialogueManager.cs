@@ -20,6 +20,7 @@ public class DialogueManager : Singleton<DialogueManager>
         _player = GameObject.FindWithTag("Player");
     }
 
+
     public void StartDialogue()
     {
         if (_dialogueStarted) return;
@@ -28,8 +29,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         if (!NPCSelected)
         {
-            var playerDialogueController = _player.GetComponent<DialogueController>();
-            playerDialogueController.PlayDialogue();
+            // var playerDialogueController = _player.GetComponent<DialogueController>();
+            // playerDialogueController.PlayDialogue();
             return;
         }
         
@@ -70,11 +71,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
         // FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
     }
-
-    public bool IsDialogueRunning()
-    {
-        return _dialogueStarted;
-    }
+    
+    public bool IsInDialogue() => _dialogueStarted;
 
     private void OnEnable()
     {
@@ -85,5 +83,4 @@ public class DialogueManager : Singleton<DialogueManager>
     {
         _playerActions.Disable();
     }
-
 }

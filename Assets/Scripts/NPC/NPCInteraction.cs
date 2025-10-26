@@ -7,20 +7,26 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private Waypoint _waypoint;
     private NPCMovement _npcMovement;
     private EnemyBrain _enemyBrain;
-    
+    private InteractionManager _interactionManager;
+
     private void Awake()
     {
         _waypoint = GetComponent<Waypoint>();
         _npcMovement = GetComponent<NPCMovement>();
         _enemyBrain = GetComponent<EnemyBrain>();
+        _interactionManager = FindFirstObjectByType<InteractionManager>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            DialogueManager.Instance.NPCSelected = this;
-            FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
+            if (!DialogueManager.Instance.IsInDialogue())
+            {
+                DialogueManager.Instance.NPCSelected = this;
+            }
+            
+            _interactionManager.RegisterInteractable(this);
         }
     }
     
@@ -28,8 +34,11 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            DialogueManager.Instance.NPCSelected = null;
-            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
+            if (DialogueManager.Instance.NPCSelected == this)
+            {
+                DialogueManager.Instance.NPCSelected = null;
+            }
+            _interactionManager.UnregisterInteractable(this);
         }
     }
 
