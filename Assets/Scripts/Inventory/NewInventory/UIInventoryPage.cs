@@ -263,6 +263,9 @@ public class UIInventoryPage : MonoBehaviour
             case "ArmorUI":
                 equippedItemsManager.EquippedItemsSlots[1].Select();
                 break;
+            case "OutfitUI":
+                equippedItemsManager.EquippedItemsSlots[2].Select();
+                break;                
             default:
                 throw new ArgumentException("Nie znaleziono slota w ui do zaznaczenia");
         }

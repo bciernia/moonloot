@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class EquippedItemsManager : Singleton<EquippedItemsManager>
@@ -9,14 +10,18 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     
     [SerializeField] private UIInventoryItem WeaponSlot;
     [SerializeField] private UIInventoryItem ArmorSlot;
+    [SerializeField] private UIInventoryItem OutfitSlot;
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
     {
         base.Awake();
+        
+        
 
         EquippedItemsSlots.Add(WeaponSlot);
         EquippedItemsSlots.Add(ArmorSlot);
+        EquippedItemsSlots.Add(OutfitSlot);
         
         if (EquippedItems.Count == 0)
             EquippedItems.Add(InventoryItem.GetEmptyItem());
@@ -27,6 +32,7 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     {
         InitializeSlot(EquippedItems[0], WeaponSlot);
         InitializeSlot(EquippedItems[1], ArmorSlot);
+        InitializeSlot(EquippedItems[2], OutfitSlot);
     }
 
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
@@ -58,17 +64,20 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
             case ItemType.Armor:
                 SetItem(ArmorSlot, item, 1);
                 break;
-            case ItemType.Ammunition:
-                break;
-            case ItemType.Ring:
-                break;
-            case ItemType.Bracelet:
+            case ItemType.Outfit:
+                SetItem(OutfitSlot, item, 2);
                 break;
             case ItemType.Necklace:
                 break;
             case ItemType.Shoes:
                 break;
             case ItemType.Helmet:
+                break;
+            case ItemType.Ammunition:
+                break;
+            case ItemType.Ring:
+                break;
+            case ItemType.Bracelet:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(item.ItemType), item.ItemType, null);

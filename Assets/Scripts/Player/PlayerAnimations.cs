@@ -36,4 +36,9 @@ public class PlayerAnimations : MonoBehaviour
         SetMoveAnimation(Vector2.down);
         _animator.SetTrigger(revive);
     }
+
+    public void SetRuntimeAnimatorController(RuntimeAnimatorController runtimeAnimatorController)
+    {
+        _animator.runtimeAnimatorController = runtimeAnimatorController;
+    }
 }

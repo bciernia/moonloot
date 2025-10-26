@@ -182,6 +182,9 @@ public class InventoryController : Singleton<InventoryController>
                 case "ArmorUI":
                     item = equippedItemsManager.EquippedItems[1];
                     break;
+                case "OutfitUI":
+                    item = equippedItemsManager.EquippedItems[2];
+                    break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
             }
@@ -233,10 +236,21 @@ public class InventoryController : Singleton<InventoryController>
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[1].item, ItemType.Armor);
                 
                         var armorItemSo = (ArmorItemSO)item.item;
-                        armorItemSo.UnequipWeapon(gameObject);
+                        armorItemSo.UnequipArmor(gameObject);
                         AddItem(item);
                         break;
                     
+                    case "OutfitUI":
+                        item = equippedItemsManager.EquippedItems[2];
+                
+                        equippedItemsManager.EquippedItems[2] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[2].item, ItemType.Outfit);
+                
+                        var outfitItemSo = (OutfitItemSO)item.item;
+                        outfitItemSo.UnequipOutfit(gameObject);
+                        AddItem(item);
+                        
+                        break;
                     default:
                         throw new ArgumentException("Nie znaleziono przedmiotu do zamiany");
                 }
@@ -263,6 +277,9 @@ public class InventoryController : Singleton<InventoryController>
                     break;
                 case "ArmorUI":
                     inventoryItem = equippedItemsManager.EquippedItems[1];
+                    break;
+                case "OutfitUI":
+                    inventoryItem = equippedItemsManager.EquippedItems[2];
                     break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
@@ -320,6 +337,9 @@ public class InventoryController : Singleton<InventoryController>
                 break;
             case ItemType.Edible:
                 sb.Append(((EdibleItemSO)inventoryItem.item).GetStatsDescription());
+                break;
+            case ItemType.Armor:
+                sb.Append(((ArmorItemSO)inventoryItem.item).GetStatsDescription());
                 break;
             default:
                 sb.Append(inventoryItem.item.GetStatsDescription());

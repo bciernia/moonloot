@@ -8,6 +8,7 @@ public enum ItemType
     Shoes,
     Helmet,
     Armor,
+    Outfit,
     Edible,
     Usable,
     Gold,

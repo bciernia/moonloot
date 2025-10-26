@@ -1,28 +1,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ArmorManager : Singleton<ArmorManager>
+public class OutfitManager : Singleton<OutfitManager>
 {
     [Header("Config")]
     [SerializeField] private InventorySO _inventoryData;
     [SerializeField] private List<ItemParameter> _parametersToModify, _itemCurrentState;
-    [SerializeField] private ArmorItemSO _armor;
+    [SerializeField] private RuntimeAnimatorController _standardOutfit;
+    [SerializeField] private OutfitItemSO _outfit;
     
-    public void SetArmor(ArmorItemSO armorItem, List<ItemParameter> itemState)
+    public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState)
     {
-        if (armorItem != null && _armor != null)
+        if (outfitItem != null && _outfit != null)
         {
-            _inventoryData.AddItem(armorItem, 1, _itemCurrentState);
+            _inventoryData.AddItem(outfitItem, 1, _itemCurrentState);
         }
 
-        _armor = armorItem;
+        _outfit = outfitItem;
+        
         if (itemState != null)
         {
             _itemCurrentState = new List<ItemParameter>(itemState);
         }
 
         ModifyParameters();
-        EquipArmor(_armor);
+        ChangeOutfit(_outfit);
     }
     
     private void ModifyParameters()
@@ -42,17 +44,16 @@ public class ArmorManager : Singleton<ArmorManager>
         }
     }
     
-    private void EquipArmor(ArmorItemSO armor)
+    private void ChangeOutfit(OutfitItemSO outfit)
     {
-        GameManager.Instance.Player.PlayerStats.UpdatePlayerResistances(armor?.DamageResistance ?? 0, armor?.MagicResistance ?? 0);
-        PlayerStatisticsManager.Instance.SetDmgResistance(armor?.DamageResistance ?? 0);
-        PlayerStatisticsManager.Instance.SetMagicResistance(armor?.MagicResistance ?? 0);
         
-        if (armor == null)
+        if (outfit == null)
         {
+            Player.instance.GetComponent<Animator>().runtimeAnimatorController = _standardOutfit;
+
             return;
         }
-
-        EquippedItemsManager.Instance.SetItemAsEquipped(armor, ItemType.Armor);
+        Player.instance.GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
+        EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit);
     }
 }

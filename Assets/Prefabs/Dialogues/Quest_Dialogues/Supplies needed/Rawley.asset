@@ -1,0 +1,162 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8420022130014987421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 4
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Staldirk
+    - id: 1
+      language: en
+      text: Hey you, want to make money?
+    - id: 2
+      language: en
+      text: Yes
+    - id: 3
+      language: en
+      text: No
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Rawley
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 3986856156215115779
+  - rid: 3986856156215115780
+  - rid: 3986856156215115781
+  - rid: 3986856156215115782
+  translationLibrary: {fileID: -8420022130014987421}
+  maxID: 77
+  references:
+    version: 2
+    RefIds:
+    - rid: 3986856156215115779
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 0d000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1934.5176
+        yPosition: 2943.841
+        entryPointName: 0
+    - rid: 3986856156215115780
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 12
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 13
+          attachedIds: 03000000
+          ownerId: 12
+          connectionType: 1
+        outputs:
+        - id: 14
+          attachedIds: 1e000000
+          ownerId: 12
+          connectionType: 1
+        width: 268
+        height: 163.08984
+        xPosition: 2148.7795
+        yPosition: 2941.8481
+        items:
+        - rid: 3986856156215115783
+        characterName: Staldirk
+        icon: 
+    - rid: 3986856156215115781
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 29
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 30
+          attachedIds: 0e000000
+          ownerId: 29
+          connectionType: 1
+        - id: 31
+          attachedIds: 
+          ownerId: 29
+          connectionType: 7
+        - id: 33
+          attachedIds: 
+          ownerId: 29
+          connectionType: 7
+        outputs:
+        - id: 32
+          attachedIds: 
+          ownerId: 29
+          connectionType: 1
+        - id: 34
+          attachedIds: 
+          ownerId: 29
+          connectionType: 1
+        width: 228
+        height: 136
+        xPosition: 2620.5115
+        yPosition: 2983.0513
+        items:
+        - rid: 3986856156215115784
+        - rid: 3986856156215115785
+    - rid: 3986856156215115782
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 46
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 47
+          attachedIds: 
+          ownerId: 46
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 3432.4797
+        yPosition: 3012.7139
+        exitPointName: 
+    - rid: 3986856156215115783
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hey you, want to make money?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 3986856156215115784
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yes
+    - rid: 3986856156215115785
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: No
