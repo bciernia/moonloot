@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Inventory.NewInventory.Model;
@@ -167,13 +168,24 @@ public class InventoryController : Singleton<InventoryController>
         }
     }
 
-    public void HandleDragging(int itemIndex, bool isPlayerItem)
+    public void HandleDragging(int itemIndex, bool isPlayerItem, string inventoryItemUiName = "")
     {
         InventoryItem item;
 
         if (itemIndex == -1)
         {
-            item = equippedItemsManager.EquippedItems[0];
+            switch (inventoryItemUiName)
+            {
+                case "WeaponUI":
+                    item = equippedItemsManager.EquippedItems[0];
+                    break;
+                case "ArmorUI":
+                    item = equippedItemsManager.EquippedItems[1];
+                    break;
+                default:
+                    throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
+            }
+            
         }
         else if (isPlayerItem)
         {
@@ -189,25 +201,45 @@ public class InventoryController : Singleton<InventoryController>
         inventoryUI.CreateDraggedItem(item.item.Image, item.quantity);
     }
 
-    public void HandleSwapItems(int itemIndex_1, int itemIndex_2)
+    public void HandleSwapItems(int itemIndex_1, int itemIndex_2, string inventoryUiName)
     {
         if (itemIndex_1 == -1 || itemIndex_2 == -1)
         {
             var inventoryItem = inventoryData.GetItemAt(itemIndex_2);
             if (inventoryItem.IsEmpty)
             {
-                var item = equippedItemsManager.EquippedItems[0];
-
-                //TODO zmienić na typ, żeby nie porównywać po nazwie
-                if (item.item.Name == "Fists") return;
+                InventoryItem item;
                 
-                equippedItemsManager.EquippedItems[0] = InventoryItem.GetEmptyItem();
-                equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[0].item);
+                switch (inventoryUiName)
+                {
+                    case "WeaponUI":
+                        item = equippedItemsManager.EquippedItems[0];
                 
-                var t = (WeaponItemSO)item.item;
-                t.UnequipWeapon(gameObject);
+                        //TODO zmienić na typ, żeby nie porównywać po nazwie
+                        if (item.item.Name == "Fists") return;
                 
-                AddItem(item);
+                        equippedItemsManager.EquippedItems[0] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[0].item, ItemType.Weapon);
+                
+                        var weaponItemSo = (WeaponItemSO)item.item;
+                        weaponItemSo.UnequipWeapon(gameObject);
+                        AddItem(item);
+                        break;
+                    
+                    case "ArmorUI":
+                        item = equippedItemsManager.EquippedItems[1];
+                
+                        equippedItemsManager.EquippedItems[1] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[1].item, ItemType.Armor);
+                
+                        var armorItemSo = (ArmorItemSO)item.item;
+                        armorItemSo.UnequipWeapon(gameObject);
+                        AddItem(item);
+                        break;
+                    
+                    default:
+                        throw new ArgumentException("Nie znaleziono przedmiotu do zamiany");
+                }
             }
             else
             {
@@ -218,13 +250,23 @@ public class InventoryController : Singleton<InventoryController>
         inventoryData.SwapItems(itemIndex_1, itemIndex_2);
     }
     
-    public void HandleDescriptionRequest(int itemIndex, bool isPlayerItem = true)
+    public void HandleDescriptionRequest(int itemIndex, bool isPlayerItem = true, string inventoryItemUiName = "")
     {
         var isInPlayerEquipment = true;
         InventoryItem inventoryItem;
         if (itemIndex == -1)
         {
-            inventoryItem = equippedItemsManager.EquippedItems[0];
+            switch (inventoryItemUiName)
+            {
+                case "WeaponUI":
+                    inventoryItem = equippedItemsManager.EquippedItems[0];
+                    break;
+                case "ArmorUI":
+                    inventoryItem = equippedItemsManager.EquippedItems[1];
+                    break;
+                default:
+                    throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
+            }
         }
         else if(isPlayerItem)
         {
@@ -243,7 +285,7 @@ public class InventoryController : Singleton<InventoryController>
         }
         var item = inventoryItem.item;
         var description = PrepareDescription(inventoryItem, isInPlayerEquipment);
-        inventoryUI.UpdateDescription(itemIndex, isPlayerItem, item.Image, item.Name, description);
+        inventoryUI.UpdateDescription(itemIndex, isPlayerItem, item.Image, item.Name, description, inventoryItemUiName);
     }
 
     private string PrepareDescription(InventoryItem inventoryItem, bool isInPlayerEquipment)

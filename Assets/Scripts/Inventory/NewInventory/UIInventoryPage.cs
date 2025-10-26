@@ -27,8 +27,8 @@ public class UIInventoryPage : MonoBehaviour
     private ItemDraggedFrom itemDraggedFrom = ItemDraggedFrom.Player;
 
     public event Action<int> OnItemActionRequested;
-    public event Action<int, bool> OnDescriptionRequested, OnStartDragging;
-    public event Action<int, int> OnSwapItems;
+    public event Action<int, bool, string> OnDescriptionRequested, OnStartDragging;
+    public event Action<int, int, string> OnSwapItems;
 
     [SerializeField] private UIItemActionPanel actionPanel;
 
@@ -90,26 +90,27 @@ public class UIInventoryPage : MonoBehaviour
         ResetDraggedItem();
     }
 
-    public void HandleSwap(UIInventoryItem inventoryItemUi)
+    public void HandleSwap(UIInventoryItem targetInventoryItemUi, UIInventoryItem draggedInventoryItemUi)
     {
-        var index = listOfUiItems.IndexOf(inventoryItemUi);
-        var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
+        var index = listOfUiItems.IndexOf(targetInventoryItemUi);
+        var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(targetInventoryItemUi);
+        var draggedInventoryItemUiName = draggedInventoryItemUi.gameObject.name;
 
-        if (itemDraggedFrom == ItemDraggedFrom.Shop && (inventoryItemUi.CompareTag("EquippedItem") || inventoryItemUi.CompareTag("PlayerItem")))
+        if (itemDraggedFrom == ItemDraggedFrom.Shop && (targetInventoryItemUi.CompareTag("EquippedItem") || targetInventoryItemUi.CompareTag("PlayerItem")))
         {
             var itemToBuy = ShopManager.Instance.SellerInventory.GetItemAt(currentlyDraggedItemIndex);
             ShopManager.Instance.BuyItem(itemToBuy, currentlyDraggedItemIndex);
             return;
         }
         
-        if (itemDraggedFrom == ItemDraggedFrom.Player && inventoryItemUi.CompareTag("ShopItem"))
+        if (itemDraggedFrom == ItemDraggedFrom.Player && targetInventoryItemUi.CompareTag("ShopItem"))
         {
             var itemToSell = InventoryController.Instance.inventoryData.GetItemAt(currentlyDraggedItemIndex);
             ShopManager.Instance.SellItem(itemToSell, currentlyDraggedItemIndex);
             return;
         }
         
-        if (index == -1 && indexOfSellerItem == -1 && inventoryItemUi.CompareTag("EquippedItem"))
+        if (index == -1 && indexOfSellerItem == -1 && targetInventoryItemUi.CompareTag("EquippedItem"))
         {
             InventoryController.Instance.PerformAction(currentlyDraggedItemIndex);
             return;
@@ -117,10 +118,10 @@ public class UIInventoryPage : MonoBehaviour
         
         if (index != -1)
         {
-            OnSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+            OnSwapItems?.Invoke(currentlyDraggedItemIndex, index, draggedInventoryItemUiName);
         }
         
-        HandleItemSelection(inventoryItemUi);
+        HandleItemSelection(targetInventoryItemUi);
     }
 
     private void ResetDraggedItem()
@@ -135,6 +136,7 @@ public class UIInventoryPage : MonoBehaviour
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
         if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
+        var inventoryItemUiName = inventoryItemUi.gameObject.name;
 
         if (index != -1)
         {
@@ -150,11 +152,11 @@ public class UIInventoryPage : MonoBehaviour
         HandleItemSelection(inventoryItemUi);
         if (index != -1)
         {
-            OnStartDragging?.Invoke(index, true);
+            OnStartDragging?.Invoke(index, true, inventoryItemUiName);
         }
         else
         {
-            OnStartDragging?.Invoke(indexOfSellerItem, false);
+            OnStartDragging?.Invoke(indexOfSellerItem, false, inventoryItemUiName);
         }
     }
 
@@ -170,15 +172,15 @@ public class UIInventoryPage : MonoBehaviour
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
         if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
-        
+        var inventoryItemUiName = inventoryItemUi.gameObject.name;
 
         if (indexOfSellerItem != -1)
         {
-            OnDescriptionRequested?.Invoke(indexOfSellerItem, false);
+            OnDescriptionRequested?.Invoke(indexOfSellerItem, false, inventoryItemUiName);
         }
         else
         {
-            OnDescriptionRequested?.Invoke(index, true);
+            OnDescriptionRequested?.Invoke(index, true, inventoryItemUiName);
         } 
     }
     
@@ -232,14 +234,14 @@ public class UIInventoryPage : MonoBehaviour
         ResetDraggedItem();
     }
 
-    public void UpdateDescription(int itemIndex, bool isPlayerItem, Sprite itemImage, string itemName, string description)
+    public void UpdateDescription(int itemIndex, bool isPlayerItem, Sprite itemImage, string itemName, string description, string inventoryUiName = "")
     {
         itemDescription.SetDescription(itemImage, itemName, description);
         DeselectAllItems();
 
         if (itemIndex == -1)
         {
-            equippedItemsManager.EquippedItemsSlots[0].Select();
+            SelectUiSlotByEquipmentUiName(inventoryUiName);
         }
         else if (isPlayerItem)
         {
@@ -248,6 +250,21 @@ public class UIInventoryPage : MonoBehaviour
         else
         {
             ShopManager.Instance.listOfSellerItems[itemIndex].Select();
+        }
+    }
+
+    private void SelectUiSlotByEquipmentUiName(string inventoryUiEqName)
+    {
+        switch (inventoryUiEqName)
+        {
+            case "WeaponUI":
+                equippedItemsManager.EquippedItemsSlots[0].Select();
+                break;
+            case "ArmorUI":
+                equippedItemsManager.EquippedItemsSlots[1].Select();
+                break;
+            default:
+                throw new ArgumentException("Nie znaleziono slota w ui do zaznaczenia");
         }
     }
 

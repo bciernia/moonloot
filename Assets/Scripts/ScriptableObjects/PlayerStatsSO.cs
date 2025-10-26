@@ -22,6 +22,9 @@ public class PlayerStatsSO : ScriptableObject
 
     public float BaseDamage;
     public float TotalDamage;
+
+    public float DamageResistance = 0;
+    public float MagicResistance = 0;
     
     [FormerlySerializedAs("CurrentWeapon")] public Weapon currentWeapon;
     
@@ -32,5 +35,11 @@ public class PlayerStatsSO : ScriptableObject
         Level = 1;
         Exp = 0;
         NextLevelExp = InitialNextLevelExp;
+    }
+
+    public void UpdatePlayerResistances(float damageResistance, float magicResistance)
+    {
+        DamageResistance += damageResistance;
+        MagicResistance += magicResistance;
     }
 }
