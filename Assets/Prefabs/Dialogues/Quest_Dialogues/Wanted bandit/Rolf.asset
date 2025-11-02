@@ -1,0 +1,1180 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-797009195445016873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 20
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Rolf
+    - id: 1
+      language: en
+      text: 'Hey, who are you?! '
+    - id: 2
+      language: en
+      text: Player
+    - id: 3
+      language: en
+      text: Relax, I heard you were robbed. I'm looking for that thief.
+    - id: 4
+      language: en
+      text: He robbed my cornfield. Most of what was growing. Good thing I chased
+        him away in time.
+    - id: 5
+      language: en
+      text: I saw him running towards the warehouse, but it was dark and I don't
+        know where he went. You can ask the bartender about the warehouse. He has
+        a key there.
+    - id: 6
+      language: en
+      text: What do you want to know?
+    - id: 7
+      language: en
+      text: Tell me what happened
+    - id: 8
+      language: en
+      text: What did he look like?
+    - id: 9
+      language: en
+      text: Okay, I will look for him.
+    - id: 10
+      language: en
+      text: Dark skin color, like a thief's...
+    - id: 11
+      language: en
+      text: ...black bandana on the head...
+    - id: 12
+      language: en
+      text: ...and it smelled terrible
+    - id: 13
+      language: en
+      text: I found this bastard.
+    - id: 14
+      language: en
+      text: Great news!
+    - id: 15
+      language: en
+      text: Did he have my corn?
+    - id: 16
+      language: en
+      text: Unfortunately not.
+    - id: 17
+      language: en
+      text: It's good that you came to town.
+    - id: 18
+      language: en
+      text: Come back next year, I bet you've never eaten corn like this.
+    - id: 19
+      language: en
+      text: Okay, I will find him.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Rolf
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 5422255948973211954
+  - rid: 5422255948973211955
+  - rid: 5422255948973211956
+  - rid: 5422255948973211957
+  - rid: 5422255948973211958
+  - rid: 5422255948973211959
+  - rid: 5422255948973211960
+  - rid: 5422255948973211961
+  - rid: 5422255948973211962
+  - rid: 5422255948973211963
+  - rid: 5422255948973211964
+  - rid: 5422255948973211965
+  - rid: 5422255948973211966
+  - rid: 5422255948973211967
+  - rid: 5422255948973211968
+  - rid: 5422255948973211969
+  - rid: 5422255948973211970
+  - rid: 5422255948973211971
+  - rid: 5422255948973211972
+  - rid: 5422255948973211973
+  - rid: 5422255948973211974
+  - rid: 5422255948973211975
+  - rid: 5422255948973211976
+  - rid: 5422255948973211977
+  - rid: 5422255948973211978
+  - rid: 5422255948973211979
+  - rid: 5422255948973211980
+  - rid: 5422255948973211981
+  - rid: 5422255948973211982
+  - rid: 5422255948973211983
+  - rid: 5422255948973211984
+  - rid: 5422255948973211985
+  - rid: 5422255948973211986
+  translationLibrary: {fileID: -797009195445016873}
+  maxID: 5399
+  references:
+    version: 2
+    RefIds:
+    - rid: 5422255948973211954
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -3583.885
+        yPosition: -1462.1571
+        entryPointName: 0
+    - rid: 5422255948973211955
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 21000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 142.68433
+        xPosition: -3408.5325
+        yPosition: -1470.0151
+        items:
+        - rid: 5422255948973211987
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211956
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 32
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 33
+          attachedIds: 06000000
+          ownerId: 32
+          connectionType: 1
+        outputs:
+        - id: 34
+          attachedIds: 72000000
+          ownerId: 32
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -3060.7844
+        yPosition: -1462.6246
+        items:
+        - rid: 5422255948973211988
+        characterName: Player
+        icon: 
+    - rid: 5422255948973211957
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 54
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 55
+          attachedIds: 59000000
+          ownerId: 54
+          connectionType: 1
+        outputs:
+        - id: 56
+          attachedIds: 39080000
+          ownerId: 54
+          connectionType: 1
+        width: 268
+        height: 304.14044
+        xPosition: -1269.5312
+        yPosition: -1309.8821
+        items:
+        - rid: 5422255948973211989
+        - rid: 5422255948973211990
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211958
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 73
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 74
+          attachedIds: 78000000300c0000
+          ownerId: 73
+          connectionType: 1
+        outputs:
+        - id: 75
+          attachedIds: 62000000
+          ownerId: 73
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -2455.1335
+        yPosition: -1291.6184
+        items:
+        - rid: 5422255948973211991
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211959
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 86
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 87
+          attachedIds: 49020000
+          ownerId: 86
+          connectionType: 1
+        - id: 88
+          attachedIds: 
+          ownerId: 86
+          connectionType: 7
+        - id: 90
+          attachedIds: 
+          ownerId: 86
+          connectionType: 7
+        - id: 621
+          attachedIds: bc040000
+          ownerId: 86
+          connectionType: 7
+        outputs:
+        - id: 89
+          attachedIds: 37000000
+          ownerId: 86
+          connectionType: 1
+        - id: 91
+          attachedIds: 5b020000
+          ownerId: 86
+          connectionType: 1
+        - id: 622
+          attachedIds: fd120000
+          ownerId: 86
+          connectionType: 1
+        width: 228
+        height: 277.07922
+        xPosition: -1703.727
+        yPosition: -1214.3107
+        items:
+        - rid: 5422255948973211992
+        - rid: 5422255948973211993
+        - rid: 5422255948973211994
+    - rid: 5422255948973211960
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 97
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 98
+          attachedIds: 4b000000
+          ownerId: 97
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -1973.6516
+        yPosition: -1418.8297
+        key: INVESTIGATION
+    - rid: 5422255948973211961
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 109
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 110
+          attachedIds: 2b0c0000
+          ownerId: 109
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -2986.3508
+        yPosition: -1116.4344
+        entryPointName: 1
+    - rid: 5422255948973211962
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 113
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 114
+          attachedIds: 22000000
+          ownerId: 113
+          connectionType: 1
+        - id: 115
+          attachedIds: 
+          ownerId: 113
+          connectionType: 5
+        - id: 116
+          attachedIds: 
+          ownerId: 113
+          connectionType: 9
+        - id: 117
+          attachedIds: 
+          ownerId: 113
+          connectionType: 9
+        - id: 118
+          attachedIds: 
+          ownerId: 113
+          connectionType: 9
+        outputs:
+        - id: 119
+          attachedIds: 
+          ownerId: 113
+          connectionType: 9
+        - id: 120
+          attachedIds: 4a000000
+          ownerId: 113
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -2765.2695
+        yPosition: -1562.6255
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255948973211963
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 584
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 585
+          attachedIds: 57000000
+          ownerId: 584
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -1883.3403
+        yPosition: -1267.7881
+        key: INVESTIGATION
+    - rid: 5422255948973211964
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 602
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 603
+          attachedIds: 5b000000
+          ownerId: 602
+          connectionType: 1
+        outputs:
+        - id: 604
+          attachedIds: bd020000
+          ownerId: 602
+          connectionType: 1
+        width: 268
+        height: 200
+        xPosition: -981.5867
+        yPosition: -920.13025
+        items:
+        - rid: 5422255948973211995
+        - rid: 5422255948973211996
+        - rid: 5422255948973211997
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211965
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 617
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 618
+          attachedIds: bf0200007f020000
+          ownerId: 617
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -237.12068
+        yPosition: -1140.9668
+        key: INVESTIGATION
+    - rid: 5422255948973211966
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 700
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 701
+          attachedIds: 5c020000
+          ownerId: 700
+          connectionType: 1
+        - id: 702
+          attachedIds: 
+          ownerId: 700
+          connectionType: 8
+        outputs:
+        - id: 703
+          attachedIds: 6a020000
+          ownerId: 700
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -609.0382
+        yPosition: -896.755
+        variableName: KnowAppearance
+        variableValue: true
+    - rid: 5422255948973211967
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 636
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 637
+          attachedIds: 3f080000
+          ownerId: 636
+          connectionType: 1
+        - id: 638
+          attachedIds: 
+          ownerId: 636
+          connectionType: 8
+        outputs:
+        - id: 639
+          attachedIds: 6a020000
+          ownerId: 636
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -549.27576
+        yPosition: -1251.8871
+        variableName: KnowStory
+        variableValue: true
+    - rid: 5422255948973211968
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 623
+        name: VARIABLE
+        nodeType: 24
+        inputs: []
+        outputs:
+        - id: 624
+          attachedIds: 
+          ownerId: 623
+          connectionType: 2
+        width: 170
+        height: 150
+        xPosition: -1690.5466
+        yPosition: -1651.0155
+        variableName: KnowStory
+        variableValue: False
+        resetOnEntry: 0
+        isGlobal: 0
+    - rid: 5422255948973211969
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 632
+        name: VARIABLE
+        nodeType: 24
+        inputs: []
+        outputs:
+        - id: 633
+          attachedIds: 
+          ownerId: 632
+          connectionType: 2
+        width: 170
+        height: 150
+        xPosition: -1473.006
+        yPosition: -1648.6804
+        variableName: KnowAppearance
+        variableValue: False
+        resetOnEntry: 0
+        isGlobal: 0
+    - rid: 5422255948973211970
+      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1208
+        name: OPTION_FILTER
+        nodeType: 13
+        inputs:
+        - id: 1209
+          attachedIds: 
+          ownerId: 1208
+          connectionType: 5
+        - id: 1210
+          attachedIds: bd060000
+          ownerId: 1208
+          connectionType: 2
+        - id: 1211
+          attachedIds: bd060000
+          ownerId: 1208
+          connectionType: 2
+        outputs:
+        - id: 1212
+          attachedIds: 6d020000
+          ownerId: 1208
+          connectionType: 7
+        width: 150
+        height: 145
+        xPosition: -1884.5565
+        yPosition: -1048.2407
+        isDisplayed: 0
+        isSelectable: 0
+    - rid: 5422255948973211971
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1721
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 1722
+          attachedIds: 
+          ownerId: 1721
+          connectionType: 1
+        - id: 1723
+          attachedIds: 15070000
+          ownerId: 1721
+          connectionType: 2
+        - id: 1724
+          attachedIds: 35070000
+          ownerId: 1721
+          connectionType: 2
+        outputs:
+        - id: 1725
+          attachedIds: ba040000bb040000
+          ownerId: 1721
+          connectionType: 2
+        - id: 1726
+          attachedIds: 
+          ownerId: 1721
+          connectionType: 10
+        - id: 1727
+          attachedIds: 
+          ownerId: 1721
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -2110.8115
+        yPosition: -1068.452
+        logicOperation: 0
+    - rid: 5422255948973211972
+      type: {class: GetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1811
+        name: GET VARIABLE
+        nodeType: 28
+        inputs:
+        - id: 1812
+          attachedIds: 
+          ownerId: 1811
+          connectionType: 1
+        outputs:
+        - id: 1813
+          attachedIds: bb060000
+          ownerId: 1811
+          connectionType: 2
+        - id: 1814
+          attachedIds: 
+          ownerId: 1811
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -2390.2273
+        yPosition: -1106.5555
+        variableName: KnowStory
+    - rid: 5422255948973211973
+      type: {class: GetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1843
+        name: GET VARIABLE
+        nodeType: 28
+        inputs:
+        - id: 1844
+          attachedIds: 
+          ownerId: 1843
+          connectionType: 1
+        outputs:
+        - id: 1845
+          attachedIds: bc060000
+          ownerId: 1843
+          connectionType: 2
+        - id: 1846
+          attachedIds: 
+          ownerId: 1843
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -2400.1785
+        yPosition: -974.0922
+        variableName: KnowAppearance
+    - rid: 5422255948973211974
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2104
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 2105
+          attachedIds: 38000000
+          ownerId: 2104
+          connectionType: 1
+        - id: 2106
+          attachedIds: 
+          ownerId: 2104
+          connectionType: 8
+        - id: 2107
+          attachedIds: 
+          ownerId: 2104
+          connectionType: 5
+        - id: 2108
+          attachedIds: 
+          ownerId: 2104
+          connectionType: 9
+        - id: 2109
+          attachedIds: 
+          ownerId: 2104
+          connectionType: 9
+        outputs:
+        - id: 2110
+          attachedIds: 
+          ownerId: 2104
+          connectionType: 9
+        - id: 2111
+          attachedIds: 7d020000
+          ownerId: 2104
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -925.45197
+        yPosition: -1314.6227
+        triggeredClassName: QuestCompletion
+        triggeredMethodName: CompleteObjective
+        methodSignature: CompleteObjective(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255948973211975
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2803
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 2804
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 1
+        - id: 2805
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 8
+        - id: 2806
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 9
+        - id: 2807
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 9
+        - id: 2808
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 9
+        outputs:
+        - id: 2809
+          attachedIds: 2c0c0000
+          ownerId: 2803
+          connectionType: 2
+        - id: 2810
+          attachedIds: 
+          ownerId: 2803
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -3224.453
+        yPosition: -1211.9241
+        triggeredClassName: QuestCompletion
+        triggeredMethodName: IsQuestCompleted
+        methodSignature: IsQuestCompleted(int):bool
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255948973211976
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3114
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3115
+          attachedIds: 6e000000
+          ownerId: 3114
+          connectionType: 1
+        - id: 3116
+          attachedIds: f90a0000
+          ownerId: 3114
+          connectionType: 2
+        - id: 3117
+          attachedIds: 
+          ownerId: 3114
+          connectionType: 2
+        outputs:
+        - id: 3118
+          attachedIds: 
+          ownerId: 3114
+          connectionType: 2
+        - id: 3119
+          attachedIds: ff0c0000
+          ownerId: 3114
+          connectionType: 10
+        - id: 3120
+          attachedIds: 4a000000
+          ownerId: 3114
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -2805.6606
+        yPosition: -1053.2053
+        logicOperation: 4
+    - rid: 5422255948973211977
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3326
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3327
+          attachedIds: 2f0c0000
+          ownerId: 3326
+          connectionType: 1
+        outputs:
+        - id: 3328
+          attachedIds: 1f0d0000
+          ownerId: 3326
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -2654.3762
+        yPosition: -838.5867
+        items:
+        - rid: 5422255948973211998
+        characterName: Player
+        icon: 
+    - rid: 5422255948973211978
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3358
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3359
+          attachedIds: 000d0000
+          ownerId: 3358
+          connectionType: 1
+        outputs:
+        - id: 3360
+          attachedIds: 3a0d0000
+          ownerId: 3358
+          connectionType: 1
+        width: 268
+        height: 170
+        xPosition: -2325.5408
+        yPosition: -794.4708
+        items:
+        - rid: 5422255948973211999
+        - rid: 5422255948973212000
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211979
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3369
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3370
+          attachedIds: 4b0d000003130000
+          ownerId: 3369
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -1199.0641
+        yPosition: -697.57684
+        exitPointName: 
+    - rid: 5422255948973211980
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3385
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3386
+          attachedIds: 200d0000
+          ownerId: 3385
+          connectionType: 1
+        outputs:
+        - id: 3387
+          attachedIds: 450d0000
+          ownerId: 3385
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -2002.0787
+        yPosition: -768.6815
+        items:
+        - rid: 5422255948973212001
+        characterName: Player
+        icon: 
+    - rid: 5422255948973211981
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3396
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3397
+          attachedIds: 3b0d0000
+          ownerId: 3396
+          connectionType: 1
+        - id: 3398
+          attachedIds: 
+          ownerId: 3396
+          connectionType: 5
+        - id: 3399
+          attachedIds: 
+          ownerId: 3396
+          connectionType: 9
+        - id: 3400
+          attachedIds: 
+          ownerId: 3396
+          connectionType: 9
+        - id: 3401
+          attachedIds: 
+          ownerId: 3396
+          connectionType: 9
+        outputs:
+        - id: 3402
+          attachedIds: 
+          ownerId: 3396
+          connectionType: 9
+        - id: 3403
+          attachedIds: 2a0d0000
+          ownerId: 3396
+          connectionType: 1
+        width: 220
+        height: 330.30792
+        xPosition: -1675.1389
+        yPosition: -830.2788
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255948973211982
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3805
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3806
+          attachedIds: e00e0000
+          ownerId: 3805
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -3337.9194
+        yPosition: -416.79312
+        entryPointName: 2
+    - rid: 5422255948973211983
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3807
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 3808
+          attachedIds: de0e0000
+          ownerId: 3807
+          connectionType: 1
+        outputs:
+        - id: 3809
+          attachedIds: f60e0000
+          ownerId: 3807
+          connectionType: 1
+        - id: 3810
+          attachedIds: 0c0f0000
+          ownerId: 3807
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: -3099.2942
+        yPosition: -453.5702
+        items:
+        - rid: 5422255948973212002
+        - rid: 5422255948973212003
+    - rid: 5422255948973211984
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3829
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3830
+          attachedIds: e10e0000
+          ownerId: 3829
+          connectionType: 1
+        outputs:
+        - id: 3831
+          attachedIds: 
+          ownerId: 3829
+          connectionType: 1
+        width: 268
+        height: 189.99997
+        xPosition: -2756.2644
+        yPosition: -587.91943
+        items:
+        - rid: 5422255948973212004
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211985
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3851
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3852
+          attachedIds: e20e0000
+          ownerId: 3851
+          connectionType: 1
+        outputs:
+        - id: 3853
+          attachedIds: 
+          ownerId: 3851
+          connectionType: 1
+        width: 268
+        height: 204.06248
+        xPosition: -2761.8093
+        yPosition: -374.87488
+        items:
+        - rid: 5422255948973212005
+        characterName: Rolf
+        icon: 
+    - rid: 5422255948973211986
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4860
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4861
+          attachedIds: 6e020000
+          ownerId: 4860
+          connectionType: 1
+        - id: 4862
+          attachedIds: 
+          ownerId: 4860
+          connectionType: 5
+        - id: 4863
+          attachedIds: 
+          ownerId: 4860
+          connectionType: 9
+        - id: 4864
+          attachedIds: 
+          ownerId: 4860
+          connectionType: 9
+        - id: 4865
+          attachedIds: 
+          ownerId: 4860
+          connectionType: 9
+        outputs:
+        - id: 4866
+          attachedIds: 
+          ownerId: 4860
+          connectionType: 9
+        - id: 4867
+          attachedIds: 2a0d0000
+          ownerId: 4860
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -1439.0767
+        yPosition: -974.48364
+        triggeredClassName: DialogueFlags
+        triggeredMethodName: Add
+        methodSignature: Add(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - TALKED_WITH_ROLF
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255948973211987
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Hey, who are you?! '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211988
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Relax, I heard you were robbed. I'm looking for that thief.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211989
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: He robbed my cornfield. Most of what was growing. Good thing I chased
+          him away in time.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211990
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I saw him running towards the warehouse, but it was dark and I don't
+          know where he went. You can ask the bartender about the warehouse. He has
+          a key there.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211991
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What do you want to know?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211992
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Tell me what happened
+    - rid: 5422255948973211993
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What did he look like?
+    - rid: 5422255948973211994
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Okay, I will find him.
+    - rid: 5422255948973211995
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Dark skin color, like a thief's...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211996
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: ...black bandana on the head...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211997
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: ...and it smelled terrible
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211998
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I found this bastard.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973211999
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Great news!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973212000
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Did he have my corn?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973212001
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Unfortunately not.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973212002
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255948973212003
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255948973212004
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's good that you came to town.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255948973212005
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Come back next year, I bet you've never eaten corn like this.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

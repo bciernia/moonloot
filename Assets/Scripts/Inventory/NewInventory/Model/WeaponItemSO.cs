@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Weapon", fileName = "Weapon_")]
 public class WeaponItemSO : EquippableItemSO, IItemAction
 {
     [field: SerializeField]

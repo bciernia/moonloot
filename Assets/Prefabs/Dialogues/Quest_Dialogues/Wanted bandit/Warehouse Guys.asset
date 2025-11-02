@@ -1,0 +1,360 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Warehouse Guys
+  m_EditorClassIdentifier: 
+  version: 1.5.1
+  nodes:
+  - rid: 5422255950001340454
+  - rid: 5422255950001340455
+  - rid: 5422255950001340456
+  - rid: 5422255950001340457
+  - rid: 5422255950001340458
+  - rid: 5422255950001340459
+  translationLibrary: {fileID: 7343717227098680196}
+  maxID: 4531
+  references:
+    version: 2
+    RefIds:
+    - rid: 5422255950001340454
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 210f0000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 114.2769
+        yPosition: 227.89952
+        entryPointName: 
+    - rid: 5422255950001340455
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: f7080000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: f8030000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 192.5
+        xPosition: 1025.1143
+        yPosition: 300.687
+        items:
+        - rid: 5422255950001340460
+        characterName: Thief
+        icon: 
+    - rid: 5422255950001340456
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1015
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1016
+          attachedIds: 06000000
+          ownerId: 1015
+          connectionType: 1
+        - id: 1017
+          attachedIds: 
+          ownerId: 1015
+          connectionType: 9
+        - id: 1018
+          attachedIds: 
+          ownerId: 1015
+          connectionType: 9
+        - id: 1019
+          attachedIds: 
+          ownerId: 1015
+          connectionType: 9
+        - id: 1020
+          attachedIds: 
+          ownerId: 1015
+          connectionType: 9
+        outputs:
+        - id: 1021
+          attachedIds: 
+          ownerId: 1015
+          connectionType: 9
+        - id: 1022
+          attachedIds: 53050000
+          ownerId: 1015
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 1386.5613
+        yPosition: 184.6691
+        triggeredClassName: SwitchCharacterOnDialogue
+        triggeredMethodName: SwitchCharacter
+        methodSignature: SwitchCharacter()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255950001340457
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1362
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1363
+          attachedIds: fe030000
+          ownerId: 1362
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1634.8445
+        yPosition: 316.89963
+        exitPointName: 
+    - rid: 5422255950001340458
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2288
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 2289
+          attachedIds: 270f0000
+          ownerId: 2288
+          connectionType: 1
+        - id: 2290
+          attachedIds: 
+          ownerId: 2288
+          connectionType: 5
+        - id: 2291
+          attachedIds: 
+          ownerId: 2288
+          connectionType: 9
+        - id: 2292
+          attachedIds: 
+          ownerId: 2288
+          connectionType: 9
+        - id: 2293
+          attachedIds: 
+          ownerId: 2288
+          connectionType: 9
+        outputs:
+        - id: 2294
+          attachedIds: 
+          ownerId: 2288
+          connectionType: 9
+        - id: 2295
+          attachedIds: 05000000
+          ownerId: 2288
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 719.25714
+        yPosition: 206.65704
+        triggeredClassName: DialogueFlags
+        triggeredMethodName: Add
+        methodSignature: Add(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - Found_Thief
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255950001340459
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3872
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3873
+          attachedIds: 03000000
+          ownerId: 3872
+          connectionType: 1
+        - id: 3874
+          attachedIds: 
+          ownerId: 3872
+          connectionType: 8
+        - id: 3875
+          attachedIds: 
+          ownerId: 3872
+          connectionType: 5
+        - id: 3876
+          attachedIds: 
+          ownerId: 3872
+          connectionType: 9
+        - id: 3877
+          attachedIds: 
+          ownerId: 3872
+          connectionType: 9
+        outputs:
+        - id: 3878
+          attachedIds: 
+          ownerId: 3872
+          connectionType: 9
+        - id: 3879
+          attachedIds: f1080000
+          ownerId: 3872
+          connectionType: 1
+        width: 200
+        height: 320
+        xPosition: 393.63568
+        yPosition: 202.73018
+        triggeredClassName: QuestCompletion
+        triggeredMethodName: CompleteObjective
+        methodSignature: CompleteObjective(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - 4
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 5422255950001340460
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: After this convo, instatiate killer
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &7005868530671418159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 4
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Test
+    - id: 1
+      language: en
+      text: After this convo, instatiate killer
+    - id: 2
+      language: en
+      text: Sw
+    - id: 3
+      language: en
+      text: itched
+  - counter: 4
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+  - counter: 4
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 
+--- !u!114 &7343717227098680196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 5
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Test
+    - id: 1
+      language: en
+      text: After this convo, instatiate killer
+    - id: 2
+      language: en
+      text: Sw
+    - id: 3
+      language: en
+      text: itched
+    - id: 4
+      language: en
+      text: Thief
+  - counter: 4
+    languageCode: es
+    translations:
+    - id: 0
+      language: es
+      text: 
+    - id: 1
+      language: es
+      text: 
+    - id: 2
+      language: es
+      text: 
+    - id: 3
+      language: es
+      text: 
+  - counter: 4
+    languageCode: fr
+    translations:
+    - id: 0
+      language: fr
+      text: 
+    - id: 1
+      language: fr
+      text: 
+    - id: 2
+      language: fr
+      text: 
+    - id: 3
+      language: fr
+      text: 

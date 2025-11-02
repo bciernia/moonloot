@@ -74,9 +74,9 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
         {
             if (enemiesInZone.TrueForAll(enemy => enemy.CurrentHP <= 0))
             {
-                if (_questCompletion && _questCompletion.Quest)
+                if (_questCompletion)
                 {
-                    _questCompletion.CompleteObjective(QuestObjectiveToComplete);
+                    _questCompletion.CompleteObjective(0, QuestObjectiveToComplete);
                 }
             
                 UnblockExitFromArea();

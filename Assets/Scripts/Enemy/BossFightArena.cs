@@ -127,9 +127,9 @@ public class BossFightArena : Singleton<BossFightArena>
 
             if (allDead && ArenaCreators.Count > 0)
             {
-                if (questCompletion && questCompletion.Quest)
+                if (questCompletion)
                 {
-                    questCompletion.CompleteObjective("1");
+                    questCompletion.CompleteObjective(0, "1");
                 }
                 
                 DestroyArena();

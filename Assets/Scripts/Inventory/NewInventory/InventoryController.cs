@@ -341,6 +341,9 @@ public class InventoryController : Singleton<InventoryController>
             case ItemType.Armor:
                 sb.Append(((ArmorItemSO)inventoryItem.item).GetStatsDescription());
                 break;
+            case ItemType.Letter:
+                sb.Append(((LetterItemSO)inventoryItem.item).GetLetterContent());
+                break;            
             default:
                 sb.Append(inventoryItem.item.GetStatsDescription());
                 break;

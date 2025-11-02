@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Armor", fileName = "Armor_")]
 public class ArmorItemSO : EquippableItemSO, IItemAction
 {
     public float DamageResistance;

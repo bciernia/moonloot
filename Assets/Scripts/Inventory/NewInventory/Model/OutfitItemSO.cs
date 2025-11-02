@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Outfit", fileName = "Outfit_")]
 public class OutfitItemSO : EquippableItemSO, IItemAction
 {
     public AudioClip actionSfx { get; }

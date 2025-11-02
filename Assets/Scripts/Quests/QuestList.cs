@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ public class QuestList : MonoBehaviour
     {
         foreach (var reward in quest.GetRewards())
         {
-            InventoryController.Instance.AddItem(new InventoryItem() { item = reward.item.item, quantity = reward.number});
+            InventoryController.Instance.AddItem(new InventoryItem() { item = reward.item.item, quantity = reward.item.quantity});
             //TODO sprawdzić czy są miejsca w eq, jak nie ma to wyrzucić przedmioty na ziemię.
         }
     }
@@ -59,6 +60,12 @@ public class QuestList : MonoBehaviour
         var questStatus = GetQuestStatus(quest);
 
         return questStatus.IsObjectiveComplete(objective);
+    }
+
+    public bool IsQuestCompleted(Quest quest)
+    {
+        var questStatus = GetQuestStatus(quest);
+        return questStatus != null && questStatus.IsComplete();
     }
     
     [CanBeNull]

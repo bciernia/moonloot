@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea183053156354b4096ce95042d415f8, type: 3}
+  m_Name: Wanted Bandit
+  m_EditorClassIdentifier: 
+  _name: 'Wanted: Bandit'
+  _description: Thief wanted! Farmer Rolf was robbed by someone with black headband
+    and dark complexion. For more information, contact the bartender.
+  _rewards:
+  - number: 1
+    item:
+      quantity: 100
+      item: {fileID: 11400000, guid: a08cd8425a8b62b4fb0f2a7e4b3d9d8e, type: 2}
+      itemState: []
+  _objectives:
+  - reference: 1
+    description: Go to bartender for more information
+  - reference: 2
+    description: Go to farmer Rolf, someone stole his corn
+  - reference: 3
+    description: Ask the bartender for the key to the warehouse
+  - reference: 4
+    description: Search the warehouse
+  - reference: 5
+    description: Go back to bartender for reward
+  _itemsInQuest:
+  - {fileID: 11400000, guid: 523d299ac23b84749a1816591fbe0f0e, type: 2}

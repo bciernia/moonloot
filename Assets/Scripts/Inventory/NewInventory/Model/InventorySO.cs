@@ -180,15 +180,20 @@ public class InventorySO : ScriptableObject
 
     public bool FindItemByName(string itemName, int quantity)
     {
+        var totalQuantity = 0;
+
         for (var i = 0; i < inventoryItems.Count; i++)
         {
             if (inventoryItems[i].IsEmpty)
                 continue;
 
-            if (inventoryItems[i].item.Name == itemName && inventoryItems[i].quantity >= quantity)
-            {
+            if(inventoryItems[i].item.Name != itemName)
+                continue;
+            
+            totalQuantity += inventoryItems[i].quantity;
+
+            if (totalQuantity >= quantity)
                 return true;
-            }
         }
 
         return false;
@@ -196,14 +201,22 @@ public class InventorySO : ScriptableObject
 
     public void RemoveItemByName(string itemName, int quantity)
     {
+        var remainingToRemove = quantity;
+
         for (var i = 0; i < inventoryItems.Count; i++)
         {
             if (inventoryItems[i].IsEmpty)
                 continue;
 
-            if (inventoryItems[i].item.Name != itemName || inventoryItems[i].quantity < quantity) continue;
-            
-            RemoveItem(i, quantity);
+            if (inventoryItems[i].item.Name != itemName)
+                continue;
+
+            var removeAmount = Mathf.Min(inventoryItems[i].quantity, remainingToRemove);
+            RemoveItem(i, removeAmount);
+            remainingToRemove -= removeAmount;
+
+            if (remainingToRemove <= 0)
+                break;
         }
     }
 }

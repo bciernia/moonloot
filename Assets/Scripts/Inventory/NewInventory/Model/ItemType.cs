@@ -14,5 +14,8 @@ public enum ItemType
     Gold,
     Book,
     Materials,
+    Letter,
     Junk
 }
+
+//TODO NOWE TYPY DORZUCAJ NA KONIEC
