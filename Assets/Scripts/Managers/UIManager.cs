@@ -39,6 +39,15 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
     
+    [Header("Quest Panel")] 
+    [SerializeField] private GameObject _questPanel;
+
+    [Header("Skills Panel")] 
+    [SerializeField] private GameObject _skillsPanel;
+    
+    [Header("Main menu Panel")]
+    [SerializeField] private GameObject _mainMenuPanel;
+    
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
@@ -48,21 +57,7 @@ public class UIManager : MonoBehaviour
     {
         UpdatePlayerUI();
     }
-
-    private void OpenCloseStatsPanel()
-    {
-        _statsPanel.SetActive(!_statsPanel.activeSelf);
-        if (_statsPanel.activeSelf)
-        {
-            UpdateStatsPanel();
-        }
-    }
-
-    private void OpenCloseEquipmentPanel()
-    {
-        _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
-    }
-
+    
     private void UpdatePlayerUI()
     {
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
@@ -83,24 +78,53 @@ public class UIManager : MonoBehaviour
         _healthTMPEq.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
     }
-
-    private void UpdateStatsPanel()
+    
+    private void OpenClosePanel(GameObject panel)
     {
-        _statsLevelTMP.text = _playerStatsSo.Level.ToString();
-        _statsDamageTMP.text = _playerStatsSo.TotalDamage.ToString(CultureInfo.InvariantCulture);
+        panel.SetActive(!panel.activeSelf);
+    }
+
+    private void HandleEscapePressed()
+    {
+        if (TryCloseAnyPanel())
+            return;
+
+        OpenClosePanel(_mainMenuPanel);
+    }
+
+    private bool TryCloseAnyPanel()
+    {
+        GameObject[] panels = { _statsPanel, _equipmentPanel, _questPanel, _skillsPanel };
+
+        foreach (var panel in panels)
+        {
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+                return true;
+            }
+        }
+
+        return false;
     }
     
     private void OnEnable()
     {
-        _actions.UI.OpenCloseStatsPanel.performed += _ => OpenCloseStatsPanel();
-        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
+        _actions.UI.OpenCloseStatsPanel.performed += _ => OpenClosePanel(_statsPanel);
+        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenClosePanel(_equipmentPanel);
+        _actions.UI.OpenCloseQuestPanel.performed += _ => OpenClosePanel(_questPanel);
+        _actions.UI.OpenCloseMainMenu.performed += _ => HandleEscapePressed();
+        _actions.UI.OpenCloseSkillsPanel.performed += _ => OpenClosePanel(_skillsPanel);
         _actions.Enable();
     }
 
     private void OnDisable()
     {
-        _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenCloseStatsPanel();
-        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
+        _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenClosePanel(_statsPanel);
+        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenClosePanel(_equipmentPanel);
+        _actions.UI.OpenCloseQuestPanel.performed -= _ => OpenClosePanel(_questPanel);
+        _actions.UI.OpenCloseMainMenu.performed -= _ => HandleEscapePressed();
+        _actions.UI.OpenCloseSkillsPanel.performed -= _ => OpenClosePanel(_skillsPanel);
         _actions.Disable();
     }
 }
