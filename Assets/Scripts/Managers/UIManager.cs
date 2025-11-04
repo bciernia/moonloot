@@ -58,6 +58,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    private void OpenCloseEquipmentPanel()
+    {
+        _equipmentPanel.SetActive(!_equipmentPanel.activeSelf);
+    }
+
     private void UpdatePlayerUI()
     {
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
@@ -88,14 +93,14 @@ public class UIManager : MonoBehaviour
     private void OnEnable()
     {
         _actions.UI.OpenCloseStatsPanel.performed += _ => OpenCloseStatsPanel();
-        // _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
+        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
         _actions.Enable();
     }
 
     private void OnDisable()
     {
         _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenCloseStatsPanel();
-        //_actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
+        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
         _actions.Disable();
     }
 }

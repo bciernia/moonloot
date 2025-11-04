@@ -1,0 +1,316 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4942786408936091908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 8
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: "The Light of Kareth never rests\u2014and neither do we."
+    - id: 1
+      language: en
+      text: Guard
+    - id: 2
+      language: en
+      text: "Kareth blesses the brave\u2014and you look like one who\u2019s known
+        His gaze."
+    - id: 3
+      language: en
+      text: Every night is a trial of courage. Dawn is the reward.
+    - id: 4
+      language: en
+      text: "Justice doesn\u2019t sleep, even if we barely stand."
+    - id: 5
+      language: en
+      text: May Kareth guide our hands to justice...
+    - id: 6
+      language: en
+      text: ...May His Light pierce every shadow...
+    - id: 7
+      language: en
+      text: ...And may our blades never tremble before the innocent.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Town_Guard
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 5422255992042160626
+  - rid: 5422255992042160627
+  - rid: 5422255992042160628
+  - rid: 5422255992042160629
+  - rid: 5422255992042160630
+  - rid: 5422255992042160631
+  - rid: 5422255992042160632
+  translationLibrary: {fileID: -4942786408936091908}
+  maxID: 192
+  references:
+    version: 2
+    RefIds:
+    - rid: 5422255992042160626
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1823.6747
+        yPosition: 419.59653
+        entryPointName: 
+    - rid: 5422255992042160627
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 10000000
+          ownerId: 4
+          connectionType: 1
+        - id: 7
+          attachedIds: 28000000
+          ownerId: 4
+          connectionType: 1
+        - id: 47
+          attachedIds: 3e000000
+          ownerId: 4
+          connectionType: 1
+        - id: 48
+          attachedIds: 4a000000
+          ownerId: 4
+          connectionType: 1
+        - id: 49
+          attachedIds: 65000000
+          ownerId: 4
+          connectionType: 1
+        width: 160
+        height: 226
+        xPosition: 2040.2803
+        yPosition: 341.48486
+        items:
+        - rid: 5422255992042160633
+        - rid: 5422255992042160634
+        - rid: 5422255992042160635
+        - rid: 5422255992042160636
+        - rid: 5422255992042160637
+    - rid: 5422255992042160628
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 15
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 16
+          attachedIds: 06000000
+          ownerId: 15
+          connectionType: 1
+        outputs:
+        - id: 17
+          attachedIds: 
+          ownerId: 15
+          connectionType: 1
+        width: 268
+        height: 238.43748
+        xPosition: 2728.4937
+        yPosition: -634.2928
+        items:
+        - rid: 5422255992042160638
+        characterName: Guard
+        icon: 
+    - rid: 5422255992042160629
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 39
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 40
+          attachedIds: 07000000
+          ownerId: 39
+          connectionType: 1
+        outputs:
+        - id: 41
+          attachedIds: 
+          ownerId: 39
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2785.9768
+        yPosition: -338.373
+        items:
+        - rid: 5422255992042160639
+        characterName: Guard
+        icon: 
+    - rid: 5422255992042160630
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 61
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 62
+          attachedIds: 2f000000
+          ownerId: 61
+          connectionType: 1
+        outputs:
+        - id: 63
+          attachedIds: 
+          ownerId: 61
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2782.4768
+        yPosition: -129.31052
+        items:
+        - rid: 5422255992042160640
+        characterName: Guard
+        icon: 
+    - rid: 5422255992042160631
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 73
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 74
+          attachedIds: 30000000
+          ownerId: 73
+          connectionType: 1
+        outputs:
+        - id: 75
+          attachedIds: 
+          ownerId: 73
+          connectionType: 1
+        width: 268
+        height: 143.125
+        xPosition: 2723.1018
+        yPosition: 56.62686
+        items:
+        - rid: 5422255992042160641
+        characterName: Guard
+        icon: 
+    - rid: 5422255992042160632
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 100
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 101
+          attachedIds: 31000000
+          ownerId: 100
+          connectionType: 1
+        outputs:
+        - id: 102
+          attachedIds: 
+          ownerId: 100
+          connectionType: 1
+        width: 268
+        height: 203.125
+        xPosition: 2736.1191
+        yPosition: 317.18906
+        items:
+        - rid: 5422255992042160642
+        - rid: 5422255992042160643
+        - rid: 5422255992042160644
+        characterName: Guard
+        icon: 
+    - rid: 5422255992042160633
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255992042160634
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255992042160635
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255992042160636
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255992042160637
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 5422255992042160638
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "The Light of Kareth never rests\u2014and neither do we."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160639
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Kareth blesses the brave\u2014and you look like one who\u2019s known
+          His gaze."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160640
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Every night is a trial of courage. Dawn is the reward.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160641
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "Justice doesn\u2019t sleep, even if we barely stand."
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160642
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: May Kareth guide our hands to justice...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160643
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: ...May His Light pierce every shadow...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422255992042160644
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: ...And may our blades never tremble before the innocent.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

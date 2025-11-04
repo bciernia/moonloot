@@ -244,6 +244,33 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenCloseQuestPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""6edf6d2e-ec2b-4707-a183-0bf4d74f8383"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenCloseSkillsPanel"",
+                    ""type"": ""Button"",
+                    ""id"": ""4efceb88-303b-4a73-b4b1-beeb6ad6a334"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OpenCloseMainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""ba5505b8-d9ea-420a-81cf-c0a953874410"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -266,6 +293,39 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""OpenCloseEquipmentPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e57ae72b-217c-42c3-918a-f15197769f6b"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenCloseQuestPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3c2898f3-3551-4d1e-98cb-aacb1ebad48f"",
+                    ""path"": ""<Keyboard>/b"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenCloseSkillsPanel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34c8a096-b368-49b2-a224-35fe97b8b2a8"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OpenCloseMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -426,6 +486,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_OpenCloseStatsPanel = m_UI.FindAction("OpenCloseStatsPanel", throwIfNotFound: true);
         m_UI_OpenCloseEquipmentPanel = m_UI.FindAction("OpenCloseEquipmentPanel", throwIfNotFound: true);
+        m_UI_OpenCloseQuestPanel = m_UI.FindAction("OpenCloseQuestPanel", throwIfNotFound: true);
+        m_UI_OpenCloseSkillsPanel = m_UI.FindAction("OpenCloseSkillsPanel", throwIfNotFound: true);
+        m_UI_OpenCloseMainMenu = m_UI.FindAction("OpenCloseMainMenu", throwIfNotFound: true);
         // Attack
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
         m_Attack_BaseAttack = m_Attack.FindAction("BaseAttack", throwIfNotFound: true);
@@ -631,6 +694,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_OpenCloseStatsPanel;
     private readonly InputAction m_UI_OpenCloseEquipmentPanel;
+    private readonly InputAction m_UI_OpenCloseQuestPanel;
+    private readonly InputAction m_UI_OpenCloseSkillsPanel;
+    private readonly InputAction m_UI_OpenCloseMainMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -650,6 +716,18 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/OpenCloseEquipmentPanel".
         /// </summary>
         public InputAction @OpenCloseEquipmentPanel => m_Wrapper.m_UI_OpenCloseEquipmentPanel;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/OpenCloseQuestPanel".
+        /// </summary>
+        public InputAction @OpenCloseQuestPanel => m_Wrapper.m_UI_OpenCloseQuestPanel;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/OpenCloseSkillsPanel".
+        /// </summary>
+        public InputAction @OpenCloseSkillsPanel => m_Wrapper.m_UI_OpenCloseSkillsPanel;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/OpenCloseMainMenu".
+        /// </summary>
+        public InputAction @OpenCloseMainMenu => m_Wrapper.m_UI_OpenCloseMainMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -682,6 +760,15 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @OpenCloseEquipmentPanel.started += instance.OnOpenCloseEquipmentPanel;
             @OpenCloseEquipmentPanel.performed += instance.OnOpenCloseEquipmentPanel;
             @OpenCloseEquipmentPanel.canceled += instance.OnOpenCloseEquipmentPanel;
+            @OpenCloseQuestPanel.started += instance.OnOpenCloseQuestPanel;
+            @OpenCloseQuestPanel.performed += instance.OnOpenCloseQuestPanel;
+            @OpenCloseQuestPanel.canceled += instance.OnOpenCloseQuestPanel;
+            @OpenCloseSkillsPanel.started += instance.OnOpenCloseSkillsPanel;
+            @OpenCloseSkillsPanel.performed += instance.OnOpenCloseSkillsPanel;
+            @OpenCloseSkillsPanel.canceled += instance.OnOpenCloseSkillsPanel;
+            @OpenCloseMainMenu.started += instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.performed += instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.canceled += instance.OnOpenCloseMainMenu;
         }
 
         /// <summary>
@@ -699,6 +786,15 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @OpenCloseEquipmentPanel.started -= instance.OnOpenCloseEquipmentPanel;
             @OpenCloseEquipmentPanel.performed -= instance.OnOpenCloseEquipmentPanel;
             @OpenCloseEquipmentPanel.canceled -= instance.OnOpenCloseEquipmentPanel;
+            @OpenCloseQuestPanel.started -= instance.OnOpenCloseQuestPanel;
+            @OpenCloseQuestPanel.performed -= instance.OnOpenCloseQuestPanel;
+            @OpenCloseQuestPanel.canceled -= instance.OnOpenCloseQuestPanel;
+            @OpenCloseSkillsPanel.started -= instance.OnOpenCloseSkillsPanel;
+            @OpenCloseSkillsPanel.performed -= instance.OnOpenCloseSkillsPanel;
+            @OpenCloseSkillsPanel.canceled -= instance.OnOpenCloseSkillsPanel;
+            @OpenCloseMainMenu.started -= instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.performed -= instance.OnOpenCloseMainMenu;
+            @OpenCloseMainMenu.canceled -= instance.OnOpenCloseMainMenu;
         }
 
         /// <summary>
@@ -1096,6 +1192,27 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenCloseEquipmentPanel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenCloseQuestPanel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenCloseQuestPanel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenCloseSkillsPanel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenCloseSkillsPanel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "OpenCloseMainMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpenCloseMainMenu(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Attack" which allows adding and removing callbacks.
