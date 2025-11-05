@@ -1,4 +1,5 @@
 using System;
+using EZCameraShake;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable
@@ -29,6 +30,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable
         
         _playerStats.HP -= reducedDamage;
         DamageManager.Instance.ShowDamageText(reducedDamage, transform);
+        CameraShaker.Instance.ShakeOnce(1f, 1f, 0f, .43f);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;

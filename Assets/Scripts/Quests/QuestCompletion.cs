@@ -1,29 +1,35 @@
 using System;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
 public class QuestCompletion : MonoBehaviour
 {
-    [SerializeField] private Quest quest;
+    [SerializeField] public List<Quest> quest;
 
-    public Quest Quest { get; private set; }
-
-    private void Awake()
-    {
-        Quest = quest;
-    }
+    // private void Awake()
+    // {
+    //     quest = new List<Quest>();
+    // }
 
     //Used in dialogue nodes
-    public void CompleteObjective(string objectiveName)
+    public void CompleteObjective(int questIndex, string objectiveName)
     {
         var questList = GetPlayerQuestList();
-        questList.CompleteObjective(quest, objectiveName);
+        questList.CompleteObjective(quest[questIndex], objectiveName);
     }
     
-    public bool IsObjectiveCompleted(string objectiveName)
+    public bool IsObjectiveCompleted(int questIndex, string objectiveName)
     {
         var questList = GetPlayerQuestList();
-        return questList.IsObjectiveCompleted(quest, objectiveName);
+        return questList.IsObjectiveCompleted(quest[questIndex], objectiveName);
+    }
+
+    public bool IsQuestCompleted(int questIndex)
+    {
+        var questList = GetPlayerQuestList();
+        
+        return questList.IsQuestCompleted(quest[questIndex]);
     }
 
     private QuestList GetPlayerQuestList()

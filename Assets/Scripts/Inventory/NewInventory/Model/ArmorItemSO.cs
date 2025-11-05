@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Armor", fileName = "Armor_")]
 public class ArmorItemSO : EquippableItemSO, IItemAction
 {
     public float DamageResistance;
@@ -22,9 +22,26 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
         return false;
     }
 
-    public void UnequipWeapon(GameObject character)
+    public void UnequipArmor(GameObject character)
     {
         var armorSystem = character.transform.parent.GetComponentInChildren<ArmorManager>();
         armorSystem.SetArmor(null, null);
+    }
+
+    public override string GetStatsDescription()
+    {
+        var description = "";
+
+        if (DamageResistance > 0)
+        {
+            description = $"Damage resistance: {DamageResistance} \n";
+        }
+
+        if (MagicResistance > 0)
+        {
+            description += $"Magic resistance: {MagicResistance} \n";
+        }
+        
+        return description;
     }
 }

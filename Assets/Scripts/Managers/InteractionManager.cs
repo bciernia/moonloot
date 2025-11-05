@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractionManager : MonoBehaviour
 {
-    private PlayerActions _playerActions;
+    private PlayerInput _playerInput;
     private readonly List<IInteractable> _nearbyInteractables = new List<IInteractable>();
     private IInteractable _currentInteractable;
 
@@ -14,11 +15,19 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerActions = new PlayerActions();
-        _playerActions.Dialogue.Enable();
-        _playerActions.Dialogue.Interact.performed += ctx => Interact();
+        _playerInput = GetComponentInParent<PlayerInput>();
     }
 
+    private void OnEnable()
+    {
+        _playerInput.actions["Interaction"].performed += ctx => Interact();
+    }
+
+    private void OnDisable()
+    {
+        _playerInput.actions["Interaction"].performed -= ctx => Interact();
+    }
+    
     private void Interact()
     {
         _currentInteractable?.Interact();
@@ -103,7 +112,4 @@ public class InteractionManager : MonoBehaviour
         UnregisterInteractable(interactable);
         RegisterInteractable(interactable);
     }
-
-    private void OnEnable() => _playerActions.Enable();
-    private void OnDisable() => _playerActions.Disable();
 }

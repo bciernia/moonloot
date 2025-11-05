@@ -3,7 +3,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[CreateAssetMenu]
+[CreateAssetMenu(menuName = "Item/Edible", fileName = "Edible_")]
 public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 {
     public string ActionName => "Consume";

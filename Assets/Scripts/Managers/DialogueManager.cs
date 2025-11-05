@@ -23,20 +23,16 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue()
     {
-        if (_dialogueStarted) return;
-        PlayerUI.SetActive(false);
-        PlayerSpeechBubble.SetActive(true);
-
-        if (!NPCSelected)
-        {
-            // var playerDialogueController = _player.GetComponent<DialogueController>();
-            // playerDialogueController.PlayDialogue();
-            return;
-        }
+        if (_dialogueStarted || !NPCSelected) return;
         
         _dialogueStarted = true;
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
+        
+        if(!dialogueController.CurrentDialogue) return;
+        
         SetCharacterInFrontOfNpc();
+        PlayerUI.SetActive(false);
+        PlayerSpeechBubble.SetActive(true);
 
         var npcDialogueEntrySetter = NPCSelected.GetComponent<DialogueEntrySetter>();
         var entryId = "";

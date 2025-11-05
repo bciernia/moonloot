@@ -10,8 +10,8 @@ public class DialogueQuestHelper : MonoBehaviour
     }
 
     //Used in dialogues
-    public bool HasPlayerQuestItem(int quantity) => InventoryController.Instance.HasUserQuestItem(quest.GetQuestItemName(), quantity);
+    public bool HasPlayerQuestItem(int itemIndex, int quantity) => InventoryController.Instance.HasUserQuestItem(quest.GetQuestItemName(itemIndex), quantity);
 
     //Used in dialogues
-    public void TryRemoveQuestItems(int quantity) => InventoryController.Instance.TryRemoveQuestItems(quest.GetQuestItemName(), quantity);
+    public void TryRemoveQuestItems(int itemIndex, int quantity) => InventoryController.Instance.TryRemoveQuestItems(quest.GetQuestItemName(itemIndex), quantity);
 }

@@ -10,8 +10,7 @@ public class Quest : ScriptableObject
     [SerializeField][TextArea] private string _description;
     [SerializeField] private List<Reward> _rewards = new List<Reward>();
     [SerializeField] private List<Objective> _objectives = new List<Objective>();
-    [SerializeField] private ItemSO _itemInQuest;
-    [SerializeField] private List<Quest> _relatedQuests = new List<Quest>();
+    [SerializeField] private List<ItemSO> _itemsInQuest;
     
     [System.Serializable]
     public class Reward
@@ -44,16 +43,14 @@ public class Quest : ScriptableObject
 
     public IEnumerable<Reward> GetRewards() => _rewards;
 
-    public IEnumerable<Quest> GetRelatedQuests() =>  _relatedQuests;
-
-    public string GetQuestItemName() => _itemInQuest.Name;
+    public string GetQuestItemName(int itemIndex) => _itemsInQuest[itemIndex].Name;
 
     public string GetRewardDescription()
     {
         var sb = new StringBuilder();
         foreach (var reward in _rewards)
         {
-            if(reward.number > 1) sb.Append($"{reward.number} ");
+            if(reward.item.quantity > 1) sb.Append($"{reward.item.quantity} ");
             sb.Append($"{reward.item.item.Name}");
             sb.AppendLine();
         }

@@ -10,7 +10,8 @@ public class EnemyLoot : MonoBehaviour
     [SerializeField] private float _expDrop;
     [SerializeField] private DropItem[] _dropItems;
 
-    public List<DropItem> Items { get; private set; }
+    private List<DropItem> Items { get; set; }
+    private List<DropItem> ItemsFromParent { get; set; }
     public float ExpDrop => _expDrop;
 
     [SerializeField] private float dropRadius = 1.0f; 
@@ -20,13 +21,13 @@ public class EnemyLoot : MonoBehaviour
     
     private void Start()
     {
-        LoadDropItems();
+        Items = new List<DropItem>();
+        AddDropItemsToList(_dropItems);
     }
 
-    private void LoadDropItems()
+    public void AddDropItemsToList(DropItem[] dropItems)
     {
-        Items = new List<DropItem>();
-        foreach (var item in _dropItems)
+        foreach (var item in dropItems)
         {
             var prob = Random.Range(0f, 100f);
             if (prob <= item.DropChance)
@@ -35,10 +36,53 @@ public class EnemyLoot : MonoBehaviour
             }
         }
     }
+    
+    public void AddDropItemsToListFromParent(DropItem[] dropItems)
+    {
+        ItemsFromParent = new List<DropItem>();
+        foreach (var item in dropItems)
+        {
+            var prob = Random.Range(0f, 100f);
+            if (prob <= item.DropChance)
+            {
+                ItemsFromParent.Add(item);
+            }
+        }
+    }
 
     public void DropItems()
     {
         foreach (var item in Items)
+        {
+            if (!item.ItemToDrop) continue;
+
+            for (var i = 0; i < item.Quantity; i++)
+            {
+                var dropPosition = FindFreeDropPosition();
+                var drop = Instantiate(item.ItemToDrop, transform.position, Quaternion.identity);
+
+                var mover = drop.GetComponent<LootDropMover>();
+                if (mover != null)
+                {
+                    mover.MoveToPosition(dropPosition, Random.Range(0.25f, 0.5f));
+                }
+                else
+                {
+                    drop.transform.position = dropPosition;
+                }
+
+                var itemSo = item.ItemToDrop.GetComponent<ItemInteraction>().GetInventoryItem();
+
+                if (itemSo is GoldItemSO)
+                {
+                    
+                }
+            }
+        }
+
+        if (ItemsFromParent == null) return;
+        
+        foreach (var item in ItemsFromParent)
         {
             if (!item.ItemToDrop) continue;
 

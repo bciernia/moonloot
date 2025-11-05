@@ -8,10 +8,14 @@ public enum ItemType
     Shoes,
     Helmet,
     Armor,
+    Outfit,
     Edible,
     Usable,
     Gold,
     Book,
     Materials,
+    Letter,
     Junk
 }
+
+//TODO NOWE TYPY DORZUCAJ NA KONIEC

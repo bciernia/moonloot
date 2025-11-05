@@ -2,15 +2,16 @@ using System;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    private PlayerActions _actions;
-
+    private PlayerInput _playerInput;
+    
     private void Awake()
     {
-        _actions = new PlayerActions();
+        _playerInput = GetComponentInParent<PlayerInput>();
     }
     
     [Header("Stats")]
@@ -39,6 +40,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
     
+    [Header("Quest Panel")] 
+    [SerializeField] private GameObject _questPanel;
+
+    [Header("Skills Panel")] 
+    [SerializeField] private GameObject _skillsPanel;
+    
+    [Header("Main menu Panel")]
+    [SerializeField] private GameObject _mainMenuPanel;
+    [SerializeField] private GameObject _optionsPanel;
+    
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
@@ -48,16 +59,29 @@ public class UIManager : MonoBehaviour
     {
         UpdatePlayerUI();
     }
-
-    private void OpenCloseStatsPanel()
+    
+    private void OnEnable()
     {
-        _statsPanel.SetActive(!_statsPanel.activeSelf);
-        if (_statsPanel.activeSelf)
-        {
-            UpdateStatsPanel();
-        }
+        var map = _playerInput.actions;
+
+        map["Statistics"].performed += _ => OpenClosePanel(_statsPanel);
+        map["Equipment"].performed += _ => OpenClosePanel(_equipmentPanel);
+        map["Journal"].performed += _ => OpenClosePanel(_questPanel);
+        map["Main menu"].performed += _ => HandleEscapePressed();
+        map["Skills"].performed += _ => OpenClosePanel(_skillsPanel);
     }
 
+    private void OnDisable()
+    {
+        var map = _playerInput.actions;
+
+        map["Statistics"].performed -= _ => OpenClosePanel(_statsPanel);
+        map["Equipment"].performed -= _ => OpenClosePanel(_equipmentPanel);
+        map["Journal"].performed -= _ => OpenClosePanel(_questPanel);
+        map["Main menu"].performed -= _ => HandleEscapePressed();
+        map["Skills"].performed -= _ => OpenClosePanel(_skillsPanel);
+    }
+    
     private void UpdatePlayerUI()
     {
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
@@ -78,24 +102,33 @@ public class UIManager : MonoBehaviour
         _healthTMPEq.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
     }
-
-    private void UpdateStatsPanel()
+    
+    private void OpenClosePanel(GameObject panel)
     {
-        _statsLevelTMP.text = _playerStatsSo.Level.ToString();
-        _statsDamageTMP.text = _playerStatsSo.TotalDamage.ToString(CultureInfo.InvariantCulture);
+        panel.SetActive(!panel.activeSelf);
     }
     
-    private void OnEnable()
+    private void HandleEscapePressed()
     {
-        _actions.UI.OpenCloseStatsPanel.performed += _ => OpenCloseStatsPanel();
-        // _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenCloseEquipmentPanel();
-        _actions.Enable();
+        if (TryCloseAnyPanel())
+            return;
+
+        OpenClosePanel(_mainMenuPanel);
     }
 
-    private void OnDisable()
+    private bool TryCloseAnyPanel()
     {
-        _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenCloseStatsPanel();
-        //_actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenCloseEquipmentPanel();
-        _actions.Disable();
+        GameObject[] panels = { _statsPanel, _equipmentPanel, _questPanel, _skillsPanel, _optionsPanel };
+
+        foreach (var panel in panels)
+        {
+            if (panel.activeSelf)
+            {
+                panel.SetActive(false);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

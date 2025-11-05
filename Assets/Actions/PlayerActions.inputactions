@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "PlayerActions",
     "maps": [
         {
@@ -142,7 +143,7 @@
             "id": "2460bde0-09e9-4f72-828f-56fc6fb19e8d",
             "actions": [
                 {
-                    "name": "OpenCloseStatsPanel",
+                    "name": "Statistics",
                     "type": "Button",
                     "id": "bed65bb5-a2e5-4fba-b4b3-b1d73b5079a4",
                     "expectedControlType": "",
@@ -151,9 +152,36 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenCloseEquipmentPanel",
+                    "name": "Equipment",
                     "type": "Button",
                     "id": "6849f662-d89a-4354-91d3-3e55df454a56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Journal",
+                    "type": "Button",
+                    "id": "6edf6d2e-ec2b-4707-a183-0bf4d74f8383",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Skills",
+                    "type": "Button",
+                    "id": "4efceb88-303b-4a73-b4b1-beeb6ad6a334",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Main menu",
+                    "type": "Button",
+                    "id": "ba5505b8-d9ea-420a-81cf-c0a953874410",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -164,22 +192,55 @@
                 {
                     "name": "",
                     "id": "78327a23-e655-42e0-9a5f-a8abfb4fce1c",
-                    "path": "<Keyboard>/tab",
+                    "path": "<Keyboard>/1",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenCloseStatsPanel",
+                    "action": "Statistics",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "bb3e78a5-e2e0-4645-b01d-5e643d3af5e5",
-                    "path": "<Keyboard>/i",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenCloseEquipmentPanel",
+                    "action": "Equipment",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e57ae72b-217c-42c3-918a-f15197769f6b",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Journal",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3c2898f3-3551-4d1e-98cb-aacb1ebad48f",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Skills",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34c8a096-b368-49b2-a224-35fe97b8b2a8",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Main menu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -190,7 +251,7 @@
             "id": "0e08295e-d4d5-492f-b82c-ff3d7df788fb",
             "actions": [
                 {
-                    "name": "BaseAttack",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "c78c89e0-8060-4d97-aa1d-3a9ea0e57af9",
                     "expectedControlType": "",
@@ -207,7 +268,7 @@
                     "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "BaseAttack",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -218,7 +279,7 @@
             "id": "58a5d72d-377e-4fff-92d6-0c2e1e41d29b",
             "actions": [
                 {
-                    "name": "Interact",
+                    "name": "Interaction",
                     "type": "Button",
                     "id": "20e21532-832e-4348-a544-281262ce021f",
                     "expectedControlType": "",
@@ -244,7 +305,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Interact",
+                    "action": "Interaction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -297,7 +358,7 @@
                 {
                     "name": "",
                     "id": "ebb5ab0f-63bf-464e-845a-99dab32b6e87",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -308,7 +369,7 @@
                 {
                     "name": "",
                     "id": "f3bf12aa-f83e-4a93-8864-77e7b44d9ab1",
-                    "path": "<Keyboard>/k",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
