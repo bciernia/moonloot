@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -16,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     private bool canAttack = true;
     private PlayerMana _playerMana;
     private PlayerStamina _playerStamina;
-    private PlayerActions _actions;
+    private PlayerInput _playerInput;
     
     private SlashEffect _slash;
 
@@ -24,7 +25,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _playerMana = GetComponent<PlayerMana>();
         _playerStamina = GetComponent<PlayerStamina>();
-        _actions = new PlayerActions();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void Start()
@@ -78,7 +79,6 @@ public class PlayerAttack : MonoBehaviour
         var elapsed = 0f;
 
         cooldownImage.fillAmount = 0f;
-
         while (elapsed < attackCooldown)
         {
             elapsed += Time.deltaTime;
@@ -98,13 +98,11 @@ public class PlayerAttack : MonoBehaviour
     
     private void OnEnable()
     {
-        _actions.Enable();
-        _actions.Attack.BaseAttack.performed += ctx => Attack();
+        _playerInput.actions["Attack"].performed += _ => Attack();
     }
 
     private void OnDisable()
     {
-        _actions.Attack.BaseAttack.performed -= ctx => Attack();
-        _actions.Disable();
+        _playerInput.actions["Attack"].performed -= _ => Attack();
     }
 }

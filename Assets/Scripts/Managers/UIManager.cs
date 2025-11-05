@@ -2,15 +2,16 @@ using System;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    private PlayerActions _actions;
-
+    private PlayerInput _playerInput;
+    
     private void Awake()
     {
-        _actions = new PlayerActions();
+        _playerInput = GetComponentInParent<PlayerInput>();
     }
     
     [Header("Stats")]
@@ -47,6 +48,7 @@ public class UIManager : MonoBehaviour
     
     [Header("Main menu Panel")]
     [SerializeField] private GameObject _mainMenuPanel;
+    [SerializeField] private GameObject _optionsPanel;
     
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
@@ -56,6 +58,28 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         UpdatePlayerUI();
+    }
+    
+    private void OnEnable()
+    {
+        var map = _playerInput.actions;
+
+        map["Statistics"].performed += _ => OpenClosePanel(_statsPanel);
+        map["Equipment"].performed += _ => OpenClosePanel(_equipmentPanel);
+        map["Journal"].performed += _ => OpenClosePanel(_questPanel);
+        map["Main menu"].performed += _ => HandleEscapePressed();
+        map["Skills"].performed += _ => OpenClosePanel(_skillsPanel);
+    }
+
+    private void OnDisable()
+    {
+        var map = _playerInput.actions;
+
+        map["Statistics"].performed -= _ => OpenClosePanel(_statsPanel);
+        map["Equipment"].performed -= _ => OpenClosePanel(_equipmentPanel);
+        map["Journal"].performed -= _ => OpenClosePanel(_questPanel);
+        map["Main menu"].performed -= _ => HandleEscapePressed();
+        map["Skills"].performed -= _ => OpenClosePanel(_skillsPanel);
     }
     
     private void UpdatePlayerUI()
@@ -83,7 +107,7 @@ public class UIManager : MonoBehaviour
     {
         panel.SetActive(!panel.activeSelf);
     }
-
+    
     private void HandleEscapePressed()
     {
         if (TryCloseAnyPanel())
@@ -94,7 +118,7 @@ public class UIManager : MonoBehaviour
 
     private bool TryCloseAnyPanel()
     {
-        GameObject[] panels = { _statsPanel, _equipmentPanel, _questPanel, _skillsPanel };
+        GameObject[] panels = { _statsPanel, _equipmentPanel, _questPanel, _skillsPanel, _optionsPanel };
 
         foreach (var panel in panels)
         {
@@ -106,25 +130,5 @@ public class UIManager : MonoBehaviour
         }
 
         return false;
-    }
-    
-    private void OnEnable()
-    {
-        _actions.UI.OpenCloseStatsPanel.performed += _ => OpenClosePanel(_statsPanel);
-        _actions.UI.OpenCloseEquipmentPanel.performed += _ => OpenClosePanel(_equipmentPanel);
-        _actions.UI.OpenCloseQuestPanel.performed += _ => OpenClosePanel(_questPanel);
-        _actions.UI.OpenCloseMainMenu.performed += _ => HandleEscapePressed();
-        _actions.UI.OpenCloseSkillsPanel.performed += _ => OpenClosePanel(_skillsPanel);
-        _actions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _actions.UI.OpenCloseStatsPanel.performed -= _ => OpenClosePanel(_statsPanel);
-        _actions.UI.OpenCloseEquipmentPanel.performed -= _ => OpenClosePanel(_equipmentPanel);
-        _actions.UI.OpenCloseQuestPanel.performed -= _ => OpenClosePanel(_questPanel);
-        _actions.UI.OpenCloseMainMenu.performed -= _ => HandleEscapePressed();
-        _actions.UI.OpenCloseSkillsPanel.performed -= _ => OpenClosePanel(_skillsPanel);
-        _actions.Disable();
     }
 }

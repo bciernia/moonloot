@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Configuration")] [SerializeField]
     private float speed;
 
-    private PlayerActions _actions;
+    private PlayerInput _playerInput;
     private Rigidbody2D _rb2D;
     private Player _player;
     private Vector2 _moveDirection;
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-        _actions = new PlayerActions();
+        _playerInput = GetComponent<PlayerInput>();
         _rb2D = GetComponent<Rigidbody2D>();
         _playerAnimations = GetComponent<PlayerAnimations>();
         playerStamina = GetComponent<PlayerStamina>();
@@ -81,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ReadMovement()
     {
-        _moveDirection = _actions.Movement.Move.ReadValue<Vector2>().normalized;
+        _moveDirection = _playerInput.actions["Move"].ReadValue<Vector2>().normalized;
 
         if (_moveDirection == Vector2.zero)
         {
@@ -95,18 +96,18 @@ public class PlayerMovement : MonoBehaviour
     
     private void ReadAim()
     {
-        var aimDirection = _actions.Movement.Aim.ReadValue<Vector2>();
+        var aimDirection = _playerInput.actions["Aim"].ReadValue<Vector2>().normalized;
         if (playerAim != null)
             playerAim.UpdateAim(aimDirection);
     }
 
-    private void OnEnable()
-    {
-        _actions.Enable();   
-    }
-
-    private void OnDisable()
-    {
-        _actions.Disable();
-    }
+    // private void OnEnable()
+    // {
+    //     _actions.Enable();   
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     _actions.Disable();
+    // }
 }

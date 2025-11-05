@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public enum SkillState
@@ -43,28 +44,33 @@ public class SkillsManager : Singleton<SkillsManager>
 
     private List<ActiveEffect> activeEffects = new List<ActiveEffect>();
 
-    private PlayerActions _actions;
+    private PlayerInput _playerInput;
 
     protected override void Awake()
     {
         base.Awake();
-        _actions = new PlayerActions();
+
+        _playerInput = GetComponentInParent<PlayerInput>();
+        if (_playerInput == null)
+        {
+            Debug.LogError("SkillsManager: PlayerInput nie znaleziony w rodzicu!");
+            return;
+        }
 
         if (skills.Count > 0) QSkillImage.sprite = skills[0].skill.Icon;
         if (skills.Count > 1) ESkillImage.sprite = skills[1].skill.Icon;
     }
-
+    
     private void OnEnable()
     {
-        _actions.Enable();
-
-        _actions.Skills.Skill1.performed += ctx => TryActivateSkill(0);
-        _actions.Skills.Skill2.performed += ctx => TryActivateSkill(1);
+        _playerInput.actions["Skill1"].performed += ctx => TryActivateSkill(0);
+        _playerInput.actions["Skill2"].performed += ctx => TryActivateSkill(1);
     }
 
     private void OnDisable()
     {
-        _actions.Disable();
+        _playerInput.actions["Skill1"].performed -= ctx => TryActivateSkill(0);
+        _playerInput.actions["Skill2"].performed -= ctx => TryActivateSkill(1);
     }
 
     private GameObject CreateEffectPrefabForSkill(Skill skill)

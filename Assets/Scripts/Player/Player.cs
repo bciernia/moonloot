@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class Player : MonoBehaviour
     
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;
+    private PlayerInput _playerInput;
     
     private void Awake()
     {
@@ -22,6 +24,13 @@ public class Player : MonoBehaviour
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();
         _playerAnimations = GetComponent<PlayerAnimations>();
+
+        _playerInput = GetComponent<PlayerInput>();
+
+        foreach (var map in _playerInput.actions.actionMaps)
+        {
+            map.Enable();
+        }
     }
 
     private void Start()
