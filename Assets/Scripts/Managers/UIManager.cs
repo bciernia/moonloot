@@ -1,5 +1,3 @@
-using System;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private PlayerInput _playerInput;
+    private bool _dialogueActive;
     
     private void Awake()
     {
@@ -28,23 +27,15 @@ public class UIManager : MonoBehaviour
     // [SerializeField] private TextMeshProUGUI _staminaTMP;
 
     [Header("Stats Panel")] 
-    [SerializeField] private GameObject _statsPanel;
     [SerializeField] private TextMeshProUGUI _statsLevelTMP;
     [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
     [Header("Equipment Panel")] 
-    [SerializeField] private GameObject _equipmentPanel;
     [SerializeField] private Image _healthBarEq;
     [SerializeField] private Image _manaBarEq;
     // [SerializeField] private Image _staminaBar;
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
-    
-    [Header("Quest Panel")] 
-    [SerializeField] private GameObject _questPanel;
-
-    [Header("Skills Panel")] 
-    [SerializeField] private GameObject _skillsPanel;
     
     [Header("Main menu Panel")]
     [SerializeField] private GameObject _mainMenuPanel;
@@ -54,6 +45,24 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
     [SerializeField] private Image _enemyHealthBar;
+
+    [Header("Skill buttons")] 
+    [SerializeField] private TextMeshProUGUI _skill1KeyText;
+    [SerializeField] private TextMeshProUGUI _skill2KeyText;
+    
+    [Header("Interaction button")]
+    [SerializeField] private TextMeshProUGUI _interactionKeyText;
+    
+    [Header("Tab menu manager")]
+    [SerializeField] private TabMenuManager _tabMenuManager;
+
+    [Header("Tab menu manager")]
+    [SerializeField] private GameObject _gameMenu;
+    
+    private void Start()
+    {
+        UpdateKeyTexts();
+    }
     
     private void Update()
     {
@@ -64,22 +73,22 @@ public class UIManager : MonoBehaviour
     {
         var map = _playerInput.actions;
 
-        map["Statistics"].performed += _ => OpenClosePanel(_statsPanel);
-        map["Equipment"].performed += _ => OpenClosePanel(_equipmentPanel);
-        map["Journal"].performed += _ => OpenClosePanel(_questPanel);
+        map["Equipment"].performed += _ => OpenCloseTabPanel(0);
+        map["Statistics"].performed += _ => OpenCloseTabPanel(1);
+        map["Skills"].performed += _ => OpenCloseTabPanel(2);
+        map["Journal"].performed += _ => OpenCloseTabPanel(3);
         map["Main menu"].performed += _ => HandleEscapePressed();
-        map["Skills"].performed += _ => OpenClosePanel(_skillsPanel);
     }
 
     private void OnDisable()
     {
         var map = _playerInput.actions;
-
-        map["Statistics"].performed -= _ => OpenClosePanel(_statsPanel);
-        map["Equipment"].performed -= _ => OpenClosePanel(_equipmentPanel);
-        map["Journal"].performed -= _ => OpenClosePanel(_questPanel);
+        
+        map["Equipment"].performed -= _ => OpenCloseTabPanel(0);
+        map["Statistics"].performed -= _ => OpenCloseTabPanel(1);
+        map["Skills"].performed -= _ => OpenCloseTabPanel(2);
+        map["Journal"].performed -= _ => OpenCloseTabPanel(3);
         map["Main menu"].performed -= _ => HandleEscapePressed();
-        map["Skills"].performed -= _ => OpenClosePanel(_skillsPanel);
     }
     
     private void UpdatePlayerUI()
@@ -102,6 +111,21 @@ public class UIManager : MonoBehaviour
         _healthTMPEq.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
         _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
     }
+
+    private void OpenCloseTabPanel(int tabIndex)
+    {
+        var isPanelActive = _gameMenu.activeSelf;
+
+        if (isPanelActive)
+        {
+            _gameMenu.SetActive(false);
+        }
+        else
+        {
+            _gameMenu.SetActive(true);
+            _tabMenuManager.SwitchToTab(tabIndex);    
+        }
+    }
     
     private void OpenClosePanel(GameObject panel)
     {
@@ -110,6 +134,10 @@ public class UIManager : MonoBehaviour
     
     private void HandleEscapePressed()
     {
+        //Przerwanie dialogu za pomocą Escape wyświetlało Main menu
+        if (DialogueManager.Instance.IsInDialogue())
+            return;
+        
         if (TryCloseAnyPanel())
             return;
 
@@ -118,10 +146,15 @@ public class UIManager : MonoBehaviour
 
     private bool TryCloseAnyPanel()
     {
-        GameObject[] panels = { _statsPanel, _equipmentPanel, _questPanel, _skillsPanel, _optionsPanel };
+        GameObject[] panels = { _gameMenu, _optionsPanel };
 
         foreach (var panel in panels)
         {
+            if (panel.name == _optionsPanel.name)
+            {
+                UpdateKeyTexts();
+            }
+            
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
@@ -130,5 +163,23 @@ public class UIManager : MonoBehaviour
         }
 
         return false;
+    }
+
+
+    private void UpdateKeyTexts()
+    {
+        if (_playerInput == null) return;
+
+        var map = _playerInput.actions;
+        var skill1 = map["Skill1"];
+        var skill2 = map["Skill2"];
+        var interaction = map["Interaction"];
+
+        if (skill1 != null)
+            _skill1KeyText.text = skill1.GetBindingDisplayString().ToUpper();
+        if (skill2 != null)
+            _skill2KeyText.text = skill2.GetBindingDisplayString().ToUpper();
+        if (interaction != null)
+            _interactionKeyText.text = interaction.GetBindingDisplayString().ToUpper();
     }
 }

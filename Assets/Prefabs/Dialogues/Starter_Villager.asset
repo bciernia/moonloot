@@ -1,0 +1,149 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Starter_Villager
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 5422256016260333775
+  - rid: 5422256016260333776
+  - rid: 5422256016260333777
+  translationLibrary: {fileID: 3139644736300840582}
+  maxID: 35
+  references:
+    version: 2
+    RefIds:
+    - rid: 5422256016260333775
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 434.6482
+        yPosition: 313.20435
+        entryPointName: 
+    - rid: 5422256016260333776
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 15000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 230
+        xPosition: 718.1481
+        yPosition: 285.70435
+        items:
+        - rid: 5422256016260333778
+        - rid: 5422256016260333779
+        - rid: 5422256016260333780
+        - rid: 5422256016260333781
+        characterName: Starter NPC
+        icon: 
+    - rid: 5422256016260333777
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 20
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 21
+          attachedIds: 06000000
+          ownerId: 20
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1177.1482
+        yPosition: 320.70435
+        exitPointName: 
+    - rid: 5422256016260333778
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hello!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422256016260333779
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Find inn in this town. There are some quests on task board in front
+          of tavern.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422256016260333780
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Then you can talk to Bartender or Meredith, they have some quests for
+          you.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 5422256016260333781
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You can also go on town arena, and try your fighting skills.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &3139644736300840582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 5
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Starter NPC
+    - id: 1
+      language: en
+      text: Hello!
+    - id: 2
+      language: en
+      text: Find inn in this town. There are some quests on task board in front of
+        tavern.
+    - id: 3
+      language: en
+      text: Then you can talk to Bartender or Meredith, they have some quests for
+        you.
+    - id: 4
+      language: en
+      text: You can also go on town arena, and try your fighting skills.
