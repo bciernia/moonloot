@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Inventory.NewInventory.Model;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopManager : Singleton<ShopManager>
@@ -15,6 +12,7 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] private RectTransform shopContainer;
     [SerializeField] private TextMeshProUGUI PanelNameTMP;
     [SerializeField] private TextMeshProUGUI MoneyAmountTMP;
+    [SerializeField] private GameObject TabPanel;
 
     public List<UIInventoryItem> listOfSellerItems = new List<UIInventoryItem>();
     
@@ -30,14 +28,16 @@ public class ShopManager : Singleton<ShopManager>
         ShopPanel.SetActive(true);
         IsShop = isShop;
         SetPanelName(panelName);
-        SetMoneyAmountVisibility(isShop);        
-        InitializeSellerEquipment(sellerInventory);
+        SetMoneyAmountVisibility();        
+        InitializeSellerEquipment(SellerInventory);
         InventoryController.Instance.PrepareSellerInventoryData(sellerInventory);
+        TabMenuManager.Instance.SwitchToTab(0);
+        TabPanel.SetActive(true);        
     }
 
     private void SetPanelName(string panelName) => PanelNameTMP.text = panelName;
     
-    private void SetMoneyAmountVisibility(bool isShop) => MoneyAmountTMP.gameObject.SetActive(isShop);
+    private void SetMoneyAmountVisibility() => MoneyAmountTMP.gameObject.SetActive(IsShop);
 
     public void ResetSellerInventory()
     {
@@ -55,6 +55,14 @@ public class ShopManager : Singleton<ShopManager>
             Destroy(child.gameObject);
         }
         
+        inventoryPage.OnDescriptionRequested -= InventoryController.Instance.HandleDescriptionRequest;
+        inventoryPage.OnStartDragging -= InventoryController.Instance.HandleDragging;
+        inventoryPage.OnItemActionRequested -= InventoryController.Instance.HandleItemActionRequest;
+
+        inventoryPage.OnDescriptionRequested += InventoryController.Instance.HandleDescriptionRequest;
+        inventoryPage.OnStartDragging += InventoryController.Instance.HandleDragging;
+        inventoryPage.OnItemActionRequested += InventoryController.Instance.HandleItemActionRequest;
+        
         for (var i = 0; i < inventorySize.Size; i++)
         {
             var uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
@@ -67,10 +75,6 @@ public class ShopManager : Singleton<ShopManager>
             uiItem.OnItemBeginDrag += inventoryPage.HandleBeginDrag;
             uiItem.OnItemDroppedOn += inventoryPage.HandleSwap;
             uiItem.OnItemEndDrag += inventoryPage.HandleEndDrag; 
-            
-            inventoryPage.OnDescriptionRequested += InventoryController.Instance.HandleDescriptionRequest;
-            inventoryPage.OnStartDragging += InventoryController.Instance.HandleDragging;
-            inventoryPage.OnItemActionRequested += InventoryController.Instance.HandleItemActionRequest;
         }
     }
     

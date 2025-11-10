@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TabMenuManager : MonoBehaviour
+public class TabMenuManager : Singleton<TabMenuManager>
 {
     [SerializeField] private GameObject[] Tabs;
     [SerializeField] private Image[] TabButtons;

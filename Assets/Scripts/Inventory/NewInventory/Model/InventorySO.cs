@@ -129,7 +129,20 @@ public class InventorySO : ScriptableObject
         return returnValue;
     }
 
-    public InventoryItem GetItemAt(int itemIndex) => inventoryItems[itemIndex];
+    public InventoryItem GetItemAt(int itemIndex)
+    {
+        InventoryItem item = default;
+        try
+        {
+            item = inventoryItems[itemIndex];
+        }
+        catch (Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+
+        return item;
+    }
 
     public void SwapItems(int itemIndex1, int itemIndex2)
     {

@@ -54,9 +54,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _interactionKeyText;
     
     [Header("Tab menu manager")]
-    [SerializeField] private TabMenuManager _tabMenuManager;
-
-    [Header("Tab menu manager")]
     [SerializeField] private GameObject _gameMenu;
     
     private void Start()
@@ -123,7 +120,7 @@ public class UIManager : MonoBehaviour
         else
         {
             _gameMenu.SetActive(true);
-            _tabMenuManager.SwitchToTab(tabIndex);    
+            TabMenuManager.Instance.SwitchToTab(tabIndex);    
         }
     }
     
@@ -181,5 +178,10 @@ public class UIManager : MonoBehaviour
             _skill2KeyText.text = skill2.GetBindingDisplayString().ToUpper();
         if (interaction != null)
             _interactionKeyText.text = interaction.GetBindingDisplayString().ToUpper();
+    }
+
+    private void ShowPrompt(string promptMessage)
+    {
+        
     }
 }
