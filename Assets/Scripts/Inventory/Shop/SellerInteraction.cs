@@ -29,7 +29,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
-        ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, true);
+        ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, InventoryType.Shop);
     }
 
     public string GetInteractionText()

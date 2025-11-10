@@ -5,12 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/InventoryType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/InventoryType.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Inventories/SellersInventories/SellerInventory.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Inventories/SellersInventories/SellerInventory.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/SellerInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/SellerInteraction.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/TabMenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/TabMenuManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Dash/Dash.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Dash/Dash.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -303,8 +305,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIItemActionPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Loot/LootDropMover.cs" root0="FORCE_HIGHLIGHTING" />
@@ -316,7 +320,10 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PlayerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/ShopManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/ShopManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/TabMenuManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TitleAndButtonIntroManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/CharacterClothesAnimator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs" root0="FORCE_HIGHLIGHTING" />
@@ -424,10 +431,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="23872">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19696">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="23872" />
+      <option name="pid" value="19696" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -620,7 +627,7 @@
       <workItem from="1762445920786" duration="661000" />
       <workItem from="1762548905169" duration="836000" />
       <workItem from="1762682772462" duration="19348000" />
-      <workItem from="1762766520497" duration="1745000" />
+      <workItem from="1762766520497" duration="5944000" />
     </task>
     <servers />
   </component>
@@ -785,13 +792,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
-          <line>29</line>
+          <line>25</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'InitializeShop'">
             <startOffsets>
-              <option value="1062" />
+              <option value="976" />
             </startOffsets>
             <endOffsets>
-              <option value="1096" />
+              <option value="1010" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="232" />
@@ -804,20 +811,20 @@
               <option value="603" />
             </startOffsets>
             <endOffsets>
-              <option value="666" />
+              <option value="680" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="233" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
-          <line>109</line>
+          <line>112</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'BuyItem'">
             <startOffsets>
-              <option value="3951" />
+              <option value="4238" />
             </startOffsets>
             <endOffsets>
-              <option value="3996" />
+              <option value="4283" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="234" />
@@ -1084,13 +1091,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>134</line>
+          <line>143</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'HandleEscapePressed'">
             <startOffsets>
-              <option value="4386" />
+              <option value="4620" />
             </startOffsets>
             <endOffsets>
-              <option value="4430" />
+              <option value="4664" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="284" />
@@ -1149,13 +1156,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
-          <line>43</line>
+          <line>41</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'SetMoneyAmountVisibility'">
             <startOffsets>
-              <option value="1639" />
+              <option value="1618" />
             </startOffsets>
             <endOffsets>
-              <option value="1682" />
+              <option value="1659" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="289" />

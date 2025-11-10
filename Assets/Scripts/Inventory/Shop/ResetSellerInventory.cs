@@ -7,11 +7,11 @@ public class ResetSellerInventory : MonoBehaviour
     
     private void OnDisable()
     {
-        ShopManager.Instance.ResetSellerInventory();
-
-        foreach (Transform uiItem in sellerInventoryUiContainer)
-        {
-            Destroy(uiItem.gameObject);            
-        }
+        // ShopManager.Instance.ResetSellerInventory();
+        //
+        // foreach (Transform uiItem in sellerInventoryUiContainer)
+        // {
+        //     Destroy(uiItem.gameObject);            
+        // }
     }
 }

@@ -7,10 +7,12 @@ public class UIManager : MonoBehaviour
 {
     private PlayerInput _playerInput;
     private bool _dialogueActive;
+    private GameObject _player;
     
     private void Awake()
     {
         _playerInput = GetComponentInParent<PlayerInput>();
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
     
     [Header("Stats")]
@@ -70,7 +72,7 @@ public class UIManager : MonoBehaviour
     {
         var map = _playerInput.actions;
 
-        map["Equipment"].performed += _ => OpenCloseTabPanel(0);
+        map["Equipment"].performed += _ => OpenCloseEquipmentPanel(0);
         map["Statistics"].performed += _ => OpenCloseTabPanel(1);
         map["Skills"].performed += _ => OpenCloseTabPanel(2);
         map["Journal"].performed += _ => OpenCloseTabPanel(3);
@@ -81,7 +83,7 @@ public class UIManager : MonoBehaviour
     {
         var map = _playerInput.actions;
         
-        map["Equipment"].performed -= _ => OpenCloseTabPanel(0);
+        map["Equipment"].performed -= _ => OpenCloseEquipmentPanel(0);
         map["Statistics"].performed -= _ => OpenCloseTabPanel(1);
         map["Skills"].performed -= _ => OpenCloseTabPanel(2);
         map["Journal"].performed -= _ => OpenCloseTabPanel(3);
@@ -109,6 +111,13 @@ public class UIManager : MonoBehaviour
         _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
     }
 
+    private void OpenCloseEquipmentPanel(int tabIndex)
+    {
+        ShopManager.Instance.ShopPanel.SetActive(false);
+        
+        OpenCloseTabPanel(tabIndex);
+    }
+    
     private void OpenCloseTabPanel(int tabIndex)
     {
         var isPanelActive = _gameMenu.activeSelf;
@@ -116,11 +125,13 @@ public class UIManager : MonoBehaviour
         if (isPanelActive)
         {
             _gameMenu.SetActive(false);
+            Time.timeScale = 1f;
         }
         else
         {
             _gameMenu.SetActive(true);
             TabMenuManager.Instance.SwitchToTab(tabIndex);    
+            Time.timeScale = 0f;
         }
     }
     
