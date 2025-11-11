@@ -388,6 +388,9 @@ namespace UnityEngine.InputSystem.Samples.RebindUI
             if (s_RebindActionUIs == null)
                 s_RebindActionUIs = new List<RebindActionUI>();
             s_RebindActionUIs.Add(this);
+            
+            UpdateBindingDisplay();
+            
             if (s_RebindActionUIs.Count == 1)
                 InputSystem.onActionChange += OnActionChange;
             if (m_DefaultInputActions != null && m_UIInputActionMap == null)

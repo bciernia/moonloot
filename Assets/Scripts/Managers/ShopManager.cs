@@ -1,43 +1,47 @@
-using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Inventory.NewInventory.Model;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ShopManager : Singleton<ShopManager>
 {
     [SerializeField] public UIInventoryPage inventoryPage;
     [SerializeField] private GameObject InventoryPanel;
-    [SerializeField] private GameObject ShopPanel;
+    [SerializeField] public GameObject ShopPanel;
     [SerializeField] private UIInventoryItem itemPrefab;
     [SerializeField] private RectTransform shopContainer;
     [SerializeField] private TextMeshProUGUI PanelNameTMP;
     [SerializeField] private TextMeshProUGUI MoneyAmountTMP;
+    [SerializeField] private GameObject TabPanel;
 
     public List<UIInventoryItem> listOfSellerItems = new List<UIInventoryItem>();
     
     private InventorySO playerInventory;
 
     public InventorySO SellerInventory { get; private set; }
-    private bool IsShop { get; set; }
+    private InventoryType InventoryType { get; set; }
     
-    public void InitializeShop(InventorySO sellerInventory, string panelName, bool isShop = false)
+    public void InitializeShop(InventorySO sellerInventory, string panelName, InventoryType inventoryType)
     {
         SellerInventory = sellerInventory;
         InventoryPanel.SetActive(true);
         ShopPanel.SetActive(true);
-        IsShop = isShop;
+        InventoryType = inventoryType;
         SetPanelName(panelName);
-        SetMoneyAmountVisibility(isShop);        
-        InitializeSellerEquipment(sellerInventory);
+        SetMoneyAmountVisibility();        
+        InitializeSellerEquipment(SellerInventory);
         InventoryController.Instance.PrepareSellerInventoryData(sellerInventory);
+        TabMenuManager.Instance.SwitchToTab(0);
+        TabPanel.SetActive(true); 
+        Time.timeScale = 0f;
     }
 
     private void SetPanelName(string panelName) => PanelNameTMP.text = panelName;
     
-    private void SetMoneyAmountVisibility(bool isShop) => MoneyAmountTMP.gameObject.SetActive(isShop);
+    private void SetMoneyAmountVisibility()
+    {
+        if(InventoryType == InventoryType.Shop) MoneyAmountTMP.gameObject.SetActive(true);
+    }
 
     public void ResetSellerInventory()
     {
@@ -55,6 +59,14 @@ public class ShopManager : Singleton<ShopManager>
             Destroy(child.gameObject);
         }
         
+        inventoryPage.OnDescriptionRequested -= InventoryController.Instance.HandleDescriptionRequest;
+        inventoryPage.OnStartDragging -= InventoryController.Instance.HandleDragging;
+        inventoryPage.OnItemActionRequested -= InventoryController.Instance.HandleItemActionRequest;
+
+        inventoryPage.OnDescriptionRequested += InventoryController.Instance.HandleDescriptionRequest;
+        inventoryPage.OnStartDragging += InventoryController.Instance.HandleDragging;
+        inventoryPage.OnItemActionRequested += InventoryController.Instance.HandleItemActionRequest;
+        
         for (var i = 0; i < inventorySize.Size; i++)
         {
             var uiItem = Instantiate(itemPrefab, Vector3.zero, Quaternion.identity);
@@ -67,10 +79,6 @@ public class ShopManager : Singleton<ShopManager>
             uiItem.OnItemBeginDrag += inventoryPage.HandleBeginDrag;
             uiItem.OnItemDroppedOn += inventoryPage.HandleSwap;
             uiItem.OnItemEndDrag += inventoryPage.HandleEndDrag; 
-            
-            inventoryPage.OnDescriptionRequested += InventoryController.Instance.HandleDescriptionRequest;
-            inventoryPage.OnStartDragging += InventoryController.Instance.HandleDragging;
-            inventoryPage.OnItemActionRequested += InventoryController.Instance.HandleItemActionRequest;
         }
     }
     
@@ -93,7 +101,7 @@ public class ShopManager : Singleton<ShopManager>
 
     public void BuyItem(InventoryItem itemToBuy, int itemIndex)
     {
-        if (IsShop)
+        if (InventoryType == InventoryType.Shop)
         {
             var playerGoldAmount = InventoryController.Instance.inventoryData.Gold;
 
@@ -117,7 +125,7 @@ public class ShopManager : Singleton<ShopManager>
 
     public void SellItem(InventoryItem itemToSell, int itemIndex)
     {
-        if (IsShop)
+        if (InventoryType == InventoryType.Shop)
         {
             var sellerGoldAmount = Instance.SellerInventory.Gold;
         

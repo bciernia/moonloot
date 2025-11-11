@@ -1,5 +1,7 @@
+using System;
 using EasyTalk.Controller;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : Singleton<DialogueManager>
 {
@@ -8,24 +10,37 @@ public class DialogueManager : Singleton<DialogueManager>
     [SerializeField] public GameObject PlayerSpeechBubble;
 
     private bool _dialogueStarted;
-    private PlayerActions _playerActions;
+    private PlayerInput _playerInput;
     private GameObject _player;
 
     public static bool DialogueInProgress => Instance != null && Instance._dialogueStarted;
 
+    public event Action OnDialogueStarted;
+    public event Action OnDialogueEnded;
+    
     protected override void Awake()
     {
         base.Awake();
-        _playerActions = new PlayerActions();
+        _playerInput = GetComponentInParent<PlayerInput>();
         _player = GameObject.FindWithTag("Player");
+        
+        _playerInput.actions["Main menu"].performed += _ => OnMainMenuPressed();
     }
 
+    public void OnMainMenuPressed()
+    {
+        if (_dialogueStarted)
+        {
+            EndDialogue();
+        }
+    }
 
     public void StartDialogue()
     {
         if (_dialogueStarted || !NPCSelected) return;
         
         _dialogueStarted = true;
+        OnDialogueStarted?.Invoke();
         var dialogueController = NPCSelected.GetComponent<DialogueController>();
         
         if(!dialogueController.CurrentDialogue) return;
@@ -58,10 +73,17 @@ public class DialogueManager : Singleton<DialogueManager>
         {
             NPCSelected.EnableNpcMovement();
             var dialogueController = NPCSelected.GetComponent<DialogueController>();
+            
+            if (dialogueController.CurrentDialogue != null)
+            {
+                dialogueController.ExitDialogue();
+            }
+            
             dialogueController.onStop.RemoveListener(EndDialogue);
         }
         
         _dialogueStarted = false;
+        OnDialogueEnded?.Invoke();
         PlayerUI.SetActive(true);
         PlayerSpeechBubble.SetActive(false);
 
@@ -69,14 +91,4 @@ public class DialogueManager : Singleton<DialogueManager>
     }
     
     public bool IsInDialogue() => _dialogueStarted;
-
-    private void OnEnable()
-    {
-        _playerActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _playerActions.Disable();
-    }
 }

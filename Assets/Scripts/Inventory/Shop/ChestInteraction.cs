@@ -22,7 +22,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
-        ShopManager.Instance.InitializeShop(ChestLoot, "Chest", false);
+        ShopManager.Instance.InitializeShop(ChestLoot, "Chest", InventoryType.Chest);
     }
 
     public string GetInteractionText()
