@@ -4,7 +4,439 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="" />
+    <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestJournalManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestJournalManager.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestDescription.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestDescription.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestGiver.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestGiver.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestService.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestStatus.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestStatus.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestDescriptionn.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/NewQuests.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/NewQuests/QuestElementUI.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/NewQuests/QuestElementUI.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/NewQuests/QuestJournalUI.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/NewQuests/QuestJournalUI.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/BOXOPHOBIC.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EasyDialogue/EasyTalk/Runtime/Resources/settings/EasyTalk Dialogue Registry.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/EasyDialogue/EasyTalk/Runtime/Resources/settings/EasyTalk Dialogue Registry.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/NPC/Created_NPCs/Movies_Characters/Character.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/NPC/Created_NPCs/Movies_Characters/Character.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/94695679-4672-4556-88be-e50517866154.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/94695679-4672-4556-88be-e50517866154.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/aem.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/aem.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/mea.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Cutscenes/mea.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/Menus/Panels_And_Slots/Minifantasy_GuiPanelsAndSlotsOriginal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/Menus/Panels_And_Slots/Minifantasy_GuiPanelsAndSlotsOriginal.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/css.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/css/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/css/main.css.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/favicon.ico" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/favicon.ico.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/assets/index.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTBezierPath.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTBezierPath.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTDescr.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTDescr.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTEvent.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTEvent.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTRect.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTRect.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTSeq.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTSeq.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTSpline.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LTSpline.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanAudio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanAudio.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanAudioOptions.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanAudioOptions.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanSmooth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanSmooth.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanTween.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanTween.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanTweenType.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/LeanTweenType.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/classes/index.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/elements.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/elements/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/elements/index.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Documentation/index.html.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Editor/LeanTweenDocumentationEditor.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Editor/LeanTweenDocumentationEditor.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/AlphBumps.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/AlphBumps.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/AlphaReadyMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/AlphaReadyMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/DirectionalArrowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/DirectionalArrowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/FrictionLess.physicMaterial" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/FrictionLess.physicMaterial.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_PersonSprites.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_PersonSprites.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_PlanetMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_PlanetMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_Ring.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_Ring.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_SineWave.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futoro_SineWave.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_Bar.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_Bar.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_ButtonBack.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_ButtonBack.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_ButtonBackDark.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_ButtonBackDark.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_SineWave.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_SineWave.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_WindowBack.psd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Futuro_WindowBack.psd.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Graph.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Graph.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/GridLines.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/GridLines.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Ground.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Ground.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/LineGlowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/LineGlowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Mock2d.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/Mock2d.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/ParticleGlow.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/ParticleGlow.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/PointMark.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/PointMark.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/SpaceLineGlowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/SpaceLineGlowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackCar.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackCar.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackFollowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackFollowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackGlowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackGlowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackLines.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrackLines.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrailFollowMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/TrailFollowMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/WalkingStick.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Material/WalkingStick.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/2dText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/2dText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/AdvancedExamplesText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/AdvancedExamplesText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/BasicExamplesText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/BasicExamplesText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/CameraShakeText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/CameraShakeText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/CurvePathsText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/CurvePathsText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/DirectionalArrow.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/DirectionalArrow.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/EndlessDrivingText.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/EndlessDrivingText.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/ExampleCar.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/ExampleCar.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/ExampleFirTree.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/ExampleFirTree.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Grid.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Grid.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween-Icon.blend.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween-Icon.blend.zip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween-Icon.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween-Icon.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTween.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTweenHD-Icon.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/LeanTweenHD-Icon.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/LMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/LMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/LineMaterial.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/LineMaterial.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material.001.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material.001.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material_001.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/Material_001.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/No Name.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/No Name.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarAlphaBlue.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarAlphaBlue.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarBlue.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarBlue.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarHat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarHat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarMat.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarMat.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarSpace.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SimpleAvatarSpace.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SubTitleText.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/SubTitleText.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/eanTween.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/Materials/eanTween.mat.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/SimpleAvatar.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/SimpleAvatar.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/SimpleAvatarPieces.fbx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Models/SimpleAvatarPieces.fbx.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/Avatar2dParticles.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/Avatar2dParticles.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarAlpha.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarAlpha.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarDiffuse 1.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarDiffuse 1.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarDiffuse.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarDiffuse.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarEventsCS.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarEventsCS.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarSpace.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarSpace.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarSparkles.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/AvatarSparkles.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/BasicExamplesText.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/BasicExamplesText.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/DustCloud.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/DustCloud.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/EndlessPiece.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/EndlessPiece.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/GridLine.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/GridLine.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/Grids.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Prefabs/Grids.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/Following.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/Following.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralAdvancedTechniques.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralAdvancedTechniques.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralBasic.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralBasic.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralBasics2d.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralBasics2d.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralCameraShake.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralCameraShake.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralEasingTypes.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralEasingTypes.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralEvents.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralEvents.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralSequencer.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralSequencer.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralSimpleUi.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralSimpleUi.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralUISpace.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralUISpace.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralUISpaceSettings.lighting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/GeneralUISpaceSettings.lighting.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/LogoCinematic.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/LogoCinematic.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathBezier.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathBezier.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathBezier2d.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathBezier2d.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSpline2d.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSpline2d.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplineEndless.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplineEndless.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplinePerformance.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplinePerformance.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplineTrack.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplineTrack.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplines.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/PathSplines.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/TestingUnitTests.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/TestingUnitTests.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/TestingZLegacy.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scenes/TestingZLegacy.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Archive.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Archive.zip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Following.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/Following.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralAdvancedTechniques.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralAdvancedTechniques.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasic.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasic.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasics2d.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralBasics2d.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralCameraShake.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralCameraShake.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEasingTypes.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEasingTypes.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEventsListeners.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralEventsListeners.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSequencer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSequencer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSimpleUI.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralSimpleUI.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralUISpace.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/GeneralUISpace.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/LogoCinematic.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/LogoCinematic.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier2d.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathBezier2d.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline2d.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSpline2d.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineEndless.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineEndless.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplinePerformance.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplinePerformance.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineTrack.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplineTrack.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplines.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/PathSplines.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingUnitTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingUnitTests.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacy.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacyExt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Scripts/TestingZLegacyExt.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/DefaultParticleReplacement.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/DefaultParticleReplacement.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/Dude2d.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/Dude2d.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/DustCloud.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/DustCloud.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/HorizontalGradient.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/HorizontalGradient.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/PowerUpStar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Examples/Textures/PowerUpStar.png.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescr.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescr.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescrOptional.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTDescrOptional.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTSeq.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LTSeq.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanAudio.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanAudio.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanSmooth.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanSmooth.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTest.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTest.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTween.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTween.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTween.dll.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTween.dll.zip.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTweenExt.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Framework/LeanTweenExt.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/License.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/License.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/ReadMe.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/ReadMe.txt.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/FollowingTests.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/PerformanceTests.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Prefabs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Prefabs/BulletPrefab.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Prefabs/BulletPrefab.prefab.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Scripts/LeanPool.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Scripts/LeanPool.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing240.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing243.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing246.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/Testing248.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingColorTweening.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingColorTweening.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingDescr.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue2.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingIssue2.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingMaxTweens.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingOptionalCancel.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingRotate.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSceneSwitching.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/LeanTween/Testing/TestingSequencer.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Lost Villager/Jovan.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Lost Villager/Jovan.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Lost Villager/Meredith.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Lost Villager/Meredith.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Wanted bandit/Rolf.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Quest_Dialogues/Wanted bandit/Rolf.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/BillingMode.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/BillingMode.json.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueFlags.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueQuestHelper.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueQuestHelper.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionAllyFighting.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionAllyFighting.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestInfoManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestInfoManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStamina.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerStamina.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/Quest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/Quest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestDescription.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestDescription.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestDescriptionn.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiver.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiverr.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiver.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiverr.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatuss.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatuss.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/QuestCard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/QuestCard.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/NewTooltip/TooltipSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/NewTooltip/TooltipSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/NewTooltip/TooltipTrigger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/NewTooltip/TooltipTrigger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestItemUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestItemUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestListUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestListUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestTooltipUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestTooltipUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/StartGamePanel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/StartGamePanel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Waypoint/Waypoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Waypoint/Waypoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/UniversalRP.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/UniversalRP.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TimeManager.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,17 +490,20 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b16f00eb0df74a0c9821fcb3020c2a7d3e200/89/46759917/Graph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ed969b0e627d471da4848289f9c322df46ae00/a9/1726428d/ThrowHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f72c99ce18e64a92acfcce42caf08d8f10fc00/30/a0260927/Enumerable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f94d23feabb04bb4b93f81d724b016ac9e3000/0d/69714649/Editor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f94d23feabb04bb4b93f81d724b016ac9e3000/0d/69714649/Editor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f94d23feabb04bb4b93f81d724b016ac9e3000/1c/46fd2abe/GameObjectInspector.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/fc9f39ef344c47699635b8624c64f91b34600/61/f7c02536/Animator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/3ea01e77be99618395f448b16bd7cc2bd4248bd9e5d8474964b2d97f39c5d74/System.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d44b17e136d09081da1e8fd0e8c83fde60e11818b9f2442d7ed8cb733fae895e/System.Collections.Generic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/Interface/IEvent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/ObjectMenuCreation/ItemCreationUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/ObjectMenuCreation/MenuItems.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/ShapeEditor/ShapeEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/ShapeEditor/ShapeEditor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/ShapeEditor/ShapeEditorRectSelection.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditor/SpriteEditorHandles.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditor/SpriteEditorMenu.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditor/SpriteEditorWindow.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditor/SpriteEditorWindowSettings.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditor/SpriteUtilityWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditorModule/ISpriteEditorModule.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.sprite/Editor/SpriteEditorModule/SpriteFrameModule/EditCapability.cs" root0="SKIP_HIGHLIGHTING" />
@@ -85,15 +520,20 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/EditorTools/TilemapEditorTool.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridBrushEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridBrushPickStoreSettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridBrushesDropdown.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridEditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaintPaletteClipboard.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaintPaletteWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaintPaletteWindowPreferences.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaintingState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaletteAddPopup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaletteBrushes.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/GridPaletteUtility.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/ObjectCreationMenu/DefaultAssetCreation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/ObjectCreationMenu/GameObjectCreation.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/PaintableGrid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/PaintableSceneViewGrid.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/SceneViewGridManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/SceneViewOpenTilePaletteHelper.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/TileDragAndDrop.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/TileDragAndDropManager.cs" root0="SKIP_HIGHLIGHTING" />
@@ -106,13 +546,18 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/GridPaintPaletteWindowSplitView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/SceneViewTilemapFocusOverlay.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteActivePaletteDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteActivePalettePopup.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteActiveTargetsDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteBrushInspector.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteBrushInspectorElement.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteBrushPanelButton.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteBrushPickElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteBrushesDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteClipboardElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteContextMenuHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteCreateTargetsDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteDragHandler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteWhiteboxPaletteDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilesetImporterElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Common/IOnboardingSection.cs" root0="SKIP_HIGHLIGHTING" />
@@ -120,13 +565,17 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Analytics/AnalyticsUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/PreReleaseHandling.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommenderSystemData.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Tests/Editor/LogicTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Tests/Editor/SectionHeaderTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Tests/Editor/UtilsForRecommendationTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Analytics/AnalyticsUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Camera/CameraUI.Environment.Drawers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Camera/CameraUI.Environment.Skin.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Camera/ISerializedCamera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/CameraEditorUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/CommandBuffers/CommandBufferGenerator/CommandBufferGenerator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/CoreEditorUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Debugging/DebugUIDrawer.Builtins.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/FilterWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/InspectorCurveEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/LightAnchorEditor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -137,6 +586,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.Dilate.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.LightTransport.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.RenderingLayers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.SkyOcclusion.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.VirtualOffset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbeGIBaking.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Lighting/ProbeVolume/ProbePlacement.cs" root0="SKIP_HIGHLIGHTING" />
@@ -153,12 +603,14 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/LookDev/DisplayWindow.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/LookDev/DropArea.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Material/MaterialHeaderScope.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/PostProcessing/LensFlareDataSRPEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/RemoveAdditionalDataUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/RemoveComponentUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/RenderGraph/RenderGraphViewer.PanManipulator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/RenderGraph/RenderGraphViewer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/SpeedTree9MaterialUpgrader.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Volume/Drawers/IntParameterDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Volume/VolumeEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Editor/Volume/VolumeGizmoDrawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Camera/CameraHistory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Camera/FreeCamera.cs" root0="SKIP_HIGHLIGHTING" />
@@ -168,10 +620,16 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/MousePositionDebug.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerValueTuple.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/ShaderDebugPrintManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/GPUDriven/InstanceCuller.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/GPUDriven/RenderersBatchersContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/GPUDriven/Utilities/ParallelSortExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeAdjustmentVolume.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeReferenceVolume.ReflProbeNormalization.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeReferenceVolume.Streaming.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeVolume.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lighting/ProbeVolume/ProbeVolumeGIContributor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Lights/LightAnchor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/PostProcessing/LensFlareComponentSRP.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/PostProcessing/Shaders/ffx/ffx_lpm.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/RenderGraph/Compiler/CompilerContextData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/RenderGraph/Compiler/NativePassCompiler.Debug.cs" root0="SKIP_HIGHLIGHTING" />
@@ -183,6 +641,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Settings/IncludeRenderPipelineAsset.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Utilities/ColorUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Utilities/GPUSort/GPUSort.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/XR/XROcclusionMesh.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Samples~/Common/Scripts/GetSampleInfos.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Samples~/Common/Scripts/SamplesFreeCamera.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/Packing.hlsl" root0="SKIP_HIGHLIGHTING" />
@@ -190,23 +649,32 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/Analytics/AnalyticsUtilsTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/DynamicArrayTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/EditorExampleTest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/GPUDriven/GPUDrivenRenderingUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/NativePassCompilerRenderGraphTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/RemoveComponentTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/RenderGraphTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Editor/Volumes/VolumeCollectionTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/RuntimeProfilerTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/Threading/FunctionTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/XRSubsystemTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Tests/Editor/ConfigurationTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Tests/Editor/Unity.RenderPipelines.Universal.Config.Editor.Tests.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/PixelPerfectCameraEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/ShapeEditor/GUIFramework/ClickAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/ShapeEditor/GUIFramework/GUIState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/ShapeEditor/View/Drawer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/Converter/PPv2/PPv2Converter.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/Decal/DecalProjectorEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/Decal/DisplacableRectHandles.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/Light2DAuthoring.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/UTess2D/PlanarGraph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/Passes/MainLightShadowCasterPass.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/ScriptableRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/UniversalAdditionalCameraData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Samples~/URPPackageSamples/SharedAssets/Scripts/FirstPersonController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Shaders/PostProcessing/FXAA3_11.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Tests/Editor/NativeRenderPassTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Tests/Editor/ShaderBuildPreprocessorTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/Sampling/Hashes.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/Sampling/QuasiRandom.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/Sampling/SobolSampling.hlsl" root0="SKIP_HIGHLIGHTING" />
@@ -215,6 +683,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Common/TerrainToMesh.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Common/Utilities/BlockAllocator.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Common/Utilities/GraphicsHelpers.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Compute/BLASPositionsPool.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Compute/RadeonRays/BvhCheck.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Compute/RadeonRays/HlbvhTopLevelBuilder.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.rendering.light-transport/Runtime/UnifiedRayTracing/Compute/RadeonRays/RadeonRaysAPI.cs" root0="SKIP_HIGHLIGHTING" />
@@ -301,12 +770,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIItemActionPanel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Loot/LootDropMover.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/ArmorManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -316,22 +782,18 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PlayerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/ShopManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/ShopManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/TabMenuManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TitleAndButtonIntroManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/CharacterClothesAnimator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Player/PlayerMovement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaTest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/DestroyObjectOnCompletedObjective.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/Quest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestCompletion.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiver.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestGiverr.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneManagement/AreaExit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/SkillVisualEffectController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -367,7 +829,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.17445482&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;DEMO/Supplies-needed-quest&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;quest-system-rework&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -429,10 +891,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19696">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="19696" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -626,6 +1088,11 @@
       <workItem from="1762548905169" duration="836000" />
       <workItem from="1762682772462" duration="19348000" />
       <workItem from="1762766520497" duration="9787000" />
+      <workItem from="1762857110421" duration="20520000" />
+      <workItem from="1762959752807" duration="5071000" />
+      <workItem from="1762977234123" duration="4752000" />
+      <workItem from="1763044086421" duration="4878000" />
+      <workItem from="1763063323846" duration="2682000" />
     </task>
     <servers />
   </component>
@@ -676,51 +1143,30 @@
           <line>16</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\UI\Quests\QuestTooltipUI.cs" containingFunctionPresentation="Method 'Setup'">
             <startOffsets>
-              <option value="575" />
+              <option value="578" />
             </startOffsets>
             <endOffsets>
-              <option value="615" />
+              <option value="618" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="22" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs</url>
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatuss.cs</url>
           <line>33</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'CompleteObjective'">
-            <startOffsets>
-              <option value="698" />
-            </startOffsets>
-            <endOffsets>
-              <option value="733" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'CompleteObjective'" />
           <option name="timeStamp" value="70" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs</url>
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatuss.cs</url>
           <line>35</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'CompleteObjective'">
-            <startOffsets>
-              <option value="756" />
-            </startOffsets>
-            <endOffsets>
-              <option value="792" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'CompleteObjective'" />
           <option name="timeStamp" value="73" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatus.cs</url>
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/QuestStatuss.cs</url>
           <line>28</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'IsObjectiveComplete'">
-            <startOffsets>
-              <option value="576" />
-            </startOffsets>
-            <endOffsets>
-              <option value="624" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\QuestStatus.cs" containingFunctionPresentation="Method 'IsObjectiveComplete'" />
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
@@ -738,13 +1184,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs</url>
-          <line>42</line>
+          <line>44</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\QuestTableManager.cs" containingFunctionPresentation="Method 'PrepareQuestTable'">
             <startOffsets>
-              <option value="1411" />
+              <option value="1498" />
             </startOffsets>
             <endOffsets>
-              <option value="1486" />
+              <option value="1573" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="190" />
@@ -754,10 +1200,10 @@
           <line>15</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Dialogues\DialogueQuestHelper.cs" containingFunctionPresentation="Method 'TryRemoveQuestItems'">
             <startOffsets>
-              <option value="466" />
+              <option value="467" />
             </startOffsets>
             <endOffsets>
-              <option value="560" />
+              <option value="561" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="200" />
@@ -839,32 +1285,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="240" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs</url>
-          <line>41</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\NPC\NPCTeleport.cs" containingFunctionPresentation="Method 'IsVisibleByCamera'">
-            <startOffsets>
-              <option value="1122" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1188" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="241" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs</url>
-          <line>37</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\NPC\NPCTeleport.cs" containingFunctionPresentation="Method 'IsVisibleByCamera'">
-            <startOffsets>
-              <option value="1028" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1029" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="242" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueFlagsManager.cs</url>
@@ -1088,19 +1508,6 @@
           <option name="timeStamp" value="283" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>145</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'HandleEscapePressed'">
-            <startOffsets>
-              <option value="4733" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4777" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="284" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/TabMenuManager.cs</url>
           <line>14</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\TabMenuManager.cs" containingFunctionPresentation="Method 'SwitchToTab'">
@@ -1203,6 +1610,71 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestGiver.cs</url>
+          <line>24</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestGiver.cs" containingFunctionPresentation="Method 'GiveQuest'">
+            <startOffsets>
+              <option value="585" />
+            </startOffsets>
+            <endOffsets>
+              <option value="631" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="295" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/DialogueManager.cs</url>
+          <line>41</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\DialogueManager.cs" containingFunctionPresentation="Method 'StartDialogue'">
+            <startOffsets>
+              <option value="1109" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1133" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="296" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs</url>
+          <line>87</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestJournal.cs" containingFunctionPresentation="Method 'IsQuestEntryInJournal'">
+            <startOffsets>
+              <option value="2582" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2627" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="297" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs</url>
+          <line>83</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestJournal.cs" containingFunctionPresentation="Method 'IsQuestEntryInJournal'">
+            <startOffsets>
+              <option value="2476" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2516" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="298" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestStatus.cs</url>
+          <line>23</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestStatus.cs" containingFunctionPresentation="Method 'HasQuestEntry'">
+            <startOffsets>
+              <option value="547" />
+            </startOffsets>
+            <endOffsets>
+              <option value="583" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="299" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -16,7 +16,7 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
 
     private QuestList _questList;
 
-    private QuestStatus Status { get; set; }
+    private QuestStatuss Statuss { get; set; }
     
     void Start()
     {
@@ -28,19 +28,19 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
 
     private void RedrawObjectives()
     {
-        if (Status == null) return;
+        if (Statuss == null) return;
         
         transform.DetachChildren();
-        SetQuestDetails(Status);
+        SetQuestDetails(Statuss);
     }
     
-    public void SetQuestDetails(QuestStatus questStatus)
+    public void SetQuestDetails(QuestStatuss questStatuss)
     {
         QuestDescriptionPanel.SetActive(true);
 
-        Status = questStatus;
+        Statuss = questStatuss;
         
-        var quest = questStatus.GetQuest();
+        var quest = questStatuss.GetQuest();
         
         Title.text = quest.GetTitle();
         Description.text = quest.GetDescription();
@@ -50,7 +50,7 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
         
         foreach (var objective in quest.GetObjectives())
         {
-            bool isComplete = questStatus.IsObjectiveComplete(objective.reference);
+            bool isComplete = questStatuss.IsObjectiveComplete(objective.reference);
 
             if (isComplete)
             {

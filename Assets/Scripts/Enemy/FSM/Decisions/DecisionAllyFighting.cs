@@ -39,9 +39,9 @@ public class DecisionAllyFighting : FSMDecision
         return false;
     }
     
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    }
+    // private void OnDrawGizmos()
+    // {
+        // Gizmos.color = Color.yellow;
+        // Gizmos.DrawWireSphere(transform.position, detectionRadius);
+    // }
 }

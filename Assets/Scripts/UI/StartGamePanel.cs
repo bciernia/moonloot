@@ -6,10 +6,4 @@ public class StartGamePanel : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

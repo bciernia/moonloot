@@ -9,15 +9,15 @@ public class QuestTooltipUI : MonoBehaviour
     [SerializeField] private GameObject _objectiveInCompletePrefab;
     [SerializeField] private TextMeshProUGUI _rewardText;
     
-    public void Setup(QuestStatus status)
+    public void Setup(QuestStatuss statuss)
     {
-        var quest = status.GetQuest();
+        var quest = statuss.GetQuest();
         _title.text = quest.GetTitle();
         _objectiveContainer.DetachChildren();
         foreach (var objective in quest.GetObjectives())
         {
             var prefab = _objectiveInCompletePrefab;
-            if (status.IsObjectiveComplete(objective.reference))
+            if (statuss.IsObjectiveComplete(objective.reference))
             {
                 prefab = _objectivePrefab;
             }

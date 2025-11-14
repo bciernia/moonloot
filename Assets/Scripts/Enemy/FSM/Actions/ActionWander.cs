@@ -71,13 +71,13 @@ public class ActionWander : FSMAction
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (moveRange != Vector2.zero)
-        {
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(transform.position, moveRange * 2f);
-            Gizmos.DrawLine(transform.position, movePosition);
-        }
-    }
+    // private void OnDrawGizmos()
+    // {
+        // if (moveRange != Vector2.zero)
+        // {
+            // Gizmos.color = Color.cyan;
+            // Gizmos.DrawWireCube(transform.position, moveRange * 2f);
+            // Gizmos.DrawLine(transform.position, movePosition);
+        // }
+    // }
 }

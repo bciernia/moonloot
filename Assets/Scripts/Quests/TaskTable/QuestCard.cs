@@ -4,19 +4,19 @@ using UnityEngine.UI;
 
 public class QuestCard : MonoBehaviour
 {
-    private Quest questData;
+    private QuestSO questData;
     public TextMeshProUGUI titleText;
     public Button button;
 
-    public void Setup(Quest quest, System.Action<Quest> onClickCallback)
+    public void Setup(QuestSO quest, System.Action<QuestSO> onClickCallback)
     {
         questData = quest;
-        titleText.text = quest.GetTitle();
+        titleText.text = quest.GetQuestTitle();
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(() => onClickCallback?.Invoke(questData));
     }
     
-    public bool HasQuest(Quest quest)
+    public bool HasQuest(QuestSO quest)
     {
         return questData == quest;
     }

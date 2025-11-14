@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using Unity.Cinemachine;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class QuestList : MonoBehaviour
 {
-    private readonly List<QuestStatus> _statuses = new List<QuestStatus>();
+    private readonly List<QuestStatuss> _statuses = new List<QuestStatuss>();
 
     public event Action onUpdate;
     public delegate void ObjectiveCompletedHandler(Quest quest, string objectiveId);
@@ -17,14 +15,14 @@ public class QuestList : MonoBehaviour
     public void AddQuest(Quest quest)
     {
         if (IsQuestInQuestList(quest)) return;
-        var newStatus = new QuestStatus(quest);
+        var newStatus = new QuestStatuss(quest);
         _statuses.Add(newStatus);
         onUpdate?.Invoke();
     }
 
     public bool IsQuestInQuestList(Quest quest) => GetQuestStatus(quest) != null;
 
-    public IEnumerable<QuestStatus> GetStatuses()
+    public IEnumerable<QuestStatuss> GetStatuses()
     {
         return _statuses;
     }
@@ -69,7 +67,7 @@ public class QuestList : MonoBehaviour
     }
     
     [CanBeNull]
-    private QuestStatus GetQuestStatus(Quest quest)
+    private QuestStatuss GetQuestStatus(Quest quest)
     {
         foreach (var status in _statuses)
         {

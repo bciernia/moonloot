@@ -6,146 +6,186 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private PlayerInput _playerInput;
-    private bool _dialogueActive;
     private GameObject _player;
-    
-    private void Awake()
-    {
-        _playerInput = GetComponentInParent<PlayerInput>();
-        _player = GameObject.FindGameObjectWithTag("Player");
-    }
-    
+
     [Header("Stats")]
     [SerializeField] private PlayerStatsSO _playerStatsSo;
-    
+
     [Header("Bars")]
     [SerializeField] private Image _healthBar;
     [SerializeField] private Image _manaBar;
-    // [SerializeField] private Image _staminaBar;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _manaTMP;
-    // [SerializeField] private TextMeshProUGUI _staminaTMP;
 
-    [Header("Stats Panel")] 
+    [Header("Stats Panel")]
     [SerializeField] private TextMeshProUGUI _statsLevelTMP;
     [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
-    [Header("Equipment Panel")] 
+    [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
     [SerializeField] private Image _manaBarEq;
-    // [SerializeField] private Image _staminaBar;
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
-    
+
     [Header("Main menu Panel")]
     [SerializeField] private GameObject _mainMenuPanel;
     [SerializeField] private GameObject _optionsPanel;
-    
+
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
     [SerializeField] private Image _enemyHealthBar;
 
-    [Header("Skill buttons")] 
+    [Header("Skill buttons")]
     [SerializeField] private TextMeshProUGUI _skill1KeyText;
     [SerializeField] private TextMeshProUGUI _skill2KeyText;
-    
+
     [Header("Interaction button")]
     [SerializeField] private TextMeshProUGUI _interactionKeyText;
-    
+
     [Header("Tab menu manager")]
     [SerializeField] private GameObject _gameMenu;
-    
+
+    // Input Actions
+    private InputAction _equipmentAction;
+    private InputAction _statsAction;
+    private InputAction _skillsAction;
+    private InputAction _journalAction;
+    private InputAction _menuAction;
+
+    // Wyświetlane wartości HP/MP (dla płynnej animacji tekstu)
+    private float _displayedHp;
+    private float _displayedMp;
+
+    private void Awake()
+    {
+        _playerInput = GetComponentInParent<PlayerInput>();
+        _player = GameObject.FindGameObjectWithTag("Player");
+
+        if (_playerStatsSo != null)
+        {
+            _displayedHp = _playerStatsSo.HP;
+            _displayedMp = _playerStatsSo.MP;
+        }
+    }
+
     private void Start()
     {
+        CacheInputActions();
+        EnableInputActions();
+        RegisterInputCallbacks();
+
         UpdateKeyTexts();
+        UpdatePlayerUI(force: true);
     }
-    
+
+    private void OnDestroy()
+    {
+        UnregisterInputCallbacks();
+    }
+
+    #region Input System Setup
+    private void CacheInputActions()
+    {
+        var map = _playerInput.actions;
+        _equipmentAction = map["Equipment"];
+        _statsAction = map["Statistics"];
+        _skillsAction = map["Skills"];
+        _journalAction = map["Journal"];
+        _menuAction = map["Main menu"];
+    }
+
+    private void EnableInputActions()
+    {
+        if (!_playerInput.actions.enabled)
+            _playerInput.actions.Enable();
+    }
+
+    private void RegisterInputCallbacks()
+    {
+        if (_equipmentAction != null) _equipmentAction.performed += OnEquipmentPressed;
+        if (_statsAction != null) _statsAction.performed += OnStatsPressed;
+        if (_skillsAction != null) _skillsAction.performed += OnSkillsPressed;
+        if (_journalAction != null) _journalAction.performed += OnJournalPressed;
+        if (_menuAction != null) _menuAction.performed += OnMenuPressed;
+    }
+
+    private void UnregisterInputCallbacks()
+    {
+        if (_equipmentAction != null) _equipmentAction.performed -= OnEquipmentPressed;
+        if (_statsAction != null) _statsAction.performed -= OnStatsPressed;
+        if (_skillsAction != null) _skillsAction.performed -= OnSkillsPressed;
+        if (_journalAction != null) _journalAction.performed -= OnJournalPressed;
+        if (_menuAction != null) _menuAction.performed -= OnMenuPressed;
+    }
+    #endregion
+
     private void Update()
     {
         UpdatePlayerUI();
     }
-    
-    private void OnEnable()
-    {
-        var map = _playerInput.actions;
 
-        map["Equipment"].performed += _ => OpenCloseEquipmentPanel(0);
-        map["Statistics"].performed += _ => OpenCloseTabPanel(1);
-        map["Skills"].performed += _ => OpenCloseTabPanel(2);
-        map["Journal"].performed += _ => OpenCloseTabPanel(3);
-        map["Main menu"].performed += _ => HandleEscapePressed();
-    }
-
-    private void OnDisable()
+    #region UI Update
+    private void UpdatePlayerUI(bool force = false)
     {
-        var map = _playerInput.actions;
-        
-        map["Equipment"].performed -= _ => OpenCloseEquipmentPanel(0);
-        map["Statistics"].performed -= _ => OpenCloseTabPanel(1);
-        map["Skills"].performed -= _ => OpenCloseTabPanel(2);
-        map["Journal"].performed -= _ => OpenCloseTabPanel(3);
-        map["Main menu"].performed -= _ => HandleEscapePressed();
-    }
-    
-    private void UpdatePlayerUI()
-    {
-        _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
-            10f * Time.deltaTime);
-        
-        _manaBar.fillAmount = Mathf.Lerp(_manaBar.fillAmount, _playerStatsSo.MP / _playerStatsSo.MaxMP,
-            10f * Time.deltaTime);
-        
-        _healthTMP.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
-        _manaTMP.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
-        
-        _healthBarEq.fillAmount = Mathf.Lerp(_healthBarEq.fillAmount, _playerStatsSo.HP / _playerStatsSo.MaxHP,
-            10f * Time.deltaTime);
-        
-        _manaBarEq.fillAmount = Mathf.Lerp(_manaBarEq.fillAmount, _playerStatsSo.MP / _playerStatsSo.MaxMP,
-            10f * Time.deltaTime);
-        
-        _healthTMPEq.text = $"{_playerStatsSo.HP}/{_playerStatsSo.MaxHP}";
-        _manaTMPEq.text = $"{_playerStatsSo.MP}/{_playerStatsSo.MaxMP}";
-    }
+        if (_playerStatsSo == null) return;
 
+        // Płynna animacja wyświetlanej wartości
+        _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 20f * Time.deltaTime);
+        _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 20f * Time.deltaTime);
+
+        float hpRatio = _displayedHp / _playerStatsSo.MaxHP;
+        float mpRatio = _displayedMp / _playerStatsSo.MaxMP;
+
+        // Aktualizacja pasków HP/MP
+        _healthBar.fillAmount = hpRatio;
+        _manaBar.fillAmount = mpRatio;
+        _healthBarEq.fillAmount = hpRatio;
+        _manaBarEq.fillAmount = mpRatio;
+
+        // Aktualizacja tekstów
+        _healthTMP.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
+        _manaTMP.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
+        _healthTMPEq.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
+        _manaTMPEq.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
+    }
+    #endregion
+
+    #region Input Callbacks
+    private void OnEquipmentPressed(InputAction.CallbackContext ctx) => OpenCloseEquipmentPanel(0);
+    private void OnStatsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(1);
+    private void OnSkillsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(2);
+    private void OnJournalPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(3);
+    private void OnMenuPressed(InputAction.CallbackContext ctx) => HandleEscapePressed();
+    #endregion
+
+    #region Menu & Panels
     private void OpenCloseEquipmentPanel(int tabIndex)
     {
-        ShopManager.Instance.ShopPanel.SetActive(false);
-        
+        if (ShopManager.Instance != null && ShopManager.Instance.ShopPanel != null)
+            ShopManager.Instance.ShopPanel.SetActive(false);
+
         OpenCloseTabPanel(tabIndex);
     }
-    
+
     private void OpenCloseTabPanel(int tabIndex)
     {
-        var isPanelActive = _gameMenu.activeSelf;
+        bool isPanelActive = _gameMenu.activeSelf;
 
-        if (isPanelActive)
-        {
-            _gameMenu.SetActive(false);
-            Time.timeScale = 1f;
-        }
-        else
-        {
-            _gameMenu.SetActive(true);
-            TabMenuManager.Instance.SwitchToTab(tabIndex);    
-            Time.timeScale = 0f;
-        }
+        _gameMenu.SetActive(!isPanelActive);
+        Time.timeScale = isPanelActive ? 1f : 0f;
+
+        if (!isPanelActive)
+            TabMenuManager.Instance.SwitchToTab(tabIndex);
     }
-    
-    private void OpenClosePanel(GameObject panel)
-    {
-        panel.SetActive(!panel.activeSelf);
-    }
-    
+
     private void HandleEscapePressed()
     {
-        //Przerwanie dialogu za pomocą Escape wyświetlało Main menu
-        if (DialogueManager.Instance.IsInDialogue())
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsInDialogue())
             return;
-        
+
         if (TryCloseAnyPanel())
             return;
 
@@ -158,14 +198,11 @@ public class UIManager : MonoBehaviour
 
         foreach (var panel in panels)
         {
-            if (panel.name == _optionsPanel.name)
-            {
-                UpdateKeyTexts();
-            }
-            
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
+                if (panel == _optionsPanel)
+                    UpdateKeyTexts();
                 return true;
             }
         }
@@ -173,26 +210,19 @@ public class UIManager : MonoBehaviour
         return false;
     }
 
+    private void OpenClosePanel(GameObject panel)
+    {
+        panel.SetActive(!panel.activeSelf);
+    }
+    #endregion
 
     private void UpdateKeyTexts()
     {
         if (_playerInput == null) return;
 
         var map = _playerInput.actions;
-        var skill1 = map["Skill1"];
-        var skill2 = map["Skill2"];
-        var interaction = map["Interaction"];
-
-        if (skill1 != null)
-            _skill1KeyText.text = skill1.GetBindingDisplayString().ToUpper();
-        if (skill2 != null)
-            _skill2KeyText.text = skill2.GetBindingDisplayString().ToUpper();
-        if (interaction != null)
-            _interactionKeyText.text = interaction.GetBindingDisplayString().ToUpper();
-    }
-
-    private void ShowPrompt(string promptMessage)
-    {
-        
+        _skill1KeyText.text = map["Skill1"]?.GetBindingDisplayString().ToUpperInvariant();
+        _skill2KeyText.text = map["Skill2"]?.GetBindingDisplayString().ToUpperInvariant();
+        _interactionKeyText.text = map["Interaction"]?.GetBindingDisplayString().ToUpperInvariant();
     }
 }

@@ -77,9 +77,9 @@ public class DecisionDetectPlayer : FSMDecision
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
+    // private void OnDrawGizmos()
+    // {
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere(transform.position, range);
+    // }
 }
