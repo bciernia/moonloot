@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Quest", menuName = "Quest")]
 public class Quest : ScriptableObject
 {
     [SerializeField] private string _name;

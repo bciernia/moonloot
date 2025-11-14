@@ -14,19 +14,21 @@ public class QuestTableManager : Singleton<QuestTableManager>
     [SerializeField] private TextMeshProUGUI QuestReward;
     [SerializeField] private Button QuestButton;
 
-    private QuestList PlayerQuests;
+    private QuestJournal PlayerQuests;
     
-    private Quest ChosenQuest { get; set; }
+    private QuestSO ChosenQuest { get; set; }
     
     private readonly List<GameObject> spawnedQuestCards = new List<GameObject>();
+
+    private const string QUEST_TAKEN_FROM_TABLE = "QUEST_TAKEN_FROM_TABLE";
 
     protected override void Awake()
     {
         base.Awake();
-        PlayerQuests = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
+        PlayerQuests = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestJournal>();
     }
 
-    public void PrepareQuestTable(List<Quest> questList)
+    public void PrepareQuestTable(List<QuestSO> questList)
     {
         ChosenQuest = null;
         QuestDescriptionPanel.SetActive(false);
@@ -51,26 +53,24 @@ public class QuestTableManager : Singleton<QuestTableManager>
         }
     }
 
-    private void OnQuestCardClicked(Quest quest)
+    private void OnQuestCardClicked(QuestSO quest)
     {
         QuestDescriptionPanel.SetActive(true);
         ChosenQuest = quest;
-        QuestTitle.text = quest.GetTitle();
-        QuestDescription.text = quest.GetDescription();
-        QuestReward.text = $"Reward:\n{quest.GetRewardDescription()}";
+        QuestTitle.text = quest.GetQuestTitle();
+        QuestDescription.text = quest.GetQuestDescription();
         QuestButton.onClick.RemoveAllListeners();
         QuestButton.onClick.AddListener(() => GetTask(quest));
     }
 
-    private void GetTask(Quest quest)
+    private void GetTask(QuestSO quest)
     {
-        var questList = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestList>();
-        questList.AddQuest(quest);
+        PlayerQuests.AddQuest(quest, QUEST_TAKEN_FROM_TABLE);
         RemoveQuestCard(quest);
         QuestDescriptionPanel.SetActive(false);
     }
     
-    private void RemoveQuestCard(Quest quest)
+    private void RemoveQuestCard(QuestSO quest)
     {
         for (var i = 0; i < spawnedQuestCards.Count; i++)
         {

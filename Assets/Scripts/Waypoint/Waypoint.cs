@@ -17,13 +17,13 @@ public class Waypoint : MonoBehaviour
         gameStarted = true;
     }
 
-    private void OnDrawGizmos()
-    {
-        if (!gameStarted && transform.hasChanged)
-        {
-            EntityPosition = transform.position;
-        }
-    }
+    // private void OnDrawGizmos()
+    // {
+        // if (!gameStarted && transform.hasChanged)
+        // {
+            // EntityPosition = transform.position;
+        // }
+    // }
 
     public Vector3 GetPosition(int pointIndex) => EntityPosition + points[pointIndex];
 

@@ -6,7 +6,7 @@ public class DialogueQuestHelper : MonoBehaviour
 
     private void Awake()
     {
-        quest = GetComponent<QuestGiver>().GetQuest();
+        quest = GetComponent<QuestGiverr>().GetQuest();
     }
 
     //Used in dialogues

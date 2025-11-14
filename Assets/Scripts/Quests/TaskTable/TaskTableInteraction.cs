@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TaskTableInteraction : MonoBehaviour, IInteractable
 {
-    [SerializeField] private List<Quest> QuestList = new List<Quest>();
+    [SerializeField] private List<QuestSO> QuestList = new List<QuestSO>();
     [SerializeField] private GameObject QuestTable;
     
     private void OnTriggerEnter2D(Collider2D other)

@@ -20,15 +20,10 @@ public class TooltipSystem : MonoBehaviour
     {
         current.tooltip.SetText(content, header);
         current.tooltip.gameObject.SetActive(true);
-
-        LeanTween.cancel(current.gameObject);
-        LeanTween.alphaCanvas(current.canvasGroup, 1f, 0.3f).setEase(LeanTweenType.easeOutQuad);
     }
 
     public static void Hide()
     {
-        LeanTween.cancel(current.gameObject);
-        LeanTween.alphaCanvas(current.canvasGroup, 0f, 0.3f).setEase(LeanTweenType.easeInQuad)
-            .setOnComplete(() => current.tooltip.gameObject.SetActive(false));
+        current.tooltip.gameObject.SetActive(false);
     }
 }

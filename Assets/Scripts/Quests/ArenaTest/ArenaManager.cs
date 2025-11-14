@@ -10,7 +10,13 @@ public class ArenaManager : Singleton<ArenaManager>
     [SerializeField] private GameObject arenaDoor;
     [SerializeField] private Transform arenaDoorPosition;
 
-    private List<GameObject> _spawnedEnemies = new();
+    private class EnemyRef
+    {
+        public GameObject GameObject;
+        public EnemyStatistics Stats;
+    }
+
+    private readonly List<EnemyRef> _spawnedEnemies = new();
     private GameObject _activeDoor;
     private bool _arenaStarted;
 
@@ -18,38 +24,29 @@ public class ArenaManager : Singleton<ArenaManager>
     {
         if (_arenaStarted) return;
         _arenaStarted = true;
-        
+
         SpawnEnemiesByDifficulty(difficultyLevel);
         SpawnArenaDoor();
     }
 
     private void SpawnEnemiesByDifficulty(DifficultyLevel difficultyLevel)
     {
-        var enemiesCount = 0;
-
-        switch (difficultyLevel)
+        int enemiesCount = difficultyLevel switch
         {
-            case DifficultyLevel.Easy:
-                enemiesCount = 2;
-                break;
-            case DifficultyLevel.Medium:
-                enemiesCount = 3;
-                break;
-            case DifficultyLevel.Hard:
-                enemiesCount = 4;
-                break;
-            default:
-                enemiesCount = 2;
-                break;
-        }
+            DifficultyLevel.Easy => 2,
+            DifficultyLevel.Medium => 3,
+            DifficultyLevel.Hard => 4,
+            _ => 2
+        };
 
-        for (var i = 0; i < enemiesCount; i++)
+        for (int i = 0; i < enemiesCount; i++)
         {
             var spawnPoint = spawnPoints[i % spawnPoints.Count];
             var enemyPrefab = enemiesToSpawn[Random.Range(0, enemiesToSpawn.Count)];
 
             var enemy = Instantiate(enemyPrefab, spawnPoint.transform.position, Quaternion.identity);
-            _spawnedEnemies.Add(enemy);
+            var stats = enemy.GetComponent<EnemyStatistics>();
+            _spawnedEnemies.Add(new EnemyRef { GameObject = enemy, Stats = stats });
         }
 
         Debug.Log($"Arena started with {enemiesCount} enemies.");
@@ -65,13 +62,17 @@ public class ArenaManager : Singleton<ArenaManager>
     {
         if (!_arenaStarted) return;
 
-        _spawnedEnemies = _spawnedEnemies.Where(e => e != null).ToList();
+        _spawnedEnemies.RemoveAll(e => e.GameObject == null);
 
-        bool allDead = _spawnedEnemies.All(enemy =>
+        bool allDead = true;
+        foreach (var enemy in _spawnedEnemies)
         {
-            var stats = enemy.GetComponent<EnemyStatistics>();
-            return stats == null || stats.CurrentHP <= 0;
-        });
+            if (enemy.Stats != null && enemy.Stats.CurrentHP > 0)
+            {
+                allDead = false;
+                break;
+            }
+        }
 
         if (allDead && _activeDoor != null)
         {

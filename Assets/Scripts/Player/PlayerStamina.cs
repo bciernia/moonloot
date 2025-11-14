@@ -23,11 +23,6 @@ public class PlayerStamina : MonoBehaviour
         ResetStamina();
     }
 
-    private void Update()
-    {
-        // RecoverStamina();
-    }
-
     private void RecoverStamina()
     {
         if (!(CurrentStamina < player.PlayerStats.MaxStamina)) return;

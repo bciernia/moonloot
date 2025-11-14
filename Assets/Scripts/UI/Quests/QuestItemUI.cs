@@ -6,20 +6,20 @@ public class QuestItemUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _title;
 
-    private QuestDescription _questDescription;
+    private QuestDescriptionn _questDescriptionn;
 
     private void Awake()
     {
-        _questDescription = GetComponent<QuestDescription>();
+        _questDescriptionn = GetComponent<QuestDescriptionn>();
     }
 
-    private QuestStatus Status { get; set; }
+    private QuestStatuss Statuss { get; set; }
     
-    public void Setup(QuestStatus status)
+    public void Setup(QuestStatuss statuss)
     {
-        Status = status;
-        _title.text = status.GetQuest().GetTitle();
-        if (status.GetCompletedCount() == status.GetQuest().GetObjectivesCount())
+        Statuss = statuss;
+        _title.text = statuss.GetQuest().GetTitle();
+        if (statuss.GetCompletedCount() == statuss.GetQuest().GetObjectivesCount())
         {
             _title.fontStyle = FontStyles.Strikethrough;
         }
@@ -27,11 +27,11 @@ public class QuestItemUI : MonoBehaviour
 
     public void SetQuestDescription()
     {
-        _questDescription.SetQuestDescription(Status);
+        _questDescriptionn.SetQuestDescription(Statuss);
     }
 
-    public QuestStatus GetQuestStatus()
+    public QuestStatuss GetQuestStatus()
     {
-        return Status;
+        return Statuss;
     }
 }

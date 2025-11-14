@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,6 +33,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     private EnemySelector _enemySelector;
     private Rigidbody2D _rb2D;
     private EnemyLoot _enemyLoot;
+
+    public Action<EnemyStatistics> OnDeath;
 
     private void Awake()
     {
@@ -81,8 +84,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _rb2D.bodyType = RigidbodyType2D.Static;
             
             _enemyLoot.DropItems();
-
+            OnDeath?.Invoke(this);
             StartCoroutine(HandleDeathAnimation());
+            
 
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
