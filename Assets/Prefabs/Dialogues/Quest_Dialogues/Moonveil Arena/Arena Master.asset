@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2070738530270915235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 9
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Vareth Dorne
+    - id: 1
+      language: en
+      text: Welcome to Moonveil Arena! This is demo, so you can test fight system
+        here.
+    - id: 2
+      language: en
+      text: Choose difficulty level and enter the arena!
+    - id: 3
+      language: en
+      text: Easy
+    - id: 4
+      language: en
+      text: Medium
+    - id: 5
+      language: en
+      text: Hard
+    - id: 6
+      language: en
+      text: Good luck! Stand on square and fight!
+    - id: 7
+      language: en
+      text: Go inside and fight!
+    - id: 8
+      language: en
+      text: Good luck! Go inside, stand on square and fight!
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,27 +59,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1.7.6
   nodes:
-  - rid: 3986856043565547718
-  - rid: 3986856043565547719
-  - rid: 3986856043565547720
-  - rid: 3986856043565547721
-  - rid: 3986856043565547722
-  - rid: 3986856043565547723
-  - rid: 3986856043565547724
-  - rid: 3986856043565547725
-  - rid: 3986856043565547726
-  - rid: 3986856043565547727
-  - rid: 3986856043565547728
-  - rid: 3986856043565547729
-  - rid: 3986856043565547730
-  - rid: 3986856043565547731
-  - rid: 3986856043565547732
-  translationLibrary: {fileID: 2753800099546190396}
-  maxID: 4035
+  - rid: 5422256220617048151
+  - rid: 5422256220617048152
+  - rid: 5422256220617048153
+  - rid: 5422256220617048154
+  - rid: 5422256220617048155
+  - rid: 5422256220617048156
+  - rid: 5422256220617048157
+  - rid: 5422256220617048158
+  - rid: 5422256220617048159
+  - rid: 5422256220617048160
+  - rid: 5422256220617048161
+  - rid: 5422256220617048162
+  - rid: 5422256220617048163
+  - rid: 5422256220617048164
+  translationLibrary: {fileID: -2070738530270915235}
+  maxID: 4592
   references:
     version: 2
     RefIds:
-    - rid: 3986856043565547718
+    - rid: 5422256220617048151
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2
@@ -43,39 +87,15 @@ MonoBehaviour:
         inputs: []
         outputs:
         - id: 3
-          attachedIds: 05000000
+          attachedIds: d1040000
           ownerId: 2
           connectionType: 1
         width: 110
         height: 75
-        xPosition: 12.402405
-        yPosition: 181.09698
+        xPosition: 343.65237
+        yPosition: 163.90948
         entryPointName: 0
-    - rid: 3986856043565547719
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 5
-          attachedIds: 03000000
-          ownerId: 4
-          connectionType: 1
-        outputs:
-        - id: 6
-          attachedIds: d1040000
-          ownerId: 4
-          connectionType: 1
-        width: 268
-        height: 210.3125
-        xPosition: 167.97699
-        yPosition: 181.88051
-        items:
-        - rid: 3986856043565547733
-        characterName: Vareth Dorne
-        icon: 
-    - rid: 3986856043565547720
+    - rid: 5422256220617048152
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 34
@@ -96,10 +116,10 @@ MonoBehaviour:
         xPosition: 829.26404
         yPosition: 213.21936
         items:
-        - rid: 3986856043565547734
+        - rid: 5422256220617048165
         characterName: Vareth Dorne
         icon: 
-    - rid: 3986856043565547721
+    - rid: 5422256220617048153
       type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 42
@@ -140,10 +160,10 @@ MonoBehaviour:
         xPosition: 1203.264
         yPosition: 206.2194
         items:
-        - rid: 3986856043565547735
-        - rid: 3986856043565547736
-        - rid: 3986856043565547737
-    - rid: 3986856043565547722
+        - rid: 5422256220617048166
+        - rid: 5422256220617048167
+        - rid: 5422256220617048168
+    - rid: 5422256220617048154
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 69
@@ -192,7 +212,7 @@ MonoBehaviour:
         - 1
         triggerType: 0
         objectTagOrName: 
-    - rid: 3986856043565547723
+    - rid: 5422256220617048155
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 668
@@ -241,7 +261,7 @@ MonoBehaviour:
         - 2
         triggerType: 0
         objectTagOrName: 
-    - rid: 3986856043565547724
+    - rid: 5422256220617048156
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 895
@@ -290,7 +310,7 @@ MonoBehaviour:
         - 3
         triggerType: 0
         objectTagOrName: 
-    - rid: 3986856043565547725
+    - rid: 5422256220617048157
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1164
@@ -307,14 +327,14 @@ MonoBehaviour:
           ownerId: 1164
           connectionType: 1
         width: 268
-        height: 169.68747
+        height: 196.24994
         xPosition: 2136.911
         yPosition: 295.41095
         items:
-        - rid: 3986856043565547738
+        - rid: 5422256220617048169
         characterName: Vareth Dorne
         icon: 
-    - rid: 3986856043565547726
+    - rid: 5422256220617048158
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1227
@@ -331,7 +351,7 @@ MonoBehaviour:
         xPosition: 2565.911
         yPosition: 346.6609
         exitPointName: 
-    - rid: 3986856043565547727
+    - rid: 5422256220617048159
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1232
@@ -339,7 +359,7 @@ MonoBehaviour:
         nodeType: 8
         inputs:
         - id: 1233
-          attachedIds: 06000000
+          attachedIds: 03000000
           ownerId: 1232
           connectionType: 1
         - id: 1234
@@ -369,8 +389,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 320
-        xPosition: 525.7945
-        yPosition: 151.21869
+        xPosition: 505.482
+        yPosition: 121.53122
         triggeredClassName: DialogueEntrySetter
         triggeredMethodName: UpdateDialogueEntry
         methodSignature: UpdateDialogueEntry(string)
@@ -380,7 +400,7 @@ MonoBehaviour:
         - 1
         triggerType: 0
         objectTagOrName: 
-    - rid: 3986856043565547728
+    - rid: 5422256220617048160
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1595
@@ -397,7 +417,7 @@ MonoBehaviour:
         xPosition: -24.399624
         yPosition: 579.3956
         entryPointName: 1
-    - rid: 3986856043565547729
+    - rid: 5422256220617048161
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1643
@@ -411,7 +431,7 @@ MonoBehaviour:
         - id: 1645
           attachedIds: 
           ownerId: 1643
-          connectionType: 8
+          connectionType: 9
         - id: 1646
           attachedIds: 
           ownerId: 1643
@@ -435,8 +455,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 321
-        xPosition: 282.55356
-        yPosition: 557.9112
+        xPosition: 230.99106
+        yPosition: 543.8487
         triggeredClassName: ArenaTest
         triggeredMethodName: IsArenaStarted
         methodSignature: IsArenaStarted():bool
@@ -444,7 +464,7 @@ MonoBehaviour:
         parameterValues: []
         triggerType: 0
         objectTagOrName: 
-    - rid: 3986856043565547730
+    - rid: 5422256220617048162
       type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 3729
@@ -478,10 +498,10 @@ MonoBehaviour:
           connectionType: 11
         width: 160
         height: 120
-        xPosition: 581.01373
-        yPosition: 624.0673
+        xPosition: 557.57623
+        yPosition: 655.31726
         logicOperation: 4
-    - rid: 3986856043565547731
+    - rid: 5422256220617048163
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 3875
@@ -499,13 +519,13 @@ MonoBehaviour:
           connectionType: 1
         width: 268
         height: 140
-        xPosition: 867.6387
-        yPosition: 667.1923
+        xPosition: 878.5762
+        yPosition: 662.5048
         items:
-        - rid: 3986856043565547739
+        - rid: 5422256220617048170
         characterName: Vareth Dorne
         icon: 
-    - rid: 3986856043565547732
+    - rid: 5422256220617048164
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 3896
@@ -522,86 +542,36 @@ MonoBehaviour:
         xPosition: 1256.0135
         yPosition: 713.7548
         exitPointName: 
-    - rid: 3986856043565547733
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Welcome to Moonveil Arena! This is demo, so you can test fight system
-          here.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 3986856043565547734
+    - rid: 5422256220617048165
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Choose difficulty level and enter the arena!
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 3986856043565547735
+    - rid: 5422256220617048166
       type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Easy
-    - rid: 3986856043565547736
+    - rid: 5422256220617048167
       type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Medium
-    - rid: 3986856043565547737
+    - rid: 5422256220617048168
       type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Hard
-    - rid: 3986856043565547738
+    - rid: 5422256220617048169
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
-        text: Good luck! Stand on square and fight!
+        text: Good luck! Go inside, stand on square and fight!
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 3986856043565547739
+    - rid: 5422256220617048170
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Go inside and fight!
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
---- !u!114 &2753800099546190396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalLanguage: en
-  translationSets:
-  - counter: 8
-    languageCode: en
-    translations:
-    - id: 0
-      language: en
-      text: Vareth Dorne
-    - id: 1
-      language: en
-      text: Welcome to Moonveil Arena! This is demo, so you can test fight system
-        here.
-    - id: 2
-      language: en
-      text: Choose difficulty level and enter the arena!
-    - id: 3
-      language: en
-      text: Easy
-    - id: 4
-      language: en
-      text: Medium
-    - id: 5
-      language: en
-      text: Hard
-    - id: 6
-      language: en
-      text: Good luck! Stand on square and fight!
-    - id: 7
-      language: en
-      text: Go inside and fight!

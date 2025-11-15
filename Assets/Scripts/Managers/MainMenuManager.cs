@@ -5,7 +5,12 @@ public class MainMenuManager : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("StartScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("SceneForest", LoadSceneMode.Single);
+    }
+
+    public void StartArena()
+    {
+        SceneManager.LoadScene("SceneArena", LoadSceneMode.Single);
     }
 
     public void ExitGame()
