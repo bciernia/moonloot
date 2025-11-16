@@ -22,7 +22,7 @@ public class SkillEntry
     [NonSerialized] public SkillState state = SkillState.ready;
 }
 
-internal class ActiveEffect
+internal class ActiveEffects
 {
     public SkillEntry Skill;
     public GameObject EffectObject;
@@ -42,7 +42,7 @@ public class SkillsManager : Singleton<SkillsManager>
     [SerializeField] private GameObject EffectsContainer;
     [SerializeField] private GameObject EffectPrefab;
 
-    private List<ActiveEffect> activeEffects = new List<ActiveEffect>();
+    private List<ActiveEffects> activeEffects = new List<ActiveEffects>();
 
     private PlayerInput _playerInput;
 
@@ -73,20 +73,6 @@ public class SkillsManager : Singleton<SkillsManager>
         _playerInput.actions["Skill2"].performed -= ctx => TryActivateSkill(1);
     }
 
-    private GameObject CreateEffectPrefabForSkill(Skill skill)
-    {
-        var instance = Instantiate(EffectPrefab, EffectsContainer.transform);
-
-        var tooltipTrigger = instance.GetComponent<TooltipTrigger>();
-        var image = instance.GetComponent<Image>();
-
-        tooltipTrigger.header = skill.Name;
-        tooltipTrigger.content = skill.Description;
-        image.sprite = skill.Icon;
-
-        return instance;
-    }
-
     private void TryActivateSkill(int index)
     {
         if (index < 0 || index >= skills.Count) return;
@@ -96,13 +82,21 @@ public class SkillsManager : Singleton<SkillsManager>
         if (entry.state != SkillState.ready) return;
 
         entry.skill.Activate(user);
+
         entry.state = SkillState.active;
         entry.activeTimer = entry.skill.ActiveTime;
 
-        if (entry.skill.HasEffectIcon)
+        if (entry.skill.Effect != null)
         {
-            var effect = CreateEffectPrefabForSkill(entry.skill);
-            activeEffects.Add(new ActiveEffect { Skill = entry, EffectObject = effect });
+            entry.skill.Effect.Apply(user);
+
+            var effectUI = StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect, user);
+
+            activeEffects.Add(new ActiveEffects
+            {
+                Skill = entry,
+                EffectObject = effectUI
+            });
         }
     }
 

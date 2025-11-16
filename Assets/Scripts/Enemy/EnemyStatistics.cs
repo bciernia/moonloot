@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatistics : MonoBehaviour, IDamageable
+public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
@@ -69,7 +69,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
 
     public void TakeDamage(float amount)
     {
-        CurrentHP -= amount;
+        CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
 
         if (CurrentHP <= 0)
@@ -95,7 +95,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _enemyAnimator.SetDamagedAnimation();
         }
     }
-    
+
     private IEnumerator HandleDeathAnimation()
     {
         const float deathAnimLength = 1f;
@@ -105,5 +105,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         {
             Destroy(gameObject);
         }
+    }
+
+    public void RestoreHealth(float amount)
+    {
+        CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
     }
 }

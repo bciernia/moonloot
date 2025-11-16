@@ -96,7 +96,7 @@ public class SlashEffect: MonoBehaviour
         
         if (weapon.ProjectilePrefab) return;
 
-        if (other.gameObject.CompareTag("NPC")) return;
+        if (!other.gameObject.CompareTag("Enemy") || other.GetComponent<EnemyStatistics>().CurrentHP <= 0) return;
         
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);

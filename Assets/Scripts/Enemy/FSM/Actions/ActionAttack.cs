@@ -7,6 +7,8 @@ public class ActionAttack : FSMAction
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
     private DecisionAttackRange _decisionAttackRange;
+
+    [SerializeField] private Effect _effect;
     
     private bool HasAttacked { get; set; }
     
@@ -45,6 +47,8 @@ public class ActionAttack : FSMAction
         player.TakeDamage(_enemyStatistics.Damage);
 
         HasAttacked = true;
+
+        AddStateForPlayer();
         
         KnockBackPlayer();
     }
@@ -53,5 +57,13 @@ public class ActionAttack : FSMAction
     {
         var playerKnockBack = _enemyBrain.Player.GetComponent<KnockBack>();
         playerKnockBack.GetKnockedBack(transform, 5f);
+    }
+
+    private void AddStateForPlayer()
+    {
+        if (_effect != null)
+        {
+            _effect.Apply(_enemyBrain.Player.gameObject);
+        }
     }
 }

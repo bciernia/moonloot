@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (!canAttack) return;
+        if (!canAttack || DialogueManager.Instance.IsInDialogue()) return;
         
         var canPerformAttack = CanPerformAttack(_weapon.RequiredMana, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
