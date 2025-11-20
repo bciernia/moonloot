@@ -1,5 +1,3 @@
-using System;
-using EZCameraShake;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
@@ -26,11 +24,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
     {
         if (_playerStats.HP <= 0) return;
 
-        var reducedDamage = Math.Max(amount - _playerStats.DamageResistance, 1); 
-        
-        _playerStats.HP -= reducedDamage;
-        DamageManager.Instance.ShowDamageText(reducedDamage, transform);
-        CameraShaker.Instance.ShakeOnce(1f, 1f, 0f, .43f);
+        _playerStats.HP -= amount;
+        DamageManager.Instance.ShowDamageText(amount, transform);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;

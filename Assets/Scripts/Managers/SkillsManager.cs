@@ -90,7 +90,7 @@ public class SkillsManager : Singleton<SkillsManager>
         {
             entry.skill.Effect.Apply(user);
 
-            var effectUI = StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect, user);
+            var effectUI = StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect);
 
             activeEffects.Add(new ActiveEffects
             {

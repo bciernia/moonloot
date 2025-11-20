@@ -27,6 +27,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     public List<GameObject> SpecialAttacks { get; private set; }
     public bool IsBoss { get; private set; }
 
+    public Effect Effect { get; private set; }
+    public float EffectChance { get; private set; }
+    
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
@@ -35,6 +38,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     private EnemyLoot _enemyLoot;
 
     public Action<EnemyStatistics> OnDeath;
+
+
 
     private void Awake()
     {
@@ -65,6 +70,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         MaxAttackTimeInterval = _enemyStats.MaxAttackTimeInterval;
         SpecialAttacks = _enemyStats.SpecialAttacks;
         IsBoss = _enemyStats.IsBoss;
+        Effect = _enemyStats.Effect;
+        EffectChance = _enemyStats.EffectChance;
     }
 
     public void TakeDamage(float amount)

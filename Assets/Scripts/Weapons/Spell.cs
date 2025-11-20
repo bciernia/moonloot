@@ -55,7 +55,6 @@ public class Spell : MonoBehaviour
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest")) return;
 
         other.GetComponent<IDamageable>()?.TakeDamage(Damage);    
-        Debug.Log("Odpalone");
     }
 
     public void DestroySpell()

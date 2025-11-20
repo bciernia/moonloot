@@ -9,7 +9,7 @@ public class StatusEffectUIManager : Singleton<StatusEffectUIManager>
 
     private readonly Dictionary<string, GameObject> activeEffectIcons = new();
 
-    public GameObject CreateEffectUI(Effect effect, GameObject target)
+    public GameObject CreateEffectUI(Effect effect)
     {
         if (activeEffectIcons.TryGetValue(effect.Name, out var existing))
         {

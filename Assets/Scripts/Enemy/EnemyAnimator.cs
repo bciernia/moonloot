@@ -8,6 +8,8 @@ public class EnemyAnimator : MonoBehaviour
     private readonly int dead = Animator.StringToHash("Dead");
     private readonly int attack = Animator.StringToHash("Attack");
     private readonly int damaged = Animator.StringToHash("Damaged");
+
+    private readonly int attackId = Animator.StringToHash("AttackId");
     
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
@@ -57,6 +59,11 @@ public class EnemyAnimator : MonoBehaviour
     public void SetDamagedAnimation()
     {
         _animator.SetTrigger(damaged);
+    }
+
+    public void SetAttackById(int id)
+    {
+        _animator.SetFloat(attackId, id);
     }
 
     public void SetNpcPositionForDialogue(Vector2 playerPosition, Vector2 npcPosition)

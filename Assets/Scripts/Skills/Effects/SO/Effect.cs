@@ -10,13 +10,20 @@ public abstract class Effect : ScriptableObject
     public float TickInterval = 1f;
     public GameObject VisualPrefab;
 
+    [Range(0, 100)] public int BasicChanceForHit;
+
     protected abstract void OnTick(GameObject target);
 
-    public void Apply(GameObject target)
+    public void Apply(GameObject target, float hitChance = 0)
     {
-        var uiObj = StatusEffectUIManager.Instance.CreateEffectUI(this, target);
+        var uiObj = target.CompareTag("Player") ? StatusEffectUIManager.Instance.CreateEffectUI(this) : null;
 
+        var effectHitChance = BasicChanceForHit + hitChance;
+        
+        if (!RNGManager.Instance.MakeSkillCheck(effectHitChance)) return;
+        
         var existing = target.GetComponent<ActiveDmgOverTime>();
+        
         ActiveDmgOverTime activeEffect;
 
         if (existing != null)

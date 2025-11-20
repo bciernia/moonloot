@@ -27,4 +27,8 @@ public class EnemyStatsSO : ScriptableObject
     public float SpecialAttackTimeInterval;
     public float MaxAttackTimeInterval;
     public List<GameObject> SpecialAttacks;
+    
+    [Header("Effects")]
+    public Effect Effect;
+    public float EffectChance;
 }

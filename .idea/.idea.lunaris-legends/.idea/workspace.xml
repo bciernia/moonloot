@@ -5,43 +5,86 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Extra/IBlindable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Extra/IBlindable.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Extra/IHealable.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Extra/IHealable.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/RNGManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/RNGManager.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Healing.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveHealingOverTime.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveHealingOverTime.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/ActiveEffect.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/ActiveEffect.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/HealingEffect.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/HealingEffect.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/PoisonEffect.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/PoisonEffect.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/BossActions.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/BossActions/ActionPutTotem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/BossActions/ActionPutTotem.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/TotemType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/TotemType.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Magic/Spell effects/Poison/Aura/Aura_Poison.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Magic/Spell effects/Poison/Aura/Aura_Poison.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Magic/Spell effects/Poison/Tileable_Effect/Tileable_Poison.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Magic/Spell effects/Poison/Tileable_Effect/Tileable_Poison.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Effect.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Effect.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Enemy_Orc.overrideController" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Enemy_Orc.overrideController.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Attack_Left.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Attack_Left.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Attack_Right.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Attack_Right.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Chase_Left.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Chase_Left.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Chase_Right.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Chase_Right.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Damaged_Left.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Damaged_Left.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Damaged_Right.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Damaged_Right.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Death.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Death.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Idle_Left.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Idle_Left.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Idle_Right.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Idle_Right.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Walk_Left.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Walk_Left.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Walk_Right.anim" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Animations/Enemy/Orc/Orc_Walk_Right.anim.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Effects/Burning/BurningEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Effects/Burning/BurningEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Effects/Poisoning/PoisoningEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Effects/Poisoning/PoisoningEffect.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Equippable/Weapons/Fist - No weapon.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Equippable/Weapons/Fist - No weapon.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Equippable/Weapons/Sword.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Equippable/Weapons/Sword.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/CameraShakeDemo.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/CameraShakeDemo.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeByDistance.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeByDistance.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeOnKeyPress.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeOnKeyPress.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeOnTrigger.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/Sample Scripts/ShakeOnTrigger.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/ShakeDemo.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Demo/ShakeDemo.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Docs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Docs/EZ Camera Shake Guide &amp; Docs.doc" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Docs/EZ Camera Shake Guide &amp; Docs.doc.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Docs/EZ Camera Shake Guide &amp; Docs.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Docs/EZ Camera Shake Guide &amp; Docs.pdf.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShakeInstance.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShakeInstance.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShakePresets.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShakePresets.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShaker.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/CameraShaker.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/Utilities.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/Utilities/CameraUtilities.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/EZ Camera Shake/Scripts/Utilities/CameraUtilities.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Characters/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Zombie (1).prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemy/Enemy_Zombie (1).prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Projectiles/AOE_Spells/Spell_IceSpikes/Spell_IceSpikes.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Projectiles/AOE_Spells/Spell_IceSpikes/Spell_IceSpikes.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyAnimator.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/WeaponItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/WeaponItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/RNGManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/RNGManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/SkillsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/SkillsManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/StatusEffectUiManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/StatusEffectUiManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerHealth.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerHealth.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skill.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/Heal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/Heal.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/Heal_Player.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/Heal_Player.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/HealingOverTime.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Heal/HealingOverTime.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/EnemyStatsSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Spell.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Spell.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/UniversalRenderPipelineGlobalSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectAuditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectAuditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -378,7 +421,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/SO/Effects/EffectSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueFlags.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/TestDialogueWithPatron.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRetreat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionStartDialogue.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedSpecialAction.cs" root0="FORCE_HIGHLIGHTING" />
@@ -419,6 +461,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestTooltipSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/StartGamePanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/TestSpell.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Totem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SetMainCameraToUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Scripts/NavMeshComponents.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap.extras@8de698ac55b7/Editor/Tiles/RuleTile/RuleTileEditor.cs" root0="SKIP_HIGHLIGHTING" />
@@ -507,10 +550,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="10876">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="10876" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -712,7 +755,10 @@
       <workItem from="1763133795532" duration="1457000" />
       <workItem from="1763144729904" duration="1855000" />
       <workItem from="1763195731647" duration="17621000" />
-      <workItem from="1763313672140" duration="2209000" />
+      <workItem from="1763313672140" duration="4975000" />
+      <workItem from="1763391474102" duration="9718000" />
+      <workItem from="1763480741442" duration="8690000" />
+      <workItem from="1763652834580" duration="2315000" />
     </task>
     <servers />
   </component>
@@ -853,45 +899,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="230" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
-          <line>25</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'InitializeShop'">
-            <startOffsets>
-              <option value="976" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1010" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="232" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs</url>
-          <line>24</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\Shop\ChestInteraction.cs" containingFunctionPresentation="Method 'Interact'">
-            <startOffsets>
-              <option value="603" />
-            </startOffsets>
-            <endOffsets>
-              <option value="680" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="233" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
-          <line>113</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ShopManager.cs" containingFunctionPresentation="Method 'BuyItem'">
-            <startOffsets>
-              <option value="4260" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4305" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="234" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/DestroyObjectOnCompletedObjective.cs</url>
@@ -1063,19 +1070,6 @@
           <option name="timeStamp" value="281" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/TabMenuManager.cs</url>
-          <line>14</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\TabMenuManager.cs" containingFunctionPresentation="Method 'SwitchToTab'">
-            <startOffsets>
-              <option value="467" />
-            </startOffsets>
-            <endOffsets>
-              <option value="492" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="285" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs</url>
           <line>9</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\Shop\ResetSellerInventory.cs" containingFunctionPresentation="Method 'OnDisable'">
@@ -1087,19 +1081,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="286" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryPage.cs</url>
-          <line>299</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\UIInventoryPage.cs" containingFunctionPresentation="Method 'UpdateSellerGoldAmount'">
-            <startOffsets>
-              <option value="9617" />
-            </startOffsets>
-            <endOffsets>
-              <option value="9666" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="288" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/ShopManager.cs</url>
@@ -1126,19 +1107,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="291" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/MouseFollower.cs</url>
-          <line>18</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\MouseFollower.cs" containingFunctionPresentation="Method 'SetData'">
-            <startOffsets>
-              <option value="452" />
-            </startOffsets>
-            <endOffsets>
-              <option value="483" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="292" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestGiver.cs</url>
@@ -1193,30 +1161,43 @@
           <option name="timeStamp" value="299" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/StatusEffectUiManager.cs</url>
-          <line>13</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\StatusEffectUiManager.cs" containingFunctionPresentation="Method 'CreateEffectUI'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Skills/SkillVisualEffectController.cs</url>
+          <line>19</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Skills\SkillVisualEffectController.cs" containingFunctionPresentation="Method 'RestartAnimation'">
             <startOffsets>
-              <option value="428" />
+              <option value="431" />
             </startOffsets>
             <endOffsets>
-              <option value="493" />
+              <option value="460" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="308" />
+          <option name="timeStamp" value="316" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs</url>
-          <line>16</line>
+          <line>20</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Skills\Effects\SO\Effect.cs" containingFunctionPresentation="Method 'Apply'">
             <startOffsets>
-              <option value="372" />
+              <option value="555" />
             </startOffsets>
             <endOffsets>
-              <option value="444" />
+              <option value="607" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="314" />
+          <option name="timeStamp" value="317" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs</url>
+          <line>71</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Enemy\FSM\Actions\ActionAttack.cs" containingFunctionPresentation="Method 'CalculateEnemyDamage'">
+            <startOffsets>
+              <option value="1985" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2078" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="319" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

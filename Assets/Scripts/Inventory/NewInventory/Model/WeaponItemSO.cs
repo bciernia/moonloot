@@ -18,6 +18,8 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     public float timeBetweenAttack;
     [field: SerializeField]
     public float RequiredStamina;
+    [field: SerializeField] public AudioClip actionSfx { get; private set; }
+
     
     [Header("Projectile")]
     [field: SerializeField]
@@ -28,6 +30,12 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     [field: SerializeField] private WeaponItemSO defaultWeapon;
 
     [field: SerializeField] public float AmmunitionAmount;
+
+
+    [Header("Effect modifiers")]
+    [field: SerializeField] public Effect Effect;
+
+    [field: SerializeField] public float EffectChance;
 
     public override string GetStatsDescription()
     {
@@ -42,7 +50,6 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
         return description;
     }
 
-    [field: SerializeField] public AudioClip actionSfx { get; private set; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
     {
         var weaponSystem = character.transform.parent.GetComponentInChildren<WeaponManager>();

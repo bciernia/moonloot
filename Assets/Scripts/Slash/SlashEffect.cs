@@ -101,6 +101,8 @@ public class SlashEffect: MonoBehaviour
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         
+        if(weapon.Effect) weapon.Effect.Apply(other.gameObject, weapon.EffectChance);
+        
         if (bloodParticle != null)
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
