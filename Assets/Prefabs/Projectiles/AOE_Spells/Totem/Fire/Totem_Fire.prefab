@@ -13,9 +13,11 @@ GameObject:
   - component: {fileID: 8801302000397489794}
   - component: {fileID: 1230903058826452071}
   - component: {fileID: 3919374537165752757}
-  m_Layer: 8
+  - component: {fileID: 7303526858645030536}
+  - component: {fileID: 4551592686411413287}
+  m_Layer: 6
   m_Name: Totem_Fire
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,8 +80,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 1902162111
-  m_SortingLayer: 1
+  m_SortingLayerID: 569395403
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: -6013300559098007169, guid: e17f5823f35404a4ebe503122c36df94, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -148,7 +150,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0481326, y: 0.10107833}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -158,7 +160,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.15, y: 0.03}
+  m_Size: {x: 0.9778799, y: 1.2525669}
   m_EdgeRadius: 0
 --- !u!114 &3919374537165752757
 MonoBehaviour:
@@ -173,16 +175,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  radius: 15
+  radius: 10
   allyLayer:
     serializedVersion: 2
     m_Bits: 64
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
-  healAmount: 10
-  damageAmount: 15
+  healAmount: 0
+  damageAmount: 3
   destroyOnEnd: 1
+--- !u!50 &7303526858645030536
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316496806616316830}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
+--- !u!114 &4551592686411413287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3316496806616316830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99b8b5c4443ab4f408b46431f75dd087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _itemStatistics: {fileID: 11400000, guid: c9565b57864a1234a92caf253f7ffb71, type: 2}
+  _destroyParticles: {fileID: 5731606433855413807, guid: c0b94f44793b20740acacdef50c1672f, type: 3}
 --- !u!1 &3420282273133061357
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7879171119148070944}
   - component: {fileID: 3778765284338588526}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +323,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7147875129281570038}
   - component: {fileID: 8965527792965231400}
-  m_Layer: 8
+  m_Layer: 6
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}

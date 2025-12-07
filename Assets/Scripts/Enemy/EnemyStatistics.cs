@@ -78,7 +78,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
-
+        
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();

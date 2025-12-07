@@ -92,11 +92,7 @@ public class SlashEffect: MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == _shooter) return;
-        
-        if (weapon.ProjectilePrefab) return;
-
-        if (!other.gameObject.CompareTag("Enemy") || other.GetComponent<EnemyStatistics>().CurrentHP <= 0) return;
+        if (!CanAttack(other)) return;
         
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
@@ -108,5 +104,22 @@ public class SlashEffect: MonoBehaviour
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
         }
+    }
+
+    private bool CanAttack(Collider2D target)
+    {
+        if (target.gameObject == _shooter) return false;
+        if (weapon.ProjectilePrefab) return false;
+
+        var enemyStats = target.GetComponent<EnemyStatistics>();
+        var itemStats = target.GetComponent<ItemStatistics>();
+
+        if (enemyStats != null)
+            return enemyStats.CurrentHP > 0;
+
+        if (itemStats != null)
+            return itemStats.CurrentHP > 0;
+
+        return false;
     }
 } 

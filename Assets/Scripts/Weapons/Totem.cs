@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Totem : MonoBehaviour
@@ -23,6 +24,13 @@ public class Totem : MonoBehaviour
 
     [Header("FX")]
     public bool destroyOnEnd = true;
+
+    private ItemStatistics _itemStatistics;
+
+    private void Start()
+    {
+        _itemStatistics = GetComponent<ItemStatistics>();
+    }
 
     public void OnTotemEffect()
     {
@@ -73,18 +81,17 @@ public class Totem : MonoBehaviour
                 if (type == TotemType.Ice)
                 {
                     // ApplyIceDebuff(h.gameObject);
-                    Debug.Log("Ice status");
                 }
 
                 if (type == TotemType.Fire)
                 {
-                    // ApplyFireDebuff(h.gameObject);
-                    Debug.Log("Fire status");
+                    ApplyFireDebuff(h.gameObject);
                 }
             }
         }
     }
 
+    //TODO
     // private void ApplyIceDebuff(GameObject target)
     // {
     //     var slow = target.GetComponent<StatusController>();
@@ -94,14 +101,13 @@ public class Totem : MonoBehaviour
     //     }
     // }
 
-    // private void ApplyFireDebuff(GameObject target)
-    // {
-    //     var burn = target.GetComponent<StatusController>();
-    //     if (burn != null)
-    //     {
-    //         burn.ApplyBurn(5, 2f); // np. dmg over time
-    //     }
-    // }
+    private void ApplyFireDebuff(GameObject target)
+    {
+        if (_itemStatistics != null && _itemStatistics.Effect != null)
+        {
+            _itemStatistics.Effect.Apply(target, _itemStatistics.ChanceForHit);
+        }
+    }
 
     private void OnDrawGizmosSelected()
     {

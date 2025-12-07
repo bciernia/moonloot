@@ -10,7 +10,8 @@ public class ActionPutTotem : FSMAction
 
     private EnemyBrain _enemyBrain;
     private EnemyStatistics _enemyStatistics;
-
+    
+    private const float totemSpawnDistance = 1.5f;
     private readonly System.Random rng = new System.Random();
 
     private void Awake()
@@ -33,25 +34,37 @@ public class ActionPutTotem : FSMAction
 
         var rolledType = (TotemType)rng.Next(0, 3);
 
-        Transform target = rolledType == TotemType.Heal
-            ? FindAllyNeedingHeal()
-            : _enemyBrain.Player;
-
-        if (target == null)
+        //Szansa na postawienie totemu leczenia
+        var canPutHealingTotem = RNGManager.Instance.MakeSkillCheck(100);        
+        
+        var healTarget = FindAllyNeedingHeal();
+        
+        if (healTarget == null || !canPutHealingTotem)
         {
-            target = _enemyBrain.Player;
             rolledType = (TotemType)rng.Next(1, 3);
         }
 
-        GameObject prefab = GetPrefab(rolledType);
+        var prefab = GetPrefab(rolledType);
 
         if (!prefab)
         {
             Debug.LogError("Totem prefab is missing!");
             return;
         }
+
+        Vector3 totemSpawnPosition;
+
+        if (rolledType == TotemType.Heal)
+        {
+            totemSpawnPosition = healTarget.position;
+        }
+        else
+        {
+            var dir = (_enemyBrain.Player.position - transform.position).normalized;
+            totemSpawnPosition = transform.position + dir * totemSpawnDistance;
+        }
         
-        Instantiate(prefab, transform.position, Quaternion.identity);
+        Instantiate(prefab, totemSpawnPosition, Quaternion.identity);
     }
 
     private GameObject GetPrefab(TotemType type)

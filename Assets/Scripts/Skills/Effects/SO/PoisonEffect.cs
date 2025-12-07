@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Poisoning", menuName = "Effects/Poisoning")]
@@ -10,7 +11,7 @@ public class PoisonEffect : Effect
         var damageable = target.GetComponent<IDamageable>();
         if (damageable != null)
         {
-            damageable.TakeDamage(TotalDamage * TickInterval / Duration);
+            damageable.TakeDamage((float)Math.Round(TotalDamage * TickInterval / Duration, 1));
         }
     }
 }
