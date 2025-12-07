@@ -9,6 +9,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     [SerializeField] private Image itemImage;
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image borderImage;
+    [SerializeField] private GameObject quantityTextContainer;
 
     public event Action<UIInventoryItem, UIInventoryItem> OnItemDroppedOn;
     
@@ -37,7 +38,15 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     {
         itemImage.gameObject.SetActive(true);
         itemImage.sprite = sprite;
-        quantityText.text = quantity + "";
+        if (quantity <= 1)
+        {
+            quantityTextContainer.SetActive(false);
+        }
+        else
+        {
+            quantityTextContainer.SetActive(true);
+            quantityText.text = quantity + "";
+        }
         empty = false;
     }
 

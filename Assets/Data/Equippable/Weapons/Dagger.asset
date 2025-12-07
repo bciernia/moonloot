@@ -10,22 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e556e85c4f9f426eb95fa2365d03f5f2, type: 3}
-  m_Name: Spear
+  m_Name: Dagger
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 0
   <MaxStackSize>k__BackingField: 1
-  <Name>k__BackingField: Spear
-  <Description>k__BackingField: Long, wooden spear.
-  <Image>k__BackingField: {fileID: -2594570879511417879, guid: 5b801626ed2ac3a4895febe9684edf4c, type: 3}
-  <DefaultParametersList>k__BackingField: []
-  <ItemToDrop>k__BackingField: {fileID: 6897480148688284128, guid: 5d2eda4a070b46f4f8f141d1171e4990, type: 3}
+  <Name>k__BackingField: Dagger
+  <Description>k__BackingField: Useful for cutting branches and heads off enemies.
+  <Image>k__BackingField: {fileID: -8084255319445393057, guid: 5b801626ed2ac3a4895febe9684edf4c, type: 3}
+  <DefaultParametersList>k__BackingField:
+  - itemParameter: {fileID: 11400000, guid: 6046b61d65f52854aab268ce8b67d7b1, type: 2}
+    value: 100
+  <ItemToDrop>k__BackingField: {fileID: 4393091342682578640, guid: 4ce0ca57fd1309948938ca2f64f0b21e, type: 3}
   <ItemType>k__BackingField: 0
-  BuyPrice: 12
-  SellPrice: 5
-  WeaponType: 1
-  SlashSize: {x: 0.3, y: 0.05}
-  SlashOffset: {x: 0.05, y: 0}
-  Damage: 4
+  BuyPrice: 3
+  SellPrice: 1
+  WeaponType: 4
+  SlashSize: {x: 0.1, y: 0.1}
+  SlashOffset: {x: 0, y: 0}
+  Damage: 3
   timeBetweenAttack: 0.5
   RequiredStamina: 0
   <actionSfx>k__BackingField: {fileID: 0}

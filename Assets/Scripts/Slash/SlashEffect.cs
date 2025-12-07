@@ -122,4 +122,27 @@ public class SlashEffect: MonoBehaviour
 
         return false;
     }
+    
+    private void OnDrawGizmos()
+    {
+        // Jeżeli collider nie istnieje w tym momencie — spróbuj go pobrać
+        if (_boxCollider == null)
+            _boxCollider = GetComponent<BoxCollider2D>();
+
+        if (_boxCollider == null) return;
+
+        Gizmos.color = Color.red;
+
+        // Pozycja kolizji w world space
+        Vector3 worldCenter = transform.TransformPoint(_boxCollider.offset);
+
+        // Rozmiar w world space (2D box → rysujemy jako 3D cube)
+        Vector3 worldSize = new Vector3(
+            _boxCollider.size.x * Mathf.Abs(transform.lossyScale.x),
+            _boxCollider.size.y * Mathf.Abs(transform.lossyScale.y),
+            0.01f // cienkie Z, żeby było widać
+        );
+
+        Gizmos.DrawWireCube(worldCenter, worldSize);
+    }
 } 
