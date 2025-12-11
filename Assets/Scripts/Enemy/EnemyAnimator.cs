@@ -43,6 +43,12 @@ public class EnemyAnimator : MonoBehaviour
         if (CurrentDirection.x < 0)
         {
             _spriteRenderer.flipX = true;
+            var sprites = GetComponentsInChildren<SpriteRenderer>();
+            
+            foreach (var sr in sprites)
+            {
+                sr.flipX = true;
+            }
         }
     }
 

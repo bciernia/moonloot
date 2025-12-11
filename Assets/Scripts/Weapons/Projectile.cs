@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    [SerializeField] private float speed;
     [SerializeField] private GameObject bloodParticle;
     
     public Vector3 Direction { get; set; }
@@ -11,6 +10,8 @@ public class Projectile : MonoBehaviour
     public GameObject Shooter { get; set; }
     public bool IsEnemy { get; set; }
 
+    public ProjectileSO ProjectileSo;
+    
     private void Start()
     {
         if (Shooter != null)
@@ -25,7 +26,7 @@ public class Projectile : MonoBehaviour
     
     private void Update()
     {
-        transform.Translate(Direction * (speed * Time.deltaTime));
+        transform.Translate(Direction * (ProjectileSo.Speed * Time.deltaTime));
     }
     
     private void OnTriggerEnter2D(Collider2D other)
@@ -36,8 +37,10 @@ public class Projectile : MonoBehaviour
         //Knockbackthrust przenieść do właściwości pocisku
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         
+        if(ProjectileSo.Effect) ProjectileSo.Effect.Apply(other.gameObject, ProjectileSo.EffectChance);
+
         //Zrobić particle dla innych materiałów (drewno/kamień)
-        if (bloodParticle != null && !other.gameObject.CompareTag(TagTypes.Environment))
+        if (bloodParticle != null && other.gameObject.CompareTag("Enemy"))
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);

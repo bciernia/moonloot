@@ -15,7 +15,8 @@ public enum ItemType
     Book,
     Materials,
     Letter,
-    Junk
+    Junk,
+    Crystal
 }
 
 //TODO NOWE TYPY DORZUCAJ NA KONIEC

@@ -37,8 +37,10 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         if (!canAttack || DialogueManager.Instance.IsInDialogue()) return;
+
+        var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
         
-        var canPerformAttack = CanPerformAttack(_weapon.RequiredMana, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
+        var canPerformAttack = CanPerformAttack(manaCost, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
         
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
@@ -50,10 +52,11 @@ public class PlayerAttack : MonoBehaviour
 
     private bool CanPerformAttack(float requiredMana, float requiredStamina, float availableMana, float availableStamina)
     {
-        if (availableStamina < requiredStamina)
-        {
-            return false;
-        }
+        //TODO Stamina system
+        // if (availableStamina < requiredStamina)
+        // {
+            // return false;
+        // }
         
         if (requiredMana > 0 && availableMana <= 0)
         {

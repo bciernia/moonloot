@@ -99,7 +99,7 @@ public class SlashEffect: MonoBehaviour
         
         if(weapon.Effect) weapon.Effect.Apply(other.gameObject, weapon.EffectChance);
         
-        if (bloodParticle != null)
+        if (bloodParticle != null && other.gameObject.CompareTag("Enemy"))
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
