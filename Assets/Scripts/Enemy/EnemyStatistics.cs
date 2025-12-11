@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatistics : MonoBehaviour, IDamageable
+public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
@@ -27,6 +27,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     public List<GameObject> SpecialAttacks { get; private set; }
     public bool IsBoss { get; private set; }
 
+    public Effect Effect { get; private set; }
+    public float EffectChance { get; private set; }
+    
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
@@ -35,6 +38,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
     private EnemyLoot _enemyLoot;
 
     public Action<EnemyStatistics> OnDeath;
+
+
 
     private void Awake()
     {
@@ -65,13 +70,15 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         MaxAttackTimeInterval = _enemyStats.MaxAttackTimeInterval;
         SpecialAttacks = _enemyStats.SpecialAttacks;
         IsBoss = _enemyStats.IsBoss;
+        Effect = _enemyStats.Effect;
+        EffectChance = _enemyStats.EffectChance;
     }
 
     public void TakeDamage(float amount)
     {
-        CurrentHP -= amount;
+        CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
-
+        
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
@@ -95,7 +102,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
             _enemyAnimator.SetDamagedAnimation();
         }
     }
-    
+
     private IEnumerator HandleDeathAnimation()
     {
         const float deathAnimLength = 1f;
@@ -105,5 +112,10 @@ public class EnemyStatistics : MonoBehaviour, IDamageable
         {
             Destroy(gameObject);
         }
+    }
+
+    public void RestoreHealth(float amount)
+    {
+        CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
     }
 }

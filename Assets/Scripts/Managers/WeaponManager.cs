@@ -61,9 +61,9 @@ public class WeaponManager: Singleton<WeaponManager>
         _weaponIcon.sprite = weapon.Image;
         _weaponIcon.gameObject.SetActive(true);
 
-        if (weapon.RequiredMana != 0)
+        if (weapon.ProjectilePrefab?.ProjectileSo.ManaCost != 0)
         {
-            _weaponManaTMP.text = weapon.RequiredMana.ToString(CultureInfo.InvariantCulture);
+            _weaponManaTMP.text = weapon.ProjectilePrefab?.ProjectileSo.ManaCost.ToString(CultureInfo.InvariantCulture);
             _weaponManaTMP.gameObject.SetActive(true);
         }
         else

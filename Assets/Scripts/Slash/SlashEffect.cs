@@ -92,19 +92,57 @@ public class SlashEffect: MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject == _shooter) return;
-        
-        if (weapon.ProjectilePrefab) return;
-
-        if (other.gameObject.CompareTag("NPC")) return;
+        if (!CanAttack(other)) return;
         
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         
-        if (bloodParticle != null)
+        if(weapon.Effect) weapon.Effect.Apply(other.gameObject, weapon.EffectChance);
+        
+        if (bloodParticle != null && other.gameObject.CompareTag("Enemy"))
         {
             var blood = Instantiate(bloodParticle, other.transform.position, Quaternion.identity);
             blood.GetComponent<BloodParticle>()?.SpawnBlood(other.transform.position, transform.position);
         }
+    }
+
+    private bool CanAttack(Collider2D target)
+    {
+        if (target.gameObject == _shooter) return false;
+        if (weapon.ProjectilePrefab) return false;
+
+        var enemyStats = target.GetComponent<EnemyStatistics>();
+        var itemStats = target.GetComponent<ItemStatistics>();
+
+        if (enemyStats != null)
+            return enemyStats.CurrentHP > 0;
+
+        if (itemStats != null)
+            return itemStats.CurrentHP > 0;
+
+        return false;
+    }
+    
+    private void OnDrawGizmos()
+    {
+        // Jeżeli collider nie istnieje w tym momencie — spróbuj go pobrać
+        if (_boxCollider == null)
+            _boxCollider = GetComponent<BoxCollider2D>();
+
+        if (_boxCollider == null) return;
+
+        Gizmos.color = Color.red;
+
+        // Pozycja kolizji w world space
+        Vector3 worldCenter = transform.TransformPoint(_boxCollider.offset);
+
+        // Rozmiar w world space (2D box → rysujemy jako 3D cube)
+        Vector3 worldSize = new Vector3(
+            _boxCollider.size.x * Mathf.Abs(transform.lossyScale.x),
+            _boxCollider.size.y * Mathf.Abs(transform.lossyScale.y),
+            0.01f // cienkie Z, żeby było widać
+        );
+
+        Gizmos.DrawWireCube(worldCenter, worldSize);
     }
 } 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Spell : MonoBehaviour
@@ -8,7 +7,7 @@ public class Spell : MonoBehaviour
     private readonly int play = Animator.StringToHash("Play");
 
     public GameObject Shooter { get; set; }
-    public float Damage { get; set; }
+    [field: SerializeField] public float Damage { get; set; }
     
     private void Awake()
     {
@@ -55,7 +54,6 @@ public class Spell : MonoBehaviour
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest")) return;
 
         other.GetComponent<IDamageable>()?.TakeDamage(Damage);    
-        Debug.Log("Odpalone");
     }
 
     public void DestroySpell()

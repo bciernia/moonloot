@@ -7,6 +7,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 {
     public List<UIInventoryItem> EquippedItemsSlots = new List<UIInventoryItem>();
     public List<InventoryItem> EquippedItems = new List<InventoryItem>();
+
+    public InventoryItem defaultWeapon;
     
     [SerializeField] private UIInventoryItem WeaponSlot;
     [SerializeField] private UIInventoryItem ArmorSlot;
@@ -16,9 +18,6 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     protected override void Awake()
     {
         base.Awake();
-        
-        
-
         EquippedItemsSlots.Add(WeaponSlot);
         EquippedItemsSlots.Add(ArmorSlot);
         EquippedItemsSlots.Add(OutfitSlot);
@@ -30,7 +29,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 
     private void InitializeEquippedSlots()
     {
-        InitializeSlot(EquippedItems[0], WeaponSlot);
+        //Dla pustej broni ustawiany default którym są pięści
+        InitializeSlot(EquippedItems[0].item == null ? defaultWeapon : EquippedItems[0], WeaponSlot);
         InitializeSlot(EquippedItems[1], ArmorSlot);
         InitializeSlot(EquippedItems[2], OutfitSlot);
     }

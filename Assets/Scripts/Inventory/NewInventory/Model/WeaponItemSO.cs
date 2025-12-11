@@ -6,6 +6,8 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
 {
     [field: SerializeField]
     public WeaponType WeaponType;
+    [field: SerializeField] private WeaponItemSO defaultWeapon;
+
 
     [field: SerializeField]
     public Vector2 SlashSize;
@@ -18,31 +20,31 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     public float timeBetweenAttack;
     [field: SerializeField]
     public float RequiredStamina;
-    
+    [field: SerializeField] public AudioClip actionSfx { get; private set; }
+
     [Header("Projectile")]
     [field: SerializeField]
     public Projectile ProjectilePrefab;
-    [field: SerializeField]
-    public float RequiredMana;
-
-    [field: SerializeField] private WeaponItemSO defaultWeapon;
-
     [field: SerializeField] public float AmmunitionAmount;
+
+
+    [Header("Effect modifiers")]
+    [field: SerializeField] public Effect Effect;
+    [field: SerializeField] public float EffectChance;
 
     public override string GetStatsDescription()
     {
         var description = $"Damage: {Damage} \n";
         description += $"Attack cooldown: {timeBetweenAttack} \n";
         
-        if (RequiredMana > 0)
+        if (ProjectilePrefab?.ProjectileSo?.ManaCost > 0)
         {
-            description += $"Required mana: {RequiredMana} \n";
+            description += $"Required mana: {ProjectilePrefab.ProjectileSo.ManaCost} \n";
         }
         
         return description;
     }
 
-    [field: SerializeField] public AudioClip actionSfx { get; private set; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
     {
         var weaponSystem = character.transform.parent.GetComponentInChildren<WeaponManager>();

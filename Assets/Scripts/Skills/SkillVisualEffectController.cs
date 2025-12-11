@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class SkillVisualEffectController : MonoBehaviour
 {
-    [SerializeField] private Skill skill;
-
     private Animator _animator;
+    private Coroutine animationRoutine;
+
     public float Duration { get; set; }
 
     private static readonly int IsEnding = Animator.StringToHash("IsEnding");
@@ -15,14 +15,17 @@ public class SkillVisualEffectController : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Start()
+    public void RestartAnimation()
     {
-        StartCoroutine(HandleAnimationSequence());
+        if (animationRoutine != null)
+            StopCoroutine(animationRoutine);
+
+        animationRoutine = StartCoroutine(AnimationSequence());
     }
 
-    private IEnumerator HandleAnimationSequence()
+    private IEnumerator AnimationSequence()
     {
-        yield return new WaitForSeconds(Duration);
+        yield return new WaitForSeconds(Duration); //Bo zostawiamy jescze 1 sekunde na zakończenie animacji.
         _animator.SetBool(IsEnding, true);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

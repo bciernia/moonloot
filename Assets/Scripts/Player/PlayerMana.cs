@@ -13,14 +13,6 @@ public class PlayerMana : MonoBehaviour
     {
         CurrentMana = _playerStats.MP;
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            UseMana(2f);
-        }
-    }
     
     public void UseMana(float amount)
     {

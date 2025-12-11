@@ -1,8 +1,6 @@
-using System;
-using EZCameraShake;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IDamageable
+public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
 {
     [Header("Configuration")]
     [SerializeField] private PlayerStatsSO _playerStats;
@@ -26,11 +24,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     {
         if (_playerStats.HP <= 0) return;
 
-        var reducedDamage = Math.Max(amount - _playerStats.DamageResistance, 1); 
-        
-        _playerStats.HP -= reducedDamage;
-        DamageManager.Instance.ShowDamageText(reducedDamage, transform);
-        CameraShaker.Instance.ShakeOnce(1f, 1f, 0f, .43f);
+        _playerStats.HP -= amount;
+        DamageManager.Instance.ShowDamageText(amount, transform);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;
@@ -45,14 +40,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable
 
     public void RestoreHealth(float amount)
     {
-        _playerStats.HP += amount;
-        _playerStats.HP = Mathf.Min(_playerStats.HP, _playerStats.MaxHP);
+        _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.MaxHP);
     }
 
     public void RestoreMana(float amount)
     {
-        _playerStats.MP += amount;
-        _playerStats.MP = Mathf.Min(_playerStats.MP, _playerStats.MaxMP);
+        _playerStats.MP = Mathf.Min(_playerStats.MP + amount, _playerStats.MaxMP);
     }
     
     public bool CanRestoreHealth()
@@ -63,10 +56,5 @@ public class PlayerHealth : MonoBehaviour, IDamageable
     public bool CanRestoreMana()
     {
         return _playerStats.MP > 0 && _playerStats.MP < _playerStats.MaxMP;
-    }
-
-    public float GetPlayerCurrentHealth()
-    {
-        return _playerStats.HP;
     }
 }

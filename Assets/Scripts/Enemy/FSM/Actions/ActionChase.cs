@@ -47,14 +47,14 @@ public class ActionChase : FSMAction
         }
 
         _enemyAnimator.FlipSpriteXOff();
-        //
-        // var dirToPlayer = _enemyBrain.Player.position - transform.position;
-        //
-        // //odległość w jakiej się zatrzymują przed graczem
-        // if (dirToPlayer.magnitude >= _enemyStatistics.StopRange && CanMove)
-        // {
-        //     transform.Translate(dirToPlayer.normalized * (_enemyStatistics.ChaseSpeed * Time.deltaTime));
-        // }
+        
+        var dirToPlayer = _enemyBrain.Player.position - transform.position;
+        
+        //odległość w jakiej się zatrzymują przed graczem
+        if (dirToPlayer.magnitude >= _enemyStatistics.StopRange && CanMove)
+        {
+            transform.Translate(dirToPlayer.normalized * (_enemyStatistics.ChaseSpeed * Time.deltaTime));
+        }
     }
 
     public void DisableMove()
