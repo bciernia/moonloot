@@ -4,9 +4,9 @@ using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
-public class QuestJournal : MonoBehaviour
+public class QuestJournal : MonoBehaviour, ISaveable
 {
-    private readonly List<QuestStatus> _questStatuses = new List<QuestStatus>();
+    private List<QuestStatus> _questStatuses = new List<QuestStatus>();
 
     public event Action onUpdate;
 
@@ -91,5 +91,16 @@ public class QuestJournal : MonoBehaviour
     public bool IsQuestCompleted(QuestSO quest)
     {
         return GetQuestStatus(quest)!.IsQuestCompleted;
+    }
+
+    public void Save()
+    {
+        ES3.Save("player_quest_statuses", _questStatuses);
+    }
+
+    public void Load()
+    {
+        _questStatuses = ES3.Load("player_quest_statuses", _questStatuses);
+        onUpdate?.Invoke();
     }
 }

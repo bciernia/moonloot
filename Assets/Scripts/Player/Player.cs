@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     public PlayerMana PlayerMana { get; private set; }
     public PlayerAttack PlayerAttack { get; private set; }
 
-    public static Player instance;
     public string areaTransitionName;
     
     public PlayerStatsSO PlayerStats => _playerStats;
@@ -24,27 +23,12 @@ public class Player : MonoBehaviour
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();
         _playerAnimations = GetComponent<PlayerAnimations>();
-
         _playerInput = GetComponent<PlayerInput>();
 
         foreach (var map in _playerInput.actions.actionMaps)
         {
             map.Enable();
         }
-    }
-
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
     }
 
     public void ResetPlayer()

@@ -1,11 +1,14 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Quest_", menuName = "Quest")]
-public class QuestSO : ScriptableObject
+public class QuestSO : IdentifiableSO
 {
     [Header("Quest configuration")]
+    [SerializeField] private string _questId; 
     [SerializeField] private string _name;
     [SerializeField][TextArea] private string _description;
     [SerializeField] private List<Quest.Reward> _rewards = new List<Quest.Reward>();
@@ -48,4 +51,6 @@ public class QuestSO : ScriptableObject
 
         return $"[Missing: {key} ({languageCode})]";
     }
+
+    public Guid guid { get; }
 }

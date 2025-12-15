@@ -3,7 +3,9 @@ using UnityEngine;
 
 public class TooltipSystem : MonoBehaviour
 {
+#pragma warning disable UDR0001
     private static TooltipSystem current;
+#pragma warning restore UDR0001
 
     public Tooltip tooltip;
     private CanvasGroup canvasGroup;

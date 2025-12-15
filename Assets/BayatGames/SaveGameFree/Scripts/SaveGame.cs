@@ -61,6 +61,7 @@ namespace BayatGames.SaveGameFree
         /// <summary>
         /// The save callback.
         /// </summary>
+#pragma warning disable UDR0001
         public static SaveHandler SaveCallback;
 
         /// <summary>
@@ -75,6 +76,7 @@ namespace BayatGames.SaveGameFree
         private static SaveGamePath m_SavePath = SaveGamePath.PersistentDataPath;
         private static string m_EncodePassword = "h@e#ll$o%^";
         private static bool m_LogError = false;
+#pragma warning restore UDR0001
 
         /// <summary>
         /// Gets or sets the serializer.

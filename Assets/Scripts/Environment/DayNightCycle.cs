@@ -30,7 +30,9 @@ public class DayNightCycle : MonoBehaviour
 
     private void OnEnable()
     {
+#pragma warning disable UDR0005
         SceneManager.sceneLoaded += OnSceneLoaded;
+#pragma warning restore UDR0005
         AssignLights();
         InitializeLightsState();
         StartCoroutine(CycleRoutine());
@@ -50,11 +52,11 @@ public class DayNightCycle : MonoBehaviour
     {
         if (globalLight == null)
         {
-            foreach (var light in FindObjectsOfType<Light2D>())
+            foreach (var l in FindObjectsByType<Light2D>(FindObjectsSortMode.None))
             {
-                if (light.lightType == Light2D.LightType.Global)
+                if (l.lightType == Light2D.LightType.Global)
                 {
-                    globalLight = light;
+                    globalLight = l;
                     break;
                 }
             }

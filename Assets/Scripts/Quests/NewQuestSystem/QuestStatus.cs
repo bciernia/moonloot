@@ -1,12 +1,13 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+[Serializable]
 public class QuestStatus
 {
-    private QuestSO _quest;
-
-    private List<string> _questEntries = new List<string>();
-    
-    public bool IsQuestCompleted { get; private set; }
+    [SerializeField] private QuestSO _quest;
+    [SerializeField] private List<string> _questEntries = new List<string>();
+    [SerializeField] public bool IsQuestCompleted { get; private set; }
     
     public QuestStatus(QuestSO quest)
     {

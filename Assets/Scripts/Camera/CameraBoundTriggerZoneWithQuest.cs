@@ -24,7 +24,7 @@ public class CameraBoundTriggerZoneWithQuest : MonoBehaviour
     
     private void Start()
     {
-        _virtualCamera = FindObjectOfType<CinemachineCamera>();
+        _virtualCamera = FindAnyObjectByType<CinemachineCamera>();
         _questCompletion = GetComponent<QuestCompletion>();
         arenaSize = new Vector2Int(arenaWidth, arenaHeight);
     }

@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveDirection;
     private PlayerAnimations _playerAnimations;
 
-    [SerializeField] private float staminaTimer = 0f;
-    [SerializeField] private float staminaDecreaseTime = .125f;
+    // [SerializeField] private float staminaTimer = 0f;
+    // [SerializeField] private float staminaDecreaseTime = .125f;
     [SerializeField] private PlayerAim playerAim;
 
     private const float sprintSpeed = 2f;

@@ -9,7 +9,9 @@ public class Waypoint : MonoBehaviour
     public Vector3[] Points => points;
     public Vector3 EntityPosition { get; set; }
 
+#pragma warning disable CS0414 // Field is assigned but its value is never used
     private bool gameStarted;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
     
     private void Start()
     {

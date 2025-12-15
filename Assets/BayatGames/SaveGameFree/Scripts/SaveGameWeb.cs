@@ -18,7 +18,7 @@ namespace BayatGames.SaveGameFree
     /// </summary>
     public class SaveGameWeb
     {
-
+#pragma warning disable UDR0001
         private static string m_DefaultUsername = "savegamefree";
         private static string m_DefaultPassword = "$@ve#game%free";
         private static string m_DefaultURL = "http://www.example.com";
@@ -27,6 +27,7 @@ namespace BayatGames.SaveGameFree
         private static ISaveGameSerializer m_DefaultSerializer = new SaveGameJsonSerializer();
         private static ISaveGameEncoder m_DefaultEncoder = new SaveGameSimpleEncoder();
         private static Encoding m_DefaultEncoding = Encoding.UTF8;
+#pragma warning restore UDR0001
 
         /// <summary>
         /// Gets or sets the default username.

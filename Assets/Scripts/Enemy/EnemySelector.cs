@@ -34,8 +34,10 @@ public class EnemySelector : MonoBehaviour
     
     private void OnEnable()
     {
+#pragma warning disable UDR0005
         SelectionManager.OnEnemySelectedEvent += EnemySelectedCallback;
         SelectionManager.OnNoSelectionEvent += NoSelectionCallback;
+#pragma warning restore UDR0005
     }
 
     private void OnDisable()

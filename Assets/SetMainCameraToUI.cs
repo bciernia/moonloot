@@ -13,7 +13,9 @@ public class SetMainCameraToUI : MonoBehaviour
 
     private void OnEnable()
     {
+#pragma warning disable UDR0005
         SceneManager.sceneLoaded += OnSceneLoaded;
+#pragma warning restore UDR0005
     }
 
     private void OnDisable()

@@ -7,7 +7,7 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        if (Player.instance == null)
+        if (FindAnyObjectByType<Player>() == null)
         {
             Instantiate(player);
         }
