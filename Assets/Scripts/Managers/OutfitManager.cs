@@ -46,14 +46,13 @@ public class OutfitManager : Singleton<OutfitManager>
     
     private void ChangeOutfit(OutfitItemSO outfit)
     {
-        
         if (outfit == null)
         {
-            Player.instance.GetComponent<Animator>().runtimeAnimatorController = _standardOutfit;
+            FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = _standardOutfit;
 
             return;
         }
-        Player.instance.GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
+        FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
         EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit);
     }
 }

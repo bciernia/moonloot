@@ -29,7 +29,7 @@ public class InventorySO : ScriptableObject
     {
         if (!item.IsStackable)
         {
-            for (int i = 0; i < inventoryItems.Count; i++)
+            for (var i = 0; i < inventoryItems.Count;)
             {
                 if (IsInventoryFull())
                 {
@@ -231,6 +231,11 @@ public class InventorySO : ScriptableObject
             if (remainingToRemove <= 0)
                 break;
         }
+    }
+    
+    public void NotifyInventoryUpdated()
+    {
+        OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
     }
 }
 

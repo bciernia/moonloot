@@ -32,7 +32,7 @@ public class EnemyActivationManager : MonoBehaviour
 
         if (autoFindEnemies)
         {
-            var found = FindObjectsOfType<EnemyActivatable>();
+            var found = FindObjectsByType<EnemyActivatable>(FindObjectsSortMode.None);
             for (int i = 0; i < found.Length; i++)
                 Register(found[i]);
         }

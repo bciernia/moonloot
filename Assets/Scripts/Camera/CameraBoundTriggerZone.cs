@@ -16,7 +16,7 @@ public class CameraBoundTriggerZone : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         currentTarget = playerTransform;
 
-        virtualCamera = FindObjectOfType<CinemachineCamera>();
+        virtualCamera = FindAnyObjectByType<CinemachineCamera>();
 
         var camTargetObj = new GameObject("CameraTarget");
         cameraTargetTransform = camTargetObj.transform;

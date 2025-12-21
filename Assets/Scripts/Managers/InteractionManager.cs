@@ -15,7 +15,7 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = GetComponentInParent<PlayerInput>();
+        _playerInput = FindAnyObjectByType<PlayerInput>();
     }
 
     private void OnEnable()

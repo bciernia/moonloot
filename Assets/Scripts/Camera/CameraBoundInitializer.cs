@@ -11,14 +11,19 @@ public class CameraBoundInitializer : MonoBehaviour
     {
         _cinemachineConfiner2D = GetComponent<CinemachineConfiner2D>();
 
+#pragma warning disable CS0618 // Type or member is obsolete
         SceneManager.sceneLoaded += OnSceneLoaded;
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
     private void OnDestroy()
     {
+#pragma warning disable CS0618 // Type or member is obsolete
         SceneManager.sceneLoaded -= OnSceneLoaded;
+#pragma warning restore CS0618 // Type or member is obsolete
     }
 
+    [Obsolete("Invalidate cache obsolete")]
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         GameObject cameraBound = GameObject.FindGameObjectWithTag("CameraBound");

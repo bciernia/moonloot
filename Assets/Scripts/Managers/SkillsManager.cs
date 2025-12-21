@@ -50,7 +50,7 @@ public class SkillsManager : Singleton<SkillsManager>
     {
         base.Awake();
 
-        _playerInput = GetComponentInParent<PlayerInput>();
+        _playerInput = FindAnyObjectByType<PlayerInput>();
         if (_playerInput == null)
         {
             Debug.LogError("SkillsManager: PlayerInput nie znaleziony w rodzicu!");

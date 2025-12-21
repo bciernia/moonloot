@@ -7,7 +7,7 @@ public class DialogueManager : Singleton<DialogueManager>
 {
     public NPCInteraction NPCSelected { get; set; }
     [SerializeField] public GameObject PlayerUI;
-    [SerializeField] public GameObject PlayerSpeechBubble;
+    [SerializeField] public GameObject DialogueUI;
 
     private bool _dialogueStarted;
     private PlayerInput _playerInput;
@@ -21,13 +21,13 @@ public class DialogueManager : Singleton<DialogueManager>
     protected override void Awake()
     {
         base.Awake();
-        _playerInput = GetComponentInParent<PlayerInput>();
+        _playerInput = FindAnyObjectByType<PlayerInput>();
         _player = GameObject.FindWithTag("Player");
         
         _playerInput.actions["Main menu"].performed += _ => OnMainMenuPressed();
     }
 
-    public void OnMainMenuPressed()
+    private void OnMainMenuPressed()
     {
         if (_dialogueStarted)
         {
@@ -47,7 +47,7 @@ public class DialogueManager : Singleton<DialogueManager>
         
         SetCharacterInFrontOfNpc();
         PlayerUI.SetActive(false);
-        PlayerSpeechBubble.SetActive(true);
+        DialogueUI.SetActive(true);
 
         var npcDialogueEntrySetter = NPCSelected.GetComponent<DialogueEntrySetter>();
         var entryId = "";
@@ -85,7 +85,7 @@ public class DialogueManager : Singleton<DialogueManager>
         _dialogueStarted = false;
         OnDialogueEnded?.Invoke();
         PlayerUI.SetActive(true);
-        PlayerSpeechBubble.SetActive(false);
+        DialogueUI.SetActive(false);
 
         // FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
     }

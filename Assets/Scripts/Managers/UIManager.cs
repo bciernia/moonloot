@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private PlayerInput _playerInput;
-    private GameObject _player;
 
     [Header("Stats")]
     [SerializeField] private PlayerStatsSO _playerStatsSo;
@@ -48,21 +47,18 @@ public class UIManager : MonoBehaviour
     [Header("Tab menu manager")]
     [SerializeField] private GameObject _gameMenu;
 
-    // Input Actions
     private InputAction _equipmentAction;
     private InputAction _statsAction;
     private InputAction _skillsAction;
     private InputAction _journalAction;
     private InputAction _menuAction;
 
-    // Wyświetlane wartości HP/MP (dla płynnej animacji tekstu)
     private float _displayedHp;
     private float _displayedMp;
 
     private void Awake()
     {
-        _playerInput = GetComponentInParent<PlayerInput>();
-        _player = GameObject.FindGameObjectWithTag("Player");
+        _playerInput = FindAnyObjectByType<PlayerInput>();
 
         if (_playerStatsSo != null)
         {

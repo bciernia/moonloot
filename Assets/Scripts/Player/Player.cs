@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ISaveable
 {
     [Header("Configuration")] [SerializeField]
     private PlayerStatsSO _playerStats;
@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     public PlayerMana PlayerMana { get; private set; }
     public PlayerAttack PlayerAttack { get; private set; }
 
-    public static Player instance;
     public string areaTransitionName;
     
     public PlayerStatsSO PlayerStats => _playerStats;
@@ -24,7 +23,6 @@ public class Player : MonoBehaviour
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();
         _playerAnimations = GetComponent<PlayerAnimations>();
-
         _playerInput = GetComponent<PlayerInput>();
 
         foreach (var map in _playerInput.actions.actionMaps)
@@ -33,23 +31,26 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-        DontDestroyOnLoad(gameObject);
-    }
-
     public void ResetPlayer()
     {
         _playerStats.ResetPlayerStats();
         _playerAnimations.ResetPlayer();
+    }
+
+    public void Save()
+    {
+        ES3.Save("player_position", transform.position);
+        
+        Debug.Log("Player transform saved");
+    }
+
+    public void Load()
+    {
+        if (!ES3.KeyExists("player_position"))
+            return;
+        
+        transform.position = ES3.Load<Vector3>("player_position");
+        
+        Debug.Log("Player transform load");    
     }
 }
