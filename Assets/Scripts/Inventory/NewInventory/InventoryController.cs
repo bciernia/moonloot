@@ -4,7 +4,7 @@ using System.Text;
 using Inventory.NewInventory.Model;
 using UnityEngine;
 
-public class InventoryController : Singleton<InventoryController>
+public class InventoryController : Singleton<InventoryController>, ISaveable
 {
     [SerializeField] private UIInventoryPage inventoryUI;
     [SerializeField] public InventorySO inventoryData;
@@ -355,4 +355,37 @@ public class InventoryController : Singleton<InventoryController>
     public bool HasUserQuestItem(string itemName, int quantity) =>  inventoryData.FindItemByName(itemName, quantity);
 
     public void TryRemoveQuestItems(string itemName, int quantity) => inventoryData.RemoveItemByName(itemName, quantity);
+    public void Save()
+    {
+        ES3.Save("playerInventory_items", inventoryData.inventoryItems);
+        ES3.Save("playerInventory_gold", inventoryData.Gold);
+        ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems);
+    }
+
+    public void Load()
+    {
+        if (ES3.KeyExists("playerInventory_items"))
+        {
+            var items = ES3.Load<List<InventoryItem>>("playerInventory_items");
+            inventoryData.inventoryItems = items;
+        }
+
+        if (ES3.KeyExists("playerInventory_gold"))
+        {
+            var gold = ES3.Load<int>("playerInventory_gold");
+            inventoryData.Gold = gold;
+        }
+
+        inventoryData.NotifyInventoryUpdated();
+
+        if (ES3.KeyExists("playerInventory_equippedItems"))
+        {
+           var equipped = ES3.Load<List<InventoryItem>>("playerInventory_equippedItems");
+           equippedItemsManager.EquippedItems = equipped;
+           equippedItemsManager.InitializeEquippedSlots();
+           WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState);
+           ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState);
+           OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState);
+        }
+    }
 }

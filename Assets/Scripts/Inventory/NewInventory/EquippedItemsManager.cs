@@ -27,7 +27,7 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         InitializeEquippedSlots();
     }
 
-    private void InitializeEquippedSlots()
+    public void InitializeEquippedSlots()
     {
         //Dla pustej broni ustawiany default którym są pięści
         InitializeSlot(EquippedItems[0].item == null ? defaultWeapon : EquippedItems[0], WeaponSlot);

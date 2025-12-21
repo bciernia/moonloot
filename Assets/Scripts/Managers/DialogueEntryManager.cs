@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 
-public class DialogueEntryManager : Singleton<DialogueEntryManager>
+public class DialogueEntryManager : Singleton<DialogueEntryManager>, ISaveable
 {
-    //TODO Uwzględnić przy zapisie
-    private readonly Dictionary<string, string> NpcDialogueEntryDictionary = new();
+    private Dictionary<string, string> NpcDialogueEntryDictionary = new();
 
     public void UpdateNpcDialogueEntry(string dialogueEntryId, string gameObjectName)
     {
@@ -11,4 +10,22 @@ public class DialogueEntryManager : Singleton<DialogueEntryManager>
     }
 
     public string GetDialogueEntryIdByNpcName(string gameObjectName) => NpcDialogueEntryDictionary.GetValueOrDefault(gameObjectName, "0");
+    
+    public void Save()
+    {
+        ES3.Save("NpcDialogueDictionary", NpcDialogueEntryDictionary);
+    }
+
+    public void Load()
+    {
+        if (ES3.KeyExists("NpcDialogueDictionary"))
+        {
+            NpcDialogueEntryDictionary =
+                ES3.Load<Dictionary<string, string>>("NpcDialogueDictionary");
+        }
+        else
+        {
+            NpcDialogueEntryDictionary = new Dictionary<string, string>();
+        }    
+    }
 }

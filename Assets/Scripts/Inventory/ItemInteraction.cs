@@ -1,4 +1,3 @@
-using Inventory.NewInventory.Model;
 using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour, IInteractable

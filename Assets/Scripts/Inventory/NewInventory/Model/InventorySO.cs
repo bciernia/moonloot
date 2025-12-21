@@ -232,6 +232,11 @@ public class InventorySO : ScriptableObject
                 break;
         }
     }
+    
+    public void NotifyInventoryUpdated()
+    {
+        OnInventoryUpdated?.Invoke(GetCurrentInventoryState());
+    }
 }
 
 [Serializable]
