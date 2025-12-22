@@ -31,6 +31,7 @@ public class ShopManager : Singleton<ShopManager>
         SetMoneyAmountVisibility();        
         InitializeSellerEquipment(SellerInventory);
         InventoryController.Instance.PrepareSellerInventoryData(sellerInventory);
+        TabMenuManager.Instance.OpenMenu();
         TabMenuManager.Instance.SwitchToTab(0);
         TabPanel.SetActive(true); 
         Time.timeScale = 0f;
