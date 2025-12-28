@@ -17,16 +17,14 @@ public class WeaponManager: Singleton<WeaponManager>
 
     [SerializeField] private WeaponItemSO fists;
 
-    public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState)
+    public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {
-        /*
         //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
-        
-        if (weaponItem != null && _weapon != null)
+        if (weaponItem != null && _weapon != null && !isFromLoading)
         {
             _inventoryData.AddItem(_weapon, 1, _itemCurrentState);
         }
-        */
+        
         _weapon = weaponItem;
         if (itemState != null)
         {

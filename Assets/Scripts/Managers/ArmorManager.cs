@@ -8,16 +8,14 @@ public class ArmorManager : Singleton<ArmorManager>
     [SerializeField] private List<ItemParameter> _parametersToModify, _itemCurrentState;
     [SerializeField] private ArmorItemSO _armor;
     
-    public void SetArmor(ArmorItemSO armorItem, List<ItemParameter> itemState)
+    public void SetArmor(ArmorItemSO armorItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {
-        /*
         //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
 
-        if (armorItem != null && _armor != null)
+        if (armorItem != null && _armor != null && !isFromLoading)
         {
-            _inventoryData.AddItem(armorItem, 1, _itemCurrentState);
+            _inventoryData.AddItem(_armor, 1, _itemCurrentState);
         }
-*/
         _armor = armorItem;
         if (itemState != null)
         {

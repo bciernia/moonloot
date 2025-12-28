@@ -50,8 +50,6 @@ public class Player : MonoBehaviour, ISaveable
     public void Save()
     {
         ES3.Save("player_position", transform.position);
-        
-        Debug.Log("Player transform saved");
     }
 
     public void Load()
@@ -60,7 +58,5 @@ public class Player : MonoBehaviour, ISaveable
             return;
         
         transform.position = ES3.Load<Vector3>("player_position");
-        
-        Debug.Log("Player transform load");    
     }
 }

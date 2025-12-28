@@ -383,9 +383,9 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
            var equipped = ES3.Load<List<InventoryItem>>("playerInventory_equippedItems");
            equippedItemsManager.EquippedItems = equipped;
            equippedItemsManager.InitializeEquippedSlots();
-           WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState);
-           ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState);
-           OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState);
+           WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState, true);
+           ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState, true);
+           OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
         }
     }
     
