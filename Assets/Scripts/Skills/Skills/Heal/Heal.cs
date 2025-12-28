@@ -5,6 +5,7 @@ public class Heal : Skill
 {
     public override void Activate(GameObject user)
     {
+        if (user == null) return;
         var mana = user.GetComponent<PlayerMana>();
         if (mana != null && mana.CurrentMana < ManaCost)
         {

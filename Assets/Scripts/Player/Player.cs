@@ -1,9 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, ISaveable
 {
+    public static Player Instance { get; private set; }
+    
     [Header("Configuration")] [SerializeField]
     private PlayerStatsSO _playerStats;
 
@@ -19,6 +20,15 @@ public class Player : MonoBehaviour, ISaveable
     
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();

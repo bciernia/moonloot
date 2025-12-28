@@ -10,11 +10,14 @@ public class ArmorManager : Singleton<ArmorManager>
     
     public void SetArmor(ArmorItemSO armorItem, List<ItemParameter> itemState)
     {
+        /*
+        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
+
         if (armorItem != null && _armor != null)
         {
             _inventoryData.AddItem(armorItem, 1, _itemCurrentState);
         }
-
+*/
         _armor = armorItem;
         if (itemState != null)
         {

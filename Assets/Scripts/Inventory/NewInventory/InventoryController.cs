@@ -11,7 +11,6 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     public List<InventoryItem> initialItems = new List<InventoryItem>();
     [SerializeField] private AudioClip audioClip;
     [SerializeField] private AudioSource audioSource;
-    [SerializeField] private Transform playerTransform;
     [SerializeField] private EquippedItemsManager equippedItemsManager;
     [SerializeField] private EquippedItemsManagerSO equippedItemsManagerSo;
     
@@ -135,6 +134,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryData.RemoveItem(itemIndex, quantity);
         inventoryUI.ResetSelection();
         if(audioSource) audioSource.PlayOneShot(audioClip);
+        var playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
         if (itemToDrop && playerTransform)
         {
             for (var i = 0; i < quantity; i++)
@@ -387,5 +387,22 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
            ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState);
            OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState);
         }
+    }
+    
+    private void OnDestroy()
+    {
+        if (inventoryData != null)
+            inventoryData.OnInventoryUpdated -= UpdateInventoryUI;
+
+        if (inventoryUI != null)
+        {
+            inventoryUI.OnDescriptionRequested -= HandleDescriptionRequest;
+            inventoryUI.OnSwapItems -= HandleSwapItems;
+            inventoryUI.OnStartDragging -= HandleDragging;
+            inventoryUI.OnItemActionRequested -= HandleItemActionRequest;
+        }
+
+        if (ShopManager.Instance != null && ShopManager.Instance.SellerInventory != null)
+            ShopManager.Instance.SellerInventory.OnInventoryUpdated -= UpdateSellerInventoryUI;
     }
 }

@@ -8,6 +8,8 @@ public class Dash : Skill
 
     public override void Activate(GameObject user)
     {
+        if (user == null) return;
+        
         var movement = user.GetComponent<PlayerMovement>();
         if (movement == null) return;
 

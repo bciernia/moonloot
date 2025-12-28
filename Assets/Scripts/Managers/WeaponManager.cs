@@ -19,11 +19,14 @@ public class WeaponManager: Singleton<WeaponManager>
 
     public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState)
     {
+        /*
+        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
+        
         if (weaponItem != null && _weapon != null)
         {
             _inventoryData.AddItem(_weapon, 1, _itemCurrentState);
         }
-
+        */
         _weapon = weaponItem;
         if (itemState != null)
         {

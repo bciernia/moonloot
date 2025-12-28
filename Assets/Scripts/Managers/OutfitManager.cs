@@ -11,11 +11,14 @@ public class OutfitManager : Singleton<OutfitManager>
     
     public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState)
     {
+        /*
+        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
         if (outfitItem != null && _outfit != null)
         {
             _inventoryData.AddItem(outfitItem, 1, _itemCurrentState);
         }
-
+        */
+        
         _outfit = outfitItem;
         
         if (itemState != null)
