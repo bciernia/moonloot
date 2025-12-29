@@ -90,7 +90,9 @@ public class QuestJournal : MonoBehaviour, ISaveable
 
     public bool IsQuestCompleted(QuestSO quest)
     {
-        return GetQuestStatus(quest)!.IsQuestCompleted;
+        var questStatus = GetQuestStatus(quest);
+        
+        return questStatus != null && GetQuestStatus(quest)!.IsQuestCompleted;
     }
 
     public void Save()

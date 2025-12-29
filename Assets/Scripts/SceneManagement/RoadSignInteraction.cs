@@ -1,5 +1,4 @@
-using System;
-using UnityEngine;
+ using UnityEngine;
 
 namespace SceneManagement
 {
@@ -20,11 +19,18 @@ namespace SceneManagement
         {
             if (other.CompareTag("Player"))
             {
-                var interactionManager = FindFirstObjectByType<InteractionManager>();
-                if (interactionManager != null)
-                {
-                    interactionManager.RegisterInteractable(this);
-                }
+                FindFirstObjectByType<InteractionManager>().RegisterInteractable(this);
+            }
+        }
+    
+        private void OnTriggerExit2D(Collider2D other)
+        {
+            if (!other.CompareTag("Player")) return;
+            
+            var manager = FindFirstObjectByType<InteractionManager>();
+            if (manager != null)
+            {
+                manager.UnregisterInteractable(this);
             }
         }
     }

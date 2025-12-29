@@ -1,8 +1,10 @@
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TabMenuManager : Singleton<TabMenuManager>
 {
+    [SerializeField] private GameObject MenuPanel;
     [SerializeField] private GameObject[] Tabs;
     [SerializeField] private Image[] TabButtons;
     [SerializeField] private Sprite InactiveTabBG;
@@ -27,5 +29,10 @@ public class TabMenuManager : Singleton<TabMenuManager>
         
         TabButtons[tabId].sprite = ActiveTabBG;
         TabButtons[tabId].rectTransform.sizeDelta = ActiveTabBtnSize;
+    }
+
+    public void OpenMenu()
+    {
+        MenuPanel.SetActive(true);
     }
 }

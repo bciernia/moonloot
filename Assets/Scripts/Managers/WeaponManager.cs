@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,13 +16,14 @@ public class WeaponManager: Singleton<WeaponManager>
 
     [SerializeField] private WeaponItemSO fists;
 
-    public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState)
+    public void SetWeapon(WeaponItemSO weaponItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {
-        if (weaponItem != null && _weapon != null)
+        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone        
+        if (weaponItem != null && _weapon != null && !isFromLoading)
         {
             _inventoryData.AddItem(_weapon, 1, _itemCurrentState);
         }
-
+        
         _weapon = weaponItem;
         if (itemState != null)
         {

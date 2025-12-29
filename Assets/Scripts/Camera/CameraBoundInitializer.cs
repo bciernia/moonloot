@@ -26,7 +26,7 @@ public class CameraBoundInitializer : MonoBehaviour
     [Obsolete("Invalidate cache obsolete")]
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameObject cameraBound = GameObject.FindGameObjectWithTag("CameraBound");
+        var cameraBound = GameObject.FindGameObjectWithTag("CameraBound");
 
         if (cameraBound != null)
         {

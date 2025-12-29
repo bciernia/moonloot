@@ -1,10 +1,12 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private ItemSO _inventoryItem;
     [SerializeField] private ParticleSystem pickupParticles;
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
