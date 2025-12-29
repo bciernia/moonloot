@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used in dialogue nodes, must be public
 public class QuestService : MonoBehaviour
 {
     [SerializeField] private List<QuestSO> _questToEntries = new List<QuestSO>();
@@ -30,6 +31,7 @@ public class QuestService : MonoBehaviour
             _questList.AddRange(_questToEntries);
     }
     
+    //Used in dialogue nodes, must be public
     public void AddEntry(int questIndex, string entryKey)
     {
         AddDialogueFlag(entryKey);
@@ -42,12 +44,14 @@ public class QuestService : MonoBehaviour
         DialogueFlagsManager.Instance.AddFlagToHashSet(flag.Trim());
     }
     
+    //Used in dialogue nodes, must be public
     public void AddEntryAndFinishQuest(int questIndex, string entryKey, bool shouldGiveReward = true)
     {
         AddDialogueFlag(entryKey);
         _questJournal.AddEntryToJournalAndFinishQuest(_questList[questIndex], entryKey, shouldGiveReward);        
     }
 
+    //Used in dialogue nodes, must be public
     public void GiveQuest(int questIndex, string entryKey)
     {
         _questGiver.GiveQuest(questIndex, entryKey);

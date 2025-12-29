@@ -7,7 +7,7 @@ public class QuestStatus
 {
     [SerializeField] private QuestSO _quest;
     [SerializeField] private List<string> _questEntries = new List<string>();
-    [SerializeField] public bool IsQuestCompleted { get; private set; }
+    [SerializeField] public bool IsQuestCompleted { get; private set; } = false;
     
     public QuestStatus(QuestSO quest)
     {

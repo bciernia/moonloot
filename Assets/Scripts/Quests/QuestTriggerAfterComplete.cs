@@ -1,17 +1,22 @@
+using System;
 using UnityEngine;
-using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class QuestTriggerAfterComplete : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EnemyStatistics[] enemies;
     [SerializeField] private WalkAfterAction objectTrigger;
-
+    [SerializeField] private QuestSO quest;
+    
     private bool triggered = false;
 
+    private QuestJournal _questJournal;
+    
     private void Awake()
     {
         enemies = GetComponentsInChildren<EnemyStatistics>();
+        _questJournal = GameObject.FindGameObjectWithTag("Player").GetComponent<QuestJournal>();
     }
 
     private void Update()

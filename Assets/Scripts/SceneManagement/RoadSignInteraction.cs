@@ -25,9 +25,12 @@ namespace SceneManagement
     
         private void OnTriggerExit2D(Collider2D other)
         {
-            if (other.CompareTag("Player"))
+            if (!other.CompareTag("Player")) return;
+            
+            var manager = FindFirstObjectByType<InteractionManager>();
+            if (manager != null)
             {
-                FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
+                manager.UnregisterInteractable(this);
             }
         }
     }

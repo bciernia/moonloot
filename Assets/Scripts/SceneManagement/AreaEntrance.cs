@@ -6,9 +6,9 @@ public class AreaEntrance : MonoBehaviour
 
     void Start()
     {
-        if (transitionName == FindAnyObjectByType<Player>().areaTransitionName)
+        if (transitionName == Player.Instance.areaTransitionName)
         {
-            FindAnyObjectByType<Player>().transform.position = transform.position;
+            Player.Instance.transform.position = transform.position;
         }
     }
 }

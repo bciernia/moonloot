@@ -527,8 +527,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  staminaTimer: 0
-  staminaDecreaseTime: 0.125
   playerAim: {fileID: 5470441802420722214}
   limitToCameraView: 0
 --- !u!114 &4771859706471597872
@@ -1493,10 +1491,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 3640270890684053759}
     m_Modifications:
     - target: {fileID: 6446409035382191176, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
-      propertyPath: Lens.OrthographicSize
-      value: 8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6446409035382191176, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 3640270890684053759}
@@ -1547,51 +1541,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8490853440843176672, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5884199786070861198}
-    - targetCorrespondingSourceObject: {fileID: 8490853440843176672, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 692049415373194887}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
---- !u!1 &7754673440522692641 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8490853440843176672, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
-  m_PrefabInstance: {fileID: 2183032369527567041}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5884199786070861198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7754673440522692641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  BoundingShape2D: {fileID: 0}
-  Damping: 0.5
-  SlowingDistance: 5
-  OversizeWindow:
-    Enabled: 0
-    MaxWindowSize: 0
-    Padding: 0
-  m_LegacyMaxWindowSize: -2
---- !u!114 &692049415373194887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7754673440522692641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e971d40f54d6e74986c67171d80ca8c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &8104394314680230429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
