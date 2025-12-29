@@ -15,7 +15,7 @@ public class AreaExit : MonoBehaviour
 
     public void ExitArea()
     {
-        SceneManager.LoadScene(sceneToLoad);
+        LoadingSceneManager.Instance.LoadScene(sceneToLoad);
         FindAnyObjectByType<Player>().areaTransitionName = areaTransitionName;
     }
 }
