@@ -21,13 +21,20 @@ public class NPCInteraction : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        if (ShowNpcWhenFlagIsInHashSet)
+        switch (ShowNpcWhenFlagIsInHashSet)
         {
-            if(!string.IsNullOrEmpty(DialogueFlag) && !DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
-        }
-        else
-        {
-            if(!string.IsNullOrEmpty(DialogueFlag) && DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
+            case false when string.IsNullOrEmpty(DialogueFlag):
+                return;
+            case true:
+            {
+                if(!string.IsNullOrEmpty(DialogueFlag) && !DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
+                break;
+            }
+            default:
+            {
+                if(!string.IsNullOrEmpty(DialogueFlag) && DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
+                break;
+            }
         }
     }
 
