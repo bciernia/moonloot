@@ -47,7 +47,7 @@ public class NPCTeleport : MonoBehaviour
     {
         if (teleportTarget == null)
         {
-            Debug.LogWarning($"{name} nie ma przypisanego celu teleportacji!");
+            Destroy(gameObject);
             return;
         }
 

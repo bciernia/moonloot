@@ -3,6 +3,8 @@ using UnityEngine;
 public class NPCInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private string NpcName;
+    [SerializeField] private bool ShowNpcWhenFlagIsInHashSet;
+    [SerializeField] private string DialogueFlag;
 
     private Waypoint _waypoint;
     private NPCMovement _npcMovement;
@@ -15,6 +17,18 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         _npcMovement = GetComponent<NPCMovement>();
         _enemyBrain = GetComponent<EnemyBrain>();
         _interactionManager = FindFirstObjectByType<InteractionManager>();
+    }
+
+    private void Start()
+    {
+        if (ShowNpcWhenFlagIsInHashSet)
+        {
+            if(!string.IsNullOrEmpty(DialogueFlag) && !DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
+        }
+        else
+        {
+            if(!string.IsNullOrEmpty(DialogueFlag) && DialogueFlagsManager.Instance.IsFlagInHashSet(DialogueFlag)) Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
