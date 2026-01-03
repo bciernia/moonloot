@@ -13,6 +13,7 @@ public class QuestTableManager : Singleton<QuestTableManager>
     [SerializeField] private TextMeshProUGUI QuestDescription;
     [SerializeField] private TextMeshProUGUI QuestReward;
     [SerializeField] private Button QuestButton;
+    [SerializeField] private GameObject QuestTable;
 
     private QuestJournal PlayerQuests;
     
@@ -51,6 +52,8 @@ public class QuestTableManager : Singleton<QuestTableManager>
             var questCard = cardGO.GetComponent<QuestCard>();
             questCard.Setup(questList[i], OnQuestCardClicked);
         }
+        
+        QuestTable.SetActive(true);
     }
 
     private void OnQuestCardClicked(QuestSO quest)
