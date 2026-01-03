@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class LoadingSceneManager : MonoBehaviour
 {
+#pragma warning disable UDR0001
     public static LoadingSceneManager Instance;
+#pragma warning restore UDR0001
 
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Image progressBar;
