@@ -12,7 +12,7 @@ public class InventorySO : ScriptableObject
     public int Size { get; private set; } = 10;
 
     [field: SerializeField]
-    public int Gold { get; set; } = 50;
+    public int Lunar { get; set; } = 50;
 
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
     

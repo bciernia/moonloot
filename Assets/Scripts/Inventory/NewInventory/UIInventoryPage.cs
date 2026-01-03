@@ -292,11 +292,11 @@ public class UIInventoryPage : MonoBehaviour
 
     public void UpdateGoldAmount(int goldAmount)
     {
-        goldAmountTMP.text = $"Gold: {goldAmount}";
+        goldAmountTMP.text = $"Lunar: {goldAmount}";
     }
     
     public void UpdateSellerGoldAmount(int goldAmount)
     {
-        sellerGoldAmountTMP.text = $"Gold: {goldAmount}";
+        sellerGoldAmountTMP.text = $"Lunar: {goldAmount}";
     }
 }
