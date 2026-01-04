@@ -5,11 +5,11 @@ public class GameMenuManager : MonoBehaviour
 {
     private void OnEnable()
     {
-        Time.timeScale = 0f;
+        PauseManager.Instance.RequestPause();
     }
 
     private void OnDisable()
     {
-        Time.timeScale = 1f;
+        PauseManager.Instance.ReleasePause();
     }
 }

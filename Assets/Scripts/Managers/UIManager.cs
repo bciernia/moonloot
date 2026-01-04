@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -46,6 +47,17 @@ public class UIManager : MonoBehaviour
 
     [Header("Tab menu manager")]
     [SerializeField] private GameObject _gameMenu;
+    
+    [Header("Task table")]
+    [SerializeField] private GameObject _taskTablePanel;
+    
+    [Header("Save/Load panel")]
+    [SerializeField] private GameObject _savePanel;
+    [SerializeField] private GameObject _loadPanel;
+    
+    [Header("Player Game UI")]
+    [SerializeField] private GameObject _mainGamePanel;
+    [SerializeField] private GameObject _equippedPanel;
 
     private InputAction _equipmentAction;
     private InputAction _statsAction;
@@ -66,7 +78,7 @@ public class UIManager : MonoBehaviour
             _displayedMp = _playerStatsSo.MP;
         }
     }
-
+    
     private void Start()
     {
         CacheInputActions();
@@ -80,6 +92,25 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         UnregisterInputCallbacks();
+    }
+
+    private void OnEnable()
+    {
+#pragma warning disable UDR0004
+        GameManager.OnGameModeChanged += OnGameModeChanged;
+#pragma warning restore UDR0004
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameModeChanged -= OnGameModeChanged;
+    }
+
+    private void OnGameModeChanged(GameMode mode)
+    {
+        var isWorldMap = mode == GameMode.WorldMap;
+        _mainGamePanel.SetActive(!isWorldMap);
+        _equippedPanel.SetActive(!isWorldMap);
     }
 
     #region Input System Setup
@@ -128,20 +159,17 @@ public class UIManager : MonoBehaviour
     {
         if (_playerStatsSo == null) return;
 
-        // Płynna animacja wyświetlanej wartości
         _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 20f * Time.deltaTime);
         _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 20f * Time.deltaTime);
 
-        float hpRatio = _displayedHp / _playerStatsSo.MaxHP;
-        float mpRatio = _displayedMp / _playerStatsSo.MaxMP;
+        var hpRatio = _displayedHp / _playerStatsSo.MaxHP;
+        var mpRatio = _displayedMp / _playerStatsSo.MaxMP;
 
-        // Aktualizacja pasków HP/MP
         _healthBar.fillAmount = hpRatio;
         _manaBar.fillAmount = mpRatio;
         _healthBarEq.fillAmount = hpRatio;
         _manaBarEq.fillAmount = mpRatio;
 
-        // Aktualizacja tekstów
         _healthTMP.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
         _manaTMP.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
         _healthTMPEq.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
@@ -168,13 +196,19 @@ public class UIManager : MonoBehaviour
 
     private void OpenCloseTabPanel(int tabIndex)
     {
-        bool isPanelActive = _gameMenu.activeSelf;
+        var isPanelActive = _gameMenu.activeSelf;
 
         _gameMenu.SetActive(!isPanelActive);
-        Time.timeScale = isPanelActive ? 1f : 0f;
 
         if (!isPanelActive)
+        {
             TabMenuManager.Instance.SwitchToTab(tabIndex);
+            PauseManager.Instance.RequestPause();
+        }
+        else
+        {
+            PauseManager.Instance.ReleasePause();
+        }
     }
 
     private void HandleEscapePressed()
@@ -184,25 +218,26 @@ public class UIManager : MonoBehaviour
 
         if (TryCloseAnyPanel())
             return;
-
+            
         OpenClosePanel(_mainMenuPanel);
     }
 
     private bool TryCloseAnyPanel()
     {
-        GameObject[] panels = { _gameMenu, _optionsPanel };
+        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel };
 
         foreach (var panel in panels)
         {
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
+                PauseManager.Instance.ReleasePause();
                 if (panel == _optionsPanel)
                     UpdateKeyTexts();
                 return true;
             }
         }
-
+        
         return false;
     }
 

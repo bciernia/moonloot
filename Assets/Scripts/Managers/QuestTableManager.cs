@@ -54,6 +54,7 @@ public class QuestTableManager : Singleton<QuestTableManager>
         }
         
         QuestTable.SetActive(true);
+        PauseManager.Instance.RequestPause();
     }
 
     private void OnQuestCardClicked(QuestSO quest)

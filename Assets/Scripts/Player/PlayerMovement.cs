@@ -18,6 +18,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerAim playerAim;
 
     private const float sprintSpeed = 2f;
+    
+    [SerializeField] private float worldMapSpeedMultiplier = 0.4f;
+    private float _currentSpeedMultiplier = 1f;
 
     private PlayerStamina playerStamina;
 
@@ -49,11 +52,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_player.PlayerStats.HP <= 0) return;
 
-        var newPosition = _rb2D.position + _moveDirection * ( speed * Time.fixedDeltaTime );
-
+        var newPosition = CalculatedPosition();
         _rb2D.MovePosition(newPosition);
     }
     
+    private Vector2 CalculatedPosition()
+    {
+        return _rb2D.position +
+               _moveDirection * (speed * _currentSpeedMultiplier * Time.fixedDeltaTime);
+    }
+
+
     public void ApplyDash(float dashAmount, float duration)
     {
         if (_moveDirection == Vector2.zero) return;
@@ -101,13 +110,27 @@ public class PlayerMovement : MonoBehaviour
             playerAim.UpdateAim(aimDirection);
     }
 
-    // private void OnEnable()
-    // {
-    //     _actions.Enable();   
-    // }
-    //
-    // private void OnDisable()
-    // {
-    //     _actions.Disable();
-    // }
+    private void OnGameModeChanged(GameMode mode)
+    {
+        switch (mode)
+        {
+            case GameMode.WorldMap:
+                _currentSpeedMultiplier = worldMapSpeedMultiplier;
+                break;
+
+            case GameMode.Location:
+                _currentSpeedMultiplier = 1f;
+                break;
+        }
+    }
+    
+    private void OnEnable()
+    {
+        GameManager.OnGameModeChanged += OnGameModeChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnGameModeChanged -= OnGameModeChanged;
+    }
 }
