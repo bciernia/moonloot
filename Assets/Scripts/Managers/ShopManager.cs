@@ -34,7 +34,7 @@ public class ShopManager : Singleton<ShopManager>
         TabMenuManager.Instance.OpenMenu();
         TabMenuManager.Instance.SwitchToTab(0);
         TabPanel.SetActive(true); 
-        Time.timeScale = 0f;
+        PauseManager.Instance.RequestPause();
     }
 
     private void SetPanelName(string panelName) => PanelNameTMP.text = panelName;

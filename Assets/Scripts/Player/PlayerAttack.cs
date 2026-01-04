@@ -36,7 +36,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (!canAttack || DialogueManager.Instance.IsInDialogue()) return;
+        if (!canAttack || DialogueManager.Instance.IsInDialogue() || GameManager.Instance.CurrentMode == GameMode.WorldMap) return;
 
         var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
         

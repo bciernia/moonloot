@@ -5,6 +5,7 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] private Player _player;
     public Player Player => _player;
+    public static event Action<GameMode> OnGameModeChanged;
 
     protected override void Awake()
     {
@@ -21,5 +22,16 @@ public class GameManager : Singleton<GameManager>
         {
             _player.ResetPlayer();
         }
+    }
+    
+
+    public GameMode CurrentMode { get; private set; } = GameMode.Location;
+
+    public void SetMode(GameMode newMode)
+    {
+        if (CurrentMode == newMode) return;
+
+        CurrentMode = newMode;
+        OnGameModeChanged?.Invoke(newMode);
     }
 }

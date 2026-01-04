@@ -11,7 +11,7 @@ public class OutfitManager : Singleton<OutfitManager>
     
     public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {
-        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone
+        //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone, dlatego dodano flage isFromLoading
         if (outfitItem != null && _outfit != null && !isFromLoading)
         {
             _inventoryData.AddItem(_outfit, 1, _itemCurrentState);
