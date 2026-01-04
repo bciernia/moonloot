@@ -126,7 +126,9 @@ public class PlayerMovement : MonoBehaviour
     
     private void OnEnable()
     {
+#pragma warning disable UDR0005
         GameManager.OnGameModeChanged += OnGameModeChanged;
+#pragma warning restore UDR0005
     }
 
     private void OnDisable()

@@ -46,6 +46,11 @@ public class SkillsManager : Singleton<SkillsManager>
 
     private PlayerInput _playerInput;
 
+    private bool _skillsEnabled = true;
+    
+    private Action<InputAction.CallbackContext> _skill1Callback;
+    private Action<InputAction.CallbackContext> _skill2Callback;
+    
     protected override void Awake()
     {
         base.Awake();
@@ -56,6 +61,9 @@ public class SkillsManager : Singleton<SkillsManager>
             Debug.LogError("SkillsManager: PlayerInput nie znaleziony w rodzicu!");
             return;
         }
+        
+        _skill1Callback = ctx => TryActivateSkill(0);
+        _skill2Callback = ctx => TryActivateSkill(1);
 
         if (skills.Count > 0) QSkillImage.sprite = skills[0].skill.Icon;
         if (skills.Count > 1) ESkillImage.sprite = skills[1].skill.Icon;
@@ -63,18 +71,60 @@ public class SkillsManager : Singleton<SkillsManager>
     
     private void OnEnable()
     {
-        _playerInput.actions["Skill1"].performed += ctx => TryActivateSkill(0);
-        _playerInput.actions["Skill2"].performed += ctx => TryActivateSkill(1);
+#pragma warning disable UDR0005
+        GameManager.OnGameModeChanged += OnGameModeChanged;
+#pragma warning restore UDR0005
+        
+        _playerInput.actions["Skill1"].performed += _skill1Callback;
+        _playerInput.actions["Skill2"].performed += _skill2Callback;
     }
 
     private void OnDisable()
     {
-        _playerInput.actions["Skill1"].performed -= ctx => TryActivateSkill(0);
-        _playerInput.actions["Skill2"].performed -= ctx => TryActivateSkill(1);
+        if (Instance != this) return;
+        
+        GameManager.OnGameModeChanged -= OnGameModeChanged;
+
+        if (_playerInput == null) return;
+        
+        _playerInput.actions["Skill1"].performed -= _skill1Callback;
+        _playerInput.actions["Skill2"].performed -= _skill2Callback;
+    }
+    
+    private void OnGameModeChanged(GameMode mode)
+    {
+        _skillsEnabled = (mode == GameMode.Location);
+
+        if (!_skillsEnabled)
+        {
+            CancelAllSkills();
+        }
+    }
+    
+    private void CancelAllSkills()
+    {
+        foreach (var entry in skills)
+        {
+            entry.activeTimer = 0f;
+            entry.cooldownTimer = 0f;
+            entry.state = SkillState.ready;
+
+            if (entry.cooldownImage != null)
+                entry.cooldownImage.fillAmount = 1f;
+        }
+
+        foreach (var effect in activeEffects)
+        {
+            if (effect.EffectObject != null)
+                Destroy(effect.EffectObject);
+        }
+
+        activeEffects.Clear();
     }
 
     private void TryActivateSkill(int index)
     {
+        if (!_skillsEnabled) return;
         if (index < 0 || index >= skills.Count) return;
 
         var entry = skills[index];
