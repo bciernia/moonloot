@@ -104,12 +104,12 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (InventoryType == InventoryType.Shop)
         {
-            var playerGoldAmount = InventoryController.Instance.inventoryData.Gold;
+            var playerGoldAmount = InventoryController.Instance.inventoryData.Lunar;
 
             if (itemToBuy.item.BuyPrice > playerGoldAmount) return;
 
             InventoryController.Instance.ChangeGoldAmount(-itemToBuy.item.BuyPrice);
-            SellerInventory.Gold += itemToBuy.item.BuyPrice;
+            SellerInventory.Lunar += itemToBuy.item.BuyPrice;
         }
 
         if (itemToBuy.item.ItemType == ItemType.Gold)
@@ -128,12 +128,12 @@ public class ShopManager : Singleton<ShopManager>
     {
         if (InventoryType == InventoryType.Shop)
         {
-            var sellerGoldAmount = Instance.SellerInventory.Gold;
+            var sellerGoldAmount = Instance.SellerInventory.Lunar;
         
             if (itemToSell.item.SellPrice > sellerGoldAmount) return;
 
             InventoryController.Instance.ChangeGoldAmount(itemToSell.item.SellPrice);
-            SellerInventory.Gold -= itemToSell.item.SellPrice;
+            SellerInventory.Lunar -= itemToSell.item.SellPrice;
         }
         
         InventoryController.Instance.inventoryData.RemoveItem(itemIndex, 1);

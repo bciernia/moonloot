@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Inventory.NewInventory.Model;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryController : Singleton<InventoryController>, ISaveable
@@ -18,35 +19,35 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         PrepareUI();
         PrepareInventoryData();
-        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+        inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
     
     private void ChangeGoldAmount(GoldItemSO gold)
     {
         var goldAmount = gold.Amount;
         
-        if (goldAmount * -1 > inventoryData.Gold)
+        if (goldAmount * -1 > inventoryData.Lunar)
         {
             Debug.Log("you don't have enough money");
             return;
         }
-        
-        inventoryData.Gold += goldAmount;
 
-        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+        inventoryData.Lunar += goldAmount;
+
+        inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
 
     public void ChangeGoldAmount(int goldAmount)
     {
-        if (goldAmount * -1 > inventoryData.Gold)
+        if (goldAmount * -1 > inventoryData.Lunar)
         {
             Debug.Log("you don't have enough money");
             return;
         }
         
-        inventoryData.Gold += goldAmount;
+        inventoryData.Lunar += goldAmount;
 
-        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+        inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
     
     public void AddItem(InventoryItem item)
@@ -85,7 +86,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         {
             ShopManager.Instance.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
         }
-        ShopManager.Instance.inventoryPage.UpdateSellerGoldAmount(ShopManager.Instance.SellerInventory.Gold);
+        ShopManager.Instance.inventoryPage.UpdateSellerGoldAmount(ShopManager.Instance.SellerInventory.Lunar);
     }
     
     private void UpdateInventoryUI(Dictionary<int, InventoryItem> inventoryState)
@@ -95,7 +96,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         {
             inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
         }
-        inventoryUI.UpdateGoldAmount(inventoryData.Gold);
+        inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
 
     private void PrepareUI()
@@ -358,7 +359,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     public void Save()
     {
         ES3.Save("playerInventory_items", inventoryData.inventoryItems);
-        ES3.Save("playerInventory_gold", inventoryData.Gold);
+        ES3.Save("playerInventory_gold", inventoryData.Lunar);
         ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems);
     }
 
@@ -373,7 +374,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         if (ES3.KeyExists("playerInventory_gold"))
         {
             var gold = ES3.Load<int>("playerInventory_gold");
-            inventoryData.Gold = gold;
+            inventoryData.Lunar = gold;
         }
 
         inventoryData.NotifyInventoryUpdated();
