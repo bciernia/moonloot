@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 
 //Used in dialogue nodes, must be public
@@ -6,7 +8,7 @@ public class QuestService : MonoBehaviour
 {
     [SerializeField] private List<QuestSO> _questToEntries = new List<QuestSO>();
     
-    private List<QuestSO> _questList = new List<QuestSO>();
+    private readonly List<QuestSO> _questList = new List<QuestSO>();
     
     private QuestJournal _questJournal;
     private QuestGiver _questGiver;
@@ -70,4 +72,25 @@ public class QuestService : MonoBehaviour
     }
 
     public bool IsQuestInQuestJournal(int questIndex) => _questJournal.HasPlayerQuest(_questList[questIndex]);
+    
+    public bool HasPlayerQuestItem(int itemIndex, int quantity)
+    {
+        var questItem = GetQuestItem(itemIndex);
+        return questItem != null && InventoryController.Instance.HasUserQuestItem(questItem.item.item.Name, quantity);
+    }
+    
+    public void TryRemoveQuestItems(int itemIndex, int quantity)
+    {
+        var questItem = GetQuestItem(itemIndex);
+        if (questItem == null) return;
+        
+        InventoryController.Instance.TryRemoveQuestItems(questItem.item.item.Name, quantity);
+    }
+
+    [CanBeNull]
+    private QuestSO.QuestItem GetQuestItem(int itemIndex)
+    {
+        var questItems = _questList[itemIndex].GetQuestItems().ToList();
+        return questItems.Count == 0 ? null : questItems[itemIndex];
+    }
 }

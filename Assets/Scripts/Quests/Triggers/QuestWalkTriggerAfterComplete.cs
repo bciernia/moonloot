@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class QuestTriggerAfterComplete : MonoBehaviour
+public class QuestWalkTriggerAfterComplete : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private EnemyStatistics[] enemies;
@@ -23,7 +21,7 @@ public class QuestTriggerAfterComplete : MonoBehaviour
     {
         if (triggered) return;
 
-        bool allDead = true;
+        var allDead = true;
         foreach (var enemy in enemies)
         {
             if (enemy != null && enemy.CurrentHP > 0)
