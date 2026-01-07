@@ -51,6 +51,23 @@ namespace EasyTalk.Localization
         }
 
         /// <summary>
+        /// Returns the ID of the translation entry (in the original/default writing language) which matches the specified text.
+        /// </summary>
+        /// <param name="text">The text to match (in the source language).</param>
+        /// <returns>The ID used for translations of the specified text. If no entry is found matching the text provided, this method returns -1.</returns>
+        public int GetTextDefinitionId(string text)
+        {
+            TranslationSet sourceSet = GetOrCreateOriginalTranslationSet();
+            Translation translation = sourceSet.FindTranslation(text);
+            if (translation == null)
+            {
+                return -1;
+            }
+
+            return translation.id;
+        }
+
+        /// <summary>
         /// Retrieves or creates a translation set for the default/original language of the library.
         /// </summary>
         /// <returns>A TranslationSet for the default/original language of the library.</returns>
@@ -159,8 +176,16 @@ namespace EasyTalk.Localization
         {
             if(!this.originalLanguage.Equals(languageCode))
             {
-                bool foundSet = false;
+                TranslationSet languageSet = null;
+                TranslationSet oldTranslationSet = null;
 
+                if (translationSets.Count > 0)
+                {
+                    oldTranslationSet = translationSets[0];
+                }
+
+                //If a translation set with the provided language code already exists, find it, and
+                //move it to be the first translation set in the list.
                 for(int i = 0; i < translationSets.Count; i++) 
                 {
                     TranslationSet translationSet = translationSets[i];
@@ -168,20 +193,66 @@ namespace EasyTalk.Localization
                     {
                         translationSets.RemoveAt(i);
                         translationSets.Insert(0, translationSet);
-                        foundSet = true;
+                        languageSet = translationSet;
                         break;
                     }
                 }
 
-                if(!foundSet)
+                //If no translation set exists for the specified language, create a new one.
+                if(languageSet == null)
                 {
-                    TranslationSet newSourceSet = new TranslationSet();
-                    newSourceSet.languageCode = languageCode;
-                    this.translationSets.Insert(0, newSourceSet);
+                    languageSet = new TranslationSet();
+                    languageSet.languageCode = languageCode;
+                    this.translationSets.Insert(0, languageSet);
+                }
+
+                //If we are switching from one language to another, and the new language doesn't have an entry,
+                //copy the old language text into the new translation. 
+                if(oldTranslationSet != null)
+                {
+                    for (int i = 0; i < oldTranslationSet.translations.Count; i++)
+                    {
+                        Translation oldTranslation = oldTranslationSet.translations[i];
+
+                        Translation newTranslation = languageSet.GetTranslation(oldTranslation.id);
+                        if(newTranslation == null)
+                        {
+                            languageSet.SetTranslation(oldTranslation.id, oldTranslation.text);
+                        }
+                    }
                 }
 
                 this.originalLanguage = languageCode;
             }
+        }
+
+        /// <summary>
+        /// Adds a new translation entry based on the text provided for each language in the translation library.
+        /// </summary>
+        /// <param name="text">The text to use when adding a translation entry for the source/default language.</param>
+        /// <param name="copySourceTextToAll">When set to true, all alternate languages will have their translation entry set to the
+        /// provided text value. By default, this flag is false, and new entries for alternate languages will be left blank.</param>
+        /// <returns>The translation entry for the provided string.</returns>
+        public Translation AddOrFindTranslation(string text, bool copySourceTextToAll = false)
+        {
+            TranslationSet originalSet = GetOrCreateOriginalTranslationSet();
+
+            //Add a new translation entry for the text provided, or find an existing one if it already exists.
+            Translation newTranslation = originalSet.AddOrFindTranslation(text);
+
+            //For all alternate (non-default) languages, add a new entry if no entry for the new/existing translation.
+            for (int i = 1; i < this.translationSets.Count; i++)
+            {
+                TranslationSet altSet = this.translationSets[i];
+                Translation altTranslation = altSet.GetTranslation(newTranslation.id);
+
+                if(altTranslation == null)
+                {
+                    altSet.SetTranslation(newTranslation.id, copySourceTextToAll ? text : "");
+                }
+            }
+
+            return newTranslation;
         }
     }
 

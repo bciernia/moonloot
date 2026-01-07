@@ -1,0 +1,1427 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Meredith
+  m_EditorClassIdentifier: 
+  version: 1.7.6
+  nodes:
+  - rid: 4538204687480390350
+  - rid: 4538204687480390351
+  - rid: 4538204687480390352
+  - rid: 4538204687480390353
+  - rid: 4538204687480390354
+  - rid: 4538204687480390355
+  - rid: 4538204687480390356
+  - rid: 4538204687480390357
+  - rid: 4538204687480390358
+  - rid: 4538204687480390359
+  - rid: 4538204687480390360
+  - rid: 4538204687480390361
+  - rid: 4538204687480390362
+  - rid: 4538204687480390363
+  - rid: 4538204687480390364
+  - rid: 4538204687480390365
+  - rid: 4538204687480390366
+  - rid: 4538204687480390367
+  - rid: 4538204687480390368
+  - rid: 4538204687480390369
+  - rid: 4538204687480390370
+  - rid: 4538204687480390371
+  - rid: 4538204687480390372
+  - rid: 4538204687480390373
+  - rid: 4538204687480390374
+  - rid: 4538204687480390375
+  - rid: 4538204687480390376
+  - rid: 4538204687480390377
+  - rid: 4538204687480390378
+  - rid: 4538204687480390379
+  - rid: 4538204687480390380
+  - rid: 4538204687480390381
+  - rid: 4538204687480390382
+  - rid: 4538204687480390383
+  - rid: 4538204687480390384
+  - rid: 4538204687480390385
+  - rid: 4538204687480390386
+  - rid: 4538204687480390387
+  translationLibrary: {fileID: 8489121711628576222}
+  maxID: 40522
+  references:
+    version: 2
+    RefIds:
+    - rid: 4538204687480390350
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 0b020000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 285.99847
+        yPosition: 467.63843
+        entryPointName: 0
+    - rid: 4538204687480390351
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 47
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 48
+          attachedIds: 
+          ownerId: 47
+          connectionType: 1
+        - id: 49
+          attachedIds: 
+          ownerId: 47
+          connectionType: 8
+        - id: 50
+          attachedIds: 
+          ownerId: 47
+          connectionType: 9
+        - id: 51
+          attachedIds: 
+          ownerId: 47
+          connectionType: 9
+        - id: 52
+          attachedIds: 
+          ownerId: 47
+          connectionType: 9
+        outputs:
+        - id: 53
+          attachedIds: 0c020000
+          ownerId: 47
+          connectionType: 2
+        - id: 54
+          attachedIds: 
+          ownerId: 47
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 298.63818
+        yPosition: 3.3357239
+        triggeredClassName: QuestService
+        triggeredMethodName: IsQuestInQuestJournal
+        methodSignature: IsQuestInQuestJournal(int):bool
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390352
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 522
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 523
+          attachedIds: 03000000
+          ownerId: 522
+          connectionType: 1
+        - id: 524
+          attachedIds: 35000000
+          ownerId: 522
+          connectionType: 2
+        - id: 525
+          attachedIds: 
+          ownerId: 522
+          connectionType: 2
+        outputs:
+        - id: 526
+          attachedIds: 
+          ownerId: 522
+          connectionType: 2
+        - id: 527
+          attachedIds: 90020000
+          ownerId: 522
+          connectionType: 10
+        - id: 528
+          attachedIds: 0e030000
+          ownerId: 522
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 552.8982
+        yPosition: 444.79385
+        logicOperation: 4
+    - rid: 4538204687480390353
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 655
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 656
+          attachedIds: 0f020000
+          ownerId: 655
+          connectionType: 1
+        outputs:
+        - id: 657
+          attachedIds: 30030000
+          ownerId: 655
+          connectionType: 1
+        width: 268
+        height: 200.93747
+        xPosition: 1099.0999
+        yPosition: 247.33673
+        items:
+        - rid: 4538204687480390388
+        characterName: Player
+        icon: 
+    - rid: 4538204687480390354
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 781
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 782
+          attachedIds: 10020000
+          ownerId: 781
+          connectionType: 1
+        outputs:
+        - id: 783
+          attachedIds: 31040000
+          ownerId: 781
+          connectionType: 1
+        width: 268
+        height: 180.125
+        xPosition: 772.9184
+        yPosition: 576.97437
+        items:
+        - rid: 4538204687480390389
+        characterName: Player
+        icon: 
+    - rid: 4538204687480390355
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 815
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 816
+          attachedIds: 91020000
+          ownerId: 815
+          connectionType: 1
+        outputs:
+        - id: 817
+          attachedIds: 38030000
+          ownerId: 815
+          connectionType: 1
+        width: 268
+        height: 263.75003
+        xPosition: 2073.0566
+        yPosition: 260.9502
+        items:
+        - rid: 4538204687480390390
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390356
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 823
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 824
+          attachedIds: 31030000247c0000d0040000
+          ownerId: 823
+          connectionType: 1
+        - id: 825
+          attachedIds: 
+          ownerId: 823
+          connectionType: 7
+        - id: 827
+          attachedIds: 
+          ownerId: 823
+          connectionType: 7
+        - id: 894
+          attachedIds: 
+          ownerId: 823
+          connectionType: 7
+        outputs:
+        - id: 826
+          attachedIds: 49030000
+          ownerId: 823
+          connectionType: 1
+        - id: 828
+          attachedIds: a2030000
+          ownerId: 823
+          connectionType: 1
+        - id: 895
+          attachedIds: c7030000
+          ownerId: 823
+          connectionType: 1
+        width: 228
+        height: 204
+        xPosition: 3559.6147
+        yPosition: 328.54572
+        items:
+        - rid: 4538204687480390391
+        - rid: 4538204687480390392
+        - rid: 4538204687480390393
+    - rid: 4538204687480390357
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 840
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 841
+          attachedIds: 3a030000
+          ownerId: 840
+          connectionType: 1
+        outputs:
+        - id: 842
+          attachedIds: 008d0000
+          ownerId: 840
+          connectionType: 1
+        width: 268
+        height: 185
+        xPosition: 3973.2036
+        yPosition: 126.6581
+        items:
+        - rid: 4538204687480390394
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390358
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 929
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 930
+          attachedIds: 3c030000
+          ownerId: 929
+          connectionType: 1
+        outputs:
+        - id: 931
+          attachedIds: 6f640000
+          ownerId: 929
+          connectionType: 1
+        width: 268
+        height: 171.25
+        xPosition: 3955.9727
+        yPosition: 365.814
+        items:
+        - rid: 4538204687480390395
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390359
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 966
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 967
+          attachedIds: 7f030000
+          ownerId: 966
+          connectionType: 1
+        outputs:
+        - id: 968
+          attachedIds: d90f0000
+          ownerId: 966
+          connectionType: 1
+        width: 268
+        height: 185
+        xPosition: 3960.6606
+        yPosition: 585.6577
+        items:
+        - rid: 4538204687480390396
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390360
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 977
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 978
+          attachedIds: df0f0000
+          ownerId: 977
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 4659.2324
+        yPosition: 973.67004
+        exitPointName: 
+    - rid: 4538204687480390361
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1072
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1073
+          attachedIds: 0f030000
+          ownerId: 1072
+          connectionType: 1
+        outputs:
+        - id: 1074
+          attachedIds: 5f040000
+          ownerId: 1072
+          connectionType: 1
+        width: 268
+        height: 184.92188
+        xPosition: 1122.3184
+        yPosition: 666.89874
+        items:
+        - rid: 4538204687480390397
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390362
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1118
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 1119
+          attachedIds: 32040000
+          ownerId: 1118
+          connectionType: 1
+        - id: 1120
+          attachedIds: 
+          ownerId: 1118
+          connectionType: 7
+        - id: 1122
+          attachedIds: 
+          ownerId: 1118
+          connectionType: 7
+        outputs:
+        - id: 1121
+          attachedIds: b1830000
+          ownerId: 1118
+          connectionType: 1
+        - id: 1123
+          attachedIds: 82070000
+          ownerId: 1118
+          connectionType: 1
+        width: 228
+        height: 188
+        xPosition: 1415.7593
+        yPosition: 830.2265
+        items:
+        - rid: 4538204687480390398
+        - rid: 4538204687480390399
+    - rid: 4538204687480390363
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1230
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1231
+          attachedIds: b7830000
+          ownerId: 1230
+          connectionType: 1
+        outputs:
+        - id: 1232
+          attachedIds: 38030000
+          ownerId: 1230
+          connectionType: 1
+        width: 268
+        height: 204.0625
+        xPosition: 2615.6394
+        yPosition: 771.1666
+        items:
+        - rid: 4538204687480390400
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390364
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1921
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1922
+          attachedIds: 63040000
+          ownerId: 1921
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1898.8625
+        yPosition: 1031.9622
+        exitPointName: 
+    - rid: 4538204687480390365
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4056
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4057
+          attachedIds: c8030000
+          ownerId: 4056
+          connectionType: 1
+        - id: 4058
+          attachedIds: 
+          ownerId: 4056
+          connectionType: 5
+        - id: 4059
+          attachedIds: 
+          ownerId: 4056
+          connectionType: 9
+        - id: 4060
+          attachedIds: 
+          ownerId: 4056
+          connectionType: 9
+        - id: 4061
+          attachedIds: 
+          ownerId: 4056
+          connectionType: 9
+        outputs:
+        - id: 4062
+          attachedIds: 
+          ownerId: 4056
+          connectionType: 9
+        - id: 4063
+          attachedIds: d2030000
+          ownerId: 4056
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 4310.3936
+        yPosition: 696.6001
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390366
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5334
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 5335
+          attachedIds: 7e170000
+          ownerId: 5334
+          connectionType: 1
+        width: 131.24997
+        height: 75
+        xPosition: 262.1636
+        yPosition: 1600.5514
+        entryPointName: 1
+    - rid: 4538204687480390367
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5344
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5345
+          attachedIds: 83170000
+          ownerId: 5344
+          connectionType: 1
+        outputs:
+        - id: 5346
+          attachedIds: 6a1b0000
+          ownerId: 5344
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1005.8218
+        yPosition: 1707.5604
+        items:
+        - rid: 4538204687480390401
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390368
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 6013
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 6014
+          attachedIds: d7140000
+          ownerId: 6013
+          connectionType: 1
+        - id: 6015
+          attachedIds: 6e150000
+          ownerId: 6013
+          connectionType: 2
+        - id: 6016
+          attachedIds: 
+          ownerId: 6013
+          connectionType: 2
+        outputs:
+        - id: 6017
+          attachedIds: 
+          ownerId: 6013
+          connectionType: 2
+        - id: 6018
+          attachedIds: be1b0000
+          ownerId: 6013
+          connectionType: 10
+        - id: 6019
+          attachedIds: e1140000
+          ownerId: 6013
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 680.76465
+        yPosition: 1560.3153
+        logicOperation: 4
+    - rid: 4538204687480390369
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 6169
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 6170
+          attachedIds: ed470000
+          ownerId: 6169
+          connectionType: 1
+        outputs:
+        - id: 6171
+          attachedIds: dc1c0000
+          ownerId: 6169
+          connectionType: 1
+        width: 268
+        height: 256.25
+        xPosition: 1930.7631
+        yPosition: 1332.7893
+        items:
+        - rid: 4538204687480390402
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390370
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5480
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 5481
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 1
+        - id: 5482
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 8
+        - id: 5483
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 5
+        - id: 5484
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 9
+        - id: 5485
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 9
+        outputs:
+        - id: 5486
+          attachedIds: 7f170000
+          ownerId: 5480
+          connectionType: 2
+        - id: 5487
+          attachedIds: 
+          ownerId: 5480
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 409.6009
+        yPosition: 1196.8612
+        triggeredClassName: QuestService
+        triggeredMethodName: IsEntryInJournal
+        methodSignature: IsEntryInJournal(int,string):bool
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - JOVAN_SAVED
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390371
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7017
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7018
+          attachedIds: e2140000
+          ownerId: 7017
+          connectionType: 1
+        outputs:
+        - id: 7019
+          attachedIds: fb1c0000
+          ownerId: 7017
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1414.6594
+        yPosition: 1719.1416
+        items:
+        - rid: 4538204687480390403
+        characterName: Player
+        icon: 
+    - rid: 4538204687480390372
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7101
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 7102
+          attachedIds: 82170000
+          ownerId: 7101
+          connectionType: 1
+        - id: 7103
+          attachedIds: 
+          ownerId: 7101
+          connectionType: 5
+        - id: 7104
+          attachedIds: 
+          ownerId: 7101
+          connectionType: 9
+        - id: 7105
+          attachedIds: 
+          ownerId: 7101
+          connectionType: 9
+        - id: 7106
+          attachedIds: 
+          ownerId: 7101
+          connectionType: 9
+        outputs:
+        - id: 7107
+          attachedIds: 
+          ownerId: 7101
+          connectionType: 9
+        - id: 7108
+          attachedIds: e7470000
+          ownerId: 7101
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1062.4934
+        yPosition: 1302.4736
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390373
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7387
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 7388
+          attachedIds: fc1c00001b180000
+          ownerId: 7387
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2370.6477
+        yPosition: 1553.3153
+        exitPointName: 
+    - rid: 4538204687480390374
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7418
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 7419
+          attachedIds: 6b1b0000
+          ownerId: 7418
+          connectionType: 1
+        outputs:
+        - id: 7420
+          attachedIds: dc1c0000
+          ownerId: 7418
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1765.4916
+        yPosition: 1708.0027
+        items:
+        - rid: 4538204687480390404
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390375
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8252
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 8253
+          attachedIds: 50200000
+          ownerId: 8252
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 103.83656
+        yPosition: 2240.796
+        entryPointName: 2
+    - rid: 4538204687480390376
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8254
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8255
+          attachedIds: 51200000
+          ownerId: 8254
+          connectionType: 1
+        outputs:
+        - id: 8256
+          attachedIds: 81200000
+          ownerId: 8254
+          connectionType: 1
+        width: 268
+        height: 177.5
+        xPosition: 612.7271
+        yPosition: 2170.796
+        items:
+        - rid: 4538204687480390405
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390377
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8271
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 8272
+          attachedIds: 3d200000
+          ownerId: 8271
+          connectionType: 1
+        outputs:
+        - id: 8273
+          attachedIds: 3f200000
+          ownerId: 8271
+          connectionType: 1
+        - id: 8274
+          attachedIds: 6b200000
+          ownerId: 8271
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: 297.58652
+        yPosition: 2241.8115
+        items:
+        - rid: 4538204687480390406
+        - rid: 4538204687480390407
+    - rid: 4538204687480390378
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8298
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8299
+          attachedIds: 52200000
+          ownerId: 8298
+          connectionType: 1
+        outputs:
+        - id: 8300
+          attachedIds: 95210000
+          ownerId: 8298
+          connectionType: 1
+        width: 268
+        height: 150.9375
+        xPosition: 636.96136
+        yPosition: 2420.0923
+        items:
+        - rid: 4538204687480390408
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390379
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8320
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8321
+          attachedIds: 40200000
+          ownerId: 8320
+          connectionType: 1
+        outputs:
+        - id: 8322
+          attachedIds: 8d210000
+          ownerId: 8320
+          connectionType: 1
+        width: 268
+        height: 161.48462
+        xPosition: 1047.1176
+        yPosition: 2198.608
+        items:
+        - rid: 4538204687480390409
+        characterName: Jovan
+        icon: 
+    - rid: 4538204687480390380
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8588
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8589
+          attachedIds: 82200000
+          ownerId: 8588
+          connectionType: 1
+        outputs:
+        - id: 8590
+          attachedIds: 95210000
+          ownerId: 8588
+          connectionType: 1
+        width: 268
+        height: 163.4375
+        xPosition: 1450.185
+        yPosition: 2199.1995
+        items:
+        - rid: 4538204687480390410
+        characterName: Meredith
+        icon: 
+    - rid: 4538204687480390381
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8596
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 8597
+          attachedIds: 8e2100006c200000
+          ownerId: 8596
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1954.5756
+        yPosition: 2393.8086
+        exitPointName: 
+    - rid: 4538204687480390382
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 18406
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 18407
+          attachedIds: c41b0000
+          ownerId: 18406
+          connectionType: 1
+        - id: 18408
+          attachedIds: 
+          ownerId: 18406
+          connectionType: 8
+        - id: 18409
+          attachedIds: 
+          ownerId: 18406
+          connectionType: 5
+        - id: 18410
+          attachedIds: 
+          ownerId: 18406
+          connectionType: 2
+        - id: 18411
+          attachedIds: 
+          ownerId: 18406
+          connectionType: 9
+        outputs:
+        - id: 18412
+          attachedIds: 
+          ownerId: 18406
+          connectionType: 9
+        - id: 18413
+          attachedIds: 1a180000
+          ownerId: 18406
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1483.511
+        yPosition: 1276.8677
+        triggeredClassName: QuestService
+        triggeredMethodName: AddEntryAndFinishQuest
+        methodSignature: AddEntryAndFinishQuest(int,string,bool)
+        parameterTypes:
+        - int
+        - string
+        - bool
+        parameterValues:
+        - 0
+        - JOVAN_LOST_FINISHED_POS
+        - true
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390383
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 25710
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 25711
+          attachedIds: a3030000
+          ownerId: 25710
+          connectionType: 1
+        - id: 25712
+          attachedIds: 
+          ownerId: 25710
+          connectionType: 8
+        - id: 25713
+          attachedIds: 
+          ownerId: 25710
+          connectionType: 5
+        - id: 25714
+          attachedIds: 
+          ownerId: 25710
+          connectionType: 9
+        - id: 25715
+          attachedIds: 
+          ownerId: 25710
+          connectionType: 9
+        outputs:
+        - id: 25716
+          attachedIds: 
+          ownerId: 25710
+          connectionType: 9
+        - id: 25717
+          attachedIds: cc7b0000
+          ownerId: 25710
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 4419.008
+        yPosition: 351.13763
+        triggeredClassName: QuestService
+        triggeredMethodName: AddEntry
+        methodSignature: AddEntry(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - JOVAN_LOOK
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390384
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 31691
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 31692
+          attachedIds: 75640000068d0000
+          ownerId: 31691
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 5044.743
+        yPosition: 299.28394
+        key: INFO_FROM_MEREDITH
+    - rid: 4538204687480390385
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 31779
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 31780
+          attachedIds: 38030000
+          ownerId: 31779
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: 3361.1497
+        yPosition: 170.37772
+        key: INFO_FROM_MEREDITH
+    - rid: 4538204687480390386
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 33712
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 33713
+          attachedIds: 61040000
+          ownerId: 33712
+          connectionType: 1
+        - id: 33714
+          attachedIds: 
+          ownerId: 33712
+          connectionType: 8
+        - id: 33715
+          attachedIds: 
+          ownerId: 33712
+          connectionType: 5
+        - id: 33716
+          attachedIds: 
+          ownerId: 33712
+          connectionType: 9
+        - id: 33717
+          attachedIds: 
+          ownerId: 33712
+          connectionType: 9
+        outputs:
+        - id: 33718
+          attachedIds: 
+          ownerId: 33712
+          connectionType: 9
+        - id: 33719
+          attachedIds: cf040000
+          ownerId: 33712
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2178.854
+        yPosition: 756.29224
+        triggeredClassName: QuestService
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - QUEST_GIVEN_FROM_ROLF
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390387
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 36095
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 36096
+          attachedIds: 4a030000
+          ownerId: 36095
+          connectionType: 1
+        - id: 36097
+          attachedIds: 
+          ownerId: 36095
+          connectionType: 8
+        - id: 36098
+          attachedIds: 
+          ownerId: 36095
+          connectionType: 5
+        - id: 36099
+          attachedIds: 
+          ownerId: 36095
+          connectionType: 9
+        - id: 36100
+          attachedIds: 
+          ownerId: 36095
+          connectionType: 9
+        outputs:
+        - id: 36101
+          attachedIds: 
+          ownerId: 36095
+          connectionType: 9
+        - id: 36102
+          attachedIds: cc7b0000
+          ownerId: 36095
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 4419.825
+        yPosition: -21.883549
+        triggeredClassName: QuestService
+        triggeredMethodName: AddEntry
+        methodSignature: AddEntry(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - INFO_ABOUT_JOVAN
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204687480390388
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hello. Are you Meredith? I came about the contract you posted on the
+          board. Is it available?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390389
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hello, how are you today?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390390
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yes, I still need someone to find my husband. He got lost in the forest.
+          Can you find him?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390391
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Where did he go?
+    - rid: 4538204687480390392
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What does he look like?
+    - rid: 4538204687480390393
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: No problem, i will find him.
+    - rid: 4538204687480390394
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Jovan left village yesterday. He left through the south gate, you can
+          ask the guards where he went.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390395
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: He was last wearing a red jacket and a white cap. His name is Jovan.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390396
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you my dear. There is a reward when you find him. Come back with
+          him please.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390397
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's very bad, my husband hasn't come home since yesterday. He went
+          out into the forest. I'm afraid the wolves got to him.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390398
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I can look for him.
+    - rid: 4538204687480390399
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: "\rI'm sorry, I hope he'll be found."
+    - rid: 4538204687480390400
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Oh my god, I think Erel himself sent you to me. Do you need any information?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390401
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Did you find him?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390402
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you! Thank you! Thank you! I prayed to Alyss, hoping she would
+          send me someone to help, and you appeared. Here's reward. May Alyss and
+          Erel take care of you.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390403
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Not yet, I am still looking for him.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390404
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Okay, I am waiting for news.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390405
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You won't go into the forest alone anymore.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390406
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 4538204687480390407
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 4538204687480390408
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: What a beautiful day!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390409
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You know I have to because it's my job.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4538204687480390410
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You will find another one.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &8489121711628576222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 26
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Player
+    - id: 1
+      language: en
+      text: Hello. Are you Meredith? I came about the contract you posted on the
+        board. Is it available?
+    - id: 2
+      language: en
+      text: Hello, how are you today?
+    - id: 3
+      language: en
+      text: Meredith
+    - id: 4
+      language: en
+      text: Yes, I still need someone to find my husband. He got lost in the forest.
+        Can you find him?
+    - id: 5
+      language: en
+      text: Where did he go?
+    - id: 6
+      language: en
+      text: What does he look like?
+    - id: 7
+      language: en
+      text: No problem, i will find him.
+    - id: 8
+      language: en
+      text: He left through the south gate, you can ask the guards where he went.
+    - id: 9
+      language: en
+      text: He was last wearing a red jacket and a white cap. His name is Jovan.
+    - id: 10
+      language: en
+      text: Thank you my dear. There is a reward when you find him. Come back with
+        him please.
+    - id: 11
+      language: en
+      text: It's very bad, my husband hasn't come home since yesterday. He went out
+        into the forest. I'm afraid the wolves got to him.
+    - id: 12
+      language: en
+      text: I can look for him.
+    - id: 13
+      language: en
+      text: "\rI'm sorry, I hope he'll be found."
+    - id: 14
+      language: en
+      text: Oh my god, I think Erel himself sent you to me Do you need any information?
+    - id: 15
+      language: en
+      text: Oh my god, I think Erel himself sent you to me. Do you need any information?
+    - id: 16
+      language: en
+      text: Did you find him?
+    - id: 17
+      language: en
+      text: Thank you! Thank you! Thank you! I prayed to Alyss, hoping she would
+        send me someone to help, and you appeared. Here's reward. May Alyss and Erel
+        take care of you.
+    - id: 18
+      language: en
+      text: Not yet, I am still looking for him.
+    - id: 19
+      language: en
+      text: Okay, I am waiting for news.
+    - id: 20
+      language: en
+      text: You won't go into the forest alone anymore.
+    - id: 21
+      language: en
+      text: Jovan
+    - id: 22
+      language: en
+      text: What a beautiful day!
+    - id: 23
+      language: en
+      text: You know I have to because it's my job.
+    - id: 24
+      language: en
+      text: You will find another one.
+    - id: 25
+      language: en
+      text: Jovan left village yesterday. He left through the south gate, you can
+        ask the guards where he went.

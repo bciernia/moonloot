@@ -1,6 +1,5 @@
 using EasyTalk.Editor.Settings;
 using EasyTalk.Localization;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.UIElements;
 

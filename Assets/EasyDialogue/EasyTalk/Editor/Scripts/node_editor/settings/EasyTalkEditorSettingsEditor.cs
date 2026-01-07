@@ -51,6 +51,8 @@ namespace EasyTalk.Editor.Settings
             EditorGUILayout.LabelField(new GUIContent("Localization Settings"), EditorStyles.boldLabel);
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(settingsObj.FindProperty("defaultOriginalLanguage"));
+            EditorGUILayout.PropertyField(settingsObj.FindProperty("copySourceTextForNewEntries"));
+
             EditorGUILayout.PropertyField(settingsObj.FindProperty("defaultFont"));
             EditorGUILayout.PropertyField(settingsObj.FindProperty("googleTranslateProjectId"));
             EditorGUILayout.Space();

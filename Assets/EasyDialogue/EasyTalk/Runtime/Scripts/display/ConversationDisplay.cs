@@ -1098,7 +1098,7 @@ namespace EasyTalk.Display
         /// <param name="controller">The Dialogue Controller being used.</param>
         public virtual void TranslateText(DialogueController controller)
         {
-            if (controller != null)
+            if (controller != null && currentLine != null)
             {
                 string convoText = currentLine.PreTranslationText;
                 string translatedText = controller.GetNodeHandler().Translate(convoText);

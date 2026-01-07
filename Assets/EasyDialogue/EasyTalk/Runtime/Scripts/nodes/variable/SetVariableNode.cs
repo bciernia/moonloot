@@ -96,9 +96,7 @@ namespace EasyTalk.Nodes.Variable
                     {
                         if (variableValue != null)
                         {
-                            //string variableValueString = nodeHandler.TranslateText(variableValue);
-                            string variableValueString = nodeHandler.ReplaceVariablesInString(variableValue);
-                            stringValue = variableValueString;
+                            nodeHandler.AttemptTranslationAndForceVariableReplacement(variableValue, NodeType.SET_VARIABLE_VALUE, out stringValue);
                         }
                     }
 

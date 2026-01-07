@@ -1,4 +1,3 @@
-using EasyTalk.Display;
 using EasyTalk.Utils;
 using UnityEngine;
 

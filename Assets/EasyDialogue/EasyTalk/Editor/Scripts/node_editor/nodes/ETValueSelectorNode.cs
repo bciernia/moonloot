@@ -73,7 +73,9 @@ namespace EasyTalk.Editor.Nodes
 
         public void UpdateStoredNodeState()
         {
+            int currentID = NodeUtils.CurrentID();
             storedNodeState = CreateNode() as ValueSelectorNode;
+            NodeUtils.SetCurrentID(currentID);
         }
 
         public override void NodeMoved()
@@ -265,18 +267,19 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            /*if (((ValueOutputType)inputContent.OutputTypeField.value) == ValueOutputType.STRING)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.VALUE_SELECT))
             {
-                TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-                foreach(ETValueContent valueContent in Items)
+                if (((ValueOutputType)inputContent.OutputTypeField.value) == ValueOutputType.STRING)
                 {
-                    if (valueContent.GetInputs()[0].ConnectedOutputs.Count == 0 && valueContent.ValueField.value.ToString().Length > 0)
+                    foreach(ETValueContent valueContent in Items)
                     {
-                        sourceSet.AddOrFindTranslation(valueContent.ValueField.value.ToString());
+                        if (valueContent.GetInputs()[0].ConnectedOutputs.Count == 0 && valueContent.ValueField.value.ToString().Length > 0)
+                        {
+                            library.AddOrFindTranslation(valueContent.ValueField.value.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                        }
                     }
                 }
-            }*/
+            }
         }
 
         protected override string GetNodeTooltip()

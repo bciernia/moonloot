@@ -84,7 +84,9 @@ namespace EasyTalk.Editor.Nodes
 
         public void UpdateStoredNodeState()
         {
+            int currentID = NodeUtils.CurrentID();
             storedNodeState = CreateNode() as ConditionalValueNode;
+            NodeUtils.SetCurrentID(currentID);
         }
 
         public override void NodeMoved()
@@ -236,20 +238,21 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            /*if (((ValueOutputType)inputContent.ValueTypeField.value) == ValueOutputType.STRING)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.CONDITIONAL_VALUE))
             {
-                TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-                if (trueContent.GetInputs()[0].ConnectedOutputs.Count == 0 && trueContent.Value.ToString().Length > 0)
+                if (((ValueOutputType)inputContent.ValueTypeField.value) == ValueOutputType.STRING)
                 {
-                    sourceSet.AddOrFindTranslation(trueContent.Value.ToString());
-                }
+                    if (trueContent.GetInputs()[0].ConnectedOutputs.Count == 0 && trueContent.Value.ToString().Length > 0)
+                    {
+                        library.AddOrFindTranslation(trueContent.Value.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                    }
 
-                if (falseContent.GetInputs()[0].ConnectedOutputs.Count == 0 && falseContent.Value.ToString().Length > 0)
-                {
-                    sourceSet.AddOrFindTranslation(falseContent.Value.ToString());
+                    if (falseContent.GetInputs()[0].ConnectedOutputs.Count == 0 && falseContent.Value.ToString().Length > 0)
+                    {
+                        library.AddOrFindTranslation(falseContent.Value.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                    }
                 }
-            }*/
+            }
         }
 
         protected override string GetNodeTooltip()

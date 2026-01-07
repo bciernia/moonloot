@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,8 +66,21 @@ public class QuestTableManager : Singleton<QuestTableManager>
         ChosenQuest = quest;
         QuestTitle.text = quest.GetQuestTitle();
         QuestDescription.text = quest.GetQuestDescription();
+        QuestReward.text = PrepareRewardForQuest(quest.GetRewards().ToList());
         QuestButton.onClick.RemoveAllListeners();
         QuestButton.onClick.AddListener(() => GetTask(quest));
+    }
+
+    private string PrepareRewardForQuest(List<QuestSO.Reward> rewards)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("Reward: ");
+        foreach (var reward in rewards)
+        {
+            sb.AppendLine($"{reward.item.item.name} x{reward.item.quantity}");
+        }
+
+        return sb.ToString();
     }
 
     private void GetTask(QuestSO quest)

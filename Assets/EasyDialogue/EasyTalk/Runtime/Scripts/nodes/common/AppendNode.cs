@@ -1,7 +1,5 @@
 using UnityEngine;
 using EasyTalk.Nodes.Core;
-using EasyTalk.Controller;
-using System.Collections.Generic;
 
 namespace EasyTalk.Nodes.Common
 {

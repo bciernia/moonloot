@@ -1,5 +1,4 @@
 using EasyTalk.Editor.Ledger.Actions;
-using System;
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
@@ -67,6 +66,16 @@ namespace EasyTalk.Editor.Nodes
             listPanel.RemoveItem(item);
         }
 
+        protected void MoveItempUpInList(ETNodeContent item)
+        {
+            listPanel.MoveItemUp(item);
+        }
+
+        protected void MoveItemDownInList(ETNodeContent item)
+        {
+            listPanel.MoveItemDown(item);
+        }
+
         public AbstractListNodeContent ListPanel { get { return listPanel; } }
     }
 
@@ -91,6 +100,20 @@ namespace EasyTalk.Editor.Nodes
         protected override void RemoveItemFromPanel(ETNode node, ETNodeContent content)
         {
             contentPanel.Remove(content);
+        }
+
+        protected override void MoveItemUpInPanel(ETNode node, int idx)
+        {
+            VisualElement content = contentPanel[idx];
+            contentPanel.RemoveAt(idx);
+            contentPanel.Insert(idx - 1, content);
+        }
+
+        protected override void MoveItemDownInPanel(ETNode node, int idx)
+        {
+            VisualElement content = contentPanel[idx];
+            contentPanel.RemoveAt(idx);
+            contentPanel.Insert(idx + 1, content);
         }
     }
 
@@ -128,6 +151,20 @@ namespace EasyTalk.Editor.Nodes
         protected override void RemoveItemFromPanel(ETNode node, ETNodeContent content)
         {
             scrollView.Remove(content);
+        }
+
+        protected override void MoveItemUpInPanel(ETNode node, int idx)
+        {
+            VisualElement content = contentPanel[idx];
+            contentPanel.RemoveAt(idx);
+            contentPanel.Insert(idx - 1, content);
+        }
+
+        protected override void MoveItemDownInPanel(ETNode node, int idx)
+        {
+            VisualElement content = contentPanel[idx];
+            contentPanel.RemoveAt(idx);
+            contentPanel.Insert(idx + 1, content);
         }
     }
 
@@ -208,6 +245,38 @@ namespace EasyTalk.Editor.Nodes
         {
             ETNodeContent content = Items[idx];
             RemoveItem(content);
+        }
+
+        protected abstract void MoveItemUpInPanel(ETNode node, int idx);
+
+        public void MoveItemUp(ETNodeContent content)
+        {
+            int idx = listItems.IndexOf(content);
+
+            if (idx > 0)
+            {
+                listItems.RemoveAt(idx);
+                listItems.Insert(idx - 1, content);
+
+                MoveItemUpInPanel(parentNode, idx);
+                EasyTalkNodeEditor.Instance.NodeView.MarkDirtyRepaint();
+            }
+        }
+
+        protected abstract void MoveItemDownInPanel(ETNode node, int idx);
+
+        public void MoveItemDown(ETNodeContent content)
+        {
+            int idx = listItems.IndexOf(content);
+
+            if (idx < listItems.Count - 1)
+            {
+                listItems.RemoveAt(idx);
+                listItems.Insert(idx + 1, content);
+
+                MoveItemDownInPanel(parentNode, idx);
+                EasyTalkNodeEditor.Instance.NodeView.MarkDirtyRepaint();
+            }
         }
 
         public override List<ETInput> GetInputs()

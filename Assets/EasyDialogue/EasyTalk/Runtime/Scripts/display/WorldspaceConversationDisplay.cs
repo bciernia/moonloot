@@ -1,5 +1,9 @@
 using EasyTalk.Utils;
+
+#if TEXTMESHPRO_INSTALLED
 using TMPro;
+#endif
+
 using UnityEngine;
 
 namespace EasyTalk.Display
@@ -54,6 +58,8 @@ namespace EasyTalk.Display
 
         private void OnValidate()
         {
+            SetupUtils.SetUpTextComponents(this.gameObject, this.forceStandardText);
+
 #if TEXTMESHPRO_INSTALLED
             if (this.TMPCharacterNameText == null)
             {

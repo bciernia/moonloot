@@ -1,7 +1,6 @@
 using EasyTalk.Display.Style;
 using EasyTalk.Editor.Utils;
 using UnityEditor;
-using UnityEngine;
 
 namespace EasyTalk.Editor.Display
 {

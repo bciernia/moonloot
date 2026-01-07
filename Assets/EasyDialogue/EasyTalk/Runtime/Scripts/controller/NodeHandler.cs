@@ -604,6 +604,7 @@ namespace EasyTalk.Controller
         {
             ConversationLine line = null;
             string text = "";
+            NodeType currentNodeType = NodeType.UNKNOWN;
 
             if (currentNode is ConversationNode)
             {
@@ -614,6 +615,7 @@ namespace EasyTalk.Controller
                     ConversationItem convoItem = convoNode.Items[convoIdx] as ConversationItem;
                     line = new ConversationLine();
                     text = convoItem.Text;
+                    currentNodeType = NodeType.CONVO;
 
                     line.AudioClip = convoItem.AudioClip;
                     line.OriginalCharacterName = convoNode.CharacterName;
@@ -630,6 +632,7 @@ namespace EasyTalk.Controller
                 AppendNode appendNode = currentNode as AppendNode;
                 line = new ConversationLine();
                 text = appendNode.Text;
+                currentNodeType = NodeType.APPEND;
 
                 Node nextNode = GetNextNode();
                 if (nextNode != null && (nextNode is OptionNode))
@@ -646,11 +649,13 @@ namespace EasyTalk.Controller
                 Dictionary<string, NodeTag> tags = new Dictionary<string, NodeTag>();
                 text = NodeTag.ExtractTags(text, tags);
 
-                string untranslatedText;
-                text = Translate(text, out untranslatedText);
+                //Attempt to translate the string value (including node-handler variable replacement).
+                //NOTE: A translation will only be performed if the APPEND type is added as a translatable node type in the dialgoue registry asset.
+                string translatedText = text;
+                AttemptTranslationAndForceVariableReplacement(text, currentNodeType, out translatedText);
 
-                line.Text = text;
-                line.PreTranslationText = untranslatedText;
+                line.Text = translatedText;
+                line.PreTranslationText = text;
 
                 if (tags.ContainsKey("append")) { line.TextDisplayMode = TextDisplayMode.APPEND; }
                 if (tags.ContainsKey("key")) { line.Key = (tags["key"] as KeyTag).keyValue; }
@@ -681,7 +686,8 @@ namespace EasyTalk.Controller
                 string tagFreeCharacterName = TMPTag.RemoveTags(line.OriginalCharacterName);
 
                 //Translate the character name. If the returned result is the same as the original, then we can just use the original character name (tags included).
-                string translatedCharacterName = Translate(tagFreeCharacterName);
+                string translatedCharacterName = tagFreeCharacterName;
+                AttemptTranslationAndForceVariableReplacement(tagFreeCharacterName, currentNodeType, out translatedCharacterName);
 
                 if(translatedCharacterName.Equals(tagFreeCharacterName))
                 {
@@ -838,11 +844,11 @@ namespace EasyTalk.Controller
                 if (tags.ContainsKey("selectable")) { option.IsSelectable = (tags["selectable"] as SelectableTag).selectable; }
                 if (tags.ContainsKey("id")) { option.ID = (tags["id"] as IDTag).id; }
 
-                string untranslatedText;
-                optionText = Translate(optionText, out untranslatedText);
+                string translatedText;
+                AttemptTranslationAndForceVariableReplacement(optionText, NodeType.OPTION, out translatedText);
 
-                option.OptionText = optionText;
-                option.PreTranslationText = untranslatedText;
+                option.OptionText = translatedText;
+                option.PreTranslationText = optionText;
                 options.Add(option);
             }
 
@@ -1467,6 +1473,61 @@ namespace EasyTalk.Controller
         }
 
         /// <summary>
+        /// Given a string and the node type associated with that string, this method will attempt to translate the string if the provided node type
+        /// is configured for translations in the dialogue registry. In addition, this method automatically handles variable injection replacing variable
+        /// injection strings with current variable values.
+        /// </summary>
+        /// <param name="text">The node text to attempt to translate.</param>
+        /// <param name="nodeType">The type of node being translated.</param>
+        /// <param name="translatedString">The output string for the translated result.</param>
+        /// <returns>Returns true if the string was translatable (the node type is configured for translation); false otherwise.</returns>
+        public bool AttemptTranslationAndForceVariableReplacement(string text, NodeType nodeType, out string translatedString)
+        {
+            //Attempt to translate the string value (including node-handler variable replacement).
+            //NOTE: A translation will only be performed if the node type is added as a translatable node type in the dialgoue registry asset.
+            if (AttemptTranslationForNode(text, nodeType, out translatedString))
+            {
+                return true;
+            }
+            else
+            {
+                //If we didn't get a translation, replace any variables in the string (variable injection).
+                translatedString = ReplaceVariablesInString(text);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Attempts to translate the provided string if the dialogue registry is configured to allow translations on the specified node type.
+        /// </summary>
+        /// <param name="text">The node text to attempt to translate.</param>
+        /// <param name="nodeType">The type of node being translated.</param>
+        /// <param name="translatedString">The output string.</param>
+        /// <returns>Returns true if the specified node type is configured for translation; false otherwise.</returns>
+        public bool AttemptTranslationForNode(string text, NodeType nodeType, out string translatedString)
+        {
+            translatedString = text;
+            if(IsNodeTranslationSupported(nodeType))
+            {
+                translatedString = Translate(text);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Returns whether or not the specified node type is configured to support translation in the dialogue registry.
+        /// </summary>
+        /// <param name="nodeType">The node type to check.</param>
+        /// <returns>Whether the specified node type supports translation.</returns>
+        private bool IsNodeTranslationSupported(NodeType nodeType)
+        {
+            return dialogueSettings != null && dialogueSettings.DialogueRegistry != null &&
+                dialogueSettings.DialogueRegistry.TranslatedNodeTypes != null && dialogueSettings.DialogueRegistry.TranslatedNodeTypes.Contains(nodeType);
+        }
+
+        /// <summary>
         /// Translates the specified string to a localized string using the TranslationLibrary of the Dialogue.
         /// </summary>
         /// <param name="text">The line of text to translate.</param>
@@ -1505,7 +1566,13 @@ namespace EasyTalk.Controller
                 }
                 else if(newText != null)
                 {
-                    Translation translation = dialogue.TranslationLibrary.GetTranslation(newText, languageCode);
+                    TranslationLibrary libraryToTranslateFrom = dialogue.TranslationLibrary;
+                    if(DialogueSettings != null && DialogueSettings.DialogueRegistry != null & DialogueSettings.DialogueRegistry.UseSingleTranslationLibrary)
+                    {
+                        libraryToTranslateFrom = DialogueSettings.DialogueRegistry.TranslationLibrary;
+                    }
+
+                    Translation translation = libraryToTranslateFrom.GetTranslation(newText, languageCode);
                     if (translation != null && translation.text != null && translation.text.Length > 0)
                     {
                         return translation.text;

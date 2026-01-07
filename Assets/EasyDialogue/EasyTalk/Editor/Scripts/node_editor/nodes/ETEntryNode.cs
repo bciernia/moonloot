@@ -1,7 +1,6 @@
 using EasyTalk.Editor.Components;
 using EasyTalk.Nodes.Common;
 using EasyTalk.Nodes.Core;
-using System.Diagnostics;
 using UnityEngine.UIElements;
 
 namespace EasyTalk.Editor.Nodes

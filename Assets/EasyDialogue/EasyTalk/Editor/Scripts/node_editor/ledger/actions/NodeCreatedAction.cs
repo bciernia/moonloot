@@ -10,7 +10,10 @@ namespace EasyTalk.Editor.Ledger.Actions
 
         public override void Redo(ETNodeView nodeView)
         {
+            int currentID = NodeUtils.CurrentID();
             Node newNode = node.CreateNode();
+            NodeUtils.SetCurrentID(currentID);
+
             nodeView.CreateNode(newNode.NodeType, newNode, false);
         }
 

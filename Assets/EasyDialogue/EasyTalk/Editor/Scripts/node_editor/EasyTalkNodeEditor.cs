@@ -108,6 +108,8 @@ namespace EasyTalk.Editor
         /// </summary>
         public bool allowChangeRegistration = false;
 
+        private string creationTimeString = null;
+
         /// <inheritdoc/>
         [MenuItem("Tools/EasyTalk/EasyTalk Node Editor")]
         static void OpenEditor()
@@ -475,6 +477,10 @@ namespace EasyTalk.Editor
                 //Load character names from the registry into the node view
                 RefreshCharactersdLibraries();
 
+                //Set the NodeUtils current ID to 0 and clear the utilized ID list of the Node View.
+                NodeUtils.SetCurrentID(0);
+                NodeView.ClearUtilizedIdList();
+
                 if (dialogue != null)
                 {
                     int numLoaded = 0;
@@ -485,8 +491,16 @@ namespace EasyTalk.Editor
                         numLoaded++;
                     }
 
-                    NodeUtils.SetCurrentID(dialogue.MaxID + 1);
+                    //Update the NodeUtils current ID to the greater of the Max ID in the Node View, or the Max ID of the dialogue asset.
+                    //This is done to prevent issues from arising with duplicated IDs.
+                    NodeUtils.SetCurrentID(Mathf.Max(NodeView.NextMaxID(), dialogue.MaxID + 1));
+
                     fileManager.CurrentFilePath = assetPath;
+
+                    if(dialogue.CreationTime != null)
+                    {
+                        creationTimeString = dialogue.CreationTime;
+                    }
                 }
 
                 SetTranslationLibrary(dialogue);
@@ -829,6 +843,12 @@ namespace EasyTalk.Editor
         { 
             get { return this.translationLibrary; } 
             set { this.translationLibrary = value; }
+        }
+
+        public string CreationTimeString
+        {
+            get { return creationTimeString; }
+            set { creationTimeString = value; }
         }
 
         /// <summary>
