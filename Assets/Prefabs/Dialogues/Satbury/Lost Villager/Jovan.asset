@@ -1,5 +1,70 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8329394831597146268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 15
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Jovan
+    - id: 1
+      language: en
+      text: Thank you for help!
+    - id: 2
+      language: en
+      text: Thank you for help! I have some gold, so please take it.
+    - id: 3
+      language: en
+      text: Your wife is looking for you. She promised me reward, so keep your gold.
+    - id: 4
+      language: en
+      text: Your wife is looking for you.
+    - id: 5
+      language: en
+      text: Thank you for rescue. I will go to village soon. Let's meet at the inn.
+    - id: 6
+      language: en
+      text: Thank you for help! I have some shards, so please take it.
+    - id: 7
+      language: en
+      text: '*Take the shards*'
+    - id: 8
+      language: en
+      text: Take the 30 shards
+    - id: 9
+      language: en
+      text: Your wife is looking for you. She promised me reward, so keep your money.
+    - id: 10
+      language: en
+      text: Oh, thank you, you're welcome, it's just that Brisanna hasn't decided
+        to summon you to her presence yet.
+    - id: 11
+      language: en
+      text: Thank you for help! I have some lunars, so please take it.
+    - id: 12
+      language: en
+      text: 'Oh, thank you, you''re welcome, it''s just that Brisanna hasn''t decided
+        to summon you to her presence yet. '
+    - id: 13
+      language: en
+      text: Take the 30 lunars
+    - id: 14
+      language: en
+      text: Thank you for rescue. I will go to village soon. Let's meet at the inn.
+        There is my wife Meredith, she will give you reward. Thank you one more time!
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12,27 +77,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
   m_Name: Jovan
   m_EditorClassIdentifier: 
-  version: 1.7.6
+  version: 1.8.4
+  creationTime: 2026-01-09@21:20:08
+  editTime: 2026-01-10@09:34:41
   nodes:
-  - rid: 5422256194123989765
-  - rid: 5422256194123989766
-  - rid: 5422256194123989767
-  - rid: 5422256194123989768
-  - rid: 5422256194123989769
-  - rid: 5422256194123989770
-  - rid: 5422256194123989771
-  - rid: 5422256194123989772
-  - rid: 5422256194123989773
-  - rid: 5422256194123989774
-  - rid: 5422256194123989775
-  - rid: 5422256194123989776
-  - rid: 5422256194123989777
-  translationLibrary: {fileID: 5994176632082734855}
-  maxID: 4848
+  - rid: 4538204791749739205
+  - rid: 4538204791749739206
+  - rid: 4538204791749739207
+  - rid: 4538204791749739208
+  - rid: 4538204791749739209
+  - rid: 4538204791749739210
+  - rid: 4538204791749739211
+  - rid: 4538204791749739212
+  - rid: 4538204791749739213
+  - rid: 4538204791749739214
+  - rid: 4538204791749739215
+  - rid: 4538204791749739216
+  - rid: 4538204791749739217
+  - rid: 4538204791749739218
+  - rid: 4538204791749739219
+  - rid: 4538204791749739220
+  - rid: 4538204791749739221
+  - rid: 4538204791749739222
+  - rid: 4538204791749739223
+  - rid: 4538204791749739224
+  - rid: 4538204791749739225
+  - rid: 4538204791749739226
+  translationLibrary: {fileID: -8329394831597146268}
+  maxID: 1048
   references:
     version: 2
     RefIds:
-    - rid: 5422256194123989765
+    - rid: 4538204791749739205
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2
@@ -46,10 +122,10 @@ MonoBehaviour:
           connectionType: 1
         width: 129.20001
         height: 75
-        xPosition: -404.57657
-        yPosition: 93.78241
+        xPosition: -588.9515
+        yPosition: 110.9699
         entryPointName: 0
-    - rid: 5422256194123989766
+    - rid: 4538204791749739206
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 4
@@ -67,13 +143,13 @@ MonoBehaviour:
           connectionType: 1
         width: 268
         height: 254.06247
-        xPosition: 96.52551
-        yPosition: 195.97926
+        xPosition: -161.91197
+        yPosition: 167.85426
         items:
-        - rid: 5422256194123989778
+        - rid: 4538204791749739227
         characterName: Jovan
         icon: 
-    - rid: 5422256194123989767
+    - rid: 4538204791749739207
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 21
@@ -111,8 +187,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 320
-        xPosition: 2469.0503
-        yPosition: 217.85904
+        xPosition: 2923.7378
+        yPosition: 414.73404
         triggeredClassName: NPCTeleport
         triggeredMethodName: set_enabled
         methodSignature: set_enabled(bool)
@@ -122,7 +198,7 @@ MonoBehaviour:
         - true
         triggerType: 0
         objectTagOrName: 
-    - rid: 5422256194123989768
+    - rid: 4538204791749739208
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 143
@@ -136,10 +212,10 @@ MonoBehaviour:
         outputs: []
         width: 110
         height: 75
-        xPosition: 2866.613
-        yPosition: 471.57776
+        xPosition: 3321.3005
+        yPosition: 668.45276
         exitPointName: 
-    - rid: 5422256194123989769
+    - rid: 4538204791749739209
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 1755
@@ -147,7 +223,7 @@ MonoBehaviour:
         nodeType: 8
         inputs:
         - id: 1756
-          attachedIds: 820e0000
+          attachedIds: 820e0000c5130000
           ownerId: 1755
           connectionType: 1
         - id: 1757
@@ -177,8 +253,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 320
-        xPosition: 2163.12
-        yPosition: 208.13644
+        xPosition: 2617.8076
+        yPosition: 405.01144
         triggeredClassName: DialogueEntrySetter
         triggeredMethodName: UpdateDialogueEntry
         methodSignature: UpdateDialogueEntry(string)
@@ -188,7 +264,7 @@ MonoBehaviour:
         - 1
         triggerType: 0
         objectTagOrName: 
-    - rid: 5422256194123989770
+    - rid: 4538204791749739210
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2466
@@ -205,7 +281,7 @@ MonoBehaviour:
         xPosition: -370.7114
         yPosition: 635.16003
         entryPointName: 1
-    - rid: 5422256194123989771
+    - rid: 4538204791749739211
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2468
@@ -226,10 +302,10 @@ MonoBehaviour:
         xPosition: -151.70525
         yPosition: 643.3444
         items:
-        - rid: 5422256194123989779
+        - rid: 4538204791749739228
         characterName: Jovan
         icon: 
-    - rid: 5422256194123989772
+    - rid: 4538204791749739212
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2476
@@ -246,7 +322,7 @@ MonoBehaviour:
         xPosition: 262.1009
         yPosition: 724.6131
         exitPointName: 
-    - rid: 5422256194123989773
+    - rid: 4538204791749739213
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2557
@@ -284,8 +360,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 327.5
-        xPosition: 756.6846
-        yPosition: 460.69833
+        xPosition: 921.1377
+        yPosition: 152.8858
         triggeredClassName: ItemGiver
         triggeredMethodName: GiveItemToPlayer
         methodSignature: GiveItemToPlayer(int)
@@ -295,7 +371,7 @@ MonoBehaviour:
         - 0
         triggerType: 0
         objectTagOrName: 
-    - rid: 5422256194123989774
+    - rid: 4538204791749739214
       type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 4409
@@ -307,11 +383,19 @@ MonoBehaviour:
           ownerId: 4409
           connectionType: 1
         - id: 4411
-          attachedIds: 
+          attachedIds: 4a130000
           ownerId: 4409
           connectionType: 7
         - id: 4413
-          attachedIds: 
+          attachedIds: 4a130000
+          ownerId: 4409
+          connectionType: 7
+        - id: 4885
+          attachedIds: 0d130000
+          ownerId: 4409
+          connectionType: 7
+        - id: 4944
+          attachedIds: 0d130000
           ownerId: 4409
           connectionType: 7
         outputs:
@@ -323,14 +407,24 @@ MonoBehaviour:
           attachedIds: fe090000
           ownerId: 4409
           connectionType: 1
+        - id: 4886
+          attachedIds: bb130000
+          ownerId: 4409
+          connectionType: 1
+        - id: 4945
+          attachedIds: 98130000
+          ownerId: 4409
+          connectionType: 1
         width: 228
-        height: 266.39993
-        xPosition: 480.633
-        yPosition: 260.20428
+        height: 404.89993
+        xPosition: 512.50793
+        yPosition: 191.1418
         items:
-        - rid: 5422256194123989780
-        - rid: 5422256194123989781
-    - rid: 5422256194123989775
+        - rid: 4538204791749739229
+        - rid: 4538204791749739230
+        - rid: 4538204791749739231
+        - rid: 4538204791749739232
+    - rid: 4538204791749739215
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 4801
@@ -348,13 +442,13 @@ MonoBehaviour:
           connectionType: 1
         width: 268
         height: 214.99997
-        xPosition: 1532.3843
-        yPosition: 265.5801
+        xPosition: 1655.4312
+        yPosition: 51.90822
         items:
-        - rid: 5422256194123989782
+        - rid: 4538204791749739233
         characterName: Jovan
         icon: 
-    - rid: 5422256194123989776
+    - rid: 4538204791749739216
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 2740
@@ -392,8 +486,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 327.5
-        xPosition: 1088.6305
-        yPosition: 452.50537
+        xPosition: 1231.9896
+        yPosition: 108.7554
         triggeredClassName: QuestService
         triggeredMethodName: AddEntry
         methodSignature: AddEntry(int,string)
@@ -405,7 +499,7 @@ MonoBehaviour:
         - JOVAN_PRICE
         triggerType: 0
         objectTagOrName: 
-    - rid: 5422256194123989777
+    - rid: 4538204791749739217
       type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 3707
@@ -443,8 +537,8 @@ MonoBehaviour:
           connectionType: 1
         width: 220
         height: 320
-        xPosition: 1843.3242
-        yPosition: 206.20645
+        xPosition: 2032.7773
+        yPosition: 33.940826
         triggeredClassName: QuestService
         triggeredMethodName: AddEntry
         methodSignature: AddEntry(int,string)
@@ -456,30 +550,409 @@ MonoBehaviour:
         - JOVAN_SAVED
         triggerType: 0
         objectTagOrName: 
-    - rid: 5422256194123989778
+    - rid: 4538204791749739218
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4850
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4851
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 1
+        - id: 4852
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 8
+        - id: 4853
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 9
+        - id: 4854
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 9
+        - id: 4855
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 9
+        outputs:
+        - id: 4856
+          attachedIds: 101300004813000049130000
+          ownerId: 4850
+          connectionType: 2
+        - id: 4857
+          attachedIds: 
+          ownerId: 4850
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -382.23938
+        yPosition: -376.59448
+        triggeredClassName: QuestService
+        triggeredMethodName: IsQuestInQuestJournal
+        methodSignature: IsQuestInQuestJournal(int):bool
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204791749739219
+      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4873
+        name: OPTION_FILTER
+        nodeType: 13
+        inputs:
+        - id: 4874
+          attachedIds: 
+          ownerId: 4873
+          connectionType: 5
+        - id: 4875
+          attachedIds: 12130000
+          ownerId: 4873
+          connectionType: 2
+        - id: 4876
+          attachedIds: 12130000
+          ownerId: 4873
+          connectionType: 2
+        outputs:
+        - id: 4877
+          attachedIds: 1513000050130000
+          ownerId: 4873
+          connectionType: 7
+        width: 150
+        height: 145
+        xPosition: 156.74501
+        yPosition: 128.09302
+        isDisplayed: 1
+        isSelectable: 1
+    - rid: 4538204791749739220
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4878
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 4879
+          attachedIds: 
+          ownerId: 4878
+          connectionType: 1
+        - id: 4880
+          attachedIds: f8120000
+          ownerId: 4878
+          connectionType: 2
+        - id: 4881
+          attachedIds: 
+          ownerId: 4878
+          connectionType: 2
+        outputs:
+        - id: 4882
+          attachedIds: 0b1300000c130000
+          ownerId: 4878
+          connectionType: 2
+        - id: 4883
+          attachedIds: 
+          ownerId: 4878
+          connectionType: 10
+        - id: 4884
+          attachedIds: 
+          ownerId: 4878
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -25.442554
+        yPosition: -14.719456
+        logicOperation: 3
+    - rid: 4538204791749739221
+      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4934
+        name: OPTION_FILTER
+        nodeType: 13
+        inputs:
+        - id: 4935
+          attachedIds: 
+          ownerId: 4934
+          connectionType: 5
+        - id: 4936
+          attachedIds: f8120000
+          ownerId: 4934
+          connectionType: 2
+        - id: 4937
+          attachedIds: f8120000
+          ownerId: 4934
+          connectionType: 2
+        outputs:
+        - id: 4938
+          attachedIds: 3b1100003d110000
+          ownerId: 4934
+          connectionType: 7
+        width: 150
+        height: 145
+        xPosition: 241.50421
+        yPosition: -121.09949
+        isDisplayed: 1
+        isSelectable: 1
+    - rid: 4538204791749739222
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5007
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 5008
+          attachedIds: 9e130000
+          ownerId: 5007
+          connectionType: 1
+        - id: 5009
+          attachedIds: 
+          ownerId: 5007
+          connectionType: 8
+        - id: 5010
+          attachedIds: 
+          ownerId: 5007
+          connectionType: 5
+        - id: 5011
+          attachedIds: 
+          ownerId: 5007
+          connectionType: 9
+        - id: 5012
+          attachedIds: 
+          ownerId: 5007
+          connectionType: 9
+        outputs:
+        - id: 5013
+          attachedIds: 
+          ownerId: 5007
+          connectionType: 9
+        - id: 5014
+          attachedIds: bb130000
+          ownerId: 5007
+          connectionType: 1
+        width: 220
+        height: 327.5
+        xPosition: 1102.2981
+        yPosition: 704.65137
+        triggeredClassName: QuestService
+        triggeredMethodName: AddEntry
+        methodSignature: AddEntry(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - JOVAN_PRICE
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204791749739223
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5015
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 5016
+          attachedIds: 51130000
+          ownerId: 5015
+          connectionType: 1
+        - id: 5017
+          attachedIds: 
+          ownerId: 5015
+          connectionType: 8
+        - id: 5018
+          attachedIds: 
+          ownerId: 5015
+          connectionType: 9
+        - id: 5019
+          attachedIds: 
+          ownerId: 5015
+          connectionType: 9
+        - id: 5020
+          attachedIds: 
+          ownerId: 5015
+          connectionType: 9
+        outputs:
+        - id: 5021
+          attachedIds: 
+          ownerId: 5015
+          connectionType: 9
+        - id: 5022
+          attachedIds: 90130000
+          ownerId: 5015
+          connectionType: 1
+        width: 220
+        height: 327.5
+        xPosition: 769.7273
+        yPosition: 677.0943
+        triggeredClassName: ItemGiver
+        triggeredMethodName: GiveItemToPlayer
+        methodSignature: GiveItemToPlayer(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204791749739224
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5050
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5051
+          attachedIds: 9613000016130000
+          ownerId: 5050
+          connectionType: 1
+        outputs:
+        - id: 5052
+          attachedIds: 0a040000
+          ownerId: 5050
+          connectionType: 1
+        width: 268
+        height: 214.99997
+        xPosition: 1474.1555
+        yPosition: 630.9193
+        items:
+        - rid: 4538204791749739234
+        characterName: Jovan
+        icon: 
+    - rid: 4538204791749739225
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1033
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1034
+          attachedIds: bc130000
+          ownerId: 1033
+          connectionType: 1
+        - id: 1035
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 8
+        - id: 1036
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 5
+        - id: 1037
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        - id: 1038
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        outputs:
+        - id: 1039
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        - id: 1040
+          attachedIds: bf130000
+          ownerId: 1033
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1904.1626
+        yPosition: 587.0624
+        triggeredClassName: QuestService
+        triggeredMethodName: GiveQuest
+        methodSignature: GiveQuest(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - JOVAN_FOUND_WITHOUT_QUEST
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204791749739226
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 5054
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 5055
+          attachedIds: 10040000
+          ownerId: 5054
+          connectionType: 1
+        - id: 5056
+          attachedIds: 
+          ownerId: 5054
+          connectionType: 5
+        - id: 5057
+          attachedIds: 
+          ownerId: 5054
+          connectionType: 5
+        - id: 5058
+          attachedIds: 
+          ownerId: 5054
+          connectionType: 9
+        - id: 5059
+          attachedIds: 
+          ownerId: 5054
+          connectionType: 9
+        outputs:
+        - id: 5060
+          attachedIds: 
+          ownerId: 5054
+          connectionType: 9
+        - id: 5061
+          attachedIds: dc060000
+          ownerId: 5054
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2200.1086
+        yPosition: 563.7569
+        triggeredClassName: QuestService
+        triggeredMethodName: AddDialogueFlag
+        methodSignature: AddDialogueFlag(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - JOVAN_FOUND_WITHOUT_QUEST
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4538204791749739227
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
-        text: Thank you for help! I have some shards, so please take it.
+        text: Thank you for help! I have some lunars, so please take it.
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 5422256194123989779
+    - rid: 4538204791749739228
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Thank you for help!
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 5422256194123989780
+    - rid: 4538204791749739229
       type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Your wife is looking for you. She promised me reward, so keep your
           money.
-    - rid: 5422256194123989781
+    - rid: 4538204791749739230
       type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
-        text: <b>Take the 30 shards</b>
-    - rid: 5422256194123989782
+        text: <b>Take the 30 lunars</b>
+    - rid: 4538204791749739231
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Oh, thank you, you''re welcome, it''s just that Brisanna hasn''t decided
+          to summon you to her presence yet. '
+    - rid: 4538204791749739232
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: <b>Take the 30 lunars</b>
+    - rid: 4538204791749739233
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Thank you for rescue. I will go to village soon. Let's meet at the
@@ -487,50 +960,12 @@ MonoBehaviour:
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
---- !u!114 &5994176632082734855
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalLanguage: en
-  translationSets:
-  - counter: 10
-    languageCode: en
-    translations:
-    - id: 0
-      language: en
-      text: Jovan
-    - id: 1
-      language: en
-      text: Thank you for help!
-    - id: 2
-      language: en
-      text: Thank you for help! I have some gold, so please take it.
-    - id: 3
-      language: en
-      text: Your wife is looking for you. She promised me reward, so keep your gold.
-    - id: 4
-      language: en
-      text: Your wife is looking for you.
-    - id: 5
-      language: en
-      text: Thank you for rescue. I will go to village soon. Let's meet at the inn.
-    - id: 6
-      language: en
-      text: Thank you for help! I have some shards, so please take it.
-    - id: 7
-      language: en
-      text: '*Take the shards*'
-    - id: 8
-      language: en
-      text: Take the 30 shards
-    - id: 9
-      language: en
-      text: Your wife is looking for you. She promised me reward, so keep your money.
+    - rid: 4538204791749739234
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you for rescue. I will go to village soon. Let's meet at the
+          inn. There is my wife Meredith, she will give you reward. Thank you one
+          more time!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

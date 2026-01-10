@@ -28,5 +28,5 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     public void SetMagicResistance(float magicResistance)
     {
         MagicResistance.text = magicResistance.ToString(CultureInfo.InvariantCulture);
-    }
+    }    
 }
