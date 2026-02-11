@@ -20,7 +20,10 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     public float timeBetweenAttack;
     [field: SerializeField]
     public float RequiredStamina;
+    
+    [Header("Sound")]
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
+    [field: SerializeField] public SoundType SoundType { get; private set; }
 
     [Header("Projectile")]
     [field: SerializeField]

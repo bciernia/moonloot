@@ -71,9 +71,15 @@ public class PlayerAttack : MonoBehaviour
     private void CreateSlashEffect(SlashEffect slash)
     {
         slash.weapon = _weapon;
+        PlayWeaponSound(slash.weapon.SoundType);
         slash.SetParent(firePoint);
         attackCooldown = slash.weapon.timeBetweenAttack;
         StartCoroutine(AttackCooldown());
+    }
+
+    private void PlayWeaponSound(SoundType soundType, float volume = .3f)
+    {
+        SoundManager.Instance.PlaySound(soundType, volume);
     }
 
     private IEnumerator AttackCooldown()

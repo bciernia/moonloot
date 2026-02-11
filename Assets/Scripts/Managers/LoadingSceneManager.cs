@@ -38,8 +38,9 @@ public class LoadingSceneManager : MonoBehaviour
         var timer = 0f;
 
         var scene = SceneManager.LoadSceneAsync(sceneName);
+        
         scene.allowSceneActivation = false;
-
+        
         while (!scene.isDone)
         {
             timer += Time.deltaTime;
@@ -55,6 +56,8 @@ public class LoadingSceneManager : MonoBehaviour
             await Task.Yield();
         }
 
+        SoundManager.Instance.FindMapForSoundManager();
+        SoundManager.Instance.PlayMusic(sceneName);
         loadingScreen.SetActive(false);
     }
 

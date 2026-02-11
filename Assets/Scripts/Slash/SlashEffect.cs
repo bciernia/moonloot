@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 public class SlashEffect: MonoBehaviour
 {
@@ -17,7 +16,7 @@ public class SlashEffect: MonoBehaviour
     public float speed = 3f;
     private Transform _parent;
     private GameObject _shooter;
-    
+
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
