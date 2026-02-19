@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -17,7 +15,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private List<AudioClip> _sceneMusicList;
     
     [SerializeField] private AudioSource _musicSource;
-    [SerializeField] private AudioSource _sfxSource;
+    [SerializeField] private List<AudioSource> _sfxSources;
     
     private Dictionary<TileBase, TileSoundSO> _dataFromTile;
     
@@ -44,7 +42,7 @@ public class SoundManager : Singleton<SoundManager>
 
         if (randomClip != null)
         {
-            _sfxSource.PlayOneShot(randomClip, volume);
+            PlaySFX(randomClip, volume);
         }
         else
         {
@@ -52,7 +50,19 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void PlayMusic(string sceneName, float volume = .75f)
+    public void PlaySound(AudioClip sound, float volume = 1f)
+    {
+        if (sound != null)
+        {
+            PlaySFX(sound, volume);
+        }
+        else
+        {
+            Debug.Log($"{sound} is missing!");
+        }
+    }
+
+    public void PlayMusic(string sceneName, float volume = .0f)
     {
         var sceneClip = _sceneMusicList.FirstOrDefault(clip => clip.name == sceneName);
 
@@ -101,6 +111,21 @@ public class SoundManager : Singleton<SoundManager>
 
         Debug.LogWarning($"Brak dźwięków dla typu: {type}");
         return _soundList[0].Sounds;
+    }
+
+    private void PlaySFX(AudioClip clip, float volume)
+    {
+        foreach (var source in _sfxSources.Where(source => !source.isPlaying))
+        {
+            source.PlayOneShot(clip, volume);
+            return;
+        }
+    }
+
+    public float CalculateDistFromPlayerForVolume(Vector2 worldPosition)
+    {
+        var distance = Vector2.Distance(GameObject.FindWithTag("Player").transform.position, worldPosition);
+        return Mathf.Clamp01(1 - distance / 15f);
     }
 }
 

@@ -23,7 +23,8 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     
     [Header("Sound")]
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
-    [field: SerializeField] public SoundType SoundType { get; private set; }
+    [field: SerializeField] public SoundType AttackSoundType { get; private set; }
+    [field: SerializeField] public SoundType HitSoundType { get; private set; }
 
     [Header("Projectile")]
     [field: SerializeField]

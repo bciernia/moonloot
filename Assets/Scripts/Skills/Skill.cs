@@ -16,6 +16,8 @@ public class Skill : ScriptableObject
 
     public Effect Effect;
 
+    public AudioClip SFX;
+
     public virtual void Activate(GameObject user)
     {
         if (Effect != null)

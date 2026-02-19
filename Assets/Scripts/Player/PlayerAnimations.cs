@@ -53,7 +53,7 @@ public class PlayerAnimations : MonoBehaviour
 
         if (currentFloorClip != null)
         {
-            _audioSource.PlayOneShot(currentFloorClip, .05f);
+            _audioSource.PlayOneShot(currentFloorClip, 1f);
         }
     }
 }

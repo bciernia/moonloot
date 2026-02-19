@@ -93,6 +93,7 @@ public class SlashEffect: MonoBehaviour
     {
         if (!CanAttack(other)) return;
         
+        SoundManager.Instance.PlaySound(weapon.HitSoundType);
         other.GetComponent<IDamageable>()?.TakeDamage(weapon.Damage);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);
         

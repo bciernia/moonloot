@@ -6,5 +6,8 @@ public enum SoundType
     HURT,
     FOOTSTEP,
     MUSIC,
-    HIT,
+    SHARP_HIT,
+    BLUNT_HIT,
+    ARROW_HIT,
+    SPELL_HIT
 }

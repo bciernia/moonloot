@@ -136,6 +136,8 @@ public class SkillsManager : Singleton<SkillsManager>
         entry.state = SkillState.active;
         entry.activeTimer = entry.skill.ActiveTime;
 
+        SoundManager.Instance.PlaySound(entry.skill.SFX, 1f);
+        
         if (entry.skill.Effect != null)
         {
             entry.skill.Effect.Apply(user);

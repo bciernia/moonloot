@@ -8,6 +8,8 @@ public class ProjectileSO : ScriptableObject
     public float ManaCost;
     public float KnockBackForce;
     public bool IsAOE;
+    public SoundType HitSound;
+
     [Header("Effect modifiers")]
     [field: SerializeField] public Effect Effect;
     [field: SerializeField] public float EffectChance;
