@@ -87,7 +87,7 @@ namespace EasyTalk.Nodes.Logic
             }
             else if(valueA != null)
             {
-                stringA = nodeHandler.ReplaceVariablesInString(valueA);
+                nodeHandler.AttemptTranslationAndForceVariableReplacement(valueA, NodeType.STRING_COMPARE, out stringA);
             }
 
             if (Inputs[2].AttachedIDs.Count > 0)
@@ -96,7 +96,7 @@ namespace EasyTalk.Nodes.Logic
             }
             else if(valueB != null)
             {
-                stringB = nodeHandler.ReplaceVariablesInString(valueB);
+                nodeHandler.AttemptTranslationAndForceVariableReplacement(valueB, NodeType.STRING_COMPARE, out stringB);
             }
 
             NodeConnection boolOutput = FindOutputOfType(InputOutputType.BOOL);

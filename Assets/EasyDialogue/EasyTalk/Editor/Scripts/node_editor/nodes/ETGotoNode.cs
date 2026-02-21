@@ -2,10 +2,8 @@ using EasyTalk.Editor.Components;
 using EasyTalk.Nodes;
 using EasyTalk.Nodes.Core;
 using EasyTalk.Nodes.Flow;
-using EasyTalk.Nodes.Utility;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace EasyTalk.Editor.Nodes

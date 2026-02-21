@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class EnemyBrain : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class EnemyBrain : MonoBehaviour
     [SerializeField] public FSMState[] states ;
 
     private EnemyStatistics _enemyStatistics;
+    private bool _isRegisteredInCombat;
     
     public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
@@ -45,7 +47,31 @@ public class EnemyBrain : MonoBehaviour
             return;
         }
         
+        HandleCombatRegistration(newStateID);
+        
         CurrentState = newState;
+    }
+    
+    private void HandleCombatRegistration(string newStateID)
+    {
+        var shouldBeInCombat =
+            newStateID == "Chase" ||
+            newStateID == "Attack";
+
+        if (shouldBeInCombat && !_isRegisteredInCombat)
+        {
+            _isRegisteredInCombat = true;
+
+            if (CombatManager.Instance != null)
+                CombatManager.Instance.RegisterEnemy(this);
+        }
+        else if (!shouldBeInCombat && _isRegisteredInCombat)
+        {
+            _isRegisteredInCombat = false;
+
+            if (CombatManager.Instance != null)
+                CombatManager.Instance.UnregisterEnemy(this);
+        }
     }
 
     private FSMState GetState(string newStateID)
@@ -92,5 +118,14 @@ public class EnemyBrain : MonoBehaviour
     public void SetEnemyTag()
     {
         gameObject.tag = EnemyLayerMaskAndTagName;
+    }
+    
+    private void OnDisable()
+    {
+        if (_isRegisteredInCombat && CombatManager.Instance != null)
+        {
+            CombatManager.Instance.UnregisterEnemy(this);
+            _isRegisteredInCombat = false;
+        }
     }
 }

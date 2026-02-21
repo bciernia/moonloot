@@ -85,7 +85,17 @@ namespace EasyTalk.Nodes.Logic
             {
                 ValueSelectorListItem item = Items[index] as ValueSelectorListItem;
                 object value = null;
-                string valueString = nodeHandler.ReplaceVariablesInString(item.Value);
+
+                string valueString;
+
+                if (valueOutputType == Logic.ValueOutputType.STRING)
+                {
+                    nodeHandler.AttemptTranslationAndForceVariableReplacement(item.Value, NodeType.VALUE_SELECT, out valueString);
+                }
+                else
+                {
+                    valueString = nodeHandler.ReplaceVariablesInString(item.Value);
+                }
 
                 switch (valueOutputType)
                 {
@@ -102,7 +112,6 @@ namespace EasyTalk.Nodes.Logic
                         nodeValues.TryAdd(FindOutputOfType(InputOutputType.BOOL).ID, value);
                         break;
                     case EasyTalk.Nodes.Logic.ValueOutputType.STRING:
-                        //value = nodeHandler.TranslateText(valueString);
                         nodeValues.TryAdd(FindOutputOfType(InputOutputType.STRING).ID, valueString);
                         break;
                 }

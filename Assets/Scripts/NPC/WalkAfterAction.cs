@@ -33,7 +33,6 @@ public class WalkAfterAction : MonoBehaviour
 
     private void HandleDestinationReached()
     {
-        Debug.Log($"{name} dotarł do punktu {destinationPoint.name}");
         StartCoroutine(LookAtPlayer());
     }
 

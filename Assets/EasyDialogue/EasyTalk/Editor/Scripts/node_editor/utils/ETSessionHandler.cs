@@ -98,17 +98,23 @@ namespace EasyTalk.Editor.Utils
 
             //Create a new Dialogue object and add all of the nodes from the node view to it.
             Dialogue dialogue = ScriptableObject.CreateInstance<Dialogue>();
+
+            //Set the max ID of the Dialogue asset.
+            dialogue.MaxID = NodeUtils.CurrentID();
+
             foreach (ETNode nmNode in nodeView.GetNodes())
             {
                 dialogue.Nodes.Add(nmNode.CreateNode());
             }
+
+            NodeUtils.SetCurrentID(dialogue.MaxID);
 
             //Serialize the Dialogue to JSON.
             string json = JsonUtility.ToJson(dialogue);
 
             //Store nodes, view position, pan, and zoom
             SessionState.SetString("et-nodes", json);
-            SessionState.SetInt("current-id", NodeUtils.CurrentID());
+            SessionState.SetInt("et-current-node-id", NodeUtils.CurrentID());
         }
 
         /// <summary>
@@ -184,6 +190,8 @@ namespace EasyTalk.Editor.Utils
                         ETNode nmNode = nodeView.CreateNode(node.NodeType, node);
                         nmNode.transform.position = new Vector3(node.XPosition, node.YPosition);
                     }
+
+                    NodeUtils.SetCurrentID(nodeView.NextMaxID());
                 }
             }
         }
@@ -256,6 +264,8 @@ namespace EasyTalk.Editor.Utils
             Dialogue dialogue = null;
             string json = SessionState.GetString("et-nodes", null);
 
+            int currentId = 1;
+
             if (json != null && json.Length > 0)
             {
                 try
@@ -263,6 +273,8 @@ namespace EasyTalk.Editor.Utils
                     //Deserialize the Dialogue
                     dialogue = ScriptableObject.CreateInstance<Dialogue>();
                     JsonUtility.FromJsonOverwrite(json, dialogue);
+
+                    currentId = dialogue.MaxID;
                 }
                 catch (Exception e)
                 {
@@ -270,8 +282,12 @@ namespace EasyTalk.Editor.Utils
                 }
             }
 
-            int currentId = SessionState.GetInt("current-id", 1000);
-            NodeUtils.SetCurrentID(currentId);
+            if (currentId == 1)
+            {
+                currentId = SessionState.GetInt("et-current-node-id", 1000);
+            }
+
+            NodeUtils.SetCurrentID(currentId + 1);
 
             return dialogue;
         }
@@ -320,7 +336,7 @@ namespace EasyTalk.Editor.Utils
             SessionState.EraseString("et-current-file");
             SessionState.EraseBool("et-has-unsaved-changes");
             SessionState.EraseString("et-translations");
-            SessionState.EraseInt("current-id");
+            SessionState.EraseInt("et-current-node-id");
         }
 
         /// <summary>

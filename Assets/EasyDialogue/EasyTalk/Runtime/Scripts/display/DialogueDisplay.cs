@@ -820,7 +820,6 @@ namespace EasyTalk.Display
 
             DialogueOption option = GetOptionWithIndex(selectedOptionIdx);
             dialogueController.ChooseOption(option);
-            displayedOptions = null;
 
             optionDisplay.DeactivateButtons();
             this.DisableOptionSelection();

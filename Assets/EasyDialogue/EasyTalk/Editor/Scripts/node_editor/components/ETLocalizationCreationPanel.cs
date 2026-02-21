@@ -264,7 +264,7 @@ namespace EasyTalk.Editor.Components
             {
                 library.SetOriginalLanguage(sourceLangCode);
             }
-
+            
             if (editorSettings.defaultOriginalLanguage == null || !editorSettings.defaultOriginalLanguage.Equals(sourceLangCode))
             {
                 editorSettings.defaultOriginalLanguage = sourceLangCode;

@@ -9,7 +9,6 @@ using EasyTalk.Editor.Utils;
 using EasyTalk.Nodes.Core;
 using EasyTalk.Nodes;
 using EasyTalk.Editor.Ledger.Actions;
-using System;
 using EasyTalk.Settings;
 using EasyTalk.Nodes.Variable;
 
@@ -62,6 +61,8 @@ namespace EasyTalk.Editor.Components
         private int filterCounter = 0;
 
         private Dictionary<int, Vector2> oldNodePositions = new Dictionary<int, Vector2>();
+
+        public List<int> utilizedIdList = new List<int>();
 
         public ETNodeView() : base()
         {
@@ -375,6 +376,10 @@ namespace EasyTalk.Editor.Components
 
             if (fromNode != null)
             {
+                //Replace the IDs of the incoming node if they are already in use.
+                ReplaceIdsAlreadyInUse(fromNode);
+
+                //Setup the IDs of the view's node to match those of the node being cloned.
                 node.InitializeFromNode(fromNode);
             }
 
@@ -384,6 +389,54 @@ namespace EasyTalk.Editor.Components
             EasyTalkNodeEditor.Instance.Ledger.AddAction(new NodeCreatedAction(node));
 
             return node;
+        }
+
+        private void ReplaceIdsAlreadyInUse(Node fromNode)
+        {
+            //If the IDs of the node are already in use, increment to an ID which isn't in use.
+            if (utilizedIdList.Contains(fromNode.ID))
+            {
+                //Debug.Log("Node ID (" + fromNode.ID + ") is already in use. Updating...");
+                fromNode.ID = NextMaxID();
+            }
+
+            for (int i = 0; i < fromNode.Inputs.Count; i++)
+            {
+                //Debug.Log("Created input: " + fromNode.Inputs[i].ID);
+                if (utilizedIdList.Contains(fromNode.Inputs[i].ID))
+                {
+                    //Debug.Log("Input ID (" + fromNode.Inputs[i].ID + ") is already in use. Updating...");
+                    fromNode.Inputs[i].ID = NextMaxID();
+                }
+            }
+
+            for (int i = 0; i < fromNode.Outputs.Count; i++)
+            {
+                //Debug.Log("Created output: " + fromNode.Outputs[i].ID);
+                if (utilizedIdList.Contains(fromNode.Outputs[i].ID))
+                {
+                    //Debug.Log("Output ID (" + fromNode.Outputs[i].ID + ") is already in use. Updating...");
+                    fromNode.Outputs[i].ID = NextMaxID();
+                }
+            }
+        }
+
+        public int NextMaxID()
+        {
+            int maxId = 0;
+            if (utilizedIdList.Count > 0)
+            {
+                utilizedIdList.Sort();
+                maxId = utilizedIdList[utilizedIdList.Count - 1];
+            }
+
+            utilizedIdList.Add(maxId + 1);
+            return maxId + 1;
+        }
+
+        public void ClearUtilizedIdList()
+        {
+            utilizedIdList.Clear();
         }
 
         private ETNode CreateNodeForType(NodeType nodeType)
@@ -534,6 +587,8 @@ namespace EasyTalk.Editor.Components
 
         private void RegisterNode(ETNode node)
         {
+            utilizedIdList.Add(node.ID);
+
             RegisterNodeInputs(node);
             RegisterNodeOutputs(node);
 
@@ -643,6 +698,8 @@ namespace EasyTalk.Editor.Components
 
         public void RegisterNodeInput(ETInput input, ETNode node)
         {
+            utilizedIdList.Add(input.ID);
+
             if (!inputIdMap.ContainsKey(input.ID))
             {
                 inputIdMap.Add(input.ID, input);
@@ -665,6 +722,8 @@ namespace EasyTalk.Editor.Components
 
         public void RegisterNodeOutput(ETOutput output, ETNode node)
         {
+            utilizedIdList.Add(output.ID);
+
             if (!outputIdMap.ContainsKey(output.ID))
             {
                 outputIdMap.Add(output.ID, output);
@@ -945,7 +1004,11 @@ namespace EasyTalk.Editor.Components
         private void CreateConnection(ETInput input, ETOutput output)
         {
             ETNode node = inputToNodeMap[input.ID];
+
+            int currentID = NodeUtils.CurrentID();
             Node oldNode = node.CreateNode();
+            NodeUtils.SetCurrentID(currentID);
+
             EasyTalkNodeEditor.Instance.Ledger.AddAction(new NodeConnectedAction(node, input.ID, output.ID));
 
             if (input == null || output == null) { return; }
@@ -1026,7 +1089,11 @@ namespace EasyTalk.Editor.Components
             if (inputToNodeMap.ContainsKey(input.ID))
             {
                 ETNode node = inputToNodeMap[input.ID];
+
+                int currentID = NodeUtils.CurrentID();
                 Node oldNode = node.CreateNode();
+                NodeUtils.SetCurrentID(currentID);
+
                 EasyTalkNodeEditor.Instance.Ledger.StartComplexAction(node.ID, oldNode, "Input Node Connections Deleted " + oldNode.ID);
 
                 input.DisconnectAll();
@@ -1043,7 +1110,11 @@ namespace EasyTalk.Editor.Components
             if (outputToNodeMap.ContainsKey(output.ID))
             {
                 ETNode node = outputToNodeMap[output.ID];
+
+                int currentID = NodeUtils.CurrentID();
                 Node oldNode = node.CreateNode();
+                NodeUtils.SetCurrentID(currentID);
+
                 EasyTalkNodeEditor.Instance.Ledger.StartComplexAction(node.ID, oldNode, "Output Node Connections Deleted " + oldNode.ID);
 
                 output.DisconnectAll();
@@ -1102,7 +1173,10 @@ namespace EasyTalk.Editor.Components
                 {
                     if(node.IsSelected) { NodeDeselected(node); }
 
+                    int currentID = NodeUtils.CurrentID();
                     deletedNodes.Add(node.CreateNode());
+                    NodeUtils.SetCurrentID(currentID);
+
                     UnregisterNode(node);
                     nodes.RemoveAt(i);
                     RemoveNodeFromDisplay(node);
@@ -1141,7 +1215,9 @@ namespace EasyTalk.Editor.Components
 
         public void DeleteNode(ETNode node)
         {
+            int currentID = NodeUtils.CurrentID();
             EasyTalkNodeEditor.Instance.Ledger.AddAction(new NodeDeletedAction(new List<Node>() { node.CreateNode() }));
+            NodeUtils.SetCurrentID(currentID);
 
             UnregisterNode(node);
             nodes.Remove(node);

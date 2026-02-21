@@ -87,31 +87,109 @@ namespace EasyTalk.Editor.Localization
             searchText = EditorGUILayout.TextField(searchText);
             EditorGUILayout.EndHorizontal();
 
+            //Create a toggle to allow translations to be shown by language or by line.
+            bool showTranslationsByLine = EditorPrefs.GetBool("et-show-translations-by-line", true);
+            showTranslationsByLine = EditorGUILayout.Toggle(new GUIContent("Show Line-By-Line?"), showTranslationsByLine);
+            EditorPrefs.SetBool("et-show-translations-by-line", showTranslationsByLine);
+
             scrollPos = EditorGUILayout.BeginScrollView(scrollPos);
 
-            //Create a list of lines
-            if(languageFilter.Equals("ALL"))
+            if (showTranslationsByLine)
             {
                 int counter = 0;
 
-                foreach(TranslationSet translationSet in library.translationSets)
+                TranslationSet originSet = library.GetOrCreateOriginalTranslationSet();
+                for (int i = 0; i < originSet.translations.Count; i++)
                 {
+                    Translation currentTranslation = originSet.translations[i];
+
+                    if (searchText != null && searchText.Length > 0)
+                    {
+                        if (!currentTranslation.text.ToLower().Contains(searchText.ToLower()))
+                        {
+                            continue;
+                        }
+                    }
+
                     Rect setArea = EditorGUILayout.BeginVertical();
                     EditorGUI.DrawRect(setArea, (counter % 2 == 0) ? colorA : colorB);
-                    EditorGUILayout.LabelField(translationSet.languageCode);
 
-                    EditorGUI.indentLevel++;
-                    ListTranslationsForSet(translationSet, library);
-                    EditorGUI.indentLevel--;
+                    if (languageFilter.Equals("ALL") || originSet.languageCode.Equals(languageFilter.ToLower()))
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        if (GUILayout.Button(new GUIContent("-"), GUILayout.MaxWidth(20.0f)))
+                        {
+                            //Remove the line from all translation sets.
+                            for (int j = 0; j < library.translationSets.Count; j++)
+                            {
+                                library.translationSets[j].translations.RemoveAt(i);
+                            }
+
+                            i--;
+
+                            EditorUtility.SetDirty(library);
+                        }
+
+                        EditorGUILayout.LabelField(new GUIContent("" + currentTranslation.language), GUILayout.MaxWidth(40.0f));
+                        EditorGUILayout.LabelField(new GUIContent("" + currentTranslation.id), GUILayout.MaxWidth(50.0f));
+
+                        EditorGUI.BeginDisabledGroup(true);
+                        string translationText = EditorGUILayout.TextField(currentTranslation.text);
+                        EditorGUI.EndDisabledGroup();
+
+                        EditorGUILayout.EndHorizontal();
+                    }
+
+                    for (int j = 1; j < library.translationSets.Count; j++)
+                    {
+                        TranslationSet altTranslationSet = library.translationSets[j];
+                        if (languageFilter.Equals("ALL") || altTranslationSet.languageCode.Equals(languageFilter.ToLower()))
+                        {
+                            Translation altTranslation = altTranslationSet.GetTranslation(currentTranslation.id);
+                            if (altTranslation != null)
+                            {
+                                EditorGUILayout.BeginHorizontal();
+                                EditorGUILayout.LabelField(new GUIContent(""), GUILayout.MaxWidth(20.0f));
+                                EditorGUILayout.LabelField(new GUIContent("" + altTranslation.language), GUILayout.MaxWidth(40.0f));
+                                EditorGUILayout.LabelField(new GUIContent("" + altTranslation.id), GUILayout.MaxWidth(50.0f));
+                                string altTranslationText = EditorGUILayout.TextField(altTranslation.text);
+                                EditorGUILayout.EndHorizontal();
+                            }
+                        }
+                    }
 
                     EditorGUILayout.EndVertical();
+                    EditorGUILayout.Space();
+
                     counter++;
                 }
             }
-            else
-            {
-                TranslationSet translationSet = library.FindTranslationSetForLanguage(languageFilter.ToLower());
-                ListTranslationsForSet(translationSet, library);
+            else {
+
+                //Create a list of lines
+                if (languageFilter.Equals("ALL"))
+                {
+                    int counter = 0;
+
+                    foreach (TranslationSet translationSet in library.translationSets)
+                    {
+                        Rect setArea = EditorGUILayout.BeginVertical();
+                        EditorGUI.DrawRect(setArea, (counter % 2 == 0) ? colorA : colorB);
+                        EditorGUILayout.LabelField(translationSet.languageCode);
+
+                        EditorGUI.indentLevel++;
+                        ListTranslationsForSet(translationSet, library);
+                        EditorGUI.indentLevel--;
+
+                        EditorGUILayout.EndVertical();
+                        counter++;
+                    }
+                }
+                else
+                {
+                    TranslationSet translationSet = library.FindTranslationSetForLanguage(languageFilter.ToLower());
+                    ListTranslationsForSet(translationSet, library);
+                }
             }
 
             EditorGUILayout.EndScrollView();

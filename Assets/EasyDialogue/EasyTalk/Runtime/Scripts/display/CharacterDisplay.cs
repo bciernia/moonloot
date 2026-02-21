@@ -1,5 +1,4 @@
 using EasyTalk.Controller;
-using EasyTalk.Settings;
 using System.Collections.Generic;
 
 namespace EasyTalk.Display

@@ -131,10 +131,14 @@ namespace EasyTalk.Editor.Utils
         {
             List<Node> nodes = new List<Node>();
 
-            foreach(ETNode node in etNodes)
+            int currentID = NodeUtils.CurrentID();
+
+            foreach (ETNode node in etNodes)
             {
                 nodes.Add(node.CreateNode());
             }
+
+            NodeUtils.SetCurrentID(currentID);
 
             return SaveOrCreateDialogue(nodes, filePath);
         }
@@ -202,6 +206,22 @@ namespace EasyTalk.Editor.Utils
             {
                 dialogue.Nodes.Add(node);
             }
+
+            //Set or update the creation/edit dates
+            if(dialogue.CreationTime == null || dialogue.CreationTime.Length == 0)
+            {
+                if (EasyTalkNodeEditor.Instance.CreationTimeString != null && EasyTalkNodeEditor.Instance.CreationTimeString.Length > 0)
+                {
+                    dialogue.CreationTime = EasyTalkNodeEditor.Instance.CreationTimeString;
+                }
+                else
+                {
+                    dialogue.CreationTime = DateTime.UtcNow.ToString("yyyy-MM-dd@HH:mm:ss");
+                }
+            }
+
+            dialogue.Version = Dialogue.VERSION;
+            dialogue.EditTime = DateTime.UtcNow.ToString("yyyy-MM-dd@HH:mm:ss");
 
             EditorUtility.SetDirty(dialogue);
 
@@ -398,11 +418,15 @@ namespace EasyTalk.Editor.Utils
         {
             Dialogue dialogue = ScriptableObject.CreateInstance<Dialogue>();
 
+            int currentID = NodeUtils.CurrentID();
+
             //Populate the Dialogue asset with nodes.
             foreach (ETNode etNode in EasyTalkNodeEditor.Instance.NodeView.GetNodes())
             {
                 dialogue.Nodes.Add(etNode.CreateNode());
             }
+
+            NodeUtils.SetCurrentID(currentID);
 
             //Set the max ID of the Dialogue asset.
             dialogue.MaxID = NodeUtils.CurrentID();

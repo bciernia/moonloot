@@ -1,6 +1,6 @@
 Thank you for using EasyTalk!!!
 
-To get started, it's recommended that you watch the tutorial here: https://youtu.be/ahqgz3Ynapk
+To get started, it's recommended that you watch the tutorials here: https://www.youtube.com/watch?v=ahqgz3Ynapk&list=PLlE4Sd2DmPt5-BYG4hrYL4UMPobfzv4zZ
 
 You can also read through the included EasyTalk User Guide PDF or read the documentation online at https://okitoki.games/easytalk
 

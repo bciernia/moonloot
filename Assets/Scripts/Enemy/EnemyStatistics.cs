@@ -30,16 +30,21 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     public Effect Effect { get; private set; }
     public float EffectChance { get; private set; }
     
+    public List<AudioClip> IdleSounds { get; private set; }
+    public List<AudioClip> MoveSounds {get; private set;  }
+    public List<AudioClip> DmgSounds {get; private set;  }
+    public List<AudioClip> AttackSounds {get; private set; }
+    public List<AudioClip> DeathSounds {get; private set; }
+    
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
     private EnemySelector _enemySelector;
     private Rigidbody2D _rb2D;
     private EnemyLoot _enemyLoot;
+    private EnemySounds _enemySounds;
 
     public Action<EnemyStatistics> OnDeath;
-
-
 
     private void Awake()
     {
@@ -49,6 +54,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         _enemySelector = GetComponent<EnemySelector>();
         _rb2D = GetComponent<Rigidbody2D>();
         _enemyLoot = GetComponent<EnemyLoot>();
+        _enemySounds = GetComponent<EnemySounds>();
     }
 
     private void Start()
@@ -72,6 +78,11 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         IsBoss = _enemyStats.IsBoss;
         Effect = _enemyStats.Effect;
         EffectChance = _enemyStats.EffectChance;
+        IdleSounds = _enemyStats.IdleSounds;
+        MoveSounds = _enemyStats.MoveSounds;
+        DmgSounds = _enemyStats.DmgSounds;
+        AttackSounds = _enemyStats.AttackSounds;
+        DeathSounds = _enemyStats.DeathSounds;
     }
 
     public void TakeDamage(float amount)
@@ -83,6 +94,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         {
             // _enemySelector.NoSelectionCallback();
 
+
+            _enemySounds.Die();
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
 
@@ -99,6 +112,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         }
         else
         {
+            _enemySounds.Hit();
             _enemyAnimator.SetDamagedAnimation();
         }
     }

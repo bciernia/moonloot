@@ -1,5 +1,4 @@
 using EasyTalk.Editor.Components;
-using EasyTalk.Editor.Utils;
 using EasyTalk.Localization;
 using EasyTalk.Nodes.Common;
 using EasyTalk.Nodes.Core;
@@ -50,6 +49,9 @@ namespace EasyTalk.Editor.Nodes
                     RemoveItemFromList(item);
                 }
             };
+
+            item.OptionField.RegisterCallback<KeyDownEvent>(OnReorderItem);
+
             return item;
         }
 
@@ -168,13 +170,14 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            foreach (ETOptionNodeItemContent item in Items)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.OPTION))
             {
-                if (item.OptionText.ToString().Length > 0)
+                foreach (ETOptionNodeItemContent item in Items)
                 {
-                    sourceSet.AddOrFindTranslation(item.OptionText.ToString());
+                    if (item.OptionText.ToString().Length > 0)
+                    {
+                        library.AddOrFindTranslation(item.OptionText.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                    }
                 }
             }
         }
@@ -182,6 +185,18 @@ namespace EasyTalk.Editor.Nodes
         protected override string GetNodeTooltip()
         {
             return "Creates options to be presented to the user. Options can be hidden, disabled, or have their text changed dynamically by using Option Modifier nodes.";
+        }
+
+        private void OnReorderItem(KeyDownEvent evt)
+        {
+            if (evt.keyCode == UnityEngine.KeyCode.UpArrow && (evt.ctrlKey || evt.altKey))
+            {
+                MoveItempUpInList((evt.target as VisualElement).GetFirstAncestorOfType<ETNodeContent>());
+            }
+            else if (evt.keyCode == UnityEngine.KeyCode.DownArrow && (evt.ctrlKey || evt.altKey))
+            {
+                MoveItemDownInList((evt.target as VisualElement).GetFirstAncestorOfType<ETNodeContent>());
+            }
         }
     }
 
@@ -311,6 +326,11 @@ namespace EasyTalk.Editor.Nodes
         public Label OptionLabel
         {
             get { return optionLabel; }
+        }
+
+        public ETTextField OptionField
+        {
+            get { return optionField; }
         }
     }
 }

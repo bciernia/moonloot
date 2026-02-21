@@ -81,7 +81,9 @@ namespace EasyTalk.Editor.Nodes
 
         public void UpdateStoredNodeState()
         {
+            int currentID = NodeUtils.CurrentID();
             storedNodeState = CreateNode() as LogicNode;
+            NodeUtils.SetCurrentID(currentID);
         }
 
         public override void NodeMoved()

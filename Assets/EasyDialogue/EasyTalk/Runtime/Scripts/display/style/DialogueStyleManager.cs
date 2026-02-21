@@ -1,11 +1,13 @@
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 #if TEXTMESHPRO_INSTALLED
 using TMPro;
 #endif
 
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
+
 using UnityEngine;
 using UnityEngine.UI;
 

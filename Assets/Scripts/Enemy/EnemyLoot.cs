@@ -25,7 +25,7 @@ public class EnemyLoot : MonoBehaviour
         AddDropItemsToList(_dropItems);
     }
 
-    public void AddDropItemsToList(DropItem[] dropItems)
+    private void AddDropItemsToList(DropItem[] dropItems)
     {
         foreach (var item in dropItems)
         {

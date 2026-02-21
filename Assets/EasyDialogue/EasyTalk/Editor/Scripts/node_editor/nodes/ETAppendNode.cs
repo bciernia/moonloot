@@ -75,11 +75,12 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            if (appendContent.Text.ToString().Length > 0)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.APPEND))
             {
-                sourceSet.AddOrFindTranslation(appendContent.Text.ToString());
+                if (appendContent.Text.ToString().Length > 0)
+                {
+                    library.AddOrFindTranslation(appendContent.Text.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                }
             }
         }
 

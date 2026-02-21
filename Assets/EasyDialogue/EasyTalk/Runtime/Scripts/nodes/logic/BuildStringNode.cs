@@ -40,8 +40,9 @@ namespace EasyTalk.Nodes.Logic
                 else
                 {
                     string itemText = ((StringItem)items[i]).text;
-                    //itemText = nodeHandler.TranslateText(itemText);
-                    itemText = nodeHandler.ReplaceVariablesInString(itemText);
+
+                    string translation = itemText;
+                    nodeHandler.AttemptTranslationAndForceVariableReplacement(itemText, NodeType.BUILD_STRING, out translation);
 
                     if (itemText != null)
                     {

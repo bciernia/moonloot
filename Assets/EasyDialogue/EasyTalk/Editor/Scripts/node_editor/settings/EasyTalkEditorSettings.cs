@@ -1,4 +1,3 @@
-using EasyTalk.Editor.Nodes;
 using EasyTalk.Localization;
 using EasyTalk.Settings;
 using System.Collections.Generic;
@@ -59,6 +58,15 @@ namespace EasyTalk.Editor.Settings
         [Tooltip("The source language being used to write dialogue in the node editor (this should be an ISO-639 language code).")]
         [SerializeField]
         public string defaultOriginalLanguage = "en";
+
+        /// <summary>
+        /// Indicates whether or not the text of the source language will be copied into translation entries for 
+        /// alternate languages in Translation Libraries versus blank entries.
+        /// </summary>
+        [Tooltip("When true, new entries for alternate languages will automatically copy the text of the original language until translated. If false," +
+            "each entry will be left blank until a translation is provided.")]
+        [SerializeField]
+        public bool copySourceTextForNewEntries = false;
 
         /// <summary>
         /// The default font to use in the node editor when a language font override can't be found for the current language being used.

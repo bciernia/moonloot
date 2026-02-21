@@ -16,13 +16,25 @@ namespace EasyTalk.Nodes
         /// <summary>
         /// A string indicating the current version of EasyTalk in use.
         /// </summary>
-        public static string VERSION = "1.7.6";
+        public static string VERSION = "1.8.4";
 
         /// <summary>
         /// The version number of the dialogue asset.
         /// </summary>
         [SerializeField]
         private string version = VERSION;
+
+        /// <summary>
+        /// The original creation time of the dialogue (in yyyy-MM-dd@HH:mm:ss format).
+        /// </summary>
+        [SerializeField]
+        private string creationTime = null;
+
+        /// <summary>
+        /// The last edit time of the dialogue (in yyyy-MM-dd@HH:mm:ss format).
+        /// </summary>
+        [SerializeField]
+        private string editTime = null;
 
         /// <summary>
         /// The List of nodes in the Dialogue.
@@ -49,6 +61,24 @@ namespace EasyTalk.Nodes
         {
             get { return version; }
             set { version = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the time string (yyyy-MM-dd@HH:mm:ss format) at which the dialogue was created.
+        /// </summary>
+        public string CreationTime
+        {
+            get { return creationTime; }
+            set { creationTime = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the time string (yyyy-MM-dd@HH:mm:ss format) at which the dialogue was edited.
+        /// </summary>
+        public string EditTime
+        {
+            get { return editTime; }
+            set { editTime = value; }
         }
 
         /// <summary>

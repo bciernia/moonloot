@@ -195,6 +195,12 @@ namespace EasyTalk.Controller
                 if (dialogueRegistry == null && dialogueDisplay.DialogueSettings != null) { dialogueRegistry = dialogueDisplay.DialogueSettings.DialogueRegistry; }
             }
 
+            //If the current EasyTalk language has not been overriden by code or a function call, set the default language to the default language of the current dialogue.
+            if(!EasyTalkGameState.Instance.IsLanguageOverridden)
+            {
+                EasyTalkGameState.Instance.SetLanguageWithoutOverride(dialogue.TranslationLibrary.originalLanguage);
+            }
+
             //Initialize global variables on the node handler using the current dialogue registry, if there is one.
             nodeHandler.InitializeGlobalVariables(dialogueRegistry);
 

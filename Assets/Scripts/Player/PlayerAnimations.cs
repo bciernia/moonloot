@@ -10,9 +10,12 @@ public class PlayerAnimations : MonoBehaviour
     
     private Animator _animator;
 
+    [SerializeField] private AudioSource _audioSource;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
     
     public void SetDeathAnimation()
@@ -40,5 +43,17 @@ public class PlayerAnimations : MonoBehaviour
     public void SetRuntimeAnimatorController(RuntimeAnimatorController runtimeAnimatorController)
     {
         _animator.runtimeAnimatorController = runtimeAnimatorController;
+    }
+
+    public void Step()
+    {
+        if (_audioSource == null) return;
+        
+        var currentFloorClip = SoundManager.Instance.GetCurrentFloorClip(transform.position);
+
+        if (currentFloorClip != null)
+        {
+            _audioSource.PlayOneShot(currentFloorClip, 1f);
+        }
     }
 }

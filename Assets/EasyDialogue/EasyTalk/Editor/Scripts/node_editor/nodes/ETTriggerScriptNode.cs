@@ -116,7 +116,9 @@ namespace EasyTalk.Editor.Nodes
 
         public void UpdateStoredNodeState()
         {
+            int currentID = NodeUtils.CurrentID();
             storedNodeState = CreateNode() as TriggerScriptNode;
+            NodeUtils.SetCurrentID(currentID);
         }
 
         private void OnClassChanged()

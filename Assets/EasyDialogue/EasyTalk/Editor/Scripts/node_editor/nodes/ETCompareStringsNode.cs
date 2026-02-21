@@ -1,5 +1,4 @@
 using EasyTalk.Editor.Components;
-using EasyTalk.Editor.Utils;
 using EasyTalk.Localization;
 using EasyTalk.Nodes.Core;
 using EasyTalk.Nodes.Logic;
@@ -115,17 +114,18 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            /*TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            if (stringVariable1.GetInputs()[0].ConnectedOutputs.Count == 0 && stringVariable1.StringValue.ToString().Length > 0)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.STRING_COMPARE))
             {
-                sourceSet.AddOrFindTranslation(stringVariable1.StringValue.ToString());
+                if (stringVariable1.GetInputs()[0].ConnectedOutputs.Count == 0 && stringVariable1.StringValue.ToString().Length > 0)
+                {
+                    library.AddOrFindTranslation(stringVariable1.StringValue.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                }
+
+                if (stringVariable2.GetInputs()[0].ConnectedOutputs.Count == 0 && stringVariable2.StringValue.ToString().Length > 0)
+                {
+                    library.AddOrFindTranslation(stringVariable2.StringValue.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                }
             }
-
-            if (stringVariable2.GetInputs()[0].ConnectedOutputs.Count == 0 && stringVariable2.StringValue.ToString().Length > 0)
-            {
-                sourceSet.AddOrFindTranslation(stringVariable2.StringValue.ToString());
-            }*/
         }
 
         protected override string GetNodeTooltip()

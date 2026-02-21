@@ -13,12 +13,14 @@ public class EnemyAnimator : MonoBehaviour
     
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-
+    private AudioSource _audioSource;
+    
     private Vector2 CurrentDirection { get; set; }
     
     private void Awake() {
         _animator = GetComponent<Animator>(); 
-        _spriteRenderer = GetComponent<SpriteRenderer>(); 
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     public void SetIsMoving(bool value)

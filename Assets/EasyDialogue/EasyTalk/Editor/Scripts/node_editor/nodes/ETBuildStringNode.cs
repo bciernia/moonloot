@@ -140,15 +140,16 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            /*TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            foreach (ETStringConcatenationNodeItemContent item in Items)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.BUILD_STRING))
             {
-                if(item.GetInputs()[0].ConnectedOutputs.Count == 0 && item.Value.ToString().Length > 0)
+                foreach (ETStringConcatenationNodeItemContent item in Items)
                 {
-                    sourceSet.AddOrFindTranslation(item.Value.ToString());
+                    if(item.GetInputs()[0].ConnectedOutputs.Count == 0 && item.Value.ToString().Length > 0)
+                    {
+                        library.AddOrFindTranslation(item.Value.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                    }
                 }
-            }*/
+            }
         }
 
         protected override string GetNodeTooltip()

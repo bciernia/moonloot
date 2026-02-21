@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace EasyTalk.Nodes.Core
 {
@@ -37,6 +38,7 @@ namespace EasyTalk.Nodes.Core
         /// <param name="id">The ID value to use.</param>
         public static void SetCurrentID(int id)
         {
+            //UnityEngine.Debug.Log("Setting node ID: " + id);
             currentId = id;
         }
 

@@ -71,8 +71,16 @@ namespace EasyTalk.Nodes.Logic
                 }
                 else
                 {
-                    string trueValueString = nodeHandler.ReplaceVariablesInString(trueValue);
-                    value = DetermineValue(trueValueString);
+                    if (valueOutputType == Logic.ValueOutputType.STRING)
+                    {
+                        string trueValueString;
+                        nodeHandler.AttemptTranslationAndForceVariableReplacement(trueValue, NodeType.CONDITIONAL_VALUE, out trueValueString);
+                        value = trueValueString;
+                    }
+                    else
+                    {
+                        value = DetermineValue(trueValue);
+                    }
                 }
             }
             else
@@ -83,8 +91,16 @@ namespace EasyTalk.Nodes.Logic
                 }
                 else
                 {
-                    string falseValueString = nodeHandler.ReplaceVariablesInString(falseValue);
-                    value = DetermineValue(falseValueString);
+                    if (valueOutputType == Logic.ValueOutputType.STRING)
+                    {
+                        string falseValueString;
+                        nodeHandler.AttemptTranslationAndForceVariableReplacement(falseValue, NodeType.CONDITIONAL_VALUE, out falseValueString);
+                        value = falseValueString;
+                    }
+                    else
+                    {
+                        value = DetermineValue(falseValue);
+                    }
                 }
             }
 
@@ -100,7 +116,6 @@ namespace EasyTalk.Nodes.Logic
                     nodeValues.TryAdd(FindOutputOfType(InputOutputType.BOOL).ID, value);
                     break;
                 case EasyTalk.Nodes.Logic.ValueOutputType.STRING:
-                    //value = nodeHandler.TranslateText(value as string);
                     nodeValues.TryAdd(FindOutputOfType(InputOutputType.STRING).ID, value);
                     break;
             }

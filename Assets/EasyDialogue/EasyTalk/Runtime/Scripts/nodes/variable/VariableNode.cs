@@ -89,7 +89,16 @@ namespace EasyTalk.Nodes.Variable
             {
                 NodeConnection output = Outputs[0];
 
-                nodeValues.TryAdd(output.ID, nodeVariable.currentValue);
+                if (nodeVariable.variableType == typeof(string))
+                {
+                    string translatedValue;
+                    nodeHandler.AttemptTranslationAndForceVariableReplacement(nodeVariable.currentValue as string, NodeType.STRING_VARIABLE, out translatedValue);
+                    nodeValues.TryAdd(output.ID, translatedValue);
+                }
+                else
+                {
+                    nodeValues.TryAdd(output.ID, nodeVariable.currentValue);
+                }
             }
 
             return true;

@@ -5,7 +5,7 @@ using EasyTalk.Nodes.Core;
 using EasyTalk.Nodes.Flow;
 using EasyTalk.Nodes.Logic;
 using EasyTalk.Nodes.Variable;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -32,6 +32,7 @@ namespace EasyTalk.Editor.Display
 
             dialogueObj = new SerializedObject(dialogue);
 
+            EditorGUILayout.LabelField(new GUIContent("Version: " + dialogue.Version));
             EditorGUILayout.LabelField(new GUIContent("Total Nodes: " + dialogue.Nodes.Count));
 
             ETGUI.DrawLineSeparator();

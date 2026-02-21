@@ -2,7 +2,6 @@ using EasyTalk.Animation;
 using EasyTalk.Display;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEngine;
 
 namespace EasyTalk.Editor.Display
 {

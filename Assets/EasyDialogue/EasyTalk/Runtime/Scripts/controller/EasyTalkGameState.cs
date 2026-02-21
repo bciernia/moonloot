@@ -22,6 +22,8 @@ namespace EasyTalk.Controller
         /// </summary>
         private string language = "en";
 
+        private bool isLanguageOverridden = false;
+
         /// <summary>
         /// Defines a delegate method to be called when the language is changed.
         /// </summary>
@@ -45,12 +47,33 @@ namespace EasyTalk.Controller
                 string oldLanguage = language;
                 this.language = value;
 
-                if(onLanguageChanged != null)
+                if (!oldLanguage.Equals(value))
+                {
+                    isLanguageOverridden = true;
+
+                    if (onLanguageChanged != null)
+                    {
+                        onLanguageChanged(oldLanguage, language);
+                    }
+                }
+            }
+        }
+
+        public void SetLanguageWithoutOverride(string languageCode)
+        {
+            string oldLanguage = language;
+            this.language = languageCode;
+
+            if (!oldLanguage.Equals(languageCode))
+            {
+                if (onLanguageChanged != null)
                 {
                     onLanguageChanged(oldLanguage, language);
                 }
             }
         }
+
+        public bool IsLanguageOverridden {  get { return isLanguageOverridden; } }
 
         /// <summary>
         /// Gets or sets the session ID.
@@ -74,6 +97,14 @@ namespace EasyTalk.Controller
                 }
 
                 return instance;
+            }
+        }
+
+        public void  SetOriginalLanguage(string originalLanguageCode)
+        {
+            if(!isLanguageOverridden)
+            {
+                language = originalLanguageCode;
             }
         }
     }

@@ -62,6 +62,9 @@ namespace EasyTalk.Editor.Nodes
                     RemoveItemFromList(item);
                 }
             };
+
+            item.ConvoTextField.RegisterCallback<KeyDownEvent>(OnReorderItem);
+
             return item;
         }
 
@@ -148,19 +151,20 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            string characterName = characterContent.GetCharacterName();
-            if (characterName != null && characterName.Length > 0)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.CONVO))
             {
-                sourceSet.AddOrFindTranslation(characterName);
-            }
-
-            foreach (ETConversationNodeItem item in Items)
-            {
-                if (item.Text.ToString().Length > 0)
+                string characterName = characterContent.GetCharacterName();
+                if (characterName != null && characterName.Length > 0)
                 {
-                    sourceSet.AddOrFindTranslation(item.Text.ToString());
+                    library.AddOrFindTranslation(characterName, EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                }
+
+                foreach (ETConversationNodeItem item in Items)
+                {
+                    if (item.Text.ToString().Length > 0)
+                    {
+                        library.AddOrFindTranslation(item.Text.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                    }
                 }
             }
         }
@@ -277,6 +281,18 @@ namespace EasyTalk.Editor.Nodes
         {
             return "Used to write lines of dialogue.";
         }
+
+        private void OnReorderItem(KeyDownEvent evt)
+        {
+            if (evt.keyCode == UnityEngine.KeyCode.UpArrow && (evt.ctrlKey || evt.altKey))
+            {
+                MoveItempUpInList((evt.target as VisualElement).GetFirstAncestorOfType<ETNodeContent>());
+            }
+            else if (evt.keyCode == UnityEngine.KeyCode.DownArrow && (evt.ctrlKey || evt.altKey))
+            {
+                MoveItemDownInList((evt.target as VisualElement).GetFirstAncestorOfType<ETNodeContent>());
+            }
+        }
     }
 
     public class ETConversationNodeCharacterContent : ETNodeContent
@@ -345,7 +361,7 @@ namespace EasyTalk.Editor.Nodes
     {
         private ETNodeButton removeButton;
 
-        private TextField convoField;
+        private ETTextField convoField;
 
         private ETAudioClipZone audioZone;
 
@@ -381,6 +397,11 @@ namespace EasyTalk.Editor.Nodes
         public ETNodeButton RemoveButton
         {
             get { return removeButton; }
+        }
+
+        public ETTextField ConvoTextField
+        {
+            get { return convoField; }
         }
 
         public string Text

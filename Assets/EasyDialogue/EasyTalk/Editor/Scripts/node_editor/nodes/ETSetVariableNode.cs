@@ -100,7 +100,9 @@ namespace EasyTalk.Editor.Nodes
 
         public void UpdateStoredNodeState()
         {
+            int currentID = NodeUtils.CurrentID();
             storedNodeState = CreateNode() as SetVariableNode;
+            NodeUtils.SetCurrentID(currentID);
         }
 
         public override void NodeMoved()
@@ -133,12 +135,13 @@ namespace EasyTalk.Editor.Nodes
 
         public override void CreateLocalizations(TranslationLibrary library)
         {
-            /*TranslationSet sourceSet = library.GetOrCreateOriginalTranslationSet();
-
-            if (content.GetInputs()[1].ConnectedOutputs.Count == 0 && content.VariableValue.ToString().Length > 0)
+            if (EasyTalkNodeEditor.Instance.EditorSettings.dialogueRegistry.TranslatedNodeTypes.Contains(NodeType.SET_VARIABLE_VALUE))
             {
-                sourceSet.AddOrFindTranslation(content.VariableValue.ToString());
-            }*/
+                if (content.GetInputs()[1].ConnectedOutputs.Count == 0 && content.VariableValue.ToString().Length > 0)
+                {
+                    library.AddOrFindTranslation(content.VariableValue.ToString(), EasyTalkNodeEditor.Instance.EditorSettings.copySourceTextForNewEntries);
+                }
+            }
         }
 
         protected override string GetNodeTooltip()

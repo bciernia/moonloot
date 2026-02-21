@@ -33,6 +33,7 @@ public class Projectile : MonoBehaviour
     {
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest") || other.gameObject.CompareTag("NPC")) return;
 
+        SoundManager.Instance.PlaySound(ProjectileSo.HitSound);
         other.GetComponent<IDamageable>()?.TakeDamage(Damage);
         //Knockbackthrust przenieść do właściwości pocisku
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, 5f);

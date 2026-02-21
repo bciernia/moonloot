@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using EasyTalk.Display;
 using EasyTalk.Animation;
 using EasyTalk.Editor.Utils;
+
 namespace EasyTalk.Editor.Display
 {
 

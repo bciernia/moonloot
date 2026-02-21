@@ -1,5 +1,4 @@
 using EasyTalk.Editor.Components;
-using EasyTalk.Editor.Utils;
 using EasyTalk.Nodes.Core;
 using System.Collections.Generic;
 
@@ -34,7 +33,9 @@ namespace EasyTalk.Editor.Ledger.Actions
 
         public override void Undo(ETNodeView nodeView)
         {
+            int currentID = NodeUtils.CurrentID();
             newNode = EasyTalkNodeEditor.Instance.NodeView.FindNode(nodeId).CreateNode();
+            NodeUtils.SetCurrentID(currentID);
 
             nodeView.DeleteNode(oldNode.ID);
             nodeView.CreateNode(oldNode.NodeType, oldNode, false);

@@ -27,8 +27,15 @@ public class EnemyStatsSO : ScriptableObject
     public float SpecialAttackTimeInterval;
     public float MaxAttackTimeInterval;
     public List<GameObject> SpecialAttacks;
-    
     [Header("Effects")]
     public Effect Effect;
     public float EffectChance;
+
+    [Header("Sounds")]
+    public float SoundInterval;
+    public List<AudioClip> IdleSounds;
+    public List<AudioClip> MoveSounds;
+    public List<AudioClip> DmgSounds;
+    public List<AudioClip> AttackSounds;
+    public List<AudioClip> DeathSounds;
 }
