@@ -55,9 +55,9 @@ public class LoadingSceneManager : MonoBehaviour
 
             await Task.Yield();
         }
-
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
+        CombatManager.Instance.ClearCombat();
         loadingScreen.SetActive(false);
     }
 

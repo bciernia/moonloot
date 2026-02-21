@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,9 +14,15 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private SoundList[] _soundList;
 
     [SerializeField] private List<AudioClip> _sceneMusicList;
-    
-    [SerializeField] private AudioSource _musicSource;
+    [SerializeField] private List<AudioClip> _combatMusicList;
+
     [SerializeField] private List<AudioSource> _sfxSources;
+    [SerializeField] private AudioSource _explorationSource;
+    [SerializeField] private AudioSource _combatSource;
+    [SerializeField] private float _musicFadeDuration = 2f;
+    
+    private Coroutine _fadeRoutine;
+    private bool _isInCombat;
     
     private Dictionary<TileBase, TileSoundSO> _dataFromTile;
     
@@ -33,6 +40,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         
         PlayMusic(SceneManager.GetActiveScene().name);
+        PlayCombatMusic(0);
     }
 
     public void PlaySound(SoundType sound, float volume = 1f)
@@ -58,25 +66,93 @@ public class SoundManager : Singleton<SoundManager>
         }
         else
         {
-            Debug.Log($"{sound} is missing!");
+            Debug.Log("Sound is missing!");
         }
     }
 
-    public void PlayMusic(string sceneName, float volume = .0f)
+    public void PlayMusic(string sceneName, float volume = 1f)
     {
         var sceneClip = _sceneMusicList.FirstOrDefault(clip => clip.name == sceneName);
 
         if (sceneClip != null)
         {
-            _musicSource.clip = sceneClip;
-            _musicSource.volume = volume;
-            _musicSource.loop = true;
-            _musicSource.Play();
+            _explorationSource.clip = sceneClip;
+            _explorationSource.volume = volume;
+            _explorationSource.loop = true;
+            _explorationSource.Play();
         }
         else
         {
             Debug.Log($"Music for scene {sceneName} is missing!");
         }
+    }
+
+    public void PlayCombatMusic(float volume = 1f)
+    {
+        if (_combatMusicList.Count == 0)
+        {
+            Debug.Log("There is no combat music");
+            return;
+        }
+        
+        var randomClip = _combatMusicList[Random.Range(0, _combatMusicList.Count)];
+        
+        _combatSource.clip = randomClip;
+        _combatSource.volume = volume;
+        _combatSource.loop = true;
+        _combatSource.Play();
+    }
+    
+    public void PlayCombatMusic()
+    {
+        if (_isInCombat) return;
+
+        _isInCombat = true;
+        StartMusicFade(true);
+    }
+    
+    public void StopCombatMusic()
+    {
+        if (!_isInCombat) return;
+
+        _isInCombat = false;
+        StartMusicFade(false);
+    } 
+    
+    private void StartMusicFade(bool toCombat)
+    {
+        if (_fadeRoutine != null)
+            StopCoroutine(_fadeRoutine);
+
+        _fadeRoutine = StartCoroutine(FadeMusic(toCombat));
+    }
+    
+    private IEnumerator FadeMusic(bool toCombat)
+    {
+        var time = 0f;
+
+        var startExploration = _explorationSource.volume;
+        var startCombat = _combatSource.volume;
+
+        var targetExploration = toCombat ? 0f : 1f;
+        var targetCombat = toCombat ? 1f : 0f;
+
+        while (time < _musicFadeDuration)
+        {
+            time += Time.deltaTime;
+            var t = time / _musicFadeDuration;
+
+            _explorationSource.volume =
+                Mathf.Lerp(startExploration, targetExploration, t);
+
+            _combatSource.volume =
+                Mathf.Lerp(startCombat, targetCombat, t);
+
+            yield return null;
+        }
+
+        _explorationSource.volume = targetExploration;
+        _combatSource.volume = targetCombat;
     }
 
     public void ChangeMusic(SoundType sound, float volume = 1f)
