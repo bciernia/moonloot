@@ -9,6 +9,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     [SerializeField] private EnemyStatsSO _enemyStats;
     [SerializeField] public CharacterType CharacterType = CharacterType.Enemy;
     
+    public event Action OnEnemyDied;
+    
     public string Name { get; private set; }
     public string Description { get; private set; }
     public float CurrentHP { get; private set; }
@@ -132,4 +134,6 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     {
         CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
     }
+    
+    
 }
