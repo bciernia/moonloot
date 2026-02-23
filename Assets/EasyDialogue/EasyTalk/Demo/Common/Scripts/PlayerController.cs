@@ -181,16 +181,16 @@ namespace EasyTalk.Demo
                 if (moveDirection.magnitude > 0)
                 {
                     Vector3 velocity = (moveDirection).normalized * movementSpeed * Time.fixedDeltaTime;
-                    rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
+                    rb.linearVelocity = new Vector3(velocity.x, rb.linearVelocity.y, velocity.z);
                 }
                 else
                 {
-                    rb.velocity = new Vector3(0.0f, rb.velocity.y, 0.0f);
+                    rb.linearVelocity = new Vector3(0.0f, rb.linearVelocity.y, 0.0f);
                 }
             }
             else
             {
-                rb.velocity = new Vector3(0.0f, rb.velocity.y, 0.0f);
+                rb.linearVelocity = new Vector3(0.0f, rb.linearVelocity.y, 0.0f);
             }
 
             //Handle camera rotation.

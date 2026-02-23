@@ -73,21 +73,27 @@ public class SoundManager : Singleton<SoundManager>
     public void PlayMusic(string sceneName, float volume = 1f)
     {
         var sceneClip = _sceneMusicList.FirstOrDefault(clip => clip.name == sceneName);
-
+        
         if (sceneClip != null)
         {
-            _explorationSource.clip = sceneClip;
-            _explorationSource.volume = volume;
-            _explorationSource.loop = true;
-            _explorationSource.Play();
+            ConfigureAndPlayMusic(sceneClip, volume);
         }
         else
         {
+            ConfigureAndPlayMusic(_sceneMusicList[0], volume);
             Debug.Log($"Music for scene {sceneName} is missing!");
         }
     }
 
-    public void PlayCombatMusic(float volume = 1f)
+    private void ConfigureAndPlayMusic(AudioClip clip, float volume = 1f)
+    {
+        _explorationSource.clip = clip;
+        _explorationSource.volume = volume;
+        _explorationSource.loop = true;
+        _explorationSource.Play();
+    }
+
+    private void PlayCombatMusic(float volume = 1f)
     {
         if (_combatMusicList.Count == 0)
         {

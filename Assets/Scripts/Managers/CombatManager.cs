@@ -10,7 +10,7 @@ public class CombatManager : Singleton<CombatManager>
     {
         if (enemy == null) return;
 
-        bool wasEmpty = _engagedEnemies.Count == 0;
+        var wasEmpty = _engagedEnemies.Count == 0;
 
         _engagedEnemies.Add(enemy);
 
@@ -49,7 +49,7 @@ public class CombatManager : Singleton<CombatManager>
             SoundManager.Instance.StopCombatMusic();
         }
 
-        // 🔥 tutaj w przyszłości:
+        //  tutaj w przyszłości:
         // - blokada save
         // - zmiana UI
         // - zmiana światła

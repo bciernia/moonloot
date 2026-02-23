@@ -58,14 +58,14 @@ public class EnemyBrain : MonoBehaviour
             newStateID == "Chase" ||
             newStateID == "Attack";
 
-        if (shouldBeInCombat && !_isRegisteredInCombat)
+        if (shouldBeInCombat)
         {
             _isRegisteredInCombat = true;
 
             if (CombatManager.Instance != null)
                 CombatManager.Instance.RegisterEnemy(this);
         }
-        else if (!shouldBeInCombat && _isRegisteredInCombat)
+        else if (_isRegisteredInCombat)
         {
             _isRegisteredInCombat = false;
 
