@@ -1,0 +1,48 @@
+using System.Collections;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "FierySalvo_", menuName = "Skill/FierySalvo")]
+public class FierySalvo : Skill
+{
+    [SerializeField] private Projectile _projectileSo;
+    [SerializeField] private float duration = 5f;
+    [SerializeField] private float interval = 1f;
+    
+    public override bool Activate(GameObject user)
+    {
+        if (user == null) return false;
+
+        var mana = user.GetComponent<PlayerMana>();
+        if (mana != null && mana.CurrentMana < ManaCost)
+            return false;
+
+        mana?.UseMana(ManaCost);
+
+        var attack = user.GetComponent<PlayerAttack>();
+        if (attack == null) return false;
+
+        attack.StartCoroutine(FireRoutine(user, attack.firePoint));
+        return true;
+    }
+    
+    private IEnumerator FireRoutine(GameObject user, Transform firePoint)
+    {
+        var elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            FireProjectile(user, firePoint);
+            yield return new WaitForSeconds(interval);
+            elapsed += interval;
+        }
+    }
+
+    private void FireProjectile(GameObject user, Transform firePoint)
+    {
+        var projectile = Instantiate(_projectileSo, firePoint.position, firePoint.rotation);
+        projectile.Shooter = user;
+        projectile.IsEnemy = false;
+        projectile.Direction = Vector3.right;
+        projectile.Damage = _projectileSo.Damage;
+    }
+}

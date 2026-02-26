@@ -17,7 +17,7 @@ public class Skill : ScriptableObject
     public Effect Effect;
 
     public AudioClip SFX;
-    
+
     public TargetType TargetingType;
     public float Radius;
 

@@ -56,11 +56,15 @@ public class PlayerAttack : MonoBehaviour
             _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
 
+        FireSlashEffect();
+    }
+
+    private void FireSlashEffect()
+    {
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
         var slash = slashObject.GetComponent<SlashEffect>();
         slash.SetShooter(gameObject);
-
-        CreateSlashEffect(slash);
+        CreateSlashEffect(slash); 
     }
 
     private bool CanPerformAttack(float requiredMana, float requiredStamina, float availableMana,
