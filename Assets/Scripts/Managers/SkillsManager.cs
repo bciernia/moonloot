@@ -1,15 +1,9 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
-public enum SkillState
-{
-    ready,
-    active,
-    cooldown,
-}
 
 [Serializable]
 public class SkillEntry
@@ -42,14 +36,23 @@ public class SkillsManager : Singleton<SkillsManager>
     [SerializeField] private GameObject EffectsContainer;
     [SerializeField] private GameObject EffectPrefab;
 
+    [Header("Range Indicator")]
+    [SerializeField] private GameObject RangeIndicatorPrefab;
+
+    private RangeIndicator _currentIndicator;
+    private int _aimingSkillIndex = -1;
+    
     private List<ActiveEffects> activeEffects = new List<ActiveEffects>();
 
     private PlayerInput _playerInput;
 
     private bool _skillsEnabled = true;
     
-    private Action<InputAction.CallbackContext> _skill1Callback;
-    private Action<InputAction.CallbackContext> _skill2Callback;
+    private Action<InputAction.CallbackContext> _skill1Started;
+    private Action<InputAction.CallbackContext> _skill1Canceled;
+
+    private Action<InputAction.CallbackContext> _skill2Started;
+    private Action<InputAction.CallbackContext> _skill2Canceled;
     
     protected override void Awake()
     {
@@ -58,12 +61,16 @@ public class SkillsManager : Singleton<SkillsManager>
         _playerInput = FindAnyObjectByType<PlayerInput>();
         if (_playerInput == null)
         {
-            Debug.LogError("SkillsManager: PlayerInput nie znaleziony w rodzicu!");
+            Debug.LogError("SkillsManager: PlayerInput nie znaleziony!");
             return;
         }
-        
-        _skill1Callback = ctx => TryActivateSkill(0);
-        _skill2Callback = ctx => TryActivateSkill(1);
+
+        // przypisujemy callbacki (raz!)
+        _skill1Started  = ctx => StartSkill(0);
+        _skill1Canceled = ctx => ReleaseSkill(0);
+
+        _skill2Started  = ctx => StartSkill(1);
+        _skill2Canceled = ctx => ReleaseSkill(1);
 
         if (skills.Count > 0) QSkillImage.sprite = skills[0].skill.Icon;
         if (skills.Count > 1) ESkillImage.sprite = skills[1].skill.Icon;
@@ -74,21 +81,29 @@ public class SkillsManager : Singleton<SkillsManager>
 #pragma warning disable UDR0005
         GameManager.OnGameModeChanged += OnGameModeChanged;
 #pragma warning restore UDR0005
-        
-        _playerInput.actions["Skill1"].performed += _skill1Callback;
-        _playerInput.actions["Skill2"].performed += _skill2Callback;
+
+        if (_playerInput == null) return;
+
+        _playerInput.actions["Skill1"].started  += _skill1Started;
+        _playerInput.actions["Skill1"].canceled += _skill1Canceled;
+
+        _playerInput.actions["Skill2"].started  += _skill2Started;
+        _playerInput.actions["Skill2"].canceled += _skill2Canceled;
     }
 
     private void OnDisable()
     {
         if (Instance != this) return;
-        
+
         GameManager.OnGameModeChanged -= OnGameModeChanged;
 
         if (_playerInput == null) return;
-        
-        _playerInput.actions["Skill1"].performed -= _skill1Callback;
-        _playerInput.actions["Skill2"].performed -= _skill2Callback;
+
+        _playerInput.actions["Skill1"].started  -= _skill1Started;
+        _playerInput.actions["Skill1"].canceled -= _skill1Canceled;
+
+        _playerInput.actions["Skill2"].started  -= _skill2Started;
+        _playerInput.actions["Skill2"].canceled -= _skill2Canceled;
     }
     
     private void OnGameModeChanged(GameMode mode)
@@ -131,8 +146,10 @@ public class SkillsManager : Singleton<SkillsManager>
         if (!entry.skill.IsInUse) return;
         if (entry.state != SkillState.ready) return;
 
-        entry.skill.Activate(user);
+        var isSkillActivated = entry.skill.Activate(user);
 
+        if (isSkillActivated) return;
+        
         entry.state = SkillState.active;
         entry.activeTimer = entry.skill.ActiveTime;
 
@@ -201,6 +218,77 @@ public class SkillsManager : Singleton<SkillsManager>
                     }
                     break;
             }
+        }
+    }
+    
+    private void StartSkill(int index)
+    {
+        if (!_skillsEnabled) return;
+        if (index < 0 || index >= skills.Count) return;
+
+        var entry = skills[index];
+        if (!entry.skill.IsInUse) return;
+        if (entry.state != SkillState.ready) return;
+
+        if (entry.skill.TargetingType == TargetType.Self)
+        {
+            ActivateEntry(entry);
+            return;
+        }
+
+        entry.state = SkillState.aiming;
+        _aimingSkillIndex = index;
+
+        var obj = Instantiate(
+            RangeIndicatorPrefab,
+            user.transform.position,
+            Quaternion.identity,
+            user.transform   
+        );
+
+        _currentIndicator = obj.GetComponent<RangeIndicator>();
+        _currentIndicator.SetRangeIndicatorRadius(entry.skill.Radius);
+        _currentIndicator.SetRangeIndicatorColor(entry.skill.RangeIndicatorMinColor, entry.skill.RangeIndicatorMaxColor);
+        _currentIndicator.transform.localPosition = Vector3.zero;
+    }
+    
+    private void ReleaseSkill(int index)
+    {
+        if (_aimingSkillIndex != index) return;
+
+        var entry = skills[index];
+        if (entry.state != SkillState.aiming) return;
+
+        ActivateEntry(entry);
+
+        Destroy(_currentIndicator.gameObject);
+        _currentIndicator = null;
+        _aimingSkillIndex = -1;
+    }
+    
+    private void ActivateEntry(SkillEntry entry)
+    {
+        var isSkillActivated = entry.skill.Activate(user);
+
+        if (!isSkillActivated) return;
+        
+        entry.state = SkillState.active;
+        entry.activeTimer = entry.skill.ActiveTime;
+
+        SoundManager.Instance.PlaySound(entry.skill.SFX, 1f);
+
+        if (entry.skill.Effect != null)
+        {
+            entry.skill.Effect.Apply(user);
+
+            var effectUI =
+                StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect);
+
+            activeEffects.Add(new ActiveEffects
+            {
+                Skill = entry,
+                EffectObject = effectUI
+            });
         }
     }
 }

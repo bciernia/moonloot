@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
+public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
@@ -47,6 +47,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     private EnemySounds _enemySounds;
 
     public Action<EnemyStatistics> OnDeath;
+
+    public bool _isRooted;
+    private Coroutine _rootCoroutine;
 
     private void Awake()
     {
@@ -134,6 +137,40 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     {
         CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
     }
+
+
+    public void ApplyRoot(float duration, GameObject effect)
+    {
+        if (_isRooted)
+        {
+            if (_rootCoroutine != null)
+                StopCoroutine(_rootCoroutine);
+        }
+
+        _rootCoroutine = StartCoroutine(RootRoutine(duration, effect));
+    }
     
-    
+    private IEnumerator RootRoutine(float duration, GameObject effect)
+    {
+        _isRooted = true;
+
+        var _originalSpeed = Speed;
+        var _originalChaseSpeed = ChaseSpeed;
+        
+        var currentEffect = Instantiate(effect, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity, transform);
+        
+        Speed = 0f;
+        ChaseSpeed = 0f;
+
+        if (_rb2D != null)
+            _rb2D.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(duration);
+
+        Speed = _originalSpeed;
+        ChaseSpeed = _originalChaseSpeed;
+
+        _isRooted = false;
+        Destroy(currentEffect);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
@@ -7,6 +8,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
 
     private PlayerAnimations _playerAnimations;
 
+    public float CurrentHealth { get; private set; }
+    
     private void Awake()
     {
         _playerAnimations = GetComponent<PlayerAnimations>();
@@ -14,6 +17,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable
 
     private void Start()
     {
+        CurrentHealth = _playerStats.HP;
+        
         if (_playerStats.HP <= 0)
         {
             PlayerDead();
