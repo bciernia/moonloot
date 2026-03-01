@@ -7,7 +7,7 @@ public class Dash : Skill
     public float dashVelocity;
 
     public override bool Activate(GameObject user)
-    {
+    { 
         if (user == null) return false;
         
         var movement = user.GetComponent<PlayerMovement>();

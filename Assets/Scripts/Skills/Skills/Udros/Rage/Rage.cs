@@ -16,7 +16,7 @@ public class Rage : Skill
             return false;
         }
 
-        hp?.TakeDamage(HealthCost);
+        hp?.TakeDamage(HealthCost, DamageType.True);
 
         var playerAttack = user.GetComponent<PlayerAttack>();
         if (playerAttack != null)

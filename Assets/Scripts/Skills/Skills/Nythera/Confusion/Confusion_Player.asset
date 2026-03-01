@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e558edac02854394eb66c92ded711d03, type: 3}
+  m_Name: Confusion_Player
+  m_EditorClassIdentifier: 
+  Name: Confusion
+  Description: Make enemy confused
+  Cooldown: 8
+  ActiveTime: 5
+  HealthCost: 0
+  ManaCost: 1
+  Icon: {fileID: 21300000, guid: 0f603ca4f51bedf4c85f59bb95b7a998, type: 3}
+  IsInUse: 0
+  Effect: {fileID: 0}
+  SFX: {fileID: 0}
+  TargetingType: 1
+  Radius: 5
+  RangeIndicatorMinColor: {r: 0.33962262, g: 0, b: 0.25347453, a: 0}
+  RangeIndicatorMaxColor: {r: 1, g: 0, b: 0.72794294, a: 0}
+  EnemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  rootDuration: 5
+  enemyCountForConfusion: 3
+  rootEffect: {fileID: 1372972322760926742, guid: 04756735848ac8747a92564d3d98a0c5, type: 3}

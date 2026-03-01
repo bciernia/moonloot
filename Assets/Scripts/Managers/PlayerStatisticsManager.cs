@@ -7,8 +7,9 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     [Header("Configuration")] 
     [SerializeField] private TextMeshProUGUI Level;
     [SerializeField] private TextMeshProUGUI Damage;
-    [SerializeField] private TextMeshProUGUI DmgResistance;
+    [SerializeField] private TextMeshProUGUI PhysicalResistance;
     [SerializeField] private TextMeshProUGUI MagicResistance;
+    [SerializeField] private TextMeshProUGUI DmgReduction;
 
     public void SetLevel(int level)
     {
@@ -20,13 +21,18 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
         Damage.text = dmg.ToString(CultureInfo.InvariantCulture);
     }
     
-    public void SetDmgResistance(float dmgResistance)
+    public void SetPhysicalResistance(float percent)
     {
-        DmgResistance.text = dmgResistance.ToString(CultureInfo.InvariantCulture);
-    }    
+        PhysicalResistance.text = percent.ToString("0") + "%";
+    }
+
+    public void SetMagicResistance(float percent)
+    {
+        MagicResistance.text = percent.ToString("0") + "%";
+    }
     
-    public void SetMagicResistance(float magicResistance)
+    public void SetShieldReductionPercent(float percent)
     {
-        MagicResistance.text = magicResistance.ToString(CultureInfo.InvariantCulture);
-    }    
+        DmgReduction.text = percent.ToString("0") + "%";
+    }
 }

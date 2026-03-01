@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-[CreateAssetMenu(fileName = "Roots_", menuName = "Skill/Roots")]
+[CreateAssetMenu(fileName = "Roots_", menuName = "Skill/Sylvar/Roots")]
 public class Roots : Skill
 {
     public LayerMask EnemyLayer;
@@ -26,6 +26,13 @@ public class Roots : Skill
             user.transform.position,
             Radius,
             EnemyLayer
+        );
+        
+        Array.Sort(hits, (a, b) =>
+            Vector2.SqrMagnitude(user.transform.position - a.transform.position)
+                .CompareTo(
+                    Vector2.SqrMagnitude(user.transform.position - b.transform.position)
+                )
         );
 
         for (var i = 0; i < Math.Min(enemyCountForRoot, hits.Length); i++)

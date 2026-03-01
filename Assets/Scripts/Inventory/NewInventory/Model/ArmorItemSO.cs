@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Armor", fileName = "Armor_")]
 public class ArmorItemSO : EquippableItemSO, IItemAction
 {
-    public float DamageResistance;
+    public float PhysicalResistance;
     public float MagicResistance;
     
     public AudioClip actionSfx { get; }
@@ -32,9 +32,9 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
     {
         var description = "";
 
-        if (DamageResistance > 0)
+        if (PhysicalResistance > 0)
         {
-            description = $"Damage resistance: {DamageResistance} \n";
+            description = $"Damage resistance: {PhysicalResistance} \n";
         }
 
         if (MagicResistance > 0)

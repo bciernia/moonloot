@@ -45,10 +45,8 @@ public class ArmorManager : Singleton<ArmorManager>
     
     private void EquipArmor(ArmorItemSO armor)
     {
-        GameManager.Instance.Player.PlayerStats.UpdatePlayerResistances(armor?.DamageResistance ?? 0, armor?.MagicResistance ?? 0);
-        PlayerStatisticsManager.Instance.SetDmgResistance(armor?.DamageResistance ?? 0);
-        PlayerStatisticsManager.Instance.SetMagicResistance(armor?.MagicResistance ?? 0);
-        
+        GameManager.Instance.Player.PlayerStats.UpdatePlayerResistances(armor?.PhysicalResistance ?? 0, armor?.MagicResistance ?? 0);
+        GameManager.Instance.Player.GetComponent<PlayerHealth>().RefreshResistanceUI();
         if (armor == null)
         {
             return;
