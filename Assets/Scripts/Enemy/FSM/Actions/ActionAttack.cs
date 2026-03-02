@@ -42,9 +42,8 @@ public class ActionAttack : FSMAction
         if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked) return; 
         
         var playerDamage = _enemyBrain.Player.GetComponent<IDamageable>();
-        var playerStats = _enemyBrain.Player.GetComponent<Player>().PlayerStats;
         
-        playerDamage.TakeDamage(CalculateEnemyDamage(_enemyStatistics.Damage, playerStats.DamageResistance));
+        playerDamage.TakeDamage(_enemyStatistics.Damage);
 
         HasAttacked = true;
 
@@ -65,12 +64,5 @@ public class ActionAttack : FSMAction
         {
             _enemyStatistics.Effect.Apply(_enemyBrain.Player.gameObject, _enemyStatistics.EffectChance);
         }
-    }
-    
-    private float CalculateEnemyDamage(float enemyDamage, float playerDamageResistance)
-    {
-        var calculatedDamage = Mathf.Floor(enemyDamage * (100 / (100 + playerDamageResistance * 2)));
-
-        return Math.Max(calculatedDamage, 1);
     }
 }

@@ -18,9 +18,17 @@ public class Skill : ScriptableObject
 
     public AudioClip SFX;
 
-    public virtual void Activate(GameObject user)
+    public TargetType TargetingType;
+    public float Radius;
+
+    public Color RangeIndicatorMinColor;
+    public Color RangeIndicatorMaxColor;
+
+    public virtual bool Activate(GameObject user)
     {
         if (Effect != null)
             Effect.Apply(user);
+
+        return true;
     }
 }

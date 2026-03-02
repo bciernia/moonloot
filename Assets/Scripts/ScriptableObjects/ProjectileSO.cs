@@ -9,7 +9,10 @@ public class ProjectileSO : ScriptableObject
     public float KnockBackForce;
     public bool IsAOE;
     public SoundType HitSound;
-
+    public float MaxDistance = 30f;
+    public float KnockBackThrust = 5f;
+    public DamageType DamageType;
+    
     [Header("Effect modifiers")]
     [field: SerializeField] public Effect Effect;
     [field: SerializeField] public float EffectChance;

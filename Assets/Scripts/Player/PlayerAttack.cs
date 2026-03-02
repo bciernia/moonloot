@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [FormerlySerializedAs("weapon")] [SerializeField] private WeaponItemSO _weapon;
+    [FormerlySerializedAs("weapon")] [SerializeField]
+    private WeaponItemSO _weapon;
+
     [SerializeField] private PlayerStatsSO _playerStats;
     [SerializeField] private Image cooldownImage;
 
@@ -18,8 +20,9 @@ public class PlayerAttack : MonoBehaviour
     private PlayerMana _playerMana;
     private PlayerStamina _playerStamina;
     private PlayerInput _playerInput;
-    
     private SlashEffect _slash;
+
+    private float _currentDmgMultiplier = 1f;
 
     private void Awake()
     {
@@ -34,35 +37,50 @@ public class PlayerAttack : MonoBehaviour
         ArmorManager.Instance.SetArmor(EquippedItemsManager.Instance.EquippedItems[1].item as ArmorItemSO, null);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log(_playerStats.TotalDamage);
+        }
+    }
+
     private void Attack()
     {
-        if (!canAttack || DialogueManager.Instance.IsInDialogue() || GameManager.Instance.CurrentMode == GameMode.WorldMap) return;
+        if (!canAttack || DialogueManager.Instance.IsInDialogue() ||
+            GameManager.Instance.CurrentMode == GameMode.WorldMap) return;
 
         var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
-        
-        var canPerformAttack = CanPerformAttack(manaCost, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
+
+        var canPerformAttack = CanPerformAttack(manaCost, _weapon.RequiredStamina, _playerMana.CurrentMana,
+            _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
-        
+
+        FireSlashEffect();
+    }
+
+    private void FireSlashEffect()
+    {
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
         var slash = slashObject.GetComponent<SlashEffect>();
         slash.SetShooter(gameObject);
-        
-        CreateSlashEffect(slash);
+        CreateSlashEffect(slash); 
     }
 
-    private bool CanPerformAttack(float requiredMana, float requiredStamina, float availableMana, float availableStamina)
+    private bool CanPerformAttack(float requiredMana, float requiredStamina, float availableMana,
+        float availableStamina)
     {
         //TODO Stamina system
         // if (availableStamina < requiredStamina)
         // {
-            // return false;
+        // return false;
         // }
-        
+
         if (requiredMana > 0 && availableMana <= 0)
         {
             return false;
         }
-        
+
         _playerMana.UseMana(requiredMana);
         _playerStamina.UseStamina(requiredStamina);
         return true;
@@ -84,7 +102,7 @@ public class PlayerAttack : MonoBehaviour
 
     private IEnumerator AttackCooldown()
     {
-        canAttack = false; 
+        canAttack = false;
         var elapsed = 0f;
 
         cooldownImage.fillAmount = 0f;
@@ -102,7 +120,30 @@ public class PlayerAttack : MonoBehaviour
     public void EquipWeapon(WeaponItemSO newItemWeapon)
     {
         _weapon = newItemWeapon;
-        _playerStats.TotalDamage = _playerStats.BaseDamage + _weapon.Damage;
+        SetPlayerTotalDamage();
+    }
+
+    private void SetPlayerTotalDamage()
+    {
+        _playerStats.TotalDamage = (_playerStats.BaseDamage + _weapon.Damage) * _currentDmgMultiplier;
+    }
+
+    public float GetPlayerDamage => _playerStats.TotalDamage;
+
+    public void ApplyDmgMultiplier(float multiplier, float duration)
+    {
+        StartCoroutine(DmgMultiplierCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator DmgMultiplierCoroutine(float multiplier, float duration)
+    {
+        _currentDmgMultiplier *= multiplier;
+        SetPlayerTotalDamage();
+
+        yield return new WaitForSeconds(duration);
+
+        _currentDmgMultiplier /= multiplier;
+        SetPlayerTotalDamage();
     }
     
     private void OnEnable()

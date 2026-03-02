@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Linq;
+using TMPro;
 using UnityEngine;
-using UnityEngine.XR;
 
 public class EnemyBrain : MonoBehaviour
 {
@@ -17,7 +15,7 @@ public class EnemyBrain : MonoBehaviour
     public float AttackCooldown { get; private set; }
 
     private readonly string EnemyLayerMaskAndTagName = "Enemy";
-
+    
     private void Awake()
     {
         _enemyStatistics = GetComponent<EnemyStatistics>();

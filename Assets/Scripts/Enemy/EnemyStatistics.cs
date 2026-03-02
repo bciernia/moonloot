@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
+public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable, IConfusionable
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
@@ -48,6 +48,11 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
 
     public Action<EnemyStatistics> OnDeath;
 
+    public bool _isRooted;
+    public bool _isConfused;
+    private Coroutine _rootCoroutine;
+    private Coroutine _confusionCoroutine;
+
     private void Awake()
     {
         _circleCollider = GetComponent<CircleCollider2D>();
@@ -87,7 +92,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
         DeathSounds = _enemyStats.DeathSounds;
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, DamageType type = DamageType.Physical)
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
@@ -134,6 +139,67 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable
     {
         CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
     }
+
+
+    public void ApplyRoot(float duration, GameObject effect)
+    {
+        if (_isRooted)
+        {
+            if (_rootCoroutine != null)
+                StopCoroutine(_rootCoroutine);
+        }
+
+        _rootCoroutine = StartCoroutine(RootRoutine(duration, effect));
+    }
     
+    private IEnumerator RootRoutine(float duration, GameObject effect)
+    {
+        _isRooted = true;
+
+        var _originalSpeed = Speed;
+        var _originalChaseSpeed = ChaseSpeed;
+        
+        var currentEffect = Instantiate(effect, new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z), Quaternion.identity, transform);
+        
+        Speed = 0f;
+        ChaseSpeed = 0f;
+
+        if (_rb2D != null)
+            _rb2D.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(duration);
+
+        Speed = _originalSpeed;
+        ChaseSpeed = _originalChaseSpeed;
+
+        _isRooted = false;
+        Destroy(currentEffect);
+    }
+
+    public void ApplyConfusion(float duration, GameObject effect)
+    {
+        if (_isConfused)
+        {
+            if (_confusionCoroutine != null)
+                StopCoroutine(_confusionCoroutine);
+        }
+
+        _confusionCoroutine = StartCoroutine(ConfusionRoutine(duration, effect));
+    }
     
+    private IEnumerator ConfusionRoutine(float duration, GameObject effect)
+    {
+        _isConfused = true;
+        var currentEffect = Instantiate(effect, new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z), Quaternion.identity, transform);
+
+        var decisionDetectPlayer = GetComponent<DecisionDetectPlayer>();
+        
+        decisionDetectPlayer.playerMask = LayerMask.GetMask("Environment");
+
+        yield return new WaitForSeconds(duration);
+
+        decisionDetectPlayer.playerMask = LayerMask.GetMask("Player");
+        _isConfused = false;
+        Destroy(currentEffect);
+    }
 }

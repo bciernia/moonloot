@@ -179,6 +179,7 @@ public class SoundManager : Singleton<SoundManager>
         var currentFloorClip = _dataFromTile[tile].Clips[index];
 
         return currentFloorClip;
+        
     }
 
     private AudioClip[] GetSoundsByType(SoundType type)

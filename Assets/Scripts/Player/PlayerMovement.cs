@@ -13,19 +13,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _moveDirection;
     private PlayerAnimations _playerAnimations;
 
-    // [SerializeField] private float staminaTimer = 0f;
-    // [SerializeField] private float staminaDecreaseTime = .125f;
     [SerializeField] private PlayerAim playerAim;
 
-    private const float sprintSpeed = 2f;
-    
     [SerializeField] private float worldMapSpeedMultiplier = 0.4f;
     private float _currentSpeedMultiplier = 1f;
 
-    private PlayerStamina playerStamina;
-
     public bool limitToCameraView;
-    private Camera mainCamera;
     
     private void Awake()
     {
@@ -33,8 +26,6 @@ public class PlayerMovement : MonoBehaviour
         _playerInput = GetComponent<PlayerInput>();
         _rb2D = GetComponent<Rigidbody2D>();
         _playerAnimations = GetComponent<PlayerAnimations>();
-        playerStamina = GetComponent<PlayerStamina>();
-        mainCamera = Camera.main;
     }
 
     private void Update()
@@ -62,6 +53,19 @@ public class PlayerMovement : MonoBehaviour
                _moveDirection * (speed * _currentSpeedMultiplier * Time.fixedDeltaTime);
     }
 
+    public void ApplySpeedMultiplier(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedMultiplierCoroutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedMultiplierCoroutine(float multiplier, float duration)
+    {
+        _currentSpeedMultiplier *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        _currentSpeedMultiplier /= multiplier;
+    }
 
     public void ApplyDash(float dashAmount, float duration)
     {
