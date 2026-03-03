@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e558edac02854394eb66c92ded711d03, type: 3}
-  m_Name: Confusion_Player
+  m_Name: Whispers of Oblivion (Confusion)
   m_EditorClassIdentifier: 
-  Name: Confusion
-  Description: Make enemy confused
-  Cooldown: 8
+  Name: Whispers of Oblivion
+  Description: "A hush falls upon the minds of your enemies.\nUp to two foes lose
+    all interest in you, abandoning their aggression and returning to their patrol
+    as if you never existed.\n\nNythera does not command fear \u2014 she erases intent."
+  Cooldown: 10
   ActiveTime: 5
   HealthCost: 0
-  ManaCost: 1
-  Icon: {fileID: 21300000, guid: 0f603ca4f51bedf4c85f59bb95b7a998, type: 3}
-  IsInUse: 0
+  ManaCost: 15
+  Icon: {fileID: -4132711624116480908, guid: a7929184ab722944395b08d8ad6eb4be, type: 3}
   Effect: {fileID: 0}
   SFX: {fileID: 0}
   TargetingType: 1
@@ -29,6 +30,5 @@ MonoBehaviour:
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  rootDuration: 5
   enemyCountForConfusion: 3
   rootEffect: {fileID: 1372972322760926742, guid: 04756735848ac8747a92564d3d98a0c5, type: 3}

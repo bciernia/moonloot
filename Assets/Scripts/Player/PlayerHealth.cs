@@ -42,7 +42,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         RefreshResistanceUI();
     }
     
-    public void TakeDamage(float amount, DamageType type)
+    public void TakeDamage(float amount, Transform damageSourceType,  DamageType type)
     {
         if (_playerStats.HP <= 0) return;
         

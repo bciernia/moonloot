@@ -5,7 +5,6 @@ using UnityEngine;
 public class Confusion : Skill
 {
     public LayerMask EnemyLayer;
-    public float rootDuration = 2f;
     public float enemyCountForConfusion = 3;
     
     public GameObject rootEffect; 
@@ -34,7 +33,7 @@ public class Confusion : Skill
             var confusion = hits[i].GetComponent<IConfusionable>();
             if (confusion != null)
             {
-                confusion.ApplyConfusion(rootDuration, rootEffect);
+                confusion.ApplyConfusion(ActiveTime, rootEffect);
             }
         }
 

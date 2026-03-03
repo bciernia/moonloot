@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e99e77b07875ab84f857abdfb95c317a, type: 3}
   m_Name: AuraOfKnowledge_Player
   m_EditorClassIdentifier: 
-  Name: Aura of knowledge
-  Description: Show enemies attack cooldown for 10 seconds. When time comes to 0,
-    enemy will try to attack.
-  Cooldown: 15
-  ActiveTime: 33
+  Name: Veil of Foresight
+  Description: "You pierce the illusion of time itself.\nUp to three enemies within
+    range are marked with prophetic sigils, revealing the exact moment of their next
+    strike for 15 seconds.\n\nKnowledge is not power \u2014 it is survival."
+  Cooldown: 20
+  ActiveTime: 15
   HealthCost: 0
-  ManaCost: 1
-  Icon: {fileID: -3469254024622076258, guid: 256ca5c6138191a4f8a66d3cdefa75fa, type: 3}
-  IsInUse: 1
+  ManaCost: 10
+  Icon: {fileID: 623446184447289365, guid: 02c2040d1bcfbfb41ba81445bf33ade2, type: 3}
   Effect: {fileID: 0}
   SFX: {fileID: 0}
   TargetingType: 1
@@ -30,5 +30,5 @@ MonoBehaviour:
   EnemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  showCooldownDuration: 33
-  enemyCountForAura: 2
+  showCooldownDuration: 15
+  enemyCountForAura: 3

@@ -35,8 +35,8 @@ public class UISkillBtn : MonoBehaviour
 
         var unlocked = _skillProgress.IsUnlocked(Skill);
 
-        if (_button != null)
-            _button.interactable = unlocked;
+        // if (_button != null)
+        //     _button.interactable = unlocked;
 
         if (Image != null)
         {
