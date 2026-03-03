@@ -5,7 +5,6 @@ using System;
 public class Roots : Skill
 {
     public LayerMask EnemyLayer;
-    public float rootDuration = 2f;
     public float enemyCountForRoot = 2;
 
     public GameObject rootEffect; 
@@ -40,7 +39,7 @@ public class Roots : Skill
             var rootable = hits[i].GetComponent<IRootable>();
             if (rootable != null)
             {
-                rootable.ApplyRoot(rootDuration, rootEffect);
+                rootable.ApplyRoot(ActiveTime, rootEffect);
             }
         }
 

@@ -9,7 +9,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     [SerializeField] private EnemyStatsSO _enemyStats;
     [SerializeField] public CharacterType CharacterType = CharacterType.Enemy;
     
-    public event Action OnEnemyDied;
+    // public event Action OnEnemyDied;
     
     public string Name { get; private set; }
     public string Description { get; private set; }
@@ -45,7 +45,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     private Rigidbody2D _rb2D;
     private EnemyLoot _enemyLoot;
     private EnemySounds _enemySounds;
-
+    private KnockBack _knockBack;
+    
     public Action<EnemyStatistics> OnDeath;
 
     public bool _isRooted;
@@ -62,6 +63,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _rb2D = GetComponent<Rigidbody2D>();
         _enemyLoot = GetComponent<EnemyLoot>();
         _enemySounds = GetComponent<EnemySounds>();
+        _knockBack = GetComponent<KnockBack>();
     }
 
     private void Start()
@@ -92,16 +94,19 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         DeathSounds = _enemyStats.DeathSounds;
     }
 
-    public void TakeDamage(float amount, DamageType type = DamageType.Physical)
+    public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
         
+        if (!_isRooted)
+        {
+            _knockBack.GetKnockedBack(damageSourceTransform, 5f);
+        }
+        
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
-
-
             _enemySounds.Die();
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
@@ -113,13 +118,11 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
             StartCoroutine(HandleDeathAnimation());
-            
-
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
         else
         {
-            _enemySounds.Hit();
+            _enemySounds?.Hit();
             _enemyAnimator.SetDamagedAnimation();
         }
     }

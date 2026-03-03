@@ -1,46 +1,47 @@
+using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class SkillsSetter : MonoBehaviour
 {
-    [SerializeField] private Image QSkillImage;
-    [SerializeField] private Image ESkillImage;
-    
     public Skill Skill { get; set; }
-    
-    //TODO narazie dodajemy na sztywno jako Q i E skille
+
     public void SetQSkillBtn()
     {
-        if (Skill != null)
-        {
-            QSkillImage.sprite = Skill.Icon;
-            ChangeUsedSkill(0);
-        }
+        if (Skill == null) return;
+        ChangeUsedSkill(0);
     }
-    
+
     public void SetESkillBtn()
     {
-        if (Skill != null)
-        {
-            ESkillImage.sprite = Skill.Icon;
-            ChangeUsedSkill(1);
-        }
+        if (Skill == null) return;
+        ChangeUsedSkill(1);
     }
 
     private void ChangeUsedSkill(int skillIndex)
     {
-        SetSkillAsUnused(skillIndex);
-        SetSkillInUse(skillIndex);
-    }
+        var skills = SkillsManager.Instance.skills;
 
-    private void SetSkillInUse(int skillIndex)
-    {
-        SkillsManager.Instance.skills[skillIndex].skill = Skill;
-        SkillsManager.Instance.skills[skillIndex].skill.IsInUse = true;
-    }
+        if (skillIndex < 0 || skillIndex >= skills.Count)
+            return;
 
-    private void SetSkillAsUnused(int skillIndex)
-    {
-        SkillsManager.Instance.skills[skillIndex].skill.IsInUse = true;
+        var targetEntry = skills[skillIndex];
+
+        var existingEntry = skills.FirstOrDefault(e => e.skill == Skill);
+
+        if (existingEntry != null)
+        {
+            if (existingEntry == targetEntry)
+                return;
+
+            var temp = targetEntry.skill;
+            targetEntry.skill = Skill;
+            existingEntry.skill = temp;
+        }
+        else
+        {
+            targetEntry.skill = Skill;
+        }
+
+        SkillsManager.Instance.RefreshSlotUI();
     }
 }

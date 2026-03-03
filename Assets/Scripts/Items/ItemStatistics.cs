@@ -23,7 +23,7 @@ public class ItemStatistics : MonoBehaviour, IDamageable
         Effect.BasicChanceForHit = ChanceForHit;
     }
     
-    public void TakeDamage(float amount, DamageType type = DamageType.Physical)
+    public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
