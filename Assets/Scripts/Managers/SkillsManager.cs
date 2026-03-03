@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,78 +9,70 @@ public class SkillEntry
 {
     public Skill skill;
     public Image cooldownImage;
-
-    [NonSerialized] public float cooldownTimer;
-    [NonSerialized] public float activeTimer;
-    [NonSerialized] public SkillState state = SkillState.ready;
 }
 
-internal class ActiveEffects
+internal class SkillRuntimeData
 {
-    public SkillEntry Skill;
-    public GameObject EffectObject;
+    public float cooldownTimer;
+    public float activeTimer;
+    public SkillState state = SkillState.ready;
 }
 
 public class SkillsManager : Singleton<SkillsManager>
 {
-    [Header("Skill Config")]
-    public List<SkillEntry> skills = new List<SkillEntry>();
+    [Header("Slots")]
+    public List<SkillEntry> skills = new();
     public GameObject user;
 
-    [Header("UI References")]
+    [Header("UI")]
     [SerializeField] private Image QSkillImage;
     [SerializeField] private Image ESkillImage;
 
-    [Header("Effect Prefabs")]
-    [SerializeField] private GameObject EffectsContainer;
-    [SerializeField] private GameObject EffectPrefab;
-
-    [Header("Range Indicator")]
+    [Header("Targeting")]
     [SerializeField] private GameObject RangeIndicatorPrefab;
 
     private RangeIndicator _currentIndicator;
     private int _aimingSkillIndex = -1;
-    
-    private List<ActiveEffects> activeEffects = new List<ActiveEffects>();
 
     private PlayerInput _playerInput;
+    private PlayerSkillProgress _skillProgress;
 
-    private bool _skillsEnabled = true;
-    
     private Action<InputAction.CallbackContext> _skill1Started;
     private Action<InputAction.CallbackContext> _skill1Canceled;
-
     private Action<InputAction.CallbackContext> _skill2Started;
     private Action<InputAction.CallbackContext> _skill2Canceled;
-    
+
+    // 🔥 Runtime per skill (nie per slot)
+    private Dictionary<Skill, SkillRuntimeData> _skillRuntime =
+        new Dictionary<Skill, SkillRuntimeData>();
+
+    #region INITIALIZATION
+
     protected override void Awake()
     {
         base.Awake();
 
         _playerInput = FindAnyObjectByType<PlayerInput>();
-        if (_playerInput == null)
+        _skillProgress = user.GetComponent<PlayerSkillProgress>();
+
+        _skill1Started  = ctx => OnSkillStarted(0);
+        _skill1Canceled = ctx => OnSkillReleased(0);
+
+        _skill2Started  = ctx => OnSkillStarted(1);
+        _skill2Canceled = ctx => OnSkillReleased(1);
+
+        // Tworzymy runtime dla startowych skilli
+        foreach (var entry in skills)
         {
-            Debug.LogError("SkillsManager: PlayerInput nie znaleziony!");
-            return;
+            if (entry.skill != null)
+                GetRuntime(entry.skill);
         }
 
-        // przypisujemy callbacki (raz!)
-        _skill1Started  = ctx => StartSkill(0);
-        _skill1Canceled = ctx => ReleaseSkill(0);
-
-        _skill2Started  = ctx => StartSkill(1);
-        _skill2Canceled = ctx => ReleaseSkill(1);
-
-        if (skills.Count > 0) QSkillImage.sprite = skills[0].skill.Icon;
-        if (skills.Count > 1) ESkillImage.sprite = skills[1].skill.Icon;
+        RefreshSlotUI();
     }
-    
+
     private void OnEnable()
     {
-#pragma warning disable UDR0005
-        GameManager.OnGameModeChanged += OnGameModeChanged;
-#pragma warning restore UDR0005
-
         if (_playerInput == null) return;
 
         _playerInput.actions["Skill1"].started  += _skill1Started;
@@ -93,10 +84,6 @@ public class SkillsManager : Singleton<SkillsManager>
 
     private void OnDisable()
     {
-        if (Instance != this) return;
-
-        GameManager.OnGameModeChanged -= OnGameModeChanged;
-
         if (_playerInput == null) return;
 
         _playerInput.actions["Skill1"].started  -= _skill1Started;
@@ -105,190 +92,194 @@ public class SkillsManager : Singleton<SkillsManager>
         _playerInput.actions["Skill2"].started  -= _skill2Started;
         _playerInput.actions["Skill2"].canceled -= _skill2Canceled;
     }
-    
-    private void OnGameModeChanged(GameMode mode)
+
+    #endregion
+
+    #region RUNTIME
+
+    private SkillRuntimeData GetRuntime(Skill skill)
     {
-        _skillsEnabled = (mode == GameMode.Location);
-
-        if (!_skillsEnabled)
+        if (!_skillRuntime.TryGetValue(skill, out var runtime))
         {
-            CancelAllSkills();
-        }
-    }
-    
-    private void CancelAllSkills()
-    {
-        foreach (var entry in skills)
-        {
-            entry.activeTimer = 0f;
-            entry.cooldownTimer = 0f;
-            entry.state = SkillState.ready;
-
-            if (entry.cooldownImage != null)
-                entry.cooldownImage.fillAmount = 1f;
+            runtime = new SkillRuntimeData();
+            _skillRuntime.Add(skill, runtime);
         }
 
-        foreach (var effect in activeEffects)
-        {
-            if (effect.EffectObject != null)
-                Destroy(effect.EffectObject);
-        }
-
-        activeEffects.Clear();
-    }
-
-    private void TryActivateSkill(int index)
-    {
-        if (!_skillsEnabled) return;
-        if (index < 0 || index >= skills.Count) return;
-
-        var entry = skills[index];
-        if (!entry.skill.IsInUse) return;
-        if (entry.state != SkillState.ready) return;
-
-        var isSkillActivated = entry.skill.Activate(user);
-
-        if (isSkillActivated) return;
-        
-        entry.state = SkillState.active;
-        entry.activeTimer = entry.skill.ActiveTime;
-
-        SoundManager.Instance.PlaySound(entry.skill.SFX, 1f);
-        
-        if (entry.skill.Effect != null)
-        {
-            entry.skill.Effect.Apply(user);
-
-            var effectUI = StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect);
-
-            activeEffects.Add(new ActiveEffects
-            {
-                Skill = entry,
-                EffectObject = effectUI
-            });
-        }
+        return runtime;
     }
 
     private void Update()
     {
-        foreach (var entry in skills)
+        // Aktualizacja runtime per skill
+        foreach (var runtime in _skillRuntime.Values)
         {
-            switch (entry.state)
+            switch (runtime.state)
             {
                 case SkillState.active:
-                    if (entry.activeTimer > 0)
-                    {
-                        entry.activeTimer -= Time.deltaTime;
-
-                        if (entry.skill.ActiveTime > 0)
-                        {
-                            var progress = entry.activeTimer / entry.skill.ActiveTime;
-                            entry.cooldownImage.fillAmount = progress;
-                        }
-                    }
+                    if (runtime.activeTimer > 0)
+                        runtime.activeTimer -= Time.deltaTime;
                     else
-                    {
-                        entry.state = SkillState.cooldown;
-                        entry.cooldownTimer = entry.skill.Cooldown;
-
-                        var toRemove = activeEffects.Find(e => e.Skill == entry);
-                        if (toRemove != null)
-                        {
-                            activeEffects.Remove(toRemove);
-                            Destroy(toRemove.EffectObject);
-                        }
-                    }
+                        runtime.state = SkillState.cooldown;
                     break;
 
                 case SkillState.cooldown:
-                    if (entry.cooldownTimer > 0)
-                    {
-                        entry.cooldownTimer -= Time.deltaTime;
-
-                        if (entry.skill.Cooldown > 0)
-                        {
-                            var progress = 1f - (entry.cooldownTimer / entry.skill.Cooldown);
-                            entry.cooldownImage.fillAmount = progress;
-                        }
-                    }
+                    if (runtime.cooldownTimer > 0)
+                        runtime.cooldownTimer -= Time.deltaTime;
                     else
-                    {
-                        entry.state = SkillState.ready;
-                        entry.cooldownImage.fillAmount = 1f;
-                    }
+                        runtime.state = SkillState.ready;
                     break;
             }
         }
+
+        UpdateSlotUI();
     }
-    
-    private void StartSkill(int index)
+
+    #endregion
+
+    #region SKILL INPUT
+
+    private void OnSkillStarted(int index)
     {
-        if (!_skillsEnabled) return;
-        if (index < 0 || index >= skills.Count) return;
+        if (index < 0 || index >= skills.Count)
+            return;
 
         var entry = skills[index];
-        if (!entry.skill.IsInUse) return;
-        if (entry.state != SkillState.ready) return;
+        if (entry.skill == null)
+            return;
+
+        if (!_skillProgress.IsUnlocked(entry.skill))
+            return;
+
+        var runtime = GetRuntime(entry.skill);
+        if (runtime.state != SkillState.ready)
+            return;
 
         if (entry.skill.TargetingType == TargetType.Self)
         {
-            ActivateEntry(entry);
+            ActivateSkill(entry.skill);
             return;
         }
 
-        entry.state = SkillState.aiming;
         _aimingSkillIndex = index;
 
-        var obj = Instantiate(
-            RangeIndicatorPrefab,
-            user.transform.position,
-            Quaternion.identity,
-            user.transform   
-        );
+        if (RangeIndicatorPrefab != null)
+        {
+            var obj = Instantiate(
+                RangeIndicatorPrefab,
+                user.transform.position,
+                Quaternion.identity,
+                user.transform
+            );
 
-        _currentIndicator = obj.GetComponent<RangeIndicator>();
-        _currentIndicator.SetRangeIndicatorRadius(entry.skill.Radius);
-        _currentIndicator.SetRangeIndicatorColor(entry.skill.RangeIndicatorMinColor, entry.skill.RangeIndicatorMaxColor);
-        _currentIndicator.transform.localPosition = Vector3.zero;
+            _currentIndicator = obj.GetComponent<RangeIndicator>();
+
+            _currentIndicator.SetRangeIndicatorRadius(entry.skill.Radius);
+
+            _currentIndicator.SetRangeIndicatorColor(
+                entry.skill.RangeIndicatorMinColor,
+                entry.skill.RangeIndicatorMaxColor
+            );
+
+            _currentIndicator.transform.localPosition = Vector3.zero;
+        }
     }
-    
-    private void ReleaseSkill(int index)
+
+    private void OnSkillReleased(int index)
     {
-        if (_aimingSkillIndex != index) return;
+        if (_aimingSkillIndex != index)
+            return;
 
         var entry = skills[index];
-        if (entry.state != SkillState.aiming) return;
+        if (entry.skill == null)
+            return;
 
-        ActivateEntry(entry);
+        ActivateSkill(entry.skill);
 
-        Destroy(_currentIndicator.gameObject);
+        if (_currentIndicator != null)
+            Destroy(_currentIndicator.gameObject);
+
         _currentIndicator = null;
         _aimingSkillIndex = -1;
     }
-    
-    private void ActivateEntry(SkillEntry entry)
+
+    #endregion
+
+    #region ACTIVATE
+
+    private void ActivateSkill(Skill skill)
     {
-        var isSkillActivated = entry.skill.Activate(user);
+        if (!skill.Activate(user))
+            return;
 
-        if (!isSkillActivated) return;
-        
-        entry.state = SkillState.active;
-        entry.activeTimer = entry.skill.ActiveTime;
+        var runtime = GetRuntime(skill);
 
-        SoundManager.Instance.PlaySound(entry.skill.SFX, 1f);
+        runtime.state = SkillState.active;
+        runtime.activeTimer = skill.ActiveTime;
+        runtime.cooldownTimer = skill.Cooldown;
 
-        if (entry.skill.Effect != null)
+        SoundManager.Instance.PlaySound(skill.SFX, 1f);
+    }
+
+    #endregion
+
+    #region UI
+
+    public void RefreshSlotUI()
+    {
+        RefreshSingleSlot(0, QSkillImage);
+        RefreshSingleSlot(1, ESkillImage);
+    }
+
+    private void RefreshSingleSlot(int index, Image image)
+    {
+        if (index >= skills.Count)
+            return;
+
+        var entry = skills[index];
+
+        if (entry.skill == null)
         {
-            entry.skill.Effect.Apply(user);
+            image.gameObject.SetActive(false);
+            return;
+        }
 
-            var effectUI =
-                StatusEffectUIManager.Instance.CreateEffectUI(entry.skill.Effect);
+        image.sprite = entry.skill.Icon;
+        image.gameObject.SetActive(true);
+    }
 
-            activeEffects.Add(new ActiveEffects
+    private void UpdateSlotUI()
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+            var entry = skills[i];
+
+            if (entry.cooldownImage == null)
+                continue;
+
+            if (entry.skill == null)
             {
-                Skill = entry,
-                EffectObject = effectUI
-            });
+                entry.cooldownImage.fillAmount = 1f;
+                continue;
+            }
+
+            var runtime = GetRuntime(entry.skill);
+
+            if (runtime.state == SkillState.cooldown && entry.skill.Cooldown > 0)
+            {
+                entry.cooldownImage.fillAmount =
+                    1f - (runtime.cooldownTimer / entry.skill.Cooldown);
+            }
+            else if (runtime.state == SkillState.active && entry.skill.ActiveTime > 0)
+            {
+                entry.cooldownImage.fillAmount =
+                    runtime.activeTimer / entry.skill.ActiveTime;
+            }
+            else
+            {
+                entry.cooldownImage.fillAmount = 1f;
+            }
         }
     }
+
+    #endregion
 }

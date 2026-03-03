@@ -12,7 +12,6 @@ public class Skill : ScriptableObject
     public float ManaCost;
 
     public Sprite Icon;
-    public bool IsInUse;
 
     public Effect Effect;
 

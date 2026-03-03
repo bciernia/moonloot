@@ -200,6 +200,15 @@ public class UIManager : MonoBehaviour
 
         _gameMenu.SetActive(!isPanelActive);
 
+        //Tylko kiedy wchodzimy do panelu ze skillami
+        if (tabIndex == 2)
+        {
+            foreach(var btn in FindObjectsOfType<UISkillBtn>())
+            {
+                btn.RefreshState();
+            }
+        }
+        
         if (!isPanelActive)
         {
             TabMenuManager.Instance.SwitchToTab(tabIndex);
