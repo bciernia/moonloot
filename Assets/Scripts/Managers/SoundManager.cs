@@ -29,7 +29,6 @@ public class SoundManager : Singleton<SoundManager>
     protected override void Awake()
     {
         base.Awake();
-        FindMapForSoundManager();
         _dataFromTile = new Dictionary<TileBase, TileSoundSO>();
         foreach (var tileData in _tileSounds)
         {
@@ -43,6 +42,11 @@ public class SoundManager : Singleton<SoundManager>
         PlayCombatMusic(0);
     }
 
+    private void Start()
+    {
+        FindMapForSoundManager();
+    }
+    
     public void PlaySound(SoundType sound, float volume = 1f)
     {
         var clips = GetSoundsByType(sound);
@@ -169,17 +173,18 @@ public class SoundManager : Singleton<SoundManager>
     private AudioClip[] GetClips(SoundType sound) => _soundList[(int)sound].Sounds;
 
     public void FindMapForSoundManager() => _map = GameObject.FindWithTag("SoundFloor").GetComponent<Tilemap>();
-    
+
     public AudioClip GetCurrentFloorClip(Vector2 worldPosition)
     {
+        if (_map == null) return null;
         var gridPosition = _map.WorldToCell(worldPosition);
+        
         var tile = _map.GetTile(gridPosition);
 
         var index = Random.Range(0, _dataFromTile[tile].Clips.Length);
         var currentFloorClip = _dataFromTile[tile].Clips[index];
 
         return currentFloorClip;
-        
     }
 
     private AudioClip[] GetSoundsByType(SoundType type)
@@ -210,12 +215,28 @@ public class SoundManager : Singleton<SoundManager>
         var distance = Vector2.Distance(GameObject.FindWithTag("Player").transform.position, worldPosition);
         return Mathf.Clamp01(1 - distance / 15f);
     }
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        FindMapForSoundManager();
+        PlayMusic(scene.name);
+    }
 }
 
 [Serializable]
 public struct SoundList
 {
-    public AudioClip[] Sounds => sounds;
+    public AudioClip[] Sounds => sounds; 
     [SerializeField] public SoundType name;
     [SerializeField] private AudioClip[] sounds;
 }
