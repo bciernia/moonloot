@@ -108,9 +108,10 @@ public class UIManager : MonoBehaviour
 
     private void OnGameModeChanged(GameMode mode)
     {
-        var isWorldMap = mode == GameMode.WorldMap;
-        _mainGamePanel.SetActive(!isWorldMap);
-        _equippedPanel.SetActive(!isWorldMap);
+        var isLocation = mode == GameMode.Location;
+        _mainGamePanel.SetActive(isLocation);
+        _equippedPanel.SetActive(isLocation);
+        CloseAllPanels();
     }
 
     #region Input System Setup
@@ -233,22 +234,36 @@ public class UIManager : MonoBehaviour
 
     private bool TryCloseAnyPanel()
     {
-        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel };
+        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel, _mainMenuPanel };
+
+        foreach (var panel in panels)
+        {
+            if (!panel.activeSelf) continue;
+            
+            panel.SetActive(false);
+
+            if (panel == _gameMenu)
+                PauseManager.Instance.ReleasePause();
+
+            if (panel == _optionsPanel)
+                UpdateKeyTexts();
+
+            return true;
+        }
+
+        return false;
+    }
+    private void CloseAllPanels()
+    {
+        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel, _mainMenuPanel };
 
         foreach (var panel in panels)
         {
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
-                //zakomentowane bo po wyjściu z okna save/load gra sie rozpoczynała
-                //PauseManager.Instance.ReleasePause();
-                if (panel == _optionsPanel)
-                    UpdateKeyTexts();
-                return true;
             }
         }
-        
-        return false;
     }
 
     private void OpenClosePanel(GameObject panel)

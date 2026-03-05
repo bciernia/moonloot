@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -58,6 +59,12 @@ public class LoadingSceneManager : MonoBehaviour
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
         CombatManager.Instance.ClearCombat();
+
+        if (sceneName == "Town")
+        {
+            
+        }
+        
         loadingScreen.SetActive(false);
     }
 

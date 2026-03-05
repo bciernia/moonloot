@@ -172,7 +172,11 @@ public class SoundManager : Singleton<SoundManager>
     
     private AudioClip[] GetClips(SoundType sound) => _soundList[(int)sound].Sounds;
 
-    public void FindMapForSoundManager() => _map = GameObject.FindWithTag("SoundFloor").GetComponent<Tilemap>();
+    public void FindMapForSoundManager()
+    {
+        var soundFloor = GameObject.FindWithTag("SoundFloor");
+        if (soundFloor != null) _map = soundFloor.GetComponent<Tilemap>();
+    }
 
     public AudioClip GetCurrentFloorClip(Vector2 worldPosition)
     {

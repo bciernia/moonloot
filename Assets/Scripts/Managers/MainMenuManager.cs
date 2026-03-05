@@ -3,9 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    private const string MAIN_MENU = "MainMenu";
+    
     public void StartGame()
     {
-        SceneManager.LoadScene("SceneForest", LoadSceneMode.Single);
+        SceneManager.LoadScene("Town", LoadSceneMode.Single);
     }
 
     public void StartArena()
@@ -27,4 +29,20 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
     
+    private void OnEnable()
+    {
+#pragma warning disable UDR0005
+        SceneManager.sceneLoaded += OnSceneLoaded;
+#pragma warning restore UDR0005
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameManager.Instance.SetMode(scene.name == MAIN_MENU ? GameMode.MainMenu : GameMode.Location);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class InteractionManager : MonoBehaviour
     private readonly List<IInteractable> _nearbyInteractables = new List<IInteractable>();
     private IInteractable _currentInteractable;
 
+    private Action<InputAction.CallbackContext> _interactionAction;
+    
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _interactionBox;
     [SerializeField] private TextMeshProUGUI _interactionBoxTMP;
@@ -16,20 +19,26 @@ public class InteractionManager : MonoBehaviour
     private void Awake()
     {
         _playerInput = FindAnyObjectByType<PlayerInput>();
+        _interactionAction = ctx => Interact();
     }
 
     private void OnEnable()
     {
-        _playerInput.actions["Interaction"].performed += ctx => Interact();
+        _playerInput.actions["Interaction"].performed += _interactionAction;
+        GameManager.OnGameModeChanged += OnGameModeChanged;
     }
 
     private void OnDisable()
     {
-        _playerInput.actions["Interaction"].performed -= ctx => Interact();
+        _playerInput.actions["Interaction"].performed -= _interactionAction;
+        GameManager.OnGameModeChanged -= OnGameModeChanged;
     }
     
     private void Interact()
     {
+        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+            return;
+
         _currentInteractable?.Interact();
     }
 
@@ -47,6 +56,20 @@ public class InteractionManager : MonoBehaviour
             _nearbyInteractables.Remove(interactable);
 
         UpdateClosestInteractable();
+    }
+    
+    private void OnGameModeChanged(GameMode mode)
+    {
+        if (mode == GameMode.MainMenu)
+        {
+            ClearAllInteractables();
+        }
+    }
+    
+    private void ClearAllInteractables()
+    {
+        _nearbyInteractables.Clear();
+        ClearInteractable();
     }
 
     private void UpdateClosestInteractable()
