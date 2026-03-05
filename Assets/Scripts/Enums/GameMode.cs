@@ -1,5 +1,6 @@
 public enum GameMode
 {
     Location,
-    WorldMap
+    WorldMap,
+    MainMenu
 }
