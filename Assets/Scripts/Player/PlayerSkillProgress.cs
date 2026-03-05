@@ -1,21 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
-public class PlayerSkillProgress : MonoBehaviour
+public class PlayerSkillProgress : MonoBehaviour, ISaveable
 {
     public List<Skill> unlockedSkills = new List<Skill>();
 
     public event Action OnSkillsChanged;
 
-    [SerializeField] public Skill skill;
+    [SerializeField] private Skill Skill;
     
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.U))
         {
-            UnlockSkill(skill);
+            UnlockSkill(Skill);
         }
     }
 
@@ -30,6 +29,19 @@ public class PlayerSkillProgress : MonoBehaviour
             unlockedSkills.Add(skill);
 
         OnSkillsChanged?.Invoke();
+    }
+
+    public void Save()
+    {
+        ES3.Save("player_unlocked_skills", unlockedSkills);
+    }
+
+    public void Load()
+    {
+        if (ES3.KeyExists("player_unlocked_skills"))
+        {
+            unlockedSkills = ES3.Load<List<Skill>>("player_unlocked_skills");
+        }
     }
 }
 

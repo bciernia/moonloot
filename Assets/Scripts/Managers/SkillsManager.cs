@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -18,7 +19,7 @@ internal class SkillRuntimeData
     public SkillState state = SkillState.ready;
 }
 
-public class SkillsManager : Singleton<SkillsManager>
+public class SkillsManager : Singleton<SkillsManager>, ISaveable
 {
     [Header("Slots")]
     public List<SkillEntry> skills = new();
@@ -281,5 +282,72 @@ public class SkillsManager : Singleton<SkillsManager>
         }
     }
 
+    #endregion
+
+    #region SAVE AND LOAD
+    
+    public void Save()
+    {
+        var saveList = new List<SkillSaveData>();
+
+        foreach (var entry in skills)
+        {
+            if (entry.skill == null)
+            {
+                saveList.Add(new SkillSaveData());
+                continue;
+            }
+
+            var runtime = GetRuntime(entry.skill);
+
+            saveList.Add(new SkillSaveData
+            {
+                skill = entry.skill,
+                cooldownTimer = runtime.cooldownTimer,
+                activeTimer = runtime.activeTimer,
+                state = runtime.state
+            });
+        }
+
+        ES3.Save("player_chosen_skills", saveList);
+    }
+
+    public void Load()
+    {
+        if (!ES3.KeyExists("player_chosen_skills"))
+            return;
+
+        var loaded = ES3.Load<List<SkillSaveData>>("player_chosen_skills");
+
+        _skillRuntime.Clear();
+
+        for (var i = 0; i < skills.Count && i < loaded.Count; i++)
+        {
+            var data = loaded[i];
+
+            skills[i].skill = data.skill;
+
+            if (data.skill == null)
+                continue;
+
+            var runtime = GetRuntime(data.skill);
+
+            runtime.cooldownTimer = data.cooldownTimer;
+            runtime.activeTimer = data.activeTimer;
+            runtime.state = data.state;
+        }
+
+        RefreshSlotUI();
+    }
+    
+    [Serializable]
+    public class SkillSaveData
+    {
+        public Skill skill;
+        public float cooldownTimer;
+        public float activeTimer;
+        public SkillState state;
+    }
+    
     #endregion
 }

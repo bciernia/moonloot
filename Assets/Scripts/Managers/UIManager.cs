@@ -240,7 +240,8 @@ public class UIManager : MonoBehaviour
             if (panel.activeSelf)
             {
                 panel.SetActive(false);
-                PauseManager.Instance.ReleasePause();
+                //zakomentowane bo po wyjściu z okna save/load gra sie rozpoczynała
+                //PauseManager.Instance.ReleasePause();
                 if (panel == _optionsPanel)
                     UpdateKeyTexts();
                 return true;

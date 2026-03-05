@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="added refreshing skills in list after unlock">
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/Menus/Buttons/Minifantasy_GuiButtonsOriginal.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/Menus/Buttons/Minifantasy_GuiButtonsOriginal.png.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/Dialogue_UI_Scroll_BottomHorizontal_Internal_Right Variant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/Dialogue_UI_Scroll_BottomHorizontal_Internal_Right Variant.prefab" afterDir="false" />
+    <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/SkillsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/SkillsManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/SoundManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerSkillProgress.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Player/PlayerSkillProgress.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -469,6 +475,8 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NpcDialogueFlagsCondition.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Player/PlayerSkillProgress.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Player/PlayerSkillProgress.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerWorldMapVisual.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaSpawner.cs" root0="FORCE_HIGHLIGHTING" />
@@ -593,10 +601,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="14008">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="14008" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -868,7 +876,8 @@
       <workItem from="1772388867126" duration="7947000" />
       <workItem from="1772473950413" duration="7903000" />
       <workItem from="1772551961793" duration="1698000" />
-      <workItem from="1772568218675" duration="4170000" />
+      <workItem from="1772568218675" duration="5023000" />
+      <workItem from="1772722176838" duration="6600000" />
     </task>
     <servers />
   </component>
@@ -1253,19 +1262,6 @@
           <option name="timeStamp" value="406" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>237</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'TryCloseAnyPanel'">
-            <startOffsets>
-              <option value="7435" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7464" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="408" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs</url>
           <line>41</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestJournal.cs" containingFunctionPresentation="Method 'AddEntryToJournalAndFinishQuest'">
@@ -1449,29 +1445,55 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerSkillProgress.cs</url>
-          <line>17</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Player\PlayerSkillProgress.cs" containingFunctionPresentation="Method 'Update'">
-            <startOffsets>
-              <option value="392" />
-            </startOffsets>
-            <endOffsets>
-              <option value="411" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="438" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerSkillProgress.cs</url>
-          <line>28</line>
+          <line>27</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Player\PlayerSkillProgress.cs" containingFunctionPresentation="Method 'UnlockSkill'">
             <startOffsets>
-              <option value="584" />
+              <option value="566" />
             </startOffsets>
             <endOffsets>
-              <option value="620" />
+              <option value="602" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="439" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/SoundManager.cs</url>
+          <line>40</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\SoundManager.cs" containingFunctionPresentation="Method 'Awake'">
+            <startOffsets>
+              <option value="1267" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1313" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="441" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
+          <line>218</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'OpenCloseTabPanel'">
+            <startOffsets>
+              <option value="6961" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6998" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="444" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
+          <line>211</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'OpenCloseTabPanel'">
+            <startOffsets>
+              <option value="6777" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6796" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="445" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
