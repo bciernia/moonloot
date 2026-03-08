@@ -302,7 +302,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
             saveList.Add(new SkillSaveData
             {
-                skill = entry.skill,
+                skillID = entry.skill.Id,
                 cooldownTimer = runtime.cooldownTimer,
                 activeTimer = runtime.activeTimer,
                 state = runtime.state
@@ -325,12 +325,12 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         {
             var data = loaded[i];
 
-            skills[i].skill = data.skill;
+            skills[i].skill = SkillDatabase.Get(data.skillID);
 
-            if (data.skill == null)
+            if (data.skillID == null)
                 continue;
 
-            var runtime = GetRuntime(data.skill);
+            var runtime = GetRuntime(skills[i].skill);
 
             runtime.cooldownTimer = data.cooldownTimer;
             runtime.activeTimer = data.activeTimer;
@@ -343,7 +343,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     [Serializable]
     public class SkillSaveData
     {
-        public Skill skill;
+        public string skillID;
         public float cooldownTimer;
         public float activeTimer;
         public SkillState state;
