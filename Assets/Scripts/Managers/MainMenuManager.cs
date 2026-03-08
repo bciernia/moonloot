@@ -43,6 +43,13 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameManager.Instance.SetMode(scene.name == MAIN_MENU ? GameMode.MainMenu : GameMode.Location);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetMode(scene.name == MAIN_MENU ? GameMode.MainMenu : GameMode.Location);
+        }
+        else
+        {
+            MainMenuSoundManager.Instance.PlayMainMenuMusic();
+        }
     }
 }

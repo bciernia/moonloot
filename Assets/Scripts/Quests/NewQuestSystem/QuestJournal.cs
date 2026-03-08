@@ -97,12 +97,43 @@ public class QuestJournal : MonoBehaviour, ISaveable
 
     public void Save()
     {
-        ES3.Save("player_quest_statuses", _questStatuses);
+        var saveData = new List<QuestSaveData>();
+
+        foreach (var questStatus in _questStatuses)
+        {
+            saveData.Add(new QuestSaveData
+            {
+                questID = questStatus._questID,
+                entries = questStatus.GetQuestEntries,
+                completed = questStatus.IsQuestCompleted
+            });
+        }
+        
+        ES3.Save("player_quest_statuses", saveData);
     }
 
     public void Load()
     {
-        _questStatuses = ES3.Load("player_quest_statuses", _questStatuses);
+        if (!ES3.KeyExists("player_quest_statuses")) return;
+
+        var saveData = ES3.Load<List<QuestSaveData>>("player_quest_statuses");
+
+        _questStatuses.Clear();
+
+        foreach (var questSaveData in saveData)
+        {
+            var quest = QuestDatabase.Get(questSaveData.questID);
+
+            var questStatus = new QuestStatus(quest);
+
+            foreach (var entry in questSaveData.entries)
+                questStatus.AddQuestEntry(entry);
+            
+            if(questSaveData.completed) questStatus.FinishQuest();
+            
+            _questStatuses.Add(questStatus);
+        }
+
         onUpdate?.Invoke();
     }
 }

@@ -32,7 +32,6 @@ public class QuestSO : IdentifiableSO
         public int number;
         public InventoryItem item;
     }
-
     
     public string GetQuestTitle() => _name ?? name;
 

@@ -107,7 +107,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
-            _enemySounds.Die();
+            _enemySounds?.Die();
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
 
