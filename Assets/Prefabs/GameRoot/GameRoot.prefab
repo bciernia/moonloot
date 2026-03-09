@@ -694,6 +694,60 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &3892959874752799567
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2336535625331425579}
+  - component: {fileID: 9060010684126535388}
+  m_Layer: 0
+  m_Name: SkillDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2336535625331425579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892959874752799567}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 459707523639994451}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9060010684126535388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3892959874752799567}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f268b1d9dd8d4863bfcdd68b6fac3981, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skills:
+  - {fileID: 11400000, guid: b836b349d16872345a4b88b5e0b4e1a9, type: 2}
+  - {fileID: 11400000, guid: 84b25bcf8c3eedc4c89f43bb6bd1474f, type: 2}
+  - {fileID: 11400000, guid: 4ae9c82cf3de4ee4ba11f4179364ecc1, type: 2}
+  - {fileID: 11400000, guid: 4562fb314fcf78f46b998e8beb92b47c, type: 2}
+  - {fileID: 11400000, guid: 3a93f4daddcaa5d4abda8c5642f339b4, type: 2}
+  - {fileID: 11400000, guid: 850987e3da4f90b42bd793bd655dda2b, type: 2}
+  - {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
+  - {fileID: 11400000, guid: e6676c6a6b325474a8ca809882e1e281, type: 2}
+  - {fileID: 11400000, guid: b164429bbb2c70541a40d047d0a14b6c, type: 2}
 --- !u!1 &4701076859561034713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1470,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2229533524078778409}
+  - {fileID: 2336535625331425579}
   m_Father: {fileID: 5798895507799208133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &3015199357432561852

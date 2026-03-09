@@ -114,7 +114,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyBrain.enabled = false;
             // _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
-            
+            EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
             StartCoroutine(HandleDeathAnimation());

@@ -36,6 +36,9 @@ public class EnemySounds : MonoBehaviour
         if (_audioSource == null) return;
         
         var currentFloorClip = SoundManager.Instance.GetCurrentFloorClip(transform.position);
+
+        if (currentFloorClip == null) return;
+        
         var calculatedVolume = SoundManager.Instance.CalculateDistFromPlayerForVolume(transform.position);
 
         if (currentFloorClip != null)

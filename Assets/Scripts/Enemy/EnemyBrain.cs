@@ -1,9 +1,11 @@
-﻿using System.Linq;
-using TMPro;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
+    [SerializeField] private string enemyID;
+    
     [SerializeField] private string initState;
     [SerializeField] public FSMState[] states ;
 
@@ -15,6 +17,17 @@ public class EnemyBrain : MonoBehaviour
     public float AttackCooldown { get; private set; }
 
     private readonly string EnemyLayerMaskAndTagName = "Enemy";
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (string.IsNullOrEmpty(enemyID))
+        {
+            enemyID = Guid.NewGuid().ToString();
+            UnityEditor.EditorUtility.SetDirty(this);
+        }
+    }
+#endif    
     
     private void Awake()
     {
@@ -24,9 +37,15 @@ public class EnemyBrain : MonoBehaviour
 
     private void Start()
     {
+        if (EnemyStateManager.Instance != null &&
+            EnemyStateManager.Instance.IsEnemyDead(enemyID))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         ChangeState(initState);
     }
-
     private void Update()
     {
         CurrentState?.UpdateState(this);
@@ -126,4 +145,6 @@ public class EnemyBrain : MonoBehaviour
             _isRegisteredInCombat = false;
         }
     }
+
+    public string EnemyID => enemyID;
 }
