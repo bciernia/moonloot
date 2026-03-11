@@ -14,4 +14,9 @@ public class DialogueFlags : MonoBehaviour
     {
         return DialogueFlagsManager.Instance.IsFlagInHashSet(flag.Trim());
     }
+
+    public void AddWorldState(string state)
+    {
+        WorldStateManager.Instance.SetState(state);
+    }
 }

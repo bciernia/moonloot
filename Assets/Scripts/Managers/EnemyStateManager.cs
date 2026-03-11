@@ -14,6 +14,19 @@ public class EnemyStateManager : Singleton<EnemyStateManager>, ISaveable
     {
         deadEnemies.Add(id);
     }
+    
+    private void RemoveDeadEnemiesFromScene()
+    {
+        var enemies = FindObjectsByType<EnemyBrain>(FindObjectsSortMode.None);
+
+        foreach (var enemy in enemies)
+        {
+            if (deadEnemies.Contains(enemy.EnemyID))
+            {
+                Destroy(enemy.gameObject);
+            }
+        }
+    }
 
     public void Save()
     {
@@ -27,5 +40,7 @@ public class EnemyStateManager : Singleton<EnemyStateManager>, ISaveable
 
         var list = ES3.Load<List<string>>("dead_enemies");
         deadEnemies = new HashSet<string>(list);
+
+        RemoveDeadEnemiesFromScene();
     }
 }

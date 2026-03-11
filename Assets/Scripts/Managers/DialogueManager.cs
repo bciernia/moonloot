@@ -89,6 +89,11 @@ public class DialogueManager : Singleton<DialogueManager>
 
         // FindObjectOfType<FourthWallDialogueManager>()?.OnDialogueEnded();
     }
+
+    public void SetWorldState(string state)
+    {
+        WorldStateManager.Instance.SetState(state);
+    }
     
     public bool IsInDialogue() => _dialogueStarted;
 }

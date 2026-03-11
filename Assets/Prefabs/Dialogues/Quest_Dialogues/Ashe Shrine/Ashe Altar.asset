@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Ashe Altar
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-01-06@21:29:41
+  editTime: 2026-03-10@21:48:28
+  nodes:
+  - rid: 8189697213138469056
+  - rid: 8189697213138469057
+  - rid: 8189697213138469058
+  translationLibrary: {fileID: 8243403613294853549}
+  maxID: 1023
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697213138469056
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1002
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1003
+          attachedIds: ed030000
+          ownerId: 1002
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 549.6015
+        yPosition: 241.13852
+        entryPointName: 0
+    - rid: 8189697213138469057
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1004
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1005
+          attachedIds: eb030000
+          ownerId: 1004
+          connectionType: 1
+        outputs:
+        - id: 1006
+          attachedIds: fb030000
+          ownerId: 1004
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 727.8707
+        yPosition: 210.54138
+        items:
+        - rid: 8189697213138469059
+        characterName: Player
+        icon: 
+    - rid: 8189697213138469058
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1018
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1019
+          attachedIds: ee030000
+          ownerId: 1018
+          connectionType: 1
+        outputs:
+        - id: 1020
+          attachedIds: 
+          ownerId: 1018
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1043.5114
+        yPosition: 216.08829
+        items:
+        - rid: 8189697213138469060
+        characterName: Player
+        icon: 
+    - rid: 8189697213138469059
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Ashe statue is missing. '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697213138469060
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I need to find it, if not, there will be still monster nearby
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &8243403613294853549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Player
+    - id: 1
+      language: en
+      text: 'Ashe statue is missing. '
+    - id: 2
+      language: en
+      text: I need to find it, if not, there will be still monster nearby
