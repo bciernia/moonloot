@@ -14,5 +14,4 @@ public class SwitchCharacterOnDialogue : MonoBehaviour
         newCharacter.GetComponent<EnemyLoot>().AddDropItemsToListFromParent(itemsForCharacter);
         Destroy(gameObject);
     }
-        
 }

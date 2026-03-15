@@ -98,8 +98,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
-        
-        if (!_isRooted)
+
+        if (!_isRooted && damageSourceTransform != null)
         {
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);
         }

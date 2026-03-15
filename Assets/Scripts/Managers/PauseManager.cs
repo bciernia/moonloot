@@ -2,22 +2,24 @@ using UnityEngine;
 
 public class PauseManager : Singleton<PauseManager>
 {
-    private int pauseRequests = 0;
+    private int _pauseRequests = 0;
 
     public void RequestPause()
     {
-        pauseRequests++;
+        _pauseRequests++;
         UpdateTimeScale();
     }
 
     public void ReleasePause()
     {
-        pauseRequests = Mathf.Max(0, pauseRequests - 1);
+        _pauseRequests = Mathf.Max(0, _pauseRequests - 1);
         UpdateTimeScale();
     }
 
     private void UpdateTimeScale()
     {
-        Time.timeScale = pauseRequests > 0 ? 0f : 1f;
+        Time.timeScale = _pauseRequests > 0 ? 0f : 1f;
     }
+
+    public int pauseRequests => _pauseRequests;
 }

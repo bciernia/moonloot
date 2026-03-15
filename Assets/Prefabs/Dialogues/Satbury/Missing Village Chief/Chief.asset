@@ -1,0 +1,781 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Chief
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-01-06@21:29:41
+  editTime: 2026-03-15@16:18:03
+  nodes:
+  - rid: 8189697321039036551
+  - rid: 8189697321039036552
+  - rid: 8189697321039036553
+  - rid: 8189697321039036554
+  - rid: 8189697321039036555
+  - rid: 8189697321039036556
+  - rid: 8189697321039036557
+  - rid: 8189697321039036558
+  - rid: 8189697321039036559
+  - rid: 8189697321039036560
+  - rid: 8189697321039036561
+  - rid: 8189697321039036562
+  - rid: 8189697321039036563
+  - rid: 8189697321039036564
+  - rid: 8189697321039036565
+  - rid: 8189697321039036566
+  - rid: 8189697321039036567
+  - rid: 8189697321039036568
+  translationLibrary: {fileID: 9132809898856722766}
+  maxID: 1263
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697321039036551
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1048.1177
+        yPosition: 2382.3499
+        entryPointName: 0
+    - rid: 8189697321039036552
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 08000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 198.59375
+        xPosition: 1219.2429
+        yPosition: 2347.9622
+        items:
+        - rid: 8189697321039036569
+        characterName: Player
+        icon: 
+    - rid: 8189697321039036553
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 8
+          attachedIds: 06000000
+          ownerId: 7
+          connectionType: 1
+        outputs:
+        - id: 9
+          attachedIds: 23000000
+          ownerId: 7
+          connectionType: 1
+        width: 268
+        height: 203.75
+        xPosition: 1573.7545
+        yPosition: 2354.095
+        items:
+        - rid: 8189697321039036570
+        - rid: 8189697321039036571
+        characterName: Hendrik
+        icon: 
+    - rid: 8189697321039036554
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 11
+          attachedIds: 29000000
+          ownerId: 10
+          connectionType: 1
+        outputs:
+        - id: 12
+          attachedIds: 13040000
+          ownerId: 10
+          connectionType: 1
+        width: 268
+        height: 269
+        xPosition: 2312.7307
+        yPosition: 2453.4973
+        items:
+        - rid: 8189697321039036572
+        - rid: 8189697321039036573
+        - rid: 8189697321039036574
+        characterName: Bandit chief
+        icon: 
+    - rid: 8189697321039036555
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 34
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 35
+          attachedIds: 09000000
+          ownerId: 34
+          connectionType: 1
+        - id: 36
+          attachedIds: 
+          ownerId: 34
+          connectionType: 8
+        - id: 37
+          attachedIds: 
+          ownerId: 34
+          connectionType: 9
+        - id: 38
+          attachedIds: 
+          ownerId: 34
+          connectionType: 9
+        - id: 39
+          attachedIds: 
+          ownerId: 34
+          connectionType: 9
+        outputs:
+        - id: 40
+          attachedIds: 
+          ownerId: 34
+          connectionType: 9
+        - id: 41
+          attachedIds: 0b000000
+          ownerId: 34
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1910.8018
+        yPosition: 2406.4421
+        triggeredClassName: DialogueHelper
+        triggeredMethodName: ShowObjectInDialogue
+        methodSignature: ShowObjectInDialogue(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 0
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036556
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1033
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1034
+          attachedIds: 97040000
+          ownerId: 1033
+          connectionType: 1
+        - id: 1035
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 2
+        - id: 1036
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        - id: 1037
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        - id: 1038
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        outputs:
+        - id: 1039
+          attachedIds: 
+          ownerId: 1033
+          connectionType: 9
+        - id: 1040
+          attachedIds: bb040000
+          ownerId: 1033
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1623.0195
+        yPosition: 2760.4475
+        triggeredClassName: NPCTeleport
+        triggeredMethodName: set_enabled
+        methodSignature: set_enabled(bool)
+        parameterTypes:
+        - bool
+        parameterValues:
+        - true
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036557
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1042
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1043
+          attachedIds: 0c000000
+          ownerId: 1042
+          connectionType: 1
+        - id: 1044
+          attachedIds: 
+          ownerId: 1042
+          connectionType: 9
+        - id: 1045
+          attachedIds: 
+          ownerId: 1042
+          connectionType: 9
+        - id: 1046
+          attachedIds: 
+          ownerId: 1042
+          connectionType: 9
+        - id: 1047
+          attachedIds: 
+          ownerId: 1042
+          connectionType: 9
+        outputs:
+        - id: 1048
+          attachedIds: 
+          ownerId: 1042
+          connectionType: 9
+        - id: 1049
+          attachedIds: 3f040000
+          ownerId: 1042
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2742.2668
+        yPosition: 2445.0637
+        triggeredClassName: DialogueHelper
+        triggeredMethodName: ActivateEnemies
+        methodSignature: ActivateEnemies()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036558
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1086
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1087
+          attachedIds: 19040000
+          ownerId: 1086
+          connectionType: 1
+        - id: 1088
+          attachedIds: 
+          ownerId: 1086
+          connectionType: 5
+        - id: 1089
+          attachedIds: 
+          ownerId: 1086
+          connectionType: 9
+        - id: 1090
+          attachedIds: 
+          ownerId: 1086
+          connectionType: 9
+        - id: 1091
+          attachedIds: 
+          ownerId: 1086
+          connectionType: 9
+        outputs:
+        - id: 1092
+          attachedIds: 
+          ownerId: 1086
+          connectionType: 9
+        - id: 1093
+          attachedIds: 6e040000
+          ownerId: 1086
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 3091.3035
+        yPosition: 2445.3262
+        triggeredClassName: DialogueFlags
+        triggeredMethodName: Add
+        methodSignature: Add(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - HENDRIK_FOUNDED
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036559
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1133
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1134
+          attachedIds: 45040000
+          ownerId: 1133
+          connectionType: 1
+        - id: 1135
+          attachedIds: 
+          ownerId: 1133
+          connectionType: 5
+        - id: 1136
+          attachedIds: 
+          ownerId: 1133
+          connectionType: 9
+        - id: 1137
+          attachedIds: 
+          ownerId: 1133
+          connectionType: 9
+        - id: 1138
+          attachedIds: 
+          ownerId: 1133
+          connectionType: 9
+        outputs:
+        - id: 1139
+          attachedIds: 
+          ownerId: 1133
+          connectionType: 9
+        - id: 1140
+          attachedIds: 7e040000
+          ownerId: 1133
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 3397.5532
+        yPosition: 2443.7634
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036560
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1149
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1150
+          attachedIds: 74040000
+          ownerId: 1149
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 3713.4854
+        yPosition: 2624.0208
+        exitPointName: 
+    - rid: 8189697321039036561
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1158
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1159
+          attachedIds: 96040000
+          ownerId: 1158
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 1017.9479
+        yPosition: 2751.8787
+        entryPointName: 1
+    - rid: 8189697321039036562
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1173
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1174
+          attachedIds: 87040000
+          ownerId: 1173
+          connectionType: 1
+        outputs:
+        - id: 1175
+          attachedIds: 0a040000
+          ownerId: 1173
+          connectionType: 1
+        width: 268
+        height: 198.59375
+        xPosition: 1229.7716
+        yPosition: 2740.4927
+        items:
+        - rid: 8189697321039036575
+        characterName: Player
+        icon: 
+    - rid: 8189697321039036563
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1210
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1211
+          attachedIds: 10040000
+          ownerId: 1210
+          connectionType: 1
+        - id: 1212
+          attachedIds: 
+          ownerId: 1210
+          connectionType: 5
+        - id: 1213
+          attachedIds: 
+          ownerId: 1210
+          connectionType: 9
+        - id: 1214
+          attachedIds: 
+          ownerId: 1210
+          connectionType: 9
+        - id: 1215
+          attachedIds: 
+          ownerId: 1210
+          connectionType: 9
+        outputs:
+        - id: 1216
+          attachedIds: 
+          ownerId: 1210
+          connectionType: 9
+        - id: 1217
+          attachedIds: eb030000
+          ownerId: 1210
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1897.0668
+        yPosition: 2748.8953
+        triggeredClassName: DialogueEntrySetter
+        triggeredMethodName: UpdateDialogueEntry
+        methodSignature: UpdateDialogueEntry(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036564
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1226
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1227
+          attachedIds: e4040000ed040000
+          ownerId: 1226
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2729.5942
+        yPosition: 3172.0466
+        exitPointName: 
+    - rid: 8189697321039036565
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1235
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1236
+          attachedIds: e3040000
+          ownerId: 1235
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 980.532
+        yPosition: 3141.4216
+        entryPointName: 2
+    - rid: 8189697321039036566
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1250
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1251
+          attachedIds: d4040000
+          ownerId: 1250
+          connectionType: 1
+        outputs:
+        - id: 1252
+          attachedIds: cb040000
+          ownerId: 1250
+          connectionType: 1
+        width: 268
+        height: 198.59375
+        xPosition: 1219.5945
+        yPosition: 3114.8591
+        items:
+        - rid: 8189697321039036576
+        characterName: Player
+        icon: 
+    - rid: 8189697321039036567
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1002
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1003
+          attachedIds: c1040000
+          ownerId: 1002
+          connectionType: 1
+        - id: 1004
+          attachedIds: 
+          ownerId: 1002
+          connectionType: 5
+        - id: 1005
+          attachedIds: 
+          ownerId: 1002
+          connectionType: 9
+        - id: 1006
+          attachedIds: 
+          ownerId: 1002
+          connectionType: 9
+        - id: 1007
+          attachedIds: 
+          ownerId: 1002
+          connectionType: 9
+        outputs:
+        - id: 1008
+          attachedIds: 
+          ownerId: 1002
+          connectionType: 9
+        - id: 1009
+          attachedIds: e7040000
+          ownerId: 1002
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2181.906
+        yPosition: 2767.2957
+        triggeredClassName: DialogueFlags
+        triggeredMethodName: Add
+        methodSignature: Add(string)
+        parameterTypes:
+        - string
+        parameterValues:
+        - HENDRIK_CHIEF_SAVED
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036568
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1254
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1255
+          attachedIds: f1030000
+          ownerId: 1254
+          connectionType: 1
+        - id: 1256
+          attachedIds: 
+          ownerId: 1254
+          connectionType: 8
+        - id: 1257
+          attachedIds: 
+          ownerId: 1254
+          connectionType: 5
+        - id: 1258
+          attachedIds: 
+          ownerId: 1254
+          connectionType: 9
+        - id: 1259
+          attachedIds: 
+          ownerId: 1254
+          connectionType: 9
+        outputs:
+        - id: 1260
+          attachedIds: 
+          ownerId: 1254
+          connectionType: 9
+        - id: 1261
+          attachedIds: cb040000
+          ownerId: 1254
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2449.4626
+        yPosition: 2767.3003
+        triggeredClassName: QuestService
+        triggeredMethodName: AddEntry
+        methodSignature: AddEntry(int,string)
+        parameterTypes:
+        - int
+        - string
+        parameterValues:
+        - 0
+        - HENDRIK_CHIEF_SAVED
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 8189697321039036569
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Who are you? I'm looking for Hendrik.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036570
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Hey, yes, yes, that's me.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036571
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Do you have key to cell? It's closed.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036572
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'We knew that you will come here. '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036573
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: My scouts saw you on the mountain pass. I should kill you for killing
+          my people.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036574
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Kill him!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036575
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you for help. Just open cell and I will get back to village.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697321039036576
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Come to my house in Satbury, I will reward you.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &9132809898856722766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: Translation Library
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 21
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Player
+    - id: 1
+      language: en
+      text: Who are you? I'm looking for Hendrik.
+    - id: 2
+      language: en
+      text: Hendrik
+    - id: 3
+      language: en
+      text: Hey, yes, yes, that's me.
+    - id: 4
+      language: en
+      text: Do you have key to cell? It's closed.
+    - id: 5
+      language: en
+      text: Bandit chief
+    - id: 6
+      language: en
+      text: 'We knew that you will come here. '
+    - id: 7
+      language: en
+      text: My scouts saw you in pass. I have an offer for you.
+    - id: 8
+      language: en
+      text: 'My scouts saw you in pass. I have an offer for you. '
+    - id: 9
+      language: en
+      text: My scouts saw you on the mountain pass. I should kill you for killing
+        my people.
+    - id: 10
+      language: en
+      text: But...
+    - id: 11
+      language: en
+      text: Give me the key or I'll kill you like I killed your people.
+    - id: 12
+      language: en
+      text: But what?
+    - id: 13
+      language: en
+      text: 'Easy, believe me, working for me will pay off for you. '
+    - id: 14
+      language: en
+      text: But I have proposition for you. Leave Hendrik here and take this 1000
+        lunars.
+    - id: 15
+      language: en
+      text: Easy, believe me, working for me will pay off for you. Just take lunars,
+        and go out from
+    - id: 16
+      language: en
+      text: Never, I am here to rescue him.
+    - id: 17
+      language: en
+      text: Okay, give me money and I will leave.
+    - id: 18
+      language: en
+      text: Kill him!
+    - id: 19
+      language: en
+      text: Thank you for help. Just open cell and I will get back to village.
+    - id: 20
+      language: en
+      text: Come to my house in Satbury, I will reward you.

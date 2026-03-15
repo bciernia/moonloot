@@ -24,6 +24,8 @@ public class TaskTableInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
+        if (PauseManager.Instance.pauseRequests > 0) return;
+
         QuestTableManager.Instance.PrepareQuestTable(QuestList);
     }
 

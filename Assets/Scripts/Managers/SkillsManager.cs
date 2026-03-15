@@ -34,6 +34,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private RangeIndicator _currentIndicator;
     private int _aimingSkillIndex = -1;
+    [SerializeField] private int slotCount = 2;
 
     private PlayerInput _playerInput;
     private PlayerSkillProgress _skillProgress;
@@ -67,6 +68,11 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         {
             if (entry.skill != null)
                 GetRuntime(entry.skill);
+        }
+        
+        while (skills.Count < slotCount)
+        {
+            skills.Add(new SkillEntry());
         }
 
         RefreshSlotUI();
@@ -234,7 +240,10 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     private void RefreshSingleSlot(int index, Image image)
     {
         if (index >= skills.Count)
+        {
+            image.gameObject.SetActive(false);
             return;
+        }
 
         var entry = skills[index];
 

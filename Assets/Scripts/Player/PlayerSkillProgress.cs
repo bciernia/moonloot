@@ -24,10 +24,13 @@ public class PlayerSkillProgress : MonoBehaviour, ISaveable
         return unlockedSkills.Contains(skill);
     }
 
-    public void UnlockSkill(Skill skill)
+    private void UnlockSkill(Skill skill)
     {
         if (!unlockedSkills.Contains(skill))
+        {
             unlockedSkills.Add(skill);
+        }
+
 
         OnSkillsChanged?.Invoke();
     }

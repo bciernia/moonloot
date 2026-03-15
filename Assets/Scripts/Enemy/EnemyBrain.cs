@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
@@ -21,16 +25,25 @@ public class EnemyBrain : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
+        if (Application.isPlaying)
+            return;
+
+        if (PrefabUtility.IsPartOfPrefabAsset(this))
+            return;
+
         if (string.IsNullOrEmpty(enemyID))
         {
             enemyID = Guid.NewGuid().ToString();
-            UnityEditor.EditorUtility.SetDirty(this);
+            EditorUtility.SetDirty(this);
+            EditorSceneManager.MarkSceneDirty(gameObject.scene);
         }
     }
-#endif    
+#endif
     
     private void Awake()
     {
+        Debug.Log($"{name} scene: {gameObject.scene.name} id:{enemyID}");
+        
         _enemyStatistics = GetComponent<EnemyStatistics>();
         AttackCooldown = 0f;
     }

@@ -3,11 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    private const string DEMO_START_SCENE = "Town";
     private const string MAIN_MENU = "MainMenu";
     
     public void StartGame()
     {
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        LoadingSceneManager.Instance.LoadScene(DEMO_START_SCENE);
     }
 
     public void StartArena()
