@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-2231371493141665083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 2
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Hendrik
+    - id: 1
+      language: en
+      text: Thank you for help.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Hendrik Village Chief
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-15@15:51:55
+  editTime: 2026-03-15@15:52:00
+  nodes:
+  - rid: 8189697316729127934
+  - rid: 8189697316729127935
+  - rid: 8189697321039036416
+  translationLibrary: {fileID: -2231371493141665083}
+  maxID: 8
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697316729127934
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -4932.198
+        yPosition: -1445.6937
+        entryPointName: 
+    - rid: 8189697316729127935
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 08000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -4584.231
+        yPosition: -1430.915
+        items:
+        - rid: 8189697321039036417
+        characterName: Hendrik
+        icon: 
+    - rid: 8189697321039036416
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 8
+          attachedIds: 06000000
+          ownerId: 7
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -4057.934
+        yPosition: -1320.2361
+        exitPointName: 
+    - rid: 8189697321039036417
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you for help.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

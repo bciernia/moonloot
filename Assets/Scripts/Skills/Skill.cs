@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Skill : ScriptableObject
+public class Skill : IdentifiableSO
 {
     public string Name;
     [TextArea] public string Description;

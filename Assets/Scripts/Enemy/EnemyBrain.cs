@@ -1,9 +1,15 @@
-﻿using System.Linq;
-using TMPro;
+﻿using System;
+using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+using UnityEditor.SceneManagement;
+#endif
 using UnityEngine;
 
 public class EnemyBrain : MonoBehaviour
 {
+    [SerializeField] private string enemyID;
+    
     [SerializeField] private string initState;
     [SerializeField] public FSMState[] states ;
 
@@ -15,18 +21,44 @@ public class EnemyBrain : MonoBehaviour
     public float AttackCooldown { get; private set; }
 
     private readonly string EnemyLayerMaskAndTagName = "Enemy";
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (Application.isPlaying)
+            return;
+
+        if (PrefabUtility.IsPartOfPrefabAsset(this))
+            return;
+
+        if (string.IsNullOrEmpty(enemyID))
+        {
+            enemyID = Guid.NewGuid().ToString();
+            EditorUtility.SetDirty(this);
+            EditorSceneManager.MarkSceneDirty(gameObject.scene);
+        }
+    }
+#endif
     
     private void Awake()
     {
+        Debug.Log($"{name} scene: {gameObject.scene.name} id:{enemyID}");
+        
         _enemyStatistics = GetComponent<EnemyStatistics>();
         AttackCooldown = 0f;
     }
 
     private void Start()
     {
+        if (EnemyStateManager.Instance != null &&
+            EnemyStateManager.Instance.IsEnemyDead(enemyID))
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         ChangeState(initState);
     }
-
     private void Update()
     {
         CurrentState?.UpdateState(this);
@@ -126,4 +158,6 @@ public class EnemyBrain : MonoBehaviour
             _isRegisteredInCombat = false;
         }
     }
+
+    public string EnemyID => enemyID;
 }

@@ -98,8 +98,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
-        
-        if (!_isRooted)
+
+        if (!_isRooted && damageSourceTransform != null)
         {
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);
         }
@@ -107,14 +107,14 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
-            _enemySounds.Die();
+            _enemySounds?.Die();
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
 
             _enemyBrain.enabled = false;
             // _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
-            
+            EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
             StartCoroutine(HandleDeathAnimation());

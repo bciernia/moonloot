@@ -20,7 +20,7 @@ public class QuestJournal : MonoBehaviour, ISaveable
         newQuestStatus.AddQuestEntry(initEntry);
     }
     
-    private bool IsQuestInQuestList(QuestSO quest) => GetQuestStatus(quest) != null;
+    private bool IsQuestInQuestList(QuestSO quest) => GetQuestStatus(quest.Id) != null;
 
     public IEnumerable<QuestStatus> GetQuestStatuses() => _questStatuses;
 
@@ -68,15 +68,16 @@ public class QuestJournal : MonoBehaviour, ISaveable
     [CanBeNull]
     private QuestStatus GetQuestStatus(QuestSO quest)
     {
-        foreach (var status in _questStatuses)
-        {
-            if (status.GetQuest() == quest) return status;
-        }
-
-        return null;
+        return GetQuestStatus(quest.Id);
     }
     
-    public bool HasPlayerQuest(QuestSO quest) => _questStatuses.Any(status => status.GetQuest().GetQuestTitle() == quest.GetQuestTitle());
+    [CanBeNull]
+    private QuestStatus GetQuestStatus(string questId)
+    {
+        return _questStatuses.FirstOrDefault(status => status._questID == questId);
+    }
+    
+    public bool HasPlayerQuest(QuestSO quest) => _questStatuses.Any(status => status._questID == quest.Id);
 
     public bool IsQuestEntryInJournal(QuestSO quest, string entryKey)
     {
@@ -88,21 +89,54 @@ public class QuestJournal : MonoBehaviour, ISaveable
         return questStatus.HasQuestEntry(questEntry);
     }
 
-    public bool IsQuestCompleted(QuestSO quest)
+    public bool IsQuestCompleted(QuestSO quest) => IsQuestCompleted(quest.Id);
+    
+    public bool IsQuestCompleted(string questId)
     {
-        var questStatus = GetQuestStatus(quest);
+        var questStatus = GetQuestStatus(questId);
         
-        return questStatus != null && GetQuestStatus(quest)!.IsQuestCompleted;
+        return questStatus != null && questStatus.IsQuestCompleted;
     }
 
     public void Save()
     {
-        ES3.Save("player_quest_statuses", _questStatuses);
+        var saveData = new List<QuestSaveData>();
+
+        foreach (var questStatus in _questStatuses)
+        {
+            saveData.Add(new QuestSaveData
+            {
+                questID = questStatus._questID,
+                entries = questStatus.GetQuestEntries,
+                completed = questStatus.IsQuestCompleted
+            });
+        }
+        
+        ES3.Save("player_quest_statuses", saveData);
     }
 
     public void Load()
     {
-        _questStatuses = ES3.Load("player_quest_statuses", _questStatuses);
+        if (!ES3.KeyExists("player_quest_statuses")) return;
+
+        var saveData = ES3.Load<List<QuestSaveData>>("player_quest_statuses");
+
+        _questStatuses.Clear();
+
+        foreach (var questSaveData in saveData)
+        {
+            var quest = QuestDatabase.Get(questSaveData.questID);
+
+            var questStatus = new QuestStatus(quest);
+
+            foreach (var entry in questSaveData.entries)
+                questStatus.AddQuestEntry(entry);
+            
+            if(questSaveData.completed) questStatus.FinishQuest();
+            
+            _questStatuses.Add(questStatus);
+        }
+
         onUpdate?.Invoke();
     }
 }

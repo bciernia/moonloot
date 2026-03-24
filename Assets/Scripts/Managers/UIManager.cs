@@ -242,7 +242,7 @@ public class UIManager : MonoBehaviour
             
             panel.SetActive(false);
 
-            if (panel == _gameMenu)
+            if (panel == _gameMenu || panel == _taskTablePanel)
                 PauseManager.Instance.ReleasePause();
 
             if (panel == _optionsPanel)

@@ -32,7 +32,10 @@ public class QuestJournalManager : Singleton<QuestJournalManager>
     {
         QuestStatus = questStatus;
 
-        JournalContainer.DetachChildren();
+        foreach (Transform child in JournalContainer)
+        {
+            Destroy(child.gameObject);
+        }
 
         foreach (var entry in questStatus.GetQuestEntries)
         {

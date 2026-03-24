@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -178,6 +179,7 @@ public class SoundManager : Singleton<SoundManager>
         if (soundFloor != null) _map = soundFloor.GetComponent<Tilemap>();
     }
 
+    [CanBeNull]
     public AudioClip GetCurrentFloorClip(Vector2 worldPosition)
     {
         if (_map == null) return null;
@@ -186,7 +188,7 @@ public class SoundManager : Singleton<SoundManager>
         var tile = _map.GetTile(gridPosition);
 
         var index = Random.Range(0, _dataFromTile[tile].Clips.Length);
-        var currentFloorClip = _dataFromTile[tile].Clips[index];
+        var currentFloorClip = _dataFromTile[tile]?.Clips[index];
 
         return currentFloorClip;
     }

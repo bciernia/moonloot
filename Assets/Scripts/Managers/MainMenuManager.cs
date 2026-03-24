@@ -3,11 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
+    private const string DEMO_START_SCENE = "Town";
     private const string MAIN_MENU = "MainMenu";
     
     public void StartGame()
     {
-        SceneManager.LoadScene("Town", LoadSceneMode.Single);
+        LoadingSceneManager.Instance.LoadScene(DEMO_START_SCENE);
     }
 
     public void StartArena()
@@ -43,6 +44,13 @@ public class MainMenuManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        GameManager.Instance.SetMode(scene.name == MAIN_MENU ? GameMode.MainMenu : GameMode.Location);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.SetMode(scene.name == MAIN_MENU ? GameMode.MainMenu : GameMode.Location);
+        }
+        else
+        {
+            MainMenuSoundManager.Instance.PlayMainMenuMusic();
+        }
     }
 }

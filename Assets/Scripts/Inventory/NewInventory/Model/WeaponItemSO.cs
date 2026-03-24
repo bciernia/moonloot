@@ -45,6 +45,12 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
         {
             description += $"Required mana: {ProjectilePrefab.ProjectileSo.ManaCost} \n";
         }
+
+        if (Effect != null)
+        {
+            description += $"\nAttack effect: {Effect.Name} \n{Effect.Description}\n";
+            description += $"Chance for effect: {EffectChance} \n";
+        }
         
         return description;
     }

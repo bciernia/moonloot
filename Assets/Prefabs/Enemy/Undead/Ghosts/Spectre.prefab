@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1719086049
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: -8315989299379633255, guid: b33ebab09bc53a241a2f02f877f65b76, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 765154081351103428, guid: 4145c96e77e9e7544932eb7f03655527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -270,7 +270,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1719086049
-  m_SortingLayer: 5
+  m_SortingLayer: 7
   m_SortingOrder: 5
   m_Sprite: {fileID: 8905037592823372644, guid: 946e56515fe6ab24fac097c26b4a8825, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279a45c88b904f38b2191228ea75e162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyID: 
   initState: Wander
   states:
   - ID: Wander
@@ -507,6 +508,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: ef03e180cdaaf4e4aaff0d3e557f90ae, type: 2}
   CharacterType: 1
+  _isRooted: 0
+  _isConfused: 0
 --- !u!114 &5498566439200998105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,6 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectorSprite: {fileID: 1177222618921255456}
+  hpCanvas: {fileID: 0}
 --- !u!114 &2930931354080921041
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,33 +623,27 @@ MonoBehaviour:
   _expDrop: 50
   _dropItems:
   - Name: Health Potion
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 3
     DropChance: 100
   - Name: Health Potion - 50%
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 7
     DropChance: 50
   - Name: Key
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 1
     DropChance: 33
   - Name: Spear
-    Item:
-      quantity: 0
-      item: {fileID: 0}
-      itemState: []
+    ItemToDrop: {fileID: 0}
     Quantity: 1
     DropChance: 12
+  dropRadius: 1
+  minDistanceBetweenDrops: 0.3
+  maxAttempts: 10
+  dropItemMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6977176301354124048
 MonoBehaviour:
   m_ObjectHideFlags: 0

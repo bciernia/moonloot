@@ -46,6 +46,8 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     
     public void Interact()
     {
+        if (PauseManager.Instance.pauseRequests > 0) return;
+        
         ShopManager.Instance.InitializeShop(chestLoot, "Chest", InventoryType.Chest);
     }
 
@@ -56,7 +58,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
 
     public void Save()
     {
-        ES3.Save($"chest_{chestId}", ChestLoot);
+        ES3.Save($"chest_{chestId}", chestLoot);
     }
 
     public void Load()

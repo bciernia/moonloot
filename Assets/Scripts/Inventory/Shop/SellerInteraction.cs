@@ -48,6 +48,8 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     
     public void Interact()
     {
+        if (PauseManager.Instance.pauseRequests > 0) return;
+        
         ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, InventoryType.Shop);
     }
 

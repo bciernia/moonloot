@@ -94,7 +94,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 5
   m_Sprite: {fileID: 8274571015283779076, guid: 5340a097bd401784c92d888d82a0aad8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -204,6 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 279a45c88b904f38b2191228ea75e162, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyID: 
   initState: Wander
   states:
   - ID: Wander
@@ -318,6 +319,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: c9bdfa8c27eaddc4eb6141deb9f93509, type: 2}
   CharacterType: 1
+  _isRooted: 0
+  _isConfused: 0
 --- !u!114 &2643764006718510344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -856,7 +859,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 569395403
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 765154081351103428, guid: 4145c96e77e9e7544932eb7f03655527, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
