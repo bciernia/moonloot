@@ -36,7 +36,7 @@ public class InteractionManager : MonoBehaviour
     
     private void Interact()
     {
-        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+        if (GameManager.Instance.CurrentMode == GameMode.MainMenu || CombatManager.Instance.IsPlayerInCombat)
             return;
 
         _currentInteractable?.Interact();
@@ -76,7 +76,7 @@ public class InteractionManager : MonoBehaviour
     {
         RemoveNulls();
 
-        if (_nearbyInteractables.Count == 0)
+        if (_nearbyInteractables.Count == 0 || CombatManager.Instance.IsPlayerInCombat)
         {
             ClearInteractable();
             return;
@@ -110,7 +110,7 @@ public class InteractionManager : MonoBehaviour
     private void SetInteractable(IInteractable interactable)
     {
         _currentInteractable = interactable;
-
+        
         if (interactable != null)
         {
             _interactionBox.SetActive(true);
