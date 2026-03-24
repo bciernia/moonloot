@@ -147,7 +147,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private void OnSkillStarted(int index)
     {
-        if (index < 0 || index >= skills.Count)
+        if (index < 0 || index >= skills.Count || GameManager.Instance.CurrentMode == GameMode.WorldMap)
             return;
 
         var entry = skills[index];
