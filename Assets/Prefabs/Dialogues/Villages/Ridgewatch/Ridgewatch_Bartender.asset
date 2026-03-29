@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7078231059445589931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Villager
+    - id: 1
+      language: en
+      text: We have best bows in whole Lunaris!
+    - id: 2
+      language: en
+      text: If you need information about the monsters for tonight, visit the scouts.
+    - id: 3
+      language: en
+      text: Bartender
+    - id: 4
+      language: en
+      text: Nice to meet you!
+    - id: 5
+      language: en
+      text: Need a bow? Buy one in Ridgewatch!
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Ridgewatch_Bartender
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-29@08:12:49
+  editTime: 2026-03-29@08:29:53
+  nodes:
+  - rid: 8189697630906089512
+  - rid: 8189697630906089513
+  - rid: 8189697630906089514
+  - rid: 8189697630906089515
+  translationLibrary: {fileID: -7078231059445589931}
+  maxID: 29
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697630906089512
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 269.09537
+        yPosition: 220.32277
+        entryPointName: 
+    - rid: 8189697630906089513
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 09000000
+          ownerId: 4
+          connectionType: 1
+        - id: 7
+          attachedIds: 17000000
+          ownerId: 4
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: 546.7922
+        yPosition: 193.13216
+        items:
+        - rid: 8189697630906089516
+        - rid: 8189697630906089517
+    - rid: 8189697630906089514
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 9
+          attachedIds: 06000000
+          ownerId: 8
+          connectionType: 1
+        outputs:
+        - id: 10
+          attachedIds: 
+          ownerId: 8
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 945.058
+        yPosition: 48.569946
+        items:
+        - rid: 8189697630906089518
+        characterName: Bartender
+        icon: 
+    - rid: 8189697630906089515
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 22
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 23
+          attachedIds: 07000000
+          ownerId: 22
+          connectionType: 1
+        outputs:
+        - id: 24
+          attachedIds: 
+          ownerId: 22
+          connectionType: 1
+        width: 268
+        height: 187
+        xPosition: 947.0581
+        yPosition: 246.58557
+        items:
+        - rid: 8189697630906089519
+        characterName: Villager
+        icon: 
+    - rid: 8189697630906089516
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089517
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089518
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Nice to meet you!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697630906089519
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Need a bow? Buy one in Ridgewatch!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

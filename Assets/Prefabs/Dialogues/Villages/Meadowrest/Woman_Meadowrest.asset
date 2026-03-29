@@ -1,0 +1,230 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Woman_Meadowrest
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-27@20:28:14
+  editTime: 2026-03-27@20:28:14
+  nodes:
+  - rid: 8189697596237807704
+  - rid: 8189697596237807705
+  - rid: 8189697596237807706
+  - rid: 8189697596237807707
+  - rid: 8189697596237807708
+  translationLibrary: {fileID: 568444197862408125}
+  maxID: 45
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697596237807704
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 642.49524
+        yPosition: 387.54733
+        entryPointName: 
+    - rid: 8189697596237807705
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 09000000
+          ownerId: 4
+          connectionType: 1
+        - id: 7
+          attachedIds: 17000000
+          ownerId: 4
+          connectionType: 1
+        - id: 28
+          attachedIds: 29000000
+          ownerId: 4
+          connectionType: 1
+        width: 160
+        height: 162
+        xPosition: 1048.5381
+        yPosition: 443.7795
+        items:
+        - rid: 8189697596237807709
+        - rid: 8189697596237807710
+        - rid: 8189697596237807711
+    - rid: 8189697596237807706
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 9
+          attachedIds: 06000000
+          ownerId: 8
+          connectionType: 1
+        outputs:
+        - id: 10
+          attachedIds: 
+          ownerId: 8
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1277.0292
+        yPosition: 297.08627
+        items:
+        - rid: 8189697596237807712
+        characterName: Woman
+        icon: 
+    - rid: 8189697596237807707
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 22
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 23
+          attachedIds: 07000000
+          ownerId: 22
+          connectionType: 1
+        outputs:
+        - id: 24
+          attachedIds: 
+          ownerId: 22
+          connectionType: 1
+        width: 268
+        height: 246.25
+        xPosition: 1378.79
+        yPosition: 478.44965
+        items:
+        - rid: 8189697596237807713
+        - rid: 8189697596237807714
+        - rid: 8189697596237807715
+        characterName: Woman
+        icon: 
+    - rid: 8189697596237807708
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 40
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 41
+          attachedIds: 1c000000
+          ownerId: 40
+          connectionType: 1
+        outputs:
+        - id: 42
+          attachedIds: 
+          ownerId: 40
+          connectionType: 1
+        width: 268
+        height: 175.9375
+        xPosition: 1400.5209
+        yPosition: 771.39215
+        items:
+        - rid: 8189697596237807716
+        characterName: Woman
+        icon: 
+    - rid: 8189697596237807709
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697596237807710
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697596237807711
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697596237807712
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I hope you will help us.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697596237807713
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: My husband also defended the villages from the fall of the deities.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697596237807714
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I miss him so much...
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697596237807715
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: ... but oh well... every hero comes to an end sometime.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697596237807716
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It's a beautiful day to face death.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &568444197862408125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Woman
+    - id: 1
+      language: en
+      text: I hope you will help us.
+    - id: 2
+      language: en
+      text: My husband also defended the villages from the fall of the deities.
+    - id: 3
+      language: en
+      text: I miss him so much...
+    - id: 4
+      language: en
+      text: ... but oh well... every hero comes to an end sometime.
+    - id: 5
+      language: en
+      text: It's a beautiful day to face death.

@@ -1,0 +1,176 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Ironvale_Bartender
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-27@21:12:48
+  editTime: 2026-03-29@11:35:56
+  nodes:
+  - rid: 8189697630906089706
+  - rid: 8189697630906089707
+  - rid: 8189697630906089708
+  - rid: 8189697630906089709
+  translationLibrary: {fileID: 1519199882214599717}
+  maxID: 1001
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697630906089706
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 5
+          attachedIds: 07000000
+          ownerId: 4
+          connectionType: 1
+        width: 278.74988
+        height: 75
+        xPosition: 1259.1837
+        yPosition: 582.3879
+        entryPointName: 
+    - rid: 8189697630906089707
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 6
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 7
+          attachedIds: 05000000
+          ownerId: 6
+          connectionType: 1
+        outputs:
+        - id: 8
+          attachedIds: 0b000000
+          ownerId: 6
+          connectionType: 1
+        - id: 9
+          attachedIds: 19000000
+          ownerId: 6
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: 1736.4341
+        yPosition: 608.88043
+        items:
+        - rid: 8189697630906089710
+        - rid: 8189697630906089711
+    - rid: 8189697630906089708
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 10
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 11
+          attachedIds: 08000000
+          ownerId: 10
+          connectionType: 1
+        outputs:
+        - id: 12
+          attachedIds: 
+          ownerId: 10
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2068.6838
+        yPosition: 553.88043
+        items:
+        - rid: 8189697630906089712
+        characterName: Bartender
+        icon: 
+    - rid: 8189697630906089709
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 24
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 25
+          attachedIds: 09000000
+          ownerId: 24
+          connectionType: 1
+        outputs:
+        - id: 26
+          attachedIds: 
+          ownerId: 24
+          connectionType: 1
+        width: 268
+        height: 283.74994
+        xPosition: 2073.934
+        yPosition: 764.13043
+        items:
+        - rid: 8189697630906089713
+        characterName: Bartender
+        icon: 
+    - rid: 8189697630906089710
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089711
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089712
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: This is Ironvale. Need armor? Weapon? Go and buy it!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697630906089713
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Welcome to my inn! It's demo so I don't have to much things... acctually
+          I dont have any item.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &1519199882214599717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Man
+    - id: 1
+      language: en
+      text: It's good to see you.
+    - id: 2
+      language: en
+      text: Protect us from evil.
+    - id: 3
+      language: en
+      text: Bartender
+    - id: 4
+      language: en
+      text: This is Ironvale. Need armor? Weapon? Go and buy it!
+    - id: 5
+      language: en
+      text: Welcome to my inn! It's demo so I don't have to much things... acctually
+        I dont have any item.

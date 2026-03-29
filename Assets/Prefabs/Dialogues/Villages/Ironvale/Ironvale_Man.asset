@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Ironvale_Man
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-27@21:16:39
+  editTime: 2026-03-27@21:16:39
+  nodes:
+  - rid: 8189697596237807763
+  - rid: 8189697596237807764
+  - rid: 8189697596237807765
+  - rid: 8189697596237807766
+  translationLibrary: {fileID: 713729892397106220}
+  maxID: 1027
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697596237807763
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1002
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1003
+          attachedIds: f0030000
+          ownerId: 1002
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 507.90173
+        yPosition: 264.5384
+        entryPointName: 
+    - rid: 8189697596237807764
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1004
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1005
+          attachedIds: f1030000
+          ownerId: 1004
+          connectionType: 1
+        outputs:
+        - id: 1006
+          attachedIds: 
+          ownerId: 1004
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1036.9016
+        yPosition: 100.038376
+        items:
+        - rid: 8189697596237807767
+        characterName: Man
+        icon: 
+    - rid: 8189697596237807765
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1007
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 1008
+          attachedIds: eb030000
+          ownerId: 1007
+          connectionType: 1
+        outputs:
+        - id: 1009
+          attachedIds: ed030000
+          ownerId: 1007
+          connectionType: 1
+        - id: 1010
+          attachedIds: ff030000
+          ownerId: 1007
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: 714.9017
+        yPosition: 220.23837
+        items:
+        - rid: 8189697596237807768
+        - rid: 8189697596237807769
+    - rid: 8189697596237807766
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1022
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1023
+          attachedIds: f2030000
+          ownerId: 1022
+          connectionType: 1
+        outputs:
+        - id: 1024
+          attachedIds: 
+          ownerId: 1022
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1041.3016
+        yPosition: 314.83838
+        items:
+        - rid: 8189697596237807770
+        characterName: Man
+        icon: 
+    - rid: 8189697596237807767
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You are very brave.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697596237807768
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697596237807769
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697596237807770
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Don't expect too much. This is demo version.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &713729892397106220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Man
+    - id: 1
+      language: en
+      text: You are very brave.
+    - id: 2
+      language: en
+      text: Don't expect too much. This is demo version.
