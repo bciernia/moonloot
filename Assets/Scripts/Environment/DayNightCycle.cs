@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -9,7 +9,11 @@ public class DayNightCycle : MonoBehaviour
     public Light2D globalLight;
 
     [Header("Cycle Settings")]
-    public float dayDuration = 60f;
+    public float dayDuration = 600f; // 10 minut
+
+    [Header("Time Thresholds (seconds)")]
+    public float eveningStart = 480f; // 8 min
+    public float nightStart = 570f;   // 9 min 30 sec
 
     [Header("Colors")]
     public Color dayColor = Color.white;
@@ -19,23 +23,29 @@ public class DayNightCycle : MonoBehaviour
     [Header("Local Lights")]
     public float nightLightIntensity = 2f;
     public float dayLightIntensity = 0f;
-    
-    [Header("Performance")]
-    public float updateInterval = 0.1f;
-    
+
+    public Action OnEveningStarted;
+    public Action OnNightStarted;
+    public Action HordeAttack;
+
     private float timer;
     private readonly List<Light2D> lights = new List<Light2D>();
-    
+
+    [SerializeField] private bool isEvening = false;
     [SerializeField] private bool isNight = false;
+    [SerializeField] private bool hordeStarted = false;
+
+    private void Awake()
+    {
+        AssignLights();
+        ApplyInitialLighting();
+    }
 
     private void OnEnable()
     {
 #pragma warning disable UDR0005
         SceneManager.sceneLoaded += OnSceneLoaded;
 #pragma warning restore UDR0005
-        AssignLights();
-        InitializeLightsState();
-        StartCoroutine(CycleRoutine());
     }
 
     private void OnDisable()
@@ -46,6 +56,100 @@ public class DayNightCycle : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AssignLights();
+        ApplyInitialLighting();
+    }
+
+    private void Update()
+    {
+        UpdateLighting();
+    }
+
+    private void UpdateLighting()
+    {
+        if (globalLight == null) return;
+
+        timer += Time.deltaTime;
+
+        // clamp czasu
+        if (timer > dayDuration)
+            timer = dayDuration;
+
+        Color targetColor;
+
+        Debug.Log(timer);
+
+        // DZIEŃ
+        if (timer < eveningStart)
+        {
+            float t = timer / eveningStart;
+            targetColor = Color.Lerp(dayColor, eveningColor, t);
+        }
+        // WIECZÓR
+        else if (timer < nightStart)
+        {
+            float t = (timer - eveningStart) / (nightStart - eveningStart);
+            targetColor = Color.Lerp(eveningColor, nightColor, t);
+
+            if (!isEvening)
+            {
+                isEvening = true;
+                Debug.Log("EVENING STARTED");
+                OnEveningStarted?.Invoke();
+            }
+        }
+        // NOC
+        else
+        {
+            targetColor = nightColor;
+
+            if (!isNight)
+            {
+                isNight = true;
+
+                Debug.Log("NIGHT STARTED");
+                OnNightStarted?.Invoke();
+
+                SetLights(nightLightIntensity);
+            }
+        }
+
+        // HORDA (koniec dnia)
+        if (timer >= dayDuration && !hordeStarted)
+        {
+            hordeStarted = true;
+
+            Debug.Log("HORDE ATTACK STARTED");
+            HordeAttack?.Invoke();
+        }
+
+        globalLight.color = targetColor;
+    }
+
+    private void ApplyInitialLighting()
+    {
+        if (globalLight == null) return;
+
+        Color targetColor;
+
+        if (timer < eveningStart)
+        {
+            float t = timer / eveningStart;
+            targetColor = Color.Lerp(dayColor, eveningColor, t);
+        }
+        else if (timer < nightStart)
+        {
+            float t = (timer - eveningStart) / (nightStart - eveningStart);
+            targetColor = Color.Lerp(eveningColor, nightColor, t);
+            isEvening = true;
+        }
+        else
+        {
+            targetColor = nightColor;
+            isNight = true;
+            SetLights(nightLightIntensity);
+        }
+
+        globalLight.color = targetColor;
     }
 
     private void AssignLights()
@@ -64,82 +168,13 @@ public class DayNightCycle : MonoBehaviour
             if (globalLight == null)
                 Debug.LogWarning("No Global Light2D found in the scene!");
         }
-        
+
         lights.Clear();
         foreach (var obj in GameObject.FindGameObjectsWithTag("Light"))
         {
             var sceneLight = obj.GetComponent<Light2D>();
             if (sceneLight != null && sceneLight.lightType != Light2D.LightType.Global)
                 lights.Add(sceneLight);
-        }
-    }
-    
-    private IEnumerator CycleRoutine()
-    {
-        while (true)
-        {
-            UpdateLighting();
-            yield return new WaitForSeconds(updateInterval);
-        }
-    }
-
-    private void UpdateLighting()
-    {
-        if (globalLight == null) return;
-
-        timer += Time.deltaTime;
-        var t = (timer % dayDuration) / dayDuration;
-
-        Color targetColor;
-
-        if (t < 0.4f)
-        {
-            var lerpT = t / 0.4f;
-            targetColor = Color.Lerp(dayColor, eveningColor, lerpT);
-        }
-        else if (t < 0.6f)
-        {
-            var lerpT = (t - 0.4f) / 0.2f;
-            targetColor = Color.Lerp(eveningColor, nightColor, lerpT);
-        }
-        else
-        {
-            var lerpT = (t - 0.6f) / 0.4f;
-            targetColor = Color.Lerp(nightColor, dayColor, lerpT);
-        }
-
-        globalLight.color = targetColor;
-
-        var nowNight = (t >= 0.55f && t < 0.9f);
-
-        if (nowNight && !isNight)
-        {
-            SetLights(nightLightIntensity);
-            isNight = true;
-        }
-        else if (!nowNight && isNight)
-        {
-            SetLights(dayLightIntensity);
-            isNight = false;
-        }
-    }
-    
-    private void InitializeLightsState()
-    {
-        if (globalLight == null) return;
-
-        var t = (timer % dayDuration) / dayDuration;
-        var nowNight = (t >= 0.55f && t < 0.9f);
-
-        if (nowNight)
-        {
-            SetLights(nightLightIntensity);
-            isNight = true;
-        }
-        else
-        {
-            SetLights(dayLightIntensity);
-            isNight = false;
         }
     }
 
@@ -150,5 +185,22 @@ public class DayNightCycle : MonoBehaviour
             if (light != null)
                 light.intensity = intensity;
         }
+    }
+
+    public void ResetCycle()
+    {
+        timer = 0f;
+        isEvening = false;
+        isNight = false;
+        hordeStarted = false;
+
+        SetLights(dayLightIntensity);
+
+        Debug.Log("NEW DAY STARTED");
+    }
+
+    public float GetTimeNormalized()
+    {
+        return timer / dayDuration;
     }
 }

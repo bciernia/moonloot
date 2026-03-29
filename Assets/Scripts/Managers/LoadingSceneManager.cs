@@ -72,4 +72,23 @@ public class LoadingSceneManager : MonoBehaviour
     {
         progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, loadedValue, lerpSpeed * Time.deltaTime);
     }
+
+    private void OnEnable()
+    {
+        var cycle = FindObjectOfType<DayNightCycle>();
+        if (cycle != null)
+            cycle.OnNightStarted += HandleNightStarted;
+    }
+
+    private void OnDisable()
+    {
+        var cycle = FindObjectOfType<DayNightCycle>();
+        if (cycle != null)
+            cycle.OnNightStarted -= HandleNightStarted;
+    }
+    
+    private void HandleNightStarted()
+    {
+        LoadScene("Forest");        
+    }
 }
