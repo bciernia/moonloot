@@ -1,0 +1,165 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5398131994125650020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Scout
+    - id: 1
+      language: en
+      text: I saw many monsters with big axes and swords.
+    - id: 2
+      language: en
+      text: They are using magic! Keep that in mind.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Ridgewatch_Scout
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-29@08:29:04
+  editTime: 2026-03-29@08:29:04
+  nodes:
+  - rid: 8189697630906089488
+  - rid: 8189697630906089489
+  - rid: 8189697630906089490
+  - rid: 8189697630906089491
+  translationLibrary: {fileID: -5398131994125650020}
+  maxID: 27
+  references:
+    version: 2
+    RefIds:
+    - rid: 8189697630906089488
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 655.8247
+        yPosition: 150.13718
+        entryPointName: 
+    - rid: 8189697630906089489
+      type: {class: RandomNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: RAND
+        nodeType: 18
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 09000000
+          ownerId: 4
+          connectionType: 1
+        - id: 7
+          attachedIds: 17000000
+          ownerId: 4
+          connectionType: 1
+        width: 160
+        height: 130
+        xPosition: 907.38715
+        yPosition: 138.26218
+        items:
+        - rid: 8189697630906089492
+        - rid: 8189697630906089493
+    - rid: 8189697630906089490
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 8
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 9
+          attachedIds: 06000000
+          ownerId: 8
+          connectionType: 1
+        outputs:
+        - id: 10
+          attachedIds: 
+          ownerId: 8
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1195.5747
+        yPosition: 103.57468
+        items:
+        - rid: 8189697630906089494
+        characterName: Scout
+        icon: 
+    - rid: 8189697630906089491
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 22
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 23
+          attachedIds: 07000000
+          ownerId: 22
+          connectionType: 1
+        outputs:
+        - id: 24
+          attachedIds: 
+          ownerId: 22
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1203.0122
+        yPosition: 293.88718
+        items:
+        - rid: 8189697630906089495
+        characterName: Scout
+        icon: 
+    - rid: 8189697630906089492
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089493
+      type: {class: RandomItem, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data: 
+    - rid: 8189697630906089494
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I saw many monsters with big axes and swords.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 8189697630906089495
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: They are using magic! Keep that in mind.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
