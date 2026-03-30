@@ -23,7 +23,8 @@ public class DayNightCycle : MonoBehaviour
     [Header("Local Lights")]
     public float nightLightIntensity = 2f;
     public float dayLightIntensity = 0f;
-
+    
+    public Action OnDayStarted;
     public Action OnEveningStarted;
     public Action OnNightStarted;
     public Action HordeAttack;
@@ -70,7 +71,6 @@ public class DayNightCycle : MonoBehaviour
 
         timer += Time.deltaTime;
 
-        // clamp czasu
         if (timer > dayDuration)
             timer = dayDuration;
 
@@ -93,7 +93,6 @@ public class DayNightCycle : MonoBehaviour
             if (!isEvening)
             {
                 isEvening = true;
-                Debug.Log("EVENING STARTED");
                 OnEveningStarted?.Invoke();
             }
         }
@@ -106,7 +105,6 @@ public class DayNightCycle : MonoBehaviour
             {
                 isNight = true;
 
-                Debug.Log("NIGHT STARTED");
                 OnNightStarted?.Invoke();
 
                 SetLights(nightLightIntensity);
@@ -197,6 +195,8 @@ public class DayNightCycle : MonoBehaviour
         SetLights(dayLightIntensity);
 
         Debug.Log("NEW DAY STARTED");
+
+        OnDayStarted?.Invoke();
     }
 
     public float GetTimeNormalized()

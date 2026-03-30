@@ -30,7 +30,7 @@ public class LoadingSceneManager : MonoBehaviour
         }
     }
 
-    public async void LoadScene(string sceneName)
+    public async void LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
@@ -47,7 +47,7 @@ public class LoadingSceneManager : MonoBehaviour
             timer += Time.deltaTime;
 
             loadedValue = Mathf.Clamp01(scene.progress / 0.9f);
-
+            
             if (scene.progress >= 0.9f && timer >= minDisplayTime)
             {
                 loadedValue = 1f;           
@@ -56,16 +56,32 @@ public class LoadingSceneManager : MonoBehaviour
 
             await Task.Yield();
         }
+
+        if (setPlayerInSpawnPoint)
+        {
+            SetPlayerToSpawnPoint();
+        }
+        
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
         CombatManager.Instance.ClearCombat();
 
-        if (sceneName == "Town")
-        {
-            
-        }
-        
         loadingScreen.SetActive(false);
+    }
+    
+    private void SetPlayerToSpawnPoint()
+    {
+        var spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+        var player = GameObject.FindGameObjectWithTag("Player");
+
+        if (spawnPoint != null && player != null)
+        {
+            player.transform.position = spawnPoint.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning("SpawnPoint or Player not found!");
+        }
     }
 
     private void Update()
@@ -77,18 +93,18 @@ public class LoadingSceneManager : MonoBehaviour
     {
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
-            cycle.OnNightStarted += HandleNightStarted;
+            cycle.HordeAttack += HandleNightStarted;
     }
 
     private void OnDisable()
     {
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
-            cycle.OnNightStarted -= HandleNightStarted;
+            cycle.HordeAttack -= HandleNightStarted;
     }
     
     private void HandleNightStarted()
     {
-        LoadScene("Forest");        
+        LoadScene("Forest", true);        
     }
 }
