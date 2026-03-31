@@ -65,7 +65,7 @@ public class DialogueManager : Singleton<DialogueManager>
         _player.GetComponent<PlayerAnimations>().SetIsMovingAnimation(false);
     }
 
-    private void EndDialogue()
+    public void EndDialogue()
     {
         _player.GetComponent<PlayerMovement>().enabled = true;
 

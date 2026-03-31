@@ -76,8 +76,6 @@ public class DayNightCycle : MonoBehaviour
 
         Color targetColor;
 
-        Debug.Log(timer);
-
         // DZIEŃ
         if (timer < eveningStart)
         {
@@ -195,7 +193,6 @@ public class DayNightCycle : MonoBehaviour
         SetLights(dayLightIntensity);
 
         Debug.Log("NEW DAY STARTED");
-
         OnDayStarted?.Invoke();
     }
 
@@ -203,4 +200,5 @@ public class DayNightCycle : MonoBehaviour
     {
         return timer / dayDuration;
     }
+    
 }

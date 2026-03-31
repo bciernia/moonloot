@@ -69,8 +69,6 @@ public class UIManager : MonoBehaviour
     private int _currentClockIndex = 0;
     private DayNightCycle _dayNightCycle;
     
-    
-
     private InputAction _equipmentAction;
     private InputAction _statsAction;
     private InputAction _skillsAction;
@@ -126,6 +124,7 @@ public class UIManager : MonoBehaviour
         var isLocation = mode == GameMode.Location;
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
+        _dayNightTimerImage.gameObject.SetActive(isLocation);
         CloseAllPanels();
     }
 
@@ -325,6 +324,9 @@ public class UIManager : MonoBehaviour
         if (_timeSprites.Length == 0)
             return;
 
+        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+            return;
+        
         _clockTimer += Time.deltaTime;
 
         if (!_isTransition)

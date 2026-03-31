@@ -17,6 +17,7 @@ public class EnemyStatsSO : ScriptableObject
     public float Damage;
     public float TimeBetweenAttack;
     public float Speed;
+    public bool IsElite;
     public bool IsBoss;
     
     [Header("Chasing")]

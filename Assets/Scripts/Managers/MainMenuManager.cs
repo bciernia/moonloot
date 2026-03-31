@@ -5,10 +5,12 @@ public class MainMenuManager : MonoBehaviour
 {
     private const string DEMO_START_SCENE = "Meadowrest";
     private const string MAIN_MENU = "MainMenu";
+    [SerializeField] private GameObject[] _buttonsMenu;
     
     public void StartGame()
     {
-        LoadingSceneManager.Instance.LoadScene(DEMO_START_SCENE, true);
+        LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
+        ChangeButtonsVisibility(false);
     }
 
     public void StartArena()
@@ -50,7 +52,16 @@ public class MainMenuManager : MonoBehaviour
         }
         else
         {
+            ChangeButtonsVisibility(true);
             MainMenuSoundManager.Instance.PlayMainMenuMusic();
+        }
+    }
+
+    private void ChangeButtonsVisibility(bool shouldBeVisible)
+    {
+        foreach (var btn in _buttonsMenu)
+        {
+            btn.gameObject.SetActive(shouldBeVisible);
         }
     }
 }

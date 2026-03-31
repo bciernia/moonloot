@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,7 +15,8 @@ public class LoadingSceneManager : MonoBehaviour
     [SerializeField] private float minDisplayTime = 0.5f; 
 
     private float loadedValue;       
-
+    private DayNightCycle _currentCycle;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -28,9 +28,20 @@ public class LoadingSceneManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public async void LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
+    public async void StartNewGame(string sceneName)
+    {
+        await LoadScene(sceneName, true);
+            
+        var cycle = FindObjectOfType<DayNightCycle>();
+        if (cycle != null)
+            cycle.ResetCycle();
+    }
+    
+    public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
@@ -62,10 +73,18 @@ public class LoadingSceneManager : MonoBehaviour
             SetPlayerToSpawnPoint();
         }
         
+        TryFindDayNightCycle();
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
         CombatManager.Instance.ClearCombat();
-
+        
+        if (sceneName == "MainMenu")
+        {
+            var cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.ResetCycle();
+        }
+        
         loadingScreen.SetActive(false);
     }
     
@@ -91,9 +110,7 @@ public class LoadingSceneManager : MonoBehaviour
 
     private void OnEnable()
     {
-        var cycle = FindObjectOfType<DayNightCycle>();
-        if (cycle != null)
-            cycle.HordeAttack += HandleNightStarted;
+        TryFindDayNightCycle();
     }
 
     private void OnDisable()
@@ -102,9 +119,44 @@ public class LoadingSceneManager : MonoBehaviour
         if (cycle != null)
             cycle.HordeAttack -= HandleNightStarted;
     }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        TryFindDayNightCycle();
+    }
+    
+    private void TryFindDayNightCycle()
+    {
+        var cycle = FindObjectOfType<DayNightCycle>();
+
+        if (cycle == null)
+            return;
+
+        if (_currentCycle != null)
+            _currentCycle.HordeAttack -= HandleNightStarted;
+
+        _currentCycle = cycle;
+
+        _currentCycle.HordeAttack += HandleNightStarted;
+
+        Debug.Log("Subscribed to DayNightCycle");
+    }
+    
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        if (_currentCycle != null)
+            _currentCycle.HordeAttack -= HandleNightStarted;
+    }
     
     private void HandleNightStarted()
     {
-        LoadScene("Forest", true);        
+        if (DialogueManager.DialogueInProgress)
+        {
+            DialogueManager.Instance.EndDialogue();
+        }
+        
+        HordeManager.Instance.StartHorde();
     }
 }
