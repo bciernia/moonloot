@@ -50,12 +50,13 @@ public class EnemyBrain : MonoBehaviour
 
     private void Start()
     {
-        if (EnemyStateManager.Instance != null &&
-            EnemyStateManager.Instance.IsEnemyDead(enemyID))
-        {
-            Destroy(gameObject);
-            return;
-        }
+        //TODO IT WAS FOR NOT SPAWNING SAME ENEMIES BETWEEN SCENES
+        // if (EnemyStateManager.Instance != null &&
+            // EnemyStateManager.Instance.IsEnemyDead(enemyID))
+        // {
+            // Destroy(gameObject);
+            // return;
+        // }
 
         ChangeState(initState);
     }

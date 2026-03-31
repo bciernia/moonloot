@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -59,6 +58,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _mainGamePanel;
     [SerializeField] private GameObject _equippedPanel;
 
+    [Header("Day Night Timer")] 
+    [SerializeField] private Image _dayNightTimerImage;
+    [SerializeField] private Sprite[] _timeSprites;
+    [SerializeField] private float _transitionDuration = 0.5f;
+
+    private float _clockTimer = 0f;
+    private bool _isTransition = false;
+    private float _mainFrameDuration;
+    private int _currentClockIndex = 0;
+    private DayNightCycle _dayNightCycle;
+    
     private InputAction _equipmentAction;
     private InputAction _statsAction;
     private InputAction _skillsAction;
@@ -81,12 +91,15 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
+        _dayNightCycle = FindAnyObjectByType<DayNightCycle>();
+        _dayNightCycle.OnDayStarted += ResetClock;
         CacheInputActions();
         EnableInputActions();
         RegisterInputCallbacks();
 
         UpdateKeyTexts();
         UpdatePlayerUI(force: true);
+        InitializeClock();
     }
 
     private void OnDestroy()
@@ -111,6 +124,7 @@ public class UIManager : MonoBehaviour
         var isLocation = mode == GameMode.Location;
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
+        _dayNightTimerImage.gameObject.SetActive(isLocation);
         CloseAllPanels();
     }
 
@@ -153,6 +167,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         UpdatePlayerUI();
+        UpdateClock();
     }
 
     #region UI Update
@@ -281,4 +296,78 @@ public class UIManager : MonoBehaviour
         _skill2KeyText.text = map["Skill2"]?.GetBindingDisplayString().ToUpperInvariant();
         _interactionKeyText.text = map["Interaction"]?.GetBindingDisplayString().ToUpperInvariant();
     }
+    
+    #region Day/Night Timer
+    private void InitializeClock()
+    {
+        if (_dayNightCycle == null || _timeSprites.Length == 0)
+            return;
+
+        var spriteCount = _timeSprites.Length;
+
+        var mainFrames = (spriteCount + 1) / 2;
+        var transitions = spriteCount / 2;
+
+        var totalTransitionTime = transitions * _transitionDuration;
+
+        _mainFrameDuration = (_dayNightCycle.dayDuration - totalTransitionTime) / mainFrames;
+
+        _currentClockIndex = 0;
+        _clockTimer = 0f;
+        _isTransition = false;
+
+        _dayNightTimerImage.sprite = _timeSprites[0];
+    }
+    
+    private void UpdateClock()
+    {
+        if (_timeSprites.Length == 0)
+            return;
+
+        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+            return;
+        
+        _clockTimer += Time.deltaTime;
+
+        if (!_isTransition)
+        {
+            if (_clockTimer >= _mainFrameDuration)
+            {
+                _clockTimer = 0f;
+
+                if (_currentClockIndex + 1 < _timeSprites.Length)
+                {
+                    _currentClockIndex++; 
+                    _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
+
+                    _isTransition = true;
+                }
+            }
+        }
+        else
+        {
+            if (_clockTimer >= _transitionDuration)
+            {
+                _clockTimer = 0f;
+
+                if (_currentClockIndex + 1 < _timeSprites.Length)
+                {
+                    _currentClockIndex++; 
+                    _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
+                }
+
+                _isTransition = false;
+            }
+        }
+    }
+    
+    public void ResetClock()
+    {
+        _currentClockIndex = 0;
+        _clockTimer = 0f;
+        _isTransition = false;
+
+        _dayNightTimerImage.sprite = _timeSprites[0];
+    }
+    #endregion
 }

@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,7 +15,8 @@ public class LoadingSceneManager : MonoBehaviour
     [SerializeField] private float minDisplayTime = 0.5f; 
 
     private float loadedValue;       
-
+    private DayNightCycle _currentCycle;
+    
     private void Awake()
     {
         if (Instance == null)
@@ -28,9 +28,20 @@ public class LoadingSceneManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public async void LoadScene(string sceneName)
+    public async void StartNewGame(string sceneName)
+    {
+        await LoadScene(sceneName, true);
+            
+        var cycle = FindObjectOfType<DayNightCycle>();
+        if (cycle != null)
+            cycle.ResetCycle();
+    }
+    
+    public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
@@ -47,7 +58,7 @@ public class LoadingSceneManager : MonoBehaviour
             timer += Time.deltaTime;
 
             loadedValue = Mathf.Clamp01(scene.progress / 0.9f);
-
+            
             if (scene.progress >= 0.9f && timer >= minDisplayTime)
             {
                 loadedValue = 1f;           
@@ -56,16 +67,40 @@ public class LoadingSceneManager : MonoBehaviour
 
             await Task.Yield();
         }
+
+        if (setPlayerInSpawnPoint)
+        {
+            SetPlayerToSpawnPoint();
+        }
+        
+        TryFindDayNightCycle();
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
         CombatManager.Instance.ClearCombat();
-
-        if (sceneName == "Town")
+        
+        if (sceneName == "MainMenu")
         {
-            
+            var cycle = FindObjectOfType<DayNightCycle>();
+            if (cycle != null)
+                cycle.ResetCycle();
         }
         
         loadingScreen.SetActive(false);
+    }
+    
+    private void SetPlayerToSpawnPoint()
+    {
+        var spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+        var player = GameObject.FindGameObjectWithTag("Player");
+
+        if (spawnPoint != null && player != null)
+        {
+            player.transform.position = spawnPoint.transform.position;
+        }
+        else
+        {
+            Debug.LogWarning("SpawnPoint or Player not found!");
+        }
     }
 
     private void Update()
@@ -75,20 +110,53 @@ public class LoadingSceneManager : MonoBehaviour
 
     private void OnEnable()
     {
-        var cycle = FindObjectOfType<DayNightCycle>();
-        if (cycle != null)
-            cycle.OnNightStarted += HandleNightStarted;
+        TryFindDayNightCycle();
     }
 
     private void OnDisable()
     {
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
-            cycle.OnNightStarted -= HandleNightStarted;
+            cycle.HordeAttack -= HandleNightStarted;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        TryFindDayNightCycle();
+    }
+    
+    private void TryFindDayNightCycle()
+    {
+        var cycle = FindObjectOfType<DayNightCycle>();
+
+        if (cycle == null)
+            return;
+
+        if (_currentCycle != null)
+            _currentCycle.HordeAttack -= HandleNightStarted;
+
+        _currentCycle = cycle;
+
+        _currentCycle.HordeAttack += HandleNightStarted;
+
+        Debug.Log("Subscribed to DayNightCycle");
+    }
+    
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        if (_currentCycle != null)
+            _currentCycle.HordeAttack -= HandleNightStarted;
     }
     
     private void HandleNightStarted()
     {
-        LoadScene("Forest");        
+        if (DialogueManager.DialogueInProgress)
+        {
+            DialogueManager.Instance.EndDialogue();
+        }
+        
+        HordeManager.Instance.StartHorde();
     }
 }

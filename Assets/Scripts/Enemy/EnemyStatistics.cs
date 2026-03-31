@@ -28,6 +28,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public float MaxAttackTimeInterval { get; private set; }
     public List<GameObject> SpecialAttacks { get; private set; }
     public bool IsBoss { get; private set; }
+    public bool IsElite { get; private set; }
 
     public Effect Effect { get; private set; }
     public float EffectChance { get; private set; }
@@ -85,6 +86,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         MaxAttackTimeInterval = _enemyStats.MaxAttackTimeInterval;
         SpecialAttacks = _enemyStats.SpecialAttacks;
         IsBoss = _enemyStats.IsBoss;
+        IsElite = _enemyStats.IsElite;
         Effect = _enemyStats.Effect;
         EffectChance = _enemyStats.EffectChance;
         IdleSounds = _enemyStats.IdleSounds;
@@ -117,6 +119,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
+            HordeManager.Instance.OnEnemyKilled();
             StartCoroutine(HandleDeathAnimation());
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }
