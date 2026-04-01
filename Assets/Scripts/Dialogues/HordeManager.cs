@@ -58,19 +58,30 @@ public class HordeManager : Singleton<HordeManager>
 
         _aliveEnemies = 0;
 
-        // NORMAL
-        SpawnGroup(data.normalEnemies, spawners, false, false, data, normalEnemies);
-
-        // ELITE
-        SpawnGroup(data.eliteEnemies, spawners, true, false, data, eliteEnemies);
-
-        // BOSS
-        SpawnGroup(data.bossEnemies, spawners, false, true, data, bossEnemies);
-
-        Debug.Log($"Spawned {_aliveEnemies} enemies");
+        StartCoroutine(SpawnHordeRoutine(spawners, data));
     }
     
-    private void SpawnGroup(int count, EnemySpawner[] spawners, bool isElite, bool isBoss, HordeData data, List<GameObject> enemies)
+    private System.Collections.IEnumerator SpawnHordeRoutine(EnemySpawner[] spawners, HordeData data)
+    {
+        // NORMAL
+        yield return StartCoroutine(SpawnGroupRoutine(data.normalEnemies, spawners, false, false, data, normalEnemies));
+
+        // ELITE
+        yield return StartCoroutine(SpawnGroupRoutine(data.eliteEnemies, spawners, true, false, data, eliteEnemies));
+
+        // BOSS
+        yield return StartCoroutine(SpawnGroupRoutine(data.bossEnemies, spawners, false, true, data, bossEnemies));
+
+        Debug.Log("All enemies spawned");
+    }
+    
+    private System.Collections.IEnumerator SpawnGroupRoutine(
+        int count,
+        EnemySpawner[] spawners,
+        bool isElite,
+        bool isBoss,
+        HordeData data,
+        List<GameObject> enemies)
     {
         for (var i = 0; i < count; i++)
         {
@@ -81,10 +92,10 @@ public class HordeManager : Singleton<HordeManager>
 
             var stats = enemyGO.GetComponent<EnemyStatistics>();
 
-            stats.DetectRange = 99999;
-            
             if (stats != null)
             {
+                stats.DetectRange = 99999;
+
                 stats.ApplyHordeScaling(
                     data.hpMultiplier,
                     data.damageMultiplier,
@@ -95,6 +106,8 @@ public class HordeManager : Singleton<HordeManager>
             }
 
             _aliveEnemies++;
+
+            yield return new WaitForSeconds(1f);
         }
     }
     
@@ -103,7 +116,7 @@ public class HordeManager : Singleton<HordeManager>
         _aliveEnemies--;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
-
+        
         if (_aliveEnemies <= 0)
         {
             Debug.Log("All enemies defeated!");
