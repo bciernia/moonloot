@@ -19,7 +19,7 @@ public class EnemyBrain : MonoBehaviour
     public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
-
+    
     private readonly string EnemyLayerMaskAndTagName = "Enemy";
 
 #if UNITY_EDITOR

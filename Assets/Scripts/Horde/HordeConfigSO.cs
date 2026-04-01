@@ -21,8 +21,8 @@ public class HordeConfigSO : ScriptableObject
 
     public HordeData GetHorde(int index)
     {
-        if (index < hordes.Count)
-            return hordes[index];
+        // if (index < hordes.Count)
+            // return hordes[index];
 
         return GenerateHorde(index);
     }
@@ -45,16 +45,30 @@ public class HordeConfigSO : ScriptableObject
 
         var gold = Mathf.RoundToInt(100 * Mathf.Pow(goldGrowth, hordeNumber));
 
+        var objective = GetRandomObjective(hordeNumber);
+        
         return new HordeData
         {
-            hordeNumber = hordeNumber,
+            number = hordeNumber,
             normalEnemies = normalCount,
             eliteEnemies = eliteCount,
             bossEnemies = bossCount,
             hpMultiplier = hpMultiplier,
             damageMultiplier = damageMultiplier,
-            goldReward = gold
+            goldReward = gold,
+            objective = objective
         };
+    }
+    
+    private HordeObjective GetRandomObjective(int hordeNumber)
+    {
+        // if (hordeNumber < 3)
+            // return HordeObjective.KillAll;
+
+        var roll = 1;
+        // var roll = RNGManager.Instance.GetRandomNumberFromRange(0, 3);
+
+        return (HordeObjective)roll;
     }
 }
 
@@ -62,7 +76,9 @@ public class HordeConfigSO : ScriptableObject
 public class HordeData
 {
     [Header("Horde Info")]
-    public int hordeNumber;
+    public int number;
+
+    public HordeObjective objective;
 
     [Header("Enemies Count")]
     public int normalEnemies;

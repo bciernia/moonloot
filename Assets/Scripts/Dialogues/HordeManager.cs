@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 public class HordeManager : Singleton<HordeManager>
 {
@@ -17,8 +20,17 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private HordeConfigSO hordeConfig;
     private string _previousScene;
     private int _aliveEnemies = 0;
+    private HordeObjective _currentObjective;
+
+    [Header("Defend objective object")]
+    [SerializeField] private GameObject defendPrefab;
+
+    private GameObject _defendTarget;
+    private bool _defendActive = false;
+    private readonly float _defendDuration = 60f;
+    private readonly int _maxAliveEnemies = 10;
     
-    public void SavePreviousScene()
+    private void SavePreviousScene()
     {
         _previousScene = SceneManager.GetActiveScene().name;
     }
@@ -55,12 +67,129 @@ public class HordeManager : Singleton<HordeManager>
         }
 
         var data = hordeConfig.GetHorde(currentHorde - 1);
-
+        _currentObjective = data.objective;
         _aliveEnemies = 0;
 
-        StartCoroutine(SpawnHordeRoutine(spawners, data));
+        Debug.Log($"Objective: {_currentObjective.ToString()}");
+
+        _currentObjective = HordeObjective.DefendObject;
+        
+        switch (_currentObjective)
+        {
+            case HordeObjective.DefendObject:
+                StartCoroutine(StartDefendObject(spawners, data));
+                break;
+            
+            case HordeObjective.EliteHunt:
+                StartCoroutine(StartEliteHunt(spawners, data));
+                break;
+            
+            case HordeObjective.KillAll:
+            default:
+                StartCoroutine(SpawnHordeRoutine(spawners, data));
+                break;
+        }
+    }
+
+    #region EliteHunt
+    private System.Collections.IEnumerator StartEliteHunt(EnemySpawner[] spawners, HordeData data)
+    {
+        Debug.Log("Elite Hunt Started");
+
+        data.normalEnemies = 0;
+        data.eliteEnemies = Mathf.Max(5, data.eliteEnemies * 2);
+
+        yield return StartCoroutine(SpawnHordeRoutine(spawners, data));
+    }
+    #endregion
+    
+    #region DefendObjective 
+    
+    private System.Collections.IEnumerator StartDefendObject(EnemySpawner[] spawners, HordeData data)
+    {
+        Debug.Log("Defend Objective Started");
+
+        var defendTargetPosition = FindObjectOfType<DefendTargetSpawner>();
+        
+        _defendTarget = Instantiate(defendPrefab, defendTargetPosition.spawnPoint.position, Quaternion.identity);
+
+        _defendActive = true;
+        _aliveEnemies = 0;
+
+        var timer = 0f;
+
+        while (_defendActive)
+        {
+            timer += Time.deltaTime;
+
+            if (timer >= _defendDuration)
+            {
+                Debug.Log("Defend Success!");
+                _defendActive = false;
+                CompleteHorde();
+                yield break;
+            }
+
+            if (_aliveEnemies < _maxAliveEnemies)
+            {
+                SpawnOneEnemy(spawners, data);
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
+    }    
+    
+    private void SpawnOneEnemy(EnemySpawner[] spawners, HordeData data)
+    {
+        var spawner = spawners[Random.Range(0, spawners.Length)];
+
+        List<GameObject> pool;
+
+        var roll = Random.value;
+
+        if (roll < 0.7f)
+            pool = normalEnemies;
+        else if (roll < 0.95f)
+            pool = eliteEnemies;
+        else
+            pool = bossEnemies;
+
+        var prefab = GetRandomEnemy(pool);
+
+        var enemyGO = Instantiate(prefab, spawner.spawnPoint.position, Quaternion.identity);
+
+        var stats = enemyGO.GetComponent<EnemyStatistics>();
+
+        if (stats != null)
+        {
+            stats.DetectRange = 99999;
+
+            stats.ApplyHordeScaling(
+                data.hpMultiplier,
+                data.damageMultiplier,
+                1f,
+                pool == eliteEnemies,
+                pool == bossEnemies
+            );
+        }
+
+        _aliveEnemies++;
     }
     
+    public void FailDefendObjective()
+    {
+        if (!_defendActive) return;
+
+        Debug.Log("Defend Failed!");
+
+        _defendActive = false;
+
+        FailHorde();
+    }
+    
+    #endregion
+    
+    #region SpawnHordeRoutine
     private System.Collections.IEnumerator SpawnHordeRoutine(EnemySpawner[] spawners, HordeData data)
     {
         // NORMAL
@@ -75,6 +204,9 @@ public class HordeManager : Singleton<HordeManager>
         Debug.Log("All enemies spawned");
     }
     
+    #endregion
+
+    #region SpawnGroupRoutine
     private System.Collections.IEnumerator SpawnGroupRoutine(
         int count,
         EnemySpawner[] spawners,
@@ -111,6 +243,8 @@ public class HordeManager : Singleton<HordeManager>
         }
     }
     
+    #endregion
+
     public void OnEnemyKilled()
     {
         _aliveEnemies--;
@@ -143,12 +277,13 @@ public class HordeManager : Singleton<HordeManager>
         ReturnToPreviousScene();
     }
 
-    public void FailHorde()
+    private void FailHorde()
     {
         Debug.Log("Player died - Game Over");
 
         // TODO: Game Over screen
-        SceneManager.LoadScene("MainMenu");
+        // SceneManager.LoadScene("MainMenu");
+        ReturnToPreviousScene();
     }
 
     private void ReturnToPreviousScene()
@@ -161,13 +296,11 @@ public class HordeManager : Singleton<HordeManager>
 
         LoadingSceneManager.Instance.LoadScene(_previousScene, true);
 
-        // reset dnia
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
             cycle.ResetCycle();
     }
 
-    // do spawnerów
     public int GetEnemyCount()
     {
         return enemiesPerHorde;
