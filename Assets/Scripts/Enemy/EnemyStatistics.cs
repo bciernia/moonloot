@@ -208,4 +208,34 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _isConfused = false;
         Destroy(currentEffect);
     }
+    
+    public void ApplyHordeScaling(float hpMultiplier, float damageMultiplier, float speedMultiplier, bool isEliteOverride = false, bool isBossOverride = false)
+    {
+        MaxHP *= hpMultiplier;
+        CurrentHP = MaxHP;
+
+        Damage *= damageMultiplier;
+
+        Speed *= speedMultiplier;
+        ChaseSpeed *= speedMultiplier;
+
+        if (isEliteOverride)
+            IsElite = true;
+
+        if (isBossOverride)
+            IsBoss = true;
+
+        // ELITE ENEMY IS BIGGER THAN OTHER
+        // BOSS IS MUCH BIGGER
+        if (IsElite)
+        {
+            transform.localScale = new Vector3(1.2f, 1.2f, 1f);
+        }
+        else if (IsBoss)
+        {
+            transform.localScale = new Vector3(1.4f, 1.4f, 1f);
+        }
+        
+        
+    }
 }

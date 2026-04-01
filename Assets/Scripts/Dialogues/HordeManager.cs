@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,8 +9,12 @@ public class HordeManager : Singleton<HordeManager>
     public int enemiesPerHorde = 1;
     public int enemiesIncreasePerHorde = 1;
 
-    [Header("Enemies")] [SerializeField] private List<GameObject> enemyPrefabs;
+    [Header("Enemies")]
+    [SerializeField] private List<GameObject> normalEnemies;
+    [SerializeField] private List<GameObject> eliteEnemies;
+    [SerializeField] private List<GameObject> bossEnemies;
     
+    [SerializeField] private HordeConfigSO hordeConfig;
     private string _previousScene;
     private int _aliveEnemies = 0;
     
@@ -33,9 +36,8 @@ public class HordeManager : Singleton<HordeManager>
     
     private System.Collections.IEnumerator WaitForSceneAndSpawn()
     {
-        yield return null; // 1 frame
+        yield return null;
 
-        // czekamy aż scena się załaduje
         while (FindObjectsOfType<EnemySpawner>().Length == 0)
             yield return null;
 
@@ -52,20 +54,48 @@ public class HordeManager : Singleton<HordeManager>
             return;
         }
 
+        var data = hordeConfig.GetHorde(currentHorde - 1);
+
         _aliveEnemies = 0;
 
-        for (var i = 0; i < enemiesPerHorde; i++)
-        {
-            var spawner = spawners[Random.Range(0, spawners.Length)];
-            var enemyPrefab = GetRandomEnemy();
-            var enemy= Instantiate(enemyPrefab, spawner.spawnPoint.position, Quaternion.identity);
+        // NORMAL
+        SpawnGroup(data.normalEnemies, spawners, false, false, data, normalEnemies);
 
-            Debug.Log(enemy.GetComponent<EnemyBrain>().EnemyID);
-            
-            _aliveEnemies++;
-        }
+        // ELITE
+        SpawnGroup(data.eliteEnemies, spawners, true, false, data, eliteEnemies);
+
+        // BOSS
+        SpawnGroup(data.bossEnemies, spawners, false, true, data, bossEnemies);
 
         Debug.Log($"Spawned {_aliveEnemies} enemies");
+    }
+    
+    private void SpawnGroup(int count, EnemySpawner[] spawners, bool isElite, bool isBoss, HordeData data, List<GameObject> enemies)
+    {
+        for (var i = 0; i < count; i++)
+        {
+            var spawner = spawners[Random.Range(0, spawners.Length)];
+            var prefab = GetRandomEnemy(enemies);
+
+            var enemyGO = Instantiate(prefab, spawner.spawnPoint.position, Quaternion.identity);
+
+            var stats = enemyGO.GetComponent<EnemyStatistics>();
+
+            stats.DetectRange = 99999;
+            
+            if (stats != null)
+            {
+                stats.ApplyHordeScaling(
+                    data.hpMultiplier,
+                    data.damageMultiplier,
+                    1f,
+                    isElite,
+                    isBoss
+                );
+            }
+
+            _aliveEnemies++;
+        }
     }
     
     public void OnEnemyKilled()
@@ -81,19 +111,22 @@ public class HordeManager : Singleton<HordeManager>
         }
     }
     
-    private GameObject GetRandomEnemy()
+    private GameObject GetRandomEnemy(List<GameObject> enemyList)
     {
-        return enemyPrefabs[Random.Range(0, enemyPrefabs.Count)];
+        return enemyList[Random.Range(0, enemyList.Count)];
     }
 
-    public void CompleteHorde()
+    private void CompleteHorde()
     {
         Debug.Log($"Horde {currentHorde} completed");
+        InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward);
 
         currentHorde++;
-
         enemiesPerHorde += enemiesIncreasePerHorde;
-
+        
+        //TODO Timescale = 0f
+        //TODO Show ui with going back
+        
         ReturnToPreviousScene();
     }
 
