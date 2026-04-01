@@ -9,5 +9,6 @@ public enum SoundType
     SHARP_HIT,
     BLUNT_HIT,
     ARROW_HIT,
-    SPELL_HIT
+    SPELL_HIT,
+    PUNCH
 }
