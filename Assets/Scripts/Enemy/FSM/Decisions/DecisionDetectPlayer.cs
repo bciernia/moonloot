@@ -29,45 +29,91 @@ public class DecisionDetectPlayer : FSMDecision
         return DetectPlayer();
     }
 
-    private bool DetectPlayer()
+private bool DetectPlayer()
+{
+    Transform player = null;
+    Transform defendTarget = null;
+
+    var playerCollider = Physics2D.OverlapCircle(
+        _enemyBrain.transform.position,
+        _enemyStatistics.DetectRange,
+        playerMask);
+
+    if (playerCollider)
+        player = playerCollider.transform;
+
+    if (HordeManager.Instance != null &&
+        HordeManager.Instance.CurrentObjective == HordeObjective.DefendObject)
     {
-        var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, _enemyStatistics.DetectRange , playerMask);
-        
-        if (playerCollider && !_enemyRelationship.IsCharacterFriendly())
-        {
-            _enemyBrain.Player = playerCollider.transform;
-            var directionToEnemy = (_enemyBrain.Player.position - _enemyBrain.transform.position).normalized;
-            var distanceToPlayer = Vector2.Distance(_enemyBrain.transform.position, playerCollider.transform.position);
+        defendTarget = HordeManager.Instance.DefendTarget;
+    }
 
-            var hit = Physics2D.Raycast(_enemyBrain.transform.position, directionToEnemy, distanceToPlayer, obstacleMask);
+    Transform chosenTarget = null;
 
-            if (hit.collider)
-            {
-                StartStopFocusTimer();
-            }
-            else
-            {
-                _stopFocusTimer = FocusTime;
-            }
+    if (player != null && defendTarget != null)
+    {
+        var distPlayer = Vector2.Distance(transform.position, player.position);
+        var distDefend = Vector2.Distance(transform.position, defendTarget.position);
 
-            if (_stopFocusTimer <= 0f)
-            {
-                _enemyBrain.Player = null;
-                EnemyNavMeshAgent.DisableNavMeshAgent(_navMeshAgent);
-                return false;
-            }
+        chosenTarget = distPlayer < distDefend * 0.8f ? player : defendTarget;
+    }
+    else if (player != null)
+    {
+        chosenTarget = player;
+    }
+    else if (defendTarget != null)
+    {
+        chosenTarget = defendTarget;
+    }
 
-            EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent); 
-
-            _enemyAnimator.SetIsMoving(true);
-            _enemyAnimator.SetMoveAnimation(new Vector2(directionToEnemy.x, directionToEnemy.y));
-            return true;
-        }
-
+    if (chosenTarget == null || _enemyRelationship.IsCharacterFriendly())
+    {
         _enemyBrain.Player = null;
         EnemyNavMeshAgent.DisableNavMeshAgent(_navMeshAgent);
         return false;
     }
+
+    _enemyBrain.Player = chosenTarget;
+
+    var directionToTarget = (_enemyBrain.Player.position - _enemyBrain.transform.position).normalized;
+    var distanceToTarget = Vector2.Distance(_enemyBrain.transform.position, _enemyBrain.Player.position);
+
+    if (chosenTarget == player)
+    {
+        var hit = Physics2D.Raycast(
+            _enemyBrain.transform.position,
+            directionToTarget,
+            distanceToTarget,
+            obstacleMask);
+
+        if (hit.collider)
+        {
+            StartStopFocusTimer();
+        }
+        else
+        {
+            _stopFocusTimer = FocusTime;
+        }
+
+        if (_stopFocusTimer <= 0f)
+        {
+            _enemyBrain.Player = null;
+            EnemyNavMeshAgent.DisableNavMeshAgent(_navMeshAgent);
+            return false;
+        }
+    }
+    else
+    {
+        _stopFocusTimer = FocusTime;
+    }
+
+    EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent);
+
+    _enemyAnimator.SetIsMoving(true);
+    _enemyAnimator.SetMoveAnimation(new Vector2(directionToTarget.x, directionToTarget.y));
+
+    return true;
+}
 
     private void StartStopFocusTimer()
     {

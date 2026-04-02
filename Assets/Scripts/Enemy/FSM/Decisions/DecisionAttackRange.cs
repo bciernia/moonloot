@@ -22,14 +22,15 @@ public class DecisionAttackRange : FSMDecision
     public bool PlayerInAttackRange()
     {
         if (!_enemyBrain.Player) return false;
-        var playerCollider = Physics2D.OverlapCircle(_enemyBrain.transform.position, _enemyStatistics.AttackRange, playerMask);
 
-        if (playerCollider)
-        {
-            return true;
-        }
+        var target = _enemyBrain.Player;
 
-        return false;
+        var distance = Vector2.Distance(
+            transform.position,
+            target.position
+        );
+
+        return distance <= _enemyStatistics.AttackRange + 0.1f;
     }
 
     private void OnDrawGizmos()
