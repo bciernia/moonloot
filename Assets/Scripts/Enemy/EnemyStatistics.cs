@@ -14,7 +14,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public string Name { get; private set; }
     public string Description { get; private set; }
     public float CurrentHP { get; private set; }
-    public float MaxHP { get; private set; }
+    public float MaxHP { get; set; }
     public float ExpForEnemy { get; private set; }
     public bool IsMelee { get; private set; }
     public float AttackRange { get; set; }
@@ -54,6 +54,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public bool _isConfused;
     private Coroutine _rootCoroutine;
     private Coroutine _confusionCoroutine;
+    
+    private bool _initialized = false;
 
     private void Awake()
     {
@@ -66,9 +68,12 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _enemySounds = GetComponent<EnemySounds>();
         _knockBack = GetComponent<KnockBack>();
     }
-
-    private void Start()
+    
+    public void Initialize()
     {
+        if (_initialized) return;
+        _initialized = true;
+        
         Name = _enemyStats.Name;
         Description = _enemyStats.Description;
         CurrentHP = _enemyStats.MaxHP;

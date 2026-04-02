@@ -21,8 +21,8 @@ public class HordeConfigSO : ScriptableObject
 
     public HordeData GetHorde(int index)
     {
-        // if (index < hordes.Count)
-            // return hordes[index];
+        if (index < hordes.Count)
+            return hordes[index];
 
         return GenerateHorde(index);
     }
@@ -62,11 +62,10 @@ public class HordeConfigSO : ScriptableObject
     
     private HordeObjective GetRandomObjective(int hordeNumber)
     {
-        // if (hordeNumber < 3)
-            // return HordeObjective.KillAll;
+        if (hordeNumber < 3)
+            return HordeObjective.KillAll;
 
-        var roll = 1;
-        // var roll = RNGManager.Instance.GetRandomNumberFromRange(0, 3);
+        var roll = RNGManager.Instance.GetRandomNumberFromRange(0, 3);
 
         return (HordeObjective)roll;
     }

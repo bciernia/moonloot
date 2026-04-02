@@ -20,6 +20,8 @@ public class EnemyBrain : MonoBehaviour
     public Transform Player { get; set; }
     public float AttackCooldown { get; private set; }
     
+    public Transform CurrentTarget { get; private set; }
+    
     private readonly string EnemyLayerMaskAndTagName = "Enemy";
 
 #if UNITY_EDITOR
@@ -67,6 +69,11 @@ public class EnemyBrain : MonoBehaviour
         {
             AttackCooldown -= Time.deltaTime;
         }
+    }
+    
+    public void SetTarget(Transform target)
+    {
+        CurrentTarget = target;
     }
 
     public void ChangeState(string newStateID)

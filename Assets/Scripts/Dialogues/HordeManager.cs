@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -24,12 +25,18 @@ public class HordeManager : Singleton<HordeManager>
 
     [Header("Defend objective object")]
     [SerializeField] private GameObject defendPrefab;
+    [SerializeField] private float defendMultiplier = 0.5f;
+    
+    public Transform DefendTarget { get; private set; }
+    public HordeObjective CurrentObjective => _currentObjective;
 
     private GameObject _defendTarget;
     private bool _defendActive = false;
-    private readonly float _defendDuration = 60f;
-    private readonly int _maxAliveEnemies = 10;
-    
+    private const float _defendDuration = 60f;
+    private const int _maxAliveEnemies = 5;
+
+    private HordeMutation _currentMutation;
+
     private void SavePreviousScene()
     {
         _previousScene = SceneManager.GetActiveScene().name;
@@ -70,10 +77,10 @@ public class HordeManager : Singleton<HordeManager>
         _currentObjective = data.objective;
         _aliveEnemies = 0;
 
+        _currentMutation = GetRandomMutation();
+        
         Debug.Log($"Objective: {_currentObjective.ToString()}");
 
-        _currentObjective = HordeObjective.DefendObject;
-        
         switch (_currentObjective)
         {
             case HordeObjective.DefendObject:
@@ -105,22 +112,28 @@ public class HordeManager : Singleton<HordeManager>
     
     #region DefendObjective 
     
-    private System.Collections.IEnumerator StartDefendObject(EnemySpawner[] spawners, HordeData data)
+    private IEnumerator StartDefendObject(EnemySpawner[] spawners, HordeData data)
     {
         Debug.Log("Defend Objective Started");
 
         var defendTargetPosition = FindObjectOfType<DefendTargetSpawner>();
         
         _defendTarget = Instantiate(defendPrefab, defendTargetPosition.spawnPoint.position, Quaternion.identity);
+        DefendTarget = _defendTarget.transform;
 
         _defendActive = true;
         _aliveEnemies = 0;
 
         var timer = 0f;
+        var spawnTimer = 0f;
+        var nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(3, 6);
 
         while (_defendActive)
         {
             timer += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
+
+            Debug.Log($"Zostało: {_defendDuration - timer}");
 
             if (timer >= _defendDuration)
             {
@@ -130,14 +143,20 @@ public class HordeManager : Singleton<HordeManager>
                 yield break;
             }
 
-            if (_aliveEnemies < _maxAliveEnemies)
+            if (spawnTimer >= nextSpawnTime)
             {
-                SpawnOneEnemy(spawners, data);
+                if (_aliveEnemies < _maxAliveEnemies)
+                {
+                    SpawnOneEnemy(spawners, data);
+                }
+
+                spawnTimer = 0f;
+                nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(3, 6);
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return null;
         }
-    }    
+    }
     
     private void SpawnOneEnemy(EnemySpawner[] spawners, HordeData data)
     {
@@ -158,19 +177,39 @@ public class HordeManager : Singleton<HordeManager>
 
         var enemyGO = Instantiate(prefab, spawner.spawnPoint.position, Quaternion.identity);
 
+        var brain = enemyGO.GetComponent<EnemyBrain>();
+
+        if (brain != null)
+        {
+            if (_currentObjective == HordeObjective.DefendObject && DefendTarget != null)
+            {
+                brain.SetTarget(DefendTarget);
+            }
+        }
+        
         var stats = enemyGO.GetComponent<EnemyStatistics>();
 
         if (stats != null)
         {
             stats.DetectRange = 99999;
 
+            var finalHpMultiplier = data.hpMultiplier;
+            if (_currentObjective == HordeObjective.DefendObject)
+            {
+                finalHpMultiplier *= defendMultiplier;
+            }
+
+            stats.Initialize();
+
             stats.ApplyHordeScaling(
-                data.hpMultiplier,
+                finalHpMultiplier,
                 data.damageMultiplier,
                 1f,
                 pool == eliteEnemies,
                 pool == bossEnemies
             );
+
+            ApplyMutation(stats);
         }
 
         _aliveEnemies++;
@@ -228,6 +267,8 @@ public class HordeManager : Singleton<HordeManager>
             {
                 stats.DetectRange = 99999;
 
+                stats.Initialize();
+                
                 stats.ApplyHordeScaling(
                     data.hpMultiplier,
                     data.damageMultiplier,
@@ -235,8 +276,9 @@ public class HordeManager : Singleton<HordeManager>
                     isElite,
                     isBoss
                 );
+                
+                ApplyMutation(stats);
             }
-
             _aliveEnemies++;
 
             yield return new WaitForSeconds(1f);
@@ -247,6 +289,8 @@ public class HordeManager : Singleton<HordeManager>
 
     public void OnEnemyKilled()
     {
+        if (_currentObjective == HordeObjective.DefendObject) return;
+        
         _aliveEnemies--;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
@@ -304,5 +348,43 @@ public class HordeManager : Singleton<HordeManager>
     public int GetEnemyCount()
     {
         return enemiesPerHorde;
+    }
+
+    private HordeMutation GetRandomMutation()
+    {
+        var roll = Random.value;
+
+        return roll switch
+        {
+            < 0.25f => HordeMutation.None,
+            < 0.5f => HordeMutation.StrongEnemies,
+            < 0.75f => HordeMutation.FastEnemies,
+            _ => HordeMutation.BrutalEnemies
+        };
+    }
+
+    private void ApplyMutation(EnemyStatistics stats)
+    {
+        Debug.Log($"⚠ Mutation active: {_currentMutation}");
+        _currentMutation = HordeMutation.BrutalEnemies;
+        switch (_currentMutation)
+        {
+            case HordeMutation.StrongEnemies:
+                stats.MaxHP *= 1.5f;
+                stats.RestoreHealth(stats.MaxHP);
+                break;
+
+            case HordeMutation.FastEnemies:
+                stats.Speed *= 1.5f;
+                stats.ChaseSpeed *= 1.5f;
+                break;
+
+            case HordeMutation.BrutalEnemies:
+                stats.Damage *= 1.5f;
+                break;
+            case HordeMutation.None:
+            default:
+                break;
+        }
     }
 }

@@ -55,6 +55,9 @@ public class ActionAttack : FSMAction
     private void KnockBackPlayer()
     {
         var playerKnockBack = _enemyBrain.Player.GetComponent<KnockBack>();
+
+        if (playerKnockBack == null) return;
+        
         playerKnockBack.GetKnockedBack(transform, 5f);
     }
 

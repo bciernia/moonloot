@@ -18,15 +18,11 @@ public class DecisionCanPerformSpecialAttack : FSMDecision
     {
         if (_canUseSpecialAttack && _enemyStatistics.SpecialAttackTimeInterval <= 0f)
         {
-            Debug.Log("CanPerformSpecialAttack");
-            
             StartCoroutine(SpecialAttackCooldown());
             return true;
         }
 
         _enemyStatistics.SpecialAttackTimeInterval -= Time.deltaTime;
-        Debug.Log("Nie może");
-        Debug.Log(_enemyStatistics.SpecialAttackTimeInterval);
         return false;    
     }
 
