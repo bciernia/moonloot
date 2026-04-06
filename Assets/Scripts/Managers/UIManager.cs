@@ -63,6 +63,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite[] _timeSprites;
     [SerializeField] private float _transitionDuration = 0.5f;
 
+    [Header("Info panel")] 
+    [SerializeField] private GameObject _infoPanelContainer;
+    [SerializeField] private TextMeshProUGUI _nightNumber;
+
+    [Header("Day night panels")] 
+    [SerializeField] private GameObject _startNightPanel;
+    [SerializeField] private GameObject _nightSummaryPanel;
+
     private float _clockTimer = 0f;
     private bool _isTransition = false;
     private float _mainFrameDuration;
@@ -93,6 +101,8 @@ public class UIManager : MonoBehaviour
     {
         _dayNightCycle = FindAnyObjectByType<DayNightCycle>();
         _dayNightCycle.OnDayStarted += ResetClock;
+        _dayNightCycle.HordeAttack += ShowStartNightPanel;
+        HordeManager.OnHordeFinished += ShowSummaryPanel;
         CacheInputActions();
         EnableInputActions();
         RegisterInputCallbacks();
@@ -112,11 +122,13 @@ public class UIManager : MonoBehaviour
 #pragma warning disable UDR0004
         GameManager.OnGameModeChanged += OnGameModeChanged;
 #pragma warning restore UDR0004
+        HordeManager.OnHordeFinished += UpdateNightUI;
     }
 
     private void OnDisable()
     {
         GameManager.OnGameModeChanged -= OnGameModeChanged;
+        HordeManager.OnHordeFinished -= UpdateNightUI;
     }
 
     private void OnGameModeChanged(GameMode mode)
@@ -361,7 +373,7 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    public void ResetClock()
+    private void ResetClock()
     {
         _currentClockIndex = 0;
         _clockTimer = 0f;
@@ -370,4 +382,36 @@ public class UIManager : MonoBehaviour
         _dayNightTimerImage.sprite = _timeSprites[0];
     }
     #endregion
+
+    private void UpdateNightUI(int night)
+    {
+        _nightNumber.text = $"Night: {night}";
+    }
+
+    private void ShowSummaryPanel(int night)
+    {
+        _nightSummaryPanel.SetActive(true);
+        PauseManager.Instance.RequestPause();
+    }
+    
+    public void OnReturnToDayClicked()
+    {
+        _nightSummaryPanel.SetActive(false);
+        PauseManager.Instance.ReleasePause();
+
+        HordeManager.Instance.ReturnToPreviousScene();
+    }
+
+    private void ShowStartNightPanel()
+    {
+        _startNightPanel.SetActive(true);
+        PauseManager.Instance.RequestPause();
+    }
+    
+    public void OnStartNightClicked()
+    {
+        _startNightPanel.SetActive(false);
+        PauseManager.Instance.ReleasePause();
+        HordeManager.Instance.StartHorde();
+    }
 }

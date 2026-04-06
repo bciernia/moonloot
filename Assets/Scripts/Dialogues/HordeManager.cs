@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class HordeManager : Singleton<HordeManager>
@@ -37,6 +37,8 @@ public class HordeManager : Singleton<HordeManager>
 
     private HordeMutation _currentMutation;
 
+    public static Action<int> OnHordeFinished;
+
     private void SavePreviousScene()
     {
         _previousScene = SceneManager.GetActiveScene().name;
@@ -45,7 +47,7 @@ public class HordeManager : Singleton<HordeManager>
     public void StartHorde()
     {
         SavePreviousScene();
-
+        
         Debug.Log($"Starting Horde {currentHorde}");
 
         LoadingSceneManager.Instance.LoadScene("Forest", true);
@@ -294,11 +296,11 @@ public class HordeManager : Singleton<HordeManager>
         _aliveEnemies--;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
-        
+
         if (_aliveEnemies <= 0)
         {
+            StartCoroutine(FinalKillSequence());
             Debug.Log("All enemies defeated!");
-            CompleteHorde();
         }
     }
     
@@ -311,14 +313,9 @@ public class HordeManager : Singleton<HordeManager>
     {
         Debug.Log($"Horde {currentHorde} completed");
         InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward);
-
         currentHorde++;
+        OnHordeFinished?.Invoke(currentHorde - 1);
         enemiesPerHorde += enemiesIncreasePerHorde;
-        
-        //TODO Timescale = 0f
-        //TODO Show ui with going back
-        
-        ReturnToPreviousScene();
     }
 
     private void FailHorde()
@@ -330,7 +327,7 @@ public class HordeManager : Singleton<HordeManager>
         ReturnToPreviousScene();
     }
 
-    private void ReturnToPreviousScene()
+    public void ReturnToPreviousScene()
     {
         if (string.IsNullOrEmpty(_previousScene))
         {
@@ -386,5 +383,28 @@ public class HordeManager : Singleton<HordeManager>
             default:
                 break;
         }
+    }
+    
+    private IEnumerator FinalKillSequence()
+    {
+        yield return StartCoroutine(FinalKillSlowMo());
+
+        CompleteHorde();
+    }
+    
+    private IEnumerator FinalKillSlowMo()
+    {
+        var originalTimeScale = Time.timeScale;
+        var originalFixedDelta = Time.fixedDeltaTime;
+
+        Time.timeScale = 0.2f;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
+
+        yield return new WaitForSecondsRealtime(1f);
+
+        Time.timeScale = originalTimeScale;
+        Time.fixedDeltaTime = originalFixedDelta;
+        
+        yield return new WaitForSecondsRealtime(3f);
     }
 }
