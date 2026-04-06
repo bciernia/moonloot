@@ -113,13 +113,14 @@ public class LoadingSceneManager : MonoBehaviour
         TryFindDayNightCycle();
     }
 
+    /*
     private void OnDisable()
     {
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
             cycle.HordeAttack -= HandleNightStarted;
     }
-
+*/
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TryFindDayNightCycle();
@@ -132,12 +133,7 @@ public class LoadingSceneManager : MonoBehaviour
         if (cycle == null)
             return;
 
-        if (_currentCycle != null)
-            _currentCycle.HordeAttack -= HandleNightStarted;
-
         _currentCycle = cycle;
-
-        _currentCycle.HordeAttack += HandleNightStarted;
 
         Debug.Log("Subscribed to DayNightCycle");
     }
@@ -145,11 +141,9 @@ public class LoadingSceneManager : MonoBehaviour
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-
-        if (_currentCycle != null)
-            _currentCycle.HordeAttack -= HandleNightStarted;
     }
     
+    /*
     private void HandleNightStarted()
     {
         if (DialogueManager.DialogueInProgress)
@@ -159,4 +153,5 @@ public class LoadingSceneManager : MonoBehaviour
         
         HordeManager.Instance.StartHorde();
     }
+    */
 }

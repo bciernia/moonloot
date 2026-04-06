@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using MoreMountains.Feedbacks;
 using UnityEngine;
 
 public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable, IConfusionable
@@ -57,6 +58,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     
     private bool _initialized = false;
 
+    private MMF_Player _feelEffects;
+    
     private void Awake()
     {
         _circleCollider = GetComponent<CircleCollider2D>();
@@ -67,6 +70,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _enemyLoot = GetComponent<EnemyLoot>();
         _enemySounds = GetComponent<EnemySounds>();
         _knockBack = GetComponent<KnockBack>();
+        _feelEffects = GetComponent<MMF_Player>();
     }
     
     public void Initialize()
@@ -119,7 +123,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyAnimator.SetDeadAnimation();
 
             _enemyBrain.enabled = false;
-            // _circleCollider.enabled = false;
+            _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
             EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
@@ -130,6 +134,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         }
         else
         {
+            _feelEffects?.PlayFeedbacks();
             _enemySounds?.Hit();
             _enemyAnimator.SetDamagedAnimation();
         }

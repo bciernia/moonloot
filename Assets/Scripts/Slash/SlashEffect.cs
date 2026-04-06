@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SlashEffect: MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class SlashEffect: MonoBehaviour
     private Transform _parent;
     private GameObject _shooter;
 
+    private HashSet<GameObject> _hitTargets = new();
+    
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -42,6 +45,11 @@ public class SlashEffect: MonoBehaviour
     public void EnableCollider()
     {
         _boxCollider.enabled = true;
+    }
+    
+    private void OnEnable()
+    {
+        _hitTargets.Clear();
     }
     
     public void DisableCollider()
@@ -92,6 +100,8 @@ public class SlashEffect: MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!CanAttack(other)) return;
+
+        if (!_hitTargets.Add(other.gameObject)) return;
 
         var playerDmg = _shooter.GetComponent<Player>().PlayerAttack.GetPlayerDamage;
         
