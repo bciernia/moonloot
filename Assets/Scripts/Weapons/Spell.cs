@@ -53,7 +53,7 @@ public class Spell : MonoBehaviour
     {
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest")) return;
 
-        other.GetComponent<IDamageable>()?.TakeDamage(Damage);    
+        other.GetComponent<IDamageable>()?.TakeDamage(Damage, Shooter.transform);    
     }
 
     public void DestroySpell()

@@ -65,9 +65,7 @@ public class HordeConfigSO : ScriptableObject
         if (hordeNumber < 3)
             return HordeObjective.KillAll;
 
-        var roll = RNGManager.Instance.GetRandomNumberFromRange(0, 3);
-
-        return (HordeObjective)roll;
+        return EnumUtils.GetRandomEnum<HordeObjective>();
     }
 }
 

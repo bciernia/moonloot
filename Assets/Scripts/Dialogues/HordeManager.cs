@@ -27,6 +27,9 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private GameObject defendPrefab;
     [SerializeField] private float defendMultiplier = 0.5f;
     
+    public HordeData PreparedData { get; private set; }
+    public HordeMutation PreparedMutation { get; private set; }
+    
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
 
@@ -37,11 +40,20 @@ public class HordeManager : Singleton<HordeManager>
 
     private HordeMutation _currentMutation;
 
+    public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
 
     private void SavePreviousScene()
     {
         _previousScene = SceneManager.GetActiveScene().name;
+    }
+    
+    public void PrepareHorde()
+    {
+        PreparedData = hordeConfig.GetHorde(currentHorde - 1);
+        PreparedMutation = GetRandomMutation();
+
+        Debug.Log($"Prepared Horde {currentHorde} | {PreparedData.objective} | {PreparedMutation}");
     }
 
     public void StartHorde()
@@ -75,11 +87,11 @@ public class HordeManager : Singleton<HordeManager>
             return;
         }
 
-        var data = hordeConfig.GetHorde(currentHorde - 1);
+        var data = PreparedData;
         _currentObjective = data.objective;
-        _aliveEnemies = 0;
+        _currentMutation = PreparedMutation;
 
-        _currentMutation = GetRandomMutation();
+        _aliveEnemies = 0;
         
         Debug.Log($"Objective: {_currentObjective.ToString()}");
 
@@ -98,10 +110,12 @@ public class HordeManager : Singleton<HordeManager>
                 StartCoroutine(SpawnHordeRoutine(spawners, data));
                 break;
         }
+        
+        OnHordeStarted?.Invoke();
     }
 
     #region EliteHunt
-    private System.Collections.IEnumerator StartEliteHunt(EnemySpawner[] spawners, HordeData data)
+    private IEnumerator StartEliteHunt(EnemySpawner[] spawners, HordeData data)
     {
         Debug.Log("Elite Hunt Started");
 
@@ -128,7 +142,7 @@ public class HordeManager : Singleton<HordeManager>
 
         var timer = 0f;
         var spawnTimer = 0f;
-        var nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(3, 6);
+        var nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(1, 3);
 
         while (_defendActive)
         {
@@ -347,23 +361,13 @@ public class HordeManager : Singleton<HordeManager>
         return enemiesPerHorde;
     }
 
-    private HordeMutation GetRandomMutation()
-    {
-        var roll = Random.value;
+    public int GetRemainEnemies() => _aliveEnemies;
 
-        return roll switch
-        {
-            < 0.25f => HordeMutation.None,
-            < 0.5f => HordeMutation.StrongEnemies,
-            < 0.75f => HordeMutation.FastEnemies,
-            _ => HordeMutation.BrutalEnemies
-        };
-    }
+    private HordeMutation GetRandomMutation() => EnumUtils.GetRandomEnum<HordeMutation>();
 
     private void ApplyMutation(EnemyStatistics stats)
     {
         Debug.Log($"⚠ Mutation active: {_currentMutation}");
-        _currentMutation = HordeMutation.BrutalEnemies;
         switch (_currentMutation)
         {
             case HordeMutation.StrongEnemies:

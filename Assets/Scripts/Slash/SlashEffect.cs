@@ -106,7 +106,7 @@ public class SlashEffect: MonoBehaviour
         var playerDmg = _shooter.GetComponent<Player>().PlayerAttack.GetPlayerDamage;
         
         SoundManager.Instance.PlaySound(weapon.HitSoundType);
-        other.GetComponent<IDamageable>()?.TakeDamage(playerDmg, transform);
+        other.GetComponent<IDamageable>()?.TakeDamage(playerDmg, _shooter.transform);
         
         if(weapon.Effect) weapon.Effect.Apply(other.gameObject, weapon.EffectChance);
         

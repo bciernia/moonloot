@@ -31,6 +31,23 @@ public class DecisionDetectPlayer : FSMDecision
 
 private bool DetectPlayer()
 {
+    if (_enemyBrain.HasForcedTarget)
+    {
+        var target = _enemyBrain.Player;
+
+        if (target == null)
+            return false;
+
+        var direction = (target.position - transform.position).normalized;
+
+        EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent);
+
+        _enemyAnimator.SetIsMoving(true);
+        _enemyAnimator.SetMoveAnimation(new Vector2(direction.x, direction.y));
+
+        return true;
+    }
+    
     Transform player = null;
     Transform defendTarget = null;
 

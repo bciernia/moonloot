@@ -21,8 +21,11 @@ public class EnemyBrain : MonoBehaviour
     public float AttackCooldown { get; private set; }
     
     public Transform CurrentTarget { get; private set; }
-    
-    private readonly string EnemyLayerMaskAndTagName = "Enemy";
+
+    private const string EnemyLayerMaskAndTagName = "Enemy";
+
+    private Transform _forcedTarget;
+    private float _forcedTargetTimer;
 
 #if UNITY_EDITOR
     private void OnValidate()
@@ -64,6 +67,8 @@ public class EnemyBrain : MonoBehaviour
     }
     private void Update()
     {
+        HandleForcedTarget();
+        
         CurrentState?.UpdateState(this);
         if (AttackCooldown > 0f)
         {
@@ -74,6 +79,28 @@ public class EnemyBrain : MonoBehaviour
     public void SetTarget(Transform target)
     {
         CurrentTarget = target;
+    }
+    
+    private void HandleForcedTarget()
+    {
+        if (_forcedTarget == null) return;
+
+        _forcedTargetTimer -= Time.deltaTime;
+
+        if (_forcedTarget == null)
+        {
+            _forcedTargetTimer = 0f;
+            return;
+        }
+
+        if (_forcedTargetTimer > 0f)
+        {
+            Player = _forcedTarget;
+        }
+        else
+        {
+            _forcedTarget = null;
+        }
     }
 
     public void ChangeState(string newStateID)
@@ -168,4 +195,12 @@ public class EnemyBrain : MonoBehaviour
     }
 
     public string EnemyID => enemyID;
+    
+    public void ForceTarget(Transform target, float duration)
+    {
+        _forcedTarget = target;
+        _forcedTargetTimer = duration;
+    }
+    
+    public bool HasForcedTarget => _forcedTarget != null;
 }

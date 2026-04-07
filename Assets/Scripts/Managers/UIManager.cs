@@ -59,17 +59,30 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _equippedPanel;
 
     [Header("Day Night Timer")] 
+    [SerializeField] private GameObject _dayNightContainer;
     [SerializeField] private Image _dayNightTimerImage;
     [SerializeField] private Sprite[] _timeSprites;
     [SerializeField] private float _transitionDuration = 0.5f;
 
     [Header("Info panel")] 
-    [SerializeField] private GameObject _infoPanelContainer;
     [SerializeField] private TextMeshProUGUI _nightNumber;
 
     [Header("Day night panels")] 
     [SerializeField] private GameObject _startNightPanel;
     [SerializeField] private GameObject _nightSummaryPanel;
+    
+    [Header("Horde info")]
+    [SerializeField] private GameObject _hordeInfoContainer;
+    [SerializeField] private GameObject _hordeInfo;
+    [SerializeField] private TextMeshProUGUI _objectiveText;
+    [SerializeField] private TextMeshProUGUI _mutationText;
+
+    private float _waveTime;
+    private bool _isTimerActive;
+    
+    private TextMeshProUGUI _enemyTMP;
+    private TextMeshProUGUI _timerTMP;
+    private TextMeshProUGUI _defendHpTMP;
 
     private float _clockTimer = 0f;
     private bool _isTransition = false;
@@ -102,6 +115,7 @@ public class UIManager : MonoBehaviour
         _dayNightCycle = FindAnyObjectByType<DayNightCycle>();
         _dayNightCycle.OnDayStarted += ResetClock;
         _dayNightCycle.HordeAttack += ShowStartNightPanel;
+        HordeManager.OnHordeStarted += SetupHordeUI;
         HordeManager.OnHordeFinished += ShowSummaryPanel;
         CacheInputActions();
         EnableInputActions();
@@ -115,6 +129,8 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         UnregisterInputCallbacks();
+        HordeManager.OnHordeStarted -= SetupHordeUI;
+        HordeManager.OnHordeFinished -= ShowSummaryPanel;
     }
 
     private void OnEnable()
@@ -180,6 +196,7 @@ public class UIManager : MonoBehaviour
     {
         UpdatePlayerUI();
         UpdateClock();
+        UpdateHordeUI();
     }
 
     #region UI Update
@@ -385,7 +402,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateNightUI(int night)
     {
-        _nightNumber.text = $"Night: {night}";
+        _nightNumber.text = $"{night}";
     }
 
     private void ShowSummaryPanel(int night)
@@ -398,14 +415,51 @@ public class UIManager : MonoBehaviour
     {
         _nightSummaryPanel.SetActive(false);
         PauseManager.Instance.ReleasePause();
-
+        _dayNightContainer.SetActive(true);
+        _hordeInfoContainer.SetActive(false);
+        
         HordeManager.Instance.ReturnToPreviousScene();
     }
 
     private void ShowStartNightPanel()
     {
+        HordeManager.Instance.PrepareHorde();
+
+        UpdateStartNightUI();
+
         _startNightPanel.SetActive(true);
         PauseManager.Instance.RequestPause();
+    }
+    
+    private void UpdateStartNightUI()
+    {
+        var data = HordeManager.Instance.PreparedData;
+        var mutation = HordeManager.Instance.PreparedMutation;
+
+        _objectiveText.text = GetObjectiveDescription(data.objective);
+        _mutationText.text = GetMutationDescription(mutation);
+    }
+    
+    private string GetObjectiveDescription(HordeObjective obj)
+    {
+        return obj switch
+        {
+            HordeObjective.KillAll => "Kill all enemies",
+            HordeObjective.DefendObject => "Defend the crystal",
+            HordeObjective.EliteHunt => "Hunt elite enemies",
+            _ => obj.ToString()
+        };
+    }
+    
+    private string GetMutationDescription(HordeMutation obj)
+    {
+        return obj switch
+        {
+            HordeMutation.BrutalEnemies => "Enemies attacks deal more damage",
+            HordeMutation.FastEnemies => "Enemies will be very fast",
+            HordeMutation.StrongEnemies => "Enemies are very tough",
+            _ => "No mutations"
+        };
     }
     
     public void OnStartNightClicked()
@@ -413,5 +467,94 @@ public class UIManager : MonoBehaviour
         _startNightPanel.SetActive(false);
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
+    }
+
+    private void SetupHordeUI()
+    {
+        _dayNightContainer.SetActive(false);
+        _hordeInfoContainer.SetActive(true);
+
+        ClearHordeUI();
+
+        var objective = HordeManager.Instance.CurrentObjective;
+
+        switch (objective)
+        {
+            case HordeObjective.KillAll:
+            case HordeObjective.EliteHunt:
+                CreateEnemyCounter();
+                break;
+
+            case HordeObjective.DefendObject:
+                CreateDefendUI();
+                break;
+        }
+    }
+    
+    private void ClearHordeUI()
+    {
+        foreach (Transform child in _hordeInfoContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        _enemyTMP = null;
+        _timerTMP = null;
+        _defendHpTMP = null;
+    }
+    
+    private void CreateEnemyCounter()
+    {
+        var obj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
+        _enemyTMP = obj.GetComponentInChildren<TextMeshProUGUI>();
+
+        _enemyTMP.text = "Enemies: 0";
+    }
+    
+    private void CreateDefendUI()
+    {
+        var timerObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
+        _timerTMP = timerObj.GetComponentInChildren<TextMeshProUGUI>();
+
+        _waveTime = 60f;
+        _isTimerActive = true;
+
+        var hpObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
+        _defendHpTMP = hpObj.GetComponentInChildren<TextMeshProUGUI>();
+    }
+    
+    private void UpdateHordeUI()
+    {
+        if (!_hordeInfoContainer.activeSelf) return;
+
+        if (_enemyTMP != null)
+        {
+            var alive = HordeManager.Instance.GetRemainEnemies();
+            _enemyTMP.text = $"Enemies: {alive}";
+        }
+
+        if (_isTimerActive && _timerTMP != null)
+        {
+            _waveTime -= Time.deltaTime;
+
+            if (_waveTime < 0f)
+                _waveTime = 0f;
+
+            var m = Mathf.FloorToInt(_waveTime / 60f);
+            var s = Mathf.FloorToInt(_waveTime % 60f);
+
+            _timerTMP.text = $"{m:00}:{s:00}";
+        }
+
+        if (_defendHpTMP != null && HordeManager.Instance.DefendTarget != null)
+        {
+            var stats = HordeManager.Instance.DefendTarget.GetComponent<DefendTarget>();
+
+            if (stats != null)
+            {
+                var percent = stats.currentHp / stats.maxHp * 100f;
+                _defendHpTMP.text = $"HP: {percent:0}%";
+            }
+        }
     }
 }

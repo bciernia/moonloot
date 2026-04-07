@@ -2,19 +2,21 @@ using UnityEngine;
 
 public class DefendTarget : MonoBehaviour, IDamageable
 {
-    public float hp = 100f;
-
+    public float currentHp = 100f;
+    public float maxHp = 100f;
+    
+    
     private void Awake()
     {
-        if (hp == 0) hp = 100f;
+        currentHp = maxHp;
     }
 
     public void TakeDamage(float amount, Transform damageSourceTransform = null, DamageType type = DamageType.Physical)
     {
         if (damageSourceTransform != null && !damageSourceTransform.CompareTag("Enemy")) return;
         
-        hp -= amount;
+        currentHp -= amount;
         
-        if(hp <= 0) HordeManager.Instance.FailDefendObjective();
+        if(currentHp <= 0) HordeManager.Instance.FailDefendObjective();
     }
 }
