@@ -409,6 +409,7 @@ public class UIManager : MonoBehaviour
     {
         _nightSummaryPanel.SetActive(true);
         PauseManager.Instance.RequestPause();
+        ShowSummary();
     }
     
     public void OnReturnToDayClicked()
@@ -556,5 +557,18 @@ public class UIManager : MonoBehaviour
                 _defendHpTMP.text = $"HP: {percent:0}%";
             }
         }
+    }
+    
+    public void ShowSummary()
+    {
+        var stats = CombatStatsManager.Instance;
+
+        Debug.Log($"Damage: {stats.DamageDealt}");
+        Debug.Log($"Enemies killed : {stats.EnemiesKilled}");
+        Debug.Log($"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m");
+        
+        // _damageText.text = $"Damage: {stats.DamageDealt}";
+        // _killsText.text = $"Kills: {stats.EnemiesKilled}";
+        // _distanceText.text = $"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m";
     }
 }

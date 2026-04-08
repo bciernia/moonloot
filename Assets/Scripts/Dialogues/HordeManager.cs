@@ -61,7 +61,7 @@ public class HordeManager : Singleton<HordeManager>
         SavePreviousScene();
         
         Debug.Log($"Starting Horde {currentHorde}");
-
+        CombatStatsManager.Instance.ResetStats(Player.Instance.transform);
         LoadingSceneManager.Instance.LoadScene("Forest", true);
 
         StartCoroutine(WaitForSceneAndSpawn());
@@ -308,6 +308,7 @@ public class HordeManager : Singleton<HordeManager>
         if (_currentObjective == HordeObjective.DefendObject) return;
         
         _aliveEnemies--;
+        CombatStatsManager.Instance.EnemiesKilled++;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
 
@@ -326,6 +327,7 @@ public class HordeManager : Singleton<HordeManager>
     private void CompleteHorde()
     {
         Debug.Log($"Horde {currentHorde} completed");
+
         InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward);
         currentHorde++;
         OnHordeFinished?.Invoke(currentHorde - 1);
