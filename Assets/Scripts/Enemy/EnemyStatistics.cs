@@ -110,6 +110,11 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         DamageManager.Instance.ShowDamageText(amount, transform);
 
+        if (_enemyBrain != null && damageSourceTransform.CompareTag("Player"))
+        {
+            _enemyBrain.ForceTarget(damageSourceTransform, 3f);
+        } 
+        
         if (!_isRooted && damageSourceTransform != null)
         {
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);

@@ -105,6 +105,8 @@ public class PlayerMovement : MonoBehaviour
         
         _playerAnimations.SetIsMovingAnimation(true);
         _playerAnimations.SetMoveAnimation(_moveDirection);
+        
+        CombatStatsManager.Instance.UpdateDistance(transform);
     }
     
     private void ReadAim()

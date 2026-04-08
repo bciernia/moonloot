@@ -58,8 +58,10 @@ public class Projectile : MonoBehaviour
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest") || other.gameObject.CompareTag("NPC")) return;
 
         SoundManager.Instance.PlaySound(ProjectileSo.HitSound);
-        other.GetComponent<IDamageable>()?.TakeDamage(Damage);
+        other.GetComponent<IDamageable>()?.TakeDamage(Damage, Shooter.transform);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, ProjectileSo.KnockBackThrust);
+
+        if (Shooter.CompareTag("Player")) CombatStatsManager.Instance.DamageDealt += Damage;
         
         if(ProjectileSo.Effect) ProjectileSo.Effect.Apply(other.gameObject, ProjectileSo.EffectChance);
 
