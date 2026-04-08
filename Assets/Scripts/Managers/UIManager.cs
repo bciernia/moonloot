@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -98,6 +100,13 @@ public class UIManager : MonoBehaviour
 
     private float _displayedHp;
     private float _displayedMp;
+
+    [Header("Choose npc buttons")] 
+    [SerializeField] private NpcDatabase _npcDatabase;
+    [SerializeField] private Transform _npcContainer;
+    [SerializeField] private GameObject _npcButtonPrefab;
+
+    private NPCData _selectedNPC;
 
     private void Awake()
     {
@@ -428,6 +437,8 @@ public class UIManager : MonoBehaviour
 
         UpdateStartNightUI();
 
+        SpawnNPCButtons();
+        
         _startNightPanel.SetActive(true);
         PauseManager.Instance.RequestPause();
     }
@@ -463,8 +474,28 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    public void OnStartNightClicked()
+    public void OnStartNightClicked(NPCData chosenNpc)
     {
+        SelectNPC(chosenNpc);
+        
+        if (_selectedNPC == null)
+        {
+            Debug.Log("No NPC selected");
+            return;
+        }
+
+        //TODO Animation + sound
+        
+        ApplyNPCEffect(_selectedNPC);
+        
+        StartCoroutine(StartNightWithDelay());
+    }
+    
+    private IEnumerator StartNightWithDelay()
+    {
+        //TODO jak będzie animacja to wtedy zwiększyć ten czas
+        yield return new WaitForSecondsRealtime(0.0f);
+
         _startNightPanel.SetActive(false);
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
@@ -559,7 +590,8 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    public void ShowSummary()
+    //TODO Show summary after night
+    private void ShowSummary()
     {
         var stats = CombatStatsManager.Instance;
 
@@ -570,5 +602,98 @@ public class UIManager : MonoBehaviour
         // _damageText.text = $"Damage: {stats.DamageDealt}";
         // _killsText.text = $"Kills: {stats.EnemiesKilled}";
         // _distanceText.text = $"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m";
+    }
+    
+    private List<NPCData> GetRandomNPCs(int count)
+    {
+        var result = new List<NPCData>();
+
+        var list = new List<NPCData>(_npcDatabase.NpcDatas);
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            var temp = list[i];
+            var randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+
+        for (var i = 0; i < count && i < list.Count; i++)
+        {
+            result.Add(list[i]);
+        }
+
+        return result;
+    }
+    
+    private void ClearNPCButtons()
+    {
+        foreach (Transform child in _npcContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
+    private void SpawnNPCButtons()
+    {
+        ClearNPCButtons();
+
+        var npcs = GetRandomNPCs(3);
+
+        foreach (var npc in npcs)
+        {
+            var obj = Instantiate(_npcButtonPrefab, _npcContainer);
+            var btn = obj.GetComponent<NPCSelectionButton>();
+
+            btn.Setup(npc, this);
+            
+            var button = obj.GetComponent<Button>();
+            button.onClick.AddListener(() => btn.OnClick(npc));
+        }
+    }
+    
+    private void SelectNPC(NPCData npc)
+    {
+        _selectedNPC = npc;
+
+        Debug.Log($"Selected NPC: {npc.Type}");
+    }
+    
+    private void ApplyNPCEffect(NPCData npc)
+    {
+        switch (GetGroup(npc.Type))
+        {
+            case NPCGroup.Stat:
+                Debug.Log("Apply npc bonus");
+                // ApplyNPCBonus(npc.Type);
+                break;
+
+            case NPCGroup.Merchant:
+                Debug.Log("Merchant unlocked");
+                break;
+
+            case NPCGroup.Hero:
+                Debug.Log("Hero unlocked");
+                break;
+        }
+    }
+    
+    private NPCGroup GetGroup(NPCType type)
+    {
+        switch (type)
+        {
+            case NPCType.Blacksmith:
+            case NPCType.Healer:
+            case NPCType.Hunter:
+                return NPCGroup.Stat;
+
+            case NPCType.Weapon:
+            case NPCType.Armor:
+            case NPCType.Potion:
+                return NPCGroup.Merchant;
+
+            default:
+                return NPCGroup.Hero;
+        }
     }
 }
