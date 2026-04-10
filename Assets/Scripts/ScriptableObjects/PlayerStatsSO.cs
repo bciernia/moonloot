@@ -26,6 +26,11 @@ public class PlayerStatsSO : ScriptableObject
     public float PhysicalResistance = 0;
     public float MagicResistance = 0;
 
+    [Header("Bonuses")] 
+    public float BonusDamage;
+    public float BonusMaxHP;
+    public float BonusSpeed;
+
     [Range(0, 3)]
     public float ShieldResistance = 1; //Wartość procentowa 1 = 100%, 0.5 - 50%, 1.5 - 150%
     

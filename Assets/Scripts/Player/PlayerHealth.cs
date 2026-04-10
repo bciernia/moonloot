@@ -33,7 +33,8 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
     private void PrepareStatistics()
     {
         PlayerStatisticsManager.Instance.SetLevel(_playerStats.Level);
-        PlayerStatisticsManager.Instance.SetDamage(_playerStats.TotalDamage);
+        Player.Instance.PlayerAttack.RecalculateDamage();
+        // PlayerStatisticsManager.Instance.SetDamage(_playerStats.TotalDamage);
         PlayerStatisticsManager.Instance.SetPhysicalResistance(_playerStats.GetPhysicalReductionPercent());
         PlayerStatisticsManager.Instance.SetMagicResistance(_playerStats.GetMagicReductionPercent());
         

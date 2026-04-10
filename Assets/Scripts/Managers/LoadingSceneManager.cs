@@ -124,6 +124,10 @@ public class LoadingSceneManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TryFindDayNightCycle();
+        
+        WorldManager.Instance.ResetSpawnPoints();
+        WorldManager.Instance.AssignPlacesIfNeeded();
+        WorldManager.Instance.SpawnNPCs();
     }
     
     private void TryFindDayNightCycle()

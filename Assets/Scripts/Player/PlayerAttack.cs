@@ -123,9 +123,19 @@ public class PlayerAttack : MonoBehaviour
         SetPlayerTotalDamage();
     }
 
-    private void SetPlayerTotalDamage()
+    private float SetPlayerTotalDamage()
     {
-        _playerStats.TotalDamage = (_playerStats.BaseDamage + _weapon.Damage) * _currentDmgMultiplier;
+        var baseDamage = _playerStats.BaseDamage;
+        var weaponDamage = _weapon != null ? _weapon.Damage : 0f;
+        var npcBonus = _playerStats.BonusDamage;
+
+        var final = (baseDamage + weaponDamage + npcBonus) * _currentDmgMultiplier;
+
+        _playerStats.TotalDamage = final;
+        
+        Debug.Log(final);
+        
+        return final;
     }
 
     public float GetPlayerDamage => _playerStats.TotalDamage;
@@ -154,5 +164,11 @@ public class PlayerAttack : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.actions["Attack"].performed -= _ => Attack();
+    }
+    
+    public void RecalculateDamage()
+    {
+        var totalDmg = SetPlayerTotalDamage();
+        PlayerStatisticsManager.Instance.SetDamage(totalDmg);
     }
 }

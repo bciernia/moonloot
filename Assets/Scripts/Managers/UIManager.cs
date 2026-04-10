@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -79,6 +80,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _objectiveText;
     [SerializeField] private TextMeshProUGUI _mutationText;
 
+    [Header("Choose npc buttons")] 
+    [SerializeField] private NpcDatabase _npcDatabase;
+    [SerializeField] private Transform _npcContainer;
+    [SerializeField] private GameObject _npcButtonPrefab;
+    
     private float _waveTime;
     private bool _isTimerActive;
     
@@ -100,12 +106,6 @@ public class UIManager : MonoBehaviour
 
     private float _displayedHp;
     private float _displayedMp;
-
-    [Header("Choose npc buttons")] 
-    [SerializeField] private NpcDatabase _npcDatabase;
-    [SerializeField] private Transform _npcContainer;
-    [SerializeField] private GameObject _npcButtonPrefab;
-
     private NPCData _selectedNPC;
 
     private void Awake()
@@ -417,6 +417,7 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
+        ApplyNPCEffect(_selectedNPC);
         PauseManager.Instance.RequestPause();
         ShowSummary();
     }
@@ -477,18 +478,16 @@ public class UIManager : MonoBehaviour
     public void OnStartNightClicked(NPCData chosenNpc)
     {
         SelectNPC(chosenNpc);
-        
-        if (_selectedNPC == null)
-        {
-            Debug.Log("No NPC selected");
-            return;
-        }
 
+        WorldManager.Instance.AddNpc(chosenNpc);
+        
         //TODO Animation + sound
         
-        ApplyNPCEffect(_selectedNPC);
+        _startNightPanel.SetActive(false);
+        PauseManager.Instance.ReleasePause();
+        HordeManager.Instance.StartHorde();
         
-        StartCoroutine(StartNightWithDelay());
+        // StartCoroutine(StartNightWithDelay());
     }
     
     private IEnumerator StartNightWithDelay()
@@ -608,7 +607,15 @@ public class UIManager : MonoBehaviour
     {
         var result = new List<NPCData>();
 
-        var list = new List<NPCData>(_npcDatabase.NpcDatas);
+        var rescued = WorldManager.Instance.RescuedNpcs;
+
+        var list = _npcDatabase.NpcDatas.Where(npc => !rescued.Contains(npc)).ToList();
+
+        if (list.Count == 0)
+        {
+            Debug.Log("No more NPCs to spawn");
+            return result;
+        }
 
         for (var i = 0; i < list.Count; i++)
         {
@@ -628,9 +635,12 @@ public class UIManager : MonoBehaviour
     
     private void ClearNPCButtons()
     {
-        foreach (Transform child in _npcContainer)
+        for (var i = _npcContainer.childCount - 1; i >= 0; i--)
         {
-            Destroy(child.gameObject);
+            var child = _npcContainer.GetChild(i);
+
+            if (child != null)
+                Destroy(child.gameObject);
         }
     }
     
@@ -639,6 +649,12 @@ public class UIManager : MonoBehaviour
         ClearNPCButtons();
 
         var npcs = GetRandomNPCs(3);
+
+        if (npcs.Count == 0)
+        {
+            Debug.Log("All npcs collected");
+            return;
+        }
 
         foreach (var npc in npcs)
         {
@@ -664,8 +680,8 @@ public class UIManager : MonoBehaviour
         switch (GetGroup(npc.Type))
         {
             case NPCGroup.Stat:
-                Debug.Log("Apply npc bonus");
-                // ApplyNPCBonus(npc.Type);
+                _playerStatsSo.BonusDamage += 5f;
+                Player.Instance.PlayerAttack.RecalculateDamage();
                 break;
 
             case NPCGroup.Merchant:
