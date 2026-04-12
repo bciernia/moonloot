@@ -66,22 +66,22 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
 
     public void RestoreHealth(float amount)
     {
-        _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.MaxHP);
+        _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.GetMaxHp());
     }
 
     public void RestoreMana(float amount)
     {
-        _playerStats.MP = Mathf.Min(_playerStats.MP + amount, _playerStats.MaxMP);
+        _playerStats.MP = Mathf.Min(_playerStats.MP + amount, _playerStats.GetMaxMp());
     }
     
     public bool CanRestoreHealth()
     {
-        return _playerStats.HP > 0 && _playerStats.HP < _playerStats.MaxHP;
+        return _playerStats.HP > 0 && _playerStats.HP < _playerStats.GetMaxHp();
     }
     
     public bool CanRestoreMana()
     {
-        return _playerStats.MP > 0 && _playerStats.MP < _playerStats.MaxMP;
+        return _playerStats.MP > 0 && _playerStats.MP < _playerStats.GetMaxMp();
     }
 
     public void ReduceDamage(float amount, float duration, GameObject effect)

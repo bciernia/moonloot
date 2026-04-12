@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,10 +23,6 @@ public class UIManager : MonoBehaviour
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _manaTMP;
-
-    [Header("Stats Panel")]
-    [SerializeField] private TextMeshProUGUI _statsLevelTMP;
-    [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
     [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
@@ -132,6 +131,9 @@ public class UIManager : MonoBehaviour
 
         UpdateKeyTexts();
         UpdatePlayerUI(force: true);
+        
+        //_playerStatsSo.ResetBonuses();
+        UpdateStatsPanel();
         InitializeClock();
     }
 
@@ -206,6 +208,11 @@ public class UIManager : MonoBehaviour
         UpdatePlayerUI();
         UpdateClock();
         UpdateHordeUI();
+        
+        if (_gameMenu.activeSelf)
+        {
+            UpdateStatsPanel();
+        }
     }
 
     #region UI Update
@@ -216,18 +223,21 @@ public class UIManager : MonoBehaviour
         _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 20f * Time.deltaTime);
         _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 20f * Time.deltaTime);
 
-        var hpRatio = _displayedHp / _playerStatsSo.MaxHP;
-        var mpRatio = _displayedMp / _playerStatsSo.MaxMP;
-
+        var maxHpWithBonuses = _playerStatsSo.GetMaxHp();
+        var maxMpWithBonuses = _playerStatsSo.GetMaxMp();
+        
+        var hpRatio = _displayedHp / maxHpWithBonuses;
+        var mpRatio = _displayedMp / maxMpWithBonuses;
+        
         _healthBar.fillAmount = hpRatio;
         _manaBar.fillAmount = mpRatio;
         _healthBarEq.fillAmount = hpRatio;
         _manaBarEq.fillAmount = mpRatio;
 
-        _healthTMP.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
-        _manaTMP.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
-        _healthTMPEq.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
-        _manaTMPEq.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
+        _healthTMP.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
+        _manaTMP.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
+        _healthTMPEq.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
+        _manaTMPEq.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
     }
     #endregion
 
@@ -418,6 +428,7 @@ public class UIManager : MonoBehaviour
     {
         _nightSummaryPanel.SetActive(true);
         ApplyNPCEffect(_selectedNPC);
+        UpdateStatsPanel();
         PauseManager.Instance.RequestPause();
         ShowSummary();
     }
@@ -680,10 +691,11 @@ public class UIManager : MonoBehaviour
         switch (GetGroup(npc.Type))
         {
             case NPCGroup.Stat:
-                _playerStatsSo.BonusDamage += 5f;
-                Player.Instance.PlayerAttack.RecalculateDamage();
+                foreach (var bonus in npc.Bonuses)
+                {
+                    _playerStatsSo.AddBonus(bonus);
+                }
                 break;
-
             case NPCGroup.Merchant:
                 Debug.Log("Merchant unlocked");
                 break;
@@ -691,6 +703,8 @@ public class UIManager : MonoBehaviour
             case NPCGroup.Hero:
                 Debug.Log("Hero unlocked");
                 break;
+            default:
+                throw new ArgumentOutOfRangeException();
         }
     }
     
@@ -711,5 +725,24 @@ public class UIManager : MonoBehaviour
             default:
                 return NPCGroup.Hero;
         }
+    }
+    
+    private void UpdateStatsPanel()
+    {
+        if (_playerStatsSo == null) return;
+
+        var player = Player.Instance;
+        var movement = player.GetComponent<PlayerMovement>();
+
+        PlayerStatisticsManager.Instance.SetDamage(_playerStatsSo.TotalDamage);
+
+        var finalSpeed = movement.GetFinalSpeed();
+        PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
+
+        var critRaw = _playerStatsSo.GetBonusValue(BonusType.Crit);
+        var crit = Mathf.Max(0f, critRaw) * 100f;
+        PlayerStatisticsManager.Instance.SetCritChance(Mathf.Min(crit, 100f));
+        
+        Player.Instance.PlayerAttack.RecalculateDamage();
     }
 }

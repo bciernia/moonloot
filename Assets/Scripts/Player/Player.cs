@@ -47,7 +47,7 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.ResetPlayerStats();
         _playerAnimations.ResetPlayer();
     }
-
+    
     public void Save()
     {
         ES3.Save("player_position", transform.position);

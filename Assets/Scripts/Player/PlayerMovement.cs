@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float worldMapSpeedMultiplier = 0.4f;
     private float _currentSpeedMultiplier = 1f;
 
-    public bool limitToCameraView;
+    public float BaseSpeed => speed;
     
     private void Awake()
     {
@@ -49,8 +49,10 @@ public class PlayerMovement : MonoBehaviour
     
     private Vector2 CalculatedPosition()
     {
+        var bonusMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
+        
         return _rb2D.position +
-               _moveDirection * (speed * _currentSpeedMultiplier * Time.fixedDeltaTime);
+               _moveDirection * (speed * _currentSpeedMultiplier * bonusMultiplier *Time.fixedDeltaTime);
     }
 
     public void ApplySpeedMultiplier(float multiplier, float duration)
@@ -128,6 +130,14 @@ public class PlayerMovement : MonoBehaviour
                 _currentSpeedMultiplier = 1f;
                 break;
         }
+    }
+
+    public float GetFinalSpeed()
+    {
+        var baseMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
+        var currentMultiplier = _currentSpeedMultiplier <= 0 ? 1f : _currentSpeedMultiplier;
+
+        return speed * currentMultiplier * baseMultiplier;
     }
     
     private void OnEnable()

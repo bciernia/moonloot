@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     private SlashEffect _slash;
 
     private float _currentDmgMultiplier = 1f;
-
+    
     private void Awake()
     {
         _playerMana = GetComponent<PlayerMana>();
@@ -127,18 +128,25 @@ public class PlayerAttack : MonoBehaviour
     {
         var baseDamage = _playerStats.BaseDamage;
         var weaponDamage = _weapon != null ? _weapon.Damage : 0f;
-        var npcBonus = _playerStats.BonusDamage;
 
-        var final = (baseDamage + weaponDamage + npcBonus) * _currentDmgMultiplier;
+        var damage = baseDamage + weaponDamage;
+        damage *= _playerStats.GetDamageBonusMultiplier();
 
-        _playerStats.TotalDamage = final;
+        _playerStats.TotalDamage = damage;
         
-        Debug.Log(final);
-        
-        return final;
+        return damage;
     }
 
-    public float GetPlayerDamage => _playerStats.TotalDamage;
+    public float GetPlayerDamage()
+    {
+        var critCheck = RNGManager.Instance.GetRandomNumberFromRange();
+        var critStat = Mathf.Round(_playerStats.GetCritBonusMultiplier() * 100f - 100f);
+        
+        if (critCheck <= critStat)
+            return _playerStats.TotalDamage * 2;
+        
+        return _playerStats.TotalDamage;
+    }
 
     public void ApplyDmgMultiplier(float multiplier, float duration)
     {

@@ -10,6 +10,8 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     [SerializeField] private TextMeshProUGUI PhysicalResistance;
     [SerializeField] private TextMeshProUGUI MagicResistance;
     [SerializeField] private TextMeshProUGUI DmgReduction;
+    [SerializeField] private TextMeshProUGUI CritChance;
+    [SerializeField] private TextMeshProUGUI MoveSpeed;
 
     public void SetLevel(int level)
     {
@@ -18,7 +20,7 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     
     public void SetDamage(float dmg)
     {
-        Damage.text = dmg.ToString(CultureInfo.InvariantCulture);
+        Damage.text = dmg.ToString("0.0", CultureInfo.InvariantCulture);
     }
     
     public void SetPhysicalResistance(float percent)
@@ -34,5 +36,15 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     public void SetShieldReductionPercent(float percent)
     {
         DmgReduction.text = percent.ToString("0") + "%";
+    }
+
+    public void SetCritChance(float percent)
+    {
+        CritChance.text = percent.ToString("0") + "%";
+    }
+    
+    public void SetMoveSpeed(float moveSpeed)
+    {
+        MoveSpeed.text = moveSpeed.ToString("0.0", CultureInfo.InvariantCulture);
     }
 }

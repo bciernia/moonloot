@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NPC_", menuName = "Game/NPC")]
@@ -12,4 +13,6 @@ public abstract class NPCData : ScriptableObject
 
     public Sprite Portrait;
     public GameObject Character;
+
+    public List<StatBonus> Bonuses;
 }
