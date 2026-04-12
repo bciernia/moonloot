@@ -1,0 +1,125 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7971675211985300347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 3
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Blacksmith
+    - id: 1
+      language: en
+      text: Thank you for help!
+    - id: 2
+      language: en
+      text: I will help you be stronger.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Blacksmith
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-04-12@15:40:14
+  editTime: 2026-04-12@15:40:14
+  nodes:
+  - rid: 6037981577472639158
+  - rid: 6037981577472639159
+  - rid: 6037981577472639160
+  translationLibrary: {fileID: -7971675211985300347}
+  maxID: 8
+  references:
+    version: 2
+    RefIds:
+    - rid: 6037981577472639158
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 2
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 3
+          attachedIds: 05000000
+          ownerId: 2
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 401.90155
+        yPosition: 247.7239
+        entryPointName: 
+    - rid: 6037981577472639159
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 5
+          attachedIds: 03000000
+          ownerId: 4
+          connectionType: 1
+        outputs:
+        - id: 6
+          attachedIds: 08000000
+          ownerId: 4
+          connectionType: 1
+        width: 268
+        height: 185.62502
+        xPosition: 578.4015
+        yPosition: 248.38785
+        items:
+        - rid: 6037981577472639161
+        - rid: 6037981577472639162
+        characterName: Blacksmith
+        icon: 
+    - rid: 6037981577472639160
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 7
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 8
+          attachedIds: 06000000
+          ownerId: 7
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 973.0917
+        yPosition: 238.46872
+        exitPointName: 
+    - rid: 6037981577472639161
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you for help!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 6037981577472639162
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I will help you be stronger.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

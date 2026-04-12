@@ -72,6 +72,12 @@ public class UIManager : MonoBehaviour
     [Header("Day night panels")] 
     [SerializeField] private GameObject _startNightPanel;
     [SerializeField] private GameObject _nightSummaryPanel;
+
+    [Header("Night summary panel")] 
+    [SerializeField] private GameObject _bonusesSummaryPanel;
+    [SerializeField] private GameObject _levelSummaryPanel;
+    [SerializeField] private GameObject _summaryInfoObject;
+    [SerializeField] private GameObject _exitSummaryBtn;
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
@@ -430,7 +436,8 @@ public class UIManager : MonoBehaviour
         ApplyNPCEffect(_selectedNPC);
         UpdateStatsPanel();
         PauseManager.Instance.RequestPause();
-        ShowSummary();
+        _exitSummaryBtn.SetActive(false);
+        StartCoroutine(ShowSummary());
     }
     
     public void OnReturnToDayClicked()
@@ -600,18 +607,34 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    //TODO Show summary after night
-    private void ShowSummary()
+    private IEnumerator ShowSummary()
     {
         var stats = CombatStatsManager.Instance;
 
-        Debug.Log($"Damage: {stats.DamageDealt}");
-        Debug.Log($"Enemies killed : {stats.EnemiesKilled}");
-        Debug.Log($"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m");
+        foreach (Transform child in _bonusesSummaryPanel.transform)
+            Destroy(child.gameObject);
+
+        foreach (Transform child in _levelSummaryPanel.transform)
+            Destroy(child.gameObject);
+
+        if (_selectedNPC != null && _selectedNPC.Bonuses != null)
+        {
+            foreach (var bonus in _selectedNPC.Bonuses)
+            {
+                var text = FormatBonus(bonus);
+                CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+                yield return new WaitForSecondsRealtime(.75f);
+            }
+        }
+
+        CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Enemies killed: {stats.EnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
         
-        // _damageText.text = $"Damage: {stats.DamageDealt}";
-        // _killsText.text = $"Kills: {stats.EnemiesKilled}";
-        // _distanceText.text = $"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m";
+        _exitSummaryBtn.SetActive(true);
     }
     
     private List<NPCData> GetRandomNPCs(int count)
@@ -682,8 +705,6 @@ public class UIManager : MonoBehaviour
     private void SelectNPC(NPCData npc)
     {
         _selectedNPC = npc;
-
-        Debug.Log($"Selected NPC: {npc.Type}");
     }
     
     private void ApplyNPCEffect(NPCData npc)
@@ -745,4 +766,34 @@ public class UIManager : MonoBehaviour
         
         Player.Instance.PlayerAttack.RecalculateDamage();
     }
+    
+    private string FormatBonus(StatBonus bonus)
+    {
+        return bonus.Type switch
+        {
+            BonusType.Damage => $"+{bonus.Value:0}% Damage",
+            BonusType.MoveSpeed => $"+{bonus.Value:0}% Move Speed",
+            BonusType.Crit => $"+{bonus.Value:0}% Crit Chance",
+
+            BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
+            BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
+
+            _ => bonus.Type.ToString()
+        };
+    }
+    
+    private void CreateSummaryText(string text, Transform parent, BonusType? bonusType = null)
+    {
+        var obj = Instantiate(_summaryInfoObject, parent);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = text;
+        tmp.color = bonusType switch
+        {
+            BonusType.MaxHp => Color.green,
+            BonusType.Damage => Color.red,
+            BonusType.MoveSpeed => Color.cyan,
+            _ => Color.white
+        };
+    }
+    
 }
