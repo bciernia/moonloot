@@ -18,10 +18,10 @@ public class ShopManager : Singleton<ShopManager>
     
     private InventorySO playerInventory;
 
-    public InventorySO SellerInventory { get; private set; }
+    public InventoryRuntime SellerInventory { get; private set; }
     private InventoryType InventoryType { get; set; }
     
-    public void InitializeShop(InventorySO sellerInventory, string panelName, InventoryType inventoryType)
+    public void InitializeShop(InventoryRuntime sellerInventory, string panelName, InventoryType inventoryType)
     {
         SellerInventory = sellerInventory;
         InventoryPanel.SetActive(true);
@@ -51,7 +51,7 @@ public class ShopManager : Singleton<ShopManager>
         inventoryPage.ResetSelection();
     }
 
-    private void InitializeSellerEquipment(InventorySO inventorySize)
+    private void InitializeSellerEquipment(InventoryRuntime inventorySize)
     {
         listOfSellerItems.Clear();
 

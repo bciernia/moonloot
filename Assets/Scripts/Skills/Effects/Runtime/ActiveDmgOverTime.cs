@@ -7,11 +7,13 @@ public class ActiveDmgOverTime : ActiveEffect
     private float tickTimer;
     private Action<GameObject> onTick;
     private GameObject target;
+    private EnemyStatistics enemyStats;
 
     public void InitializeEffect(Effect effect, GameObject target, GameObject uiObj, Action<GameObject> onTickAction)
     {
         this.target = target;
-        this.onTick = onTickAction;
+        enemyStats = target.GetComponent<EnemyStatistics>();
+        onTick = onTickAction;
         tickInterval = effect.TickInterval;
         
         Initialize(effect, uiObj, null);
@@ -20,7 +22,11 @@ public class ActiveDmgOverTime : ActiveEffect
 
     protected override void Tick(float deltaTime)
     {
+        if (target == null || enemyStats == null) return;
+        if (enemyStats.CurrentHP <= 0) return;
+        
         tickTimer += deltaTime;
+
         if (tickTimer >= tickInterval)
         {
             tickTimer -= tickInterval;
