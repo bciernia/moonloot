@@ -14,5 +14,5 @@ public abstract class NPCData : ScriptableObject
     public Sprite Portrait;
     public GameObject Character;
 
-    public List<StatBonus> Bonuses;
+    public List<NPCUpgradeLevel> UpgradeLevels;
 }

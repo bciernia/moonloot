@@ -7,7 +7,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     [SerializeField] public string sellerId;
     
     private EnemyStatistics _enemyStatistics;
-    private InventorySO sellerInventory;
+    private InventorySO _sellerInventory;
     
         
 #if UNITY_EDITOR
@@ -27,7 +27,8 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     private void Awake()
     {
         _enemyStatistics = GetComponent<EnemyStatistics>();
-        sellerInventory = SellerInventory;
+        _sellerInventory = Instantiate(SellerInventory);
+        _sellerInventory.Initialize();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -50,7 +51,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     {
         if (PauseManager.Instance.pauseRequests > 0) return;
         
-        ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, InventoryType.Shop);
+        ShopManager.Instance.InitializeShop(_sellerInventory, _enemyStatistics.Name, InventoryType.Shop);
     }
 
     public string GetInteractionText()
@@ -60,14 +61,14 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     
     public void Save()
     {
-        ES3.Save($"shop_{sellerId}", sellerInventory);
+        ES3.Save($"shop_{sellerId}", _sellerInventory);
     }
 
     public void Load()
     {
         if (ES3.KeyExists($"shop_{sellerId}"))
         {
-            sellerInventory = ES3.Load<InventorySO>($"shop_{sellerId}");
+            _sellerInventory = ES3.Load<InventorySO>($"shop_{sellerId}");
         }
     }
 }

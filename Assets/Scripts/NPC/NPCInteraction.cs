@@ -1,3 +1,4 @@
+using EasyTalk.Controller;
 using UnityEngine;
 
 public class NPCInteraction : MonoBehaviour, IInteractable
@@ -63,5 +64,9 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private void DisableNpcMovement() => SetNpcMovementEnabled(false);
     public void EnableNpcMovement() => SetNpcMovementEnabled(true);
 
-    public string GetInteractionText() => $"Talk to: {NpcName}";
+    public string GetInteractionText()
+    {
+        var npcName = GetComponent<NPCStatUpgrade>()?.GetNpcName();
+        return string.IsNullOrEmpty(npcName) ? $"Talk to: {NpcName}" : $"Talk to: {npcName}";
+    }
 }

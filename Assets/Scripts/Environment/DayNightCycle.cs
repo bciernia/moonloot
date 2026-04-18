@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -36,10 +37,18 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private bool isNight = false;
     [SerializeField] private bool hordeStarted = false;
 
+    private bool hordePending = false;
+    
     private void Awake()
     {
         AssignLights();
         ApplyInitialLighting();
+    }
+
+    private void Start()
+    {
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEnded += HandleDialogueEnded;
     }
 
     private void OnEnable()
@@ -52,6 +61,8 @@ public class DayNightCycle : MonoBehaviour
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (DialogueManager.Instance != null)
+            DialogueManager.Instance.OnDialogueEnded -= HandleDialogueEnded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -62,7 +73,7 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
-        UpdateLighting();
+        if(!hordePending) UpdateLighting();
     }
 
     private void UpdateLighting()
@@ -110,15 +121,29 @@ public class DayNightCycle : MonoBehaviour
         }
 
         // HORDA (koniec dnia)
-        if (timer >= dayDuration && !hordeStarted)
+        if (timer >= dayDuration && !hordeStarted && !hordePending)   
         {
-            hordeStarted = true;
-
-            Debug.Log("HORDE ATTACK STARTED");
-            HordeAttack?.Invoke();
+            if (DialogueManager.Instance.IsInDialogue())
+            {
+                hordePending = true;
+            }
+            else
+            {
+                StartHorde();
+            }
         }
 
         globalLight.color = targetColor;
+    }
+
+    private void StartHorde()
+    {
+        if (hordeStarted) return;
+
+        hordeStarted = true;
+        hordePending = false;
+        Debug.Log("HORDE ATTACK STARTED");
+        HordeAttack?.Invoke();
     }
 
     private void ApplyInitialLighting()
@@ -200,5 +225,16 @@ public class DayNightCycle : MonoBehaviour
     {
         return timer / dayDuration;
     }
-    
+
+    private void HandleDialogueEnded()
+    {
+        if (hordePending) StartCoroutine(StartHordeWithDelay());
+    }
+
+    private IEnumerator StartHordeWithDelay()
+    {
+        Debug.Log("Odliczanieee");
+        yield return new WaitForSeconds(.5f);
+        StartHorde();
+    }
 }

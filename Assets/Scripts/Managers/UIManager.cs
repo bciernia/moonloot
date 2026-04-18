@@ -433,7 +433,7 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        ApplyNPCEffect(_selectedNPC);
+        NPCManager.Instance.ApplyNPC(_selectedNPC);
         UpdateStatsPanel();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
@@ -617,16 +617,25 @@ public class UIManager : MonoBehaviour
         foreach (Transform child in _levelSummaryPanel.transform)
             Destroy(child.gameObject);
 
-        if (_selectedNPC != null && _selectedNPC.Bonuses != null)
+        switch (_selectedNPC)
         {
-            foreach (var bonus in _selectedNPC.Bonuses)
-            {
-                var text = FormatBonus(bonus);
-                CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
-                yield return new WaitForSecondsRealtime(.75f);
-            }
+            case NPCStat statNpc:
+                yield return ShowNpcStatSummary(statNpc);
+                break;
+            
+            case NPCMerchant merchantNpc:
+                ShowNpcMerchantSummary(merchantNpc);
+                break;
+            
+            case NPCHero heroNpc:
+                ShowNpcHeroSummary(heroNpc);
+                break;
+            
+            default:
+                Debug.LogWarning("Unknown NPC type");
+                break;
         }
-
+            
         CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
         CreateSummaryText($"Enemies killed: {stats.EnemiesKilled}", _levelSummaryPanel.transform);
@@ -635,6 +644,32 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(.75f);
         
         _exitSummaryBtn.SetActive(true);
+    }
+
+    private void ShowNpcMerchantSummary(NPCMerchant merchantNpc)
+    {
+        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = $"Saved {merchantNpc.Name}";
+    }
+
+    private void ShowNpcHeroSummary(NPCHero heroNpc)
+    {
+        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = $"Saved {heroNpc.Name}";   
+    }
+
+    private IEnumerator ShowNpcStatSummary(NPCStat npc)
+    {
+        if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
+        
+        foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+        {
+            var text = FormatBonus(bonus);
+            CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+            yield return new WaitForSecondsRealtime(.75f);
+        }
     }
     
     private List<NPCData> GetRandomNPCs(int count)
@@ -705,47 +740,6 @@ public class UIManager : MonoBehaviour
     private void SelectNPC(NPCData npc)
     {
         _selectedNPC = npc;
-    }
-    
-    private void ApplyNPCEffect(NPCData npc)
-    {
-        switch (GetGroup(npc.Type))
-        {
-            case NPCGroup.Stat:
-                foreach (var bonus in npc.Bonuses)
-                {
-                    _playerStatsSo.AddBonus(bonus);
-                }
-                break;
-            case NPCGroup.Merchant:
-                Debug.Log("Merchant unlocked");
-                break;
-
-            case NPCGroup.Hero:
-                Debug.Log("Hero unlocked");
-                break;
-            default:
-                throw new ArgumentOutOfRangeException();
-        }
-    }
-    
-    private NPCGroup GetGroup(NPCType type)
-    {
-        switch (type)
-        {
-            case NPCType.Blacksmith:
-            case NPCType.Healer:
-            case NPCType.Hunter:
-                return NPCGroup.Stat;
-
-            case NPCType.Weapon:
-            case NPCType.Armor:
-            case NPCType.Potion:
-                return NPCGroup.Merchant;
-
-            default:
-                return NPCGroup.Hero;
-        }
     }
     
     private void UpdateStatsPanel()

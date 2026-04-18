@@ -11,6 +11,7 @@ public enum NPCType
     Blacksmith,
     Healer,
     Hunter,
+    Artificer,
     
     //MERCHANT
     Weapon,

@@ -18,7 +18,7 @@ public class NPCSelectionButton : MonoBehaviour
         
         _nameText.text = data.Name;
         _professionText.text = data.Profession;
-        _portrait.sprite = data.Portrait;
+        _portrait.sprite = data.Character.GetComponent<SpriteRenderer>().sprite;
 
         if (data is NPCStat)
         {
@@ -41,16 +41,14 @@ public class NPCSelectionButton : MonoBehaviour
     
     private string FormatBonuses(NPCData data)
     {
-        if (data.Bonuses == null || data.Bonuses.Count == 0)
+        if (data.UpgradeLevels[0].Bonuses == null || data.UpgradeLevels[0].Bonuses.Count == 0)
             return "";
 
         System.Text.StringBuilder sb = new();
 
-        foreach (var bonus in data.Bonuses)
+        foreach (var bonus in data.UpgradeLevels[0].Bonuses)
         {
             var statName = GetReadableName(bonus.Type);
-            var percent = bonus.Value;
-
             var getBonusValue = GetBonusValue(bonus);
             
             sb.AppendLine($"+{getBonusValue} {statName}");

@@ -72,7 +72,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _knockBack = GetComponent<KnockBack>();
         _feelEffects = GetComponent<MMF_Player>();
     }
-    
+
     public void Initialize()
     {
         if (_initialized) return;
@@ -252,7 +252,5 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         {
             transform.localScale = new Vector3(1.4f, 1.4f, 1f);
         }
-        
-        
     }
 }

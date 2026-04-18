@@ -186,8 +186,12 @@ public class SoundManager : Singleton<SoundManager>
         var gridPosition = _map.WorldToCell(worldPosition);
         
         var tile = _map.GetTile(gridPosition);
-
-        var index = Random.Range(0, _dataFromTile[tile].Clips.Length);
+        var index = 0;
+        if (_dataFromTile[tile]?.Clips != null)
+        {
+            index = Random.Range(0, _dataFromTile[tile].Clips.Length);
+        }
+        
         var currentFloorClip = _dataFromTile[tile]?.Clips[index];
 
         return currentFloorClip;
