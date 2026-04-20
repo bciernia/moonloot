@@ -292,6 +292,11 @@ public class HordeManager : Singleton<HordeManager>
                     isElite,
                     isBoss
                 );
+
+                if (isBoss)
+                {
+                    NPCInfoManager.Instance.ShowNpcInfo(stats);
+                }
                 
                 ApplyMutation(stats);
             }

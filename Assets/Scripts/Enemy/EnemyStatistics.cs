@@ -135,6 +135,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
+
+            if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();
+            
             HordeManager.Instance.OnEnemyKilled();
             StartCoroutine(HandleDeathAnimation());
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci

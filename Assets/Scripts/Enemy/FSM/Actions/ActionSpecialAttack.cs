@@ -11,8 +11,13 @@ public class ActionSpecialAttack : FSMAction
 
     public override void Act()
     {
-        Debug.Log("SPELL");
         var player = GameObject.FindGameObjectWithTag("Player");
-        Instantiate(_enemyStatistics.SpecialAttacks[0], player.transform.position, Quaternion.identity);        
+        var specialAttack = Instantiate(_enemyStatistics.SpecialAttacks[0], player.transform.position, Quaternion.identity);
+        var spell = specialAttack.GetComponent<Spell>();
+
+        if (spell != null)
+        {
+            spell.Shooter = _enemyStatistics.gameObject;
+        }
     }
 }
