@@ -34,7 +34,7 @@ public class NPCSelectionButton : MonoBehaviour
         }
     }
 
-    public void OnClick(NPCData chosenNpc)
+    public void OnClick(VillageNpcData chosenNpc)
     {
         _uiManager.OnStartNightClicked(chosenNpc);
     }

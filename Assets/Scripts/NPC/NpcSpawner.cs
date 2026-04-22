@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ChestSpawner : MonoBehaviour
+public class NpcSpawner : MonoBehaviour
 {
     public Transform spawnPoint;
 

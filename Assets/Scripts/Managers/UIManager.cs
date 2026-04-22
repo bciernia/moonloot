@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
 
     private float _displayedHp;
     private float _displayedMp;
-    private NPCData _selectedNPC;
+    private VillageNpcData _selectedNPC;
 
     private void Awake()
     {
@@ -433,7 +433,7 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        NPCManager.Instance.ApplyNPC(_selectedNPC);
+        //NPCManager.Instance.ApplyNPC(_selectedNPC);
         UpdateStatsPanel();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
@@ -493,11 +493,11 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    public void OnStartNightClicked(NPCData chosenNpc)
+    public void OnStartNightClicked(VillageNpcData chosenNpc)
     {
         SelectNPC(chosenNpc);
 
-        WorldManager.Instance.AddNpc(chosenNpc);
+        // WorldManager.Instance.AddNpc(chosenNpc);
         
         //TODO Animation + sound
         
@@ -531,6 +531,7 @@ public class UIManager : MonoBehaviour
         {
             case HordeObjective.KillAll:
             case HordeObjective.EliteHunt:
+            case HordeObjective.NightExploration:
                 CreateEnemyCounter();
                 break;
 
@@ -672,9 +673,9 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private List<NPCData> GetRandomNPCs(int count)
+    private List<VillageNpcData> GetRandomNPCs(int count)
     {
-        var result = new List<NPCData>();
+        var result = new List<VillageNpcData>();
 
         var rescued = WorldManager.Instance.RescuedNpcs;
 
@@ -737,9 +738,10 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void SelectNPC(NPCData npc)
+    private void SelectNPC(VillageNpcData npc)
     {
         _selectedNPC = npc;
+        HordeManager.Instance.SelectedNpc = npc;
     }
     
     private void UpdateStatsPanel()

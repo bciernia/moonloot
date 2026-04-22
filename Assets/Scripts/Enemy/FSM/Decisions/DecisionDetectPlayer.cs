@@ -95,34 +95,35 @@ private bool DetectPlayer()
     var directionToTarget = (_enemyBrain.Player.position - _enemyBrain.transform.position).normalized;
     var distanceToTarget = Vector2.Distance(_enemyBrain.transform.position, _enemyBrain.Player.position);
 
-    if (chosenTarget == player)
-    {
-        var hit = Physics2D.Raycast(
-            _enemyBrain.transform.position,
-            directionToTarget,
-            distanceToTarget,
-            obstacleMask);
-
-        if (hit.collider)
-        {
-            StartStopFocusTimer();
-        }
-        else
-        {
-            _stopFocusTimer = FocusTime;
-        }
-
-        if (_stopFocusTimer <= 0f)
-        {
-            _enemyBrain.Player = null;
-            EnemyNavMeshAgent.DisableNavMeshAgent(_navMeshAgent);
-            return false;
-        }
-    }
-    else
-    {
-        _stopFocusTimer = FocusTime;
-    }
+    //TODO Przestaje gonić gracza jeśli go nie widzi
+    // if (chosenTarget == player)
+    // {
+    //     var hit = Physics2D.Raycast(
+    //         _enemyBrain.transform.position,
+    //         directionToTarget,
+    //         distanceToTarget,
+    //         obstacleMask);
+    //
+    //     if (hit.collider)
+    //     {
+    //         StartStopFocusTimer();
+    //     }
+    //     else
+    //     {
+    //         _stopFocusTimer = FocusTime;
+    //     }
+    //
+    //     if (_stopFocusTimer <= 0f)
+    //     {
+    //         _enemyBrain.Player = null;
+    //         EnemyNavMeshAgent.DisableNavMeshAgent(_navMeshAgent);
+    //         return false;
+    //     }
+    // }
+    // else
+    // {
+    //     _stopFocusTimer = FocusTime;
+    // }
 
     EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent);
 

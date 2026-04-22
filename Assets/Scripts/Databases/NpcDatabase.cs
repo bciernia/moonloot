@@ -3,5 +3,5 @@ using UnityEngine;
 
 public class NpcDatabase : MonoBehaviour
 {
-    public List<NPCData> NpcDatas;
+    public List<VillageNpcData> NpcDatas;
 }

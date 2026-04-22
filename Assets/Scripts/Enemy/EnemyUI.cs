@@ -6,7 +6,7 @@ public class EnemyUI : MonoBehaviour, IShowEnemyInfo
 {
     [SerializeField] private TextMeshProUGUI text;
     private EnemyBrain _enemyBrain;
-    public bool ShouldShowAttackCooldown { get; set; }
+    private bool ShouldShowAttackCooldown { get; set; }
     private float _lastDisplayedValue = -1f;
 
     public bool _isShownEnemyCooldown;

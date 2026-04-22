@@ -66,9 +66,12 @@ public class ActionChase : FSMAction
     //     }
     // }
 
-    private void ChasePlayer()
+    private void ChasePlayer() 
     {
         if (!_enemyBrain.Player) return;
+        
+        if (!_navMeshAgent.isOnNavMesh)
+            return;
         
         if (_enemyStatistics._isRooted)
         {
