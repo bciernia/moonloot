@@ -73,7 +73,7 @@ public class ActionChase : FSMAction
         if (!_navMeshAgent.isOnNavMesh)
             return;
         
-        if (_enemyStatistics._isRooted)
+        if (_enemyStatistics._isRooted || DialogueManager.Instance.IsInDialogue())
         {
             _navMeshAgent.isStopped = true;
             _enemyAnimator.SetIsMoving(false);
