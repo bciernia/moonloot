@@ -71,8 +71,8 @@ public class WeaponManager: Singleton<WeaponManager>
             _weaponManaTMP.gameObject.SetActive(false);
         }
 
-        PlayerStatisticsManager.Instance.SetDamage(weapon.Damage);
         GameManager.Instance.Player.PlayerAttack.EquipWeapon(weapon);
         EquippedItemsManager.Instance.SetItemAsEquipped(weapon, ItemType.Weapon);
+        Player.Instance.PlayerAttack.RecalculateDamage();
     }
 }

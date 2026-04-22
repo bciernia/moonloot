@@ -62,6 +62,8 @@ public class HordeConfigSO : ScriptableObject
     
     private HordeObjective GetRandomObjective(int hordeNumber)
     {
+        return HordeObjective.NightExploration;
+        
         if (hordeNumber < 3)
             return HordeObjective.KillAll;
 

@@ -26,12 +26,15 @@ public class NPCInfoManager : Singleton<NPCInfoManager>
     {
         if (_npcInfoPanel.activeSelf)
         {
-            _npcInfoPanel.SetActive(false);        
+            _npcInfoPanel.SetActive(false);
+            _enemyStatistics = null;
         }
     }
 
     private void UpdateNpcUI()
     {
+        if (_enemyStatistics == null) return;
+        
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _enemyStatistics.CurrentHP / _enemyStatistics.MaxHP,
             10f * Time.deltaTime);
     }

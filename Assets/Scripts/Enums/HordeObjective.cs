@@ -3,5 +3,6 @@ public enum HordeObjective
     KillAll,
     DefendObject,
     EliteHunt,
-    SurviveForTime
+    SurviveForTime,
+    NightExploration
 }

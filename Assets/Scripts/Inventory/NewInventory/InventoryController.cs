@@ -61,7 +61,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryData.AddItem(item, item.quantity);
     }
 
-    public void PrepareSellerInventoryData(InventorySO sellerInventory)
+    public void PrepareSellerInventoryData(InventoryRuntime sellerInventory)
     {
         UpdateSellerInventoryUI(sellerInventory.GetCurrentInventoryState());
         sellerInventory.OnInventoryUpdated += UpdateSellerInventoryUI;

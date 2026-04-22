@@ -66,11 +66,14 @@ public class ActionChase : FSMAction
     //     }
     // }
 
-    private void ChasePlayer()
+    private void ChasePlayer() 
     {
         if (!_enemyBrain.Player) return;
         
-        if (_enemyStatistics._isRooted)
+        if (!_navMeshAgent.isOnNavMesh)
+            return;
+        
+        if (_enemyStatistics._isRooted || DialogueManager.Instance.IsInDialogue())
         {
             _navMeshAgent.isStopped = true;
             _enemyAnimator.SetIsMoving(false);

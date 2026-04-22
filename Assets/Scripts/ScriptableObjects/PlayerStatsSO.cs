@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Mono.Cecil.Cil;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -26,15 +28,19 @@ public class PlayerStatsSO : ScriptableObject
     public float PhysicalResistance = 0;
     public float MagicResistance = 0;
 
+    
     [Range(0, 3)]
     public float ShieldResistance = 1; //Wartość procentowa 1 = 100%, 0.5 - 50%, 1.5 - 150%
     
     [FormerlySerializedAs("CurrentWeapon")] public Weapon currentWeapon;
+
+    private Dictionary<BonusType, float> _bonusMultipliers = new();
+    private Dictionary<BonusType, float> _flatBonuses = new();
     
     public void ResetPlayerStats()
     {
-        HP = MaxHP;
-        MP = MaxMP;
+        HP = GetMaxHp();
+        MP = GetMaxMp();
         Level = 1;
         Exp = 0;
         NextLevelExp = InitialNextLevelExp;
@@ -64,4 +70,67 @@ public class PlayerStatsSO : ScriptableObject
 
         return (1f - finalMultiplier) * 100f;
     }
+
+    public void AddBonus(StatBonus bonus)
+    {
+        if (bonus.Type == BonusType.Damage ||
+            bonus.Type == BonusType.MoveSpeed ||
+            bonus.Type == BonusType.Crit)
+        {
+            var normalized = bonus.Value / 100f;
+
+            if (_bonusMultipliers.ContainsKey(bonus.Type))
+                _bonusMultipliers[bonus.Type] += normalized;
+            else
+                _bonusMultipliers[bonus.Type] = normalized;
+
+            return;
+        }
+
+        if (_flatBonuses.ContainsKey(bonus.Type))
+            _flatBonuses[bonus.Type] += bonus.Value;
+        else
+            _flatBonuses[bonus.Type] = bonus.Value;
+    }
+    
+    private float GetMultiplier(BonusType type)
+    {
+        if (_bonusMultipliers.TryGetValue(type, out float value))
+            return 1f + value;
+
+        return 1f;
+    }
+
+    private float GetBonus(BonusType type)
+    {
+        return _bonusMultipliers.GetValueOrDefault(type, 0f);
+    }
+
+    public float GetMoveSpeedMultiplier()
+    {
+        return GetMultiplier(BonusType.MoveSpeed);
+    }
+
+    public float GetDamageBonusMultiplier()
+    {
+        return GetMultiplier(BonusType.Damage);
+    }
+
+    public float GetCritBonusMultiplier()
+    {
+        return GetMultiplier(BonusType.Crit);
+    }
+    
+    public float GetBonusValue(BonusType type)
+    {
+        return _bonusMultipliers.GetValueOrDefault(type, 0f);
+    }
+    
+    private float GetFlatBonus(BonusType type)
+    {
+        return _flatBonuses.GetValueOrDefault(type, 0f);
+    }
+
+    public float GetMaxHp() => MaxHP + GetFlatBonus(BonusType.MaxHp);
+    public float GetMaxMp() => MaxMP + GetFlatBonus(BonusType.MaxMp);
 }

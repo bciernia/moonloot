@@ -43,6 +43,8 @@ public class LoadingSceneManager : MonoBehaviour
     
     public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
+        SaveGame();
+        
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
         loadingScreen.SetActive(true);
@@ -124,6 +126,10 @@ public class LoadingSceneManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         TryFindDayNightCycle();
+        
+        WorldManager.Instance.ResetSpawnPoints();
+        WorldManager.Instance.AssignPlacesIfNeeded();
+        WorldManager.Instance.SpawnNPCs();
     }
     
     private void TryFindDayNightCycle()
@@ -154,4 +160,19 @@ public class LoadingSceneManager : MonoBehaviour
         HordeManager.Instance.StartHorde();
     }
     */
+    
+    private void SaveGame()
+    {
+        var saveables = FindObjectsOfType<MonoBehaviour>(true);
+
+        foreach (var mono in saveables)
+        {
+            if (mono is ISaveable saveable)
+            {
+                saveable.Save();
+            }
+        }
+
+        Debug.Log("GAME SAVED");
+    }
 }

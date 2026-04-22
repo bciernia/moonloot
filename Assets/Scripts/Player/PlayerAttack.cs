@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
     private SlashEffect _slash;
 
     private float _currentDmgMultiplier = 1f;
-
+    
     private void Awake()
     {
         _playerMana = GetComponent<PlayerMana>();
@@ -123,12 +124,29 @@ public class PlayerAttack : MonoBehaviour
         SetPlayerTotalDamage();
     }
 
-    private void SetPlayerTotalDamage()
+    private float SetPlayerTotalDamage()
     {
-        _playerStats.TotalDamage = (_playerStats.BaseDamage + _weapon.Damage) * _currentDmgMultiplier;
+        var baseDamage = _playerStats.BaseDamage;
+        var weaponDamage = _weapon != null ? _weapon.Damage : 0f;
+
+        var damage = baseDamage + weaponDamage;
+        damage *= _playerStats.GetDamageBonusMultiplier();
+
+        _playerStats.TotalDamage = damage;
+        
+        return damage;
     }
 
-    public float GetPlayerDamage => _playerStats.TotalDamage;
+    public float GetPlayerDamage()
+    {
+        var critCheck = RNGManager.Instance.GetRandomNumberFromRange();
+        var critStat = Mathf.Round(_playerStats.GetCritBonusMultiplier() * 100f - 100f);
+        
+        if (critCheck <= critStat)
+            return _playerStats.TotalDamage * 2;
+        
+        return _playerStats.TotalDamage;
+    }
 
     public void ApplyDmgMultiplier(float multiplier, float duration)
     {
@@ -154,5 +172,11 @@ public class PlayerAttack : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.actions["Attack"].performed -= _ => Attack();
+    }
+    
+    public void RecalculateDamage()
+    {
+        var totalDmg = SetPlayerTotalDamage();
+        PlayerStatisticsManager.Instance.SetDamage(totalDmg);
     }
 }

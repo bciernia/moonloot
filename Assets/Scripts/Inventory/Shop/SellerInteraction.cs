@@ -7,7 +7,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     [SerializeField] public string sellerId;
     
     private EnemyStatistics _enemyStatistics;
-    private InventorySO sellerInventory;
+    private InventoryRuntime _sellerInventory;
     
         
 #if UNITY_EDITOR
@@ -27,7 +27,15 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     private void Awake()
     {
         _enemyStatistics = GetComponent<EnemyStatistics>();
-        sellerInventory = SellerInventory;
+        
+        if (ES3.KeyExists($"shop_{sellerId}"))
+        {
+            Load();
+        }
+        else
+        {
+            _sellerInventory = new InventoryRuntime(SellerInventory);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -50,7 +58,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     {
         if (PauseManager.Instance.pauseRequests > 0) return;
         
-        ShopManager.Instance.InitializeShop(SellerInventory, _enemyStatistics.Name, InventoryType.Shop);
+        ShopManager.Instance.InitializeShop(_sellerInventory, _enemyStatistics.Name, InventoryType.Shop);
     }
 
     public string GetInteractionText()
@@ -60,14 +68,28 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     
     public void Save()
     {
-        ES3.Save($"shop_{sellerId}", sellerInventory);
+        var data = new ShopSaveData()
+        {
+            items = _sellerInventory.Items,
+            lunar = _sellerInventory.Lunar
+        };
+        
+        ES3.Save($"shop_{sellerId}", data);
     }
 
     public void Load()
     {
+        if (_sellerInventory == null)
+        {
+            _sellerInventory = new InventoryRuntime(SellerInventory);
+        }
+        
         if (ES3.KeyExists($"shop_{sellerId}"))
         {
-            sellerInventory = ES3.Load<InventorySO>($"shop_{sellerId}");
+            var data = ES3.Load<ShopSaveData>($"shop_{sellerId}");
+            _sellerInventory.LoadData(data.items, data.lunar);
+
+            _sellerInventory.NotifyInventoryUpdated();
         }
     }
 }

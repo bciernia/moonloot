@@ -1,7 +1,13 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,10 +23,6 @@ public class UIManager : MonoBehaviour
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _manaTMP;
-
-    [Header("Stats Panel")]
-    [SerializeField] private TextMeshProUGUI _statsLevelTMP;
-    [SerializeField] private TextMeshProUGUI _statsDamageTMP;
 
     [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
@@ -70,6 +72,12 @@ public class UIManager : MonoBehaviour
     [Header("Day night panels")] 
     [SerializeField] private GameObject _startNightPanel;
     [SerializeField] private GameObject _nightSummaryPanel;
+
+    [Header("Night summary panel")] 
+    [SerializeField] private GameObject _bonusesSummaryPanel;
+    [SerializeField] private GameObject _levelSummaryPanel;
+    [SerializeField] private GameObject _summaryInfoObject;
+    [SerializeField] private GameObject _exitSummaryBtn;
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
@@ -77,6 +85,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _objectiveText;
     [SerializeField] private TextMeshProUGUI _mutationText;
 
+    [Header("Choose npc buttons")] 
+    [SerializeField] private NpcDatabase _npcDatabase;
+    [SerializeField] private Transform _npcContainer;
+    [SerializeField] private GameObject _npcButtonPrefab;
+    
     private float _waveTime;
     private bool _isTimerActive;
     
@@ -98,6 +111,7 @@ public class UIManager : MonoBehaviour
 
     private float _displayedHp;
     private float _displayedMp;
+    private VillageNpcData _selectedNPC;
 
     private void Awake()
     {
@@ -123,6 +137,9 @@ public class UIManager : MonoBehaviour
 
         UpdateKeyTexts();
         UpdatePlayerUI(force: true);
+        
+        //_playerStatsSo.ResetBonuses();
+        UpdateStatsPanel();
         InitializeClock();
     }
 
@@ -197,6 +214,11 @@ public class UIManager : MonoBehaviour
         UpdatePlayerUI();
         UpdateClock();
         UpdateHordeUI();
+        
+        if (_gameMenu.activeSelf)
+        {
+            UpdateStatsPanel();
+        }
     }
 
     #region UI Update
@@ -207,18 +229,21 @@ public class UIManager : MonoBehaviour
         _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 20f * Time.deltaTime);
         _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 20f * Time.deltaTime);
 
-        var hpRatio = _displayedHp / _playerStatsSo.MaxHP;
-        var mpRatio = _displayedMp / _playerStatsSo.MaxMP;
-
+        var maxHpWithBonuses = _playerStatsSo.GetMaxHp();
+        var maxMpWithBonuses = _playerStatsSo.GetMaxMp();
+        
+        var hpRatio = _displayedHp / maxHpWithBonuses;
+        var mpRatio = _displayedMp / maxMpWithBonuses;
+        
         _healthBar.fillAmount = hpRatio;
         _manaBar.fillAmount = mpRatio;
         _healthBarEq.fillAmount = hpRatio;
         _manaBarEq.fillAmount = mpRatio;
 
-        _healthTMP.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
-        _manaTMP.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
-        _healthTMPEq.text = $"{(int)_displayedHp}/{_playerStatsSo.MaxHP}";
-        _manaTMPEq.text = $"{(int)_displayedMp}/{_playerStatsSo.MaxMP}";
+        _healthTMP.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
+        _manaTMP.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
+        _healthTMPEq.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
+        _manaTMPEq.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
     }
     #endregion
 
@@ -408,8 +433,11 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
+        //NPCManager.Instance.ApplyNPC(_selectedNPC);
+        UpdateStatsPanel();
         PauseManager.Instance.RequestPause();
-        ShowSummary();
+        _exitSummaryBtn.SetActive(false);
+        StartCoroutine(ShowSummary());
     }
     
     public void OnReturnToDayClicked()
@@ -428,6 +456,8 @@ public class UIManager : MonoBehaviour
 
         UpdateStartNightUI();
 
+        SpawnNPCButtons();
+        
         _startNightPanel.SetActive(true);
         PauseManager.Instance.RequestPause();
     }
@@ -463,8 +493,26 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    public void OnStartNightClicked()
+    public void OnStartNightClicked(VillageNpcData chosenNpc)
     {
+        SelectNPC(chosenNpc);
+
+        // WorldManager.Instance.AddNpc(chosenNpc);
+        
+        //TODO Animation + sound
+        
+        _startNightPanel.SetActive(false);
+        PauseManager.Instance.ReleasePause();
+        HordeManager.Instance.StartHorde();
+        
+        // StartCoroutine(StartNightWithDelay());
+    }
+    
+    private IEnumerator StartNightWithDelay()
+    {
+        //TODO jak będzie animacja to wtedy zwiększyć ten czas
+        yield return new WaitForSecondsRealtime(0.0f);
+
         _startNightPanel.SetActive(false);
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
@@ -483,6 +531,7 @@ public class UIManager : MonoBehaviour
         {
             case HordeObjective.KillAll:
             case HordeObjective.EliteHunt:
+            case HordeObjective.NightExploration:
                 CreateEnemyCounter();
                 break;
 
@@ -559,16 +608,188 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    public void ShowSummary()
+    private IEnumerator ShowSummary()
     {
         var stats = CombatStatsManager.Instance;
 
-        Debug.Log($"Damage: {stats.DamageDealt}");
-        Debug.Log($"Enemies killed : {stats.EnemiesKilled}");
-        Debug.Log($"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m");
+        foreach (Transform child in _bonusesSummaryPanel.transform)
+            Destroy(child.gameObject);
+
+        foreach (Transform child in _levelSummaryPanel.transform)
+            Destroy(child.gameObject);
+
+        switch (_selectedNPC)
+        {
+            case NPCStat statNpc:
+                yield return ShowNpcStatSummary(statNpc);
+                break;
+            
+            case NPCMerchant merchantNpc:
+                ShowNpcMerchantSummary(merchantNpc);
+                break;
+            
+            case NPCHero heroNpc:
+                ShowNpcHeroSummary(heroNpc);
+                break;
+            
+            default:
+                Debug.LogWarning("Unknown NPC type");
+                break;
+        }
+            
+        CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Enemies killed: {stats.EnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
         
-        // _damageText.text = $"Damage: {stats.DamageDealt}";
-        // _killsText.text = $"Kills: {stats.EnemiesKilled}";
-        // _distanceText.text = $"Distance: {Mathf.RoundToInt(stats.DistanceTraveled)}m";
+        _exitSummaryBtn.SetActive(true);
     }
+
+    private void ShowNpcMerchantSummary(NPCMerchant merchantNpc)
+    {
+        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = $"Saved {merchantNpc.Name}";
+    }
+
+    private void ShowNpcHeroSummary(NPCHero heroNpc)
+    {
+        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = $"Saved {heroNpc.Name}";   
+    }
+
+    private IEnumerator ShowNpcStatSummary(NPCStat npc)
+    {
+        if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
+        
+        foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+        {
+            var text = FormatBonus(bonus);
+            CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+            yield return new WaitForSecondsRealtime(.75f);
+        }
+    }
+    
+    private List<VillageNpcData> GetRandomNPCs(int count)
+    {
+        var result = new List<VillageNpcData>();
+
+        var rescued = WorldManager.Instance.RescuedNpcs;
+
+        var list = _npcDatabase.NpcDatas.Where(npc => !rescued.Contains(npc)).ToList();
+
+        if (list.Count == 0)
+        {
+            Debug.Log("No more NPCs to spawn");
+            return result;
+        }
+
+        for (var i = 0; i < list.Count; i++)
+        {
+            var temp = list[i];
+            var randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
+        }
+
+        for (var i = 0; i < count && i < list.Count; i++)
+        {
+            result.Add(list[i]);
+        }
+
+        return result;
+    }
+    
+    private void ClearNPCButtons()
+    {
+        for (var i = _npcContainer.childCount - 1; i >= 0; i--)
+        {
+            var child = _npcContainer.GetChild(i);
+
+            if (child != null)
+                Destroy(child.gameObject);
+        }
+    }
+    
+    private void SpawnNPCButtons()
+    {
+        ClearNPCButtons();
+
+        var npcs = GetRandomNPCs(3);
+
+        if (npcs.Count == 0)
+        {
+            Debug.Log("All npcs collected");
+            return;
+        }
+
+        foreach (var npc in npcs)
+        {
+            var obj = Instantiate(_npcButtonPrefab, _npcContainer);
+            var btn = obj.GetComponent<NPCSelectionButton>();
+
+            btn.Setup(npc, this);
+            
+            var button = obj.GetComponent<Button>();
+            button.onClick.AddListener(() => btn.OnClick(npc));
+        }
+    }
+    
+    private void SelectNPC(VillageNpcData npc)
+    {
+        _selectedNPC = npc;
+        HordeManager.Instance.SelectedNpc = npc;
+    }
+    
+    private void UpdateStatsPanel()
+    {
+        if (_playerStatsSo == null) return;
+
+        var player = Player.Instance;
+        var movement = player.GetComponent<PlayerMovement>();
+
+        PlayerStatisticsManager.Instance.SetDamage(_playerStatsSo.TotalDamage);
+
+        var finalSpeed = movement.GetFinalSpeed();
+        PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
+
+        var critRaw = _playerStatsSo.GetBonusValue(BonusType.Crit);
+        var crit = Mathf.Max(0f, critRaw) * 100f;
+        PlayerStatisticsManager.Instance.SetCritChance(Mathf.Min(crit, 100f));
+        
+        Player.Instance.PlayerAttack.RecalculateDamage();
+    }
+    
+    private string FormatBonus(StatBonus bonus)
+    {
+        return bonus.Type switch
+        {
+            BonusType.Damage => $"+{bonus.Value:0}% Damage",
+            BonusType.MoveSpeed => $"+{bonus.Value:0}% Move Speed",
+            BonusType.Crit => $"+{bonus.Value:0}% Crit Chance",
+
+            BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
+            BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
+
+            _ => bonus.Type.ToString()
+        };
+    }
+    
+    private void CreateSummaryText(string text, Transform parent, BonusType? bonusType = null)
+    {
+        var obj = Instantiate(_summaryInfoObject, parent);
+        var tmp = obj.GetComponent<TextMeshProUGUI>();
+        tmp.text = text;
+        tmp.color = bonusType switch
+        {
+            BonusType.MaxHp => Color.green,
+            BonusType.Damage => Color.red,
+            BonusType.MoveSpeed => Color.cyan,
+            _ => Color.white
+        };
+    }
+    
 }

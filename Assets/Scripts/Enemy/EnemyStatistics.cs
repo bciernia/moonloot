@@ -72,7 +72,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         _knockBack = GetComponent<KnockBack>();
         _feelEffects = GetComponent<MMF_Player>();
     }
-    
+
     public void Initialize()
     {
         if (_initialized) return;
@@ -130,9 +130,14 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyBrain.enabled = false;
             _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
-            EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
+            
+            //TODO używane przy zapisywaniu martwych miedzy scenami
+            //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
+
+            if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();
+            
             HordeManager.Instance.OnEnemyKilled();
             StartCoroutine(HandleDeathAnimation());
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
@@ -250,7 +255,5 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         {
             transform.localScale = new Vector3(1.4f, 1.4f, 1f);
         }
-        
-        
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -27,6 +28,9 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private GameObject defendPrefab;
     [SerializeField] private float defendMultiplier = 0.5f;
     
+    [Header("ExitPrefab")]
+    [SerializeField] private GameObject exitPrefab;
+    
     public HordeData PreparedData { get; private set; }
     public HordeMutation PreparedMutation { get; private set; }
     
@@ -39,7 +43,10 @@ public class HordeManager : Singleton<HordeManager>
     private const int _maxAliveEnemies = 5;
 
     private HordeMutation _currentMutation;
-
+    private bool _bossSpawned = false;
+    private bool _rescuedNPC = false;
+    public VillageNpcData SelectedNpc { get; set; }
+    
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
 
@@ -63,7 +70,7 @@ public class HordeManager : Singleton<HordeManager>
         Debug.Log($"Starting Horde {currentHorde}");
         CombatStatsManager.Instance.ResetStats(Player.Instance.transform);
         LoadingSceneManager.Instance.LoadScene("Forest", true);
-
+        
         StartCoroutine(WaitForSceneAndSpawn());
     }
     
@@ -74,7 +81,20 @@ public class HordeManager : Singleton<HordeManager>
         while (FindObjectsOfType<EnemySpawner>().Length == 0)
             yield return null;
 
+        LootSpawnManager.Instance.SpawnAll();
+        SpawnNPC();
         SpawnHorde();
+        
+    }
+    
+    public void OnPlayerExit()
+    {
+        Debug.Log("Player exited");
+
+        Debug.Log(_rescuedNPC ? "NPC rescued!" : "No NPC found");
+
+        StopAllCoroutines();
+        CompleteHorde();
     }
     
     private void SpawnHorde()
@@ -87,8 +107,11 @@ public class HordeManager : Singleton<HordeManager>
             return;
         }
 
+        _rescuedNPC = false;
+        
         var data = PreparedData;
-        _currentObjective = data.objective;
+        // _currentObjective = data.objective;
+        _currentObjective = HordeObjective.NightExploration;
         _currentMutation = PreparedMutation;
 
         _aliveEnemies = 0;
@@ -105,6 +128,10 @@ public class HordeManager : Singleton<HordeManager>
                 StartCoroutine(StartEliteHunt(spawners, data));
                 break;
             
+            case HordeObjective.NightExploration:
+                StartCoroutine(StartNightExploration(spawners, data));
+                break;
+            
             case HordeObjective.KillAll:
             default:
                 StartCoroutine(SpawnHordeRoutine(spawners, data));
@@ -113,6 +140,191 @@ public class HordeManager : Singleton<HordeManager>
         
         OnHordeStarted?.Invoke();
     }
+
+    #region NightExploration
+    private IEnumerator StartNightExploration(EnemySpawner[] spawners, HordeData data)
+    {
+        Debug.Log("Night Exploration Started");
+
+        var spawnTimer = 0f;
+        var spawnInterval = 3f;
+
+        var elapsed = 0f;
+        var speedIncreaseTimer = 0f;
+
+        _aliveEnemies = 0;
+
+        SpawnExit(); 
+
+        while (true) 
+        {
+            elapsed += Time.deltaTime;
+            spawnTimer += Time.deltaTime;
+
+            // spawn enemy
+            if (spawnTimer >= spawnInterval)
+            {
+                if (_aliveEnemies < 50)
+                {
+                    SpawnEnemyNearPlayer(spawners, data);
+                }
+
+                spawnTimer = 0f;
+            }
+
+            // scaling po 3 minutach
+            if (elapsed >= 180f)
+            {
+                speedIncreaseTimer += Time.deltaTime;
+
+                if (speedIncreaseTimer >= 10f)
+                {
+                    IncreaseEnemiesSpeed();
+                    speedIncreaseTimer = 0f;
+                }
+            }
+
+            yield return null;
+        }
+    }
+    
+    private void IncreaseEnemiesSpeed()
+    {
+        Debug.Log("Enemies speed increased!");
+        var enemies = FindObjectsOfType<EnemyStatistics>();
+
+        foreach (var e in enemies)
+        {
+            e.Speed *= 1.1f;
+            e.ChaseSpeed *= 1.1f;
+        }
+    }
+    
+    private void SpawnExit()
+    {
+        var exitSpawners = FindObjectsOfType<ExitSpawner>();
+
+        if (exitSpawners.Length == 0)
+        {
+            Debug.LogWarning("No ExitSpawners found!");
+            return;
+        }
+
+        var chosen = exitSpawners[Random.Range(0, exitSpawners.Length)];
+
+        Instantiate(exitPrefab, chosen.transform.position, Quaternion.identity);
+
+        Debug.Log("Exit spawned!");
+    }
+    
+    private void SpawnBossNearPlayer(HordeData data)
+    {
+        Debug.Log("BOSS SPAWNED");
+
+        var playerPos = Player.Instance.transform.position;
+
+        var circle = Random.insideUnitCircle.normalized * Random.Range(12f, 18f);
+        var spawnPos = playerPos + new Vector3(circle.x, 0, circle.y);
+
+        var prefab = GetRandomEnemy(bossEnemies);
+        var bossGO = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+        SetupEnemy(bossGO, data, bossEnemies);
+
+        var stats = bossGO.GetComponent<EnemyStatistics>();
+        if (stats != null)
+        {
+            NPCInfoManager.Instance.ShowNpcInfo(stats);
+        }
+    }
+    
+    private void SpawnEnemyNearPlayer(EnemySpawner[] spawners, HordeData data)
+    {
+        var playerPos = Player.Instance.transform.position;
+
+        var minDistance = 12f;
+        var maxDistance = 20f;
+        var maxAttempts = 10;
+
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            var rawPos = GetRandomSpawnPosition(playerPos, minDistance, maxDistance);
+
+            if (IsValidSpawnPosition(rawPos, playerPos, out Vector3 finalPos))
+            {
+                var pool = GetEnemyPool();
+                var prefab = GetRandomEnemy(pool);
+
+                var enemyGO = Instantiate(prefab, finalPos, Quaternion.identity);
+                SetupEnemy(enemyGO, data, pool);
+                return;
+            }
+        }
+
+        Debug.LogWarning("Nie znaleziono dobrej pozycji spawnu");
+    }
+    
+    private Vector3 GetRandomSpawnPosition(Vector3 center, float minDist, float maxDist)
+    {
+        var distance = Random.Range(minDist, maxDist);
+        var dir = Random.insideUnitCircle.normalized;
+
+        return center + new Vector3(dir.x, 0, dir.y) * distance;
+    }
+    
+    private bool IsValidSpawnPosition(Vector3 pos, Vector3 playerPos, out Vector3 finalPos)
+    {
+        finalPos = pos;
+
+        if (Vector3.Distance(pos, playerPos) < 10f)
+            return false;
+
+        if (Physics.CheckSphere(pos, 0.5f, LayerMask.GetMask("Obstacle")))
+            return false;
+
+        if (NavMesh.SamplePosition(pos, out NavMeshHit hit, 3f, NavMesh.AllAreas))
+        {
+            finalPos = hit.position;
+            return true;
+        }
+
+        return false;
+    }
+    
+    private void SetupEnemy(GameObject enemyGO, HordeData data, List<GameObject> pool)
+    {
+        var stats = enemyGO.GetComponent<EnemyStatistics>();
+
+        if (stats != null)
+        {
+            stats.DetectRange = 9999999;
+            stats.Initialize();
+
+            stats.ApplyHordeScaling(
+                data.hpMultiplier,
+                data.damageMultiplier,
+                1f,
+                pool == eliteEnemies,
+                pool == bossEnemies
+            );
+
+            ApplyMutation(stats);
+        }
+
+        _aliveEnemies++;
+    }
+    
+    private List<GameObject> GetEnemyPool()
+    {
+        var roll = Random.value;
+
+        return roll switch
+        {
+            < 0.7f => normalEnemies,
+            _ => eliteEnemies,
+        };
+    }
+    #endregion
 
     #region EliteHunt
     private IEnumerator StartEliteHunt(EnemySpawner[] spawners, HordeData data)
@@ -174,6 +386,16 @@ public class HordeManager : Singleton<HordeManager>
         }
     }
     
+    public void SetRescuedNPC()
+    {
+        _rescuedNPC = true;
+
+        if (SelectedNpc != null)
+        {
+            WorldManager.Instance.AddNpc(SelectedNpc);
+        }
+    }
+    
     private void SpawnOneEnemy(EnemySpawner[] spawners, HordeData data)
     {
         var spawner = spawners[Random.Range(0, spawners.Length)];
@@ -207,7 +429,7 @@ public class HordeManager : Singleton<HordeManager>
 
         if (stats != null)
         {
-            stats.DetectRange = 99999;
+            stats.DetectRange = 9999999;
 
             var finalHpMultiplier = data.hpMultiplier;
             if (_currentObjective == HordeObjective.DefendObject)
@@ -281,7 +503,7 @@ public class HordeManager : Singleton<HordeManager>
 
             if (stats != null)
             {
-                stats.DetectRange = 99999;
+                stats.DetectRange = 9999999;
 
                 stats.Initialize();
                 
@@ -292,6 +514,11 @@ public class HordeManager : Singleton<HordeManager>
                     isElite,
                     isBoss
                 );
+
+                if (isBoss)
+                {
+                    NPCInfoManager.Instance.ShowNpcInfo(stats);
+                }
                 
                 ApplyMutation(stats);
             }
@@ -369,7 +596,7 @@ public class HordeManager : Singleton<HordeManager>
 
     private void ApplyMutation(EnemyStatistics stats)
     {
-        Debug.Log($"⚠ Mutation active: {_currentMutation}");
+        Debug.Log($"Mutation active: {_currentMutation}");
         switch (_currentMutation)
         {
             case HordeMutation.StrongEnemies:
@@ -412,5 +639,32 @@ public class HordeManager : Singleton<HordeManager>
         Time.fixedDeltaTime = originalFixedDelta;
         
         yield return new WaitForSecondsRealtime(3f);
+    }
+    
+    private void SpawnNPC()
+    {
+        if (SelectedNpc == null)
+        {
+            Debug.LogWarning("No NPC selected!");
+            return;
+        }
+
+        var spawners = FindObjectsOfType<NpcSpawner>();
+
+        if (spawners.Length == 0)
+        {
+            Debug.LogWarning("No NpcSpawners found!");
+            return;
+        }
+
+        var chosen = spawners[Random.Range(0, spawners.Length)];
+
+        var npcGO = Instantiate(
+            SelectedNpc.Character,
+            chosen.spawnPoint.position,
+            Quaternion.identity
+        );
+
+        Debug.Log($"Spawned NPC: {SelectedNpc.Name}");
     }
 }

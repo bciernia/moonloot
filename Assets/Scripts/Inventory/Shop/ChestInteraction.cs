@@ -7,7 +7,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     [SerializeField] public InventorySO ChestLoot;
     [SerializeField] public string chestId;
 
-    private InventorySO chestLoot;
+    private InventoryRuntime _chestInventory;
     
 #if UNITY_EDITOR
     private void OnValidate()
@@ -25,7 +25,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
 
     private void Awake()
     {
-        chestLoot = ChestLoot;
+        _chestInventory = new InventoryRuntime(ChestLoot);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -48,7 +48,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     {
         if (PauseManager.Instance.pauseRequests > 0) return;
         
-        ShopManager.Instance.InitializeShop(chestLoot, "Chest", InventoryType.Chest);
+        ShopManager.Instance.InitializeShop(_chestInventory, "Chest", InventoryType.Chest);
     }
 
     public string GetInteractionText()
@@ -58,14 +58,25 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
 
     public void Save()
     {
-        ES3.Save($"chest_{chestId}", chestLoot);
+        var data = new ChestSaveData()
+        {
+            items = _chestInventory.Items,
+            isOpened = _chestInventory.Items.TrueForAll(i => i.IsEmpty)
+        };
+
+        ES3.Save($"chest_{chestId}", data);
     }
 
     public void Load()
     {
+        if (_chestInventory == null)
+            _chestInventory = new InventoryRuntime(ChestLoot);
+
         if (ES3.KeyExists($"chest_{chestId}"))
         {
-            chestLoot = ES3.Load<InventorySO>($"chest_{chestId}");
+            var data = ES3.Load<ChestSaveData>($"chest_{chestId}");
+
+            _chestInventory.LoadData(data.items, 0); // chest raczej nie ma waluty
         }
     }
 }

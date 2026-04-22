@@ -40,7 +40,7 @@ public class SelectionManager : MonoBehaviour
 
     private void Update()
     {
-        SelectEnemy();
+        // SelectEnemy();
     }
 
     private void SelectEnemy()

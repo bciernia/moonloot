@@ -103,7 +103,7 @@ public class SlashEffect: MonoBehaviour
 
         if (!_hitTargets.Add(other.gameObject)) return;
 
-        var playerDmg = _shooter.GetComponent<Player>().PlayerAttack.GetPlayerDamage;
+        var playerDmg = _shooter.GetComponent<Player>().PlayerAttack.GetPlayerDamage();
         
         SoundManager.Instance.PlaySound(weapon.HitSoundType);
         other.GetComponent<IDamageable>()?.TakeDamage(playerDmg, _shooter.transform);
