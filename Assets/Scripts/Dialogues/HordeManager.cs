@@ -390,6 +390,7 @@ public class HordeManager : Singleton<HordeManager>
     public void SetRescuedNPC()
     {
         _rescuedNPC = true;
+        PointsManager.Instance.AddScore(100);
 
         if (SelectedNpc != null)
         {
@@ -537,16 +538,19 @@ public class HordeManager : Singleton<HordeManager>
         {
             CombatStatsManager.Instance.BossEnemiesKilled++;
             CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(50, 100);
+            PointsManager.Instance.AddScore(3);
         }
         else if (isElite)
         {
             CombatStatsManager.Instance.EliteEnemiesKilled++;
             CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(10, 20);
+            PointsManager.Instance.AddScore(10);
         }
         else
         {
             CombatStatsManager.Instance.NormalEnemiesKilled++;
             CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(2, 5);
+            PointsManager.Instance.AddScore(100);
         }
         
         if (_currentObjective == HordeObjective.DefendObject) return;
@@ -575,6 +579,7 @@ public class HordeManager : Singleton<HordeManager>
         currentHorde++;
         OnHordeFinished?.Invoke(currentHorde - 1);
         enemiesPerHorde += enemiesIncreasePerHorde;
+        PointsManager.Instance.AddScore(100);
     }
 
     private void FailHorde()
@@ -636,9 +641,10 @@ public class HordeManager : Singleton<HordeManager>
     
     private IEnumerator FinalKillSequence()
     {
+        //TODO Slow motion zrobić dla pokonania objectivu którym jest pokonanie wszystkich przeciwników
         yield return StartCoroutine(FinalKillSlowMo());
 
-        CompleteHorde();
+        // CompleteHorde();
     }
     
     private IEnumerator FinalKillSlowMo()
