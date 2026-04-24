@@ -138,7 +138,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
 
             if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();
             
-            HordeManager.Instance.OnEnemyKilled();
+            HordeManager.Instance.OnEnemyKilled(IsElite, IsBoss);
             StartCoroutine(HandleDeathAnimation());
             //TODO po otrzymaniu obrażen, zwiększyć na kilka sekund chase range innych postaci
         }

@@ -45,6 +45,7 @@ public class HordeManager : Singleton<HordeManager>
     private HordeMutation _currentMutation;
     private bool _bossSpawned = false;
     private bool _rescuedNPC = false;
+    
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     public static Action OnHordeStarted;
@@ -73,7 +74,7 @@ public class HordeManager : Singleton<HordeManager>
         
         StartCoroutine(WaitForSceneAndSpawn());
     }
-    
+
     private System.Collections.IEnumerator WaitForSceneAndSpawn()
     {
         yield return null;
@@ -530,12 +531,27 @@ public class HordeManager : Singleton<HordeManager>
     
     #endregion
 
-    public void OnEnemyKilled()
+    public void OnEnemyKilled(bool isElite, bool isBoss)
     {
+        if (isBoss)
+        {
+            CombatStatsManager.Instance.BossEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(50, 100);
+        }
+        else if (isElite)
+        {
+            CombatStatsManager.Instance.EliteEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(10, 20);
+        }
+        else
+        {
+            CombatStatsManager.Instance.NormalEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(2, 5);
+        }
+        
         if (_currentObjective == HordeObjective.DefendObject) return;
         
         _aliveEnemies--;
-        CombatStatsManager.Instance.EnemiesKilled++;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
 
@@ -555,7 +571,7 @@ public class HordeManager : Singleton<HordeManager>
     {
         Debug.Log($"Horde {currentHorde} completed");
 
-        InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward);
+        InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward + CombatStatsManager.Instance.GoldEarned);
         currentHorde++;
         OnHordeFinished?.Invoke(currentHorde - 1);
         enemiesPerHorde += enemiesIncreasePerHorde;

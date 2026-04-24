@@ -644,7 +644,13 @@ public class UIManager : MonoBehaviour
             
         CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Enemies killed: {stats.EnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Earned gold: {stats.GoldEarned}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated minions: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated elites: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated bosses: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
         CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);

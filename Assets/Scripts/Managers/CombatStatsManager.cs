@@ -3,16 +3,22 @@ using UnityEngine;
 public class CombatStatsManager : Singleton<CombatStatsManager>
 {
     public float DamageDealt;
-    public int EnemiesKilled;
+    public int NormalEnemiesKilled;
+    public int EliteEnemiesKilled;
+    public int BossEnemiesKilled;
     public float DistanceTraveled;
+    public int GoldEarned;
 
     private Vector3 _lastPlayerPosition;
     
     public void ResetStats(Transform player)
     {
         DamageDealt = 0;
-        EnemiesKilled = 0;
+        NormalEnemiesKilled = 0;
+        EliteEnemiesKilled = 0;
+        BossEnemiesKilled = 0;
         DistanceTraveled = 0f;
+        GoldEarned = 0;
 
         _lastPlayerPosition = player.position;
     }
