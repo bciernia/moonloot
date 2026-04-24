@@ -12,29 +12,29 @@ public class NPCSelectionButton : MonoBehaviour
 
     private UIManager _uiManager;
 
-    public void Setup(NPCData data, UIManager uiManager)
+    public void Setup(VillageNpcRuntime data, UIManager uiManager)
     {
         _uiManager = uiManager;
         
         _nameText.text = data.Name;
         _professionText.text = data.Profession;
-        _portrait.sprite = data.Character.GetComponent<SpriteRenderer>().sprite;
+        _portrait.sprite = data.Data.Character.GetComponent<SpriteRenderer>().sprite;
 
-        if (data is NPCStat)
+        if (data.Data is NPCStat)
         {
-            _bonusText.text = FormatBonuses(data);
+            _bonusText.text = FormatBonuses(data.Data);
         }
-        else if (data is NPCHero)
+        else if (data.Data is NPCHero)
         {
             _bonusText.text = "He will help from guild";
         }
-        else if (data is NPCMerchant)
+        else if (data.Data is NPCMerchant)
         {
             _bonusText.text = "Buy some things";
         }
     }
 
-    public void OnClick(VillageNpcData chosenNpc)
+    public void OnClick(VillageNpcRuntime chosenNpc)
     {
         _uiManager.OnStartNightClicked(chosenNpc);
     }

@@ -5,23 +5,23 @@ public class NPCManager : Singleton<NPCManager>
 {
     [SerializeField] private PlayerStatsSO _playerStats;
 
-    private Dictionary<NPCType, int> _npcLevels = new();
+    private Dictionary<string, int> _npcLevels = new();
     
-    public int GetLevel(NPCType type)
+    public int GetLevel(VillageNpcRuntime npc)
     {
-        return _npcLevels.GetValueOrDefault(type, 1);
+        return npc == null ? 1 : _npcLevels.GetValueOrDefault(npc.RuntimeID, 1);
     }
 
-    public void ApplyNPC(NPCData npc)
+    public void ApplyNPC(VillageNpcRuntime npc)
     {
         if (npc == null) return;
 
-        var level = GetLevel(npc.Type);
+        var level = GetLevel(npc);
 
-        switch (npc.Group)
+        switch (npc.Data.Group)
         {
             case NPCGroup.Stat:
-                ApplyStatNPC(npc, level);
+                ApplyStatNPC(npc.Data, level);
                 break;
 
             case NPCGroup.Merchant:
@@ -52,9 +52,9 @@ public class NPCManager : Singleton<NPCManager>
         Player.Instance.PlayerAttack.RecalculateDamage();
     }
 
-    public bool TryUpgradeNPC(NPCData npc)
+    public bool TryUpgradeNPC(VillageNpcRuntime npc)
     {
-        var currentLevel = GetLevel(npc.Type);
+        var currentLevel = GetLevel(npc);
         var nextLevel = currentLevel + 1;
 
         var nextLevelData = npc.UpgradeLevels.Find(l => l.Level == nextLevel);
@@ -70,9 +70,15 @@ public class NPCManager : Singleton<NPCManager>
             Debug.Log("Not enough items");
             return false;
         }
+
+        if (!InventoryController.Instance.ChangeGoldAmount(nextLevelData.GoldAmount))
+        {
+            Debug.Log("Not enough gold");
+            return false;
+        }
         
         InventoryController.Instance.TryRemoveQuestItems(nextLevelData.ItemName, nextLevelData.RequiredAmount);
-        _npcLevels[npc.Type] = nextLevel;
+        _npcLevels[npc.RuntimeID] = nextLevel;
         Debug.Log($"{npc.Name} upgraded to level {nextLevel}");
 
         return true;

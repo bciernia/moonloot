@@ -45,7 +45,7 @@ public class HordeManager : Singleton<HordeManager>
     private HordeMutation _currentMutation;
     private bool _bossSpawned = false;
     private bool _rescuedNPC = false;
-    public VillageNpcData SelectedNpc { get; set; }
+    public VillageNpcRuntime SelectedNpc { get; set; }
     
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
@@ -660,7 +660,7 @@ public class HordeManager : Singleton<HordeManager>
         var chosen = spawners[Random.Range(0, spawners.Length)];
 
         var npcGO = Instantiate(
-            SelectedNpc.Character,
+            SelectedNpc.Data.Character,
             chosen.spawnPoint.position,
             Quaternion.identity
         );

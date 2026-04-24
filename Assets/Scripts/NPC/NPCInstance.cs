@@ -1,5 +1,21 @@
-public class NPCInstance
+using UnityEngine;
+
+public class NPCInstance : MonoBehaviour
 {
-    public NPCData Data;
-    public int Level = 0;
+    public VillageNpcRuntime Runtime { get; private set; }
+
+    public void Initialize(VillageNpcRuntime runtime)
+    {
+        Runtime = runtime;
+    }
+
+    public string GetRuntimeID()
+    {
+        return Runtime?.RuntimeID;
+    }
+
+    public VillageNpcData GetData()
+    {
+        return Runtime?.Data;
+    }
 }

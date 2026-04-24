@@ -7,4 +7,5 @@ public class NPCUpgradeLevel
     public List<StatBonus> Bonuses;
     public string ItemName;
     public int RequiredAmount;
+    public int GoldAmount;
 }

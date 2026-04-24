@@ -175,4 +175,7 @@ public class LoadingSceneManager : MonoBehaviour
 
         Debug.Log("GAME SAVED");
     }
+
+
+    public bool IsSceneTown() => SceneManager.GetActiveScene().name == "Meadowrest";
 }

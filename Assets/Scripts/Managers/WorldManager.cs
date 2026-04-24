@@ -8,11 +8,14 @@ public class WorldManager : Singleton<WorldManager>
 
     public IReadOnlyList<NPCData> RescuedNpcs => _rescuedNPCs;
 
-    public void AddNpc(NPCData npc)
+    private HashSet<string> _rescuedNpcIDs = new();
+    
+    public void AddNpc(VillageNpcRuntime npc)
     {
-        if (_rescuedNPCs.Contains(npc)) return;
+        if (_rescuedNPCs.Contains(npc.Data)) return;
         
-        _rescuedNPCs.Add(npc);
+        _rescuedNPCs.Add(npc.Data);
+        _rescuedNpcIDs.Add(npc.RuntimeID);
     }
     
     public void AssignPlacesIfNeeded()
