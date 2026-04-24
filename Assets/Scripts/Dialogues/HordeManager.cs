@@ -667,4 +667,6 @@ public class HordeManager : Singleton<HordeManager>
 
         Debug.Log($"Spawned NPC: {SelectedNpc.Name}");
     }
+    
+    public bool IsNpcRescued() => _rescuedNPC;
 }

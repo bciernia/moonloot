@@ -433,11 +433,16 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        NPCManager.Instance.ApplyNPC(_selectedNPC);
-        UpdateStatsPanel();
+        if (IsNpcRescued()) ApplyNpcBonuses();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
         StartCoroutine(ShowSummary());
+    }
+
+    private void ApplyNpcBonuses()
+    {
+        NPCManager.Instance.ApplyNPC(_selectedNPC);
+        UpdateStatsPanel();
     }
     
     public void OnReturnToDayClicked()
@@ -664,16 +669,27 @@ public class UIManager : MonoBehaviour
     private IEnumerator ShowNpcStatSummary(NPCStat npc)
     {
         if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
-        
-        foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+
+        if (!IsNpcRescued())
         {
-            CreateSummaryText("New villager saved!", _bonusesSummaryPanel.transform);
-            //var text = FormatBonus(bonus);
-            //CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+            CreateSummaryText("You did not find the peasant.", _bonusesSummaryPanel.transform, BonusType.Damage);
             yield return new WaitForSecondsRealtime(.75f);
+
+        }
+        else
+        {
+            foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+            {
+                CreateSummaryText("New villager saved!", _bonusesSummaryPanel.transform);
+                var text = FormatBonus(bonus);
+                CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+                yield return new WaitForSecondsRealtime(.75f);
+            }
         }
     }
-     
+
+    private bool IsNpcRescued() => HordeManager.Instance.IsNpcRescued();
+
     private List<VillageNpcRuntime> GetRandomNPCs(int count)
     {
         var result = new List<VillageNpcRuntime>();
@@ -794,5 +810,4 @@ public class UIManager : MonoBehaviour
             _ => Color.white
         };
     }
-    
 }
