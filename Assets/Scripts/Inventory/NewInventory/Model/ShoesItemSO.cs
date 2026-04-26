@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Armor", fileName = "Armor_")]
-public class ArmorItemSO : EquippableItemSO, IItemAction
+[CreateAssetMenu(menuName = "Item/Shoes", fileName = "Shoes_")]
+public class ShoesItemSO : EquippableItemSO, IItemAction
 {
     public float PhysicalResistance;
     public float MagicResistance;
@@ -14,7 +14,7 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
 
         if (armorSystem != null)
         {
-            armorSystem.SetArmor(this, itemState ?? DefaultParametersList);
+            armorSystem.SetShoes(this, itemState ?? DefaultParametersList);
             EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
             return true;
         }
@@ -25,7 +25,7 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
     public void Unequip(GameObject character)
     {
         var armorSystem = character.transform.parent.GetComponentInChildren<ArmorManager>();
-        armorSystem.SetArmor(null, null);
+        armorSystem.SetShoes(null, null);
     }
 
     public override string GetStatsDescription()

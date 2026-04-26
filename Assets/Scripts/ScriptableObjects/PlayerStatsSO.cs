@@ -46,10 +46,10 @@ public class PlayerStatsSO : ScriptableObject
         NextLevelExp = InitialNextLevelExp;
     }
 
-    public void UpdatePlayerResistances(float physicalResistance, float magicResistance)
+    public void RecalculateResistances(float physical, float magic)
     {
-        PhysicalResistance = physicalResistance;
-        MagicResistance = magicResistance;
+        PhysicalResistance = physical;
+        MagicResistance = magic;
 
         GetPhysicalReductionPercent();
         GetMagicReductionPercent();

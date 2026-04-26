@@ -13,6 +13,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     [SerializeField] private UIInventoryItem WeaponSlot;
     [SerializeField] private UIInventoryItem ArmorSlot;
     [SerializeField] private UIInventoryItem OutfitSlot;
+    [SerializeField] private UIInventoryItem HelmetSlot;
+    [SerializeField] private UIInventoryItem ShoesSlot;
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
@@ -21,6 +23,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         EquippedItemsSlots.Add(WeaponSlot);
         EquippedItemsSlots.Add(ArmorSlot);
         EquippedItemsSlots.Add(OutfitSlot);
+        EquippedItemsSlots.Add(HelmetSlot);
+        EquippedItemsSlots.Add(ShoesSlot);
         
         if (EquippedItems.Count == 0)
             EquippedItems.Add(InventoryItem.GetEmptyItem());
@@ -33,6 +37,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         InitializeSlot(EquippedItems[0].item == null ? defaultWeapon : EquippedItems[0], WeaponSlot);
         InitializeSlot(EquippedItems[1], ArmorSlot);
         InitializeSlot(EquippedItems[2], OutfitSlot);
+        InitializeSlot(EquippedItems[3], HelmetSlot);
+        InitializeSlot(EquippedItems[4], ShoesSlot);
     }
 
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
@@ -69,9 +75,11 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
                 break;
             case ItemType.Necklace:
                 break;
-            case ItemType.Shoes:
-                break;
             case ItemType.Helmet:
+                SetItem(HelmetSlot, item, 3);
+                break;
+            case ItemType.Shoes:
+                SetItem(ShoesSlot, item, 4);
                 break;
             case ItemType.Ammunition:
                 break;

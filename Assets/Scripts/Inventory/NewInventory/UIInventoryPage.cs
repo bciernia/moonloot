@@ -265,7 +265,13 @@ public class UIInventoryPage : MonoBehaviour
                 break;
             case "OutfitUI":
                 equippedItemsManager.EquippedItemsSlots[2].Select();
-                break;                
+                break;       
+            case "HelmetUI":
+                 equippedItemsManager.EquippedItemsSlots[3].Select();
+                break;           
+            case "ShoesUI":
+                equippedItemsManager.EquippedItemsSlots[4].Select();
+                break;           
             default:
                 throw new ArgumentException("Nie znaleziono slota w ui do zaznaczenia");
         }

@@ -188,6 +188,12 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                 case "OutfitUI":
                     item = equippedItemsManager.EquippedItems[2];
                     break;
+                case "HelmetUI":
+                    item = equippedItemsManager.EquippedItems[3];
+                    break;
+                case "ShoesUI":
+                    item = equippedItemsManager.EquippedItems[4];
+                    break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
             }
@@ -239,7 +245,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[1].item, ItemType.Armor);
                 
                         var armorItemSo = (ArmorItemSO)item.item;
-                        armorItemSo.UnequipArmor(gameObject);
+                        armorItemSo.Unequip(gameObject);
                         AddItem(item);
                         break;
                     
@@ -251,6 +257,28 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                 
                         var outfitItemSo = (OutfitItemSO)item.item;
                         outfitItemSo.UnequipOutfit(gameObject);
+                        AddItem(item);
+                        
+                        break;
+                    case "HelmetUI":
+                        item = equippedItemsManager.EquippedItems[3];
+                        
+                        equippedItemsManager.EquippedItems[3] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[3].item, ItemType.Helmet);
+                
+                        var helmetItemSo = (HelmetItemSO)item.item;
+                        helmetItemSo.Unequip(gameObject);
+                        AddItem(item);
+                        
+                        break;
+                    case "ShoesUI":
+                        item = equippedItemsManager.EquippedItems[4];
+                        
+                        equippedItemsManager.EquippedItems[4] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[4].item, ItemType.Shoes);
+                
+                        var shoesItemSo = (ShoesItemSO)item.item;
+                        shoesItemSo.Unequip(gameObject);
                         AddItem(item);
                         
                         break;
@@ -283,6 +311,12 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                     break;
                 case "OutfitUI":
                     inventoryItem = equippedItemsManager.EquippedItems[2];
+                    break;
+                case "HelmetUI":
+                    inventoryItem = equippedItemsManager.EquippedItems[3];
+                    break;
+                case "ShoesUI":
+                    inventoryItem = equippedItemsManager.EquippedItems[4];
                     break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
@@ -346,7 +380,13 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                 break;
             case ItemType.Letter:
                 sb.Append(((LetterItemSO)inventoryItem.item).GetLetterContent());
-                break;            
+                break;     
+            case ItemType.Helmet:
+                sb.Append(((HelmetItemSO)inventoryItem.item).GetStatsDescription());
+                break;
+            case ItemType.Shoes:
+                sb.Append(((ShoesItemSO)inventoryItem.item).GetStatsDescription());
+                break;
             default:
                 sb.Append(inventoryItem.item.GetStatsDescription());
                 break;
@@ -389,6 +429,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
            WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState, true);
            ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState, true);
            OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
+           ArmorManager.Instance.SetHelmet((HelmetItemSO)equippedItemsManager.EquippedItems[3].item, equippedItemsManager.EquippedItems[3].itemState, true);
+           ArmorManager.Instance.SetShoes((ShoesItemSO)equippedItemsManager.EquippedItems[4].item, equippedItemsManager.EquippedItems[4].itemState, true);
         }
     }
     
