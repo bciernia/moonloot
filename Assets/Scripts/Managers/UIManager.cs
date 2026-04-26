@@ -111,7 +111,7 @@ public class UIManager : MonoBehaviour
 
     private float _displayedHp;
     private float _displayedMp;
-    private VillageNpcData _selectedNPC;
+    private VillageNpcRuntime _selectedNPC;
 
     private void Awake()
     {
@@ -433,11 +433,16 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        //NPCManager.Instance.ApplyNPC(_selectedNPC);
-        UpdateStatsPanel();
+        if (IsNpcRescued()) ApplyNpcBonuses();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
         StartCoroutine(ShowSummary());
+    }
+
+    private void ApplyNpcBonuses()
+    {
+        NPCManager.Instance.ApplyNPC(_selectedNPC);
+        UpdateStatsPanel();
     }
     
     public void OnReturnToDayClicked()
@@ -493,7 +498,7 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    public void OnStartNightClicked(VillageNpcData chosenNpc)
+    public void OnStartNightClicked(VillageNpcRuntime chosenNpc)
     {
         SelectNPC(chosenNpc);
 
@@ -618,7 +623,7 @@ public class UIManager : MonoBehaviour
         foreach (Transform child in _levelSummaryPanel.transform)
             Destroy(child.gameObject);
 
-        switch (_selectedNPC)
+        switch (_selectedNPC.Data)
         {
             case NPCStat statNpc:
                 yield return ShowNpcStatSummary(statNpc);
@@ -639,7 +644,13 @@ public class UIManager : MonoBehaviour
             
         CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Enemies killed: {stats.EnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Earned gold: {stats.GoldEarned}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated minions: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated elites: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+        CreateSummaryText($"Defeated bosses: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
         CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
@@ -664,22 +675,36 @@ public class UIManager : MonoBehaviour
     private IEnumerator ShowNpcStatSummary(NPCStat npc)
     {
         if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
-        
-        foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+
+        if (!IsNpcRescued())
         {
-            var text = FormatBonus(bonus);
-            CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+            CreateSummaryText("You did not find the peasant.", _bonusesSummaryPanel.transform, BonusType.Damage);
             yield return new WaitForSecondsRealtime(.75f);
+
+        }
+        else
+        {
+            foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
+            {
+                CreateSummaryText("New villager saved!", _bonusesSummaryPanel.transform);
+                var text = FormatBonus(bonus);
+                CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
+                yield return new WaitForSecondsRealtime(.75f);
+            }
         }
     }
-    
-    private List<VillageNpcData> GetRandomNPCs(int count)
+
+    private bool IsNpcRescued() => HordeManager.Instance.IsNpcRescued();
+
+    private List<VillageNpcRuntime> GetRandomNPCs(int count)
     {
-        var result = new List<VillageNpcData>();
+        var result = new List<VillageNpcRuntime>();
 
         var rescued = WorldManager.Instance.RescuedNpcs;
 
-        var list = _npcDatabase.NpcDatas.Where(npc => !rescued.Contains(npc)).ToList();
+        var list = _npcDatabase.NpcDatas
+            .Where(npc => !rescued.Contains(npc))
+            .ToList();
 
         if (list.Count == 0)
         {
@@ -697,7 +722,7 @@ public class UIManager : MonoBehaviour
 
         for (var i = 0; i < count && i < list.Count; i++)
         {
-            result.Add(list[i]);
+            result.Add(new VillageNpcRuntime(list[i]));
         }
 
         return result;
@@ -738,7 +763,7 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private void SelectNPC(VillageNpcData npc)
+    private void SelectNPC(VillageNpcRuntime npc)
     {
         _selectedNPC = npc;
         HordeManager.Instance.SelectedNpc = npc;
@@ -791,5 +816,4 @@ public class UIManager : MonoBehaviour
             _ => Color.white
         };
     }
-    
 }

@@ -4,7 +4,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NPC_", menuName = "Game/NPC")]
 public abstract class NPCData : ScriptableObject
 {
-    
     public NPCGroup Group;
 
     public NPCType Type;

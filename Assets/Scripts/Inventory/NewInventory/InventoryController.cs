@@ -37,17 +37,19 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
 
-    public void ChangeGoldAmount(int goldAmount)
+    public bool ChangeGoldAmount(int goldAmount)
     {
         if (goldAmount * -1 > inventoryData.Lunar)
         {
             Debug.Log("you don't have enough money");
-            return;
+            return false;
         }
         
         inventoryData.Lunar += goldAmount;
 
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
+
+        return true;
     }
     
     public void AddItem(InventoryItem item)

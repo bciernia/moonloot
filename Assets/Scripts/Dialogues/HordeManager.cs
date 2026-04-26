@@ -45,7 +45,8 @@ public class HordeManager : Singleton<HordeManager>
     private HordeMutation _currentMutation;
     private bool _bossSpawned = false;
     private bool _rescuedNPC = false;
-    public VillageNpcData SelectedNpc { get; set; }
+    
+    public VillageNpcRuntime SelectedNpc { get; set; }
     
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
@@ -73,7 +74,7 @@ public class HordeManager : Singleton<HordeManager>
         
         StartCoroutine(WaitForSceneAndSpawn());
     }
-    
+
     private System.Collections.IEnumerator WaitForSceneAndSpawn()
     {
         yield return null;
@@ -389,6 +390,7 @@ public class HordeManager : Singleton<HordeManager>
     public void SetRescuedNPC()
     {
         _rescuedNPC = true;
+        PointsManager.Instance.AddScore(100);
 
         if (SelectedNpc != null)
         {
@@ -530,12 +532,30 @@ public class HordeManager : Singleton<HordeManager>
     
     #endregion
 
-    public void OnEnemyKilled()
+    public void OnEnemyKilled(bool isElite, bool isBoss)
     {
+        if (isBoss)
+        {
+            CombatStatsManager.Instance.BossEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(50, 100);
+            PointsManager.Instance.AddScore(3);
+        }
+        else if (isElite)
+        {
+            CombatStatsManager.Instance.EliteEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(10, 20);
+            PointsManager.Instance.AddScore(10);
+        }
+        else
+        {
+            CombatStatsManager.Instance.NormalEnemiesKilled++;
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(2, 5);
+            PointsManager.Instance.AddScore(100);
+        }
+        
         if (_currentObjective == HordeObjective.DefendObject) return;
         
         _aliveEnemies--;
-        CombatStatsManager.Instance.EnemiesKilled++;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
 
@@ -555,10 +575,11 @@ public class HordeManager : Singleton<HordeManager>
     {
         Debug.Log($"Horde {currentHorde} completed");
 
-        InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward);
+        InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward + CombatStatsManager.Instance.GoldEarned);
         currentHorde++;
         OnHordeFinished?.Invoke(currentHorde - 1);
         enemiesPerHorde += enemiesIncreasePerHorde;
+        PointsManager.Instance.AddScore(100);
     }
 
     private void FailHorde()
@@ -620,9 +641,10 @@ public class HordeManager : Singleton<HordeManager>
     
     private IEnumerator FinalKillSequence()
     {
+        //TODO Slow motion zrobić dla pokonania objectivu którym jest pokonanie wszystkich przeciwników
         yield return StartCoroutine(FinalKillSlowMo());
 
-        CompleteHorde();
+        // CompleteHorde();
     }
     
     private IEnumerator FinalKillSlowMo()
@@ -660,11 +682,13 @@ public class HordeManager : Singleton<HordeManager>
         var chosen = spawners[Random.Range(0, spawners.Length)];
 
         var npcGO = Instantiate(
-            SelectedNpc.Character,
+            SelectedNpc.Data.Character,
             chosen.spawnPoint.position,
             Quaternion.identity
         );
 
         Debug.Log($"Spawned NPC: {SelectedNpc.Name}");
     }
+    
+    public bool IsNpcRescued() => _rescuedNPC;
 }

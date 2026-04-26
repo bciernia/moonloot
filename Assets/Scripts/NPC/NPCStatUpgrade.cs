@@ -1,17 +1,28 @@
+using System;
 using UnityEngine;
 
 public class NPCStatUpgrade : MonoBehaviour
 { 
-    [SerializeField] private NPCData npc;
+    [SerializeField] private VillageNpcData npc;
+
+    public string Id { get; set; }
+
+    private VillageNpcRuntime _runtimeNpc;
+
+    private void Awake()
+    {
+        Id = $"{npc.Name}_{npc.Type.ToString()}";
+        _runtimeNpc = new VillageNpcRuntime(npc);
+    }
 
     //Musi być public bo użyte w dialogach
     public bool TryUpgrade()
     {
-        var success = NPCManager.Instance.TryUpgradeNPC(npc);
+        var success = NPCManager.Instance.TryUpgradeNPC(_runtimeNpc);
 
         if (!success) return false;
         
-        NPCManager.Instance.ApplyNPC(npc);
+        NPCManager.Instance.ApplyNPC(_runtimeNpc);
         Debug.Log("Upgrade + bonus applied");
         return true;
     }
@@ -22,7 +33,7 @@ public class NPCStatUpgrade : MonoBehaviour
     //Musi być public bo użyte w dialogach
     public int GetLevel()
     {
-        return NPCManager.Instance.GetLevel(npc.Type);
+        return NPCManager.Instance.GetLevel(_runtimeNpc);
     }
 
     public string GetLevelAsText() => GetLevel().ToString();
@@ -30,7 +41,7 @@ public class NPCStatUpgrade : MonoBehaviour
     //Musi być public bo użyte w dialogach
     public string GetNewLevel()
     {
-        var currentLevel = NPCManager.Instance.GetLevel(npc.Type) + 1;
+        var currentLevel = NPCManager.Instance.GetLevel(_runtimeNpc) + 1;
 
         return currentLevel.ToString();
     }
