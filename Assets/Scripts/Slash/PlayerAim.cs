@@ -16,8 +16,8 @@ public class PlayerAim : MonoBehaviour
 
     private void Update()
     {
-        float angle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
-        Quaternion targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        var angle = Mathf.Atan2(lastAimDirection.y, lastAimDirection.x) * Mathf.Rad2Deg;
+        var targetRotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
     }
 }
