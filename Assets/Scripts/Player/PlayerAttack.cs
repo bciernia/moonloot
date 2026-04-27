@@ -36,6 +36,8 @@ public class PlayerAttack : MonoBehaviour
     {
         WeaponManager.Instance.SetWeapon(EquippedItemsManager.Instance.EquippedItems[0].item as WeaponItemSO, null);
         ArmorManager.Instance.SetArmor(EquippedItemsManager.Instance.EquippedItems[1].item as ArmorItemSO, null);
+        ArmorManager.Instance.SetHelmet(EquippedItemsManager.Instance.EquippedItems[3].item as HelmetItemSO, null);
+        ArmorManager.Instance.SetShoes(EquippedItemsManager.Instance.EquippedItems[4].item as ShoesItemSO, null);
     }
 
     private void Update()
@@ -139,7 +141,7 @@ public class PlayerAttack : MonoBehaviour
 
     public float GetPlayerDamage()
     {
-        var critCheck = RNGManager.Instance.GetRandomNumberFromRange();
+        var critCheck = RNGManager.Instance.GetRandomInt();
         var critStat = Mathf.Round(_playerStats.GetCritBonusMultiplier() * 100f - 100f);
         
         if (critCheck <= critStat)

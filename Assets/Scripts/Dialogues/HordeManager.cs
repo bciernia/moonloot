@@ -355,7 +355,7 @@ public class HordeManager : Singleton<HordeManager>
 
         var timer = 0f;
         var spawnTimer = 0f;
-        var nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(1, 3);
+        var nextSpawnTime = RNGManager.Instance.GetRandomInt(1, 3);
 
         while (_defendActive)
         {
@@ -380,7 +380,7 @@ public class HordeManager : Singleton<HordeManager>
                 }
 
                 spawnTimer = 0f;
-                nextSpawnTime = RNGManager.Instance.GetRandomNumberFromRange(3, 6);
+                nextSpawnTime = RNGManager.Instance.GetRandomInt(3, 6);
             }
 
             yield return null;
@@ -537,19 +537,19 @@ public class HordeManager : Singleton<HordeManager>
         if (isBoss)
         {
             CombatStatsManager.Instance.BossEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(50, 100);
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(50, 100);
             PointsManager.Instance.AddScore(3);
         }
         else if (isElite)
         {
             CombatStatsManager.Instance.EliteEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(10, 20);
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(10, 20);
             PointsManager.Instance.AddScore(10);
         }
         else
         {
             CombatStatsManager.Instance.NormalEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomNumberFromRange(2, 5);
+            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(2, 5);
             PointsManager.Instance.AddScore(100);
         }
         

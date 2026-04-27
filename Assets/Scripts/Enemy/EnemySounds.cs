@@ -70,7 +70,7 @@ public class EnemySounds : MonoBehaviour
 
     private AudioClip GetEnemySound(List<AudioClip> enemySounds)
     {
-        var rndNumber = RNGManager.Instance.GetRandomNumberFromRange(0, enemySounds.Count);
+        var rndNumber = RNGManager.Instance.GetRandomInt(0, enemySounds.Count);
         return enemySounds[rndNumber];
     }
 
@@ -78,7 +78,7 @@ public class EnemySounds : MonoBehaviour
     {
         while (true)
         {
-            float delay = UnityEngine.Random.Range(_idleMinDelay, _idleMaxDelay);
+            var delay = UnityEngine.Random.Range(_idleMinDelay, _idleMaxDelay);
             yield return new WaitForSeconds(delay);
 
             PlayEnemySound();

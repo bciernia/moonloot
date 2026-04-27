@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         Player.Instance.PlayerAttack.RecalculateDamage();
         // PlayerStatisticsManager.Instance.SetDamage(_playerStats.TotalDamage);
         PlayerStatisticsManager.Instance.SetPhysicalResistance(_playerStats.GetPhysicalReductionPercent());
-        PlayerStatisticsManager.Instance.SetMagicResistance(_playerStats.GetMagicReductionPercent());
+        // PlayerStatisticsManager.Instance.SetMagicResistance(_playerStats.GetMagicReductionPercent());
         
         var shieldReductionPercent = (1f - _playerStats.ShieldResistance) * 100f;
         PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
@@ -105,19 +105,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         if (type == DamageType.True)
             return damage;
 
-        var resistance = 0f;
-
-        switch (type)
-        {
-            case DamageType.Physical:
-                resistance = _playerStats.PhysicalResistance;
-                break;
-
-            case DamageType.Magical:
-                resistance = _playerStats.MagicResistance;
-                break;
-        }
-
+        var resistance = _playerStats.PhysicalResistance;
         var multiplier = 100f / (100f + resistance * 2f);
 
         var reduced = Mathf.Floor(damage * multiplier);
@@ -132,11 +120,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         PlayerStatisticsManager.Instance.SetPhysicalResistance(
             _playerStats.GetPhysicalReductionPercent());
 
-        PlayerStatisticsManager.Instance.SetMagicResistance(
-            _playerStats.GetMagicReductionPercent());
-
         var shieldReductionPercent = (1f - amount) * 100f;
         PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
+    }
+    
+    public void ClampHealth()
+    {
+        _playerStats.HP = Mathf.Min(_playerStats.HP, _playerStats.GetMaxHp());
     }
     
     public void RefreshResistanceUI()
@@ -144,11 +134,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         PlayerStatisticsManager.Instance.SetPhysicalResistance(
             _playerStats.GetPhysicalReductionPercent());
 
-        PlayerStatisticsManager.Instance.SetMagicResistance(
-            _playerStats.GetMagicReductionPercent());
+        PlayerStatisticsManager.Instance.SetMoveSpeed(_playerStats.GetMoveSpeedMultiplier());
 
         var shieldReductionPercent = (1f - _playerStats.ShieldResistance) * 100f;
 
         PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
+        
+        ClampHealth();
     }
 }

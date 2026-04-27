@@ -9,12 +9,14 @@ public class EnemyStatsSO : ScriptableObject
     [TextArea] public string Description = "EMPTY_DESCRIPTION";
     
     [Header("Configuration")]
+    public float MinHP;
     public float MaxHP;
     public float Exp;
     public float AttackRange;
     public float DetectRange;
     public bool IsMelee;
-    public float Damage;
+    public float MinDamage;
+    public float MaxDamage;
     public float TimeBetweenAttack;
     public float Speed;
     public bool IsElite;

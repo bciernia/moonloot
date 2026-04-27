@@ -78,15 +78,18 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         if (_initialized) return;
         _initialized = true;
         
+        var hp = RandomizeStat(_enemyStats.MinHP, _enemyStats.MaxHP);
+        var dmg = RandomizeStat(_enemyStats.MinDamage, _enemyStats.MaxDamage);
+        
         Name = _enemyStats.Name;
         Description = _enemyStats.Description;
-        CurrentHP = _enemyStats.MaxHP;
-        MaxHP = _enemyStats.MaxHP;
+        CurrentHP = hp;
+        MaxHP = hp;
         ExpForEnemy = _enemyStats.Exp;
         IsMelee = _enemyStats.IsMelee;
         AttackRange = _enemyStats.AttackRange;
         DetectRange = _enemyStats.DetectRange;
-        Damage = _enemyStats.Damage;
+        Damage = dmg;
         TimeBetweenAttacks = _enemyStats.TimeBetweenAttack;
         Speed = _enemyStats.Speed;
         ChaseSpeed = _enemyStats.ChaseSpeed;
@@ -104,6 +107,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         AttackSounds = _enemyStats.AttackSounds;
         DeathSounds = _enemyStats.DeathSounds;
     }
+
+    private float RandomizeStat(float min, float max) => RNGManager.Instance.GetRandomFloat(min, max);
 
     public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
@@ -244,16 +249,5 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
 
         if (isBossOverride)
             IsBoss = true;
-
-        // ELITE ENEMY IS BIGGER THAN OTHER
-        // BOSS IS MUCH BIGGER
-        if (IsElite)
-        {
-            transform.localScale = new Vector3(1.2f, 1.2f, 1f);
-        }
-        else if (IsBoss)
-        {
-            transform.localScale = new Vector3(1.4f, 1.4f, 1f);
-        }
     }
 }

@@ -46,7 +46,7 @@ public class NPCManager : Singleton<NPCManager>
 
         foreach (var bonus in levelData.Bonuses)
         {
-            _playerStats.AddBonus(bonus);
+            _playerStats.AddNpcBonus(bonus);
         }
 
         Player.Instance.PlayerAttack.RecalculateDamage();

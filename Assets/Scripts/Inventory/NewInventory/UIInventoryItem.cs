@@ -18,8 +18,8 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     private bool empty = true;
 
     private void Awake()
-    {
-      //ResetData();
+    { 
+        ResetData();
         Deselect();
     }
 
