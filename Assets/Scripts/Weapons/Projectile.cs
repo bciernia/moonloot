@@ -32,6 +32,15 @@ public class Projectile : MonoBehaviour
                 Physics2D.IgnoreCollision(GetComponent<Collider2D>(), shooterCollider, true);
             }
 
+            if (Shooter.CompareTag("Player"))
+            {
+                Damage = Shooter.GetComponent<Player>().PlayerAttack.GetPlayerDamage();
+            }
+            else
+            {
+                Damage = Shooter.GetComponent<EnemyStatistics>()?.Damage ?? ProjectileSo.Damage;
+            }
+            
             if (Damage == 0)
             {
                 Damage = ProjectileSo.Damage;

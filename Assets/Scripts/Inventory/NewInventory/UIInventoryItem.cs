@@ -10,7 +10,6 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image borderImage;
     [SerializeField] private GameObject quantityTextContainer;
-    [SerializeField] private Sprite DefaultImage;
 
     public event Action<UIInventoryItem, UIInventoryItem> OnItemDroppedOn;
     
@@ -19,16 +18,14 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     private bool empty = true;
 
     private void Awake()
-    {
-      //ResetData();
+    { 
+        ResetData();
         Deselect();
     }
 
     public void ResetData()
     {
-        itemImage.sprite = DefaultImage;
-        
-        //itemImage.gameObject.SetActive(false);
+        itemImage.gameObject.SetActive(false);
         empty = true;
     }
 

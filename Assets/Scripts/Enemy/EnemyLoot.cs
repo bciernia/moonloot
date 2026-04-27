@@ -52,6 +52,8 @@ public class EnemyLoot : MonoBehaviour
 
     public void DropItems()
     {
+        if (Items == null) return;
+        
         foreach (var item in Items)
         {
             if (!item.ItemToDrop) continue;

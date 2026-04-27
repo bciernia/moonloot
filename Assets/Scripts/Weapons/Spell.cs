@@ -7,7 +7,8 @@ public class Spell : MonoBehaviour
     private readonly int play = Animator.StringToHash("Play");
 
     public GameObject Shooter { get; set; }
-    [field: SerializeField] public float Damage { get; set; }
+    [field: SerializeField] public float MinDmg { get; set; }
+    [field: SerializeField] public float MaxDmg { get; set; }
     
     private void Awake()
     {
@@ -53,7 +54,9 @@ public class Spell : MonoBehaviour
     {
         if (other.gameObject == Shooter || other.gameObject.CompareTag("CameraBound") || other.gameObject.CompareTag("CameraBoundQuest")) return;
 
-        other.GetComponent<IDamageable>()?.TakeDamage(Damage, Shooter.transform);    
+        var dmg = RNGManager.Instance.GetRandomFloat(MinDmg, MaxDmg);       
+        
+        other.GetComponent<IDamageable>()?.TakeDamage(dmg, Shooter.transform);    
     }
 
     public void DestroySpell()
