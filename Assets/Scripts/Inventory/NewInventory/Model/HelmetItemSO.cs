@@ -4,8 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Helmet", fileName = "Helmet_")]
 public class HelmetItemSO : EquippableItemSO, IItemAction
 {
+    public float AdditionalHp;
     public float PhysicalResistance;
-    public float MagicResistance;
     
     public AudioClip actionSfx { get; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
@@ -34,14 +34,14 @@ public class HelmetItemSO : EquippableItemSO, IItemAction
 
         if (PhysicalResistance > 0)
         {
-            description = $"Damage resistance: {PhysicalResistance} \n";
-        }
-
-        if (MagicResistance > 0)
-        {
-            description += $"Magic resistance: {MagicResistance} \n";
+            description = $"Damage resistance: {PhysicalResistance}% \n";
         }
         
+        if (AdditionalHp > 0)
+        {
+            description += $"Health points: +{AdditionalHp} \n";
+        }
+
         return description;
     }
 }

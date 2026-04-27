@@ -34,8 +34,10 @@ public class PlayerStatsSO : ScriptableObject
     
     [FormerlySerializedAs("CurrentWeapon")] public Weapon currentWeapon;
 
-    private Dictionary<BonusType, float> _bonusMultipliers = new();
-    private Dictionary<BonusType, float> _flatBonuses = new();
+    private Dictionary<BonusType, float> _npcBonuses = new();
+    private Dictionary<BonusType, float> _eqBonuses = new();
+    private Dictionary<BonusType, float> _npcFlatBonuses = new();
+    private Dictionary<BonusType, float> _eqFlatBonuses = new();
     
     public void ResetPlayerStats()
     {
@@ -46,32 +48,32 @@ public class PlayerStatsSO : ScriptableObject
         NextLevelExp = InitialNextLevelExp;
     }
 
-    public void RecalculateResistances(float physical, float magic)
+    public void RecalculateResistances(float physical)
     {
         PhysicalResistance = physical;
-        MagicResistance = magic;
 
         GetPhysicalReductionPercent();
-        GetMagicReductionPercent();
     }
     
     public float GetPhysicalReductionPercent()
     {
+        return PhysicalResistance;
+        
         var armorMultiplier = 100f / (100f + PhysicalResistance);
         var finalMultiplier = armorMultiplier * ShieldResistance;
 
         return (1f - finalMultiplier) * 100f;
     }
     
-    public float GetMagicReductionPercent()
-    {
-        var magicMultiplier = 100f / (100f + MagicResistance);
-        var finalMultiplier = magicMultiplier * ShieldResistance;
+    // public float GetMagicReductionPercent()
+    // {
+    //     var magicMultiplier = 100f / (100f + MagicResistance);
+    //     var finalMultiplier = magicMultiplier * ShieldResistance;
+    //
+    //     return (1f - finalMultiplier) * 100f;
+    // }
 
-        return (1f - finalMultiplier) * 100f;
-    }
-
-    public void AddBonus(StatBonus bonus)
+    public void AddNpcBonus(StatBonus bonus)
     {
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
@@ -79,31 +81,36 @@ public class PlayerStatsSO : ScriptableObject
         {
             var normalized = bonus.Value / 100f;
 
-            if (_bonusMultipliers.ContainsKey(bonus.Type))
-                _bonusMultipliers[bonus.Type] += normalized;
+            if (_npcBonuses.ContainsKey(bonus.Type))
+                _npcBonuses[bonus.Type] += normalized;
             else
-                _bonusMultipliers[bonus.Type] = normalized;
+                _npcBonuses[bonus.Type] = normalized;
 
             return;
         }
 
-        if (_flatBonuses.ContainsKey(bonus.Type))
-            _flatBonuses[bonus.Type] += bonus.Value;
+        if (_npcFlatBonuses.ContainsKey(bonus.Type))
+            _npcFlatBonuses[bonus.Type] += bonus.Value;
         else
-            _flatBonuses[bonus.Type] = bonus.Value;
+            _npcFlatBonuses[bonus.Type] = bonus.Value;
     }
     
     private float GetMultiplier(BonusType type)
     {
-        if (_bonusMultipliers.TryGetValue(type, out float value))
-            return 1f + value;
+        var total = 1f;
 
-        return 1f;
+        if (_npcBonuses.TryGetValue(type, out var npc))
+            total += npc;
+
+        if (_eqBonuses.TryGetValue(type, out var eq))
+            total += eq;
+
+        return total;
     }
 
-    private float GetBonus(BonusType type)
+    private float GetNpcBonus(BonusType type)
     {
-        return _bonusMultipliers.GetValueOrDefault(type, 0f);
+        return _npcBonuses.GetValueOrDefault(type, 0f);
     }
 
     public float GetMoveSpeedMultiplier()
@@ -123,14 +130,56 @@ public class PlayerStatsSO : ScriptableObject
     
     public float GetBonusValue(BonusType type)
     {
-        return _bonusMultipliers.GetValueOrDefault(type, 0f);
+        var total = 0f;
+
+        total += _npcBonuses.GetValueOrDefault(type, 0f);
+        total += _eqBonuses.GetValueOrDefault(type, 0f);
+
+        return total;
     }
     
-    private float GetFlatBonus(BonusType type)
+    private float GetNpcFlatBonus(BonusType type)
     {
-        return _flatBonuses.GetValueOrDefault(type, 0f);
+        return _npcFlatBonuses.GetValueOrDefault(type, 0f);
+    }
+    
+    private float GetEqFlatBonus(BonusType type)
+    {
+        return _eqFlatBonuses.GetValueOrDefault(type, 0f);
     }
 
-    public float GetMaxHp() => MaxHP + GetFlatBonus(BonusType.MaxHp);
-    public float GetMaxMp() => MaxMP + GetFlatBonus(BonusType.MaxMp);
+    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp);
+    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp);
+    
+    public void ResetEquipmentBonuses()
+    {
+        _eqBonuses.Clear();
+    }
+    
+    public void ResetEquipmentFlatBonuses()
+    {
+        _eqFlatBonuses.Clear();
+    }
+    
+    public void AddEquipmentBonus(StatBonus bonus)
+    {
+        var normalized = bonus.Value / 100f;
+
+        if (bonus.Type == BonusType.Damage ||
+            bonus.Type == BonusType.MoveSpeed ||
+            bonus.Type == BonusType.Crit)
+        {
+            if (_eqBonuses.ContainsKey(bonus.Type))
+                _eqBonuses[bonus.Type] += normalized;
+            else
+                _eqBonuses[bonus.Type] = normalized;
+
+            return;
+        }
+
+        if (_eqFlatBonuses.ContainsKey(bonus.Type))
+            _eqFlatBonuses[bonus.Type] += bonus.Value;
+        else
+            _eqFlatBonuses[bonus.Type] = bonus.Value;
+    }
 }

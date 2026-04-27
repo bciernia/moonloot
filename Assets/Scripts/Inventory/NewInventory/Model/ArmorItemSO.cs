@@ -5,7 +5,8 @@ using UnityEngine;
 public class ArmorItemSO : EquippableItemSO, IItemAction
 {
     public float PhysicalResistance;
-    public float MagicResistance;
+    public float AdditionalHp;
+    public float MovementSpeedDisadvantage;
     
     public AudioClip actionSfx { get; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
@@ -34,12 +35,17 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
 
         if (PhysicalResistance > 0)
         {
-            description = $"Damage resistance: {PhysicalResistance} \n";
+            description = $"Damage resistance: {PhysicalResistance}% \n";
+        }
+        
+        if (AdditionalHp > 0)
+        {
+            description = $"Health points: +{AdditionalHp} \n";
         }
 
-        if (MagicResistance > 0)
+        if (MovementSpeedDisadvantage > 0)
         {
-            description += $"Magic resistance: {MagicResistance} \n";
+            description += $"Movement speed reduction: {MovementSpeedDisadvantage}% \n";
         }
         
         return description;

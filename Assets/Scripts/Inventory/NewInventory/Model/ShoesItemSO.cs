@@ -4,8 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Shoes", fileName = "Shoes_")]
 public class ShoesItemSO : EquippableItemSO, IItemAction
 {
-    public float PhysicalResistance;
-    public float MagicResistance;
+    public float MovementSpeedBonus;
     
     public AudioClip actionSfx { get; }
     public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
@@ -32,14 +31,9 @@ public class ShoesItemSO : EquippableItemSO, IItemAction
     {
         var description = "";
 
-        if (PhysicalResistance > 0)
+        if (MovementSpeedBonus > 0)
         {
-            description = $"Damage resistance: {PhysicalResistance} \n";
-        }
-
-        if (MagicResistance > 0)
-        {
-            description += $"Magic resistance: {MagicResistance} \n";
+            description = $"Movement speed bonus: {MovementSpeedBonus}% \n";
         }
         
         return description;

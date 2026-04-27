@@ -33,7 +33,7 @@ public class ArmorManager : Singleton<ArmorManager>
     
     private void EquipArmor(ArmorItemSO armor)
     {
-        RecalculateAllResistances();
+        RecalculateAllBonusesFromArmor();
         if (armor == null)
         {
             return;
@@ -66,7 +66,7 @@ public class ArmorManager : Singleton<ArmorManager>
     
     private void EquipHelmet(HelmetItemSO helmet)
     {
-        RecalculateAllResistances();
+        RecalculateAllBonusesFromArmor();
         if (helmet == null)
         {
             return;
@@ -100,7 +100,7 @@ public class ArmorManager : Singleton<ArmorManager>
     
     private void EquipShoes(ShoesItemSO shoes)
     {
-        RecalculateAllResistances();
+        RecalculateAllBonusesFromArmor();
         
         if (shoes == null)
         {
@@ -132,30 +132,53 @@ public class ArmorManager : Singleton<ArmorManager>
     }
     #endregion
 
-    private void RecalculateAllResistances()
+    private void RecalculateAllBonusesFromArmor()
     {
+        var stats = GameManager.Instance.Player.PlayerStats;
+
+        stats.ResetEquipmentBonuses();
+        stats.ResetEquipmentFlatBonuses();
+        
         float physical = 0;
-        float magic = 0;
 
         if (_armor != null)
         {
             physical += _armor.PhysicalResistance;
-            magic += _armor.MagicResistance;
+            
+            GameManager.Instance.Player.PlayerStats.AddEquipmentBonus(new StatBonus
+            {
+                Type = BonusType.MaxHp,
+                Value = _armor.AdditionalHp
+            });
+            
+            GameManager.Instance.Player.PlayerStats.AddEquipmentBonus(new StatBonus
+            {
+                Type = BonusType.MoveSpeed,
+                //ZMNIEJSZAMY PRĘDKOŚĆ, DLATEGO JEST "-"
+                Value = -_armor.MovementSpeedDisadvantage
+            });
         }
 
         if (_helmet != null)
         {
             physical += _helmet.PhysicalResistance;
-            magic += _helmet.MagicResistance;
+            GameManager.Instance.Player.PlayerStats.AddEquipmentBonus(new StatBonus
+            {
+                Type = BonusType.MaxHp,
+                Value = _helmet.AdditionalHp
+            });
         }
 
         if (_shoes != null)
         {
-            physical += _shoes.PhysicalResistance;
-            magic += _shoes.MagicResistance;
+            GameManager.Instance.Player.PlayerStats.AddEquipmentBonus(new StatBonus
+            {
+                Type = BonusType.MoveSpeed,
+                Value = _shoes.MovementSpeedBonus
+            });
         }
 
-        GameManager.Instance.Player.PlayerStats.RecalculateResistances(physical, magic);
+        GameManager.Instance.Player.PlayerStats.RecalculateResistances(physical);
         GameManager.Instance.Player.GetComponent<PlayerHealth>().RefreshResistanceUI();
     }
     
