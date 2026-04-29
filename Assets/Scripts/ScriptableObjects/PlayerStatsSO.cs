@@ -77,7 +77,7 @@ public class PlayerStatsSO : ScriptableObject
     {
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
-            bonus.Type == BonusType.Crit)
+            bonus.Type == BonusType.CritChance)
         {
             var normalized = bonus.Value / 100f;
 
@@ -123,9 +123,21 @@ public class PlayerStatsSO : ScriptableObject
         return GetMultiplier(BonusType.Damage);
     }
 
-    public float GetCritBonusMultiplier()
+    public float GetCritChanceBonusMultiplier()
     {
-        return GetMultiplier(BonusType.Crit);
+        return GetMultiplier(BonusType.CritChance);
+    }
+
+    public float GetCritMultiplier()
+    {
+        var baseCrit = 1.5f;
+
+        var bonus = 0f;
+
+        bonus += _npcFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _eqFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+
+        return baseCrit + bonus;
     }
     
     public float GetBonusValue(BonusType type)
@@ -137,6 +149,7 @@ public class PlayerStatsSO : ScriptableObject
 
         return total;
     }
+    
     
     private float GetNpcFlatBonus(BonusType type)
     {
@@ -167,7 +180,7 @@ public class PlayerStatsSO : ScriptableObject
 
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
-            bonus.Type == BonusType.Crit)
+            bonus.Type == BonusType.CritChance)
         {
             if (_eqBonuses.ContainsKey(bonus.Type))
                 _eqBonuses[bonus.Type] += normalized;

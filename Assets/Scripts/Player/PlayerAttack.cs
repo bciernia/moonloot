@@ -142,10 +142,10 @@ public class PlayerAttack : MonoBehaviour
     public float GetPlayerDamage()
     {
         var critCheck = RNGManager.Instance.GetRandomInt();
-        var critStat = Mathf.Round(_playerStats.GetCritBonusMultiplier() * 100f - 100f);
+        var critStat = Mathf.Round(_playerStats.GetCritChanceBonusMultiplier() * 100f - 100f);
         
         if (critCheck <= critStat)
-            return _playerStats.TotalDamage * 2;
+            return _playerStats.TotalDamage * _playerStats.GetCritMultiplier();
         
         return _playerStats.TotalDamage;
     }

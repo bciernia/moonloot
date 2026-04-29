@@ -2,7 +2,8 @@ public enum BonusType
 {
     Damage,
     MoveSpeed,
-    Crit,
+    CritChance,
+    CritMultiplier,
     
     MaxHp,
     MaxMp,
