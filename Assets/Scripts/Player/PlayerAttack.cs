@@ -133,7 +133,8 @@ public class PlayerAttack : MonoBehaviour
 
         var damage = baseDamage + weaponDamage;
         damage *= _playerStats.GetDamageBonusMultiplier();
-
+        damage *= _currentDmgMultiplier;
+        
         _playerStats.TotalDamage = damage;
         
         return damage;

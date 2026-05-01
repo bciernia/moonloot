@@ -16,4 +16,6 @@ public class ProjectileSO : ScriptableObject
     [Header("Effect modifiers")]
     [field: SerializeField] public Effect Effect;
     [field: SerializeField] public float EffectChance;
+    [field: SerializeField] public bool CanBounce;
+    [field: SerializeField] public int BounceNumber;
 }

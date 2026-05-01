@@ -8,18 +8,14 @@ public class UISkillBtn : MonoBehaviour
     [SerializeField] private Image Image;
 
     private Button _button;
-    
     private UISkillDescription _uiSkillDescription;
 
-    private PlayerSkillProgress _skillProgress;
-    
     private void Awake()
     {
         _uiSkillDescription = DescriptionPanel.GetComponent<UISkillDescription>();
         Image.sprite = Skill.Icon;
         _button = GetComponent<Button>();
-        _skillProgress = FindAnyObjectByType<PlayerSkillProgress>();
-        
+
         RefreshState();
     }
 
@@ -30,13 +26,13 @@ public class UISkillBtn : MonoBehaviour
 
     public void RefreshState()
     {
-        if (_skillProgress == null || Skill == null)
+        if (PlayerSkillManager.Instance == null || Skill == null)
             return;
 
-        var unlocked = _skillProgress.IsUnlocked(Skill);
+        var unlocked = PlayerSkillManager.Instance.IsUnlocked(Skill);
 
-        // if (_button != null)
-        //     _button.interactable = unlocked;
+        if (_button != null)
+            _button.interactable = unlocked;
 
         if (Image != null)
         {
@@ -44,10 +40,5 @@ public class UISkillBtn : MonoBehaviour
                 ? Color.white
                 : new Color(1f, 1f, 1f, 0.3f);
         }
-    }
-    
-    public void Initialize(PlayerSkillProgress progress)
-    {
-        _skillProgress = progress;
     }
 }

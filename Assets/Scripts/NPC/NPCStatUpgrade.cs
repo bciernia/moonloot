@@ -47,4 +47,17 @@ public class NPCStatUpgrade : MonoBehaviour
     }
 
     public string GetNpcName() => npc.Name;
+
+    public bool TryUnlockSkill() => _runtimeNpc.GrantedSkill != null && PlayerSkillManager.Instance.UnlockSkill(_runtimeNpc.GrantedSkill);
+    
+    
+    public bool IsSkillUnlocked() => PlayerSkillManager.Instance.IsUnlocked(_runtimeNpc.GrantedSkill);
+
+    public string GetGrantedSkillName()
+    {
+        var test = _runtimeNpc.GrantedSkill.Name;
+        return test;
+    }
+    
+    public string GetGrantedSkillDescription => _runtimeNpc.GrantedSkill.NpcDescription;
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
@@ -7,4 +8,5 @@ public class VillageNpcData : NPCData
 {
     public NPCRole AssignedRole;
     public NPCRole PreferredRole;
+    public List<Skill> PossibleSkills;
 }

@@ -1510,6 +1510,7 @@ Transform:
   - {fileID: 8641956755457585595}
   - {fileID: 3584013800139257171}
   - {fileID: 2777289222262521720}
+  - {fileID: 5088120244562804324}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005456009627945634
@@ -1556,12 +1557,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a17c361e2cf364e9143f3ecedcdfa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: {fileID: 0}
   Damage: {fileID: 0}
   PhysicalResistance: {fileID: 0}
-  MagicResistance: {fileID: 0}
   DmgReduction: {fileID: 0}
   CritChance: {fileID: 0}
+  CritMultiplier: {fileID: 0}
   MoveSpeed: {fileID: 0}
 --- !u!1 &2316603820376517927
 GameObject:
@@ -2533,6 +2533,52 @@ Transform:
   - {fileID: 693246703850355807}
   m_Father: {fileID: 5419951858597589884}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3849436242032148410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5088120244562804324}
+  - component: {fileID: 7902781967862635188}
+  m_Layer: 0
+  m_Name: PlayerSkillManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5088120244562804324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849436242032148410}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7902781967862635188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3849436242032148410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37993a01770f0b94c8538da2eef357e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logUnlocks: 1
+  startingSkills: []
 --- !u!1 &3962047042188046341
 GameObject:
   m_ObjectHideFlags: 0
@@ -3117,6 +3163,8 @@ MonoBehaviour:
     value: 100
   _itemCurrentState: []
   _armor: {fileID: 11400000, guid: ddfff04bcfe17f946920311263e96fd7, type: 2}
+  _helmet: {fileID: 0}
+  _shoes: {fileID: 0}
 --- !u!1 &4599838828895267686
 GameObject:
   m_ObjectHideFlags: 0
@@ -7072,6 +7120,12 @@ MonoBehaviour:
   - quantity: 0
     item: {fileID: 0}
     itemState: []
+  - quantity: 0
+    item: {fileID: 0}
+    itemState: []
+  - quantity: 0
+    item: {fileID: 0}
+    itemState: []
   defaultWeapon:
     quantity: 1
     item: {fileID: 11400000, guid: c5211e011ed53b943b253c3d2d431c2c, type: 2}
@@ -7079,6 +7133,8 @@ MonoBehaviour:
   WeaponSlot: {fileID: 0}
   ArmorSlot: {fileID: 0}
   OutfitSlot: {fileID: 0}
+  HelmetSlot: {fileID: 0}
+  ShoesSlot: {fileID: 0}
   EquippedItemsManagerSo: {fileID: 11400000, guid: c107e423446854c4ea75c4455f9ed514, type: 2}
 --- !u!1 &8432694355708011506
 GameObject:

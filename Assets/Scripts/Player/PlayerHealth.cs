@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
+public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, IHealth
 {
     [Header("Configuration")]
     [SerializeField] private PlayerStatsSO _playerStats;
@@ -142,4 +142,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         
         ClampHealth();
     }
+
+    public float CurrentHealthPoints => CurrentHealth;
+    public bool IsAlive => CurrentHealth > 0f;
 }
