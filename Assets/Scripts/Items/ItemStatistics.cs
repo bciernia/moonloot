@@ -26,7 +26,7 @@ public class ItemStatistics : MonoBehaviour, IDamageable
     public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
-        DamageManager.Instance.ShowDamageText(amount, transform);
+        FloatingTextManager.Instance.ShowDamageText(amount, transform);
 
         if (CurrentHP <= 0f)
         {

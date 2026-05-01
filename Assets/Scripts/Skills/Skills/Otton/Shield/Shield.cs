@@ -11,11 +11,7 @@ public class Shield : Skill
     {
         if (user == null) return false;
         var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && mana.CurrentMana < ManaCost)
-        {
-            Debug.Log("No mana");
-            return false;
-        }
+        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
         
         var playerHealth = user.GetComponent<PlayerHealth>();
 
@@ -24,8 +20,6 @@ public class Shield : Skill
             Debug.LogError("There is no player health for Shield Spell");
             return false;
         }
-        
-        mana?.UseMana(ManaCost);
         
         playerHealth.ReduceDamage(ReduceAmount, Duration, ShieldEffect);
         return true;

@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMana : MonoBehaviour
 {
@@ -14,10 +12,21 @@ public class PlayerMana : MonoBehaviour
         CurrentMana = _playerStats.MP;
     }
     
-    public void UseMana(float amount)
+    public bool TryUseMana(float amount)
     {
+        if (CurrentMana < amount)
+        {
+            Debug.Log(CurrentMana);
+            Debug.Log(amount);
+            
+            FloatingTextManager.Instance.ShowWarningText("Not enough mana!", transform);
+            
+            return false;
+        }
+        
         _playerStats.MP = Mathf.Max(_playerStats.MP -= amount, 0f);
         CurrentMana = _playerStats.MP;
+        return true;
     }
 
     public void RecoverMana(float amount)

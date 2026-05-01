@@ -51,7 +51,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         var reducedDamage = afterArmor * _playerStats.ShieldResistance;
         
         _playerStats.HP -= reducedDamage;
-        DamageManager.Instance.ShowDamageText(reducedDamage, transform);
+        FloatingTextManager.Instance.ShowDamageText(reducedDamage, transform);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;
@@ -67,6 +67,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
     public void RestoreHealth(float amount)
     {
         _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.GetMaxHp());
+        FloatingTextManager.Instance.ShowHealText(amount, transform);
     }
 
     public void RestoreMana(float amount)

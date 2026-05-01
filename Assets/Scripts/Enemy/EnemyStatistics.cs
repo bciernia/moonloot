@@ -115,7 +115,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         if (CurrentHP <= 0) return;
         
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
-        DamageManager.Instance.ShowDamageText(amount, transform);
+        FloatingTextManager.Instance.ShowDamageText(amount, transform);
 
         if (_enemyBrain != null && damageSourceTransform != null && damageSourceTransform.CompareTag("Player"))
         {
@@ -171,8 +171,13 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public void RestoreHealth(float amount)
     {
         CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
+        FloatingTextManager.Instance.ShowHealText(amount, transform);
     }
 
+    public void RestoreHealthForEliteEnemy(float amount)
+    {
+        CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
+    }
 
     public void ApplyRoot(float duration, GameObject effect)
     {

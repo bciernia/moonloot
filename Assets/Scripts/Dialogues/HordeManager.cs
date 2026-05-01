@@ -622,7 +622,7 @@ public class HordeManager : Singleton<HordeManager>
         {
             case HordeMutation.StrongEnemies:
                 stats.MaxHP *= 1.5f;
-                stats.RestoreHealth(stats.MaxHP);
+                stats.RestoreHealthForEliteEnemy(stats.MaxHP);
                 break;
 
             case HordeMutation.FastEnemies:

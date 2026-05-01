@@ -55,8 +55,7 @@ public class PlayerAttack : MonoBehaviour
 
         var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
 
-        var canPerformAttack = CanPerformAttack(manaCost, _weapon.RequiredStamina, _playerMana.CurrentMana,
-            _playerStamina.CurrentStamina);
+        var canPerformAttack = CanPerformAttack(manaCost, _weapon.RequiredStamina, _playerMana.CurrentMana, _playerStamina.CurrentStamina);
         if (!canPerformAttack) return;
 
         FireSlashEffect();
@@ -79,12 +78,11 @@ public class PlayerAttack : MonoBehaviour
         // return false;
         // }
 
-        if (requiredMana > 0 && availableMana <= 0)
+        if (!_playerMana.TryUseMana(requiredMana))
         {
             return false;
         }
 
-        _playerMana.UseMana(requiredMana);
         _playerStamina.UseStamina(requiredStamina);
         return true;
     }

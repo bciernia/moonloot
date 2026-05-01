@@ -15,10 +15,7 @@ public class AuraOfKnowledge : Skill
         if (user == null) return false;
 
         var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && mana.CurrentMana < ManaCost)
-            return false;
-
-        mana?.UseMana(ManaCost);
+        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
 
         var hits = Physics2D.OverlapCircleAll(
             user.transform.position,
