@@ -11,7 +11,11 @@ PrefabInstance:
     - target: {fileID: 2336843719227338529, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 3436759215c829148a60517f39615e82, type: 2}
+      objectReference: {fileID: 22100000, guid: bf314ff4588dcd04ba2fc0d49496a636, type: 2}
+    - target: {fileID: 3309021524241675244, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: c7c4860c21305ff42b09502c595c30e1, type: 2}
     - target: {fileID: 6568515052697615923, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -65,5 +69,42 @@ PrefabInstance:
     - {fileID: 6353578004099875147, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8232978262104228839}
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3603784442153078673}
   m_SourcePrefab: {fileID: 100100000, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+--- !u!1 &6294509973485728611 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+  m_PrefabInstance: {fileID: 872691701950077380}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8232978262104228839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6294509973485728611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370f494eedaf4014d81907a202a8cd24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc: {fileID: 11400000, guid: dc3ec1676c948c542b5f9f914cee6c86, type: 2}
+--- !u!114 &-3603784442153078673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6294509973485728611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94130cce39d34469a83caba923e8c698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsInTown: 0

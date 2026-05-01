@@ -173,12 +173,12 @@ public class HordeManager : Singleton<HordeManager>
                 spawnTimer = 0f;
             }
 
-            // scaling po 3 minutach
-            if (elapsed >= 180f)
+            // scaling po 2 minutach
+            if (elapsed >= 120f)
             {
                 speedIncreaseTimer += Time.deltaTime;
 
-                if (speedIncreaseTimer >= 10f)
+                if (speedIncreaseTimer >= 5f)
                 {
                     IncreaseEnemiesSpeed();
                     speedIncreaseTimer = 0f;
