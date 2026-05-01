@@ -781,11 +781,20 @@ public class UIManager : MonoBehaviour
         var finalSpeed = movement.GetFinalSpeed();
         PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
 
-        var critRaw = _playerStatsSo.GetBonusValue(BonusType.Crit);
-        var crit = Mathf.Max(0f, critRaw) * 100f;
-        PlayerStatisticsManager.Instance.SetCritChance(Mathf.Min(crit, 100f));
+        SetCriticalStatistics();
+        
         
         Player.Instance.PlayerAttack.RecalculateDamage();
+    }
+
+    private void SetCriticalStatistics()
+    {
+        var critRaw = _playerStatsSo.GetBonusValue(BonusType.CritChance);
+        var crit = Mathf.Max(0f, critRaw) * 100f;
+        PlayerStatisticsManager.Instance.SetCritChance(Mathf.Min(crit, 100f));
+
+        var critMultiplier = _playerStatsSo.GetCritMultiplier();
+        PlayerStatisticsManager.Instance.SetCritMultiplier(critMultiplier);
     }
     
     private string FormatBonus(StatBonus bonus)
@@ -794,7 +803,8 @@ public class UIManager : MonoBehaviour
         {
             BonusType.Damage => $"+{bonus.Value:0}% Damage",
             BonusType.MoveSpeed => $"+{bonus.Value:0}% Move Speed",
-            BonusType.Crit => $"+{bonus.Value:0}% Crit Chance",
+            BonusType.CritChance => $"+{bonus.Value:0}% Crit Chance",
+            BonusType.CritMultiplier => $"+{bonus.Value:0} Crit Multiplier",
 
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",

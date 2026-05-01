@@ -12,11 +12,8 @@ public class UISkillDescription : MonoBehaviour
     [SerializeField] private GameObject lockedInfo;
     [SerializeField] private SkillsSetter skillsSetter;
     
-    private PlayerSkillProgress _skillProgress;
-    
     protected void Awake()
     {
-        _skillProgress = FindAnyObjectByType<PlayerSkillProgress>();
         ResetDescription();
     }
 
@@ -31,13 +28,7 @@ public class UISkillDescription : MonoBehaviour
 
     private void ShowButtonsIfSkillUnlocked(Skill chosenSkill)
     {
-        if (_skillProgress == null)
-        {
-            Debug.LogError("PlayerSkillProgress not found");
-            return;
-        }
-
-        var isUnlocked = _skillProgress.IsUnlocked(chosenSkill);
+        var isUnlocked = PlayerSkillManager.Instance.IsUnlocked(chosenSkill);
         SetActionButtonsAndUnlockInfoSections(isUnlocked);
     }
 

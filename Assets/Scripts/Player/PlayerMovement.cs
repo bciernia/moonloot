@@ -52,7 +52,7 @@ public class PlayerMovement : MonoBehaviour
         var bonusMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
         
         return _rb2D.position +
-               _moveDirection * (speed * _currentSpeedMultiplier * bonusMultiplier *Time.fixedDeltaTime);
+               _moveDirection * (speed * _currentSpeedMultiplier * bonusMultiplier * Time.fixedDeltaTime);
     }
 
     public void ApplySpeedMultiplier(float multiplier, float duration)

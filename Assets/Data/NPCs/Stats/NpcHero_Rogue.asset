@@ -10,36 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d799d762db042338c5c0f74b9363cd1, type: 3}
-  m_Name: NPCStat_Blacksmith
+  m_Name: NpcHero_Rogue
   m_EditorClassIdentifier: 
   Group: 0
-  Type: 0
-  Name: Greg the Blacksmith
-  Profession: Blacksmith
-  Portrait: {fileID: 4723107735738678597, guid: dea9df1d483570c41b67f1083ea4e32f, type: 3}
-  Character: {fileID: 4342973776558152014, guid: 323d3e1abf3dc614c9be26d0b8dcc138, type: 3}
+  Type: 4
+  Name: Rogue
+  Profession: Killer
+  Portrait: {fileID: 3656756913067813815, guid: 70508a79cc3b8d54a888194df6374da0, type: 3}
+  Character: {fileID: 6294509973485728611, guid: 4c7066c54a0d9b943bd5c351f6bfb71b, type: 3}
   UpgradeLevels:
   - Level: 1
     Bonuses:
-    - Type: 0
-      Value: 2
-    ItemName: 
-    RequiredAmount: 0
-    GoldAmount: 0
+    - Type: 3
+      Value: 0.25
+    ItemName: Turnip
+    RequiredAmount: 2
+    GoldAmount: 33
   - Level: 2
     Bonuses:
-    - Type: 0
-      Value: 3
-    ItemName: Corn
+    - Type: 3
+      Value: 0.25
+    ItemName: Turnip
     RequiredAmount: 3
     GoldAmount: 0
   - Level: 3
     Bonuses:
-    - Type: 0
-      Value: 5
-    ItemName: Potato
-    RequiredAmount: 3
+    - Type: 3
+      Value: 0.5
+    ItemName: Turnip
+    RequiredAmount: 1
     GoldAmount: 0
-  uniqueID: 
   AssignedRole: 0
   PreferredRole: 0
+  PossibleSkills:
+  - {fileID: 11400000, guid: e6676c6a6b325474a8ca809882e1e281, type: 2}

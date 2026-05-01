@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
+public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, IHealth
 {
     [Header("Configuration")]
     [SerializeField] private PlayerStatsSO _playerStats;
@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
 
     private void PrepareStatistics()
     {
-        PlayerStatisticsManager.Instance.SetLevel(_playerStats.Level);
+        // PlayerStatisticsManager.Instance.SetLevel(_playerStats.Level);
         Player.Instance.PlayerAttack.RecalculateDamage();
         // PlayerStatisticsManager.Instance.SetDamage(_playerStats.TotalDamage);
         PlayerStatisticsManager.Instance.SetPhysicalResistance(_playerStats.GetPhysicalReductionPercent());
@@ -51,7 +51,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         var reducedDamage = afterArmor * _playerStats.ShieldResistance;
         
         _playerStats.HP -= reducedDamage;
-        DamageManager.Instance.ShowDamageText(reducedDamage, transform);
+        FloatingTextManager.Instance.ShowDamageText(reducedDamage, transform);
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;
@@ -67,6 +67,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
     public void RestoreHealth(float amount)
     {
         _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.GetMaxHp());
+        FloatingTextManager.Instance.ShowHealText(amount, transform);
     }
 
     public void RestoreMana(float amount)
@@ -142,4 +143,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable
         
         ClampHealth();
     }
+
+    public float CurrentHealthPoints => CurrentHealth;
+    public bool IsAlive => CurrentHealth > 0f;
 }

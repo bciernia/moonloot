@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5d799d762db042338c5c0f74b9363cd1, type: 3}
-  m_Name: NPCStat_Hunter
+  m_Name: NpcHero_Ranger
   m_EditorClassIdentifier: 
   Group: 0
   Type: 2
-  Name: Jimbo the Hunter
+  Name: Ranger
   Profession: Hunter
-  Portrait: {fileID: 4723107735738678597, guid: de921e992f33724488e7a7b39aa2983c, type: 3}
-  Character: {fileID: 9016100815546929347, guid: 4fdcae7d8c36c7a4daa2523dc105e021, type: 3}
+  Portrait: {fileID: 8048668061461203166, guid: 8a0053c4fb580d54b905d8948087b3dd, type: 3}
+  Character: {fileID: 6294509973485728611, guid: c0d92f33b01b7a44faf09e378238733d, type: 3}
   UpgradeLevels:
   - Level: 1
     Bonuses:
@@ -25,15 +25,22 @@ MonoBehaviour:
       Value: 5
     ItemName: 
     RequiredAmount: 0
+    GoldAmount: 0
   - Level: 2
     Bonuses:
     - Type: 1
       Value: 10
     ItemName: Turnip
     RequiredAmount: 2
+    GoldAmount: 0
   - Level: 3
     Bonuses:
     - Type: 1
       Value: 20
     ItemName: Turnip
     RequiredAmount: 5
+    GoldAmount: 0
+  AssignedRole: 0
+  PreferredRole: 0
+  PossibleSkills:
+  - {fileID: 11400000, guid: b164429bbb2c70541a40d047d0a14b6c, type: 2}

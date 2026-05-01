@@ -37,7 +37,6 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     [SerializeField] private int slotCount = 2;
 
     private PlayerInput _playerInput;
-    private PlayerSkillProgress _skillProgress;
 
     private Action<InputAction.CallbackContext> _skill1Started;
     private Action<InputAction.CallbackContext> _skill1Canceled;
@@ -55,7 +54,6 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         base.Awake();
 
         _playerInput = FindAnyObjectByType<PlayerInput>();
-        _skillProgress = user.GetComponent<PlayerSkillProgress>();
 
         _skill1Started  = ctx => OnSkillStarted(0);
         _skill1Canceled = ctx => OnSkillReleased(0);
@@ -154,7 +152,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         if (entry.skill == null)
             return;
 
-        if (!_skillProgress.IsUnlocked(entry.skill))
+        if (!PlayerSkillManager.Instance.IsUnlocked(entry.skill))
             return;
 
         var runtime = GetRuntime(entry.skill);

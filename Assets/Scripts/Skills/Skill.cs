@@ -4,6 +4,7 @@ public class Skill : IdentifiableSO
 {
     public string Name;
     [TextArea] public string Description;
+    [TextArea] public string NpcDescription;
 
     public float Cooldown;
     public float ActiveTime;

@@ -7,19 +7,12 @@ public enum NPCGroup
 
 public enum NPCType
 {
-    //STAT
-    Blacksmith,
-    Healer,
-    Hunter,
-    Artificer,
-    
-    //MERCHANT
-    Weapon,
-    Armor,
-    Potion,
-    
-    //HERO
-    Warrior,
+    Barbarian,
+    Bard,
+    Cleric,
+    Ranger,
     Rogue,
-    Mage
+    Wizard,
+    
+    
 }

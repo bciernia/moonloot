@@ -7,13 +7,7 @@ public class Heal : Skill
     {
         if (user == null) return false;
         var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && mana.CurrentMana < ManaCost)
-        {
-            Debug.Log("No mana");
-            return false;
-        }
-
-        mana?.UseMana(ManaCost);
+        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
 
         base.Activate(user);
         

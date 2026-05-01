@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using MoreMountains.Feedbacks;
 using UnityEngine;
 
-public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable, IConfusionable
+public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable, IConfusionable, IHealth
 {
     [Header("Config")]
     [SerializeField] private EnemyStatsSO _enemyStats;
@@ -112,15 +112,17 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
 
     public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
+        if (CurrentHP <= 0) return;
+        
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
-        DamageManager.Instance.ShowDamageText(amount, transform);
+        FloatingTextManager.Instance.ShowDamageText(amount, transform);
 
-        if (_enemyBrain != null && damageSourceTransform.CompareTag("Player"))
+        if (_enemyBrain != null && damageSourceTransform != null && damageSourceTransform.CompareTag("Player"))
         {
             _enemyBrain.ForceTarget(damageSourceTransform, 3f);
         } 
         
-        if (!_isRooted && damageSourceTransform != null)
+        if (!_isRooted && damageSourceTransform != null && _knockBack != null)
         {
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);
         }
@@ -169,8 +171,13 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public void RestoreHealth(float amount)
     {
         CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
+        FloatingTextManager.Instance.ShowHealText(amount, transform);
     }
 
+    public void RestoreHealthForEliteEnemy(float amount)
+    {
+        CurrentHP = Mathf.Min(CurrentHP + amount, MaxHP);
+    }
 
     public void ApplyRoot(float duration, GameObject effect)
     {
@@ -250,4 +257,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         if (isBossOverride)
             IsBoss = true;
     }
+
+    public float CurrentHealthPoints => CurrentHP;
+    public bool IsAlive => CurrentHP > 0f;
 }
