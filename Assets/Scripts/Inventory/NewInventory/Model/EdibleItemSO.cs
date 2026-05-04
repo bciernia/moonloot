@@ -42,8 +42,8 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
     
     public void Unequip(GameObject character)
     {
-        var armorSystem = character.transform.parent.GetComponentInChildren<QuickItemManager>();
-        armorSystem.SetQuickItem(null, null, 0, 5);
+        var quickItemManager = character.transform.parent.GetComponentInChildren<QuickItemManager>();
+        quickItemManager.SetQuickItem(null, null, 0, 5);
     }
 }
 

@@ -109,6 +109,12 @@ public class UIInventoryPage : MonoBehaviour
             ShopManager.Instance.SellItem(itemToSell, currentlyDraggedItemIndex);
             return;
         }
+
+        if (IsDraggingFromQuickSlotToQuickSlot(targetInventoryItemUi.gameObject.name, draggedInventoryItemUiName))
+        {
+            InventoryController.Instance.SwapQuickSlots(targetInventoryItemUi.gameObject.name, draggedInventoryItemUiName);
+            return;
+        }
         
         if (index == -1 && indexOfSellerItem == -1 && targetInventoryItemUi.CompareTag("EquippedItem"))
         {
@@ -312,4 +318,6 @@ public class UIInventoryPage : MonoBehaviour
     {
         sellerGoldAmountTMP.text = $"{goldAmount}";
     }
+
+    private bool IsDraggingFromQuickSlotToQuickSlot(string slotName1, string slotName2) => slotName1 == "QuickSlot1" && slotName2 == "QuickSlot2" || slotName1 == "QuickSlot2" && slotName2 == "QuickSlot1";
 }

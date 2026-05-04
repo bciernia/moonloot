@@ -30,7 +30,6 @@ public class QuickItemManager : Singleton<QuickItemManager>
     private void UseSlot(int index)
     {
         var item = EquippedItemsManager.Instance.EquippedItems[index];
-        var equipped = EquippedItemsManager.Instance;
         if (item.IsEmpty) return;
 
         var action = item.item as IItemAction;
@@ -46,22 +45,6 @@ public class QuickItemManager : Singleton<QuickItemManager>
         SkillsManager.Instance.RefreshSlotUI();
 
     }
-    
-    // public void SetQuickItem(EdibleItemSO item, List<ItemParameter> itemState, int itemQuantity, int quickItemSlotIndex, bool isFromLoading = false)
-    // {
-    //     // if (item != null && _edibleItemSo1 != null && !isFromLoading)
-    //     // {
-    //     //     _inventoryData.AddItem(_edibleItemSo1, itemQuantity, _itemCurrentState);
-    //     // }
-    //     
-    //     _edibleItemSo1 = item;
-    //     if (itemState != null)
-    //     {
-    //         _itemCurrentState = new List<ItemParameter>(itemState);
-    //     }
-    //
-    //     EquipQuickItem1(_edibleItemSo1, itemQuantity);
-    // }
     
     public void SetQuickItem(EdibleItemSO item, List<ItemParameter> itemState, int quantity, int slotIndex, bool isFromLoading = false)
     {

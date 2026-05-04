@@ -38,6 +38,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             var color = itemImage.color;
             color.a = 0.3f;
             itemImage.color = color;
+            quantityTextContainer.gameObject.SetActive(false);
         }
         
         empty = true;

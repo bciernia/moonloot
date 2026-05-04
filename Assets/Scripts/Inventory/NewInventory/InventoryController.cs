@@ -518,4 +518,32 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         if (ShopManager.Instance != null && ShopManager.Instance.SellerInventory != null)
             ShopManager.Instance.SellerInventory.OnInventoryUpdated -= UpdateSellerInventoryUI;
     }
+
+    public void SwapQuickSlots(string targetSlotName, string draggedSlotName)
+    {
+        var targetIndex = GetQuickSlotIndex(targetSlotName);
+        var draggedIndex = GetQuickSlotIndex(draggedSlotName);
+
+        if (targetIndex == -1 || draggedIndex == -1) return;
+
+        var equipped = equippedItemsManager.EquippedItems;
+
+        var temp = equipped[targetIndex];
+        equipped[targetIndex] = equipped[draggedIndex];
+        equipped[draggedIndex] = temp;
+
+        equippedItemsManager.InitializeEquippedSlots();
+        QuickItemManager.Instance.RefreshUI();
+        SkillsManager.Instance.RefreshSlotUI();
+    }
+
+    private int GetQuickSlotIndex(string slotName)
+    {
+        return slotName switch
+        {
+            "QuickSlot1" => 5,
+            "QuickSlot2" => 6,
+            _ => -1
+        };
+    }
 }
