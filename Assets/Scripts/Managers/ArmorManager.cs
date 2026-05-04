@@ -30,7 +30,6 @@ public class ArmorManager : Singleton<ArmorManager>
         EquipArmor(_armor);
     }
     
-    
     private void EquipArmor(ArmorItemSO armor)
     {
         RecalculateAllBonusesFromArmor();

@@ -8,13 +8,13 @@ public class HelmetItemSO : EquippableItemSO, IItemAction
     public float PhysicalResistance;
     
     public AudioClip actionSfx { get; }
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var armorSystem = character.transform.parent.GetComponentInChildren<ArmorManager>();
 
         if (armorSystem != null)
         {
-            armorSystem.SetHelmet(this, itemState ?? DefaultParametersList);
+            armorSystem.SetHelmet(this, inventoryItem.itemState ?? DefaultParametersList);
             EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
             return true;
         }

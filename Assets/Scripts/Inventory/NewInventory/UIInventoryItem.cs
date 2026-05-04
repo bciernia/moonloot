@@ -10,6 +10,10 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     [SerializeField] private TMP_Text quantityText;
     [SerializeField] private Image borderImage;
     [SerializeField] private GameObject quantityTextContainer;
+    [SerializeField] private Sprite defaultImage = null;
+    
+    [SerializeField] private EquipmentSlotType slotType;
+    public EquipmentSlotType SlotType => slotType;
 
     public event Action<UIInventoryItem, UIInventoryItem> OnItemDroppedOn;
     
@@ -25,7 +29,17 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
 
     public void ResetData()
     {
-        itemImage.gameObject.SetActive(false);
+        if(defaultImage == null)
+            itemImage.gameObject.SetActive(false);
+        else
+        {
+            itemImage.gameObject.SetActive(true);
+            itemImage.sprite = defaultImage;
+            var color = itemImage.color;
+            color.a = 0.3f;
+            itemImage.color = color;
+        }
+        
         empty = true;
     }
 
@@ -38,6 +52,9 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     {
         itemImage.gameObject.SetActive(true);
         itemImage.sprite = sprite;
+        var color = itemImage.color;
+        color.a = 1f;
+        itemImage.color = color;
         if (quantity <= 1)
         {
             quantityTextContainer.SetActive(false);

@@ -229,15 +229,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             ""id"": ""2460bde0-09e9-4f72-828f-56fc6fb19e8d"",
             ""actions"": [
                 {
-                    ""name"": ""Statistics"",
-                    ""type"": ""Button"",
-                    ""id"": ""bed65bb5-a2e5-4fba-b4b3-b1d73b5079a4"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Equipment"",
                     ""type"": ""Button"",
                     ""id"": ""6849f662-d89a-4354-91d3-3e55df454a56"",
@@ -277,17 +268,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""78327a23-e655-42e0-9a5f-a8abfb4fce1c"",
-                    ""path"": ""<Keyboard>/1"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Statistics"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""bb3e78a5-e2e0-4645-b01d-5e643d3af5e5"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -300,7 +280,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e57ae72b-217c-42c3-918a-f15197769f6b"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""path"": ""<Keyboard>/9"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -311,7 +291,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3c2898f3-3551-4d1e-98cb-aacb1ebad48f"",
-                    ""path"": ""<Keyboard>/3"",
+                    ""path"": ""<Keyboard>/8"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -431,9 +411,18 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill3"",
+                    ""name"": ""QuickItem1"",
                     ""type"": ""Button"",
                     ""id"": ""c085e391-627a-4a4e-b35d-55cf6addf947"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickItem2"",
+                    ""type"": ""Button"",
+                    ""id"": ""270b4286-1def-4ea0-940e-d27d49cf5c70"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -466,11 +455,22 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""82dcdf2e-1b97-41c4-97bf-08fa4fcf87f3"",
-                    ""path"": ""<Keyboard>/l"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill3"",
+                    ""action"": ""QuickItem1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5e2bd320-5ee5-4c09-877b-1ea81b4ddf19"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuickItem2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -485,7 +485,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_Movement_Aim = m_Movement.FindAction("Aim", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Statistics = m_UI.FindAction("Statistics", throwIfNotFound: true);
         m_UI_Equipment = m_UI.FindAction("Equipment", throwIfNotFound: true);
         m_UI_Journal = m_UI.FindAction("Journal", throwIfNotFound: true);
         m_UI_Skills = m_UI.FindAction("Skills", throwIfNotFound: true);
@@ -501,7 +500,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_Skills = asset.FindActionMap("Skills", throwIfNotFound: true);
         m_Skills_Skill1 = m_Skills.FindAction("Skill1", throwIfNotFound: true);
         m_Skills_Skill2 = m_Skills.FindAction("Skill2", throwIfNotFound: true);
-        m_Skills_Skill3 = m_Skills.FindAction("Skill3", throwIfNotFound: true);
+        m_Skills_QuickItem1 = m_Skills.FindAction("QuickItem1", throwIfNotFound: true);
+        m_Skills_QuickItem2 = m_Skills.FindAction("QuickItem2", throwIfNotFound: true);
     }
 
     ~@PlayerActions()
@@ -693,7 +693,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_Statistics;
     private readonly InputAction m_UI_Equipment;
     private readonly InputAction m_UI_Journal;
     private readonly InputAction m_UI_Skills;
@@ -709,10 +708,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
         public UIActions(@PlayerActions wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "UI/Statistics".
-        /// </summary>
-        public InputAction @Statistics => m_Wrapper.m_UI_Statistics;
         /// <summary>
         /// Provides access to the underlying input action "UI/Equipment".
         /// </summary>
@@ -755,9 +750,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @Statistics.started += instance.OnStatistics;
-            @Statistics.performed += instance.OnStatistics;
-            @Statistics.canceled += instance.OnStatistics;
             @Equipment.started += instance.OnEquipment;
             @Equipment.performed += instance.OnEquipment;
             @Equipment.canceled += instance.OnEquipment;
@@ -781,9 +773,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UIActions" />
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @Statistics.started -= instance.OnStatistics;
-            @Statistics.performed -= instance.OnStatistics;
-            @Statistics.canceled -= instance.OnStatistics;
             @Equipment.started -= instance.OnEquipment;
             @Equipment.performed -= instance.OnEquipment;
             @Equipment.canceled -= instance.OnEquipment;
@@ -1038,7 +1027,8 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private List<ISkillsActions> m_SkillsActionsCallbackInterfaces = new List<ISkillsActions>();
     private readonly InputAction m_Skills_Skill1;
     private readonly InputAction m_Skills_Skill2;
-    private readonly InputAction m_Skills_Skill3;
+    private readonly InputAction m_Skills_QuickItem1;
+    private readonly InputAction m_Skills_QuickItem2;
     /// <summary>
     /// Provides access to input actions defined in input action map "Skills".
     /// </summary>
@@ -1059,9 +1049,13 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Skill2 => m_Wrapper.m_Skills_Skill2;
         /// <summary>
-        /// Provides access to the underlying input action "Skills/Skill3".
+        /// Provides access to the underlying input action "Skills/QuickItem1".
         /// </summary>
-        public InputAction @Skill3 => m_Wrapper.m_Skills_Skill3;
+        public InputAction @QuickItem1 => m_Wrapper.m_Skills_QuickItem1;
+        /// <summary>
+        /// Provides access to the underlying input action "Skills/QuickItem2".
+        /// </summary>
+        public InputAction @QuickItem2 => m_Wrapper.m_Skills_QuickItem2;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1094,9 +1088,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Skill2.started += instance.OnSkill2;
             @Skill2.performed += instance.OnSkill2;
             @Skill2.canceled += instance.OnSkill2;
-            @Skill3.started += instance.OnSkill3;
-            @Skill3.performed += instance.OnSkill3;
-            @Skill3.canceled += instance.OnSkill3;
+            @QuickItem1.started += instance.OnQuickItem1;
+            @QuickItem1.performed += instance.OnQuickItem1;
+            @QuickItem1.canceled += instance.OnQuickItem1;
+            @QuickItem2.started += instance.OnQuickItem2;
+            @QuickItem2.performed += instance.OnQuickItem2;
+            @QuickItem2.canceled += instance.OnQuickItem2;
         }
 
         /// <summary>
@@ -1114,9 +1111,12 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Skill2.started -= instance.OnSkill2;
             @Skill2.performed -= instance.OnSkill2;
             @Skill2.canceled -= instance.OnSkill2;
-            @Skill3.started -= instance.OnSkill3;
-            @Skill3.performed -= instance.OnSkill3;
-            @Skill3.canceled -= instance.OnSkill3;
+            @QuickItem1.started -= instance.OnQuickItem1;
+            @QuickItem1.performed -= instance.OnQuickItem1;
+            @QuickItem1.canceled -= instance.OnQuickItem1;
+            @QuickItem2.started -= instance.OnQuickItem2;
+            @QuickItem2.performed -= instance.OnQuickItem2;
+            @QuickItem2.canceled -= instance.OnQuickItem2;
         }
 
         /// <summary>
@@ -1179,13 +1179,6 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
     public interface IUIActions
     {
-        /// <summary>
-        /// Method invoked when associated input action "Statistics" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnStatistics(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Equipment" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -1274,11 +1267,18 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkill2(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Skill3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "QuickItem1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill3(InputAction.CallbackContext context);
+        void OnQuickItem1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "QuickItem2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnQuickItem2(InputAction.CallbackContext context);
     }
 }

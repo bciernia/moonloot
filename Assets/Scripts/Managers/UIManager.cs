@@ -42,6 +42,8 @@ public class UIManager : MonoBehaviour
     [Header("Skill buttons")]
     [SerializeField] private TextMeshProUGUI _skill1KeyText;
     [SerializeField] private TextMeshProUGUI _skill2KeyText;
+    [SerializeField] private TextMeshProUGUI _quickItem1KeyText;
+    [SerializeField] private TextMeshProUGUI _quickItem2KeyText;
 
     [Header("Interaction button")]
     [SerializeField] private TextMeshProUGUI _interactionKeyText;
@@ -104,7 +106,6 @@ public class UIManager : MonoBehaviour
     private DayNightCycle _dayNightCycle;
     
     private InputAction _equipmentAction;
-    private InputAction _statsAction;
     private InputAction _skillsAction;
     private InputAction _journalAction;
     private InputAction _menuAction;
@@ -178,7 +179,6 @@ public class UIManager : MonoBehaviour
     {
         var map = _playerInput.actions;
         _equipmentAction = map["Equipment"];
-        _statsAction = map["Statistics"];
         _skillsAction = map["Skills"];
         _journalAction = map["Journal"];
         _menuAction = map["Main menu"];
@@ -193,7 +193,6 @@ public class UIManager : MonoBehaviour
     private void RegisterInputCallbacks()
     {
         if (_equipmentAction != null) _equipmentAction.performed += OnEquipmentPressed;
-        if (_statsAction != null) _statsAction.performed += OnStatsPressed;
         if (_skillsAction != null) _skillsAction.performed += OnSkillsPressed;
         if (_journalAction != null) _journalAction.performed += OnJournalPressed;
         if (_menuAction != null) _menuAction.performed += OnMenuPressed;
@@ -202,7 +201,6 @@ public class UIManager : MonoBehaviour
     private void UnregisterInputCallbacks()
     {
         if (_equipmentAction != null) _equipmentAction.performed -= OnEquipmentPressed;
-        if (_statsAction != null) _statsAction.performed -= OnStatsPressed;
         if (_skillsAction != null) _skillsAction.performed -= OnSkillsPressed;
         if (_journalAction != null) _journalAction.performed -= OnJournalPressed;
         if (_menuAction != null) _menuAction.performed -= OnMenuPressed;
@@ -249,9 +247,8 @@ public class UIManager : MonoBehaviour
 
     #region Input Callbacks
     private void OnEquipmentPressed(InputAction.CallbackContext ctx) => OpenCloseEquipmentPanel(0);
-    private void OnStatsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(1);
-    private void OnSkillsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(2);
-    private void OnJournalPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(3);
+    private void OnSkillsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(1);
+    private void OnJournalPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(2);
     private void OnMenuPressed(InputAction.CallbackContext ctx) => HandleEscapePressed();
     #endregion
 
@@ -348,6 +345,8 @@ public class UIManager : MonoBehaviour
         var map = _playerInput.actions;
         _skill1KeyText.text = map["Skill1"]?.GetBindingDisplayString().ToUpperInvariant();
         _skill2KeyText.text = map["Skill2"]?.GetBindingDisplayString().ToUpperInvariant();
+        _quickItem1KeyText.text = map["QuickItem1"]?.GetBindingDisplayString().ToUpperInvariant();
+        _quickItem2KeyText.text = map["QuickItem2"]?.GetBindingDisplayString().ToUpperInvariant();
         _interactionKeyText.text = map["Interaction"]?.GetBindingDisplayString().ToUpperInvariant();
     }
     

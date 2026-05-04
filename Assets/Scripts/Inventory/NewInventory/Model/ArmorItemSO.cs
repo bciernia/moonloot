@@ -9,13 +9,13 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
     public float MovementSpeedDisadvantage;
     
     public AudioClip actionSfx { get; }
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var armorSystem = character.transform.parent.GetComponentInChildren<ArmorManager>();
 
         if (armorSystem != null)
         {
-            armorSystem.SetArmor(this, itemState ?? DefaultParametersList);
+            armorSystem.SetArmor(this, inventoryItem.itemState ?? DefaultParametersList);
             EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
             return true;
         }

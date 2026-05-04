@@ -147,7 +147,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         }
     }
 
-    public void PerformAction(int itemIndex)
+    public void PerformAction(int itemIndex, string slotName = "")
     {
         var inventoryItem = inventoryData.GetItemAt(itemIndex);
         var isActionPerformed = false;
@@ -157,7 +157,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         var itemAction = inventoryItem.item as IItemAction;
         if (itemAction != null)
         {
-            isActionPerformed = itemAction.PerformAction(gameObject, inventoryItem.itemState);
+            isActionPerformed = itemAction.PerformAction(gameObject, inventoryItem, false, slotName);
         }
 
         if (!isActionPerformed) return;
@@ -165,7 +165,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         var destroyableItem = inventoryItem.item as IDestroyableItem;
         if (destroyableItem != null)
         {
-            inventoryData.RemoveItem(itemIndex, 1);
+            inventoryData.RemoveItem(itemIndex, inventoryItem.quantity);
             if(audioSource) audioSource.PlayOneShot(itemAction.actionSfx);
             if(inventoryData.GetItemAt(itemIndex).IsEmpty) inventoryUI.ResetSelection();
         }
@@ -193,6 +193,12 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                     break;
                 case "ShoesUI":
                     item = equippedItemsManager.EquippedItems[4];
+                    break;
+                case "QuickSlot1":
+                    item = equippedItemsManager.EquippedItems[5];
+                    break;
+                case "QuickSlot2":
+                    item = equippedItemsManager.EquippedItems[6];
                     break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
@@ -281,6 +287,28 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         shoesItemSo.Unequip(gameObject);
                         AddItem(item);
                         
+                        break;                    
+                    case "QuickSlot1":
+                        item = equippedItemsManager.EquippedItems[5];
+                        
+                        equippedItemsManager.EquippedItems[5] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[5].item, ItemType.Edible);
+                
+                        var edibleItemSo1 = (EdibleItemSO)item.item;
+                        edibleItemSo1.Unequip(gameObject);
+                        AddItem(item);
+                        
+                        break;          
+                    case "QuickSlot2":
+                        item = equippedItemsManager.EquippedItems[6];
+                        
+                        equippedItemsManager.EquippedItems[6] = InventoryItem.GetEmptyItem();
+                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[6].item, ItemType.Edible);
+                
+                        var edibleItemSo2 = (EdibleItemSO)item.item;
+                        edibleItemSo2.Unequip(gameObject);
+                        AddItem(item);
+                        
                         break;
                     default:
                         throw new ArgumentException("Nie znaleziono przedmiotu do zamiany");
@@ -288,11 +316,43 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             }
             else
             {
+                
+                var item = inventoryData.GetItemAt(itemIndex_2);
+
+                if (item.item.ItemType == ItemType.Edible)
+                {
+                    EquipToQuickSlot(item, inventoryUiName);
+                    inventoryData.RemoveItem(itemIndex_2, item.quantity);
+                    return;
+                }
+
                 PerformAction(itemIndex_2);
             }            
         }
         
         inventoryData.SwapItems(itemIndex_1, itemIndex_2);
+    }
+    
+    private void EquipToQuickSlot(InventoryItem newItem, string slotName)
+    {
+        var slotIndex = slotName == "QuickSlot1" ? 5 : 6;
+
+        var equipped = equippedItemsManager.EquippedItems[slotIndex];
+
+        if (!equipped.IsEmpty)
+        {
+            AddItem(equipped);
+        }
+
+        equippedItemsManager.EquippedItems[slotIndex] = new InventoryItem()
+        {
+            item = newItem.item,
+            quantity = newItem.quantity,
+            itemState = newItem.itemState
+        };
+
+        equippedItemsManager.InitializeEquippedSlots();
+        SkillsManager.Instance.RefreshSlotUI();
     }
     
     public void HandleDescriptionRequest(int itemIndex, bool isPlayerItem = true, string inventoryItemUiName = "")
@@ -317,6 +377,12 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                     break;
                 case "ShoesUI":
                     inventoryItem = equippedItemsManager.EquippedItems[4];
+                    break;
+                case "QuickSlot1":
+                    inventoryItem = equippedItemsManager.EquippedItems[5];
+                    break;
+                case "QuickSlot2":
+                    inventoryItem = equippedItemsManager.EquippedItems[6];
                     break;
                 default:
                     throw new ArgumentException("Nie znaleziono przedmiotu do przeciągnięcia");
@@ -431,6 +497,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
            OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
            ArmorManager.Instance.SetHelmet((HelmetItemSO)equippedItemsManager.EquippedItems[3].item, equippedItemsManager.EquippedItems[3].itemState, true);
            ArmorManager.Instance.SetShoes((ShoesItemSO)equippedItemsManager.EquippedItems[4].item, equippedItemsManager.EquippedItems[4].itemState, true);
+           QuickItemManager.Instance.SetQuickItem((EdibleItemSO)equippedItemsManager.EquippedItems[5].item, equippedItemsManager.EquippedItems[5].itemState, equippedItemsManager.EquippedItems[5].quantity,5, true);
+           QuickItemManager.Instance.SetQuickItem((EdibleItemSO)equippedItemsManager.EquippedItems[6].item, equippedItemsManager.EquippedItems[6].itemState,equippedItemsManager.EquippedItems[6].quantity, 6,true);
         }
     }
     

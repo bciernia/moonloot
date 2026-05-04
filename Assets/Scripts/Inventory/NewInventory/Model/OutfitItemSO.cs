@@ -6,13 +6,13 @@ public class OutfitItemSO : EquippableItemSO, IItemAction
 {
     public AudioClip actionSfx { get; }
     public RuntimeAnimatorController RuntimeAnimatorController;
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var outfitSystem = character.transform.parent.GetComponentInChildren<OutfitManager>();
 
         if (outfitSystem != null)
         {
-            outfitSystem.SetOutfit(this, itemState ?? DefaultParametersList);
+            outfitSystem.SetOutfit(this, inventoryItem.itemState ?? DefaultParametersList);
             EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
             return true;
         }
