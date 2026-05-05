@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 [CreateAssetMenu(menuName = "Item/Edible", fileName = "Edible_")]
 public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
@@ -15,9 +13,17 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 
     public override string GetStatsDescription() => $"Health: {HealthValue} \nMana: {ManaValue} \n";
     
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var restoredStats = false;
+
+        if (!isUsingItem)
+        {
+            var slotIndex = slotName == "QuickSlot1" ? 5 : 6;
+            
+            QuickItemManager.Instance.SetQuickItem(this, inventoryItem.itemState, inventoryItem.quantity, slotIndex);
+            return true;
+        }
         
         if (GameManager.Instance.Player.PlayerHealth.CanRestoreHealth())
         {
@@ -33,6 +39,12 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 
         return restoredStats;
     }
+    
+    public void Unequip(GameObject character)
+    {
+        var quickItemManager = character.transform.parent.GetComponentInChildren<QuickItemManager>();
+        quickItemManager.SetQuickItem(null, null, 0, 5);
+    }
 }
 
 public interface IDestroyableItem
@@ -46,6 +58,6 @@ public interface IItemAction
 
     public AudioClip actionSfx { get; }
 
-    bool PerformAction(GameObject character, List<ItemParameter> itemParameters);
+    bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "");
 }
 

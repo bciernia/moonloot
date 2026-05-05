@@ -54,6 +54,6 @@ public class OutfitManager : Singleton<OutfitManager>
             return;
         }
         FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
-        EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit);
+        EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit, 1, 2);
     }
 }

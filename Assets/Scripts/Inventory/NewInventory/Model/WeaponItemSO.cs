@@ -55,14 +55,14 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
         return description;
     }
 
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var weaponSystem = character.transform.parent.GetComponentInChildren<WeaponManager>();
 
         if (weaponSystem != null)
         {
-            weaponSystem.SetWeapon(this, itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
+            weaponSystem.SetWeapon(this, inventoryItem.itemState ?? DefaultParametersList);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 0);
             return true;
         }
 

@@ -6,10 +6,18 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 [Serializable]
-public class SkillEntry
+public class ActionSlot
 {
+    public ActionType type;
     public Skill skill;
     public Image cooldownImage;
+    public int quickSlotIndex;
+}
+
+public enum ActionType
+{
+    Skill,
+    QuickItem
 }
 
 internal class SkillRuntimeData
@@ -22,12 +30,14 @@ internal class SkillRuntimeData
 public class SkillsManager : Singleton<SkillsManager>, ISaveable
 {
     [Header("Slots")]
-    public List<SkillEntry> skills = new();
+    public List<ActionSlot> slots = new();
     public GameObject user;
 
     [Header("UI")]
     [SerializeField] private Image QSkillImage;
     [SerializeField] private Image ESkillImage;
+    [SerializeField] private Image QuickItem1Image;
+    [SerializeField] private Image QuickItem2Image;
 
     [Header("Targeting")]
     [SerializeField] private GameObject RangeIndicatorPrefab;
@@ -42,6 +52,10 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     private Action<InputAction.CallbackContext> _skill1Canceled;
     private Action<InputAction.CallbackContext> _skill2Started;
     private Action<InputAction.CallbackContext> _skill2Canceled;
+    private Action<InputAction.CallbackContext> _quickItem1Started;
+    private Action<InputAction.CallbackContext> _quickItem1Canceled;
+    private Action<InputAction.CallbackContext> _quickItem2Started;
+    private Action<InputAction.CallbackContext> _quickItem2Canceled;
 
     // 🔥 Runtime per skill (nie per slot)
     private Dictionary<Skill, SkillRuntimeData> _skillRuntime =
@@ -55,22 +69,28 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
         _playerInput = FindAnyObjectByType<PlayerInput>();
 
-        _skill1Started  = ctx => OnSkillStarted(0);
-        _skill1Canceled = ctx => OnSkillReleased(0);
+        _skill1Started  = ctx => OnSlotStarted(0);
+        _skill1Canceled = ctx => OnSlotReleased(0);
 
-        _skill2Started  = ctx => OnSkillStarted(1);
-        _skill2Canceled = ctx => OnSkillReleased(1);
+        _skill2Started  = ctx => OnSlotStarted(1);
+        _skill2Canceled = ctx => OnSlotReleased(1);
+        
+        _quickItem1Started  = ctx => OnSlotStarted(2);
+        _quickItem1Canceled = ctx => OnSlotReleased(2);
+        
+        _quickItem2Started  = ctx => OnSlotStarted(3);
+        _quickItem2Canceled = ctx => OnSlotReleased(3);
 
         // Tworzymy runtime dla startowych skilli
-        foreach (var entry in skills)
+        foreach (var entry in slots)
         {
             if (entry.skill != null)
                 GetRuntime(entry.skill);
         }
         
-        while (skills.Count < slotCount)
+        while (slots.Count < slotCount)
         {
-            skills.Add(new SkillEntry());
+            slots.Add(new ActionSlot());
         }
 
         RefreshSlotUI();
@@ -85,6 +105,12 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
         _playerInput.actions["Skill2"].started  += _skill2Started;
         _playerInput.actions["Skill2"].canceled += _skill2Canceled;
+        
+        _playerInput.actions["QuickItem1"].started  += _quickItem1Started;
+        _playerInput.actions["QuickItem1"].canceled += _quickItem1Canceled;
+        
+        _playerInput.actions["QuickItem2"].started  += _quickItem2Started;
+        _playerInput.actions["QuickItem2"].canceled += _quickItem2Canceled;
     }
 
     private void OnDisable()
@@ -96,6 +122,12 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
         _playerInput.actions["Skill2"].started  -= _skill2Started;
         _playerInput.actions["Skill2"].canceled -= _skill2Canceled;
+        
+        _playerInput.actions["QuickItem1"].started  -= _quickItem1Started;
+        _playerInput.actions["QuickItem1"].canceled -= _quickItem1Canceled;
+        
+        _playerInput.actions["QuickItem2"].started  -= _quickItem2Started;
+        _playerInput.actions["QuickItem2"].canceled -= _quickItem2Canceled;
     }
 
     #endregion
@@ -143,12 +175,60 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     #region SKILL INPUT
 
-    private void OnSkillStarted(int index)
+    private void OnSlotStarted(int index)
     {
-        if (index < 0 || index >= skills.Count || GameManager.Instance.CurrentMode == GameMode.WorldMap)
+        if (index < 0 || index >= slots.Count || GameManager.Instance.CurrentMode == GameMode.WorldMap)
             return;
 
-        var entry = skills[index];
+        var slot = slots[index];
+
+        switch (slot.type)
+        {
+            case ActionType.Skill:
+                HandleSkillStarted(index);
+                break;
+            case ActionType.QuickItem:
+                UseQuickItem(slot.quickSlotIndex);
+                break;
+            default:
+                Debug.LogWarning("Unknown action type in slot: " + slot.type);
+                break;
+        }
+    }
+
+    private void UseQuickItem(int index)
+    {
+        var equipped = EquippedItemsManager.Instance;
+        var item = equipped.EquippedItems[index];
+
+        if (item.IsEmpty) return;
+
+        var action = item.item as IItemAction;
+        if (action == null) return;
+
+        var player = GameManager.Instance.Player.gameObject;
+        action.PerformAction(player, item, true);
+        item.quantity--;
+        
+        equipped.EquippedItems[index] = item;
+
+        if (item.quantity <= 0)
+        {
+            equipped.EquippedItems[index] = InventoryItem.GetEmptyItem();
+        }
+        else
+        {
+            equipped.EquippedItems[index] = item;
+        }
+
+        RefreshSlotUI();
+        QuickItemManager.Instance.RefreshUI();
+        EquippedItemsManager.Instance.InitializeEquippedSlots();
+    }
+
+    private void HandleSkillStarted(int index)
+    {
+        var entry = slots[index];
         if (entry.skill == null)
             return;
 
@@ -186,15 +266,15 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
             );
 
             _currentIndicator.transform.localPosition = Vector3.zero;
-        }
+        }   
     }
 
-    private void OnSkillReleased(int index)
+    private void OnSlotReleased(int index)
     {
         if (_aimingSkillIndex != index)
             return;
 
-        var entry = skills[index];
+        var entry = slots[index];
         if (entry.skill == null)
             return;
 
@@ -233,33 +313,53 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     {
         RefreshSingleSlot(0, QSkillImage);
         RefreshSingleSlot(1, ESkillImage);
+        RefreshSingleSlot(2, QuickItem1Image);
+        RefreshSingleSlot(3, QuickItem2Image);
     }
 
     private void RefreshSingleSlot(int index, Image image)
     {
-        if (index >= skills.Count)
+        if (index >= slots.Count)
         {
             image.gameObject.SetActive(false);
             return;
         }
 
-        var entry = skills[index];
+        var slot = slots[index];
 
-        if (entry.skill == null)
+        switch (slot.type)
         {
-            image.gameObject.SetActive(false);
-            return;
-        }
+            case ActionType.Skill:
+                if (slot.skill == null)
+                {
+                    image.gameObject.SetActive(false);
+                    return;
+                }
 
-        image.sprite = entry.skill.Icon;
-        image.gameObject.SetActive(true);
+                image.sprite = slot.skill.Icon;
+                image.gameObject.SetActive(true);
+                break;
+
+            case ActionType.QuickItem:
+                var item = EquippedItemsManager.Instance.EquippedItems[slot.quickSlotIndex];
+
+                if (item.IsEmpty)
+                {
+                    image.gameObject.SetActive(false);
+                    return;
+                }
+
+                image.sprite = item.item.Image;
+                image.gameObject.SetActive(true);
+                break;
+        }
     }
 
     private void UpdateSlotUI()
     {
-        for (int i = 0; i < skills.Count; i++)
+        for (var i = 0; i < slots.Count; i++)
         {
-            var entry = skills[i];
+            var entry = slots[i];
 
             if (entry.cooldownImage == null)
                 continue;
@@ -297,7 +397,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     {
         var saveList = new List<SkillSaveData>();
 
-        foreach (var entry in skills)
+        foreach (var entry in slots)
         {
             if (entry.skill == null)
             {
@@ -328,16 +428,16 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
         _skillRuntime.Clear();
 
-        for (var i = 0; i < skills.Count && i < loaded.Count; i++)
+        for (var i = 0; i < slots.Count && i < loaded.Count; i++)
         {
             var data = loaded[i];
 
-            skills[i].skill = SkillDatabase.Get(data.skillID);
+            slots[i].skill = SkillDatabase.Get(data.skillID);
 
             if (data.skillID == null)
                 continue;
 
-            var runtime = GetRuntime(skills[i].skill);
+            var runtime = GetRuntime(slots[i].skill);
 
             runtime.cooldownTimer = data.cooldownTimer;
             runtime.activeTimer = data.activeTimer;

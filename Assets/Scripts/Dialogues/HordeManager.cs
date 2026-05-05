@@ -50,7 +50,7 @@ public class HordeManager : Singleton<HordeManager>
     
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
-
+    
     private void SavePreviousScene()
     {
         _previousScene = SceneManager.GetActiveScene().name;
@@ -301,10 +301,12 @@ public class HordeManager : Singleton<HordeManager>
             stats.DetectRange = 9999999;
             stats.Initialize();
 
+            var hordeMultiplier = GetHordeMultiplier();
+            
             stats.ApplyHordeScaling(
-                data.hpMultiplier,
-                data.damageMultiplier,
-                1f,
+                data.hpMultiplier * hordeMultiplier,
+                data.damageMultiplier * hordeMultiplier,
+                1f * hordeMultiplier,
                 pool == eliteEnemies,
                 pool == bossEnemies
             );
@@ -691,4 +693,9 @@ public class HordeManager : Singleton<HordeManager>
     }
     
     public bool IsNpcRescued() => _rescuedNPC;
+    
+    private float GetHordeMultiplier()
+    {
+        return 1f + (currentHorde - 1) * 0.2f;
+    }
 }

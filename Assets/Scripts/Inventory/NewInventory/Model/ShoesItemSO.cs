@@ -7,14 +7,14 @@ public class ShoesItemSO : EquippableItemSO, IItemAction
     public float MovementSpeedBonus;
     
     public AudioClip actionSfx { get; }
-    public bool PerformAction(GameObject character, List<ItemParameter> itemState = null)
+    public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var armorSystem = character.transform.parent.GetComponentInChildren<ArmorManager>();
 
         if (armorSystem != null)
         {
-            armorSystem.SetShoes(this, itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
+            armorSystem.SetShoes(this, inventoryItem.itemState ?? DefaultParametersList);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 4);
             return true;
         }
 

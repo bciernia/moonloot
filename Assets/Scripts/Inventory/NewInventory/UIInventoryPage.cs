@@ -109,10 +109,16 @@ public class UIInventoryPage : MonoBehaviour
             ShopManager.Instance.SellItem(itemToSell, currentlyDraggedItemIndex);
             return;
         }
+
+        if (IsDraggingFromQuickSlotToQuickSlot(targetInventoryItemUi.gameObject.name, draggedInventoryItemUiName))
+        {
+            InventoryController.Instance.SwapQuickSlots(targetInventoryItemUi.gameObject.name, draggedInventoryItemUiName);
+            return;
+        }
         
         if (index == -1 && indexOfSellerItem == -1 && targetInventoryItemUi.CompareTag("EquippedItem"))
         {
-            InventoryController.Instance.PerformAction(currentlyDraggedItemIndex);
+            InventoryController.Instance.PerformAction(currentlyDraggedItemIndex, targetInventoryItemUi.gameObject.name);
             return;
         }   
         
@@ -271,7 +277,14 @@ public class UIInventoryPage : MonoBehaviour
                 break;           
             case "ShoesUI":
                 equippedItemsManager.EquippedItemsSlots[4].Select();
-                break;           
+                break;                   
+            case "QuickSlot1":
+                equippedItemsManager.EquippedItemsSlots[5].Select();
+                break;                      
+            case "QuickSlot2":
+                equippedItemsManager.EquippedItemsSlots[6].Select();
+                break;          
+            
             default:
                 throw new ArgumentException("Nie znaleziono slota w ui do zaznaczenia");
         }
@@ -298,11 +311,13 @@ public class UIInventoryPage : MonoBehaviour
 
     public void UpdateGoldAmount(int goldAmount)
     {
-        goldAmountTMP.text = $"Lunar: {goldAmount}";
+        goldAmountTMP.text = $"{goldAmount}";
     }
     
     public void UpdateSellerGoldAmount(int goldAmount)
     {
-        sellerGoldAmountTMP.text = $"Lunar: {goldAmount}";
+        sellerGoldAmountTMP.text = $"{goldAmount}";
     }
+
+    private bool IsDraggingFromQuickSlotToQuickSlot(string slotName1, string slotName2) => slotName1 == "QuickSlot1" && slotName2 == "QuickSlot2" || slotName1 == "QuickSlot2" && slotName2 == "QuickSlot1";
 }

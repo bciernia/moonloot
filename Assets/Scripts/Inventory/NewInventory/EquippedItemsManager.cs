@@ -10,11 +10,17 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 
     public InventoryItem defaultWeapon;
     
+    [Header("Equipped")]
     [SerializeField] private UIInventoryItem WeaponSlot;
     [SerializeField] private UIInventoryItem ArmorSlot;
     [SerializeField] private UIInventoryItem OutfitSlot;
     [SerializeField] private UIInventoryItem HelmetSlot;
     [SerializeField] private UIInventoryItem ShoesSlot;
+
+    [Header("Usable")]
+    [SerializeField] private UIInventoryItem QuickSlot1;
+    [SerializeField] private UIInventoryItem QuickSlot2;
+    
     [SerializeField] private EquippedItemsManagerSO EquippedItemsManagerSo;
     
     protected override void Awake()
@@ -25,6 +31,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         EquippedItemsSlots.Add(OutfitSlot);
         EquippedItemsSlots.Add(HelmetSlot);
         EquippedItemsSlots.Add(ShoesSlot);
+        EquippedItemsSlots.Add(QuickSlot1);
+        EquippedItemsSlots.Add(QuickSlot2);
         
         if (EquippedItems.Count == 0)
             EquippedItems.Add(InventoryItem.GetEmptyItem());
@@ -39,6 +47,8 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         InitializeSlot(EquippedItems[2], OutfitSlot);
         InitializeSlot(EquippedItems[3], HelmetSlot);
         InitializeSlot(EquippedItems[4], ShoesSlot);
+        InitializeSlot(EquippedItems[5], QuickSlot1);
+        InitializeSlot(EquippedItems[6], QuickSlot2);
     }
 
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
@@ -55,31 +65,31 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         }
     }
     
-    public void SetItemAsEquipped(ItemSO item, ItemType itemType)
+    public void SetItemAsEquipped(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
     {
-        SetEquippedItemByType(item, itemType);
+        SetEquippedItemByType(item, itemType, quantity, slotIndex);
     }
     
-    private void SetEquippedItemByType(ItemSO item, ItemType itemType)
+    private void SetEquippedItemByType(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
     {
         switch (itemType)
         {
             case ItemType.Weapon:
-                SetItem(WeaponSlot, item, 0);
+                SetItem(WeaponSlot, item, slotIndex);
                 break;
             case ItemType.Armor:
-                SetItem(ArmorSlot, item, 1);
+                SetItem(ArmorSlot, item, slotIndex);
                 break;
             case ItemType.Outfit:
-                SetItem(OutfitSlot, item, 2);
+                SetItem(OutfitSlot, item, slotIndex);
                 break;
             case ItemType.Necklace:
                 break;
             case ItemType.Helmet:
-                SetItem(HelmetSlot, item, 3);
+                SetItem(HelmetSlot, item, slotIndex);
                 break;
             case ItemType.Shoes:
-                SetItem(ShoesSlot, item, 4);
+                SetItem(ShoesSlot, item, slotIndex);
                 break;
             case ItemType.Ammunition:
                 break;
@@ -87,18 +97,29 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
                 break;
             case ItemType.Bracelet:
                 break;
+            case ItemType.Edible:
+                SetQuickSlot(item, slotIndex, quantity);
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(item.ItemType), item.ItemType, null);
         }
     }
-
-    private void SetItem(UIInventoryItem slotToSet, ItemSO item, int slotIndex)
+    
+    public void SetQuickSlot(ItemSO item, int slotIndex, int quantity = 1)
     {
-        SetItemInSlot(slotToSet, item);
-        SetItemInList(item, slotIndex);
+        if (slotIndex == 5)
+            SetItem(QuickSlot1, item, 5, quantity);
+        else if (slotIndex == 6)
+            SetItem(QuickSlot2, item, 6, quantity);
+    }
+
+    private void SetItem(UIInventoryItem slotToSet, ItemSO item, int slotIndex, int quantity = 1)
+    {
+        SetItemInSlot(slotToSet, item, quantity);
+        SetItemInList(item, slotIndex, quantity);
     } 
     
-    private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item)
+    private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item, int quantity = 1)
     {
         if (item == null)
         {
@@ -106,16 +127,16 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         }
         else
         {
-            slotToSet.SetData(item.Image, 1);
+            slotToSet.SetData(item.Image, quantity);
         }
     }
     
-    private void SetItemInList(ItemSO item, int slotIndex)
+    private void SetItemInList(ItemSO item, int slotIndex, int quantity = 1)
     {
         EquippedItems[slotIndex] = new InventoryItem()
         {
             item = item,
-            quantity = 1,
+            quantity = quantity,
             itemState = new List<ItemParameter>(),
         };
     }

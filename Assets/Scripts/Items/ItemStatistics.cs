@@ -22,7 +22,7 @@ public class ItemStatistics : MonoBehaviour, IDamageable
         Effect = _itemStatistics.Effect;
         Effect.BasicChanceForHit = ChanceForHit;
     }
-    
+
     public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)
     {
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
@@ -34,7 +34,7 @@ public class ItemStatistics : MonoBehaviour, IDamageable
             var particles = Instantiate(_destroyParticles, transform.position, Quaternion.identity);
             var main = particles.main;
             particles.Play();
-            Destroy(particles.gameObject, main.duration + main.startLifetime.constantMax);     
+            Destroy(particles.gameObject, main.duration + main.startLifetime.constantMax);
             Destroy(gameObject);
         }
     }

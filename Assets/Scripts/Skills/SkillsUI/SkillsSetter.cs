@@ -19,7 +19,7 @@ public class SkillsSetter : MonoBehaviour
 
     private void ChangeUsedSkill(int skillIndex)
     {
-        var skills = SkillsManager.Instance.skills;
+        var skills = SkillsManager.Instance.slots;
 
         if (skillIndex < 0 || skillIndex >= skills.Count)
             return;

@@ -56,7 +56,16 @@ public class WeaponManager: Singleton<WeaponManager>
         if (weapon == null)
         {
             weapon = fists;
+         
+            //TODO wywalenie fist jako domyślnej broni 
+            // Player.Instance.PlayerAttack.RecalculateDamage();
+            // EquippedItemsManager.Instance.SetItemAsEquipped(null, ItemType.Weapon);
+            // _weaponIcon.gameObject.SetActive(false);
+            // _weaponManaTMP.gameObject.SetActive(false);
+            // return;             
         }
+        
+        
         
         _weaponIcon.sprite = weapon.Image;
         _weaponIcon.gameObject.SetActive(true);
@@ -72,7 +81,7 @@ public class WeaponManager: Singleton<WeaponManager>
         }
 
         GameManager.Instance.Player.PlayerAttack.EquipWeapon(weapon);
-        EquippedItemsManager.Instance.SetItemAsEquipped(weapon, ItemType.Weapon);
+        EquippedItemsManager.Instance.SetItemAsEquipped(weapon, ItemType.Weapon, 1, 0);
         Player.Instance.PlayerAttack.RecalculateDamage();
     }
 }
