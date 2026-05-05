@@ -7,11 +7,16 @@
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryPage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryPage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/QuickItemManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/QuickItemManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/ArmorItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/ArmorItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/HelmetItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/HelmetItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/OutfitItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/OutfitItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/ShoesItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/ShoesItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/WeaponItemSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/WeaponItemSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/ArmorManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/ArmorManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/OutfitManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/OutfitManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/WeaponManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/WeaponManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -555,6 +560,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/HelmetItemSO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIItemActionPanel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/ItemStatsSO.cs" root0="FORCE_HIGHLIGHTING" />
@@ -570,6 +576,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/LootSpawnManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuSoundManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/OutfitManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PlayerManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PointsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" root0="FORCE_HIGHLIGHTING" />
@@ -710,10 +717,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="28184">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="8508">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="28184" />
+      <option name="pid" value="8508" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -1050,7 +1057,8 @@
       <workItem from="1777808463579" duration="4302000" />
       <workItem from="1777813977666" duration="5417000" />
       <workItem from="1777832264295" duration="1185000" />
-      <workItem from="1777913950028" duration="3211000" />
+      <workItem from="1777913950028" duration="4808000" />
+      <workItem from="1777997712671" duration="1022000" />
     </task>
     <servers />
   </component>
@@ -1283,10 +1291,10 @@
           <line>155</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\ArmorManager.cs" containingFunctionPresentation="Method 'RecalculateAllBonusesFromArmor'">
             <startOffsets>
-              <option value="4138" />
+              <option value="4156" />
             </startOffsets>
             <endOffsets>
-              <option value="4139" />
+              <option value="4157" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="525" />
@@ -1383,19 +1391,6 @@
           <option name="timeStamp" value="539" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>151</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'PerformAction'">
-            <startOffsets>
-              <option value="4909" />
-            </startOffsets>
-            <endOffsets>
-              <option value="4964" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="541" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/ArmorItemSO.cs</url>
           <line>13</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\Model\ArmorItemSO.cs" containingFunctionPresentation="Method 'PerformAction'">
@@ -1413,10 +1408,10 @@
           <line>321</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="12265" />
+              <option value="12300" />
             </startOffsets>
             <endOffsets>
-              <option value="12307" />
+              <option value="12342" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="547" />
@@ -1439,10 +1434,10 @@
           <line>69</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetItemAsEquipped'">
             <startOffsets>
-              <option value="2432" />
+              <option value="2452" />
             </startOffsets>
             <endOffsets>
-              <option value="2480" />
+              <option value="2511" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="558" />
@@ -1452,10 +1447,10 @@
           <line>73</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetEquippedItemByType'">
             <startOffsets>
-              <option value="2589" />
+              <option value="2636" />
             </startOffsets>
             <endOffsets>
-              <option value="2590" />
+              <option value="2637" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="559" />
@@ -1465,10 +1460,10 @@
           <line>109</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetQuickSlot'">
             <startOffsets>
-              <option value="3708" />
+              <option value="3803" />
             </startOffsets>
             <endOffsets>
-              <option value="3727" />
+              <option value="3822" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="560" />
@@ -1491,26 +1486,13 @@
           <line>291</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="10848" />
+              <option value="10873" />
             </startOffsets>
             <endOffsets>
-              <option value="10893" />
+              <option value="10918" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="571" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>233</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
-            <startOffsets>
-              <option value="7754" />
-            </startOffsets>
-            <endOffsets>
-              <option value="7799" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="572" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
@@ -1552,19 +1534,6 @@
           <option name="timeStamp" value="575" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>159</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'PerformAction'">
-            <startOffsets>
-              <option value="5171" />
-            </startOffsets>
-            <endOffsets>
-              <option value="5260" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="576" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs</url>
           <line>21</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\Model\EdibleItemSO.cs" containingFunctionPresentation="Method 'PerformAction'">
@@ -1591,17 +1560,30 @@
           <option name="timeStamp" value="578" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIInventoryPage.cs</url>
-          <line>94</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\UIInventoryPage.cs" containingFunctionPresentation="Method 'HandleSwap'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
+          <line>230</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="3143" />
+              <option value="7650" />
             </startOffsets>
             <endOffsets>
-              <option value="3200" />
+              <option value="7674" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="579" />
+          <option name="timeStamp" value="582" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
+          <line>258</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
+            <startOffsets>
+              <option value="9076" />
+            </startOffsets>
+            <endOffsets>
+              <option value="9121" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="583" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -81,7 +81,7 @@ public class WeaponManager: Singleton<WeaponManager>
         }
 
         GameManager.Instance.Player.PlayerAttack.EquipWeapon(weapon);
-        EquippedItemsManager.Instance.SetItemAsEquipped(weapon, ItemType.Weapon);
+        EquippedItemsManager.Instance.SetItemAsEquipped(weapon, ItemType.Weapon, 1, 0);
         Player.Instance.PlayerAttack.RecalculateDamage();
     }
 }

@@ -15,7 +15,7 @@ public class HelmetItemSO : EquippableItemSO, IItemAction
         if (armorSystem != null)
         {
             armorSystem.SetHelmet(this, inventoryItem.itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 3);
             return true;
         }
 

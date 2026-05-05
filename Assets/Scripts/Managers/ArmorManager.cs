@@ -38,7 +38,7 @@ public class ArmorManager : Singleton<ArmorManager>
             return;
         }
 
-        EquippedItemsManager.Instance.SetItemAsEquipped(armor, ItemType.Armor);
+        EquippedItemsManager.Instance.SetItemAsEquipped(armor, ItemType.Armor, 1, 1);
     }
 
     #endregion
@@ -71,7 +71,7 @@ public class ArmorManager : Singleton<ArmorManager>
             return;
         }
 
-        EquippedItemsManager.Instance.SetItemAsEquipped(helmet, ItemType.Helmet);
+        EquippedItemsManager.Instance.SetItemAsEquipped(helmet, ItemType.Helmet, 1, 3);
     }
 
     #endregion
@@ -106,7 +106,7 @@ public class ArmorManager : Singleton<ArmorManager>
             return;
         }
 
-        EquippedItemsManager.Instance.SetItemAsEquipped(shoes, ItemType.Shoes);
+        EquippedItemsManager.Instance.SetItemAsEquipped(shoes, ItemType.Shoes, 1, 4);
     }
 
     #endregion

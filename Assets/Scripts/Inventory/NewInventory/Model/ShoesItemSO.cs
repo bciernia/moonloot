@@ -14,7 +14,7 @@ public class ShoesItemSO : EquippableItemSO, IItemAction
         if (armorSystem != null)
         {
             armorSystem.SetShoes(this, inventoryItem.itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 4);
             return true;
         }
 

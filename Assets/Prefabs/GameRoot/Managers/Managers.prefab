@@ -1511,6 +1511,7 @@ Transform:
   - {fileID: 3584013800139257171}
   - {fileID: 2777289222262521720}
   - {fileID: 5088120244562804324}
+  - {fileID: 1140512172106513131}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005456009627945634
@@ -1845,9 +1846,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   TabButtons:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -4860,14 +4859,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04da88b9d994cb94a8142b2a0a2e68f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skills:
-  - skill: {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
+  slots:
+  - type: 0
+    skill: {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
     cooldownImage: {fileID: 0}
-  - skill: {fileID: 0}
+    quickSlotIndex: 0
+  - type: 0
+    skill: {fileID: 0}
     cooldownImage: {fileID: 0}
+    quickSlotIndex: 0
+  - type: 1
+    skill: {fileID: 0}
+    cooldownImage: {fileID: 0}
+    quickSlotIndex: 5
+  - type: 1
+    skill: {fileID: 0}
+    cooldownImage: {fileID: 0}
+    quickSlotIndex: 6
   user: {fileID: 0}
   QSkillImage: {fileID: 0}
   ESkillImage: {fileID: 0}
+  QuickItem1Image: {fileID: 0}
+  QuickItem2Image: {fileID: 0}
   RangeIndicatorPrefab: {fileID: 3759880039309635326, guid: b2e57c9be0ed8c544a221c18479f8b6c, type: 3}
   slotCount: 2
 --- !u!1 &6295005901928153037
@@ -5058,7 +5071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce30530792d54d539aed9ee55f8902d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageTextPrefab: {fileID: 723971752867673432, guid: 493df2f2c99c0a74eb928d681f95e59f, type: 3}
+  textPrefab: {fileID: 0}
 --- !u!1 &6724136351104868145
 GameObject:
   m_ObjectHideFlags: 0
@@ -5860,6 +5873,8 @@ MonoBehaviour:
   _enemyHealthBar: {fileID: 0}
   _skill1KeyText: {fileID: 0}
   _skill2KeyText: {fileID: 0}
+  _quickItem1KeyText: {fileID: 0}
+  _quickItem2KeyText: {fileID: 0}
   _interactionKeyText: {fileID: 0}
   _gameMenu: {fileID: 0}
   _taskTablePanel: {fileID: 0}
@@ -7065,6 +7080,61 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &8295870399913533492
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1140512172106513131}
+  - component: {fileID: 6192086032565516409}
+  m_Layer: 0
+  m_Name: QuickItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1140512172106513131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295870399913533492}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6192086032565516409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8295870399913533492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a78dbf87341cc4d8c0f8de25cf5d62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventoryData: {fileID: 11400000, guid: 9d20f1d97fcf7614a8155cbb085d9c9d, type: 2}
+  _parametersToModify: []
+  _itemCurrentState: []
+  _edibleItemSo1: {fileID: 0}
+  _edibleItemSo2: {fileID: 0}
+  _quickItem1Image: {fileID: 0}
+  _quickItem2Image: {fileID: 0}
+  _quickItem1GameObject: {fileID: 0}
+  _quickItem2GameObject: {fileID: 0}
+  _quickItem1ItemQuantityText: {fileID: 0}
+  _quickItem2ItemQuantityText: {fileID: 0}
 --- !u!1 &8362002530818759316
 GameObject:
   m_ObjectHideFlags: 0
@@ -7126,6 +7196,12 @@ MonoBehaviour:
   - quantity: 0
     item: {fileID: 0}
     itemState: []
+  - quantity: 0
+    item: {fileID: 0}
+    itemState: []
+  - quantity: 0
+    item: {fileID: 0}
+    itemState: []
   defaultWeapon:
     quantity: 1
     item: {fileID: 11400000, guid: c5211e011ed53b943b253c3d2d431c2c, type: 2}
@@ -7135,6 +7211,8 @@ MonoBehaviour:
   OutfitSlot: {fileID: 0}
   HelmetSlot: {fileID: 0}
   ShoesSlot: {fileID: 0}
+  QuickSlot1: {fileID: 0}
+  QuickSlot2: {fileID: 0}
   EquippedItemsManagerSo: {fileID: 11400000, guid: c107e423446854c4ea75c4455f9ed514, type: 2}
 --- !u!1 &8432694355708011506
 GameObject:

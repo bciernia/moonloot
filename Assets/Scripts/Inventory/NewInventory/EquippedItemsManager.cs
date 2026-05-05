@@ -65,31 +65,31 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         }
     }
     
-    public void SetItemAsEquipped(ItemSO item, ItemType itemType, int quantity = 1)
+    public void SetItemAsEquipped(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
     {
-        SetEquippedItemByType(item, itemType, quantity);
+        SetEquippedItemByType(item, itemType, quantity, slotIndex);
     }
     
-    private void SetEquippedItemByType(ItemSO item, ItemType itemType, int quantity = 1)
-        {
+    private void SetEquippedItemByType(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
+    {
         switch (itemType)
         {
             case ItemType.Weapon:
-                SetItem(WeaponSlot, item, 0);
+                SetItem(WeaponSlot, item, slotIndex);
                 break;
             case ItemType.Armor:
-                SetItem(ArmorSlot, item, 1);
+                SetItem(ArmorSlot, item, slotIndex);
                 break;
             case ItemType.Outfit:
-                SetItem(OutfitSlot, item, 2);
+                SetItem(OutfitSlot, item, slotIndex);
                 break;
             case ItemType.Necklace:
                 break;
             case ItemType.Helmet:
-                SetItem(HelmetSlot, item, 3);
+                SetItem(HelmetSlot, item, slotIndex);
                 break;
             case ItemType.Shoes:
-                SetItem(ShoesSlot, item, 4);
+                SetItem(ShoesSlot, item, slotIndex);
                 break;
             case ItemType.Ammunition:
                 break;
@@ -98,7 +98,7 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
             case ItemType.Bracelet:
                 break;
             case ItemType.Edible:
-                SetQuickSlot(item, 5, quantity);
+                SetQuickSlot(item, slotIndex, quantity);
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(item.ItemType), item.ItemType, null);

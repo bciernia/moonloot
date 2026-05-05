@@ -13,7 +13,7 @@ public class OutfitItemSO : EquippableItemSO, IItemAction
         if (outfitSystem != null)
         {
             outfitSystem.SetOutfit(this, inventoryItem.itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType,1,2);
             return true;
         }
 
