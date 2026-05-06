@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LootSpawnManager : Singleton<LootSpawnManager>
 {
@@ -38,8 +39,9 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         {
             var randomPos = GetRandomPoint(spawner);
 
-            if (IsPositionFree(randomPos, spawner) &&
-                IsFarEnough(randomPos, spawnedPositions, 1.5f))
+            if (randomPos.HasValue &&
+                IsPositionFree(randomPos.Value, spawner) &&
+                IsFarEnough(randomPos.Value, spawnedPositions, 1.5f))
             {
                 var obj = GetRandomObject();
                 var go = Instantiate(obj, spawner.spawnPoint.position, Quaternion.identity);
@@ -47,13 +49,13 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
                 var mover = go.GetComponent<LootDropMover>();
                 if (mover != null)
                 {
-                    mover.MoveToPosition(randomPos);
+                    mover.MoveToPosition(randomPos.Value);
                 }
                 else
                 {
-                    go.transform.position = randomPos;
+                    go.transform.position = randomPos.Value;
                 }
-                spawnedPositions.Add(randomPos); 
+                spawnedPositions.Add(randomPos.Value); 
                 
                 return;
             }
@@ -73,13 +75,28 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         return true;
     }
 
-    private Vector3 GetRandomPoint(ObjectsSpawner spawner)
+    private Vector3? GetRandomPoint(ObjectsSpawner spawner)
     {
-        var circle = Random.insideUnitCircle * spawner.spawnRadius;
+        var maxAttempts = 15;
 
-        var point = spawner.spawnPoint.position + new Vector3(circle.x, circle.y, circle.y);
+        for (var i = 0; i < maxAttempts; i++)
+        {
+            var circle = Random.insideUnitCircle * spawner.spawnRadius;
 
-        return point;
+            var rawPoint = spawner.spawnPoint.position +
+                           new Vector3(circle.x, 0f, circle.y);
+
+            if (NavMesh.SamplePosition(
+                    rawPoint,
+                    out NavMeshHit hit,
+                    2f,
+                    NavMesh.AllAreas))
+            {
+                return hit.position;
+            }
+        }
+
+        return null;
     }
 
     private bool IsPositionFree(Vector3 position, ObjectsSpawner spawner)
