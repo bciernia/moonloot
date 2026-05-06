@@ -11,7 +11,11 @@ PrefabInstance:
     - target: {fileID: 2336843719227338529, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: fb9c47dfc99eb7b4988bf2282ec4cba3, type: 2}
+      objectReference: {fileID: 22100000, guid: 4a85415a50b06944cbfa56e228120654, type: 2}
+    - target: {fileID: 3309021524241675244, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: 1731e60b6ee23b8478d6cd31dd041346, type: 2}
     - target: {fileID: 6353578004099875147, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: points.Array.size
       value: 2
@@ -19,10 +23,10 @@ PrefabInstance:
     - target: {fileID: 6568515052697615923, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -6980954017460250838, guid: 95b1e8abe44f32a47974b62d847a80a6, type: 3}
+      objectReference: {fileID: 4723107735738678597, guid: ddf70966d09471c4a817b74535e0a064, type: 3}
     - target: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Name
-      value: NPC_Villager7
+      value: NPC_Villager4
       objectReference: {fileID: 0}
     - target: {fileID: 7298815171178954401, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_LocalPosition.x
@@ -69,5 +73,57 @@ PrefabInstance:
     - {fileID: 6353578004099875147, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5513101644125201039}
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8898270925356376000}
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5319387555524443099}
   m_SourcePrefab: {fileID: 100100000, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+--- !u!1 &6888550204076818324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+  m_PrefabInstance: {fileID: 351264192002397491}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-5513101644125201039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888550204076818324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 370f494eedaf4014d81907a202a8cd24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npc: {fileID: 11400000, guid: 1775327dd1e8a854fb677e853a80a002, type: 2}
+--- !u!114 &8898270925356376000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888550204076818324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94130cce39d34469a83caba923e8c698, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsInTown: 0
+--- !u!114 &5319387555524443099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888550204076818324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19067befe7f5bbc4684a12e1998e9ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

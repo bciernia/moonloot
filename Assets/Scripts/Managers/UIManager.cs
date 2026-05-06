@@ -84,13 +84,25 @@ public class UIManager : MonoBehaviour
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
     [SerializeField] private GameObject _hordeInfo;
-    [SerializeField] private TextMeshProUGUI _objectiveText;
-    [SerializeField] private TextMeshProUGUI _mutationText;
 
     [Header("Choose npc buttons")] 
     [SerializeField] private NpcDatabase _npcDatabase;
     [SerializeField] private Transform _npcContainer;
     [SerializeField] private GameObject _npcButtonPrefab;
+    
+    [Header("Night selection")]
+    [SerializeField] private TextMeshProUGUI _nightTitle;
+    [SerializeField] private TextMeshProUGUI _nightDescription;
+
+    [SerializeField] private Image _nightPreviewImage;
+
+    [SerializeField] private Button _startNightButton;
+
+    [Header("Hero night")]
+    [SerializeField] private GameObject _heroContainer;
+    [SerializeField] private Image _heroPortrait;
+    [SerializeField] private TextMeshProUGUI _heroName;
+    [SerializeField] private TextMeshProUGUI _heroDescription;
     
     private float _waveTime;
     private bool _isTimerActive;
@@ -432,7 +444,7 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        if (IsNpcRescued()) ApplyNpcBonuses();
+        if (NpcRescuedCount() > 0) ApplyNpcBonuses();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
         StartCoroutine(ShowSummary());
@@ -446,11 +458,15 @@ public class UIManager : MonoBehaviour
     
     public void OnReturnToDayClicked()
     {
+        _selectedNPC = null;
+
         _nightSummaryPanel.SetActive(false);
+
         PauseManager.Instance.ReleasePause();
+
         _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
-        
+
         HordeManager.Instance.ReturnToPreviousScene();
     }
 
@@ -458,21 +474,32 @@ public class UIManager : MonoBehaviour
     {
         HordeManager.Instance.PrepareHorde();
 
-        UpdateStartNightUI();
+        SetupNightPanel();
 
-        SpawnNPCButtons();
-        
         _startNightPanel.SetActive(true);
+
         PauseManager.Instance.RequestPause();
+    }
+    
+    private void StartSelectedNight(VillageNpcRuntime npc)
+    {
+        CombatStatsManager.Instance.ResetStats(Player.Instance.transform);
+
+        if (npc != null)
+        {
+            SelectNPC(npc);
+        }
+
+        _startNightPanel.SetActive(false);
+
+        PauseManager.Instance.ReleasePause();
+        HordeManager.Instance.StartHorde();
     }
     
     private void UpdateStartNightUI()
     {
         var data = HordeManager.Instance.PreparedData;
         var mutation = HordeManager.Instance.PreparedMutation;
-
-        _objectiveText.text = GetObjectiveDescription(data.objective);
-        _mutationText.text = GetMutationDescription(mutation);
     }
     
     private string GetObjectiveDescription(HordeObjective obj)
@@ -612,15 +639,51 @@ public class UIManager : MonoBehaviour
         }
     }
     
-    private IEnumerator ShowSummary()
+    private IEnumerator ShowNormalNightSummary()
     {
         var stats = CombatStatsManager.Instance;
 
+        CreateSummaryText("Night survived!", _bonusesSummaryPanel.transform);
+
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Earned gold: {stats.GoldEarned}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Defeated minions: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Defeated elites: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Defeated bosses: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
+        yield return new WaitForSecondsRealtime(.75f);
+
+        CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
+
+        yield return new WaitForSecondsRealtime(.75f);
+
+        _exitSummaryBtn.SetActive(true);
+    }
+    
+    private IEnumerator ShowSummary()
+    {
         foreach (Transform child in _bonusesSummaryPanel.transform)
             Destroy(child.gameObject);
 
         foreach (Transform child in _levelSummaryPanel.transform)
             Destroy(child.gameObject);
+        
+        if (_selectedNPC == null)
+        {
+            yield return ShowNormalNightSummary();
+            yield break;
+        }
+        
+        var stats = CombatStatsManager.Instance;
 
         switch (_selectedNPC.Data)
         {
@@ -675,7 +738,7 @@ public class UIManager : MonoBehaviour
     {
         if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
 
-        if (!IsNpcRescued())
+        if (NpcRescuedCount() == 0)
         {
             CreateSummaryText("You did not find the peasant.", _bonusesSummaryPanel.transform, BonusType.Damage);
             yield return new WaitForSecondsRealtime(.75f);
@@ -693,7 +756,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private bool IsNpcRescued() => HordeManager.Instance.IsNpcRescued();
+    private int NpcRescuedCount() => HordeManager.Instance.NpcRescuedCount();
 
     private List<VillageNpcRuntime> GetRandomNPCs(int count)
     {
@@ -702,7 +765,7 @@ public class UIManager : MonoBehaviour
         var rescued = WorldManager.Instance.RescuedNpcs;
 
         var list = _npcDatabase.NpcDatas
-            .Where(npc => !rescued.Contains(npc))
+            .Where(npcData => rescued.All(r => r.Data != npcData))
             .ToList();
 
         if (list.Count == 0)
@@ -740,6 +803,11 @@ public class UIManager : MonoBehaviour
     
     private void SpawnNPCButtons()
     {
+        if (!LoadingSceneManager.Instance.IsSceneTown())
+            return;
+
+        if (_npcContainer == null) return;
+            
         ClearNPCButtons();
 
         var npcs = GetRandomNPCs(3);
@@ -760,6 +828,60 @@ public class UIManager : MonoBehaviour
             var button = obj.GetComponent<Button>();
             button.onClick.AddListener(() => btn.OnClick(npc));
         }
+    }
+    private void SetupNightPanel()
+    {
+        var location = HordeManager.Instance.CurrentNightLocation;
+
+        if (location == null)
+            return;
+
+        _nightTitle.text = location.Title;
+        _nightDescription.text = location.Description;
+        _nightPreviewImage.sprite = location.PreviewImage;
+
+        _heroContainer.SetActive(false);
+
+        _startNightButton.onClick.RemoveAllListeners();
+
+        if (HordeManager.Instance.NightCycleStep == 3)
+        {
+            SetupHeroNight();
+        }
+
+        _startNightButton.onClick.AddListener(() =>
+        {
+            StartSelectedNight(
+                HordeManager.Instance.NightCycleStep == 3
+                    ? HordeManager.Instance.CurrentHeroNpc
+                    : null
+            );
+        });
+    }
+    
+    private void SetupNormalNight(
+        string title,
+        string description,
+        Sprite preview)
+    {
+        _nightTitle.text = title;
+        _nightDescription.text = description;
+        _nightPreviewImage.sprite = preview;
+    }
+    
+    private void SetupHeroNight()
+    {
+        var hero = HordeManager.Instance.CurrentHeroNpc;
+
+        _heroContainer.SetActive(true);
+
+        if (hero == null)
+            return;
+
+        _heroPortrait.sprite = hero.Data.Portrait;
+        _heroName.text = hero.Name;
+
+        _heroDescription.text = hero.Data.Type.ToString();
     }
     
     private void SelectNPC(VillageNpcRuntime npc)

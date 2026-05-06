@@ -13,6 +13,5 @@ public enum NPCType
     Ranger,
     Rogue,
     Wizard,
-    
-    
+    Worker
 }

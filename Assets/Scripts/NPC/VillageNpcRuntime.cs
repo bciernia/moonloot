@@ -16,6 +16,10 @@ public class VillageNpcRuntime
     public string Profession;
     public List<NPCUpgradeLevel> UpgradeLevels;
 
+    public WorkerJob CurrentJob;
+
+    public bool IsWorker => Data.Type == NPCType.Worker;
+    
     public VillageNpcRuntime(VillageNpcData data)
     {
         var id = GenerateID(data);
@@ -32,10 +36,10 @@ public class VillageNpcRuntime
         {
             GrantedSkill = data.PossibleSkills[UnityEngine.Random.Range(0, data.PossibleSkills.Count)];
         }
-        else
-        {
-            if (data.PossibleSkills != null) GrantedSkill = data.PossibleSkills[0];
-        }
+        // else
+        // {
+            // if (data.PossibleSkills != null) GrantedSkill = data.PossibleSkills[0];
+        // }
     }
 
     private string GenerateID(VillageNpcData data) => $"{data.Name}_{data.Profession}";

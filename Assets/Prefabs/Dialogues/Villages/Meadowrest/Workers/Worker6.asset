@@ -1,0 +1,687 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5949641786504847984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 9
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: First Worker
+    - id: 1
+      language: en
+      text: 'Thank you for saving! '
+    - id: 2
+      language: en
+      text: Third Worker
+    - id: 3
+      language: en
+      text: Sixth Worker
+    - id: 4
+      language: en
+      text: How can I help you?
+    - id: 5
+      language: en
+      text: Go make food
+    - id: 6
+      language: en
+      text: Go for wood
+    - id: 7
+      language: en
+      text: Sorry, you are fired
+    - id: 8
+      language: en
+      text: See you!
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Worker6
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-04-12@15:40:14
+  editTime: 2026-05-05@20:46:46
+  nodes:
+  - rid: 4348854493627286056
+  - rid: 4348854493627286057
+  - rid: 4348854493627286058
+  - rid: 4348854493627286059
+  - rid: 4348854493627286060
+  - rid: 4348854493627286061
+  - rid: 4348854493627286062
+  - rid: 4348854493627286063
+  - rid: 4348854493627286064
+  - rid: 4348854493627286065
+  - rid: 4348854493627286066
+  - rid: 4348854493627286067
+  - rid: 4348854493627286068
+  - rid: 4348854493627286069
+  - rid: 4348854493627286070
+  - rid: 4348854493627286071
+  - rid: 4348854493627286072
+  - rid: 4348854493627286073
+  translationLibrary: {fileID: -5949641786504847984}
+  maxID: 1422
+  references:
+    version: 2
+    RefIds:
+    - rid: 4348854493627286056
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1244
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 1245
+          attachedIds: f6040000
+          ownerId: 1244
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 435.2776
+        yPosition: -51.895203
+        entryPointName: 
+    - rid: 4348854493627286057
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1246
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1247
+          attachedIds: fb040000
+          ownerId: 1246
+          connectionType: 1
+        - id: 1248
+          attachedIds: 
+          ownerId: 1246
+          connectionType: 9
+        - id: 1249
+          attachedIds: 
+          ownerId: 1246
+          connectionType: 9
+        - id: 1250
+          attachedIds: 
+          ownerId: 1246
+          connectionType: 9
+        - id: 1251
+          attachedIds: 
+          ownerId: 1246
+          connectionType: 9
+        outputs:
+        - id: 1252
+          attachedIds: 
+          ownerId: 1246
+          connectionType: 9
+        - id: 1253
+          attachedIds: e7040000
+          ownerId: 1246
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1085.6226
+        yPosition: -289.76727
+        triggeredClassName: RescueNpc
+        triggeredMethodName: SetSaveNpc
+        methodSignature: SetSaveNpc()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286058
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1254
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1255
+          attachedIds: e5040000
+          ownerId: 1254
+          connectionType: 1
+        outputs:
+        - id: 1256
+          attachedIds: fd040000
+          ownerId: 1254
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1490.612
+        yPosition: -289.86145
+        items:
+        - rid: 4348854493627286074
+        characterName: Sixth Worker
+        icon: 
+    - rid: 4348854493627286059
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1257
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1258
+          attachedIds: f2040000
+          ownerId: 1257
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2510.1836
+        yPosition: -62.45633
+        exitPointName: 
+    - rid: 4348854493627286060
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1259
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1260
+          attachedIds: ff040000
+          ownerId: 1259
+          connectionType: 1
+        - id: 1261
+          attachedIds: 
+          ownerId: 1259
+          connectionType: 9
+        - id: 1262
+          attachedIds: 
+          ownerId: 1259
+          connectionType: 9
+        - id: 1263
+          attachedIds: 
+          ownerId: 1259
+          connectionType: 9
+        - id: 1264
+          attachedIds: 
+          ownerId: 1259
+          connectionType: 9
+        outputs:
+        - id: 1265
+          attachedIds: 
+          ownerId: 1259
+          connectionType: 9
+        - id: 1266
+          attachedIds: ea040000
+          ownerId: 1259
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2200.6406
+        yPosition: -292.78137
+        triggeredClassName: RescueNpc
+        triggeredMethodName: HideNpc
+        methodSignature: HideNpc()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286061
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1267
+        name: VARIABLE
+        nodeType: 24
+        inputs: []
+        outputs:
+        - id: 1268
+          attachedIds: 
+          ownerId: 1267
+          connectionType: 2
+        width: 170
+        height: 150
+        xPosition: 369.87268
+        yPosition: 242.44373
+        variableName: isSaved
+        variableValue: False
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 4348854493627286062
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1269
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 1270
+          attachedIds: dd040000
+          ownerId: 1269
+          connectionType: 1
+        - id: 1271
+          attachedIds: 0a050000
+          ownerId: 1269
+          connectionType: 2
+        - id: 1272
+          attachedIds: 
+          ownerId: 1269
+          connectionType: 2
+        outputs:
+        - id: 1273
+          attachedIds: 
+          ownerId: 1269
+          connectionType: 2
+        - id: 1274
+          attachedIds: 01050000
+          ownerId: 1269
+          connectionType: 10
+        - id: 1275
+          attachedIds: df040000
+          ownerId: 1269
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 629.3353
+        yPosition: -96.41119
+        logicOperation: 4
+    - rid: 4348854493627286063
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1276
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 1277
+          attachedIds: e8040000
+          ownerId: 1276
+          connectionType: 1
+        - id: 1278
+          attachedIds: 
+          ownerId: 1276
+          connectionType: 2
+        outputs:
+        - id: 1279
+          attachedIds: ec040000
+          ownerId: 1276
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 1870.4503
+        yPosition: -192.25648
+        variableName: isSaved
+        variableValue: true
+    - rid: 4348854493627286064
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1280
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 1281
+          attachedIds: fa040000
+          ownerId: 1280
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 824.18835
+        yPosition: -315.56387
+        key: START
+    - rid: 4348854493627286065
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1282
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 1283
+          attachedIds: 0d050000
+          ownerId: 1282
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: 714.4289
+        yPosition: 687.0038
+        key: START
+    - rid: 4348854493627286066
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1284
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1285
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 1
+        - id: 1286
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 9
+        - id: 1287
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 9
+        - id: 1288
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 9
+        - id: 1289
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 9
+        outputs:
+        - id: 1290
+          attachedIds: f7040000
+          ownerId: 1284
+          connectionType: 2
+        - id: 1291
+          attachedIds: 
+          ownerId: 1284
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 316.3728
+        yPosition: -426.3516
+        triggeredClassName: RescueNpc
+        triggeredMethodName: IsSaved
+        methodSignature: IsSaved():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286067
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1292
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1293
+          attachedIds: 03050000
+          ownerId: 1292
+          connectionType: 1
+        outputs:
+        - id: 1294
+          attachedIds: 10050000
+          ownerId: 1292
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 946.21466
+        yPosition: 682.21765
+        items:
+        - rid: 4348854493627286075
+        characterName: Sixth Worker
+        icon: 
+    - rid: 4348854493627286068
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1295
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 1296
+          attachedIds: 0e050000
+          ownerId: 1295
+          connectionType: 1
+        - id: 1297
+          attachedIds: 
+          ownerId: 1295
+          connectionType: 7
+        - id: 1298
+          attachedIds: 
+          ownerId: 1295
+          connectionType: 7
+        - id: 1299
+          attachedIds: 
+          ownerId: 1295
+          connectionType: 7
+        - id: 1300
+          attachedIds: 
+          ownerId: 1295
+          connectionType: 7
+        outputs:
+        - id: 1301
+          attachedIds: 1a050000
+          ownerId: 1295
+          connectionType: 1
+        - id: 1302
+          attachedIds: 22050000
+          ownerId: 1295
+          connectionType: 1
+        - id: 1303
+          attachedIds: 2a050000
+          ownerId: 1295
+          connectionType: 1
+        - id: 1304
+          attachedIds: 32050000
+          ownerId: 1295
+          connectionType: 1
+        width: 228
+        height: 212
+        xPosition: 1348.81
+        yPosition: 686.9624
+        items:
+        - rid: 4348854493627286076
+        - rid: 4348854493627286077
+        - rid: 4348854493627286078
+        - rid: 4348854493627286079
+    - rid: 4348854493627286069
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1305
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1306
+          attachedIds: 15050000
+          ownerId: 1305
+          connectionType: 1
+        - id: 1307
+          attachedIds: 
+          ownerId: 1305
+          connectionType: 8
+        - id: 1308
+          attachedIds: 
+          ownerId: 1305
+          connectionType: 9
+        - id: 1309
+          attachedIds: 
+          ownerId: 1305
+          connectionType: 9
+        - id: 1310
+          attachedIds: 
+          ownerId: 1305
+          connectionType: 9
+        outputs:
+        - id: 1311
+          attachedIds: 
+          ownerId: 1305
+          connectionType: 9
+        - id: 1312
+          attachedIds: 34050000
+          ownerId: 1305
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1971.5945
+        yPosition: 449.23093
+        triggeredClassName: WorkerNpcController
+        triggeredMethodName: GetJob
+        methodSignature: GetJob(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 1
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286070
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1313
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1314
+          attachedIds: 16050000
+          ownerId: 1313
+          connectionType: 1
+        - id: 1315
+          attachedIds: 
+          ownerId: 1313
+          connectionType: 8
+        - id: 1316
+          attachedIds: 
+          ownerId: 1313
+          connectionType: 9
+        - id: 1317
+          attachedIds: 
+          ownerId: 1313
+          connectionType: 9
+        - id: 1318
+          attachedIds: 
+          ownerId: 1313
+          connectionType: 9
+        outputs:
+        - id: 1319
+          attachedIds: 
+          ownerId: 1313
+          connectionType: 9
+        - id: 1320
+          attachedIds: 34050000
+          ownerId: 1313
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2213.6636
+        yPosition: 790.2853
+        triggeredClassName: WorkerNpcController
+        triggeredMethodName: GetJob
+        methodSignature: GetJob(int)
+        parameterTypes:
+        - int
+        parameterValues:
+        - 2
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286071
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1321
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 1322
+          attachedIds: 17050000
+          ownerId: 1321
+          connectionType: 1
+        - id: 1323
+          attachedIds: 
+          ownerId: 1321
+          connectionType: 9
+        - id: 1324
+          attachedIds: 
+          ownerId: 1321
+          connectionType: 9
+        - id: 1325
+          attachedIds: 
+          ownerId: 1321
+          connectionType: 9
+        - id: 1326
+          attachedIds: 
+          ownerId: 1321
+          connectionType: 9
+        outputs:
+        - id: 1327
+          attachedIds: 
+          ownerId: 1321
+          connectionType: 9
+        - id: 1328
+          attachedIds: 34050000
+          ownerId: 1321
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1988.4182
+        yPosition: 895.9824
+        triggeredClassName: WorkerNpcController
+        triggeredMethodName: FireWorker
+        methodSignature: FireWorker()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 4348854493627286072
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1329
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1330
+          attachedIds: 18050000
+          ownerId: 1329
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 1652.6276
+        yPosition: 937.49695
+        exitPointName: 
+    - rid: 4348854493627286073
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1331
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 1332
+          attachedIds: 200500002805000030050000
+          ownerId: 1331
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 2758.0361
+        yPosition: 910.8823
+        exitPointName: 
+    - rid: 4348854493627286074
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Thank you for saving! '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854493627286075
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: How can I help you?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854493627286076
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Go make food
+    - rid: 4348854493627286077
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Go for wood
+    - rid: 4348854493627286078
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Sorry, you are fired
+    - rid: 4348854493627286079
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: See you!
