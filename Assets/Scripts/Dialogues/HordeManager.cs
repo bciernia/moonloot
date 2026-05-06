@@ -57,6 +57,9 @@ public class HordeManager : Singleton<HordeManager>
     private bool _bossSpawned = false;
     private int _rescuedNpcCount = 0;
     
+    private Coroutine _nightRoutine;
+    private bool _isNightRunning;
+    
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     private List<VillageNpcRuntime> _spawnedNpcsThisRun = new();
@@ -86,7 +89,9 @@ public class HordeManager : Singleton<HordeManager>
     
     private void GenerateNightLocation()
     {
-        var pool = NightCycleStep == 3 ? _nightDatabase.HeroNights : _nightDatabase.NormalNights;
+        var pool = NightCycleStep == 3
+            ? _nightDatabase.HeroNights
+            : _nightDatabase.NormalNights;
 
         if (pool == null || pool.Count == 0)
         {
@@ -95,25 +100,32 @@ public class HordeManager : Singleton<HordeManager>
         }
 
         CurrentNightLocation = pool[Random.Range(0, pool.Count)];
+
+        Debug.Log($"SELECTED NIGHT: {CurrentNightLocation.name}");
+        Debug.Log($"SCENE TO LOAD: {CurrentNightLocation.SceneName}");
     }
 
     public void StartHorde()
     {
+        StopNight();
+        
         SavePreviousScene();
-        
+
         Debug.Log($"Starting Horde {currentHorde}");
-        
+
         if (CurrentNightLocation == null)
         {
             Debug.LogError("No night location selected!");
             return;
         }
-        
+
+        Debug.Log($"LOADING SCENE: {CurrentNightLocation.SceneName}");
+
         LoadingSceneManager.Instance.LoadScene(
             CurrentNightLocation.SceneName,
             true
         );
-        
+
         StartCoroutine(WaitForSceneAndSpawn());
     }
 
@@ -121,19 +133,31 @@ public class HordeManager : Singleton<HordeManager>
     {
         yield return null;
 
-        while (FindObjectsOfType<EnemySpawner>().Length == 0)
-            yield return null;
+        yield return new WaitForSeconds(0.2f);
 
         LootSpawnManager.Instance.SpawnAll();
         SpawnNPC();
         SpawnHorde();
     }
     
+    private void CleanupEnemies()
+    {
+        var enemies = FindObjectsOfType<EnemyStatistics>();
+
+        foreach (var enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
+    }
+    
     public void OnPlayerExit()
     {
         Debug.Log("Player exited");
+
+        StopNight();
+
+        CleanupEnemies();
         
-        StopAllCoroutines();
         CompleteHorde();
     }
     
@@ -144,7 +168,6 @@ public class HordeManager : Singleton<HordeManager>
         if (spawners.Length == 0)
         {
             Debug.LogWarning("No EnemySpawners found!");
-            return;
         }
 
         _rescuedNpcCount = 0;
@@ -169,7 +192,7 @@ public class HordeManager : Singleton<HordeManager>
                 break;
             
             case HordeObjective.NightExploration:
-                StartCoroutine(StartNightExploration(spawners, data));
+                _nightRoutine = StartCoroutine(StartNightExploration(spawners, data));
                 break;
             
             case HordeObjective.KillAll:
@@ -220,7 +243,7 @@ public class HordeManager : Singleton<HordeManager>
     #region NightExploration
     private IEnumerator StartNightExploration(EnemySpawner[] spawners, HordeData data)
     {
-        Debug.Log("Night Exploration Started");
+        _isNightRunning = true;
 
         var spawnTimer = 0f;
         var spawnInterval = 3f;
@@ -230,14 +253,13 @@ public class HordeManager : Singleton<HordeManager>
 
         _aliveEnemies = 0;
 
-        SpawnExit(); 
+        SpawnExit();
 
-        while (true) 
+        while (_isNightRunning)
         {
             elapsed += Time.deltaTime;
             spawnTimer += Time.deltaTime;
 
-            // spawn enemy
             if (spawnTimer >= spawnInterval)
             {
                 if (_aliveEnemies < 50)
@@ -248,7 +270,6 @@ public class HordeManager : Singleton<HordeManager>
                 spawnTimer = 0f;
             }
 
-            // scaling po 2 minutach
             if (elapsed >= 120f)
             {
                 speedIncreaseTimer += Time.deltaTime;
@@ -261,6 +282,19 @@ public class HordeManager : Singleton<HordeManager>
             }
 
             yield return null;
+        }
+
+        Debug.Log("Night Exploration Stopped");
+    }
+    
+    private void StopNight()
+    {
+        _isNightRunning = false;
+
+        if (_nightRoutine != null)
+        {
+            StopCoroutine(_nightRoutine);
+            _nightRoutine = null;
         }
     }
     
@@ -316,6 +350,25 @@ public class HordeManager : Singleton<HordeManager>
     
     private void SpawnEnemyNearPlayer(EnemySpawner[] spawners, HordeData data)
     {
+        if (spawners != null && spawners.Length > 0)
+        {
+            var spawner = spawners[Random.Range(0, spawners.Length)];
+
+            var pool = GetEnemyPool();
+            var prefab = GetRandomEnemy(pool);
+
+            var enemyGO = Instantiate(
+                prefab,
+                spawner.spawnPoint.position,
+                Quaternion.identity
+            );
+
+            SetupEnemy(enemyGO, data, pool);
+
+            return;
+        }
+
+        
         var playerPos = Player.Instance.transform.position;
 
         var minDistance = 12f;
@@ -325,7 +378,7 @@ public class HordeManager : Singleton<HordeManager>
         for (var i = 0; i < maxAttempts; i++)
         {
             var rawPos = GetRandomSpawnPosition(playerPos, minDistance, maxDistance);
-
+            
             if (IsValidSpawnPosition(rawPos, playerPos, out Vector3 finalPos))
             {
                 var pool = GetEnemyPool();
@@ -665,6 +718,7 @@ public class HordeManager : Singleton<HordeManager>
     private void FailHorde()
     {
         Debug.Log("Player died - Game Over");
+        StopNight();
 
         // TODO: Game Over screen
         // SceneManager.LoadScene("MainMenu");
@@ -750,7 +804,6 @@ public class HordeManager : Singleton<HordeManager>
         if (spawners.Count == 0)
         {
             Debug.LogWarning("No NpcSpawners found!");
-            return;
         }
 
         Shuffle(spawners);
