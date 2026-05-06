@@ -34,11 +34,19 @@ public class HordeManager : Singleton<HordeManager>
     
     [Header("Villagers")]
     [SerializeField] private List<VillageNpcData> workerPool;
+    
+    [SerializeField] private NpcDatabase _npcDatabase;
+    
+    [SerializeField] private NightDatabaseSO _nightDatabase;
+
+    public NightLocationSO CurrentNightLocation { get; private set; }
+    
     public HordeData PreparedData { get; private set; }
     public HordeMutation PreparedMutation { get; private set; }
     
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
+    public bool IsHeroNight => NightCycleStep == 3;
 
     private GameObject _defendTarget;
     private bool _defendActive = false;
@@ -52,6 +60,13 @@ public class HordeManager : Singleton<HordeManager>
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     private List<VillageNpcRuntime> _spawnedNpcsThisRun = new();
+
+    public int NightCycleStep { get; private set; } = 1;
+    //1 - First night
+    //2 - Second night
+    //3 - Hero night
+    
+    public VillageNpcRuntime CurrentHeroNpc { get; private set; }
     
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
@@ -66,7 +81,20 @@ public class HordeManager : Singleton<HordeManager>
         PreparedData = hordeConfig.GetHorde(currentHorde - 1);
         PreparedMutation = GetRandomMutation();
 
-        Debug.Log($"Prepared Horde {currentHorde} | {PreparedData.objective} | {PreparedMutation}");
+        GenerateNightLocation();
+    }
+    
+    private void GenerateNightLocation()
+    {
+        var pool = NightCycleStep == 3 ? _nightDatabase.HeroNights : _nightDatabase.NormalNights;
+
+        if (pool == null || pool.Count == 0)
+        {
+            CurrentNightLocation = null;
+            return;
+        }
+
+        CurrentNightLocation = pool[Random.Range(0, pool.Count)];
     }
 
     public void StartHorde()
@@ -74,8 +102,17 @@ public class HordeManager : Singleton<HordeManager>
         SavePreviousScene();
         
         Debug.Log($"Starting Horde {currentHorde}");
-        CombatStatsManager.Instance.ResetStats(Player.Instance.transform);
-        LoadingSceneManager.Instance.LoadScene("Forest", true);
+        
+        if (CurrentNightLocation == null)
+        {
+            Debug.LogError("No night location selected!");
+            return;
+        }
+        
+        LoadingSceneManager.Instance.LoadScene(
+            CurrentNightLocation.SceneName,
+            true
+        );
         
         StartCoroutine(WaitForSceneAndSpawn());
     }
@@ -90,7 +127,6 @@ public class HordeManager : Singleton<HordeManager>
         LootSpawnManager.Instance.SpawnAll();
         SpawnNPC();
         SpawnHorde();
-        
     }
     
     public void OnPlayerExit()
@@ -143,6 +179,42 @@ public class HordeManager : Singleton<HordeManager>
         }
         
         OnHordeStarted?.Invoke();
+    }
+    
+    private void GenerateHeroNight()
+    {
+        var rescued = WorldManager.Instance.RescuedNpcs;
+
+        var available = _npcDatabase.NpcDatas
+            .Where(npcData =>
+                rescued.All(r => r.Data != npcData))
+            .ToList();
+
+        if (available.Count == 0)
+        {
+            CurrentHeroNpc = null;
+            return;
+        }
+
+        var randomNpc = available[Random.Range(0, available.Count)];
+
+        CurrentHeroNpc = new VillageNpcRuntime(randomNpc);
+    }
+    
+    private void AdvanceNightCycle()
+    {
+        NightCycleStep++;
+
+        if (NightCycleStep > 3)
+        {
+            NightCycleStep = 1;
+            CurrentHeroNpc = null;
+        }
+
+        if (NightCycleStep == 3)
+        {
+            GenerateHeroNight();
+        }
     }
 
     #region NightExploration
@@ -576,7 +648,13 @@ public class HordeManager : Singleton<HordeManager>
     private void CompleteHorde()
     {
         Debug.Log($"Horde {currentHorde} completed");
-
+        AdvanceNightCycle();
+        
+        if (NightCycleStep == 1)
+        {
+            CurrentHeroNpc = null;
+        }
+        
         InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward + CombatStatsManager.Instance.GoldEarned);
         currentHorde++;
         OnHordeFinished?.Invoke(currentHorde - 1);
@@ -667,13 +745,15 @@ public class HordeManager : Singleton<HordeManager>
     
     private void SpawnNPC()
     {
-        var spawners = FindObjectsOfType<NpcSpawner>();
+        var spawners = FindObjectsOfType<NpcSpawner>().ToList();
 
-        if (spawners.Length == 0)
+        if (spawners.Count == 0)
         {
             Debug.LogWarning("No NpcSpawners found!");
             return;
         }
+
+        Shuffle(spawners);
 
         var npcsToSpawn = new List<VillageNpcRuntime>();
 
@@ -699,17 +779,25 @@ public class HordeManager : Singleton<HordeManager>
             npcsToSpawn.Add(new VillageNpcRuntime(availableWorkers[i]));
         }
 
-        foreach (var npc in npcsToSpawn)
+        for (int i = 0; i < npcsToSpawn.Count; i++)
         {
-            var chosen = spawners[Random.Range(0, spawners.Length)];
+            if (i >= spawners.Count)
+            {
+                Debug.LogWarning("Not enough NPC spawners!");
+                break;
+            }
+
+            var npc = npcsToSpawn[i];
+            var chosen = spawners[i];
 
             var npcGO = Instantiate(
                 npc.Data.Character,
                 chosen.spawnPoint.position,
                 Quaternion.identity
             );
-            
+
             var rescue = npcGO.GetComponent<RescueNpc>();
+
             if (rescue != null)
             {
                 rescue.SetRuntime(npc);

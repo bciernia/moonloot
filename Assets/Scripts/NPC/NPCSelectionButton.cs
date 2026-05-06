@@ -9,15 +9,17 @@ public class NPCSelectionButton : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _professionText;
     [SerializeField] private TextMeshProUGUI _bonusText;
     [SerializeField] private Image _portrait;
+    [SerializeField] private Sprite _defaultPortrait;
 
     private UIManager _uiManager;
+    
+    
 
     public void Setup(VillageNpcRuntime data, UIManager uiManager)
     {
         _uiManager = uiManager;
         
         _nameText.text = data.Name;
-        _professionText.text = data.Profession;
         _portrait.sprite = data.Data.Character.GetComponent<SpriteRenderer>().sprite;
 
         if (data.Data is NPCStat)
@@ -55,6 +57,14 @@ public class NPCSelectionButton : MonoBehaviour
         }
 
         return sb.ToString();
+    }
+    
+    public void ResetUI()
+    {
+        _nameText.text = "Hero Night";
+        _bonusText.text = "Rescue a new hero";
+
+        _portrait.sprite = _defaultPortrait;
     }
 
     private string GetBonusValue(StatBonus bonus)
