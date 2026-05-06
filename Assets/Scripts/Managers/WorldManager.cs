@@ -1,20 +1,21 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WorldManager : Singleton<WorldManager>
 {
-    private List<NPCData> _rescuedNPCs = new();
-    private Dictionary<NPCData, string> _npcPlacements = new();
+    private List<VillageNpcRuntime> _rescuedNPCs = new();
+    private Dictionary<VillageNpcRuntime, string> _npcPlacements = new();
 
-    public IReadOnlyList<NPCData> RescuedNpcs => _rescuedNPCs;
+    public IReadOnlyList<VillageNpcRuntime> RescuedNpcs => _rescuedNPCs;
 
     private HashSet<string> _rescuedNpcIDs = new();
     
     public void AddNpc(VillageNpcRuntime npc)
     {
-        if (_rescuedNPCs.Contains(npc.Data)) return;
+        if (_rescuedNPCs.Contains(npc)) return;
         
-        _rescuedNPCs.Add(npc.Data);
+        _rescuedNPCs.Add(npc);
         _rescuedNpcIDs.Add(npc.RuntimeID);
     }
     
@@ -45,11 +46,45 @@ public class WorldManager : Singleton<WorldManager>
 
         foreach (var (npc, pointID) in _npcPlacements)
         {
+            if (npc.IsWorker)
+            {
+                var go = Instantiate(npc.Data.Character, Vector3.zero, Quaternion.identity);
+
+                var rescue = go.GetComponent<RescueNpc>();
+                if (rescue != null)
+                    rescue.SetRuntime(npc);
+
+                var worker = go.GetComponent<WorkerNpcController>();
+                if (worker != null)
+                    worker.SetRuntime(npc);
+
+                if (LoadingSceneManager.Instance.IsSceneTown())
+                {
+                    StartCoroutine(AssignNextFrame(npc));
+                }
+                
+                continue;
+            }
+
             var point = System.Array.Find(points, p => p.ID == pointID);
 
             if (point == null || point.transform.childCount > 0) continue;
 
-            Instantiate(npc.Character, point.transform.position, Quaternion.identity, point.transform);
+            var goHero = Instantiate(npc.Data.Character, point.transform.position, Quaternion.identity, point.transform);
+
+            var rescueHero = goHero.GetComponent<RescueNpc>();
+            if (rescueHero != null)
+                rescueHero.SetRuntime(npc);
+        }
+    }
+    
+    private IEnumerator AssignNextFrame(VillageNpcRuntime npc)
+    {
+        yield return null;
+
+        if (WorkManager.Instance != null)
+        {
+            WorkManager.Instance.TryAssignWorker(npc, npc.CurrentJob);
         }
     }
     

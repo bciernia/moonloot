@@ -432,7 +432,7 @@ public class UIManager : MonoBehaviour
     private void ShowSummaryPanel(int night)
     {
         _nightSummaryPanel.SetActive(true);
-        if (IsNpcRescued()) ApplyNpcBonuses();
+        if (NpcRescuedCount() > 0) ApplyNpcBonuses();
         PauseManager.Instance.RequestPause();
         _exitSummaryBtn.SetActive(false);
         StartCoroutine(ShowSummary());
@@ -675,7 +675,7 @@ public class UIManager : MonoBehaviour
     {
         if (_selectedNPC == null || _selectedNPC.UpgradeLevels[0]?.Bonuses == null) yield break;
 
-        if (!IsNpcRescued())
+        if (NpcRescuedCount() == 0)
         {
             CreateSummaryText("You did not find the peasant.", _bonusesSummaryPanel.transform, BonusType.Damage);
             yield return new WaitForSecondsRealtime(.75f);
@@ -693,7 +693,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private bool IsNpcRescued() => HordeManager.Instance.IsNpcRescued();
+    private int NpcRescuedCount() => HordeManager.Instance.NpcRescuedCount();
 
     private List<VillageNpcRuntime> GetRandomNPCs(int count)
     {
@@ -702,7 +702,7 @@ public class UIManager : MonoBehaviour
         var rescued = WorldManager.Instance.RescuedNpcs;
 
         var list = _npcDatabase.NpcDatas
-            .Where(npc => !rescued.Contains(npc))
+            .Where(npcData => rescued.All(r => r.Data != npcData))
             .ToList();
 
         if (list.Count == 0)
@@ -740,6 +740,11 @@ public class UIManager : MonoBehaviour
     
     private void SpawnNPCButtons()
     {
+        if (!LoadingSceneManager.Instance.IsSceneTown())
+            return;
+
+        if (_npcContainer == null) return;
+            
         ClearNPCButtons();
 
         var npcs = GetRandomNPCs(3);
