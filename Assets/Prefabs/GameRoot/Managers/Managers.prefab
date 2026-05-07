@@ -1512,6 +1512,7 @@ Transform:
   - {fileID: 2777289222262521720}
   - {fileID: 5088120244562804324}
   - {fileID: 1140512172106513131}
+  - {fileID: 7107798368542500091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005456009627945634
@@ -2577,7 +2578,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logUnlocks: 1
-  startingSkills: []
+  startingSkills:
+  - {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
+  - {fileID: 11400000, guid: 4ae9c82cf3de4ee4ba11f4179364ecc1, type: 2}
+  - {fileID: 11400000, guid: 4562fb314fcf78f46b998e8beb92b47c, type: 2}
 --- !u!1 &3962047042188046341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4125,6 +4129,50 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &5496698137911695835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7107798368542500091}
+  - component: {fileID: 1250021806367187460}
+  m_Layer: 0
+  m_Name: WorkManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7107798368542500091
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496698137911695835}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1250021806367187460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5496698137911695835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29fe07f20e17d894cab200b5d416a9a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5577167637571150877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4440,14 +4488,14 @@ MonoBehaviour:
   - {fileID: 4836842873025884928, guid: 6c6748ed7c0edca4297c7738c79fab41, type: 3}
   - {fileID: 4836842873025884928, guid: d19f5686907c2b84dad8be8cdf87a9cd, type: 3}
   eliteEnemies:
-  - {fileID: 4836842873025884928, guid: a568d4c4e068ab04ebc3225b343a10db, type: 3}
-  - {fileID: 3202980762219922541, guid: d263677ca6d41e646801650c66a18e81, type: 3}
-  - {fileID: 4836842873025884928, guid: 1beb1b6e6a1ee9146827165453d3545c, type: 3}
-  - {fileID: 4836842873025884928, guid: 9587fb9c6c3b08949b381998d12a5548, type: 3}
-  - {fileID: 3202980762219922541, guid: 2307122e125389940adcb4dfa2f9a6cb, type: 3}
-  - {fileID: 4836842873025884928, guid: 32241f378ebc3a042a57e1ffc22812ba, type: 3}
-  - {fileID: 4836842873025884928, guid: 6c6748ed7c0edca4297c7738c79fab41, type: 3}
-  - {fileID: 4836842873025884928, guid: d19f5686907c2b84dad8be8cdf87a9cd, type: 3}
+  - {fileID: 3202980762219922541, guid: 32a8ab6e9e11fd0479461905a670eeb1, type: 3}
+  - {fileID: 4836842873025884928, guid: bb4754da52690234888b010aed166976, type: 3}
+  - {fileID: 4836842873025884928, guid: 39dd3963af3179e4f8c3ac0c5a88967e, type: 3}
+  - {fileID: 4836842873025884928, guid: 7831b8a20fe65f244b166f0103db778e, type: 3}
+  - {fileID: 3202980762219922541, guid: d1add4c6c41683c4f9bbbda80ed583cd, type: 3}
+  - {fileID: 4836842873025884928, guid: 66c8755175a70094596187315813125e, type: 3}
+  - {fileID: 4836842873025884928, guid: e9a23f98d090ad94984fea1a08f7d241, type: 3}
+  - {fileID: 4836842873025884928, guid: c8afd952ed369264798df3f5fd6d574d, type: 3}
   bossEnemies:
   - {fileID: 3581277466367944902, guid: aadf67f7b06020744a0781f17765ef90, type: 3}
   - {fileID: 4836842873025884928, guid: 16c3b264e5e5e904faac491adcd2175e, type: 3}
@@ -4455,6 +4503,17 @@ MonoBehaviour:
   defendPrefab: {fileID: 4657763860773282106, guid: 4e27195d5f147cc43806444fded1c2ba, type: 3}
   defendMultiplier: 0.5
   exitPrefab: {fileID: 1815477841043541840, guid: 27fa568d5c131a746ad322efbc5c04c6, type: 3}
+  workerPool:
+  - {fileID: 11400000, guid: 0fa8649d1561ba4409a2413ee6b80cc6, type: 2}
+  - {fileID: 11400000, guid: d31e27f1a327c81439a808837cbe2380, type: 2}
+  - {fileID: 11400000, guid: f613dc20c43c4eb44b4f555b55b0032a, type: 2}
+  - {fileID: 11400000, guid: 1775327dd1e8a854fb677e853a80a002, type: 2}
+  - {fileID: 11400000, guid: 411bd195d4db3ad4b8a969d4179a5000, type: 2}
+  - {fileID: 11400000, guid: 01850690ef1145847bca957deda6b128, type: 2}
+  - {fileID: 11400000, guid: 4f12457ae29c72b4f943eef8ab31bd28, type: 2}
+  - {fileID: 11400000, guid: 1523f159797c941458db2ddd41d66768, type: 2}
+  _npcDatabase: {fileID: 0}
+  _nightDatabase: {fileID: 11400000, guid: 960fea4492a885043858c472a0d576d2, type: 2}
 --- !u!1 &5964391249184360381
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,7 +5097,7 @@ GameObject:
   - component: {fileID: 1945275370520865500}
   - component: {fileID: 4236023324808392037}
   m_Layer: 0
-  m_Name: DamageManager
+  m_Name: FloatingTextManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5071,7 +5130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce30530792d54d539aed9ee55f8902d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textPrefab: {fileID: 0}
+  textPrefab: {fileID: 723971752867673432, guid: 493df2f2c99c0a74eb928d681f95e59f, type: 3}
 --- !u!1 &6724136351104868145
 GameObject:
   m_ObjectHideFlags: 0
@@ -5914,11 +5973,17 @@ MonoBehaviour:
   _exitSummaryBtn: {fileID: 0}
   _hordeInfoContainer: {fileID: 0}
   _hordeInfo: {fileID: 6990380560165669326, guid: 3ce884f9439779c458df0baf9d554490, type: 3}
-  _objectiveText: {fileID: 0}
-  _mutationText: {fileID: 0}
   _npcDatabase: {fileID: 0}
   _npcContainer: {fileID: 0}
   _npcButtonPrefab: {fileID: 7752133405114005818, guid: 15c8ce1cb5060aa4a878baa22e20bc88, type: 3}
+  _nightTitle: {fileID: 0}
+  _nightDescription: {fileID: 0}
+  _nightPreviewImage: {fileID: 0}
+  _startNightButton: {fileID: 0}
+  _heroContainer: {fileID: 0}
+  _heroPortrait: {fileID: 0}
+  _heroName: {fileID: 0}
+  _heroDescription: {fileID: 0}
 --- !u!1 &7370504835617294549
 GameObject:
   m_ObjectHideFlags: 0
