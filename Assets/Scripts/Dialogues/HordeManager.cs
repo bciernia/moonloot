@@ -62,6 +62,8 @@ public class HordeManager : Singleton<HordeManager>
     
     private bool _bossAlive;
     
+    private bool _hordePrepared;
+    
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     private List<VillageNpcRuntime> _spawnedNpcsThisRun = new();
@@ -83,6 +85,14 @@ public class HordeManager : Singleton<HordeManager>
     
     public void PrepareHorde()
     {
+        if (_hordePrepared)
+        {
+            Debug.Log("Horde is prepared");
+            return;
+        }
+
+        _hordePrepared = true;
+        
         PreparedData = hordeConfig.GetHorde(currentHorde - 1);
         PreparedMutation = GetRandomMutation();
 
@@ -837,7 +847,8 @@ public class HordeManager : Singleton<HordeManager>
     {
         Debug.Log($"Horde {currentHorde} completed");
         AdvanceNightCycle();
-        
+        _hordePrepared = false;
+
         if (NightCycleStep == 1)
         {
             CurrentHeroNpc = null;
@@ -854,6 +865,7 @@ public class HordeManager : Singleton<HordeManager>
     {
         Debug.Log("Player died - Game Over");
         StopNight();
+        _hordePrepared = false;
 
         // TODO: Game Over screen
         // SceneManager.LoadScene("MainMenu");

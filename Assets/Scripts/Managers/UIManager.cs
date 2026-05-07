@@ -102,6 +102,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _heroContainer;
     [SerializeField] private Image _heroPortrait;
     [SerializeField] private TextMeshProUGUI _heroName;
+    [SerializeField] private TextMeshProUGUI _heroProfession;
     [SerializeField] private TextMeshProUGUI _heroDescription;
     
     private float _waveTime;
@@ -880,8 +881,10 @@ public class UIManager : MonoBehaviour
 
         _heroPortrait.sprite = hero.Data.Portrait;
         _heroName.text = hero.Name;
+        _heroProfession.text = hero.Data.Type.ToString();
 
-        _heroDescription.text = hero.Data.Type.ToString();
+        var startingBonus = FormatBonus(hero.UpgradeLevels[0].Bonuses[0]);
+        _heroDescription.text = startingBonus;
     }
     
     private void SelectNPC(VillageNpcRuntime npc)
