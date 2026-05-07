@@ -60,6 +60,8 @@ public class HordeManager : Singleton<HordeManager>
     private Coroutine _nightRoutine;
     private bool _isNightRunning;
     
+    private bool _bossAlive;
+    
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     private List<VillageNpcRuntime> _spawnedNpcsThisRun = new();
@@ -174,7 +176,10 @@ public class HordeManager : Singleton<HordeManager>
         
         var data = PreparedData;
         // _currentObjective = data.objective;
-        _currentObjective = HordeObjective.NightExploration;
+        _currentObjective = CurrentNightLocation.IsBossArena
+            ? HordeObjective.BossArena
+            : HordeObjective.NightExploration;
+        
         _currentMutation = PreparedMutation;
 
         _aliveEnemies = 0;
@@ -195,6 +200,10 @@ public class HordeManager : Singleton<HordeManager>
                 _nightRoutine = StartCoroutine(StartNightExploration(spawners, data));
                 break;
             
+            case HordeObjective.BossArena:
+                _nightRoutine = StartCoroutine(StartBossArena(spawners, data));
+                break;
+            
             case HordeObjective.KillAll:
             default:
                 StartCoroutine(SpawnHordeRoutine(spawners, data));
@@ -203,7 +212,41 @@ public class HordeManager : Singleton<HordeManager>
         
         OnHordeStarted?.Invoke();
     }
-    
+
+    private IEnumerator StartBossArena(
+        EnemySpawner[] spawners,
+        HordeData data)
+    {
+        _isNightRunning = true;
+        _bossAlive = false;
+
+        Debug.Log("Boss Arena Started");
+
+        _aliveEnemies = 0;
+
+        SpawnBossNearPlayer(data);
+
+        var spawnTimer = 0f;
+        var spawnInterval = 4f;
+
+        while (_isNightRunning)
+        {
+            spawnTimer += Time.deltaTime;
+
+            if (spawnTimer >= spawnInterval)
+            {
+                if (_aliveEnemies < 20)
+                {
+                    SpawnEnemyNearPlayer(spawners, data);
+                }
+
+                spawnTimer = 0f;
+            }
+
+            yield return null;
+        }
+    }
+
     private void GenerateHeroNight()
     {
         var rescued = WorldManager.Instance.RescuedNpcs;
@@ -329,7 +372,8 @@ public class HordeManager : Singleton<HordeManager>
     
     private void SpawnBossNearPlayer(HordeData data)
     {
-        Debug.Log("BOSS SPAWNED");
+        if (_bossAlive)
+            return;
 
         var playerPos = Player.Instance.transform.position;
 
@@ -337,11 +381,19 @@ public class HordeManager : Singleton<HordeManager>
         var spawnPos = playerPos + new Vector3(circle.x, 0, circle.y);
 
         var prefab = GetRandomEnemy(bossEnemies);
-        var bossGO = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+        var bossGO = Instantiate(
+            prefab,
+            spawnPos,
+            Quaternion.identity
+        );
 
         SetupEnemy(bossGO, data, bossEnemies);
 
+        _bossAlive = true;
+
         var stats = bossGO.GetComponent<EnemyStatistics>();
+
         if (stats != null)
         {
             NPCInfoManager.Instance.ShowNpcInfo(stats);
@@ -391,6 +443,76 @@ public class HordeManager : Singleton<HordeManager>
         }
 
         Debug.LogWarning("Nie znaleziono dobrej pozycji spawnu");
+    }
+    
+    private RescueNpc SpawnHeroNpc()
+    {
+        var spawners = FindObjectsOfType<NpcSpawner>();
+
+        if (spawners.Length == 0)
+        {
+            Debug.LogWarning("No NPC spawners found!");
+            return null;
+        }
+
+        if (SelectedNpc == null)
+        {
+            Debug.LogWarning("No hero selected!");
+            return null;
+        }
+
+        var chosenSpawner = spawners[Random.Range(0, spawners.Length)];
+
+        var npcGO = Instantiate(
+            SelectedNpc.Data.Character,
+            chosenSpawner.spawnPoint.position,
+            Quaternion.identity
+        );
+
+        var rescue = npcGO.GetComponent<RescueNpc>();
+
+        if (rescue != null)
+        {
+            rescue.SetRuntime(SelectedNpc);
+        }
+
+        Debug.Log($"Boss reward hero spawned: {SelectedNpc.Name}");
+
+        return rescue;
+    }
+    
+    private void SpawnExitNear(Vector3 position)
+    {
+        var offset = Random.insideUnitSphere * 3f;
+
+        offset.y = 0f;
+
+        var spawnPos = position + offset;
+
+        if (NavMesh.SamplePosition(
+                spawnPos,
+                out NavMeshHit hit,
+                5f,
+                NavMesh.AllAreas))
+        {
+            Instantiate(
+                exitPrefab,
+                hit.position,
+                Quaternion.identity
+            );
+
+            Debug.Log("Exit spawned near hero NPC");
+        }
+        else
+        {
+            Instantiate(
+                exitPrefab,
+                position,
+                Quaternion.identity
+            );
+
+            Debug.LogWarning("Fallback exit spawn used");
+        }
     }
     
     private Vector3 GetRandomSpawnPosition(Vector3 center, float minDist, float maxDist)
@@ -447,13 +569,9 @@ public class HordeManager : Singleton<HordeManager>
     
     private List<GameObject> GetEnemyPool()
     {
-        var roll = Random.value;
-
-        return roll switch
-        {
-            < 0.7f => normalEnemies,
-            _ => eliteEnemies,
-        };
+        return Random.value < 0.75f
+            ? normalEnemies
+            : eliteEnemies;
     }
     #endregion
 
@@ -661,11 +779,28 @@ public class HordeManager : Singleton<HordeManager>
 
     public void OnEnemyKilled(bool isElite, bool isBoss)
     {
-        if (isBoss)
+        if (_currentObjective == HordeObjective.BossArena && isBoss)
         {
+            _bossAlive = false;
+
             CombatStatsManager.Instance.BossEnemiesKilled++;
             CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(50, 100);
-            PointsManager.Instance.AddScore(3);
+
+            PointsManager.Instance.AddScore(100);
+            StartCoroutine(FinalKillSequence());
+
+            Debug.Log("Boss defeated!");
+
+            var hero = SpawnHeroNpc();
+
+            if (hero != null)
+            {
+                SpawnExitNear(hero.transform.position);
+            }
+            else
+            {
+                SpawnExit();
+            }
         }
         else if (isElite)
         {
@@ -677,7 +812,7 @@ public class HordeManager : Singleton<HordeManager>
         {
             CombatStatsManager.Instance.NormalEnemiesKilled++;
             CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(2, 5);
-            PointsManager.Instance.AddScore(100);
+            PointsManager.Instance.AddScore(3);
         }
         
         if (_currentObjective == HordeObjective.DefendObject) return;
@@ -801,6 +936,9 @@ public class HordeManager : Singleton<HordeManager>
     {
         var spawners = FindObjectsOfType<NpcSpawner>().ToList();
 
+        var isBossArena = CurrentNightLocation != null &&
+                          CurrentNightLocation.IsBossArena;
+        
         if (spawners.Count == 0)
         {
             Debug.LogWarning("No NpcSpawners found!");
@@ -810,17 +948,19 @@ public class HordeManager : Singleton<HordeManager>
 
         var npcsToSpawn = new List<VillageNpcRuntime>();
 
-        if (SelectedNpc != null)
+        if (!isBossArena && SelectedNpc != null)
         {
             npcsToSpawn.Add(SelectedNpc);
         }
         else
         {
-            Debug.LogWarning("No hero selected!");
+            Debug.LogWarning("No hero selected or is in boss arena!");
         }
 
-        var workerCount = Random.Range(1, 3);
-
+        var workerCount = isBossArena
+            ? 0
+            : Random.Range(1, 3);
+        
         var availableWorkers = workerPool
             .Where(w => !WorldManager.Instance.RescuedNpcs.Any(r => r.Data == w))
             .ToList();

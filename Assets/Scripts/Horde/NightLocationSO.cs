@@ -14,7 +14,8 @@ public class NightLocationSO : ScriptableObject
     [Header("Night Type")] public NightLocationType NightType;
 
     [Header("Scene")] public string SceneName;
-    
+
+    public bool IsBossArena;
     
 
 // public SceneReference Scene;
