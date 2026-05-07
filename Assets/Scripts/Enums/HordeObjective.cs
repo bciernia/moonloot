@@ -4,5 +4,6 @@ public enum HordeObjective
     DefendObject,
     EliteHunt,
     SurviveForTime,
-    NightExploration
+    NightExploration,
+    BossArena
 }
