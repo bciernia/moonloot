@@ -237,4 +237,31 @@ public class DayNightCycle : MonoBehaviour
         yield return new WaitForSeconds(.5f);
         StartHorde();
     }
+    
+    public void ForceStartNight()
+    {
+        if (hordeStarted)
+            return;
+
+        timer = dayDuration;
+
+        isEvening = true;
+        isNight = true;
+
+        globalLight.color = nightColor;
+
+        SetLights(nightLightIntensity);
+
+        OnNightStarted?.Invoke();
+
+        if (DialogueManager.Instance != null &&
+            DialogueManager.Instance.IsInDialogue())
+        {
+            hordePending = true;
+        }
+        else
+        {
+            StartHorde();
+        }
+    }
 }
