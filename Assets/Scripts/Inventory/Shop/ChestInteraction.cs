@@ -5,6 +5,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
 {
     [SerializeField] public InventorySO ChestLoot;
     [SerializeField] public string chestId;
+    [SerializeField] public string interactionText;
 
     private InventoryRuntime _chestInventory;
     
@@ -52,10 +53,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
         ShopManager.Instance.InitializeShop(_chestInventory, "Chest", InventoryType.Chest);
     }
 
-    public string GetInteractionText()
-    {
-        return "Open chest";
-    }
+    public string GetInteractionText() => string.IsNullOrEmpty(interactionText) ? "Open chest" : interactionText;
 
     public InventoryRuntime GetRuntimeInventory() => _chestInventory;
 
