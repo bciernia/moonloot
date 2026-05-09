@@ -65,17 +65,17 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         }
     }
     
-    public void SetItemAsEquipped(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
+    public void SetItemAsEquipped(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1, List<ItemParameter> itemState = null)
     {
-        SetEquippedItemByType(item, itemType, quantity, slotIndex);
+        SetEquippedItemByType(item, itemType, quantity, slotIndex, itemState);
     }
     
-    private void SetEquippedItemByType(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1)
+    private void SetEquippedItemByType(ItemSO item, ItemType itemType, int quantity = 1, int slotIndex = -1, List<ItemParameter> itemState = null)
     {
         switch (itemType)
         {
             case ItemType.Weapon:
-                SetItem(WeaponSlot, item, slotIndex);
+                SetItem(WeaponSlot, item, slotIndex, 1, itemState);
                 break;
             case ItemType.Armor:
                 SetItem(ArmorSlot, item, slotIndex);
@@ -113,10 +113,10 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
             SetItem(QuickSlot2, item, 6, quantity);
     }
 
-    private void SetItem(UIInventoryItem slotToSet, ItemSO item, int slotIndex, int quantity = 1)
+    private void SetItem(UIInventoryItem slotToSet, ItemSO item, int slotIndex, int quantity = 1, List<ItemParameter> itemState = null)
     {
         SetItemInSlot(slotToSet, item, quantity);
-        SetItemInList(item, slotIndex, quantity);
+        SetItemInList(item, slotIndex, quantity, itemState);
     } 
     
     private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item, int quantity = 1)
@@ -131,13 +131,15 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         }
     }
     
-    private void SetItemInList(ItemSO item, int slotIndex, int quantity = 1)
+    private void SetItemInList(ItemSO item, int slotIndex, int quantity = 1, List<ItemParameter> itemState = null)
     {
         EquippedItems[slotIndex] = new InventoryItem()
         {
             item = item,
             quantity = quantity,
-            itemState = new List<ItemParameter>(),
+            itemState = itemState != null
+                ? new List<ItemParameter>(itemState)
+                : new List<ItemParameter>()
         };
     }
 }

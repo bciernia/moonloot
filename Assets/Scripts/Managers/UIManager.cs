@@ -237,8 +237,8 @@ public class UIManager : MonoBehaviour
     {
         if (_playerStatsSo == null) return;
 
-        _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 20f * Time.unscaledDeltaTime);
-        _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 20f * Time.unscaledDeltaTime);
+        _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 100f * Time.unscaledDeltaTime);
+        _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 100f * Time.unscaledDeltaTime);
 
         var maxHpWithBonuses = _playerStatsSo.GetMaxHp();
         var maxMpWithBonuses = _playerStatsSo.GetMaxMp();

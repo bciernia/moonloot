@@ -13,6 +13,8 @@ public class PlayerAttack : MonoBehaviour
 
     [SerializeField] private PlayerStatsSO _playerStats;
     [SerializeField] private Image cooldownImage;
+    
+    [SerializeField] private ItemParameterSO damageBonusParameter;
 
     public Transform firePoint;
     public GameObject slashEffect;
@@ -127,14 +129,31 @@ public class PlayerAttack : MonoBehaviour
     private float SetPlayerTotalDamage()
     {
         var baseDamage = _playerStats.BaseDamage;
-        var weaponDamage = _weapon != null ? _weapon.Damage : 0f;
+
+        var weaponDamage = 0f;
+
+        if (_weapon != null)
+        {
+            weaponDamage = _weapon.Damage;
+
+            var equippedWeapon =
+                EquippedItemsManager.Instance.EquippedItems[0];
+
+            var bonusDamage =
+                ItemParameterHelper.GetParameterValue(
+                    equippedWeapon.itemState,
+                    damageBonusParameter);
+
+            weaponDamage += bonusDamage;
+        }
 
         var damage = baseDamage + weaponDamage;
+
         damage *= _playerStats.GetDamageBonusMultiplier();
         damage *= _currentDmgMultiplier;
-        
+
         _playerStats.TotalDamage = damage;
-        
+
         return damage;
     }
 

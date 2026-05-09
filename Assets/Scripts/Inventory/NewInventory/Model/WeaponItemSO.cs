@@ -62,7 +62,7 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
         if (weaponSystem != null)
         {
             weaponSystem.SetWeapon(this, inventoryItem.itemState ?? DefaultParametersList);
-            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 0);
+            EquippedItemsManager.Instance.SetItemAsEquipped(this, ItemType, 1, 0, inventoryItem.itemState);
             return true;
         }
 

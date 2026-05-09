@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -84,8 +85,15 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         // Tworzymy runtime dla startowych skilli
         foreach (var entry in slots)
         {
-            if (entry.skill != null)
-                GetRuntime(entry.skill);
+            if (entry.skill == null)
+            {
+                Debug.LogWarning("Empty skill slot detected");
+                continue;
+            }
+
+            Debug.Log("Skill loaded: " + entry.skill.Name);
+
+            GetRuntime(entry.skill);
         }
         
         while (slots.Count < slotCount)
@@ -93,40 +101,60 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
             slots.Add(new ActionSlot());
         }
 
-        RefreshSlotUI();
     }
 
-    private void OnEnable()
+    private IEnumerator Start()
     {
-        if (_playerInput == null) return;
+        yield return null;
 
-        _playerInput.actions["Skill1"].started  += _skill1Started;
+        _playerInput = FindAnyObjectByType<PlayerInput>();
+
+        if (_playerInput == null)
+        {
+            Debug.LogError("Player input not found");
+            yield break;
+        }
+
+        RegisterInputs();
+        
+        RefreshSlotUI();
+        
+        Debug.Log("SKILLS MANAGER INITIALIZED");
+    }
+    
+    private void RegisterInputs()
+    {
+        _playerInput.actions["Skill1"].started += _skill1Started;
         _playerInput.actions["Skill1"].canceled += _skill1Canceled;
 
-        _playerInput.actions["Skill2"].started  += _skill2Started;
+        _playerInput.actions["Skill2"].started += _skill2Started;
         _playerInput.actions["Skill2"].canceled += _skill2Canceled;
-        
-        _playerInput.actions["QuickItem1"].started  += _quickItem1Started;
+
+        _playerInput.actions["QuickItem1"].started += _quickItem1Started;
         _playerInput.actions["QuickItem1"].canceled += _quickItem1Canceled;
-        
-        _playerInput.actions["QuickItem2"].started  += _quickItem2Started;
+
+        _playerInput.actions["QuickItem2"].started += _quickItem2Started;
         _playerInput.actions["QuickItem2"].canceled += _quickItem2Canceled;
+
+        Debug.Log("INPUTS REGISTERED");
+        
     }
-
-    private void OnDisable()
+    
+    private void OnDestroy()
     {
-        if (_playerInput == null) return;
+        if (_playerInput == null)
+            return;
 
-        _playerInput.actions["Skill1"].started  -= _skill1Started;
+        _playerInput.actions["Skill1"].started -= _skill1Started;
         _playerInput.actions["Skill1"].canceled -= _skill1Canceled;
 
-        _playerInput.actions["Skill2"].started  -= _skill2Started;
+        _playerInput.actions["Skill2"].started -= _skill2Started;
         _playerInput.actions["Skill2"].canceled -= _skill2Canceled;
-        
-        _playerInput.actions["QuickItem1"].started  -= _quickItem1Started;
+
+        _playerInput.actions["QuickItem1"].started -= _quickItem1Started;
         _playerInput.actions["QuickItem1"].canceled -= _quickItem1Canceled;
-        
-        _playerInput.actions["QuickItem2"].started  -= _quickItem2Started;
+
+        _playerInput.actions["QuickItem2"].started -= _quickItem2Started;
         _playerInput.actions["QuickItem2"].canceled -= _quickItem2Canceled;
     }
 
@@ -177,6 +205,8 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private void OnSlotStarted(int index)
     {
+        Debug.Log("SLOT STARTED: " + index);
+        
         if (index < 0 || index >= slots.Count || GameManager.Instance.CurrentMode == GameMode.WorldMap)
             return;
 
@@ -293,6 +323,9 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private void ActivateSkill(Skill skill)
     {
+        Debug.Log("Skill activate: " + skill.Name);
+
+        
         if (!skill.Activate(user))
             return;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Inventory.NewInventory.Model;
 using Unity.VisualScripting;
@@ -415,13 +416,25 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         sb.Append(isInPlayerEquipment
             ? $"Sell price: {inventoryItem.item.SellPrice}"
             : $"Buy price: {inventoryItem.item.BuyPrice}");
-        for (var i = 0; i < inventoryItem.itemState.Count; i++)
+        foreach (var currentParam in inventoryItem.itemState)
         {
+            var param = currentParam;
+            var defaultParam = inventoryItem.item.DefaultParametersList
+                .FirstOrDefault(p => p.itemParameter == param.itemParameter);
+
             sb.AppendLine();
-            sb.Append($"{inventoryItem.itemState[i].itemParameter.ParameterName}: " +
-                      $"{inventoryItem.itemState[i].value} / " +
-                      
-                      $"{inventoryItem.item.DefaultParametersList[i].value}");
+
+            if (defaultParam.itemParameter != null)
+            {
+                sb.Append(
+                    $"{currentParam.itemParameter.ParameterName}: " +
+                    $"{currentParam.value} / {defaultParam.value}");
+            }
+            else
+            {
+                sb.Append(
+                    $"{currentParam.itemParameter.ParameterName}: +{currentParam.value}");
+            }
         }
         
         sb.AppendLine();
