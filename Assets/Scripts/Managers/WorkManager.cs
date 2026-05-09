@@ -4,12 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class WorkManager : Singleton<WorkManager>
 {
     private float _timer;
     private WorkerPoint[] _points;
 
+    [SerializeField] private ItemParameterSO damageBonusParameter;
+
+    [SerializeField] private InventoryItem potion;     
+    
     protected override void Awake()
     {
         base.Awake();
@@ -23,57 +28,137 @@ public class WorkManager : Singleton<WorkManager>
             .ToArray();
     }
 
-    private void Update()
+    public void ProcessWorkersAfterNight()
     {
-        if (!LoadingSceneManager.Instance.IsSceneTown())
+        ProcessScavengers();
+        ProcessBlacksmiths();
+        ProcessAlchemists();
+    }
+
+    private ChestInteraction GetWorkerChest(WorkerJob job)
+    {
+        var workerChest = FindObjectsOfType<WorkerChest>()
+            .FirstOrDefault(c => c.workerJob == job);
+
+        return workerChest?.GetComponent<ChestInteraction>();
+    }
+
+    private InventoryRuntime TryGetChestInventory(WorkerJob job)
+    {
+        var chest = GetWorkerChest(job);
+
+        if (chest == null)
+        {
+            Debug.LogWarning("Worker chest not found!");
+            return null;
+        }
+
+        return chest.GetRuntimeInventory();
+    }
+    
+    private void ProcessBlacksmiths()
+    {
+        var smithCount = GetWorkersCount(WorkerJob.Blacksmith);
+
+        if (smithCount <= 0)
+            return;
+
+        var inventory = TryGetChestInventory(WorkerJob.Blacksmith);
+
+        if (inventory == null)
             return;
         
-        _timer += Time.deltaTime;
-
-        if (_timer >= 1f)
+        for (var i = 0; i < inventory.Items.Count; i++)
         {
-            Tick();
-            _timer = 0f;
+            var item = inventory.Items[i];
+
+            if (item.IsEmpty)
+                continue;
+
+            if (item.item is not WeaponItemSO)
+                continue;
+
+            UpgradeWeapon(ref item, smithCount);
+
+            inventory.Items[i] = item;
         }
+
+        inventory.NotifyInventoryUpdated();
     }
-
-    private void Tick()
+    
+    private void UpgradeWeapon(ref InventoryItem item, int smithCount)
     {
-        foreach (var npc in WorldManager.Instance.RescuedNpcs)
+        var bonusValue = smithCount * 2f;
+
+        item.itemState ??= new List<ItemParameter>();
+
+        var found = false;
+
+        for (var i = 0; i < item.itemState.Count; i++)
         {
-            if (!npc.IsWorker) continue;
-
-            switch (npc.CurrentJob)
+            if (item.itemState[i].itemParameter == damageBonusParameter)
             {
-                case WorkerJob.FoodProduction:
-                    ProduceFood(npc);
-                    break;
+                var param = item.itemState[i];
+                param.value += bonusValue;
 
-                case WorkerJob.Lumber:
-                    ProduceWood(npc);
-                    break;
-                
-                case WorkerJob.None:
-                    break;
-                
-                default:
-                    throw new ArgumentOutOfRangeException();
+                item.itemState[i] = param;
+
+                found = true;
+                break;
             }
         }
+
+        if (!found)
+        {
+            item.itemState.Add(new ItemParameter()
+            {
+                itemParameter = damageBonusParameter,
+                value = bonusValue
+            });
+        }
+
+        Debug.Log($"{item.item.Name} upgraded by +{bonusValue} damage");
     }
 
-    private void ProduceFood(VillageNpcRuntime npc)
+    private void ProcessAlchemists()
     {
-        Debug.Log($"{npc.Name} produkuje jedzenie");
+        var alchemistsCount = GetWorkersCount(WorkerJob.Alchemist);
+
+        if (alchemistsCount <= 0)
+            return;
+
+        var inventory = TryGetChestInventory(WorkerJob.Alchemist);
+
+        if (inventory == null)
+            return;
+        
+        foreach (var item in inventory.Items)
+        {
+            if (!item.IsEmpty)
+                continue;
+
+            inventory.AddItem(potion, alchemistsCount);
+            break;
+        }
+
+        inventory.NotifyInventoryUpdated();    
     }
 
-    private void ProduceWood(VillageNpcRuntime npc)
+    private void ProcessScavengers()
     {
-        Debug.Log($"{npc.Name} produkuje drewno");
+        var count = GetWorkersCount(WorkerJob.Scavenger);
+        var gold = Random.Range(10, 20) * count;
+        InventoryController.Instance.ChangeGoldAmount(gold);
+        
+        Debug.Log($"Scavengers found {gold} gold");
     }
+
+    private int GetWorkersCount(WorkerJob job) => WorldManager.Instance.RescuedNpcs.Count(npc => npc.IsWorker && npc.CurrentJob == job);
 
     public bool TryAssignWorker(VillageNpcRuntime npc, WorkerJob newJob)
     {
+        Debug.Log($"{npc.Name} | {npc.RuntimeID} | {npc.CurrentJob}");
+        
         EnsurePoints();
         
         if (!npc.IsWorker)

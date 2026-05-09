@@ -1,6 +1,7 @@
 public enum WorkerJob
 {
     None = 0,
-    FoodProduction = 1,
-    Lumber = 2
+    Blacksmith = 1,
+    Scavenger = 2,
+    Alchemist = 3,
 }

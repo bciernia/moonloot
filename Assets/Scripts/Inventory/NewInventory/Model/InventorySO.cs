@@ -112,7 +112,7 @@ public class InventorySO : ScriptableObject
 
     public void AddItem(InventoryItem item, int quantity)
     {
-        AddItem(item.item, quantity);
+        AddItem(item.item, quantity, item.itemState);
     }
 
     public Dictionary<int, InventoryItem> GetCurrentInventoryState()

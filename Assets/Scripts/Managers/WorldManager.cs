@@ -13,10 +13,27 @@ public class WorldManager : Singleton<WorldManager>
     
     public void AddNpc(VillageNpcRuntime npc)
     {
-        if (_rescuedNPCs.Contains(npc)) return;
-        
+        var existingNpc = _rescuedNPCs
+            .Find(x => x.RuntimeID == npc.RuntimeID);
+
+        if (existingNpc != null)
+        {
+            npc.CurrentJob = existingNpc.CurrentJob;
+
+            Debug.Log(
+                $"NPC already exists, restored job: " +
+                $"{npc.Name} | {npc.CurrentJob}");
+
+            return;
+        }
+
         _rescuedNPCs.Add(npc);
         _rescuedNpcIDs.Add(npc.RuntimeID);
+
+        Debug.Log(
+            $"Added NPC: {npc.Name} | " +
+            $"{npc.RuntimeID} | " +
+            $"{npc.CurrentJob}");
     }
     
     public void AssignPlacesIfNeeded()

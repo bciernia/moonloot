@@ -43,12 +43,12 @@ public class LoadingSceneManager : MonoBehaviour
     
     public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
-        SaveGame();
-        
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
         loadingScreen.SetActive(true);
 
+        SaveGame();
+        
         var timer = 0f;
 
         var scene = SceneManager.LoadSceneAsync(sceneName);
@@ -130,6 +130,13 @@ public class LoadingSceneManager : MonoBehaviour
         WorldManager.Instance.ResetSpawnPoints();
         WorldManager.Instance.AssignPlacesIfNeeded();
         WorldManager.Instance.SpawnNPCs();
+        
+        if(IsSceneTown()) ExecuteFunctionsForMainTownScene();
+    }
+
+    private void ExecuteFunctionsForMainTownScene()
+    {
+        WorkManager.Instance.ProcessWorkersAfterNight();
     }
     
     private void TryFindDayNightCycle()

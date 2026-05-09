@@ -234,7 +234,7 @@ public class HordeManager : Singleton<HordeManager>
 
         _aliveEnemies = 0;
 
-        SpawnBossNearPlayer(data);
+        SpawnBoss(data);
 
         var spawnTimer = 0f;
         var spawnInterval = 4f;
@@ -380,22 +380,27 @@ public class HordeManager : Singleton<HordeManager>
         Debug.Log("Exit spawned!");
     }
     
-    private void SpawnBossNearPlayer(HordeData data)
+    private void SpawnBoss(HordeData data)
     {
         if (_bossAlive)
             return;
 
-        var playerPos = Player.Instance.transform.position;
+        var spawners = FindObjectsOfType<BossSpawner>();
 
-        var circle = Random.insideUnitCircle.normalized * Random.Range(12f, 18f);
-        var spawnPos = playerPos + new Vector3(circle.x, 0, circle.y);
+        if (spawners == null || spawners.Length == 0)
+        {
+            Debug.LogWarning("No BossSpawner found in scene!");
+            return;
+        }
+
+        var randomSpawner = spawners[Random.Range(0, spawners.Length)];
 
         var prefab = GetRandomEnemy(bossEnemies);
 
         var bossGO = Instantiate(
             prefab,
-            spawnPos,
-            Quaternion.identity
+            randomSpawner.transform.position,
+            randomSpawner.transform.rotation
         );
 
         SetupEnemy(bossGO, data, bossEnemies);
@@ -805,7 +810,7 @@ public class HordeManager : Singleton<HordeManager>
 
             if (hero != null)
             {
-                SpawnExitNear(hero.transform.position);
+                SpawnExit();
             }
             else
             {

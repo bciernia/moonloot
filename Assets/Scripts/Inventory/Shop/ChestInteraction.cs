@@ -1,5 +1,4 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
@@ -26,6 +25,8 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     private void Awake()
     {
         _chestInventory = new InventoryRuntime(ChestLoot);
+
+        Load();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -55,6 +56,8 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     {
         return "Open chest";
     }
+
+    public InventoryRuntime GetRuntimeInventory() => _chestInventory;
 
     public void Save()
     {

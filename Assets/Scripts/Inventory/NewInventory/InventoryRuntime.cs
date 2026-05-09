@@ -34,7 +34,7 @@ public class InventoryRuntime
     
     public void AddItem(InventoryItem item, int quantity)
     {
-        AddItem(item.item, quantity);
+        AddItem(item.item, quantity, item.itemState);
     }
     
     public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemState = null)
