@@ -1,0 +1,260 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4837788555522000543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 14
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Man
+    - id: 1
+      language: en
+      text: I would help you but I have a family to support.
+    - id: 2
+      language: en
+      text: Don't introduce yourself, you change so quickly that it's not worth remembering.
+    - id: 3
+      language: en
+      text: I wish you the best, and the next one, and the next one.
+    - id: 4
+      language: en
+      text: Guard
+    - id: 5
+      language: en
+      text: Welcome traveler! My name is Totharial
+    - id: 6
+      language: en
+      text: Welcome traveler! My name is Totharial and I will help you with game,
+        I mean your adventure.
+    - id: 7
+      language: en
+      text: Totharial
+    - id: 8
+      language: en
+      text: Firstly, you have few minutes before night will come. Days in our town
+        are very short. You will have to fight with hordes of monsters.
+    - id: 9
+      language: en
+      text: It will be opportunity for you to find supplies and villagers.
+    - id: 10
+      language: en
+      text: 'The most important thing about nights - the longer you fight, the more
+        powerful monsters appear. '
+    - id: 11
+      language: en
+      text: They will be faster and stronger so don't be too long outside village.
+    - id: 12
+      language: en
+      text: So how do you get back to the city? Find the portal that will take you
+        back and let you end the night.
+    - id: 13
+      language: en
+      text: Don't worry about the people you find, they'll handle it.
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Guard_Meadowrest
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-27@20:29:40
+  editTime: 2026-05-09@16:16:40
+  nodes:
+  - rid: 4348854571242357240
+  - rid: 4348854571242357241
+  - rid: 4348854571242357242
+  - rid: 4348854571242357243
+  - rid: 4348854571242357244
+  translationLibrary: {fileID: -4837788555522000543}
+  maxID: 4178
+  references:
+    version: 2
+    RefIds:
+    - rid: 4348854571242357240
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 30
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 31
+          attachedIds: eb030000
+          ownerId: 30
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: 520.5977
+        yPosition: 321.89133
+        entryPointName: 
+    - rid: 4348854571242357241
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1002
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1003
+          attachedIds: 1f000000
+          ownerId: 1002
+          connectionType: 1
+        outputs:
+        - id: 1004
+          attachedIds: 4c070000
+          ownerId: 1002
+          connectionType: 1
+        width: 268
+        height: 350.49997
+        xPosition: 790.33514
+        yPosition: 104.26698
+        items:
+        - rid: 4348854571242357245
+        characterName: Guard
+        icon: 
+    - rid: 4348854571242357242
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1867
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1868
+          attachedIds: ec030000
+          ownerId: 1867
+          connectionType: 1
+        outputs:
+        - id: 1869
+          attachedIds: 5d070000
+          ownerId: 1867
+          connectionType: 1
+        width: 268
+        height: 376.49997
+        xPosition: 1146.4065
+        yPosition: 50.706238
+        items:
+        - rid: 4348854571242357246
+        - rid: 4348854571242357247
+        characterName: Totharial
+        icon: 
+    - rid: 4348854571242357243
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1884
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1885
+          attachedIds: 4d070000
+          ownerId: 1884
+          connectionType: 1
+        outputs:
+        - id: 1886
+          attachedIds: 6e070000
+          ownerId: 1884
+          connectionType: 1
+        width: 268
+        height: 346.75
+        xPosition: 1476.4064
+        yPosition: 63.20627
+        items:
+        - rid: 4348854571242357248
+        - rid: 4348854571242357249
+        characterName: Totharial
+        icon: 
+    - rid: 4348854571242357244
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 1901
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 1902
+          attachedIds: 5e070000
+          ownerId: 1901
+          connectionType: 1
+        outputs:
+        - id: 1903
+          attachedIds: 
+          ownerId: 1901
+          connectionType: 1
+        width: 268
+        height: 346.75
+        xPosition: 1809.1055
+        yPosition: 64.60126
+        items:
+        - rid: 4348854571242357250
+        - rid: 4348854571242357251
+        characterName: Totharial
+        icon: 
+    - rid: 4348854571242357245
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Welcome traveler! My name is Totharial and I will help you with game,
+          I mean your adventure.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357246
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Firstly, you have few minutes before night will come. Days in our town
+          are very short. You will have to fight with hordes of monsters.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357247
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: It will be opportunity for you to find supplies and villagers.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357248
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'The most important thing about nights - the longer you fight, the
+          more powerful monsters appear. '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357249
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: They will be faster and stronger so don't be too long outside village.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357250
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: So how do you get back to the city? Find the portal that will take
+          you back and let you end the night.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348854571242357251
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Don't worry about the people you find, they'll handle it.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
