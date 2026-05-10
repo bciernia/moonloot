@@ -7,20 +7,45 @@ public class Roots : Skill
     public LayerMask EnemyLayer;
     public float enemyCountForRoot = 2;
 
-    public GameObject rootEffect; 
+    public GameObject rootEffect;
 
     public override bool Activate(GameObject user)
     {
-        if (user == null) return false;
+        if (user == null)
+            return false;
+
         var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
-        
+
+        if (mana != null && !mana.TryUseMana(ManaCost))
+            return false;
+
+        var targetCount =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.TargetCount,
+                enemyCountForRoot
+            );
+
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                ActiveTime
+            );
+
+        var radius =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Radius,
+                Radius
+            );
+
         var hits = Physics2D.OverlapCircleAll(
             user.transform.position,
-            Radius,
+            radius,
             EnemyLayer
         );
-        
+
         Array.Sort(hits, (a, b) =>
             Vector2.SqrMagnitude(user.transform.position - a.transform.position)
                 .CompareTo(
@@ -28,12 +53,13 @@ public class Roots : Skill
                 )
         );
 
-        for (var i = 0; i < Math.Min(enemyCountForRoot, hits.Length); i++)
+        for (var i = 0; i < Math.Min(targetCount, hits.Length); i++)
         {
             var rootable = hits[i].GetComponent<IRootable>();
+
             if (rootable != null)
             {
-                rootable.ApplyRoot(ActiveTime, rootEffect);
+                rootable.ApplyRoot(duration, rootEffect);
             }
         }
 

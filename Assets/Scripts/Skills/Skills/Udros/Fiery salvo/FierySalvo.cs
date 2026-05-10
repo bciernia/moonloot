@@ -26,7 +26,14 @@ public class FierySalvo : Skill
     {
         var elapsed = 0f;
 
-        while (elapsed < duration)
+        var modifiedDuration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                duration
+            );
+        
+        while (elapsed < modifiedDuration)
         {
             FireProjectile(user, firePoint);
             yield return new WaitForSeconds(interval);

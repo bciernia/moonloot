@@ -91,7 +91,7 @@ public class Projectile : MonoBehaviour
             CombatStatsManager.Instance.DamageDealt += Damage;
 
         if (ProjectileSo.Effect)
-            ProjectileSo.Effect.Apply(other.gameObject, ProjectileSo.EffectChance);
+            ProjectileSo.Effect.Apply(other.gameObject, null, ProjectileSo.EffectChance);
 
         if (bloodParticle != null && other.gameObject.CompareTag("Enemy"))
         {

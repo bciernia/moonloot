@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public abstract class Effect : ScriptableObject
@@ -14,7 +15,7 @@ public abstract class Effect : ScriptableObject
 
     protected abstract void OnTick(GameObject target);
 
-    public void Apply(GameObject target, float hitChance = 0)
+    public void Apply(GameObject target, Skill sourceSkill = null, float hitChance = 0)
     {
         var uiObj = target.CompareTag("Player") ? StatusEffectUIManager.Instance.CreateEffectUI(this) : null;
 
@@ -22,7 +23,11 @@ public abstract class Effect : ScriptableObject
         
         if (!RNGManager.Instance.MakeSkillCheck(effectHitChance)) return;
         
-        var existing = target.GetComponent<ActiveDmgOverTime>();
+        var existingEffects =
+            target.GetComponents<ActiveDmgOverTime>();
+        
+        var existing = existingEffects
+            .FirstOrDefault(e => e.Effect == this);
         
         ActiveDmgOverTime activeEffect;
 
@@ -34,7 +39,7 @@ public abstract class Effect : ScriptableObject
         else
         {
             activeEffect = target.AddComponent<ActiveDmgOverTime>();
-            activeEffect.InitializeEffect(this, target, uiObj, OnTick);
+            activeEffect.InitializeEffect(this, sourceSkill, target, uiObj, OnTick);
         }
 
         if (VisualPrefab != null)

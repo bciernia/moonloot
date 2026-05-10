@@ -1,7 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "AuraOfKnowledge_", menuName = "Skill/Aulla/AuraOfKnowledge")]
 public class AuraOfKnowledge : Skill
@@ -12,17 +10,41 @@ public class AuraOfKnowledge : Skill
 
     public override bool Activate(GameObject user)
     {
-        if (user == null) return false;
+        if (user == null)
+            return false;
 
         var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
+
+        if (mana != null && !mana.TryUseMana(ManaCost))
+            return false;
+
+        var targetCount =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.TargetCount,
+                enemyCountForAura
+            );
+
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                showCooldownDuration
+            );
+
+        var radius =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Radius,
+                Radius
+            );
 
         var hits = Physics2D.OverlapCircleAll(
             user.transform.position,
-            Radius,
+            radius,
             EnemyLayer
         );
-        
+
         Array.Sort(hits, (a, b) =>
             Vector2.SqrMagnitude(user.transform.position - a.transform.position)
                 .CompareTo(
@@ -30,14 +52,16 @@ public class AuraOfKnowledge : Skill
                 )
         );
 
-        var count = Mathf.Min(enemyCountForAura, hits.Length);
+        var count = Mathf.Min((int)targetCount, hits.Length);
 
         for (var i = 0; i < count; i++)
         {
-            var showEnemyInfo = hits[i].GetComponentInChildren<IShowEnemyInfo>();
+            var showEnemyInfo =
+                hits[i].GetComponentInChildren<IShowEnemyInfo>();
+
             if (showEnemyInfo != null)
             {
-                showEnemyInfo.ShowEnemyCooldown(showCooldownDuration);
+                showEnemyInfo.ShowEnemyCooldown(duration);
             }
         }
 

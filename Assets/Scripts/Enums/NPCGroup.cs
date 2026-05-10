@@ -10,8 +10,11 @@ public enum NPCType
     Barbarian,
     Bard,
     Cleric,
+    Druid,
+    Fighter,
+    Paladin,
     Ranger,
     Rogue,
     Wizard,
-    Worker
+    Worker,
 }

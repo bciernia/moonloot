@@ -50,6 +50,24 @@ public class NPCStatUpgrade : MonoBehaviour
 
     public bool TryUnlockSkill() => _runtimeNpc.GrantedSkill != null && PlayerSkillManager.Instance.UnlockSkill(_runtimeNpc.GrantedSkill);
     
+    public bool TryUpgradeSkill()
+    {
+        if (_runtimeNpc.GrantedSkill == null)
+            return false;
+
+        foreach (var upgrade in npc.SkillStatModifiers)
+        {
+            PlayerSkillManager.Instance.AddSkillModifier(
+                _runtimeNpc.GrantedSkill,
+                upgrade.statType,
+                upgrade.value
+            );
+        }
+
+        Debug.Log($"Skill upgraded: {_runtimeNpc.GrantedSkill.Name}");
+
+        return true;
+    }
     
     public bool IsSkillUnlocked() => PlayerSkillManager.Instance.IsUnlocked(_runtimeNpc.GrantedSkill);
 

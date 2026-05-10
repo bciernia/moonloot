@@ -105,7 +105,7 @@ public class Totem : MonoBehaviour
     {
         if (_itemStatistics != null && _itemStatistics.Effect != null)
         {
-            _itemStatistics.Effect.Apply(target, _itemStatistics.ChanceForHit);
+            _itemStatistics.Effect.Apply(target, null, _itemStatistics.ChanceForHit);
         }
     }
 

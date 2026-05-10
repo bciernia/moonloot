@@ -65,7 +65,7 @@ public class ActionAttack : FSMAction
     {
         if (_enemyStatistics != null && _enemyStatistics.Effect != null)
         {
-            _enemyStatistics.Effect.Apply(_enemyBrain.Player.gameObject, _enemyStatistics.EffectChance);
+            _enemyStatistics.Effect.Apply(_enemyBrain.Player.gameObject,null, _enemyStatistics.EffectChance);
         }
     }
 }

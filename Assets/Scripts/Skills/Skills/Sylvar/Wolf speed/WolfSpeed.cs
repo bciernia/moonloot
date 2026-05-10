@@ -12,10 +12,13 @@ public class WolfSpeed : Skill
         var mana = user.GetComponent<PlayerMana>();
         if (mana != null && mana.TryUseMana(ManaCost)) return false;
 
+        var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+        var speed = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.SpeedMultiplier, SpeedMultiplier);
+        
         var movement = user.GetComponent<PlayerMovement>();
         if (movement != null)
         {
-            movement.ApplySpeedMultiplier(SpeedMultiplier, ActiveTime);
+            movement.ApplySpeedMultiplier(speed, duration);
         }
 
         return true;

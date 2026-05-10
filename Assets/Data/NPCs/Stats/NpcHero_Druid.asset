@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d799d762db042338c5c0f74b9363cd1, type: 3}
+  m_Name: NpcHero_Druid
+  m_EditorClassIdentifier: 
+  Group: 0
+  Type: 3
+  Name: Elathir
+  Profession: Druid
+  Portrait: {fileID: -6486799761944546, guid: 39b7df7ed6a710442b4fefc099ae0ede, type: 3}
+  Character: {fileID: 6294509973485728611, guid: 63a24e88b0f17d545867380018ae1d0b, type: 3}
+  UpgradeLevels:
+  - Level: 1
+    Bonuses:
+    - Type: 2
+      Value: 10
+    ItemName: Turnip
+    RequiredAmount: 1
+    GoldAmount: 0
+  - Level: 2
+    Bonuses:
+    - Type: 2
+      Value: 5
+    ItemName: Turnip
+    RequiredAmount: 2
+    GoldAmount: 0
+  - Level: 3
+    Bonuses:
+    - Type: 2
+      Value: 5
+    ItemName: Tomato
+    RequiredAmount: 4
+    GoldAmount: 0
+  AssignedRole: 0
+  PreferredRole: 0
+  PossibleSkills:
+  - {fileID: 11400000, guid: 850987e3da4f90b42bd793bd655dda2b, type: 2}
+  SkillStatModifiers:
+  - statType: 1
+    value: 3
+  - statType: 6
+    value: 5
