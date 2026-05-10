@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d799d762db042338c5c0f74b9363cd1, type: 3}
+  m_Name: NpcHero_Paladin
+  m_EditorClassIdentifier: 
+  Group: 0
+  Type: 5
+  Name: Erevan
+  Profession: Paladin
+  Portrait: {fileID: -8717662422559749900, guid: 678bd9b83843b4a4393184e64b5b420e, type: 3}
+  Character: {fileID: 6294509973485728611, guid: 8d561822b1b817d4cacb06f7d6d1337f, type: 3}
+  UpgradeLevels:
+  - Level: 1
+    Bonuses:
+    - Type: 2
+      Value: 10
+    ItemName: Turnip
+    RequiredAmount: 1
+    GoldAmount: 0
+  - Level: 2
+    Bonuses:
+    - Type: 2
+      Value: 5
+    ItemName: Turnip
+    RequiredAmount: 2
+    GoldAmount: 0
+  - Level: 3
+    Bonuses:
+    - Type: 2
+      Value: 5
+    ItemName: Tomato
+    RequiredAmount: 4
+    GoldAmount: 0
+  AssignedRole: 0
+  PreferredRole: 0
+  PossibleSkills:
+  - {fileID: 11400000, guid: b836b349d16872345a4b88b5e0b4e1a9, type: 2}
+  SkillStatModifiers:
+  - statType: 7
+    value: 10
+  - statType: 1
+    value: 5

@@ -21,7 +21,10 @@ public class Shield : Skill
             return false;
         }
         
-        playerHealth.ReduceDamage(ReduceAmount, Duration, ShieldEffect);
+        var reduceAmount = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.ShieldReduction, ReduceAmount);
+        var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, Duration);
+        
+        playerHealth.ReduceDamage(reduceAmount, duration, ShieldEffect);
         return true;
     }
 }

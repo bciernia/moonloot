@@ -27,7 +27,7 @@ public class Skill : IdentifiableSO
     public virtual bool Activate(GameObject user)
     {
         if (Effect != null)
-            Effect.Apply(user);
+            Effect.Apply(user, this);
 
         return true;
     }

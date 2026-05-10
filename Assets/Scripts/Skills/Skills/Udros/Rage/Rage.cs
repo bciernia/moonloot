@@ -18,10 +18,24 @@ public class Rage : Skill
 
         hp?.TakeDamage(HealthCost, null,  DamageType.True);
 
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                ActiveTime
+            );
+        
+        var damageMultiplier =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.DamageMultiplier,
+                DmgMultiplier
+            );
+        
         var playerAttack = user.GetComponent<PlayerAttack>();
         if (playerAttack != null)
         {
-            playerAttack.ApplyDmgMultiplier(DmgMultiplier, ActiveTime);
+            playerAttack.ApplyDmgMultiplier(damageMultiplier, duration);
         }
 
         return true;

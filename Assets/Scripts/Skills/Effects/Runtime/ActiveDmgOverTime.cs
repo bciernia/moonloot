@@ -10,8 +10,13 @@ public class ActiveDmgOverTime : ActiveEffect
     private IHealth health;
     private bool _isFinished;
     
-    public void InitializeEffect(Effect effect, GameObject target, GameObject uiObj, Action<GameObject> onTickAction)
+    public Effect Effect { get; private set; }
+    public Skill SourceSkill { get; private set; }
+    
+    public void InitializeEffect(Effect effect, Skill sourceSkill, GameObject target, GameObject uiObj, Action<GameObject> onTickAction)
     {
+        Effect = effect;
+        SourceSkill = sourceSkill;
         this.target = target;
         health = target.GetComponent<IHealth>();
         onTick = onTickAction;

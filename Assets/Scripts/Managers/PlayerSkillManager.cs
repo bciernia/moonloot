@@ -16,6 +16,8 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
 
     public IReadOnlyList<Skill> UnlockedSkills => _unlockedSkills;
 
+    private Dictionary<string, List<SkillStatModifier>> _skillModifiers = new();
+
     public event Action OnSkillsChanged;
 
     private bool _isLoaded = false;
@@ -28,6 +30,54 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
         }
     }
 
+    public float GetSkillStat(
+        Skill skill,
+        SkillStatType statType,
+        float baseValue)
+    {
+        if (skill == null)
+            return baseValue;
+
+        if (!_skillModifiers.TryGetValue(skill.Id, out var modifiers))
+            return baseValue;
+
+        var final = baseValue;
+
+        foreach (var modifier in modifiers)
+        {
+            if (modifier.statType == statType)
+            {
+                final += modifier.value;
+            }
+        }
+
+        return final;
+    }
+    
+    public void AddSkillModifier(
+        Skill skill,
+        SkillStatType type,
+        float value)
+    {
+        if (skill == null)
+            return;
+
+        if (!_skillModifiers.ContainsKey(skill.Id))
+        {
+            _skillModifiers[skill.Id] =
+                new List<SkillStatModifier>();
+        }
+
+        _skillModifiers[skill.Id].Add(
+            new SkillStatModifier
+            {
+                statType = type,
+                value = value
+            });
+
+        Debug.Log($"Added {type} modifier to {skill.Name}: {value}");
+    }
+    
     public bool IsUnlocked(Skill skill)
     {
         return skill != null && _unlockedSkillIds.Contains(skill.Id);
@@ -75,6 +125,7 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
         if (logUnlocks)
             Debug.Log("Initialized starting skills");
     }
+    
 
     #region SAVE / LOAD
 

@@ -109,7 +109,7 @@ public class SlashEffect: MonoBehaviour
         other.GetComponent<IDamageable>()?.TakeDamage(playerDmg, _shooter.transform);
         CombatStatsManager.Instance.DamageDealt += playerDmg;
         
-        if(weapon.Effect) weapon.Effect.Apply(other.gameObject, weapon.EffectChance);
+        if(weapon.Effect) weapon.Effect.Apply(other.gameObject, null, weapon.EffectChance);
         
         if (bloodParticle != null && other.gameObject.CompareTag("Enemy"))
         {
