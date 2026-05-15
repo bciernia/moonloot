@@ -50,6 +50,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     private KnockBack _knockBack;
     
     public Action<EnemyStatistics> OnDeath;
+    public Action OnHit;
 
     public bool _isRooted;
     public bool _isConfused;
@@ -59,6 +60,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     private bool _initialized = false;
 
     private MMF_Player _feelEffects;
+    
+    public bool ShouldRunAway { get; private set; }
     
     private void Awake()
     {
@@ -151,6 +154,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         }
         else
         {
+            ShouldRunAway = true;
+            
             _feelEffects?.PlayFeedbacks();
             _enemySounds?.Hit();
             _enemyAnimator.SetDamagedAnimation();
@@ -260,4 +265,9 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
 
     public float CurrentHealthPoints => CurrentHP;
     public bool IsAlive => CurrentHP > 0f;
+    
+    public void StopRunningAway()
+    {
+        ShouldRunAway = false;
+    }
 }

@@ -5,7 +5,6 @@ public class DefendTarget : MonoBehaviour, IDamageable
     public float currentHp = 100f;
     public float maxHp = 100f;
     
-    
     private void Awake()
     {
         currentHp = maxHp;

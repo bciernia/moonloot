@@ -16,6 +16,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     [SerializeField] private EquippedItemsManager equippedItemsManager;
     [SerializeField] private EquippedItemsManagerSO equippedItemsManagerSo;
     
+    public Action OnInventoryChanged;
+    
     private void Start()
     {
         PrepareUI();
@@ -62,6 +64,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         }
         
         inventoryData.AddItem(item, item.quantity);
+        
+        OnInventoryChanged?.Invoke();
     }
 
     public void PrepareSellerInventoryData(InventoryRuntime sellerInventory)
@@ -80,6 +84,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             
             inventoryData.AddItem(item, item.quantity);
         }
+
+        OnInventoryChanged?.Invoke();
     }
 
     private void UpdateSellerInventoryUI(Dictionary<int, InventoryItem> inventoryState)
@@ -136,6 +142,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         var itemToDrop = inventoryData.GetItemAt(itemIndex).item.ItemToDrop;
         inventoryData.RemoveItem(itemIndex, quantity);
+        OnInventoryChanged?.Invoke();
         inventoryUI.ResetSelection();
         if(audioSource) audioSource.PlayOneShot(audioClip);
         var playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
@@ -169,6 +176,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             inventoryData.RemoveItem(itemIndex, inventoryItem.quantity);
             if(audioSource) audioSource.PlayOneShot(itemAction.actionSfx);
             if(inventoryData.GetItemAt(itemIndex).IsEmpty) inventoryUI.ResetSelection();
+            OnInventoryChanged?.Invoke();
         }
     }
 
@@ -559,4 +567,24 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             _ => -1
         };
     }
+    
+    public int GetItemCount(InventoryItem item)
+    {
+        var count = 0;
+
+        foreach (var inventoryItem in inventoryData.inventoryItems)
+        {
+            if (inventoryItem.IsEmpty)
+                continue;
+
+            if (inventoryItem.item.Name == item.item.Name)
+            {
+                count += inventoryItem.quantity;
+            }
+        }
+
+        return count;
+    }
+    
+    public bool IsEmptySlotInEquipment() => inventoryData.inventoryItems.Any(item => item.IsEmpty);
 }

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -21,7 +23,10 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 
     private void SpawnFromSpawner(ObjectsSpawner spawner)
     {
-        var amount = Random.Range(spawner.minItems, spawner.maxItems + 1);
+        var minItemsAmout = Mathf.Ceil(spawner.minItems * MoonManager.Instance.CurrentMoon.LootMultiplier);
+        var maxItemsAmount = Mathf.Ceil((spawner.maxItems + 1) * MoonManager.Instance.CurrentMoon.LootMultiplier);
+        
+        var amount = Random.Range(minItemsAmout, maxItemsAmount);
 
         var spawnedPositions = new List<Vector3>();
 
@@ -97,6 +102,71 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         }
 
         return null;
+    }
+
+    public void SpawnObjectiveItems(GameObject prefab, int amount)
+    {
+        var spawners = FindObjectsOfType<ObjectsSpawner>()
+            .Where(x => x.isObjectiveSpawner)
+            .ToList();
+
+        if (spawners.Count == 0)
+        {
+            Debug.LogWarning("No objective spawners found!");
+            return;
+        }
+
+        var spawnedPositions = new List<Vector3>();
+
+        for (int i = 0; i < amount; i++)
+        {
+            var spawner = spawners[Random.Range(0, spawners.Count)];
+
+            TrySpawnSpecificItem(
+                prefab,
+                spawner,
+                spawnedPositions
+            );
+        }
+    }
+    
+    private void TrySpawnSpecificItem(
+        GameObject prefab,
+        ObjectsSpawner spawner,
+        List<Vector3> spawnedPositions)
+    {
+        var maxAttempts = 10;
+
+        for (var attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            var randomPos = GetRandomPoint(spawner);
+
+            if (randomPos.HasValue &&
+                IsPositionFree(randomPos.Value, spawner) &&
+                IsFarEnough(randomPos.Value, spawnedPositions, 1.5f))
+            {
+                var go = Instantiate(
+                    prefab,
+                    spawner.spawnPoint.position,
+                    Quaternion.identity
+                );
+
+                var mover = go.GetComponent<LootDropMover>();
+
+                if (mover != null)
+                {
+                    mover.MoveToPosition(randomPos.Value);
+                }
+                else
+                {
+                    go.transform.position = randomPos.Value;
+                }
+
+                spawnedPositions.Add(randomPos.Value);
+
+                return;
+            }
+        }
     }
 
     private bool IsPositionFree(Vector3 position, ObjectsSpawner spawner)

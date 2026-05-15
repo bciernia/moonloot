@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -19,6 +21,7 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private List<GameObject> normalEnemies;
     [SerializeField] private List<GameObject> eliteEnemies;
     [SerializeField] private List<GameObject> bossEnemies;
+    [SerializeField] private GameObject corruptedVillager;
     
     [SerializeField] private HordeConfigSO hordeConfig;
     private string _previousScene;
@@ -38,6 +41,12 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private NpcDatabase _npcDatabase;
     
     [SerializeField] private NightDatabaseSO _nightDatabase;
+    
+    [Header("Obelisk Objective")]
+    [SerializeField] private GameObject obeliskPrefab;
+
+    private int _activatedObelisks;
+    private int _spawnedObelisks;
 
     public NightLocationSO CurrentNightLocation { get; private set; }
     
@@ -63,20 +72,58 @@ public class HordeManager : Singleton<HordeManager>
     private bool _bossAlive;
     
     private bool _hordePrepared;
+
+    private GameObject _spawnedExit;
+    
+    private bool _objectiveCompleted;
+    
+    private int _aliveTrees;
+
+    public MoonData CurrentMoon { get; set; }
     
     public VillageNpcRuntime SelectedNpc { get; set; }
     
     private List<VillageNpcRuntime> _spawnedNpcsThisRun = new();
 
+    [Header("Nythera night")] [SerializeField]
+    private GameObject mimicChestPrefab;
+    
     public int NightCycleStep { get; private set; } = 1;
-    //1 - First night
-    //2 - Second night
-    //3 - Hero night
     
     public VillageNpcRuntime CurrentHeroNpc { get; private set; }
     
+    public int CurrentObjectiveProgress { get; private set; }
+    
+    public int CurrentObjectiveTarget =>
+        CurrentMoon != null
+            ? CurrentMoon.RequiredAmount
+            : 0;
+    
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
+    public Action<int, int> OnObjectiveProgressChanged;
+    public static Action<Transform> OnExitSpawned;
+    public static Action OnExitRemoved;
+    
+    private void Start()
+    {
+        if (InventoryController.Instance != null)
+        {
+            InventoryController.Instance.OnInventoryChanged += RefreshObjective;
+        }
+        
+        CorruptedVillager.OnCorruptedVillagerKilled += RefreshObjective;
+    }
+
+    private void OnDisable()
+    {
+        if (InventoryController.Instance != null)
+        {
+            InventoryController.Instance.OnInventoryChanged -= RefreshObjective;
+        }
+        
+        CorruptedVillager.OnCorruptedVillagerKilled -= RefreshObjective;
+    }
     
     private void SavePreviousScene()
     {
@@ -91,6 +138,8 @@ public class HordeManager : Singleton<HordeManager>
             return;
         }
 
+        CurrentMoon = MoonManager.Instance.CurrentMoon;
+        
         _hordePrepared = true;
         
         PreparedData = hordeConfig.GetHorde(currentHorde - 1);
@@ -148,6 +197,7 @@ public class HordeManager : Singleton<HordeManager>
         yield return new WaitForSeconds(0.2f);
 
         LootSpawnManager.Instance.SpawnAll();
+        SpawnObjectiveItems();
         SpawnNPC();
         SpawnHorde();
     }
@@ -181,6 +231,14 @@ public class HordeManager : Singleton<HordeManager>
         {
             Debug.LogWarning("No EnemySpawners found!");
         }
+
+        _objectiveCompleted = false;
+        CurrentObjectiveProgress = 0;
+
+        OnObjectiveProgressChanged?.Invoke(
+            CurrentObjectiveProgress,
+            CurrentObjectiveTarget
+        );
 
         _rescuedNpcCount = 0;
         
@@ -256,6 +314,87 @@ public class HordeManager : Singleton<HordeManager>
             yield return null;
         }
     }
+    
+    private void SpawnObjectiveItems()
+    {
+        if (CurrentMoon == null)
+            return;
+
+        switch (CurrentMoon.ObjectiveType)
+        {
+            case MoonObjectiveType.CollectKnowledge:
+            {
+                if (CurrentMoon.RequiredItem.item == null)
+                    return;
+
+                LootSpawnManager.Instance.SpawnObjectiveItems(
+                    CurrentMoon.RequiredItem.item.ItemToDrop,
+                    CurrentObjectiveTarget
+                );
+
+                break;
+            }
+
+            case MoonObjectiveType.DestroyCorruptedTrees:
+            {
+                SpawnCorruptedTrees();
+                break;
+            }
+            
+            case MoonObjectiveType.ActivateObelisks:
+                SpawnObelisks();
+                break;
+            
+            case MoonObjectiveType.FindMimics:
+                SpawnMimicChests();
+                break;
+        }
+    }
+
+    private void SpawnMimicChests()
+    {
+        var spawners = FindObjectsOfType<EnemyObjectiveSpawner>().ToList();
+
+        Shuffle(spawners);
+
+        var count = Mathf.Min(6, spawners.Count);
+        
+        var mimicCount = Mathf.Min(CurrentObjectiveTarget, count);
+
+        var mimicIndexes = new List<int>();
+
+        while (mimicIndexes.Count < mimicCount)
+        {
+            var random = Random.Range(0, count);
+
+            if (!mimicIndexes.Contains(random))
+            {
+                mimicIndexes.Add(random);
+            }
+        }
+
+        for (var i = 0; i < count; i++)
+        {
+            var chest = Instantiate(
+                mimicChestPrefab,
+                spawners[i].transform.position,
+                Quaternion.identity
+            );
+
+            var mimicChest = chest.GetComponent<MimicChest>();
+
+            if (mimicChest != null)
+            {
+                mimicChest.Initialize(
+                    mimicIndexes.Contains(i)
+                );
+            }
+        }
+
+        Debug.Log(
+            $"Spawned {count} chests | Mimics: {CurrentObjectiveTarget}"
+        );
+    }
 
     private void GenerateHeroNight()
     {
@@ -306,8 +445,7 @@ public class HordeManager : Singleton<HordeManager>
 
         _aliveEnemies = 0;
 
-        SpawnExit();
-
+        // SpawnExit();
         while (_isNightRunning)
         {
             elapsed += Time.deltaTime;
@@ -315,6 +453,7 @@ public class HordeManager : Singleton<HordeManager>
 
             if (spawnTimer >= spawnInterval)
             {
+                PointsManager.Instance.AddScore(3);
                 if (_aliveEnemies < 50)
                 {
                     SpawnEnemyNearPlayer(spawners, data);
@@ -375,9 +514,26 @@ public class HordeManager : Singleton<HordeManager>
 
         var chosen = exitSpawners[Random.Range(0, exitSpawners.Length)];
 
-        Instantiate(exitPrefab, chosen.transform.position, Quaternion.identity);
+        if (_spawnedExit != null) return;
+        
+        _spawnedExit = Instantiate(exitPrefab, chosen.transform.position, Quaternion.identity);
 
+        OnExitSpawned?.Invoke(_spawnedExit.transform);
+        
         Debug.Log("Exit spawned!");
+    }
+
+    private void RemoveExit()
+    {
+        if (_spawnedExit == null) return;
+
+        OnExitRemoved?.Invoke();
+        
+        Destroy(_spawnedExit);
+
+        _spawnedExit = null;
+
+        Debug.Log("Exit removed!");
     }
     
     private void SpawnBoss(HordeData data)
@@ -413,6 +569,25 @@ public class HordeManager : Singleton<HordeManager>
         {
             NPCInfoManager.Instance.ShowNpcInfo(stats);
         }
+    }
+    
+    public void SpawnMimicEnemy(Vector3 position)
+    {
+        var pool = GetEnemyPool();
+
+        var prefab = GetRandomEnemy(pool);
+
+        var enemyGO = Instantiate(
+            prefab,
+            position,
+            Quaternion.identity
+        );
+
+        SetupEnemy(
+            enemyGO,
+            PreparedData,
+            pool
+        );
     }
     
     private void SpawnEnemyNearPlayer(EnemySpawner[] spawners, HordeData data)
@@ -569,9 +744,9 @@ public class HordeManager : Singleton<HordeManager>
             var hordeMultiplier = GetHordeMultiplier();
             
             stats.ApplyHordeScaling(
-                data.hpMultiplier * hordeMultiplier,
-                data.damageMultiplier * hordeMultiplier,
-                1f * hordeMultiplier,
+                data.hpMultiplier * hordeMultiplier * CurrentMoon.EnemyHealthMultiplier,
+                data.damageMultiplier * hordeMultiplier * CurrentMoon.EnemyDamageMultiplier,
+                1f * hordeMultiplier * CurrentMoon.EnemySpeedMultiplier,
                 pool == eliteEnemies,
                 pool == bossEnemies
             );
@@ -584,7 +759,7 @@ public class HordeManager : Singleton<HordeManager>
     
     private List<GameObject> GetEnemyPool()
     {
-        return Random.value < 0.75f
+        return Random.value < CurrentMoon.EliteChanceBonus
             ? normalEnemies
             : eliteEnemies;
     }
@@ -794,14 +969,15 @@ public class HordeManager : Singleton<HordeManager>
 
     public void OnEnemyKilled(bool isElite, bool isBoss)
     {
+        var goldForEnemy = GetGoldForEnemy(isBoss, isElite);
+        
         if (_currentObjective == HordeObjective.BossArena && isBoss)
         {
             _bossAlive = false;
 
             CombatStatsManager.Instance.BossEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(50, 100);
 
-            PointsManager.Instance.AddScore(100);
+            PointsManager.Instance.AddScore(1000);
             StartCoroutine(FinalKillSequence());
 
             Debug.Log("Boss defeated!");
@@ -812,23 +988,28 @@ public class HordeManager : Singleton<HordeManager>
             {
                 SpawnExit();
             }
-            else
-            {
-                SpawnExit();
-            }
+
+            return;
         }
-        else if (isElite)
+        
+        if (_currentObjective != HordeObjective.BossArena &&
+            CurrentMoon.ObjectiveType == MoonObjectiveType.KillEnemies)
+        {
+            AddObjectiveProgress(1);
+        }
+        
+        if (isElite)
         {
             CombatStatsManager.Instance.EliteEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(10, 20);
-            PointsManager.Instance.AddScore(10);
+            PointsManager.Instance.AddScore(100);
         }
         else
         {
             CombatStatsManager.Instance.NormalEnemiesKilled++;
-            CombatStatsManager.Instance.GoldEarned += RNGManager.Instance.GetRandomInt(2, 5);
-            PointsManager.Instance.AddScore(3);
+            PointsManager.Instance.AddScore(50);
         }
+        
+        CombatStatsManager.Instance.GoldEarned += goldForEnemy;
         
         if (_currentObjective == HordeObjective.DefendObject) return;
         
@@ -841,6 +1022,16 @@ public class HordeManager : Singleton<HordeManager>
             StartCoroutine(FinalKillSequence());
             Debug.Log("All enemies defeated!");
         }
+    }
+
+    private int GetGoldForEnemy(bool isBoss, bool isElite)
+    {
+        if (isBoss)
+            return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(50, 100) * CurrentMoon.GoldMultiplier);
+        if (isElite)
+            return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(10, 20) * CurrentMoon.GoldMultiplier);
+            
+        return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(2, 5) * CurrentMoon.GoldMultiplier);
     }
     
     private GameObject GetRandomEnemy(List<GameObject> enemyList)
@@ -1026,6 +1217,109 @@ public class HordeManager : Singleton<HordeManager>
         return 1f + (currentHorde - 1) * 0.2f;
     }
     
+    public void AddObjectiveProgress(int amount = 1)
+    {
+        CurrentObjectiveProgress += amount;
+
+        CheckObjectiveComplete();
+    }
+    
+    private void RefreshObjective()
+    {
+        if (CurrentMoon == null) return;
+        if (_currentObjective == HordeObjective.BossArena) return;
+        
+        CheckObjectiveComplete();
+    }
+    
+    private void CheckObjectiveComplete()
+    {
+        if (CurrentMoon == null)
+            return;
+
+        switch (CurrentMoon.ObjectiveType)
+        {
+            case MoonObjectiveType.KillEnemies:
+            {
+                CurrentObjectiveProgress = Mathf.Clamp(
+                    CurrentObjectiveProgress,
+                    0,
+                    CurrentObjectiveTarget
+                );
+
+                break;
+            }
+
+            case MoonObjectiveType.CollectKnowledge:
+            {
+                var amount =
+                    InventoryController.Instance.GetItemCount(
+                        CurrentMoon.RequiredItem
+                    );
+
+                CurrentObjectiveProgress = amount;
+
+                break;
+            }
+            
+            case MoonObjectiveType.DestroyCorruptedTrees:
+            {
+                CurrentObjectiveProgress = _aliveTrees - FindObjectsOfType<CorruptedVillager>().Length;
+                break;
+            }
+            case MoonObjectiveType.ActivateObelisks:
+                CurrentObjectiveProgress = _activatedObelisks;
+                break;
+            
+            
+            case MoonObjectiveType.FindMimics:
+                //Nic nie dajemy bo progres jest robiony w MimicChest.cs
+            default:
+                break;
+        }
+
+        OnObjectiveProgressChanged?.Invoke(
+            CurrentObjectiveProgress,
+            CurrentObjectiveTarget
+        );
+
+        var completed =
+            CurrentObjectiveProgress >= CurrentObjectiveTarget;
+
+        if (completed && !_objectiveCompleted)
+        {
+            _objectiveCompleted = true;
+            SpawnExit();
+        }
+        else if (!completed && _objectiveCompleted)
+        {
+            _objectiveCompleted = false;
+            RemoveExit();
+        }
+    }
+    
+    private void SpawnCorruptedTrees()
+    {
+        var spawners = FindObjectsOfType<EnemyObjectiveSpawner>().ToList();
+        
+        Shuffle(spawners);
+
+        var count = Mathf.Min(3, spawners.Count);
+
+        _aliveTrees = count;
+
+        for (var i = 0; i < count; i++)
+        {
+            var enemy = Instantiate(
+                corruptedVillager,
+                spawners[i].transform.position,
+                Quaternion.identity
+            );
+            
+            enemy.GetComponent<EnemyStatistics>()?.Initialize();
+        }
+    }
+    
     private void Shuffle<T>(List<T> list)
     {
         for (var i = 0; i < list.Count; i++)
@@ -1033,5 +1327,35 @@ public class HordeManager : Singleton<HordeManager>
             var randomIndex = Random.Range(i, list.Count);
             (list[i], list[randomIndex]) = (list[randomIndex], list[i]);
         }
+    }
+    
+    private void SpawnObelisks()
+    {
+        var spawners = FindObjectsOfType<EnemyObjectiveSpawner>().ToList();
+
+        Shuffle(spawners);
+
+        var count = Mathf.Min(3, spawners.Count);
+
+        _spawnedObelisks = count;
+        _activatedObelisks = 0;
+
+        for (var i = 0; i < count; i++)
+        {
+            Instantiate(
+                obeliskPrefab,
+                spawners[i].transform.position,
+                Quaternion.identity
+            );
+        }
+    }
+    
+    public void OnObeliskActivated()
+    {
+        _activatedObelisks++;
+
+        AddObjectiveProgress(1);
+
+        Debug.Log($"Activated obelisks: {_activatedObelisks}/{_spawnedObelisks}");
     }
 }

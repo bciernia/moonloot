@@ -15,6 +15,8 @@ public class ObjectsSpawner : MonoBehaviour
     [Header("Collision")]
     public float checkRadius = 0.5f;
     public LayerMask collisionMask;
+
+    public bool isObjectiveSpawner;    
     
     private void Awake()
     {

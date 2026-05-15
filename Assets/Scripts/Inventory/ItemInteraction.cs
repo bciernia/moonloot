@@ -25,6 +25,12 @@ public class ItemInteraction : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if(!InventoryController.Instance.IsEmptySlotInEquipment())
+        {
+            FloatingTextManager.Instance.ShowWarningText("No empty slot in equipment", transform);
+            return;
+        }
+        
         InventoryController.Instance.AddItem(new InventoryItem() { item = _inventoryItem, quantity = 1});
         TriggerParticles();
         Destroy(gameObject);
