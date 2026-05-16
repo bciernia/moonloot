@@ -48,6 +48,14 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
     
     public void Interact()
     {
+        var mimic = GetComponent<MimicChest>();
+
+        if (mimic != null)
+        {
+            mimic.OpenChest();
+            return;
+        }
+        
         if (PauseManager.Instance.pauseRequests > 0) return;
         
         ShopManager.Instance.InitializeShop(_chestInventory, "Chest", InventoryType.Chest);

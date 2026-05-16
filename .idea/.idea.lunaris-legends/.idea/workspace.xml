@@ -5,47 +5,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/SkillStatType.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/SkillStatType.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/SkillStatModifier.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/SkillStatModifier.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRun.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRun.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWanderNavMesh.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWanderNavMesh.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionStopRunning.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionStopRunning.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/MoonObjectiveType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/MoonObjectiveType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/MoonType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/MoonType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/JunkItemSO.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/JunkItemSO.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Moons.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Moons/MoonData.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Moons/MoonData.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/NPCs/Stats/NpcHero_Cleric.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/NPCs/Stats/NpcHero_Cleric.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Data/NPCs/Stats/NpcHero_Wizard.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/NPCs/Stats/NpcHero_Wizard.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Edible Items/Food/Vegetables/Chilli.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Edible Items/Food/Vegetables/Chilli.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Data/Edible Items/Food/Vegetables/Turnip.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Data/Edible Items/Food/Vegetables/Turnip.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Attack.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Attack.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Die.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Die.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Dmg.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Dmg.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Idle.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Idle.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Walk.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/Walk.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Attack_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Attack_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Die_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Die_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Dmg_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Dmg_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Idle_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Idle_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Walk_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Characters/Forest_Dwellers/Necromyces/Fungifyed_Corpse/_Shadows/Walk_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Locations/Crafting And Professions/Minifantasy_CraftingAndProfessions2_Assets/Craftable_Item_Icons/Minifantasy_CraftingAndProfessionsWeaponIcons.png" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Locations/Crafting And Professions/Minifantasy_CraftingAndProfessions2_Assets/Craftable_Item_Icons/Minifantasy_CraftingAndProfessionsWeaponIcons.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Locations/Crafting And Professions/Minifantasy_CraftingAndProfessions2_Assets/Craftable_Item_Icons/Minifantasy_CraftingAndProfessionsWeaponIcons.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Locations/Crafting And Professions/Minifantasy_CraftingAndProfessions2_Assets/Craftable_Item_Icons/Minifantasy_CraftingAndProfessionsWeaponIcons.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/!CharacterLibrary/Character Library.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/!CharacterLibrary/Character Library.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Barbarian.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Barbarian.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Bard.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Bard.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Cleric.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Cleric.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Ranger.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Ranger.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Rogue.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Rogue.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Wizard.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Dialogues/Villages/Meadowrest/StatNpc/Wizard.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/Dialogue_UI_Scroll_BottomHorizontal_Internal_Right Variant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/Dialogue_UI_Scroll_BottomHorizontal_Internal_Right Variant.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SO/Items DO WY/ItemStatistics/ItemStats_HealTotem.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/Items DO WY/ItemStatistics/ItemStats_HealTotem.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SO/PlayerStats.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SO/PlayerStats.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enums/NPCGroup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/NPCGroup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/PlayerSkillManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/PlayerSkillManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCStatUpgrade.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCStatUpgrade.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/VillageNpcData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/VillageNpcData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveHealingOverTime.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveHealingOverTime.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/Effect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/HealingEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Effects/SO/HealingEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skill.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Aulla/AuraOfKnowledge/AuraOfKnowledge.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Aulla/AuraOfKnowledge/AuraOfKnowledge.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Nythera/Confusion/Confusion.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Nythera/Confusion/Confusion.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Otton/Shield/Shield.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Otton/Shield/Shield.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Heal/Heal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Heal/Heal.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Heal/HealEffect.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Heal/HealEffect.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Roots/Roots.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Roots/Roots.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Wolf speed/WolfSpeed.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Wolf speed/WolfSpeed.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Fiery salvo/FierySalvo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Fiery salvo/FierySalvo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Rage/Rage.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Rage/Rage.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Totem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Totem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/PlayerUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/PlayerUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Horde/ExitHorde.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Horde/ExitHorde.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Text/TextAnimation.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Text/TextAnimation.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionNegativeDialogueFinish.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionNegativeDialogueFinish.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Environment/DayNightCycle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Environment/DayNightCycle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Horde/DefendTarget.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/DefendTarget.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Horde/NightLocationSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/NightLocationSO.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/ItemInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Items/ItemStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Items/ItemStatistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Loot/Spawners/ObjectsSpawner.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Loot/Spawners/ObjectsSpawner.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/LootSpawnManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/LootSpawnManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Quests/TaskTable/TaskTableInteraction.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,6 +210,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/External/GridView.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/External/RenameableLabel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/GridPaintPaletteWindowSplitView.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/SceneViewOpenTilePaletteOverlay.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/SceneViewTilemapFocusOverlay.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteActivePaletteDropdownMenu.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.2d.tilemap/Editor/UI/TilePaletteActivePalettePopup.cs" root0="SKIP_HIGHLIGHTING" />
@@ -323,6 +334,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/MousePositionDebug.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerCanvas.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerContainer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerFoldout.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerIndirectToggle.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerProgressBar.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Runtime/Debugging/Prefabs/Scripts/DebugUIHandlerRow.cs" root0="SKIP_HIGHLIGHTING" />
@@ -389,6 +401,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/API/GLES3.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/Color.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/CommonLighting.hlsl" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/Debug.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/DynamicScalingClamping.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/Packing.hlsl" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/ShaderLibrary/Sampling/Fibonacci.hlsl" root0="SKIP_HIGHLIGHTING" />
@@ -412,9 +425,11 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/RuntimeProfilerTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/Threading/FunctionTests.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.core/Tests/Runtime/XRSubsystemTests.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Runtime/ShaderConfig.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Runtime/Unity.RenderPipelines.Universal.Config.Runtime.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Tests/Editor/ConfigurationTest.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal-config/Tests/Editor/Unity.RenderPipelines.Universal.Config.Editor.Tests.asmdef" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/Light2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/PixelPerfectCameraEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/ShapeEditor/GUIFramework/ClickAction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/2D/ShapeEditor/GUIFramework/GUIState.cs" root0="SKIP_HIGHLIGHTING" />
@@ -431,6 +446,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Editor/ShaderGUI/ShadingModels/LitGUI.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/Light2DAuthoring.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/PixelPerfectCamera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/Rendergraph/Renderer2DRendergraph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/2D/UTess2D/PlanarGraph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/Debug/DebugDisplaySettingsMaterial.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/Debug/DebugHandler.cs" root0="SKIP_HIGHLIGHTING" />
@@ -445,6 +461,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/ShaderUtils.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/UniversalAdditionalCameraData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/UniversalCameraHistory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Runtime/UniversalRendererRenderGraph.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Samples~/URPPackageSamples/SharedAssets/Scripts/FirstPersonController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Shaders/CameraMotionVectors.shader" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.render-pipelines.universal/Shaders/PostProcessing/BokehDepthOfField.shader" root0="SKIP_HIGHLIGHTING" />
@@ -578,28 +595,27 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/DialogueHelper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Dialogues/TestDialogueWithPatron.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/AppearOnProximity.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/CorruptedTree.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/CorruptedVillager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyObjectiveSpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySounds.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemySpawner.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyUI.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionRetreat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionStartDialogue.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionPerformedSpecialAction.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Enums/WorkerJob.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionRunAfterAttack.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Environment/LightBlink.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/ExitInteraction.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/MimicChest.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/ObjectiveObelisk.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/WorkerChest.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Interfaces/IRootable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/InventoryController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/InventoryRuntime.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/ItemParameters/ItemParameterSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/EdibleItemSO.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/NewInventory/Model/WeaponItemSO.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/UIItemActionPanel.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Inventory/Shop/ChestInteraction.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Inventory/Shop/ResetSellerInventory.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Items/ItemStatsSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Loot/LootDropMover.cs" root0="FORCE_HIGHLIGHTING" />
@@ -615,27 +631,19 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/MainMenuSoundManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PlayerManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/PlayerSkillManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/PointsManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/QuestTableManager.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/SkillsManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/StatusEffectUiManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/TitleAndButtonIntroManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/UIClickDebugger.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/UIManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/WeaponManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/WorkManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Managers/WorldManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/WorldManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/WorldMapManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/WorldStateManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/CharacterClothesAnimator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/NPC/NPCStatUpgrade.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NPCTeleport.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NpcDialogueFlagsCondition.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/NPC/NpcSpawner.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/NPC/VillageNpcData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Player/PlayerWorldMapVisual.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/ArenaTest/ArenaSpawner.cs" root0="FORCE_HIGHLIGHTING" />
@@ -652,13 +660,11 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/SkillVisualEffectController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Skills/Skills/Nythera/Confusion/Confusion.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Nythera/Confusion/Confusion.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Otton/Shield/Shield.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Roots/Roots.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Sylvar/Wolf speed/WolfSpeed.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Fiery salvo/FierySalvo.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/Assets/Scripts/Skills/Skills/Udros/Fiery salvo/FierySalvo.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Skills/Udros/Rage/Rage.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/SkillsUI/SkillsSetter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Quests/QuestTooltipSpawner.cs" root0="FORCE_HIGHLIGHTING" />
@@ -667,7 +673,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Weapons/Totem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/WorldMap/WorldMapEvent.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/SetMainCameraToUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Editor/CollectSources2dEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Editor/NavMeshSurfaceEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Scripts/CollectSources2d.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.h8man.2d.navmeshplus@3fdf1984803c/NavMeshComponents/Scripts/NavMeshComponents.asmdef" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap.extras@8de698ac55b7/Editor/Tiles/RuleTile/RuleTileEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.2d.tilemap.extras@8de698ac55b7/Runtime/Tiles/AnimatedTile/AnimatedTile.cs" root0="SKIP_HIGHLIGHTING" />
@@ -686,7 +694,6 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/UGUI/EventSystem/UIBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/UGUI/UI/Core/Image.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.visualscripting@7dcdc439b230/Runtime/VisualScripting.Core/Utilities/IIdentifiable.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://E:/Projekty/LL/lunaris-legends/ProjectSettings/TagManager.asset" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectColorInfo">{
@@ -703,7 +710,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.08255452&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;iteration-19-heros-bonuses&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;iteration-20-moon-system&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -765,10 +772,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="30932">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="30932" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -1114,7 +1121,18 @@
       <workItem from="1778262551971" duration="8236000" />
       <workItem from="1778306818117" duration="14177000" />
       <workItem from="1778358540576" duration="1929000" />
-      <workItem from="1778393813213" duration="7412000" />
+      <workItem from="1778393813213" duration="9088000" />
+      <workItem from="1778434395429" duration="5177000" />
+      <workItem from="1778510515668" duration="4892000" />
+      <workItem from="1778527457385" duration="1263000" />
+      <workItem from="1778529131975" duration="13000" />
+      <workItem from="1778596786065" duration="9514000" />
+      <workItem from="1778655382575" duration="22000" />
+      <workItem from="1778672206625" duration="1457000" />
+      <workItem from="1778686078020" duration="8595000" />
+      <workItem from="1778766305349" duration="719000" />
+      <workItem from="1778778680558" duration="3140000" />
+      <workItem from="1778867202372" duration="5268000" />
     </task>
     <servers />
   </component>
@@ -1344,13 +1362,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>115</line>
+          <line>121</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleItemActionRequest'">
             <startOffsets>
-              <option value="3561" />
+              <option value="3690" />
             </startOffsets>
             <endOffsets>
-              <option value="3616" />
+              <option value="3745" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="539" />
@@ -1370,13 +1388,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>322</line>
+          <line>330</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="12319" />
+              <option value="12528" />
             </startOffsets>
             <endOffsets>
-              <option value="12361" />
+              <option value="12570" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="547" />
@@ -1395,19 +1413,6 @@
           <option name="timeStamp" value="553" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs</url>
-          <line>109</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetQuickSlot'">
-            <startOffsets>
-              <option value="3904" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3923" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="560" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/QuickItemManager.cs</url>
           <line>31</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\QuickItemManager.cs" containingFunctionPresentation="Method 'UseSlot'">
@@ -1422,26 +1427,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>292</line>
+          <line>300</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="10892" />
+              <option value="11101" />
             </startOffsets>
             <endOffsets>
-              <option value="10937" />
+              <option value="11146" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="571" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>227</line>
+          <line>235</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="7559" />
+              <option value="7768" />
             </startOffsets>
             <endOffsets>
-              <option value="7585" />
+              <option value="7794" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="573" />
@@ -1500,52 +1505,52 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>231</line>
+          <line>239</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="7669" />
+              <option value="7878" />
             </startOffsets>
             <endOffsets>
-              <option value="7693" />
+              <option value="7902" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="582" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
-          <line>259</line>
+          <line>267</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'HandleSwapItems'">
             <startOffsets>
-              <option value="9095" />
+              <option value="9304" />
             </startOffsets>
             <endOffsets>
-              <option value="9140" />
+              <option value="9349" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="583" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>795</line>
+          <line>840</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'ClearNPCButtons'">
             <startOffsets>
-              <option value="24783" />
+              <option value="26135" />
             </startOffsets>
             <endOffsets>
-              <option value="24838" />
+              <option value="26190" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="589" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>797</line>
+          <line>842</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'ClearNPCButtons'">
             <startOffsets>
-              <option value="24861" />
+              <option value="26213" />
             </startOffsets>
             <endOffsets>
-              <option value="24899" />
+              <option value="26251" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="590" />
@@ -1577,82 +1582,160 @@
           <option name="timeStamp" value="611" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs</url>
-          <line>29</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\Model\InventorySO.cs" containingFunctionPresentation="Method 'AddItem'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/MoonManager.cs</url>
+          <line>22</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\MoonManager.cs" containingFunctionPresentation="Method 'RollMoon'">
             <startOffsets>
+              <option value="434" />
+            </startOffsets>
+            <endOffsets>
+              <option value="484" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="620" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/InventoryController.cs</url>
+          <line>572</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\InventoryController.cs" containingFunctionPresentation="Method 'GetItemCount'">
+            <startOffsets>
+              <option value="21998" />
+            </startOffsets>
+            <endOffsets>
+              <option value="22012" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="622" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Quests/NewQuestSystem/QuestJournal.cs</url>
+          <line>79</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Quests\NewQuestSystem\QuestJournal.cs" containingFunctionPresentation="Method 'HasPlayerQuest'">
+            <startOffsets>
+              <option value="2320" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2377" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="624" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/ItemInteraction.cs</url>
+          <line>27</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\ItemInteraction.cs" containingFunctionPresentation="Method 'Interact'">
+            <startOffsets>
+              <option value="708" />
+            </startOffsets>
+            <endOffsets>
               <option value="766" />
-            </startOffsets>
-            <endOffsets>
-              <option value="788" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="612" />
+          <option name="timeStamp" value="625" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/Model/InventorySO.cs</url>
-          <line>114</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\Model\InventorySO.cs" containingFunctionPresentation="Method 'AddItem'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
+          <line>108</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
             <startOffsets>
-              <option value="3291" />
+              <option value="2883" />
             </startOffsets>
             <endOffsets>
-              <option value="3336" />
+              <option value="2960" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="613" />
+          <option name="timeStamp" value="627" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/WeaponManager.cs</url>
-          <line>83</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\WeaponManager.cs" containingFunctionPresentation="Method 'EquipWeapon'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
+          <line>107</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
             <startOffsets>
-              <option value="2736" />
+              <option value="2821" />
             </startOffsets>
             <endOffsets>
-              <option value="2834" />
+              <option value="2874" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="616" />
+          <option name="timeStamp" value="628" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs</url>
-          <line>69</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetItemAsEquipped'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
+          <line>101</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
             <startOffsets>
-              <option value="2490" />
+              <option value="2627" />
             </startOffsets>
             <endOffsets>
-              <option value="2560" />
+              <option value="2649" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="617" />
+          <option name="timeStamp" value="629" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs</url>
-          <line>77</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetEquippedItemByType'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Slash/SlashEffect.cs</url>
+          <line>122</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Slash\SlashEffect.cs" containingFunctionPresentation="Method 'CanAttack'">
             <startOffsets>
-              <option value="2811" />
+              <option value="3501" />
             </startOffsets>
             <endOffsets>
-              <option value="2862" />
+              <option value="3535" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="618" />
+          <option name="timeStamp" value="630" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Inventory/NewInventory/EquippedItemsManager.cs</url>
-          <line>118</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Inventory\NewInventory\EquippedItemsManager.cs" containingFunctionPresentation="Method 'SetItem'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs</url>
+          <line>1302</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Dialogues\HordeManager.cs" containingFunctionPresentation="Method 'SpawnCorruptedTrees'">
             <startOffsets>
-              <option value="4268" />
+              <option value="34387" />
             </startOffsets>
             <endOffsets>
-              <option value="4320" />
+              <option value="34454" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="619" />
+          <option name="timeStamp" value="631" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/WorkManager.cs</url>
+          <line>159</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\WorkManager.cs" containingFunctionPresentation="Method 'TryAssignWorker'">
+            <startOffsets>
+              <option value="3995" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4057" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="633" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/NPC/WorkerNpcController.cs</url>
+          <line>15</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\NPC\WorkerNpcController.cs" containingFunctionPresentation="Method 'GetJob'">
+            <startOffsets>
+              <option value="314" />
+            </startOffsets>
+            <endOffsets>
+              <option value="335" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="634" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/WorldManager.cs</url>
+          <line>63</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\WorldManager.cs" containingFunctionPresentation="Method 'SpawnNPCs'">
+            <startOffsets>
+              <option value="1627" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1673" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="635" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

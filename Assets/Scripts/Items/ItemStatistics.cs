@@ -19,8 +19,12 @@ public class ItemStatistics : MonoBehaviour, IDamageable
         Description = _itemStatistics.Description;
         CurrentHP = _itemStatistics.MaxHP;
         MaxHP = _itemStatistics.MaxHP;
-        Effect = _itemStatistics.Effect;
-        Effect.BasicChanceForHit = ChanceForHit;
+        if (Effect != null)
+        {
+            Effect = _itemStatistics.Effect;
+            Effect.BasicChanceForHit = ChanceForHit;
+        }
+
     }
 
     public void TakeDamage(float amount, Transform damageSourceTransform, DamageType type = DamageType.Physical)

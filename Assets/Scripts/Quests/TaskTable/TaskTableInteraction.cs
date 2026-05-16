@@ -26,6 +26,12 @@ public class TaskTableInteraction : MonoBehaviour, IInteractable
     {
         if (PauseManager.Instance.pauseRequests > 0) return;
 
+        if (QuestList.Count == 0)
+        {
+            FloatingTextManager.Instance.ShowWarningText("No tasks available", transform);
+            return;
+        }
+        
         QuestTableManager.Instance.PrepareQuestTable(QuestList);
     }
 

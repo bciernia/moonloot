@@ -29,6 +29,4 @@ public class DecisionNegativeDialogueFinish : FSMDecision
 
         return false;
     }
-    
-    
 }

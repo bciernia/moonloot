@@ -104,6 +104,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _heroName;
     [SerializeField] private TextMeshProUGUI _heroProfession;
     [SerializeField] private TextMeshProUGUI _heroDescription;
+
+    [Header("MoonObjectiveUI")]
+    [SerializeField] private GameObject _moonObjectiveContainer;
+    [SerializeField] private TextMeshProUGUI _moonObjectiveText;
     
     private float _waveTime;
     private bool _isTimerActive;
@@ -127,6 +131,8 @@ public class UIManager : MonoBehaviour
     private float _displayedMp;
     private VillageNpcRuntime _selectedNPC;
 
+    private bool _portalSpawned;
+    
     private void Awake()
     {
         _playerInput = FindAnyObjectByType<PlayerInput>();
@@ -145,6 +151,9 @@ public class UIManager : MonoBehaviour
         _dayNightCycle.HordeAttack += ShowStartNightPanel;
         HordeManager.OnHordeStarted += SetupHordeUI;
         HordeManager.OnHordeFinished += ShowSummaryPanel;
+        HordeManager.OnExitSpawned += OnPortalSpawned;
+        HordeManager.OnExitRemoved += OnPortalRemoved;
+        
         CacheInputActions();
         EnableInputActions();
         RegisterInputCallbacks();
@@ -155,6 +164,27 @@ public class UIManager : MonoBehaviour
         //_playerStatsSo.ResetBonuses();
         UpdateStatsPanel();
         InitializeClock();
+
+        RefreshMoonObjective();
+        RefreshObjectiveVisibility();
+        HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
+    }
+
+    private void OnPortalSpawned(Transform exitTransform)
+    {
+        _portalSpawned = true;
+
+        UpdateMoonObjectiveUI(
+            HordeManager.Instance.CurrentObjectiveProgress,
+            HordeManager.Instance.CurrentObjectiveTarget
+        );
+    }
+
+    private void OnPortalRemoved()
+    {
+        _portalSpawned = false;
+
+        RefreshMoonObjective();
     }
 
     private void OnDestroy()
@@ -162,6 +192,13 @@ public class UIManager : MonoBehaviour
         UnregisterInputCallbacks();
         HordeManager.OnHordeStarted -= SetupHordeUI;
         HordeManager.OnHordeFinished -= ShowSummaryPanel;
+        HordeManager.OnExitSpawned -= OnPortalSpawned;
+        HordeManager.OnExitRemoved -= OnPortalRemoved;
+        
+        if (HordeManager.Instance != null)
+        {
+            HordeManager.Instance.OnObjectiveProgressChanged -= UpdateMoonObjectiveUI;
+        }
     }
 
     private void OnEnable()
@@ -177,7 +214,7 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameModeChanged -= OnGameModeChanged;
         HordeManager.OnHordeFinished -= UpdateNightUI;
     }
-
+    
     private void OnGameModeChanged(GameMode mode)
     {
         var isLocation = mode == GameMode.Location;
@@ -461,14 +498,18 @@ public class UIManager : MonoBehaviour
     {
         _selectedNPC = null;
 
+        _portalSpawned = false;
+
         _nightSummaryPanel.SetActive(false);
 
         PauseManager.Instance.ReleasePause();
 
         _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
+        _moonObjectiveContainer.SetActive(false);
 
         HordeManager.Instance.ReturnToPreviousScene();
+        RefreshObjectiveVisibility();
     }
 
     private void ShowStartNightPanel()
@@ -480,6 +521,7 @@ public class UIManager : MonoBehaviour
         _startNightPanel.SetActive(true);
 
         PauseManager.Instance.RequestPause();
+        RefreshObjectiveVisibility();
     }
     
     private void StartSelectedNight(VillageNpcRuntime npc)
@@ -552,6 +594,9 @@ public class UIManager : MonoBehaviour
 
     private void SetupHordeUI()
     {
+        RefreshObjectiveVisibility();
+        RefreshMoonObjective();
+
         _dayNightContainer.SetActive(false);
         _hordeInfoContainer.SetActive(true);
 
@@ -950,4 +995,66 @@ public class UIManager : MonoBehaviour
             _ => Color.white
         };
     }
+
+    #region Moon objective UI
+
+    private void RefreshMoonObjective()
+    {
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon == null)
+            return;
+
+        UpdateMoonObjectiveUI(
+            HordeManager.Instance.CurrentObjectiveProgress,
+            HordeManager.Instance.CurrentObjectiveTarget
+        );
+    }
+
+    private void UpdateMoonObjectiveUI(int current, int target)
+    {
+        RefreshObjectiveVisibility();
+
+        if (!_moonObjectiveContainer.activeSelf)
+            return;
+
+        if (_portalSpawned)
+        {
+            _moonObjectiveText.text = "Find the portal";
+            return;
+        }
+        
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon == null)
+            return;
+
+        _moonObjectiveText.text = $"{moon.ObjectiveText}: {current}/{target}";
+    }
+    
+    private void RefreshObjectiveVisibility()
+    {
+        if (_moonObjectiveContainer == null)
+            return;
+
+        var isTown =
+            LoadingSceneManager.Instance.IsSceneTown();
+
+        var hasMoon =
+            MoonManager.Instance.CurrentMoon != null;
+
+        var isBossArena =
+            HordeManager.Instance.CurrentObjective ==
+            HordeObjective.BossArena;
+
+        var shouldShow =
+            !isTown &&
+            hasMoon &&
+            !isBossArena;
+
+        _moonObjectiveContainer.SetActive(shouldShow);
+    }
+    
+
+    #endregion
 }

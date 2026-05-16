@@ -18,9 +18,15 @@ public class DayNightCycle : MonoBehaviour
 
     [Header("Colors")]
     public Color dayColor = Color.white;
-    public Color eveningColor = new Color(1f, 0.6f, 0.3f);
-    public Color nightColor = new Color(0.2f, 0.3f, 0.6f);
-
+    private Color CurrentEveningColor =>
+        MoonManager.Instance?.CurrentMoon != null
+            ? MoonManager.Instance.CurrentMoon.EveningColor
+            : dayColor;
+    private Color CurrentNightColor =>
+        MoonManager.Instance?.CurrentMoon != null
+            ? MoonManager.Instance.CurrentMoon.NightColor
+            : Color.black;
+    
     [Header("Local Lights")]
     public float nightLightIntensity = 2f;
     public float dayLightIntensity = 0f;
@@ -90,14 +96,14 @@ public class DayNightCycle : MonoBehaviour
         // DZIEŃ
         if (timer < eveningStart)
         {
-            float t = timer / eveningStart;
-            targetColor = Color.Lerp(dayColor, eveningColor, t);
+            var t = timer / eveningStart;
+            targetColor = Color.Lerp(dayColor, CurrentEveningColor, t);
         }
         // WIECZÓR
         else if (timer < nightStart)
         {
-            float t = (timer - eveningStart) / (nightStart - eveningStart);
-            targetColor = Color.Lerp(eveningColor, nightColor, t);
+            var t = (timer - eveningStart) / (nightStart - eveningStart);
+            targetColor = Color.Lerp(CurrentEveningColor, CurrentNightColor, t);
 
             if (!isEvening)
             {
@@ -108,7 +114,7 @@ public class DayNightCycle : MonoBehaviour
         // NOC
         else
         {
-            targetColor = nightColor;
+            targetColor = CurrentNightColor;
 
             if (!isNight)
             {
@@ -155,17 +161,17 @@ public class DayNightCycle : MonoBehaviour
         if (timer < eveningStart)
         {
             float t = timer / eveningStart;
-            targetColor = Color.Lerp(dayColor, eveningColor, t);
+            targetColor = Color.Lerp(dayColor, CurrentEveningColor, t);
         }
         else if (timer < nightStart)
         {
             float t = (timer - eveningStart) / (nightStart - eveningStart);
-            targetColor = Color.Lerp(eveningColor, nightColor, t);
+            targetColor = Color.Lerp(CurrentEveningColor, CurrentNightColor, t);
             isEvening = true;
         }
         else
         {
-            targetColor = nightColor;
+            targetColor = CurrentNightColor;
             isNight = true;
             SetLights(nightLightIntensity);
         }
@@ -210,6 +216,8 @@ public class DayNightCycle : MonoBehaviour
 
     public void ResetCycle()
     {
+        MoonManager.Instance.RollMoon();
+        
         timer = 0f;
         isEvening = false;
         isNight = false;
@@ -217,7 +225,8 @@ public class DayNightCycle : MonoBehaviour
 
         SetLights(dayLightIntensity);
 
-        Debug.Log("NEW DAY STARTED");
+        globalLight.color = dayColor;
+        
         OnDayStarted?.Invoke();
     }
 
@@ -248,7 +257,7 @@ public class DayNightCycle : MonoBehaviour
         isEvening = true;
         isNight = true;
 
-        globalLight.color = nightColor;
+        globalLight.color = CurrentNightColor;
 
         SetLights(nightLightIntensity);
 
