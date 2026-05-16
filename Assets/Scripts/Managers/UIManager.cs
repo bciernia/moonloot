@@ -308,6 +308,7 @@ public class UIManager : MonoBehaviour
         if (ShopManager.Instance != null && ShopManager.Instance.ShopPanel != null)
             ShopManager.Instance.ShopPanel.SetActive(false);
 
+        InventoryController.Instance.ResetSelectedItem();
         OpenCloseTabPanel(tabIndex);
     }
 

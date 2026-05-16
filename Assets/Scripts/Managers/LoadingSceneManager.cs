@@ -172,12 +172,20 @@ public class LoadingSceneManager : MonoBehaviour
     {
         var saveables = FindObjectsOfType<MonoBehaviour>(true);
 
+        Debug.Log($"Saveables: {saveables.Length}");
+
+        var i = 1;
+        
         foreach (var mono in saveables)
         {
             if (mono is ISaveable saveable)
             {
                 saveable.Save();
             }
+
+            Debug.Log(i);
+            i++; 
+
         }
 
         Debug.Log("GAME SAVED");

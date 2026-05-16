@@ -13,7 +13,11 @@ public class WorkManager : Singleton<WorkManager>
 
     [SerializeField] private ItemParameterSO damageBonusParameter;
 
-    [SerializeField] private InventoryItem potion;     
+    [SerializeField] private InventoryItem potion;
+    
+    private int _usedBlacksmithUpgrades;
+    private const int UpgradeDamageBonus = 2;
+    private const int UpgradeCostStep = 50;
     
     protected override void Awake()
     {
@@ -31,8 +35,9 @@ public class WorkManager : Singleton<WorkManager>
     public void ProcessWorkersAfterNight()
     {
         ProcessScavengers();
-        ProcessBlacksmiths();
         ProcessAlchemists();
+
+        _usedBlacksmithUpgrades = 0;
     }
 
     private ChestInteraction GetWorkerChest(WorkerJob job)
@@ -56,40 +61,77 @@ public class WorkManager : Singleton<WorkManager>
         return chest.GetRuntimeInventory();
     }
     
-    private void ProcessBlacksmiths()
+    public void UpgradeItem(int itemIndex)
     {
-        var smithCount = GetWorkersCount(WorkerJob.Blacksmith);
+        if (!CanUpgrade())
+        {
+            FloatingTextManager.Instance.ShowWarningText(
+                "No upgrades remaining!",
+                Player.Instance.transform
+            );
 
-        if (smithCount <= 0)
             return;
+        }
 
-        var inventory = TryGetChestInventory(WorkerJob.Blacksmith);
+        var inventory = InventoryController.Instance.inventoryData;
 
         if (inventory == null)
             return;
-        
-        for (var i = 0; i < inventory.Items.Count; i++)
+
+        if (itemIndex < 0 || itemIndex >= inventory.inventoryItems.Count)
+            return;
+
+        var item = inventory.inventoryItems[itemIndex];
+
+        if (item.IsEmpty)
+            return;
+
+        if (item.item is not WeaponItemSO)
+            return;
+
+        var cost = GetUpgradeCost(item);
+
+        if (!InventoryController.Instance.ChangeGoldAmount(-cost))
         {
-            var item = inventory.Items[i];
+            FloatingTextManager.Instance.ShowWarningText(
+                "Not enough gold!",
+                Player.Instance.transform
+            );
 
-            if (item.IsEmpty)
-                continue;
-
-            if (item.item is not WeaponItemSO)
-                continue;
-
-            UpgradeWeapon(ref item, smithCount);
-
-            inventory.Items[i] = item;
+            return;
         }
 
+        UpgradeWeapon(ref item);
+
+        inventory.inventoryItems[itemIndex] = item;
+
         inventory.NotifyInventoryUpdated();
+
+        _usedBlacksmithUpgrades++;
+
+        Debug.Log(
+            $"Upgrade used: {_usedBlacksmithUpgrades}/" +
+            $"{GetWorkersCount(WorkerJob.Blacksmith)}"
+        );
     }
     
-    private void UpgradeWeapon(ref InventoryItem item, int smithCount)
+    public int GetRemainingUpgrades()
     {
-        var bonusValue = smithCount * 2f;
+        var smithCount = GetWorkersCount(WorkerJob.Blacksmith);
 
+        return Mathf.Max(
+            0,
+            smithCount - _usedBlacksmithUpgrades
+        );
+    }
+    
+    public bool CanUpgrade()
+    {
+        return GetRemainingUpgrades() > 0;
+    }
+    
+    private void UpgradeWeapon(ref InventoryItem item)
+    {
         item.itemState ??= new List<ItemParameter>();
 
         var found = false;
@@ -99,7 +141,8 @@ public class WorkManager : Singleton<WorkManager>
             if (item.itemState[i].itemParameter == damageBonusParameter)
             {
                 var param = item.itemState[i];
-                param.value += bonusValue;
+
+                param.value += UpgradeDamageBonus;
 
                 item.itemState[i] = param;
 
@@ -113,11 +156,42 @@ public class WorkManager : Singleton<WorkManager>
             item.itemState.Add(new ItemParameter()
             {
                 itemParameter = damageBonusParameter,
-                value = bonusValue
+                value = UpgradeDamageBonus
             });
         }
 
-        Debug.Log($"{item.item.Name} upgraded by +{bonusValue} damage");
+        Debug.Log(
+            $"{item.item.Name} upgraded by +{UpgradeDamageBonus} damage"
+        );
+    }
+    
+    public int GetUpgradeLevel(InventoryItem item)
+    {
+        if (item.itemState == null)
+            return 0;
+
+        var damageParam = item.itemState.FirstOrDefault(
+            x => x.itemParameter == damageBonusParameter
+        );
+
+        if (damageParam.itemParameter == null)
+            return 0;
+
+        return Mathf.RoundToInt(
+            damageParam.value / UpgradeDamageBonus
+        );
+    }
+    
+    public int GetUpgradeCost(InventoryItem item)
+    {
+        var nextLevel = GetUpgradeLevel(item) + 1;
+
+        return nextLevel * UpgradeCostStep;
+    }
+    
+    public int GetNextUpgradeBonus()
+    {
+        return UpgradeDamageBonus;
     }
 
     private void ProcessAlchemists()

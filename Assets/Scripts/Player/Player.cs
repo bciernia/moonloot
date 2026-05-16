@@ -12,8 +12,12 @@ public class Player : MonoBehaviour, ISaveable
     public PlayerHealth PlayerHealth { get; private set; }
     public PlayerMana PlayerMana { get; private set; }
     public PlayerAttack PlayerAttack { get; private set; }
+    
+    public bool IsNearBlacksmith { get; set; }
+    
 
     public string areaTransitionName;
+    
     
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;
