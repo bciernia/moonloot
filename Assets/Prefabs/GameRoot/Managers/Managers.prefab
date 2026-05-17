@@ -1,5 +1,155 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &21760727401894261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 657000957186184500}
+  - component: {fileID: 6084885202445281944}
+  m_Layer: 0
+  m_Name: MoonManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &657000957186184500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21760727401894261}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6084885202445281944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21760727401894261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25aa9a40b8c3ec54da5b1e8e8e45870f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moons:
+  - Type: 0
+    DisplayName: Udros
+    EveningColor: {r: 1, g: 0.64607745, b: 0.5330188, a: 0}
+    NightColor: {r: 0.41509432, g: 0.1194375, b: 0.1194375, a: 1}
+    MoonSprite: {fileID: 0}
+    Description: Udros is on the sky
+    ObjectiveType: 0
+    RequiredAmount: 10
+    ObjectiveText: Kill enemies
+    ObjectiveTextLong: Udros seeks worthy warriors. Defeat enemies and prove your
+      strength in his name.
+    EnemyHealthMultiplier: 1.5
+    EnemyDamageMultiplier: 1.5
+    EnemySpeedMultiplier: 2
+    LootMultiplier: 1
+    GoldMultiplier: 1
+    EliteChanceBonus: 0.9
+    requiredItem:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
+  - Type: 1
+    DisplayName: Sylvar
+    EveningColor: {r: 0.7673556, g: 1, b: 0.6650944, a: 0}
+    NightColor: {r: 0.21163785, g: 0.46226418, b: 0.13300997, a: 0}
+    MoonSprite: {fileID: 0}
+    Description: Sylvar is on the sky
+    ObjectiveType: 2
+    RequiredAmount: 3
+    ObjectiveText: 'Killed corrupted villagers: '
+    ObjectiveTextLong: A dark infection has corrupted the local villagers. Defeat
+      them and cleanse the area from the spreading plague.
+    EnemyHealthMultiplier: 1.25
+    EnemyDamageMultiplier: 0.8
+    EnemySpeedMultiplier: 1.5
+    LootMultiplier: 1
+    GoldMultiplier: 1
+    EliteChanceBonus: 0.5
+    requiredItem:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
+  - Type: 2
+    DisplayName: Aulla
+    EveningColor: {r: 0.4292453, g: 0.7146226, b: 1, a: 0}
+    NightColor: {r: 0.08810966, g: 0.15155442, b: 0.41509432, a: 0}
+    MoonSprite: {fileID: 0}
+    Description: Aulla is on the sky
+    ObjectiveType: 1
+    RequiredAmount: 3
+    ObjectiveText: 'Aula orbs: '
+    ObjectiveTextLong: "Ancient crystals containing Aulla\u2019s lost knowledge are
+      hidden across the area. Recover them before their secrets disappear forever."
+    EnemyHealthMultiplier: 0.75
+    EnemyDamageMultiplier: 0.9
+    EnemySpeedMultiplier: 1.2
+    LootMultiplier: 1
+    GoldMultiplier: 1.5
+    EliteChanceBonus: 0.35
+    requiredItem:
+      quantity: 3
+      item: {fileID: 11400000, guid: a748b2fe2fd41364fbbb6a3c24792f44, type: 2}
+      itemState: []
+  - Type: 4
+    DisplayName: Otton
+    EveningColor: {r: 1, g: 0.9327237, b: 0.4764151, a: 0}
+    NightColor: {r: 0.6226415, g: 0.52852124, b: 0, a: 0}
+    MoonSprite: {fileID: 0}
+    Description: Otton is on the sky
+    ObjectiveType: 4
+    RequiredAmount: 3
+    ObjectiveText: Activated obelisks
+    ObjectiveTextLong: "Otto\u2019s forgotten towers must be restored. Reactivate
+      their ancient mechanisms to protect the land once more."
+    EnemyHealthMultiplier: 1
+    EnemyDamageMultiplier: 1
+    EnemySpeedMultiplier: 1
+    LootMultiplier: 2
+    GoldMultiplier: 2
+    EliteChanceBonus: 0.75
+    requiredItem:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
+  - Type: 3
+    DisplayName: Nythera
+    EveningColor: {r: 1, g: 0.5518868, b: 0.96485376, a: 0}
+    NightColor: {r: 0.4528302, g: 0.1516554, b: 0.4528302, a: 0}
+    MoonSprite: {fileID: 0}
+    Description: Nythera is on the sky
+    ObjectiveType: 3
+    RequiredAmount: 3
+    ObjectiveText: Found chests
+    ObjectiveTextLong: Magical fake chests created by Nythera are hidden throughout
+      the region. Find them and uncover their secrets.
+    EnemyHealthMultiplier: 1.15
+    EnemyDamageMultiplier: 1.15
+    EnemySpeedMultiplier: 1
+    LootMultiplier: 1.15
+    GoldMultiplier: 1.15
+    EliteChanceBonus: 0.75
+    requiredItem:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
 --- !u!1 &178012546894764947
 GameObject:
   m_ObjectHideFlags: 0
@@ -1302,12 +1452,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalLight: {fileID: 0}
-  dayDuration: 15
-  eveningStart: 10
-  nightStart: 12
+  dayDuration: 90
+  eveningStart: 5
+  nightStart: 10
   dayColor: {r: 1, g: 1, b: 1, a: 1}
-  eveningColor: {r: 1, g: 0.6, b: 0.3, a: 1}
-  nightColor: {r: 0.2, g: 0.3, b: 0.6, a: 1}
   nightLightIntensity: 2
   dayLightIntensity: 0
   isEvening: 0
@@ -1513,6 +1661,7 @@ Transform:
   - {fileID: 5088120244562804324}
   - {fileID: 1140512172106513131}
   - {fileID: 7107798368542500091}
+  - {fileID: 657000957186184500}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005456009627945634
@@ -2580,7 +2729,6 @@ MonoBehaviour:
   logUnlocks: 1
   startingSkills:
   - {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
-  - {fileID: 11400000, guid: 4ae9c82cf3de4ee4ba11f4179364ecc1, type: 2}
   - {fileID: 11400000, guid: 4562fb314fcf78f46b998e8beb92b47c, type: 2}
 --- !u!1 &3962047042188046341
 GameObject:
@@ -4173,6 +4321,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29fe07f20e17d894cab200b5d416a9a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damageBonusParameter: {fileID: 11400000, guid: edfe9b0fa6629174b9f6a8f1b75f2c46, type: 2}
+  potion:
+    quantity: 1
+    item: {fileID: 11400000, guid: 195d96577870ccc468ce40a49d3a0c0e, type: 2}
+    itemState: []
 --- !u!1 &5577167637571150877
 GameObject:
   m_ObjectHideFlags: 0
@@ -4499,6 +4652,7 @@ MonoBehaviour:
   bossEnemies:
   - {fileID: 3581277466367944902, guid: aadf67f7b06020744a0781f17765ef90, type: 3}
   - {fileID: 4836842873025884928, guid: 16c3b264e5e5e904faac491adcd2175e, type: 3}
+  corruptedVillager: {fileID: 5236658223282917037, guid: 15eae8b9ea9fbb146999df27ee7a080d, type: 3}
   hordeConfig: {fileID: 11400000, guid: 41670f6e5d77f4a46bc3654cd79bb0ea, type: 2}
   defendPrefab: {fileID: 4657763860773282106, guid: 4e27195d5f147cc43806444fded1c2ba, type: 3}
   defendMultiplier: 0.5
@@ -4514,6 +4668,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1523f159797c941458db2ddd41d66768, type: 2}
   _npcDatabase: {fileID: 0}
   _nightDatabase: {fileID: 11400000, guid: 960fea4492a885043858c472a0d576d2, type: 2}
+  obeliskPrefab: {fileID: 8293030176035848737, guid: ec732b5018ebea44a91a51253312488a, type: 3}
+  mimicChestPrefab: {fileID: 4615432878825729954, guid: 6bc4e13c1e231bd43a60b0690be970f2, type: 3}
 --- !u!1 &5964391249184360381
 GameObject:
   m_ObjectHideFlags: 0
@@ -5983,7 +6139,16 @@ MonoBehaviour:
   _heroContainer: {fileID: 0}
   _heroPortrait: {fileID: 0}
   _heroName: {fileID: 0}
+  _heroProfession: {fileID: 0}
   _heroDescription: {fileID: 0}
+  _moonObjectiveContainer: {fileID: 0}
+  _moonObjectiveText: {fileID: 0}
+  moonInformation: {fileID: 0}
+  objectiveText: {fileID: 0}
+  showPositionX: 0
+  hiddenPositionX: 1200
+  moveSpeed: 2000
+  visibleTime: 5
 --- !u!1 &7370504835617294549
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MoonManager : Singleton<MoonManager>
 {
@@ -20,8 +21,7 @@ public class MoonManager : Singleton<MoonManager>
 
     public void RollMoon()
     {
-        // CurrentMoon = moons[Random.Range(0, moons.Count)];
-        CurrentMoon = moons[0];
+        CurrentMoon = moons[Random.Range(0, moons.Count)];
 
         Debug.Log($"Current moon: {CurrentMoon.DisplayName}");
 

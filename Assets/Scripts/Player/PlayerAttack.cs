@@ -16,6 +16,8 @@ public class PlayerAttack : MonoBehaviour
     
     [SerializeField] private ItemParameterSO damageBonusParameter;
 
+    [SerializeField] private float damageVariancePercent = 0.1f;
+    
     public Transform firePoint;
     public GameObject slashEffect;
     private float attackCooldown;
@@ -26,7 +28,6 @@ public class PlayerAttack : MonoBehaviour
     private SlashEffect _slash;
 
     private float _currentDmgMultiplier = 1f;
-    
     private void Awake()
     {
         _playerMana = GetComponent<PlayerMana>();
@@ -162,10 +163,18 @@ public class PlayerAttack : MonoBehaviour
         var critCheck = RNGManager.Instance.GetRandomInt();
         var critStat = Mathf.Round(_playerStats.GetCritChanceBonusMultiplier() * 100f - 100f);
         
-        if (critCheck <= critStat)
-            return _playerStats.TotalDamage * _playerStats.GetCritMultiplier();
+        var baseDamage = _playerStats.TotalDamage;
+
+        var minDamage = baseDamage * (1f - damageVariancePercent);
+        var maxDamage = baseDamage * (1f + damageVariancePercent);
+
+        var finalDamage = RNGManager.Instance.GetRandomFloat(minDamage, maxDamage);
+
         
-        return _playerStats.TotalDamage;
+        if (critCheck <= critStat)
+            finalDamage *= _playerStats.GetCritMultiplier();
+        
+        return Mathf.Round(finalDamage);
     }
 
     public void ApplyDmgMultiplier(float multiplier, float duration)
