@@ -62,6 +62,7 @@ public class UIManager : MonoBehaviour
     [Header("Player Game UI")]
     [SerializeField] private GameObject _mainGamePanel;
     [SerializeField] private GameObject _equippedPanel;
+    [SerializeField] private GameObject _pointsPanel;
 
     [Header("Day Night Timer")] 
     [SerializeField] private GameObject _dayNightContainer;
@@ -234,6 +235,28 @@ public class UIManager : MonoBehaviour
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         RefreshObjectiveVisibility();
+        
+        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+        {
+            HidePersistentGameplayUI();
+        }
+    }
+
+    private void HidePersistentGameplayUI()
+    {
+        _moonObjectiveContainer.SetActive(false);
+        _hordeInfoContainer.SetActive(false);
+        _nightSummaryPanel.SetActive(false);
+        _startNightPanel.SetActive(false);
+
+        if (_moonInformationRoutine != null)
+        {
+            StopCoroutine(_moonInformationRoutine);
+        }
+
+        var pos = moonInformation.anchoredPosition;
+        pos.x = hiddenPositionX;
+        moonInformation.anchoredPosition = pos;
     }
 
     private void OnGameModeChanged(GameMode mode)
@@ -241,6 +264,7 @@ public class UIManager : MonoBehaviour
         var isLocation = mode == GameMode.Location;
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
+        _pointsPanel.SetActive(isLocation);
         _dayNightTimerImage.gameObject.SetActive(isLocation);
         CloseAllPanels();
     }
@@ -1138,7 +1162,7 @@ public class UIManager : MonoBehaviour
             return;
 
         var isTown =
-            LoadingSceneManager.Instance.IsSceneTown();
+            LoadingSceneManager.Instance.IsSceneTown() || LoadingSceneManager.Instance.IsInMainMenu();
 
         var hasMoon =
             MoonManager.Instance.CurrentMoon != null;

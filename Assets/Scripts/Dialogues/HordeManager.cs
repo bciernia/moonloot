@@ -188,21 +188,27 @@ public class HordeManager : Singleton<HordeManager>
         );
 
         StartCoroutine(WaitForSceneAndSpawn());
+        SoundManager.Instance.PlayCombatMusic(1f);
     }
 
     private System.Collections.IEnumerator WaitForSceneAndSpawn()
     {
         yield return null;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitUntil(() =>
+            FindObjectsOfType<EnemySpawner>().Length > 0 ||
+            FindObjectsOfType<EnemyObjectiveSpawner>().Length > 0
+        );
 
+        yield return new WaitForSeconds(0.2f);
+        
         LootSpawnManager.Instance.SpawnAll();
         SpawnObjectiveItems();
         SpawnNPC();
         SpawnHorde();
     }
     
-    private void CleanupEnemies()
+    public void CleanupEnemies()
     {
         var enemies = FindObjectsOfType<EnemyStatistics>();
 
@@ -336,10 +342,8 @@ public class HordeManager : Singleton<HordeManager>
             }
 
             case MoonObjectiveType.DestroyCorruptedTrees:
-            {
-                SpawnCorruptedTrees();
+                SpawnCorruptedVillagers();
                 break;
-            }
             
             case MoonObjectiveType.ActivateObelisks:
                 SpawnObelisks();
@@ -479,7 +483,7 @@ public class HordeManager : Singleton<HordeManager>
         Debug.Log("Night Exploration Stopped");
     }
     
-    private void StopNight()
+    public void StopNight()
     {
         _isNightRunning = false;
 
@@ -609,10 +613,8 @@ public class HordeManager : Singleton<HordeManager>
 
             return;
         }
-
         
         var playerPos = Player.Instance.transform.position;
-
         var minDistance = 12f;
         var maxDistance = 20f;
         var maxAttempts = 10;
@@ -1041,6 +1043,8 @@ public class HordeManager : Singleton<HordeManager>
 
     private void CompleteHorde()
     {
+        SoundManager.Instance.PlayWinMusic();
+        
         Debug.Log($"Horde {currentHorde} completed");
         AdvanceNightCycle();
         _hordePrepared = false;
@@ -1298,7 +1302,7 @@ public class HordeManager : Singleton<HordeManager>
         }
     }
     
-    private void SpawnCorruptedTrees()
+    private void SpawnCorruptedVillagers()
     {
         var spawners = FindObjectsOfType<EnemyObjectiveSpawner>().ToList();
         

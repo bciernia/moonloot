@@ -40,7 +40,7 @@ public class ActionAttack : FSMAction
 
     public void DealDmgToPlayer()
     {
-        if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked)
+        if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked || !Player.Instance.PlayerHealth.IsAlive)
             return;
 
         var playerDamage =
@@ -56,7 +56,7 @@ public class ActionAttack : FSMAction
 
         var finalDamage = RNGManager.Instance.GetRandomFloat(minDamage, maxDamage);
 
-        playerDamage.TakeDamage(Mathf.Round(finalDamage));
+        playerDamage?.TakeDamage(Mathf.Round(finalDamage));
 
         HasAttacked = true;
 

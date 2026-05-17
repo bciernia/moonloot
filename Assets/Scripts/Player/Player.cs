@@ -40,6 +40,8 @@ public class Player : MonoBehaviour, ISaveable
         _playerAnimations = GetComponent<PlayerAnimations>();
         _playerInput = GetComponent<PlayerInput>();
 
+        _playerStats.ResetPlayerStats();
+        
         foreach (var map in _playerInput.actions.actionMaps)
         {
             map.Enable();

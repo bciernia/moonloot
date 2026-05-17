@@ -61,7 +61,12 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
 
     private void PlayerDead()    
     {
+        HordeManager.Instance.CleanupEnemies();
+        HordeManager.Instance.StopNight();
+        SoundManager.Instance.PlayDeathMusic();
         _playerAnimations.SetDeathAnimation();
+        var points = PointsManager.Instance.GetCurrentScore();
+        DeathScreenManager.Instance.ShowDeathScreen(points);
     }
 
     public void RestoreHealth(float amount)

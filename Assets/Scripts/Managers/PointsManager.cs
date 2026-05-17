@@ -33,4 +33,6 @@ public class PointsManager : Singleton<PointsManager>
         currentScore = target;
         scoreText.text = currentScore.ToString();
     }
+
+    public int GetCurrentScore() => currentScore;
 }
