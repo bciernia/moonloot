@@ -76,7 +76,8 @@ public class Projectile : MonoBehaviour
         if (other.gameObject == Shooter ||
             other.gameObject.CompareTag("CameraBound") ||
             other.gameObject.CompareTag("CameraBoundQuest") ||
-            other.gameObject.CompareTag("NPC"))
+            other.gameObject.CompareTag("NPC") ||
+            other.gameObject.CompareTag("DroppedItem"))
             return;
 
         if (other.gameObject == _lastHitTarget)

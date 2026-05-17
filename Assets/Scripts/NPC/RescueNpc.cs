@@ -1,9 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class RescueNpc : MonoBehaviour
 {
-    public bool IsInTown;
     private bool _alreadySaved = false;
+    [SerializeField] private GameObject RescuePanel;
 
     private VillageNpcRuntime _runtime;
 
@@ -21,12 +22,17 @@ public class RescueNpc : MonoBehaviour
             return;
 
         _alreadySaved = true;
-
+        
+        RescuePanel.SetActive(true);
+        
         HordeManager.Instance.SetRescuedNPC(_runtime);
+        StartCoroutine(HideNpc());
     }
-
-    public void HideNpc()
+    
+    private IEnumerator HideNpc()
     {
+        yield return new WaitForSeconds(3f);
+        RescuePanel.SetActive(false);
         gameObject.SetActive(false);
     }
 }
