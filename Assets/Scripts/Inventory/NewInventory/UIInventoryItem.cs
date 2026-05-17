@@ -15,6 +15,8 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
     [SerializeField] private EquipmentSlotType slotType;
     public EquipmentSlotType SlotType => slotType;
 
+    public int Quantity { get; set; }
+
     public event Action<UIInventoryItem, UIInventoryItem> OnItemDroppedOn;
     
     public event Action<UIInventoryItem> OnLeftMouseBtnClick, OnItemBeginDrag, OnItemEndDrag, OnRightMouseBtnClick;
@@ -65,6 +67,8 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
             quantityTextContainer.SetActive(true);
             quantityText.text = quantity + "";
         }
+
+        Quantity = quantity;
         empty = false;
     }
 

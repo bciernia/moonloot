@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 internal enum ItemDraggedFrom {
     Player,
@@ -18,6 +19,10 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] private MouseFollower mouseFollower;
     [SerializeField] private TextMeshProUGUI goldAmountTMP;
     [SerializeField] private TextMeshProUGUI sellerGoldAmountTMP;
+    [SerializeField] private Button DropItemButton;
+    [SerializeField] private Button DropAllItemsButton;
+    [SerializeField] private Button UpgradeItemButton;
+    
     private List<UIInventoryItem> listOfUiItems = new List<UIInventoryItem>();
 
     [SerializeField] private UIInventoryItem WeaponSlot;
@@ -33,11 +38,28 @@ public class UIInventoryPage : MonoBehaviour
     [SerializeField] private UIItemActionPanel actionPanel;
 
     [SerializeField] private EquippedItemsManager equippedItemsManager;
+
+    private int CurrentChosenItemIndex { get; set; }
     
     private void Awake()
     {
         mouseFollower.Toggle(false);
         itemDescription.ResetDescription();
+        
+        DropItemButton.onClick.AddListener(() =>
+        {
+            DropItem(CurrentChosenItemIndex, false);
+        });
+
+        DropAllItemsButton.onClick.AddListener(() =>
+        {
+            DropItem(CurrentChosenItemIndex, true);
+        });
+
+        UpgradeItemButton.onClick.AddListener(() =>
+        {
+            UpgradeCurrentItem(CurrentChosenItemIndex);
+        });
     }
 
     public void InitializeInventoryUI(int inventorySize)
@@ -176,6 +198,11 @@ public class UIInventoryPage : MonoBehaviour
     {
         var index = listOfUiItems.IndexOf(inventoryItemUi);
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
+        DropItemButton.gameObject.SetActive(false);
+        DropAllItemsButton.gameObject.SetActive(false);
+        UpgradeItemButton.gameObject.SetActive(false);
+        CurrentChosenItemIndex = index;
+        
         if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
             return;
         var inventoryItemUiName = inventoryItemUi.gameObject.name;
@@ -187,7 +214,41 @@ public class UIInventoryPage : MonoBehaviour
         else
         {
             OnDescriptionRequested?.Invoke(index, true, inventoryItemUiName);
-        } 
+
+            if (index == -1) return;
+            
+            var hasItem = inventoryItemUi.Quantity > 0;
+            DropItemButton.gameObject.SetActive(hasItem);
+            DropAllItemsButton.gameObject.SetActive(
+                hasItem &&
+                inventoryItemUi.Quantity > 1
+            );
+            
+            UpgradeItemButton.gameObject.SetActive(
+                hasItem &&
+                Player.Instance.IsNearBlacksmith
+            );
+        }
+    }
+
+    private void DropItem(int itemIndex, bool dropAll)
+    {
+        if (itemIndex < 0)
+            return;
+
+        var item = InventoryController.Instance.inventoryData.GetItemAt(itemIndex);
+
+        if (item.IsEmpty)
+            return;
+
+        var amount = dropAll
+            ? item.quantity
+            : 1;
+
+        InventoryController.Instance.DropItem(
+            itemIndex,
+            amount
+        );
     }
     
     public void Show()
@@ -198,6 +259,9 @@ public class UIInventoryPage : MonoBehaviour
 
     public void ResetSelection()
     {
+        DropItemButton.gameObject.SetActive(false);
+        DropAllItemsButton.gameObject.SetActive(false);
+        UpgradeItemButton.gameObject.SetActive(false);
         itemDescription.ResetDescription();
         DeselectAllItems();
     }
@@ -318,6 +382,11 @@ public class UIInventoryPage : MonoBehaviour
     {
         sellerGoldAmountTMP.text = $"{goldAmount}";
     }
-
+    
+    private void UpgradeCurrentItem(int index)
+    {
+        WorkManager.Instance.UpgradeItem(index);
+    }
+    
     private bool IsDraggingFromQuickSlotToQuickSlot(string slotName1, string slotName2) => slotName1 == "QuickSlot1" && slotName2 == "QuickSlot2" || slotName1 == "QuickSlot2" && slotName2 == "QuickSlot1";
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Inventory.NewInventory.Model;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryController : Singleton<InventoryController>, ISaveable
@@ -138,7 +137,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         }
     }
 
-    private void DropItem(int itemIndex, int quantity)
+    public void DropItem(int itemIndex, int quantity)
     {
         var itemToDrop = inventoryData.GetItemAt(itemIndex).item.ItemToDrop;
         inventoryData.RemoveItem(itemIndex, quantity);
@@ -368,6 +367,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         var isInPlayerEquipment = true;
         InventoryItem inventoryItem;
+        
         if (itemIndex == -1)
         {
             switch (inventoryItemUiName)
@@ -449,6 +449,44 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         sb.AppendLine();
         sb.Append(inventoryItem.item.Description);
 
+        if (Player.Instance.IsNearBlacksmith &&
+            inventoryItem.item.ItemType == ItemType.Weapon)
+        {
+            sb.AppendLine();
+            sb.AppendLine();
+
+            if (WorkManager.Instance.CanUpgrade())
+            {
+                var cost =
+                    WorkManager.Instance.GetUpgradeCost(inventoryItem);
+
+                var remaining =
+                    WorkManager.Instance.GetRemainingUpgrades();
+
+                sb.Append(
+                    $"<color=#4CFF7A>" +
+                    $"-{cost} gold → +2 damage" +
+                    $"</color>"
+                );
+
+                sb.AppendLine();
+
+                sb.Append(
+                    $"<color=#AAAAAA>" +
+                    $"{remaining} upgrades remaining" +
+                    $"</color>"
+                );
+            }
+            else
+            {
+                sb.Append(
+                    "<color=#FFD700>" +
+                    "NO UPGRADES REMAINING" +
+                    "</color>"
+                );
+            }
+        }
+        
         return sb.ToString();
     }
 
@@ -587,4 +625,9 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     }
     
     public bool IsEmptySlotInEquipment() => inventoryData.inventoryItems.Any(item => item.IsEmpty);
+    
+    public void ResetSelectedItem()
+    {
+        inventoryUI.ResetSelection();
+    }
 }

@@ -10,11 +10,14 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private EnemyBrain _enemyBrain;
     private InteractionManager _interactionManager;
 
+    private RescueNpc _rescueNpc;
+    
     private void Awake()
     {
         _waypoint = GetComponent<Waypoint>();
         _npcMovement = GetComponent<NPCMovement>();
         _enemyBrain = GetComponent<EnemyBrain>();
+        _rescueNpc = GetComponent<RescueNpc>();
         _interactionManager = FindFirstObjectByType<InteractionManager>();
     }
 
@@ -45,13 +48,25 @@ public class NPCInteraction : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        DialogueManager.Instance.StartDialogue();
-
         var enemyAnimator = GetComponent<EnemyAnimator>();
         var player = GameObject.FindGameObjectWithTag("Player");
-        
-        DisableNpcMovement();
         enemyAnimator.SetNpcPositionForDialogue(player.transform.position, gameObject.transform.position);
+        
+        if(_rescueNpc != null && !_rescueNpc.IsSaved())
+        {
+            _rescueNpc.SetSaveNpc();
+            if (DialogueManager.Instance.NPCSelected == this)
+            {
+                DialogueManager.Instance.NPCSelected = null;
+            }
+            _interactionManager.UnregisterInteractable(this);
+            enabled = false;
+            
+            return;
+        }
+        
+        DialogueManager.Instance.StartDialogue();
+        DisableNpcMovement();
     }
 
     private void SetNpcMovementEnabled(bool isEnabled)
