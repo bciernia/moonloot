@@ -17,9 +17,11 @@ public class Projectile : MonoBehaviour
     private float _maxDistanceSqr;
     
     [SerializeField] private float bounceRange = 20f;
-
+    [SerializeField] private float damageVariancePercent = 0.1f;
+    
     private int _remainingBounces;
     private GameObject _lastHitTarget;
+    
     
     private void Start()
     {
@@ -47,12 +49,16 @@ public class Projectile : MonoBehaviour
             }
             else
             {
-                Damage = Shooter.GetComponent<EnemyStatistics>()?.Damage ?? ProjectileSo.Damage;
+                var baseDamage =
+                    Shooter.GetComponent<EnemyStatistics>()?.Damage
+                    ?? ProjectileSo.Damage;
+
+                Damage = GetRandomizedDamage(baseDamage);
             }
 
             if (Damage == 0)
             {
-                Damage = ProjectileSo.Damage;
+                Damage = GetRandomizedDamage(ProjectileSo.Damage);
             }
         }
     }
@@ -122,6 +128,17 @@ public class Projectile : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+    
+    private float GetRandomizedDamage(float baseDamage)
+    {
+        var minDamage =
+            baseDamage * (1f - damageVariancePercent);
+
+        var maxDamage =
+            baseDamage * (1f + damageVariancePercent);
+
+        return Mathf.Round(RNGManager.Instance.GetRandomFloat(minDamage, maxDamage));
     }
     
     private GameObject FindNextTarget(GameObject currentTarget)

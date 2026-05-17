@@ -20,6 +20,10 @@ public class MoonData
     [TextArea]
     public string ObjectiveText;
 
+    [TextArea]
+    public string ObjectiveTextLong;
+
+    
     public float EnemyHealthMultiplier = 1f;
     public float EnemyDamageMultiplier = 1f;
     public float EnemySpeedMultiplier = 1f;

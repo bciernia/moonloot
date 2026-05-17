@@ -8,6 +8,7 @@ public class ActionAttack : FSMAction
     private EnemyAnimator _enemyAnimator;
     private DecisionAttackRange _decisionAttackRange;
 
+    [SerializeField] private float damageVariancePercent = 0.1f;
     private bool HasAttacked { get; set; }
     
     private void Awake()
@@ -39,16 +40,28 @@ public class ActionAttack : FSMAction
 
     public void DealDmgToPlayer()
     {
-        if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked) return; 
-        
-        var playerDamage = _enemyBrain.Player.GetComponent<IDamageable>();
-        
-        playerDamage.TakeDamage(_enemyStatistics.Damage);
+        if (!_decisionAttackRange.PlayerInAttackRange() || HasAttacked)
+            return;
+
+        var playerDamage =
+            _enemyBrain.Player.GetComponent<IDamageable>();
+
+        var baseDamage = _enemyStatistics.Damage;
+
+        var minDamage =
+            baseDamage * (1f - damageVariancePercent);
+
+        var maxDamage =
+            baseDamage * (1f + damageVariancePercent);
+
+        var finalDamage = RNGManager.Instance.GetRandomFloat(minDamage, maxDamage);
+
+        playerDamage.TakeDamage(Mathf.Round(finalDamage));
 
         HasAttacked = true;
 
         AddStateForPlayer();
-        
+
         KnockBackPlayer();
     }
 
