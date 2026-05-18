@@ -1067,23 +1067,40 @@ public class UIManager : MonoBehaviour
     private void UpdateMoonObjectiveUI(int current, int target)
     {
         RefreshObjectiveVisibility();
-        NotifyObjectiveChanged();
 
         if (!_moonObjectiveContainer.activeSelf)
             return;
 
-        if (_portalSpawned)
+        string newText;
+
+        if (HordeManager.Instance.CurrentObjective ==
+            HordeObjective.BossArena)
         {
-            _moonObjectiveText.text = "Find the portal";
-            return;
+            newText = HordeManager.Instance.IsBossAlive()
+                ? "Kill the boss"
+                : "Find the portal";
         }
-        
-        var moon = MoonManager.Instance.CurrentMoon;
+        else if (_portalSpawned)
+        {
+            newText = "Find the portal";
+        }
+        else
+        {
+            var moon = MoonManager.Instance.CurrentMoon;
 
-        if (moon == null)
-            return;
+            if (moon == null)
+                return;
 
-        _moonObjectiveText.text = $"{moon.ObjectiveText}: {current}/{target}";
+            newText =
+                $"{moon.ObjectiveText}: {current}/{target}";
+        }
+
+        if (_moonObjectiveText.text != newText)
+        {
+            _moonObjectiveText.text = newText;
+
+            NotifyObjectiveChanged();
+        }
     }
     
     private void NotifyObjectiveChanged()

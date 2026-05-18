@@ -11,6 +11,7 @@ public class DeathScreenManager : Singleton<DeathScreenManager>
     [SerializeField] private CanvasGroup panelCanvasGroup;
 
     [SerializeField] private TextMeshProUGUI scoreLabel;
+    [SerializeField] private TextMeshProUGUI topLabel;
 
     [SerializeField] private GameObject returnButton;
 
@@ -32,10 +33,11 @@ public class DeathScreenManager : Singleton<DeathScreenManager>
         returnButton.SetActive(false);
     }
 
-    public void ShowDeathScreen(int score)
+    public void ShowEndScreen(string title, int score)
     {
         deathScreen.SetActive(true);
 
+        topLabel.text = title;
         scoreLabel.text = $"Score: {score}";
 
         _playerRenderer = Player.Instance.GetComponent<SpriteRenderer>();
@@ -51,6 +53,17 @@ public class DeathScreenManager : Singleton<DeathScreenManager>
 
         StartCoroutine(DeathRoutine());
     }
+
+    public void ShowDeathScreen(int score)
+    {
+        ShowEndScreen("You died", score);
+    }
+
+    public void ShowWinScreen(int score)
+    {
+        ShowEndScreen("You won", score);
+    }
+    
     private IEnumerator DeathRoutine()
     {
         var timer = 0f;

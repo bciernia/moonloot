@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: a2d98f30381c70e41a845950f2be9ed0, type: 2}
+    - target: {fileID: 3074749718962474586, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5400108167599618872, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -64,6 +68,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5826689808848630455, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833560843228186745, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
+      propertyPath: npc
+      value: 
+      objectReference: {fileID: 11400000, guid: d8e09d87e1a83ad42bed7a884239613c, type: 2}
     - target: {fileID: 7293901130976958148, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
       propertyPath: NpcName
       value: Barbarian
@@ -81,42 +93,5 @@ PrefabInstance:
     - {fileID: 8617604860590965970, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8430012259719245630, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3172658891981131174}
-    - targetCorrespondingSourceObject: {fileID: 8430012259719245630, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -5033309073473619645}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
---- !u!1 &8619297355929432137 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8430012259719245630, guid: bb70e8a52155ef8438d38cac8eabc8ff, type: 3}
-  m_PrefabInstance: {fileID: 243350765163503479}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &-3172658891981131174
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8619297355929432137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 370f494eedaf4014d81907a202a8cd24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npc: {fileID: 11400000, guid: d8e09d87e1a83ad42bed7a884239613c, type: 2}
---- !u!114 &-5033309073473619645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8619297355929432137}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94130cce39d34469a83caba923e8c698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsInTown: 0

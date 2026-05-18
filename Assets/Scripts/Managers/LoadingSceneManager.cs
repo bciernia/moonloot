@@ -1,14 +1,11 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoadingSceneManager : MonoBehaviour
+public class LoadingSceneManager : Singleton<LoadingSceneManager>
 {
-#pragma warning disable UDR0001
-    public static LoadingSceneManager Instance;
-#pragma warning restore UDR0001
-
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Image progressBar;
     [SerializeField] private float lerpSpeed = 3f;
@@ -17,18 +14,9 @@ public class LoadingSceneManager : MonoBehaviour
     private float loadedValue;
     private DayNightCycle _currentCycle;
 
-    private void Awake()
+    protected override void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
+        base.Awake();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -87,6 +75,7 @@ public class LoadingSceneManager : MonoBehaviour
                 cycle.ResetCycle();
         }
 
+        await Task.Delay(500);        
         loadingScreen.SetActive(false);
     }
 

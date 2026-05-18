@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7281793142779411601
+--- !u!114 &-818609662786191868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalLanguage: en
   translationSets:
-  - counter: 74
+  - counter: 75
     languageCode: en
     translations:
     - id: 0
@@ -260,7 +260,10 @@ MonoBehaviour:
     - id: 73
       language: en
       text: This is where you will meet the heroes and villagers you will save.
-  - counter: 73
+    - id: 74
+      language: en
+      text: This is where you will meet  heroes and villagers you will save.
+  - counter: 75
     languageCode: es
     translations:
     - id: 0
@@ -371,7 +374,10 @@ MonoBehaviour:
     - id: 73
       language: es
       text: 
-  - counter: 73
+    - id: 74
+      language: es
+      text: 
+  - counter: 75
     languageCode: fr
     translations:
     - id: 0
@@ -482,6 +488,9 @@ MonoBehaviour:
     - id: 73
       language: fr
       text: 
+    - id: 74
+      language: fr
+      text: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,18 +505,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1.8.4
   creationTime: 2026-03-27@20:29:40
-  editTime: 2026-05-09@16:18:12
+  editTime: 2026-05-18@20:28:07
   nodes:
-  - rid: 4348854571242357258
-  - rid: 4348854571242357259
-  - rid: 4348854571242357260
-  - rid: 4348854571242357261
-  translationLibrary: {fileID: -7281793142779411601}
-  maxID: 76703
+  - rid: 4348854787880255488
+  - rid: 4348854787880255489
+  - rid: 4348854787880255490
+  - rid: 4348854787880255491
+  translationLibrary: {fileID: -818609662786191868}
+  maxID: 76704
   references:
     version: 2
     RefIds:
-    - rid: 4348854571242357258
+    - rid: 4348854787880255488
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76694
@@ -521,10 +530,10 @@ MonoBehaviour:
           connectionType: 1
         width: 110
         height: 75
-        xPosition: -2975.6755
-        yPosition: -3818.109
+        xPosition: -2985.6755
+        yPosition: -3830.609
         entryPointName: 
-    - rid: 4348854571242357259
+    - rid: 4348854787880255489
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76696
@@ -542,13 +551,13 @@ MonoBehaviour:
           connectionType: 1
         width: 268
         height: 143.125
-        xPosition: -2786.2402
-        yPosition: -3809.8938
+        xPosition: -2803.7402
+        yPosition: -3831.1438
         items:
-        - rid: 4348854571242357262
+        - rid: 4348854787880255492
         characterName: Bartender
         icon: 
-    - rid: 4348854571242357260
+    - rid: 4348854787880255490
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76699
@@ -566,13 +575,13 @@ MonoBehaviour:
           connectionType: 1
         width: 268
         height: 304.0625
-        xPosition: -2404.9902
-        yPosition: -3745.8313
+        xPosition: -2449.9902
+        yPosition: -3737.0813
         items:
-        - rid: 4348854571242357263
+        - rid: 4348854787880255493
         characterName: Bartender
         icon: 
-    - rid: 4348854571242357261
+    - rid: 4348854787880255491
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76702
@@ -586,20 +595,20 @@ MonoBehaviour:
         outputs: []
         width: 110
         height: 75
-        xPosition: -1993.1777
-        yPosition: -3608.644
+        xPosition: -2013.1777
+        yPosition: -3503.644
         exitPointName: 
-    - rid: 4348854571242357262
+    - rid: 4348854787880255492
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Welcome to my inn.
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 4348854571242357263
+    - rid: 4348854787880255493
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
-        text: This is where you will meet the heroes and villagers you will save.
+        text: This is where you will meet  heroes and villagers you will save.
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0

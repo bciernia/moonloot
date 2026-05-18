@@ -35,7 +35,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        LoadingSceneManager.Instance.LoadScene("MainMenu");
+        
+        Destroy(GameObject.FindWithTag("GameRoot"));
+        Destroy(GameObject.FindWithTag("Player"));
     }
     
     private void OnEnable()
