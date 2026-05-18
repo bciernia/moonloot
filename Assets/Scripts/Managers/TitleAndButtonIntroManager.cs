@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class TitleAndButtonsIntro2D : MonoBehaviour
 {
@@ -21,8 +22,12 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     private Vector2 buttonsStartPos;
     private Vector2 buttonsEndPos;
 
+    [SerializeField] private TextMeshProUGUI version;
+
     void Start()
     {
+        version.text = $"v{Application.version}";
+        
         titleStartPos = title.position;
         titleEndPos = titleStartPos + titleEndOffset;
 

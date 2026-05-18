@@ -71,7 +71,7 @@ public class NPCManager : Singleton<NPCManager>
             return false;
         }
 
-        if (!InventoryController.Instance.ChangeGoldAmount(nextLevelData.GoldAmount))
+        if (!InventoryController.Instance.ChangeGoldAmount(-nextLevelData.GoldAmount))
         {
             Debug.Log("Not enough gold");
             return false;

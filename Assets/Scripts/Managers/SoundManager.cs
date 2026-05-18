@@ -22,10 +22,17 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private AudioSource _combatSource;
     [SerializeField] private float _musicFadeDuration = 2f;
     
+    [Header("Death music")] [SerializeField]
+    private AudioClip _deathMusic;
+
+    [Header("Win music")] [SerializeField]
+    private AudioClip _winMusic;
+    
     private Coroutine _fadeRoutine;
     private bool _isInCombat;
     
     private Dictionary<TileBase, TileSoundSO> _dataFromTile;
+    private Dictionary<AudioClip, float> _lastPlayedTimes = new();
     
     protected override void Awake()
     {
@@ -40,7 +47,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         
         PlayMusic(SceneManager.GetActiveScene().name);
-        PlayCombatMusic(0);
+        // PlayCombatMusic(0);
     }
 
     private void Start()
@@ -92,26 +99,41 @@ public class SoundManager : Singleton<SoundManager>
 
     private void ConfigureAndPlayMusic(AudioClip clip, float volume = 1f)
     {
+        if (_explorationSource == null)
+            return;
+
+        _explorationSource.enabled = true;
+        _explorationSource.gameObject.SetActive(true);
+
         _explorationSource.clip = clip;
         _explorationSource.volume = volume;
         _explorationSource.loop = true;
         _explorationSource.Play();
     }
 
-    private void PlayCombatMusic(float volume = 1f)
+    public void PlayCombatMusic(float volume = 1f)
     {
         if (_combatMusicList.Count == 0)
         {
             Debug.Log("There is no combat music");
             return;
         }
-        
-        var randomClip = _combatMusicList[Random.Range(0, _combatMusicList.Count)];
-        
+
+        if (_combatSource == null)
+            return;
+
+        _combatSource.enabled = true;
+        _combatSource.gameObject.SetActive(true);
+
+        var randomClip =
+            _combatMusicList[Random.Range(0, _combatMusicList.Count)];
+
         _combatSource.clip = randomClip;
         _combatSource.volume = volume;
         _combatSource.loop = true;
         _combatSource.Play();
+
+        StartMusicFade(true);
     }
     
     public void PlayCombatMusic()
@@ -213,11 +235,24 @@ public class SoundManager : Singleton<SoundManager>
 
     private void PlaySFX(AudioClip clip, float volume)
     {
+        if (_lastPlayedTimes.TryGetValue(clip, out var lastTime))
+        {
+            if (Time.time - lastTime < 0.05f)
+                return;
+        }
+
+        _lastPlayedTimes[clip] = Time.time;
+
         foreach (var source in _sfxSources.Where(source => !source.isPlaying))
         {
             source.PlayOneShot(clip, volume);
             return;
         }
+
+        var fallback = _sfxSources[0];
+
+        fallback.Stop();
+        fallback.PlayOneShot(clip, volume);
     }
 
     public float CalculateDistFromPlayerForVolume(Vector2 worldPosition)
@@ -240,6 +275,46 @@ public class SoundManager : Singleton<SoundManager>
     {
         FindMapForSoundManager();
         PlayMusic(scene.name);
+    }
+    
+    public void PlayDeathMusic(float volume = 1f)
+    {
+        StopAllCoroutines();
+
+        _isInCombat = false;
+
+        _explorationSource.Stop();
+        _combatSource.Stop();
+
+        foreach (var source in _sfxSources)
+        {
+            source.Stop();
+        }
+
+        _explorationSource.clip = _deathMusic;
+        _explorationSource.volume = volume;
+        _explorationSource.loop = false;
+        _explorationSource.Play();
+    }
+
+    public void PlayWinMusic(float volume = 1f)
+    {
+        StopAllCoroutines();
+
+        _isInCombat = false;
+
+        _explorationSource.Stop();
+        _combatSource.Stop();
+
+        foreach (var source in _sfxSources)
+        {
+            source.Stop();
+        }
+
+        _explorationSource.clip = _winMusic;
+        _explorationSource.volume = volume;
+        _explorationSource.loop = false;
+        _explorationSource.Play();
     }
 }
 

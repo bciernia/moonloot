@@ -42,11 +42,11 @@ public class CombatManager : Singleton<CombatManager>
     {
         if (isInCombat)
         {
-            SoundManager.Instance.PlayCombatMusic();
+            // SoundManager.Instance.PlayCombatMusic();
         }
         else
         {
-            SoundManager.Instance.StopCombatMusic();
+            // SoundManager.Instance.StopCombatMusic();
         }
 
         //  tutaj w przyszłości:

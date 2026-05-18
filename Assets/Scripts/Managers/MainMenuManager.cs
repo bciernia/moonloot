@@ -9,6 +9,12 @@ public class MainMenuManager : MonoBehaviour
     
     public void StartGame()
     {
+        var gameRoot = GameObject.FindWithTag("GameRoot");
+        var player = GameObject.FindWithTag("Player");
+
+        if (gameRoot != null) Destroy(gameRoot);
+        if (player != null) Destroy(player);
+
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }
@@ -29,7 +35,10 @@ public class MainMenuManager : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        LoadingSceneManager.Instance.LoadScene("MainMenu");
+        
+        Destroy(GameObject.FindWithTag("GameRoot"));
+        Destroy(GameObject.FindWithTag("Player"));
     }
     
     private void OnEnable()
@@ -53,7 +62,7 @@ public class MainMenuManager : MonoBehaviour
         else
         {
             ChangeButtonsVisibility(true);
-            MainMenuSoundManager.Instance.PlayMainMenuMusic();
+            // MainMenuSoundManager.Instance.PlayMainMenuMusic();
         }
     }
 

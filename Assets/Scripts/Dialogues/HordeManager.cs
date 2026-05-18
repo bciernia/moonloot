@@ -137,7 +137,6 @@ public class HordeManager : Singleton<HordeManager>
             Debug.Log("Horde is prepared");
             return;
         }
-
         CurrentMoon = MoonManager.Instance.CurrentMoon;
         
         _hordePrepared = true;
@@ -153,7 +152,7 @@ public class HordeManager : Singleton<HordeManager>
         var pool = NightCycleStep == 3
             ? _nightDatabase.HeroNights
             : _nightDatabase.NormalNights;
-
+            
         if (pool == null || pool.Count == 0)
         {
             CurrentNightLocation = null;
@@ -188,21 +187,27 @@ public class HordeManager : Singleton<HordeManager>
         );
 
         StartCoroutine(WaitForSceneAndSpawn());
+        SoundManager.Instance.PlayCombatMusic(1f);
     }
 
     private System.Collections.IEnumerator WaitForSceneAndSpawn()
     {
         yield return null;
 
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitUntil(() =>
+            FindObjectsOfType<EnemySpawner>().Length > 0 ||
+            FindObjectsOfType<EnemyObjectiveSpawner>().Length > 0
+        );
 
+        yield return new WaitForSeconds(0.2f);
+        
         LootSpawnManager.Instance.SpawnAll();
         SpawnObjectiveItems();
         SpawnNPC();
         SpawnHorde();
     }
     
-    private void CleanupEnemies()
+    public void CleanupEnemies()
     {
         var enemies = FindObjectsOfType<EnemyStatistics>();
 
@@ -317,6 +322,9 @@ public class HordeManager : Singleton<HordeManager>
     
     private void SpawnObjectiveItems()
     {
+        if (CurrentNightLocation != null && CurrentNightLocation.IsBossArena)
+            return;
+        
         if (CurrentMoon == null)
             return;
 
@@ -336,10 +344,8 @@ public class HordeManager : Singleton<HordeManager>
             }
 
             case MoonObjectiveType.DestroyCorruptedTrees:
-            {
-                SpawnCorruptedTrees();
+                SpawnCorruptedVillagers();
                 break;
-            }
             
             case MoonObjectiveType.ActivateObelisks:
                 SpawnObelisks();
@@ -479,7 +485,7 @@ public class HordeManager : Singleton<HordeManager>
         Debug.Log("Night Exploration Stopped");
     }
     
-    private void StopNight()
+    public void StopNight()
     {
         _isNightRunning = false;
 
@@ -609,10 +615,8 @@ public class HordeManager : Singleton<HordeManager>
 
             return;
         }
-
         
         var playerPos = Player.Instance.transform.position;
-
         var minDistance = 12f;
         var maxDistance = 20f;
         var maxAttempts = 10;
@@ -1041,6 +1045,8 @@ public class HordeManager : Singleton<HordeManager>
 
     private void CompleteHorde()
     {
+        SoundManager.Instance.PlayWinMusic();
+        
         Debug.Log($"Horde {currentHorde} completed");
         AdvanceNightCycle();
         _hordePrepared = false;
@@ -1052,9 +1058,16 @@ public class HordeManager : Singleton<HordeManager>
         
         InventoryController.Instance.ChangeGoldAmount(hordeConfig.GetHorde(currentHorde - 1).goldReward + CombatStatsManager.Instance.GoldEarned);
         currentHorde++;
-        OnHordeFinished?.Invoke(currentHorde - 1);
         enemiesPerHorde += enemiesIncreasePerHorde;
         PointsManager.Instance.AddScore(100);
+
+        if (currentHorde > 9)
+        {
+            var points = PointsManager.Instance.GetCurrentScore();
+            DeathScreenManager.Instance.ShowWinScreen(points);
+            return;
+        }
+        OnHordeFinished?.Invoke(currentHorde - 1);
     }
 
     private void FailHorde()
@@ -1219,9 +1232,11 @@ public class HordeManager : Singleton<HordeManager>
     
     public void AddObjectiveProgress(int amount = 1)
     {
+        var oldProgress = CurrentObjectiveProgress;
+        
         CurrentObjectiveProgress += amount;
 
-        CheckObjectiveComplete();
+        CheckObjectiveComplete(oldProgress);
     }
     
     private void RefreshObjective()
@@ -1232,7 +1247,7 @@ public class HordeManager : Singleton<HordeManager>
         CheckObjectiveComplete();
     }
     
-    private void CheckObjectiveComplete()
+    private void CheckObjectiveComplete(int oldProgress = -1)
     {
         if (CurrentMoon == null)
             return;
@@ -1278,10 +1293,13 @@ public class HordeManager : Singleton<HordeManager>
                 break;
         }
 
-        OnObjectiveProgressChanged?.Invoke(
-            CurrentObjectiveProgress,
-            CurrentObjectiveTarget
-        );
+        if (oldProgress != CurrentObjectiveProgress)
+        {
+            OnObjectiveProgressChanged?.Invoke(
+                CurrentObjectiveProgress,
+                CurrentObjectiveTarget
+            );
+        }
 
         var completed =
             CurrentObjectiveProgress >= CurrentObjectiveTarget;
@@ -1295,10 +1313,11 @@ public class HordeManager : Singleton<HordeManager>
         {
             _objectiveCompleted = false;
             RemoveExit();
+            CurrentObjectiveProgress = 0;
         }
     }
     
-    private void SpawnCorruptedTrees()
+    private void SpawnCorruptedVillagers()
     {
         var spawners = FindObjectsOfType<EnemyObjectiveSpawner>().ToList();
         
@@ -1358,4 +1377,6 @@ public class HordeManager : Singleton<HordeManager>
 
         Debug.Log($"Activated obelisks: {_activatedObelisks}/{_spawnedObelisks}");
     }
+
+    public bool IsBossAlive() => _bossAlive;
 }
