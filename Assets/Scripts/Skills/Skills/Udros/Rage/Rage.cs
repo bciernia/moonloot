@@ -13,6 +13,7 @@ public class Rage : Skill
         if (hp != null && hp.CurrentHealth <= HealthCost)
         {
             Debug.Log("Hp is too low");
+            FloatingTextManager.Instance.ShowWarningText("HP is too low", user.transform);
             return false;
         }
 

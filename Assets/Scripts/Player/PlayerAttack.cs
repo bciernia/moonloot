@@ -26,8 +26,9 @@ public class PlayerAttack : MonoBehaviour
     private PlayerStamina _playerStamina;
     private PlayerInput _playerInput;
     private SlashEffect _slash;
-
+    
     private float _currentDmgMultiplier = 1f;
+    private float _attackCooldownMultiplier = 1f;
     private void Awake()
     {
         _playerMana = GetComponent<PlayerMana>();
@@ -110,15 +111,40 @@ public class PlayerAttack : MonoBehaviour
         var elapsed = 0f;
 
         cooldownImage.fillAmount = 0f;
-        while (elapsed < attackCooldown)
+        
+        var finalCooldown =
+            attackCooldown * _attackCooldownMultiplier;
+        
+        while (elapsed < finalCooldown)
         {
             elapsed += Time.deltaTime;
-            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / attackCooldown);
+            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / finalCooldown);
             yield return null;
         }
 
         cooldownImage.fillAmount = 1f;
         canAttack = true;
+    }
+    
+    public void ApplyAttackCooldownMultiplier(
+        float multiplier,
+        float duration)
+    {
+        StartCoroutine(
+            AttackCooldownMultiplierCoroutine(
+                multiplier,
+                duration));
+    }
+
+    private IEnumerator AttackCooldownMultiplierCoroutine(
+        float multiplier,
+        float duration)
+    {
+        _attackCooldownMultiplier *= multiplier;
+
+        yield return new WaitForSeconds(duration);
+
+        _attackCooldownMultiplier /= multiplier;
     }
 
     public void EquipWeapon(WeaponItemSO newItemWeapon)
