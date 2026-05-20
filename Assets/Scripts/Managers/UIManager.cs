@@ -645,7 +645,7 @@ public class UIManager : MonoBehaviour
         
         var moon = MoonManager.Instance.CurrentMoon;
 
-        if (moon != null)
+        if (moon != null && !HordeManager.Instance.IsHeroNight)
         {
             ShowMoonInformation(moon.ObjectiveTextLong);
         }
@@ -943,7 +943,7 @@ public class UIManager : MonoBehaviour
 
         _startNightButton.onClick.RemoveAllListeners();
 
-        if (HordeManager.Instance.NightCycleStep == 3)
+        if (HordeManager.Instance.IsHeroNight)
         {
             SetupHeroNight();
         }
@@ -951,7 +951,7 @@ public class UIManager : MonoBehaviour
         _startNightButton.onClick.AddListener(() =>
         {
             StartSelectedNight(
-                HordeManager.Instance.NightCycleStep == 3
+                HordeManager.Instance.IsHeroNight
                     ? HordeManager.Instance.CurrentHeroNpc
                     : null
             );
