@@ -121,6 +121,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private float moveSpeed = 2000f;
     [SerializeField] private float visibleTime = 5f;
     
+    [Header("Minimap")]
+    [SerializeField] private GameObject _minimapContainer;
+    
     private float _waveTime;
     private bool _isTimerActive;
     
@@ -184,6 +187,8 @@ public class UIManager : MonoBehaviour
 
         RefreshObjectiveVisibility();
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
+        
+        RefreshMinimapVisibility();
     }
 
     private void OnPortalSpawned(Transform exitTransform)
@@ -235,6 +240,7 @@ public class UIManager : MonoBehaviour
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
         RefreshObjectiveVisibility();
+        RefreshMinimapVisibility();
         
         if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
         {
@@ -1243,6 +1249,22 @@ public class UIManager : MonoBehaviour
         var finalPos = moonInformation.anchoredPosition;
         finalPos.x = targetX;
         moonInformation.anchoredPosition = finalPos;
+    }
+
+    #endregion
+
+    #region Minimap
+
+    private void RefreshMinimapVisibility()
+    {
+        if (_minimapContainer == null)
+            return;
+
+        var shouldShow =
+            !LoadingSceneManager.Instance.IsSceneTown()
+            && !LoadingSceneManager.Instance.IsInMainMenu();
+
+        _minimapContainer.SetActive(shouldShow);
     }
 
     #endregion
