@@ -10,7 +10,6 @@ public class ShopManager : Singleton<ShopManager>
     [SerializeField] public GameObject ShopPanel;
     [SerializeField] private UIInventoryItem itemPrefab;
     [SerializeField] private RectTransform shopContainer;
-    [SerializeField] private TextMeshProUGUI PanelNameTMP;
     [SerializeField] private TextMeshProUGUI MoneyAmountTMP;
     [SerializeField] private GameObject TabPanel;
 
@@ -27,7 +26,6 @@ public class ShopManager : Singleton<ShopManager>
         InventoryPanel.SetActive(true);
         ShopPanel.SetActive(true);
         InventoryType = inventoryType;
-        SetPanelName(panelName);
         SetMoneyAmountVisibility();        
         InitializeSellerEquipment(SellerInventory);
         InventoryController.Instance.PrepareSellerInventoryData(sellerInventory);
@@ -37,7 +35,6 @@ public class ShopManager : Singleton<ShopManager>
         PauseManager.Instance.RequestPause();
     }
 
-    private void SetPanelName(string panelName) => PanelNameTMP.text = panelName;
     
     private void SetMoneyAmountVisibility()
     {
