@@ -1,6 +1,6 @@
 public enum MoonObjectiveType
 {
-    KillEnemies,
+    KilledEnemies,
     CollectKnowledge,
     DestroyCorruptedTrees,
     FindMimics,

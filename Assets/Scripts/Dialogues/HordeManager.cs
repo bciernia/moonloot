@@ -997,7 +997,7 @@ public class HordeManager : Singleton<HordeManager>
         }
         
         if (_currentObjective != HordeObjective.BossArena &&
-            CurrentMoon.ObjectiveType == MoonObjectiveType.KillEnemies)
+            CurrentMoon.ObjectiveType == MoonObjectiveType.KilledEnemies)
         {
             AddObjectiveProgress(1);
         }
@@ -1252,9 +1252,12 @@ public class HordeManager : Singleton<HordeManager>
         if (CurrentMoon == null)
             return;
 
+        // SPRAWDZIĆ CZY JAK SIE ZBUDUJE, ODPALI, POGRA, KUPI RZECZY W SKLEPIE, zarobi kase i zrestartuje, to czy zawsze zostaje to samo
+            // i dołożyć losowanie startowej broni
+        
         switch (CurrentMoon.ObjectiveType)
         {
-            case MoonObjectiveType.KillEnemies:
+            case MoonObjectiveType.KilledEnemies:
             {
                 CurrentObjectiveProgress = Mathf.Clamp(
                     CurrentObjectiveProgress,
