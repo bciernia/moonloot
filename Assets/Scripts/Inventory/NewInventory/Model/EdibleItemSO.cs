@@ -25,13 +25,13 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
             return true;
         }
         
-        if (GameManager.Instance.Player.PlayerHealth.CanRestoreHealth())
+        if (GameManager.Instance.Player.PlayerHealth.CanRestoreHealth() && HealthValue > 0)
         {
             GameManager.Instance.Player.PlayerHealth.RestoreHealth(HealthValue);
             restoredStats = true;
         }
         
-        if (GameManager.Instance.Player.PlayerHealth.CanRestoreMana())
+        if (GameManager.Instance.Player.PlayerHealth.CanRestoreMana() && ManaValue > 0)
         {
             GameManager.Instance.Player.PlayerHealth.RestoreMana(ManaValue);
             restoredStats = true;

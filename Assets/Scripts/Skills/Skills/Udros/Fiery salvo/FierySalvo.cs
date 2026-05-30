@@ -12,9 +12,6 @@ public class FierySalvo : Skill
     {
         if (user == null) return false;
 
-        var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
-
         var attack = user.GetComponent<PlayerAttack>();
         if (attack == null) return false;
 

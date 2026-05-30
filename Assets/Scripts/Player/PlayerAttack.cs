@@ -82,10 +82,12 @@ public class PlayerAttack : MonoBehaviour
         // return false;
         // }
 
-        if (!_playerMana.TryUseMana(requiredMana))
-        {
-            return false;
-        }
+        
+        //MANA SYSTEM DISABLED FOR NOW
+        // if (!_playerMana.TryUseMana(requiredMana))
+        // {
+        //     return false;
+        // }
 
         _playerStamina.UseStamina(requiredStamina);
         return true;

@@ -9,9 +9,6 @@ public class WolfSpeed : Skill
     {
         if (user == null) return false;
 
-        var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && mana.TryUseMana(ManaCost)) return false;
-
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
         var speed = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.SpeedMultiplier, SpeedMultiplier);
         

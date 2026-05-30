@@ -78,6 +78,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
     public void RestoreMana(float amount)
     {
         _playerStats.MP = Mathf.Min(_playerStats.MP + amount, _playerStats.GetMaxMp());
+        FloatingTextManager.Instance.ShowManaText(amount, transform);
     }
     
     public bool CanRestoreHealth()

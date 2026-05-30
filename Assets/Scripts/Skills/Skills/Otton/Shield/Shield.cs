@@ -10,8 +10,6 @@ public class Shield : Skill
     public override bool Activate(GameObject user)
     {
         if (user == null) return false;
-        var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
         
         var playerHealth = user.GetComponent<PlayerHealth>();
 
