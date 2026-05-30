@@ -227,7 +227,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryUI.CreateDraggedItem(item.item.Image, item.quantity);
     }
 
-    public void HandleSwapItems(int itemIndex_1, int itemIndex_2, string inventoryUiName)
+    private void HandleSwapItems(int itemIndex_1, int itemIndex_2, string inventoryUiName)
     {
         if (itemIndex_1 == -1 || itemIndex_2 == -1)
         {
