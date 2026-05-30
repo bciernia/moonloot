@@ -145,13 +145,13 @@ public class SoundManager : Singleton<SoundManager>
         StartMusicFade(true);
     }
     
-    public void PlayCombatMusic()
-    {
-        if (_isInCombat) return;
-
-        _isInCombat = true;
-        StartMusicFade(true);
-    }
+    // public void PlayCombatMusic()
+    // {
+    //     if (_isInCombat) return;
+    //
+    //     _isInCombat = true;
+    //     StartMusicFade(true);
+    // }
     
     public void StopCombatMusic()
     {

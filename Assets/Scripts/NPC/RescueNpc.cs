@@ -8,7 +8,7 @@ public class RescueNpc : MonoBehaviour
 
     private VillageNpcRuntime _runtime;
 
-    public bool IsSaved() => LoadingSceneManager.Instance.IsSceneTown(); 
+    public bool IsSaved() => LoadingSceneManager.Instance.IsSceneBase(); 
     public VillageNpcRuntime GetRuntime() => _runtime;
     
     public void SetRuntime(VillageNpcRuntime runtime)

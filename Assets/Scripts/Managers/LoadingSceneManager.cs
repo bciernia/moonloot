@@ -123,7 +123,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         WorldManager.Instance.AssignPlacesIfNeeded();
         WorldManager.Instance.SpawnNPCs();
 
-        if (IsSceneTown())
+        if (IsSceneBase())
         {
             SoundManager.Instance.StopCombatMusic();
             ExecuteFunctionsForMainTownScene();
@@ -178,7 +178,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     }
 
 
-    public bool IsSceneTown() => SceneManager.GetActiveScene().name == "Meadowrest";
+    public bool IsSceneBase() => SceneManager.GetActiveScene().name == "Base";
     public bool IsInMainMenu() => SceneManager.GetActiveScene().name == "MainMenu";
 
     public async void LoadMainMenu()

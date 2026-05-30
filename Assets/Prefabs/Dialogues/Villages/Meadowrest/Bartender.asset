@@ -1,6 +1,127 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-818609662786191868
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Bartender
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-03-27@20:29:40
+  editTime: 2026-05-30@13:48:19
+  nodes:
+  - rid: 4348855053382844416
+  - rid: 4348855053382844417
+  - rid: 4348855053382844418
+  - rid: 4348855053382844419
+  translationLibrary: {fileID: 2767970370104310347}
+  maxID: 76705
+  references:
+    version: 2
+    RefIds:
+    - rid: 4348855053382844416
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76694
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 76695
+          attachedIds: 992b0100
+          ownerId: 76694
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -2985.6755
+        yPosition: -3830.609
+        entryPointName: 
+    - rid: 4348855053382844417
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76696
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 76697
+          attachedIds: 972b0100
+          ownerId: 76696
+          connectionType: 1
+        outputs:
+        - id: 76698
+          attachedIds: 9c2b0100
+          ownerId: 76696
+          connectionType: 1
+        width: 268
+        height: 143.125
+        xPosition: -2803.7402
+        yPosition: -3831.1438
+        items:
+        - rid: 4348855053382844420
+        characterName: Bartender
+        icon: 
+    - rid: 4348855053382844418
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76699
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 76700
+          attachedIds: 9a2b0100
+          ownerId: 76699
+          connectionType: 1
+        outputs:
+        - id: 76701
+          attachedIds: 9f2b0100
+          ownerId: 76699
+          connectionType: 1
+        width: 268
+        height: 210.3125
+        xPosition: -2481.2402
+        yPosition: -3770.8313
+        items:
+        - rid: 4348855053382844421
+        characterName: Bartender
+        icon: 
+    - rid: 4348855053382844419
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76702
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 76703
+          attachedIds: 9d2b0100
+          ownerId: 76702
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -2003.1777
+        yPosition: -3541.144
+        exitPointName: 
+    - rid: 4348855053382844420
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Welcome to my inn.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 4348855053382844421
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: This is where you will meet  heroes and villagers you will save.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &2767970370104310347
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -491,124 +612,3 @@ MonoBehaviour:
     - id: 74
       language: fr
       text: 
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
-  m_Name: Bartender
-  m_EditorClassIdentifier: 
-  version: 1.8.4
-  creationTime: 2026-03-27@20:29:40
-  editTime: 2026-05-18@20:28:07
-  nodes:
-  - rid: 4348854787880255488
-  - rid: 4348854787880255489
-  - rid: 4348854787880255490
-  - rid: 4348854787880255491
-  translationLibrary: {fileID: -818609662786191868}
-  maxID: 76704
-  references:
-    version: 2
-    RefIds:
-    - rid: 4348854787880255488
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 76694
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 76695
-          attachedIds: 992b0100
-          ownerId: 76694
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: -2985.6755
-        yPosition: -3830.609
-        entryPointName: 
-    - rid: 4348854787880255489
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 76696
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 76697
-          attachedIds: 972b0100
-          ownerId: 76696
-          connectionType: 1
-        outputs:
-        - id: 76698
-          attachedIds: 9c2b0100
-          ownerId: 76696
-          connectionType: 1
-        width: 268
-        height: 143.125
-        xPosition: -2803.7402
-        yPosition: -3831.1438
-        items:
-        - rid: 4348854787880255492
-        characterName: Bartender
-        icon: 
-    - rid: 4348854787880255490
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 76699
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 76700
-          attachedIds: 9a2b0100
-          ownerId: 76699
-          connectionType: 1
-        outputs:
-        - id: 76701
-          attachedIds: 9f2b0100
-          ownerId: 76699
-          connectionType: 1
-        width: 268
-        height: 304.0625
-        xPosition: -2449.9902
-        yPosition: -3737.0813
-        items:
-        - rid: 4348854787880255493
-        characterName: Bartender
-        icon: 
-    - rid: 4348854787880255491
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 76702
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 76703
-          attachedIds: 9d2b0100
-          ownerId: 76702
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: -2013.1777
-        yPosition: -3503.644
-        exitPointName: 
-    - rid: 4348854787880255492
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Welcome to my inn.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 4348854787880255493
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: This is where you will meet  heroes and villagers you will save.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0

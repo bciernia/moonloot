@@ -76,7 +76,7 @@ public class WorldManager : Singleton<WorldManager>
                 if (worker != null)
                     worker.SetRuntime(npc);
 
-                if (LoadingSceneManager.Instance.IsSceneTown())
+                if (LoadingSceneManager.Instance.IsSceneBase())
                 {
                     StartCoroutine(AssignNextFrame(npc));
                 }

@@ -908,7 +908,7 @@ public class UIManager : MonoBehaviour
     
     private void SpawnNPCButtons()
     {
-        if (!LoadingSceneManager.Instance.IsSceneTown())
+        if (!LoadingSceneManager.Instance.IsSceneBase())
             return;
 
         if (_npcContainer == null) return;
@@ -1185,7 +1185,7 @@ public class UIManager : MonoBehaviour
             return;
 
         var isTown =
-            LoadingSceneManager.Instance.IsSceneTown() || LoadingSceneManager.Instance.IsInMainMenu();
+            LoadingSceneManager.Instance.IsSceneBase() || LoadingSceneManager.Instance.IsInMainMenu();
 
         var hasMoon =
             MoonManager.Instance.CurrentMoon != null;
@@ -1261,7 +1261,7 @@ public class UIManager : MonoBehaviour
             return;
 
         var shouldShow =
-            !LoadingSceneManager.Instance.IsSceneTown()
+            !LoadingSceneManager.Instance.IsSceneBase()
             && !LoadingSceneManager.Instance.IsInMainMenu();
 
         _minimapContainer.SetActive(shouldShow);
