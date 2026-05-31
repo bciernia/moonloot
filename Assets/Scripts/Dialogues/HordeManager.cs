@@ -1190,7 +1190,8 @@ public class HordeManager : Singleton<HordeManager>
 
         if (!isBossArena && SelectedNpc != null)
         {
-            npcsToSpawn.Add(SelectedNpc);
+            Debug.LogError("NPC SPAWNED");
+            //npcsToSpawn.Add(SelectedNpc);
         }
         else
         {
@@ -1207,12 +1208,12 @@ public class HordeManager : Singleton<HordeManager>
 
         Shuffle(availableWorkers);
 
-        for (int i = 0; i < workerCount && i < availableWorkers.Count; i++)
+        for (var i = 0; i < workerCount && i < availableWorkers.Count; i++)
         {
             npcsToSpawn.Add(new VillageNpcRuntime(availableWorkers[i]));
         }
 
-        for (int i = 0; i < npcsToSpawn.Count; i++)
+        for (var i = 0; i < npcsToSpawn.Count; i++)
         {
             if (i >= spawners.Count)
             {
