@@ -8,4 +8,6 @@ public enum BonusType
     MaxHp,
     MaxMp,
 
+    AttackCooldownReduction,
+    
 }

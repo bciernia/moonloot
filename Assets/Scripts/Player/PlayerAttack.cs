@@ -113,19 +113,32 @@ public class PlayerAttack : MonoBehaviour
         var elapsed = 0f;
 
         cooldownImage.fillAmount = 0f;
+
+        var cooldown = GetCurrentAttackCooldown();
         
-        var finalCooldown =
-            attackCooldown * _attackCooldownMultiplier;
-        
-        while (elapsed < finalCooldown)
+        while (elapsed < cooldown)
         {
             elapsed += Time.deltaTime;
-            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / finalCooldown);
+            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / cooldown);
             yield return null;
         }
 
         cooldownImage.fillAmount = 1f;
         canAttack = true;
+    }
+    
+    public float GetCurrentAttackCooldown()
+    {
+        var cooldownReduction =
+            _playerStats.GetBonusValue(
+                BonusType.AttackCooldownReduction);        
+        
+        return Mathf.Max(
+            0.1f,
+            attackCooldown *
+            _attackCooldownMultiplier *
+            (1f - cooldownReduction)
+        );
     }
     
     public void ApplyAttackCooldownMultiplier(

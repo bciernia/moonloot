@@ -39,7 +39,28 @@ public class WeaponItemSO : EquippableItemSO, IItemAction
     public override string GetStatsDescription()
     {
         var description = $"Damage: {Damage} \n";
-        description += $"Attack cooldown: {timeBetweenAttack} \n";
+        
+        var player = Player.Instance;
+
+        if (player != null)
+        {
+            var playerStats = player.PlayerStats;
+            var cooldownReduction = playerStats.GetBonusValue(
+                    BonusType.AttackCooldownReduction);
+            
+            var cooldown = Mathf.Max(
+                0.1f,
+                timeBetweenAttack *
+                (1f - cooldownReduction)
+            );
+            
+            description += $"Attack cooldown: {cooldown} \n";
+        }
+        else
+        {
+            description += $"Attack cooldown: {timeBetweenAttack} \n";
+        }
+        
         
         if (ProjectilePrefab?.ProjectileSo?.ManaCost > 0)
         {

@@ -1009,8 +1009,14 @@ public class UIManager : MonoBehaviour
         var finalSpeed = movement.GetFinalSpeed();
         PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
 
-        SetCriticalStatistics();
+        var attackCooldownReduction =
+            _playerStatsSo.GetBonusValue(
+                BonusType.AttackCooldownReduction);
+
+        PlayerStatisticsManager.Instance.SetAttackCooldownPercent(
+            attackCooldownReduction * 100f);
         
+        SetCriticalStatistics();
         
         Player.Instance.PlayerAttack.RecalculateDamage();
     }
@@ -1036,7 +1042,7 @@ public class UIManager : MonoBehaviour
 
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
-
+            BonusType.AttackCooldownReduction => $"+{bonus.Value:0}% Attack Speed",
             _ => bonus.Type.ToString()
         };
     }
