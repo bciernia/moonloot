@@ -39,6 +39,12 @@ public class FloatingText : MonoBehaviour
         floatingTextTMP.text = text;
     }
     
+    public void SetFloatingGoldText(string text)
+    {
+        floatingTextTMP.color = Color.gold;
+        floatingTextTMP.text = text;
+    }
+    
     public void SetFloatingText(string text)
     {
         floatingTextTMP.text = text;

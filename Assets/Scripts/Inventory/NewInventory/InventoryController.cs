@@ -21,7 +21,9 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         PrepareUI();
         PrepareInventoryData();
+        inventoryData.Lunar = 50;
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
+        Debug.Log("TEST");
     }
     
     private void ChangeGoldAmount(GoldItemSO gold)

@@ -14,7 +14,9 @@ public class MainMenuManager : MonoBehaviour
 
         if (gameRoot != null) Destroy(gameRoot);
         if (player != null) Destroy(player);
-
+        
+        ES3.DeleteFile();
+        
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }

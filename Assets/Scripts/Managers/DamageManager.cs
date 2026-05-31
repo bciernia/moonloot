@@ -35,4 +35,10 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
         var floatingText = Instantiate(textPrefab, parent);
         floatingText.SetFloatingWarningText(text);
     }
+
+    public void ShowGoldText(int goldForEnemy, Transform parent)
+    {
+        var floatingText = Instantiate(textPrefab, parent);
+        floatingText.SetFloatingGoldText($"+{goldForEnemy}");
+    }
 }

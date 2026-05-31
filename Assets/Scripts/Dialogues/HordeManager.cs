@@ -99,6 +99,8 @@ public class HordeManager : Singleton<HordeManager>
             ? CurrentMoon.RequiredAmount
             : 0;
     
+    private NightLocationSO _lastNightLocation;
+    
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
     public Action<int, int> OnObjectiveProgressChanged;
@@ -158,8 +160,20 @@ public class HordeManager : Singleton<HordeManager>
             CurrentNightLocation = null;
             return;
         }
+        
+        var availableLocations = pool
+            .Where(x => x != _lastNightLocation)
+            .ToList();
 
-        CurrentNightLocation = pool[Random.Range(0, pool.Count)];
+        if (availableLocations.Count == 0)
+        {
+            availableLocations = pool.ToList();
+        }
+
+        CurrentNightLocation =
+            availableLocations[Random.Range(0, availableLocations.Count)];
+        
+        _lastNightLocation = CurrentNightLocation;
 
         Debug.Log($"SELECTED NIGHT: {CurrentNightLocation.name}");
         Debug.Log($"SCENE TO LOAD: {CurrentNightLocation.SceneName}");
@@ -220,6 +234,7 @@ public class HordeManager : Singleton<HordeManager>
     public void OnPlayerExit()
     {
         Debug.Log("Player exited");
+        SoundManager.Instance.StopCombatMusic();
 
         StopNight();
 
@@ -1015,6 +1030,8 @@ public class HordeManager : Singleton<HordeManager>
         
         CombatStatsManager.Instance.GoldEarned += goldForEnemy;
         
+        FloatingTextManager.Instance.ShowGoldText(goldForEnemy, Player.Instance.transform);
+        
         if (_currentObjective == HordeObjective.DefendObject) return;
         
         _aliveEnemies--;
@@ -1083,6 +1100,8 @@ public class HordeManager : Singleton<HordeManager>
 
     public void ReturnToPreviousScene()
     {
+        SoundManager.Instance.StopCombatMusic();
+        
         if (string.IsNullOrEmpty(_previousScene))
         {
             Debug.LogWarning("No previous scene saved!");
@@ -1121,7 +1140,7 @@ public class HordeManager : Singleton<HordeManager>
                 break;
 
             case HordeMutation.BrutalEnemies:
-                stats.Damage *= 1.5f;
+                // stats.Damage *= 1.5f;
                 break;
             case HordeMutation.None:
             default:
@@ -1227,7 +1246,7 @@ public class HordeManager : Singleton<HordeManager>
     
     private float GetHordeMultiplier()
     {
-        return 1f + (currentHorde - 1) * 0.2f;
+        return 1f + (currentHorde - 1) * 0.02f;
     }
     
     public void AddObjectiveProgress(int amount = 1)

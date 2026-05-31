@@ -123,16 +123,9 @@ public class SoundManager : Singleton<SoundManager>
     public void PlayCombatMusic(float volume = 1f)
     {
         if (_combatMusicList.Count == 0)
-        {
-            Debug.Log("There is no combat music");
-            return;
-        }
-
-        if (_combatSource == null)
             return;
 
-        _combatSource.enabled = true;
-        _combatSource.gameObject.SetActive(true);
+        _isInCombat = true;
 
         var randomClip =
             _combatMusicList[Random.Range(0, _combatMusicList.Count)];
@@ -155,11 +148,9 @@ public class SoundManager : Singleton<SoundManager>
     
     public void StopCombatMusic()
     {
-        if (!_isInCombat) return;
-
         _isInCombat = false;
         StartMusicFade(false);
-    } 
+    }
     
     private void StartMusicFade(bool toCombat)
     {
