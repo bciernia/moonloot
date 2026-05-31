@@ -1052,7 +1052,7 @@ public class HordeManager : Singleton<HordeManager>
         if (isElite)
             return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(10, 20) * CurrentMoon.GoldMultiplier);
             
-        return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(2, 5) * CurrentMoon.GoldMultiplier);
+        return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(4, 8) * CurrentMoon.GoldMultiplier);
     }
     
     private GameObject GetRandomEnemy(List<GameObject> enemyList)
