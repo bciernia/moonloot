@@ -27,8 +27,64 @@ public class NPCStatUpgrade : MonoBehaviour
         return true;
     }
 
-    public string GetItemNameToUpgrade() => npc.UpgradeLevels[GetLevel()].ItemName;
+    public string GetItemNameToUpgrade() => npc.UpgradeLevels[GetLevel()].Item.Name;
     public string GetItemAmountToUpgrade() => npc.UpgradeLevels[GetLevel()].RequiredAmount.ToString();
+    
+    public string GetStatName()
+    {
+        if (npc.UpgradeLevels.Count == 0)
+            return string.Empty;
+
+        if (npc.UpgradeLevels[0].Bonuses.Count == 0)
+            return string.Empty;
+
+        return GetBonusDisplayName(
+            npc.UpgradeLevels[0].Bonuses[0].Type
+        );
+    }
+    
+    public ItemSO GetRequiredItem()
+    {
+        return npc.UpgradeLevels[GetLevel()].Item;
+    }
+
+    public int GetRequiredAmount()
+    {
+        return npc.UpgradeLevels[GetLevel()].RequiredAmount;
+    }
+
+    public int GetRequiredGold()
+    {
+        return npc.UpgradeLevels[GetLevel()].GoldAmount;
+    }
+    
+    public float GetCurrentBonusValue()
+    {
+        float total = 0;
+
+        var currentLevel = GetLevel();
+
+        for (var i = 0; i < currentLevel; i++)
+        {
+            total += npc.UpgradeLevels[i].Bonuses[0].Value;
+        }
+
+        return total;
+    }
+    
+    public float GetNextBonusValue()
+    {
+        var total = GetCurrentBonusValue();
+
+        var currentLevel = GetLevel();
+
+        if (currentLevel >= npc.UpgradeLevels.Count)
+            return total;
+
+        total += npc.UpgradeLevels[currentLevel].Bonuses[0].Value;
+
+        return total;
+    }
     
     //Musi być public bo użyte w dialogach
     public int GetLevel()
@@ -46,7 +102,10 @@ public class NPCStatUpgrade : MonoBehaviour
         return currentLevel.ToString();
     }
 
+    public BonusType GetNpcBonus() => npc.UpgradeLevels[0].Bonuses[0].Type;
+    
     public string GetNpcName() => npc.Name;
+    public string GetNpcProfession() => npc.Profession;
 
     public bool TryUnlockSkill() => _runtimeNpc.GrantedSkill != null && PlayerSkillManager.Instance.UnlockSkill(_runtimeNpc.GrantedSkill);
     
@@ -78,4 +137,29 @@ public class NPCStatUpgrade : MonoBehaviour
     }
     
     public string GetGrantedSkillDescription => _runtimeNpc.GrantedSkill.NpcDescription;
+    
+    public void OpenStatPanel()
+    {
+        NPCUpgradePanelManager.Instance.Show(this);
+    }
+    
+    private string GetBonusDisplayName(BonusType bonusType)
+    {
+        return bonusType switch
+        {
+            BonusType.Damage => "Damage",
+            BonusType.MoveSpeed => "Move Speed",
+            BonusType.CritChance => "Critical Chance",
+            BonusType.CritMultiplier => "Critical Damage",
+            BonusType.MaxHp => "Maximum HP",
+            BonusType.MaxMp => "Maximum Mana",
+            BonusType.AttackCooldownReduction => "Attack Speed",
+            _ => bonusType.ToString()
+        };
+    }
+    
+    public int GetMaxLevel()
+    {
+        return npc.UpgradeLevels.Count;
+    }
 }
