@@ -62,4 +62,24 @@ public class AuraOfKnowledge : Skill
 
         return true;
     }
+
+    public override string GetDescription()
+    {
+        var targetCount =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.TargetCount,
+                enemyCountForAura
+            );
+
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                showCooldownDuration
+            );
+        
+        return
+            $"You pierce the illusion of time itself.\nUp to {targetCount} enemies within range are marked with prophetic sigils, revealing the exact moment of their next strike for {duration} seconds.\n\nKnowledge is not power — it is survival.";
+    }
 }

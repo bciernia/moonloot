@@ -60,4 +60,24 @@ public class Roots : Skill
 
         return true;
     }
+
+    public override string GetDescription()
+    {
+        var targetCount =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.TargetCount,
+                enemyCountForRoot
+            );
+
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                ActiveTime
+            );
+
+        return
+            $"Ancient roots burst from the earth, binding up to {targetCount} enemies in place for {duration} seconds.\n\nThe forest remembers every trespass.";
+    }
 }

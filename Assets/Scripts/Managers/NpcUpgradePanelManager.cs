@@ -1,12 +1,14 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
 {
     [Header("Panels")]
     [SerializeField] private GameObject mainPanel;
     [SerializeField] private GameObject upgradePanel;
+    [SerializeField] private GameObject skillPanel;
     [SerializeField] private GameObject pricePanel;
     [SerializeField] private GameObject fullyUpgradedPanel;
 
@@ -21,6 +23,11 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
     [SerializeField] private TMP_Text npcNameAndLevel;
     [SerializeField] private TMP_Text statName;
     [SerializeField] private TMP_Text statUpgrade;
+    
+    [Header("Skill")]
+    [SerializeField] private TMP_Text skillName;
+    [SerializeField] private TMP_Text skillUpgrade;
+    [SerializeField] private Image skillSprite;
 
     [Header("Prices")]
     [SerializeField] private GameObject priceContainer;
@@ -133,6 +140,7 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         if (npcLevel >= maxLevel)
         {
             upgradePanel.SetActive(false);
+            skillPanel.SetActive(false);
             pricePanel.SetActive(false);
             fullyUpgradedPanel.SetActive(true);
             upgradeBtn.SetActive(false);
@@ -141,6 +149,7 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         }
 
         upgradePanel.SetActive(true);
+        skillPanel.SetActive(true);
         pricePanel.SetActive(true);
         fullyUpgradedPanel.SetActive(false);
         upgradeBtn.SetActive(true);
@@ -152,6 +161,10 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
             $" -> " +
             $"{_currentNpc.GetNextBonusValue()}{GetPercentForBonuses(_currentNpc.GetNpcBonus())}";
 
+        skillName.text = _currentNpc.GetGrantedSkillName();
+        skillSprite.sprite = _currentNpc.GetGrantedSkillIcon();
+        skillUpgrade.text = _currentNpc.GetSkillUpgradeText();
+        
         var item = _currentNpc.GetRequiredItem();
 
         var itemElement =

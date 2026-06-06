@@ -41,4 +41,12 @@ public class Rage : Skill
 
         return true;
     }
+
+    public override string GetDescription()
+    {
+        var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+
+        return
+            $"Pain feeds your strength.\nFor {duration} seconds, your damage is increased by 50%, as your blows strike with unrestrained fury.";
+    }
 }

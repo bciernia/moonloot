@@ -1,4 +1,4 @@
-using System;
+using Unity.Collections;
 using UnityEngine;
 
 public class NPCStatUpgrade : MonoBehaviour
@@ -23,6 +23,19 @@ public class NPCStatUpgrade : MonoBehaviour
         if (!success) return false;
         
         NPCManager.Instance.ApplyNPC(_runtimeNpc);
+
+        if (_runtimeNpc.GrantedSkill != null)
+        {
+            if (!IsSkillUnlocked())
+            {
+                TryUnlockSkill();
+            }
+            else
+            {
+                TryUpgradeSkill();
+            }
+        }
+        
         Debug.Log("Upgrade + bonus applied");
         return true;
     }
@@ -130,12 +143,8 @@ public class NPCStatUpgrade : MonoBehaviour
     
     public bool IsSkillUnlocked() => PlayerSkillManager.Instance.IsUnlocked(_runtimeNpc.GrantedSkill);
 
-    public string GetGrantedSkillName()
-    {
-        var test = _runtimeNpc.GrantedSkill.Name;
-        return test;
-    }
-    
+    public string GetGrantedSkillName() => _runtimeNpc.GrantedSkill.Name;
+    public Sprite GetGrantedSkillIcon() => _runtimeNpc.GrantedSkill.Icon;
     public string GetGrantedSkillDescription => _runtimeNpc.GrantedSkill.NpcDescription;
     
     public void OpenStatPanel()
@@ -162,4 +171,68 @@ public class NPCStatUpgrade : MonoBehaviour
     {
         return npc.UpgradeLevels.Count;
     }
+    
+    public SkillStatModifier GetSkillModifier()
+    {
+        if (npc.SkillStatModifiers == null || npc.SkillStatModifiers.Count == 0)
+            return null;
+
+        return npc.SkillStatModifiers[0];
+    }
+    
+    public string GetSkillUpgradeText()
+    {
+        var modifier = GetSkillModifier();
+
+        if (modifier == null)
+            return string.Empty;
+
+        if (!IsSkillUnlocked())
+            return "Unlock";
+
+        var currentLevel = GetLevel();
+
+        var currentValue = modifier.value;
+        var nextValue = modifier.value * currentLevel;
+
+        return $"{GetSkillStatName(modifier.statType)} {FormatValue(modifier.statType, currentValue)} -> {FormatValue(modifier.statType, nextValue)}";
+    }
+    
+    private string GetSkillStatName(SkillStatType type)
+    {
+        return type switch
+        {
+            SkillStatType.Radius => "Radius",
+            SkillStatType.Duration => "Duration",
+            SkillStatType.Cooldown => "Cooldown",
+            SkillStatType.Damage => "Damage",
+            SkillStatType.ProjectileCount => "Projectiles",
+            SkillStatType.ProjectileInterval => "Interval",
+            SkillStatType.TargetCount => "Targets",
+            SkillStatType.ShieldReduction => "Shield Reduction",
+            SkillStatType.ManaCost => "Mana Cost",
+            SkillStatType.DamageMultiplier => "Damage Multiplier",
+            SkillStatType.SpeedMultiplier => "Speed Multiplier",
+            SkillStatType.HealAmount => "Heal amount",
+            _ => type.ToString()
+        };
+    }
+    
+    private string FormatValue(SkillStatType type, float value)
+    {
+        return type switch
+        {
+            SkillStatType.Duration => $"{value:0.#}s",
+            SkillStatType.Cooldown => $"{value:0.#}s",
+            SkillStatType.ProjectileInterval => $"{value:0.#}s",
+
+            SkillStatType.DamageMultiplier => $"{value:0.#}%",
+            SkillStatType.SpeedMultiplier => $"{value:0.#}%",
+            SkillStatType.ShieldReduction => $"{value:0.#}%",
+
+            _ => value.ToString("0.#")
+        };
+    }
+    
+    
 }

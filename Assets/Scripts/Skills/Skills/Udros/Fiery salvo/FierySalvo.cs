@@ -46,4 +46,12 @@ public class FierySalvo : Skill
         projectile.Direction = Vector3.right;
         projectile.Damage = _projectileSo.Damage;
     }
+
+    public override string GetDescription()
+    {
+        var skillDuration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, duration);
+        
+        return
+            $"Udros ignites your wrath.\nYou unleash a barrage of fireballs, one each second, culminating in a devastating fivefold inferno. Let the battlefield burn for {skillDuration} seconds.";
+    }
 }

@@ -324,16 +324,14 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     private void ActivateSkill(Skill skill)
     {
         Debug.Log("Skill activate: " + skill.Name);
-
-        
         if (!skill.Activate(user))
             return;
 
         var runtime = GetRuntime(skill);
 
         runtime.state = SkillState.active;
-        runtime.activeTimer = skill.ActiveTime;
-        runtime.cooldownTimer = skill.Cooldown;
+        runtime.activeTimer = GetSkillDuration(skill);
+        runtime.cooldownTimer = GetSkillCooldown(skill);
 
         SoundManager.Instance.PlaySound(skill.SFX, 1f);
     }
@@ -407,13 +405,17 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
             if (runtime.state == SkillState.cooldown && entry.skill.Cooldown > 0)
             {
+                var cooldown = GetSkillCooldown(entry.skill);
+                
                 entry.cooldownImage.fillAmount =
-                    1f - (runtime.cooldownTimer / entry.skill.Cooldown);
+                    1f - (runtime.cooldownTimer / cooldown);
             }
             else if (runtime.state == SkillState.active && entry.skill.ActiveTime > 0)
             {
+                var activeDuration = GetSkillDuration(entry.skill);
+
                 entry.cooldownImage.fillAmount =
-                    runtime.activeTimer / entry.skill.ActiveTime;
+                    runtime.activeTimer / activeDuration;
             }
             else
             {
@@ -487,6 +489,26 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         public float cooldownTimer;
         public float activeTimer;
         public SkillState state;
+    }
+    
+    #endregion
+    
+    #region Helpers
+    
+    private float GetSkillDuration(Skill skill)
+    {
+        return PlayerSkillManager.Instance.GetSkillStat(
+            skill,
+            SkillStatType.Duration,
+            skill.ActiveTime);
+    }
+    
+    private float GetSkillCooldown(Skill skill)
+    {
+        return PlayerSkillManager.Instance.GetSkillStat(
+            skill,
+            SkillStatType.Cooldown,
+            skill.Cooldown);
     }
     
     #endregion
