@@ -117,7 +117,7 @@ public class UIInventoryPage : MonoBehaviour
         var index = listOfUiItems.IndexOf(targetInventoryItemUi);
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(targetInventoryItemUi);
         var draggedInventoryItemUiName = draggedInventoryItemUi.gameObject.name;
-
+        Debug.Log($"itemDraggedFrom = {itemDraggedFrom}");
         if (itemDraggedFrom == ItemDraggedFrom.Shop && (targetInventoryItemUi.CompareTag("EquippedItem") || targetInventoryItemUi.CompareTag("PlayerItem")))
         {
             var itemToBuy = ShopManager.Instance.SellerInventory.GetItemAt(currentlyDraggedItemIndex);
@@ -160,6 +160,9 @@ public class UIInventoryPage : MonoBehaviour
 
     public void HandleBeginDrag(UIInventoryItem inventoryItemUi)
     {
+        currentlyDraggedItemIndex = -1;
+        itemDraggedFrom = ItemDraggedFrom.Player;
+        
         var index = listOfUiItems.IndexOf(inventoryItemUi);
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
         if (index == -1 && indexOfSellerItem == -1 && !inventoryItemUi.CompareTag("EquippedItem"))
@@ -196,6 +199,7 @@ public class UIInventoryPage : MonoBehaviour
 
     public void HandleItemSelection(UIInventoryItem inventoryItemUi)
     {
+        Debug.Log($"itemDraggedFrom={itemDraggedFrom}, currentlyDraggedItemIndex={currentlyDraggedItemIndex}");
         var index = listOfUiItems.IndexOf(inventoryItemUi);
         var indexOfSellerItem = ShopManager.Instance.listOfSellerItems.IndexOf(inventoryItemUi);
         DropItemButton.gameObject.SetActive(false);

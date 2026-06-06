@@ -18,6 +18,12 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
         floatingText.SetHealText(damageAmount);
     }
     
+    public void ShowManaText(float damageAmount, Transform parent)
+    {
+        var floatingText = Instantiate(textPrefab, parent);
+        floatingText.SetManaText(damageAmount);
+    }
+    
     public void ShowText(string text, Transform parent)
     {
         var floatingText = Instantiate(textPrefab, parent);
@@ -28,5 +34,11 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
     {
         var floatingText = Instantiate(textPrefab, parent);
         floatingText.SetFloatingWarningText(text);
+    }
+
+    public void ShowGoldText(int goldForEnemy, Transform parent)
+    {
+        var floatingText = Instantiate(textPrefab, parent);
+        floatingText.SetFloatingGoldText($"+{goldForEnemy}");
     }
 }

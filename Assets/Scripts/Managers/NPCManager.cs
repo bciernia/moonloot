@@ -65,7 +65,7 @@ public class NPCManager : Singleton<NPCManager>
             return false;
         }
 
-        if (!InventoryController.Instance.HasUserQuestItem(nextLevelData.ItemName, nextLevelData.RequiredAmount))
+        if (!InventoryController.Instance.HasUserQuestItem(nextLevelData.Item.Name, nextLevelData.RequiredAmount))
         {
             Debug.Log("Not enough items");
             return false;
@@ -77,7 +77,7 @@ public class NPCManager : Singleton<NPCManager>
             return false;
         }
         
-        InventoryController.Instance.TryRemoveQuestItems(nextLevelData.ItemName, nextLevelData.RequiredAmount);
+        InventoryController.Instance.TryRemoveQuestItems(nextLevelData.Item.Name, nextLevelData.RequiredAmount);
         _npcLevels[npc.RuntimeID] = nextLevel;
         Debug.Log($"{npc.Name} upgraded to level {nextLevel}");
 

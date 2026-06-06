@@ -53,7 +53,7 @@ MonoBehaviour:
     Description: Udros is on the sky
     ObjectiveType: 0
     RequiredAmount: 10
-    ObjectiveText: Kill enemies
+    ObjectiveText: Killed enemies
     ObjectiveTextLong: Udros seeks worthy warriors. Defeat enemies and prove your
       strength in his name.
     EnemyHealthMultiplier: 1.5
@@ -74,7 +74,7 @@ MonoBehaviour:
     Description: Sylvar is on the sky
     ObjectiveType: 2
     RequiredAmount: 3
-    ObjectiveText: 'Killed corrupted villagers: '
+    ObjectiveText: Killed corrupted villagers
     ObjectiveTextLong: A dark infection has corrupted the local villagers. Defeat
       them and cleanse the area from the spreading plague.
     EnemyHealthMultiplier: 1.25
@@ -95,7 +95,7 @@ MonoBehaviour:
     Description: Aulla is on the sky
     ObjectiveType: 1
     RequiredAmount: 3
-    ObjectiveText: 'Aula crystals: '
+    ObjectiveText: Found crystals
     ObjectiveTextLong: "Ancient crystals containing Aulla\u2019s lost knowledge are
       hidden across the area. Recover them before their secrets disappear forever."
     EnemyHealthMultiplier: 0.75
@@ -427,7 +427,6 @@ MonoBehaviour:
   ShopPanel: {fileID: 0}
   itemPrefab: {fileID: -8930725633462753335, guid: c5874e40398e4764abb35b3049f479f9, type: 3}
   shopContainer: {fileID: 0}
-  PanelNameTMP: {fileID: 0}
   MoneyAmountTMP: {fileID: 0}
   TabPanel: {fileID: 0}
   listOfSellerItems: []
@@ -587,49 +586,50 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 618582954188936655}
-  - {fileID: 35619795779561365}
-  - {fileID: 1945275370520865500}
-  - {fileID: 368892739396994622}
-  - {fileID: 7778129078106997328}
-  - {fileID: 4323657320857817920}
-  - {fileID: 4764482760219055548}
-  - {fileID: 6835389026958847432}
-  - {fileID: 6982993810105831001}
-  - {fileID: 1730892963468312038}
-  - {fileID: 6212664498611844464}
-  - {fileID: 5221434252800001642}
-  - {fileID: 5185536571393342959}
-  - {fileID: 6421925515006320951}
-  - {fileID: 850191733564676110}
-  - {fileID: 3154219595600858475}
-  - {fileID: 2021508380720264841}
   - {fileID: 4152891690172576040}
   - {fileID: 6063864258747084829}
-  - {fileID: 8058484542748204825}
-  - {fileID: 5340579759797416335}
+  - {fileID: 35619795779561365}
   - {fileID: 2514460604508008450}
-  - {fileID: 8988933973375486928}
-  - {fileID: 2727742030006375562}
-  - {fileID: 4181532424574793080}
-  - {fileID: 5944311580980984221}
-  - {fileID: 3744656463697501909}
-  - {fileID: 6452376622931028810}
-  - {fileID: 5837143216972876104}
+  - {fileID: 2021508380720264841}
   - {fileID: 548710459505815341}
-  - {fileID: 3741254983265783073}
-  - {fileID: 8537953693479268941}
   - {fileID: 3584440026966315022}
-  - {fileID: 1645382351432993795}
-  - {fileID: 7430855188818398059}
-  - {fileID: 8641956755457585595}
-  - {fileID: 3584013800139257171}
-  - {fileID: 2777289222262521720}
-  - {fileID: 5088120244562804324}
-  - {fileID: 1140512172106513131}
-  - {fileID: 7107798368542500091}
-  - {fileID: 657000957186184500}
+  - {fileID: 4764482760219055548}
+  - {fileID: 6835389026958847432}
   - {fileID: 2962144912369218059}
+  - {fileID: 6421925515006320951}
+  - {fileID: 1945275370520865500}
+  - {fileID: 618582954188936655}
+  - {fileID: 8537953693479268941}
+  - {fileID: 6982993810105831001}
+  - {fileID: 5185536571393342959}
+  - {fileID: 8641956755457585595}
+  - {fileID: 657000957186184500}
+  - {fileID: 5221434252800001642}
+  - {fileID: 7430855188818398059}
+  - {fileID: 4403623122522711616}
+  - {fileID: 5340579759797416335}
+  - {fileID: 5837143216972876104}
+  - {fileID: 2777289222262521720}
+  - {fileID: 1730892963468312038}
+  - {fileID: 5088120244562804324}
+  - {fileID: 4181532424574793080}
+  - {fileID: 3744656463697501909}
+  - {fileID: 368892739396994622}
+  - {fileID: 850191733564676110}
+  - {fileID: 6212664498611844464}
+  - {fileID: 8058484542748204825}
+  - {fileID: 2727742030006375562}
+  - {fileID: 8988933973375486928}
+  - {fileID: 3154219595600858475}
+  - {fileID: 1140512172106513131}
+  - {fileID: 5944311580980984221}
+  - {fileID: 7778129078106997328}
+  - {fileID: 3584013800139257171}
+  - {fileID: 4323657320857817920}
+  - {fileID: 1645382351432993795}
+  - {fileID: 7107798368542500091}
+  - {fileID: 6452376622931028810}
+  - {fileID: 3741254983265783073}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005456009627945634
@@ -682,6 +682,61 @@ MonoBehaviour:
   CritChance: {fileID: 0}
   CritMultiplier: {fileID: 0}
   MoveSpeed: {fileID: 0}
+  AttackCooldown: {fileID: 0}
+--- !u!1 &2293848231984601944
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4403623122522711616}
+  - component: {fileID: 3665516298904603135}
+  m_Layer: 0
+  m_Name: NpcUpgradePanelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4403623122522711616
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293848231984601944}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3665516298904603135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2293848231984601944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 933652b2b0b122148893b6993b84210d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 0}
+  upgradeRect: {fileID: 0}
+  animationTime: 0.75
+  hiddenBottomY: -1200
+  npcNameAndLevel: {fileID: 0}
+  statName: {fileID: 0}
+  statUpgrade: {fileID: 0}
+  priceContainer: {fileID: 0}
+  pricePrefab: {fileID: 3363584101469159404, guid: 857a6bfa9ec4c55499a8bfea58ab374c, type: 3}
+  goldSprite: {fileID: 819390268, guid: e15ca2ed8c4cd3d4f8cf80fbb382e518, type: 3}
 --- !u!1 &2616209945073216543
 GameObject:
   m_ObjectHideFlags: 0
@@ -912,7 +967,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3443916548036382975}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -982,6 +1037,11 @@ MonoBehaviour:
   startingSkills:
   - {fileID: 11400000, guid: 0243499bd08dbed49b4a4aff24d7938a, type: 2}
   - {fileID: 11400000, guid: 4562fb314fcf78f46b998e8beb92b47c, type: 2}
+  - {fileID: 11400000, guid: 42264afe22104364da6cde9cba4e1143, type: 2}
+  - {fileID: 11400000, guid: e6676c6a6b325474a8ca809882e1e281, type: 2}
+  - {fileID: 11400000, guid: b164429bbb2c70541a40d047d0a14b6c, type: 2}
+  - {fileID: 11400000, guid: b836b349d16872345a4b88b5e0b4e1a9, type: 2}
+  - {fileID: 11400000, guid: 4ae9c82cf3de4ee4ba11f4179364ecc1, type: 2}
 --- !u!1 &3962047042188046341
 GameObject:
   m_ObjectHideFlags: 0
@@ -1474,6 +1534,7 @@ MonoBehaviour:
   - {fileID: 4836842873025884928, guid: 6c6748ed7c0edca4297c7738c79fab41, type: 3}
   - {fileID: 4836842873025884928, guid: d19f5686907c2b84dad8be8cdf87a9cd, type: 3}
   eliteEnemies:
+  - {fileID: 7951900005604885773, guid: 9ead22208d3e73b4a9aae1906c02fe94, type: 3}
   - {fileID: 3202980762219922541, guid: 32a8ab6e9e11fd0479461905a670eeb1, type: 3}
   - {fileID: 4836842873025884928, guid: bb4754da52690234888b010aed166976, type: 3}
   - {fileID: 4836842873025884928, guid: 39dd3963af3179e4f8c3ac0c5a88967e, type: 3}
@@ -1842,7 +1903,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6642684215228747526}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2446,19 +2507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 0}
   inventoryData: {fileID: 11400000, guid: 9d20f1d97fcf7614a8155cbb085d9c9d, type: 2}
-  initialItems:
-  - quantity: 1
-    item: {fileID: 11400000, guid: f38deacc7610ac14e9e46c92fc7c9df5, type: 2}
-    itemState: []
-  - quantity: 1
-    item: {fileID: 11400000, guid: 3f70f05b1683829409143ed454d31562, type: 2}
-    itemState: []
-  - quantity: 1
-    item: {fileID: 11400000, guid: 6bd04cf9a08c36c499bdb79d986e7607, type: 2}
-    itemState: []
-  - quantity: 1
-    item: {fileID: 11400000, guid: bdfe8e4136cf41146bb53fccef43cf7b, type: 2}
-    itemState: []
+  initialItems: []
   audioClip: {fileID: 8300000, guid: 8c4534bc5967f7f418e0f6ae250a2b44, type: 3}
   audioSource: {fileID: 0}
   equippedItemsManager: {fileID: 990366422150204442}

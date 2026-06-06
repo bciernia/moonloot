@@ -9,9 +9,6 @@ public class WolfSpeed : Skill
     {
         if (user == null) return false;
 
-        var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && mana.TryUseMana(ManaCost)) return false;
-
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
         var speed = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.SpeedMultiplier, SpeedMultiplier);
         
@@ -22,5 +19,14 @@ public class WolfSpeed : Skill
         }
 
         return true;
+    }
+
+    public override string GetDescription()
+    {
+        var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+        var speed = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.SpeedMultiplier, SpeedMultiplier);
+
+        return
+            $"The spirit of the hunt flows through you.\nYour movement speed is {speed} times increased for {duration} seconds, as swift and relentless as a prowling wolf.";
     }
 }

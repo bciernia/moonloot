@@ -99,6 +99,8 @@ public class HordeManager : Singleton<HordeManager>
             ? CurrentMoon.RequiredAmount
             : 0;
     
+    private NightLocationSO _lastNightLocation;
+    
     public static Action OnHordeStarted;
     public static Action<int> OnHordeFinished;
     public Action<int, int> OnObjectiveProgressChanged;
@@ -158,8 +160,20 @@ public class HordeManager : Singleton<HordeManager>
             CurrentNightLocation = null;
             return;
         }
+        
+        var availableLocations = pool
+            .Where(x => x != _lastNightLocation)
+            .ToList();
 
-        CurrentNightLocation = pool[Random.Range(0, pool.Count)];
+        if (availableLocations.Count == 0)
+        {
+            availableLocations = pool.ToList();
+        }
+
+        CurrentNightLocation =
+            availableLocations[Random.Range(0, availableLocations.Count)];
+        
+        _lastNightLocation = CurrentNightLocation;
 
         Debug.Log($"SELECTED NIGHT: {CurrentNightLocation.name}");
         Debug.Log($"SCENE TO LOAD: {CurrentNightLocation.SceneName}");
@@ -220,6 +234,7 @@ public class HordeManager : Singleton<HordeManager>
     public void OnPlayerExit()
     {
         Debug.Log("Player exited");
+        SoundManager.Instance.StopCombatMusic();
 
         StopNight();
 
@@ -1015,6 +1030,8 @@ public class HordeManager : Singleton<HordeManager>
         
         CombatStatsManager.Instance.GoldEarned += goldForEnemy;
         
+        FloatingTextManager.Instance.ShowGoldText(goldForEnemy, Player.Instance.transform);
+        
         if (_currentObjective == HordeObjective.DefendObject) return;
         
         _aliveEnemies--;
@@ -1035,7 +1052,7 @@ public class HordeManager : Singleton<HordeManager>
         if (isElite)
             return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(10, 20) * CurrentMoon.GoldMultiplier);
             
-        return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(2, 5) * CurrentMoon.GoldMultiplier);
+        return (int)Mathf.Ceil(RNGManager.Instance.GetRandomInt(4, 8) * CurrentMoon.GoldMultiplier);
     }
     
     private GameObject GetRandomEnemy(List<GameObject> enemyList)
@@ -1083,6 +1100,8 @@ public class HordeManager : Singleton<HordeManager>
 
     public void ReturnToPreviousScene()
     {
+        SoundManager.Instance.StopCombatMusic();
+        
         if (string.IsNullOrEmpty(_previousScene))
         {
             Debug.LogWarning("No previous scene saved!");
@@ -1121,7 +1140,7 @@ public class HordeManager : Singleton<HordeManager>
                 break;
 
             case HordeMutation.BrutalEnemies:
-                stats.Damage *= 1.5f;
+                // stats.Damage *= 1.5f;
                 break;
             case HordeMutation.None:
             default:
@@ -1171,7 +1190,8 @@ public class HordeManager : Singleton<HordeManager>
 
         if (!isBossArena && SelectedNpc != null)
         {
-            npcsToSpawn.Add(SelectedNpc);
+            Debug.LogError("NPC SPAWNED");
+            //npcsToSpawn.Add(SelectedNpc);
         }
         else
         {
@@ -1188,12 +1208,12 @@ public class HordeManager : Singleton<HordeManager>
 
         Shuffle(availableWorkers);
 
-        for (int i = 0; i < workerCount && i < availableWorkers.Count; i++)
+        for (var i = 0; i < workerCount && i < availableWorkers.Count; i++)
         {
             npcsToSpawn.Add(new VillageNpcRuntime(availableWorkers[i]));
         }
 
-        for (int i = 0; i < npcsToSpawn.Count; i++)
+        for (var i = 0; i < npcsToSpawn.Count; i++)
         {
             if (i >= spawners.Count)
             {
@@ -1227,7 +1247,7 @@ public class HordeManager : Singleton<HordeManager>
     
     private float GetHordeMultiplier()
     {
-        return 1f + (currentHorde - 1) * 0.2f;
+        return 1f + (currentHorde - 1) * 0.02f;
     }
     
     public void AddObjectiveProgress(int amount = 1)

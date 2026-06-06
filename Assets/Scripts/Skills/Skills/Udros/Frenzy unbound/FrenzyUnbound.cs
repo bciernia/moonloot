@@ -23,7 +23,7 @@ public class FrenzyUnbound : Skill
             FloatingTextManager.Instance.ShowWarningText("HP is too low", user.transform);
             return false;
         }
-
+        
         hp?.TakeDamage(
             HealthCost,
             null,
@@ -54,5 +54,12 @@ public class FrenzyUnbound : Skill
         }
 
         return true;
+    }
+
+    public override string GetDescription()
+    {
+        var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+        
+        return $"Sacrifice health to unleash a furious battle trance, reducing attack cooldown for a {duration} seconds.";
     }
 }

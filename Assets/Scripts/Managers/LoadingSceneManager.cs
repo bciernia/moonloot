@@ -10,7 +10,17 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     [SerializeField] private Image progressBar;
     [SerializeField] private float lerpSpeed = 3f;
     [SerializeField] private float minDisplayTime = 0.5f;
+    [SerializeField] private RectTransform[] _moons;
 
+    private readonly float[] moonSpeeds =
+    {
+        10f,
+        -15f,
+        20f,
+        -25f,
+        30f
+    };
+    
     private float loadedValue;
     private DayNightCycle _currentCycle;
 
@@ -64,18 +74,20 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         }
 
         TryFindDayNightCycle();
+        CombatManager.Instance.ClearCombat();
         SoundManager.Instance.FindMapForSoundManager();
         SoundManager.Instance.PlayMusic(sceneName);
-        CombatManager.Instance.ClearCombat();
 
         if (sceneName == "MainMenu")
         {
             var cycle = FindObjectOfType<DayNightCycle>();
+            SoundManager.Instance.StopCombatMusic();
             if (cycle != null)
                 cycle.ResetCycle();
         }
 
-        await Task.Delay(500);        
+        await Task.Delay(500);       
+        
         loadingScreen.SetActive(false);
     }
 
@@ -96,7 +108,21 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
 
     private void Update()
     {
-        progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, loadedValue, lerpSpeed * Time.deltaTime);
+        progressBar.fillAmount =
+            Mathf.Lerp(
+                progressBar.fillAmount,
+                loadedValue,
+                lerpSpeed * Time.deltaTime
+            );
+
+        for (var i = 0; i < _moons.Length; i++)
+        {
+            _moons[i].Rotate(
+                0,
+                0,
+                moonSpeeds[i] * Time.deltaTime
+            );
+        }
     }
 
     private void OnEnable()
@@ -123,7 +149,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         WorldManager.Instance.AssignPlacesIfNeeded();
         WorldManager.Instance.SpawnNPCs();
 
-        if (IsSceneTown())
+        if (IsSceneBase())
         {
             SoundManager.Instance.StopCombatMusic();
             ExecuteFunctionsForMainTownScene();
@@ -178,7 +204,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     }
 
 
-    public bool IsSceneTown() => SceneManager.GetActiveScene().name == "Meadowrest";
+    public bool IsSceneBase() => SceneManager.GetActiveScene().name == "Base";
     public bool IsInMainMenu() => SceneManager.GetActiveScene().name == "MainMenu";
 
     public async void LoadMainMenu()

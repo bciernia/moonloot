@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemInteraction : MonoBehaviour, IInteractable
@@ -32,6 +30,7 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         }
         
         InventoryController.Instance.AddItem(new InventoryItem() { item = _inventoryItem, quantity = 1});
+        SoundManager.Instance.PlayPickUpSFX();
         TriggerParticles();
         Destroy(gameObject);
     }

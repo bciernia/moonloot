@@ -11,6 +11,7 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     [SerializeField] private TextMeshProUGUI CritChance;
     [SerializeField] private TextMeshProUGUI CritMultiplier;
     [SerializeField] private TextMeshProUGUI MoveSpeed;
+    [SerializeField] private TextMeshProUGUI AttackCooldown;
 
     public void SetDamage(float dmg)
     {
@@ -40,5 +41,10 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     public void SetMoveSpeed(float moveSpeed)
     {
         MoveSpeed.text = moveSpeed.ToString("0.0", CultureInfo.InvariantCulture);
+    }    
+    
+    public void SetAttackCooldownPercent(float percent)
+    {
+        AttackCooldown.text = percent.ToString("0") + "%";
     }
 }

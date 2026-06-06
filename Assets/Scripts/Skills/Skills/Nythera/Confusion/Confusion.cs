@@ -14,11 +14,6 @@ public class Confusion : Skill
         if (user == null)
             return false;
 
-        var mana = user.GetComponent<PlayerMana>();
-
-        if (mana != null && !mana.TryUseMana(ManaCost))
-            return false;
-
         var targetCount =
             PlayerSkillManager.Instance.GetSkillStat(
                 this,
@@ -57,5 +52,25 @@ public class Confusion : Skill
         }
 
         return true;
+    }
+
+    public override string GetDescription()
+    {
+        var targetCount =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.TargetCount,
+                enemyCountForConfusion
+            );
+
+        var duration =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Duration,
+                ActiveTime
+            );
+        
+        return
+            $"A hush falls upon the minds of your enemies.\nUp to {targetCount} foes lose all interest in you, abandoning their aggression and returning to their patrol as if you never existed for {duration} seconds.\n\nNythera does not command fear — she erases intent.";
     }
 }

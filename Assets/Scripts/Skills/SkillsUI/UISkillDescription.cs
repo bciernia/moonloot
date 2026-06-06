@@ -44,7 +44,7 @@ public class UISkillDescription : MonoBehaviour
         itemImage.gameObject.SetActive(true);
         itemImage.sprite = skill.Icon;
         title.text = skill.Name;
-        description.text = skill.Description;
+        description.text = skill.GetDescription();
         skillsSetter.Skill = skill;
     }
 }

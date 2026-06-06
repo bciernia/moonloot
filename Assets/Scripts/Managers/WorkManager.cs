@@ -328,7 +328,7 @@ public class WorkManager : Singleton<WorkManager>
     
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (!LoadingSceneManager.Instance.IsSceneTown())
+        if (!LoadingSceneManager.Instance.IsSceneBase())
             return;
 
         StartCoroutine(RefreshNextFrame());

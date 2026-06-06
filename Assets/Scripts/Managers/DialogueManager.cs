@@ -59,6 +59,15 @@ public class DialogueManager : Singleton<DialogueManager>
         dialogueController.PlayDialogue(entryId);
     }
 
+    public void ContinueDialogue()
+    {
+        var dialogueController = NPCSelected.GetComponent<DialogueController>();
+        if (dialogueController.CurrentDialogue)
+        {
+            dialogueController.Continue();
+        }
+    }
+
     private void SetCharacterInFrontOfNpc()
     {
         _player.GetComponent<PlayerMovement>().enabled = false;

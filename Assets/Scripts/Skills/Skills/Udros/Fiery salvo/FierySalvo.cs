@@ -12,9 +12,6 @@ public class FierySalvo : Skill
     {
         if (user == null) return false;
 
-        var mana = user.GetComponent<PlayerMana>();
-        if (mana != null && !mana.TryUseMana(ManaCost)) return false;
-
         var attack = user.GetComponent<PlayerAttack>();
         if (attack == null) return false;
 
@@ -48,5 +45,13 @@ public class FierySalvo : Skill
         projectile.IsEnemy = false;
         projectile.Direction = Vector3.right;
         projectile.Damage = _projectileSo.Damage;
+    }
+
+    public override string GetDescription()
+    {
+        var skillDuration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, duration);
+        
+        return
+            $"Udros ignites your wrath.\nYou unleash a barrage of fireballs, one each second, culminating in a devastating fivefold inferno. Let the battlefield burn for {skillDuration} seconds.";
     }
 }

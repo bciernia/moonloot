@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private const string DEMO_START_SCENE = "Meadowrest";
+    private const string DEMO_START_SCENE = "Base";
     private const string MAIN_MENU = "MainMenu";
     [SerializeField] private GameObject[] _buttonsMenu;
     
@@ -14,7 +14,9 @@ public class MainMenuManager : MonoBehaviour
 
         if (gameRoot != null) Destroy(gameRoot);
         if (player != null) Destroy(player);
-
+        
+        ES3.DeleteFile();
+        
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }

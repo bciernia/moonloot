@@ -26,10 +26,22 @@ public class FloatingText : MonoBehaviour
         floatingTextTMP.color = Color.green;
         floatingTextTMP.text = healAmount.ToString(CultureInfo.InvariantCulture);
     }
+    
+    public void SetManaText(float manaAmount)
+    {
+        floatingTextTMP.color = Color.blue;
+        floatingTextTMP.text = manaAmount.ToString(CultureInfo.InvariantCulture);
+    }
 
     public void SetFloatingWarningText(string text)
     {
         floatingTextTMP.color = Color.yellow;
+        floatingTextTMP.text = text;
+    }
+    
+    public void SetFloatingGoldText(string text)
+    {
+        floatingTextTMP.color = Color.gold;
         floatingTextTMP.text = text;
     }
     

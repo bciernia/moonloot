@@ -27,6 +27,7 @@ public class PlayerStatsSO : ScriptableObject
     public float PhysicalResistance = 0;
     public float MagicResistance = 0;
 
+    public float AttackCooldownReduction { get; set; } = 1f;
     
     [Range(0, 3)]
     public float ShieldResistance = 1; //Wartość procentowa 1 = 100%, 0.5 - 50%, 1.5 - 150%
@@ -76,7 +77,8 @@ public class PlayerStatsSO : ScriptableObject
     {
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
-            bonus.Type == BonusType.CritChance)
+            bonus.Type == BonusType.CritChance ||
+            bonus.Type == BonusType.AttackCooldownReduction)
         {
             var normalized = bonus.Value / 100f;
 
@@ -179,7 +181,8 @@ public class PlayerStatsSO : ScriptableObject
 
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
-            bonus.Type == BonusType.CritChance)
+            bonus.Type == BonusType.CritChance ||
+            bonus.Type == BonusType.AttackCooldownReduction)
         {
             if (_eqBonuses.ContainsKey(bonus.Type))
                 _eqBonuses[bonus.Type] += normalized;

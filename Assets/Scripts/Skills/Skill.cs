@@ -31,4 +31,6 @@ public class Skill : IdentifiableSO
 
         return true;
     }
+
+    public virtual string GetDescription() => Description;
 }

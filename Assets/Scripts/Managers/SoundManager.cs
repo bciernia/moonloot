@@ -16,8 +16,12 @@ public class SoundManager : Singleton<SoundManager>
 
     [SerializeField] private List<AudioClip> _sceneMusicList;
     [SerializeField] private List<AudioClip> _combatMusicList;
+    
+    [SerializeField] private List<AudioClip> _pickUpSfx;
 
-    [SerializeField] private List<AudioSource> _sfxSources;
+    [SerializeField] private Transform _sfxSourcesParent;
+    private List<AudioSource> _sfxSources;
+    
     [SerializeField] private AudioSource _explorationSource;
     [SerializeField] private AudioSource _combatSource;
     [SerializeField] private float _musicFadeDuration = 2f;
@@ -37,7 +41,13 @@ public class SoundManager : Singleton<SoundManager>
     protected override void Awake()
     {
         base.Awake();
+
+        _sfxSources = _sfxSourcesParent
+            .GetComponentsInChildren<AudioSource>(true)
+            .ToList();
+
         _dataFromTile = new Dictionary<TileBase, TileSoundSO>();
+
         foreach (var tileData in _tileSounds)
         {
             foreach (var tile in tileData.Tiles)
@@ -45,9 +55,8 @@ public class SoundManager : Singleton<SoundManager>
                 _dataFromTile.Add(tile, tileData);
             }
         }
-        
+
         PlayMusic(SceneManager.GetActiveScene().name);
-        // PlayCombatMusic(0);
     }
 
     private void Start()
@@ -114,16 +123,9 @@ public class SoundManager : Singleton<SoundManager>
     public void PlayCombatMusic(float volume = 1f)
     {
         if (_combatMusicList.Count == 0)
-        {
-            Debug.Log("There is no combat music");
-            return;
-        }
-
-        if (_combatSource == null)
             return;
 
-        _combatSource.enabled = true;
-        _combatSource.gameObject.SetActive(true);
+        _isInCombat = true;
 
         var randomClip =
             _combatMusicList[Random.Range(0, _combatMusicList.Count)];
@@ -136,21 +138,19 @@ public class SoundManager : Singleton<SoundManager>
         StartMusicFade(true);
     }
     
-    public void PlayCombatMusic()
-    {
-        if (_isInCombat) return;
-
-        _isInCombat = true;
-        StartMusicFade(true);
-    }
+    // public void PlayCombatMusic()
+    // {
+    //     if (_isInCombat) return;
+    //
+    //     _isInCombat = true;
+    //     StartMusicFade(true);
+    // }
     
     public void StopCombatMusic()
     {
-        if (!_isInCombat) return;
-
         _isInCombat = false;
         StartMusicFade(false);
-    } 
+    }
     
     private void StartMusicFade(bool toCombat)
     {
@@ -316,6 +316,24 @@ public class SoundManager : Singleton<SoundManager>
         _explorationSource.loop = false;
         _explorationSource.Play();
     }
+
+    #region SFX
+
+    public void PlayPickUpSFX()
+    {
+        if (_pickUpSfx.Count == 0)
+        {
+            Debug.Log("There is no pickup sfx");
+            return;
+        }
+
+        var randomClip =
+            _pickUpSfx[Random.Range(0, _pickUpSfx.Count)];
+
+        PlaySFX(randomClip, 1f);
+    }
+    
+    #endregion
 }
 
 [Serializable]
