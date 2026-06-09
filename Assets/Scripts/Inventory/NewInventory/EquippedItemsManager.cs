@@ -53,6 +53,11 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
     {
+        Debug.Log(
+            $"INIT SLOT {slot.name} item: " +
+            $"{equippedItem.item?.Name}"
+        );
+        
         var itemToSet = equippedItem.item;
         
         if (itemToSet != null && itemToSet != InventoryItem.GetEmptyItem().item)

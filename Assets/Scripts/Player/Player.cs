@@ -56,7 +56,7 @@ public class Player : MonoBehaviour, ISaveable
     
     public void Save()
     {
-        ES3.Save("player_position", transform.position);
+        // ES3.Save("player_position", transform.position);
 
         var stats = new PlayerStatsData
         {
@@ -92,10 +92,10 @@ public class Player : MonoBehaviour, ISaveable
 
     public void Load()
     {
-        if (ES3.KeyExists("player_position"))
-        {
-            transform.position = ES3.Load<Vector3>("player_position");
-        }
+        // if (ES3.KeyExists("player_position"))
+        // {
+            // transform.position = ES3.Load<Vector3>("player_position");
+        // }
 
         if (!ES3.KeyExists("player_stats"))
             return;
@@ -123,7 +123,7 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.MagicResistance = data.magicResistance;
 
         _playerStats.ShieldResistance = data.shieldResistance;
-
+        
         // if (!string.IsNullOrEmpty(data.weaponID))
         // {
         //     _playerStats.currentWeapon = WeaponDatabase.Get(data.weaponID);

@@ -2,13 +2,13 @@ using TMPro;
 using UnityEngine;
 using System.Collections;
 
-public class PointsManager : Singleton<PointsManager>
+public class PointsManager : Singleton<PointsManager>, ISaveable
 {
     [SerializeField] public TextMeshProUGUI scoreText;
 
     private int currentScore = 0;
     private Coroutine countingCoroutine;
-    
+
     public void AddScore(int amount)
     {
         var targetScore = currentScore + amount;
@@ -35,4 +35,18 @@ public class PointsManager : Singleton<PointsManager>
     }
 
     public int GetCurrentScore() => currentScore;
+
+    public void Save()
+    {
+        ES3.Save("points", currentScore);
+    }
+
+    public void Load()
+    {
+        if (ES3.KeyExists("points"))
+        {
+            currentScore = ES3.Load<int>("points");
+            scoreText.text = currentScore.ToString();
+        }
+    }
 }
