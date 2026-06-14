@@ -112,7 +112,9 @@ public class QuestJournal : MonoBehaviour, ISaveable
             });
         }
         
-        ES3.Save("player_quest_statuses", saveData);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("player_quest_statuses", saveData, settings);
     }
 
     public void Load()

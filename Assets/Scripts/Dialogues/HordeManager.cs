@@ -1110,12 +1110,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         }
 
         LoadingSceneManager.Instance.LoadScene(_previousScene, true);
-        SaveLoadManager.Instance.Save();
-        ToastrPanelManager.Instance.Show("SAVING");
         
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
             cycle.ResetCycle();
+
+        ToastrPanelManager.Instance.Show("SAVING");
+        SaveLoadManager.Instance.Save();
     }
 
     public int GetEnemyCount()
@@ -1410,9 +1411,11 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public void Save()
     {
-        ES3.Save("currentHorde", currentHorde);
-        ES3.Save("nightCycleStep", NightCycleStep);
-        ES3.Save("enemiesPerHorde", enemiesPerHorde);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("currentHorde", currentHorde, settings);
+        ES3.Save("nightCycleStep", NightCycleStep, settings);
+        ES3.Save("enemiesPerHorde", enemiesPerHorde, settings);
     }
 
     public void Load()

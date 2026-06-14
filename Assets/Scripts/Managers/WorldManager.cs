@@ -11,6 +11,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
     public IReadOnlyList<VillageNpcRuntime> RescuedNpcs => _rescuedNPCs;
 
+    [SerializeField] private NpcDatabase _npcDatabase;
+
     private HashSet<string> _rescuedNpcIDs = new();
     
     public void AddNpc(VillageNpcRuntime npc)
@@ -139,6 +141,24 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             }
         }
     }
+    
+    private VillageNpcData GetNpcData(
+        string npcName,
+        string profession)
+    {
+        var worker = HordeManager.Instance.workerPool
+            .FirstOrDefault(x =>
+                x.Name == npcName &&
+                x.Profession == profession);
+
+        if (worker != null)
+            return worker as VillageNpcData;
+
+        return _npcDatabase.NpcDatas
+            .FirstOrDefault(x =>
+                x.Name == npcName &&
+                x.Profession == profession);
+    }
 
     public void Save()
     {
@@ -156,7 +176,9 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             });
         }
 
-        ES3.Save("workers", workers);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("workers", workers, settings);
     }
 
     public void Load()
@@ -171,12 +193,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
         foreach (var data in savedNpcs)
         {
-            var npcData =
-                HordeManager.Instance.workerPool
-                    .FirstOrDefault(x =>
-                        x.Name == data.NpcName &&
-                        x.Profession == data.Profession);
-
+            var npcData = GetNpcData(data.NpcName, data.Profession);
+            
             if (npcData == null)
                 continue;
 

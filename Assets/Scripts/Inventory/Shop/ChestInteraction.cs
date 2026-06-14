@@ -73,7 +73,9 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
             isOpened = _chestInventory.Items.TrueForAll(i => i.IsEmpty)
         };
 
-        ES3.Save($"chest_{chestId}", data);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save($"chest_{chestId}", data, settings);
     }
 
     public void Load()

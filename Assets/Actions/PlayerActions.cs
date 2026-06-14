@@ -330,7 +330,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ffd473bf-8a61-40c4-9cfe-562c864c3cbb"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",

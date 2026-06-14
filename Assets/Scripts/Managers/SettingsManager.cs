@@ -8,7 +8,9 @@ public class SettingsManager : Singleton<SettingsManager>
     {
         AimMode = (AimMode)dropdownValue;
 
-        ES3.Save("AimMode", dropdownValue);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("AimMode", dropdownValue, settings);
     }
 
     private void Start()

@@ -38,7 +38,9 @@ public class ItemSaveLoad : MonoBehaviour, ISaveable
         if (!collected.Contains(itemId))
             collected.Add(itemId);
 
-        ES3.Save("worldItems", collected);    
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("worldItems", collected, settings);    
     }
 
     public void Load()

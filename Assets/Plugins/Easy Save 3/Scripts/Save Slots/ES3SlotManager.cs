@@ -149,7 +149,7 @@ public class ES3SlotManager : MonoBehaviour
             slot.SelectSlot();
 
         // Scroll the scroll view to the top of the list.
-        //ScrollToTop();
+        ScrollToTop();
 
         return slot;
     }

@@ -6,8 +6,9 @@ public class MainMenuManager : MonoBehaviour
     private const string DEMO_START_SCENE = "Base";
     private const string MAIN_MENU = "MainMenu";
     [SerializeField] private GameObject[] _buttonsMenu;
-    [SerializeField] private GameObject _loadPanel;
     
+    private GameObject _loadPanel;
+
     public void StartGame()
     {
         var gameRoot = GameObject.FindWithTag("GameRoot");
@@ -18,14 +19,9 @@ public class MainMenuManager : MonoBehaviour
         
         // ES3.DeleteFile();
         
-        LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         SaveLoadManager.Instance.CreateNewSaveForNewGame();
+        LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
-    }
-
-    public void StartArena()
-    {
-        SceneManager.LoadScene("SceneArena", LoadSceneMode.Single);
     }
 
     public void ExitGame()
@@ -80,6 +76,33 @@ public class MainMenuManager : MonoBehaviour
     
     public void SetActiveLoadPanel(bool isActive)
     {
-        _loadPanel.SetActive(isActive);
+        if (_loadPanel == null)
+        {
+            FindLoadPanel();
+        }
+
+        if (_loadPanel != null)
+        {
+            _loadPanel.SetActive(isActive);
+        }
+    }
+    
+    private void FindLoadPanel()
+    {
+        var transforms =
+            FindObjectsByType<Transform>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+
+        foreach (var t in transforms)
+        {
+            if (!t.CompareTag("LoadSlots"))
+                continue;
+
+            _loadPanel = t.gameObject;
+            return;
+        }
+
+        Debug.LogError("LoadPanel not found!");
     }
 }

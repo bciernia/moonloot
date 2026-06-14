@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
@@ -24,11 +25,11 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         }
     }
 
+    public ES3Settings GetSettings() =>  CurrentSettings;
+
     public void CreateNewSaveForNewGame()
     {
-        var slotName =
-            System.DateTime.Now.ToString(
-                "yyyyMMdd_HHmmss");
+        var slotName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
         var slot =
             slotManager.CreateNewSlot(slotName);
@@ -36,28 +37,28 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         ES3SlotManager.selectedSlotPath =
             slot.GetSlotPath();
 
-        ES3.DeleteFile(
-            ES3SlotManager.selectedSlotPath);
+        // ES3.DeleteFile(
+            // ES3SlotManager.selectedSlotPath);
 
         ES3.Save(
             "SceneName",
-            "Base",
-            CurrentSettings);
+            "Base", CurrentSettings);
+        
+        Debug.Log(
+            "Slot path: " +
+            ES3SlotManager.selectedSlotPath
+        );
 
-        ES3.Save(
-            "CreatedAt",
-            System.DateTime.Now.ToBinary(),
-            CurrentSettings);
+        Debug.Log(
+            "File exists: " +
+            ES3.FileExists(
+                ES3SlotManager.selectedSlotPath
+            )
+        );
 
         ES3.Save(
             "CurrentNight",
-            1,
-            CurrentSettings);
-
-        ES3.Save(
-            "LastSavedAt",
-            System.DateTime.Now.ToBinary(),
-            CurrentSettings);
+            1, CurrentSettings);
     }
 
     public void Save()
@@ -66,28 +67,26 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
                 ES3SlotManager.selectedSlotPath))
             return;
 
-        var saveables =
-            FindObjectsByType<MonoBehaviour>(
-                    FindObjectsSortMode.None)
-                .OfType<ISaveable>();
+        var saveables = FindObjectsOfType<MonoBehaviour>(true);
 
-        foreach (var saveable in saveables)
+        foreach (var mono in saveables)
         {
-            saveable.Save();
+            if (mono is ISaveable saveable)
+            {
+                saveable.Save();
+            }
         }
 
         ES3.Save(
             "CurrentNight",
-            HordeManager.Instance.currentHorde,
-            CurrentSettings);
+            HordeManager.Instance.currentHorde, CurrentSettings);
 
         ES3.Save(
             "LastSavedAt",
-            System.DateTime.Now.ToBinary(),
-            CurrentSettings);
+            System.DateTime.Now.ToBinary(), CurrentSettings);
     }
 
-    public void Load()
+    public async void Load()
     {
         if (string.IsNullOrEmpty(
                 ES3SlotManager.selectedSlotPath))
@@ -95,23 +94,10 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
         var sceneName =
             ES3.Load<string>(
-                "SceneName",
-                CurrentSettings);
+                "SceneName");
 
-        StartCoroutine(
-            LoadSceneAndApplySave(sceneName));
-    }
-
-    private IEnumerator LoadSceneAndApplySave(
-        string sceneName)
-    {
-        var asyncOp =
-            SceneManager.LoadSceneAsync(sceneName);
-
-        while (!asyncOp.isDone)
-        {
-            yield return null;
-        }
+        await LoadingSceneManager.Instance.LoadScene(
+            sceneName);
 
         var saveables =
             FindObjectsByType<MonoBehaviour>(

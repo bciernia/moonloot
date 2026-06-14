@@ -527,9 +527,11 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     public void TryRemoveQuestItems(string itemName, int quantity) => inventoryData.RemoveItemByName(itemName, quantity);
     public void Save()
     {
-        ES3.Save("playerInventory_items", inventoryData.inventoryItems);
-        ES3.Save("playerInventory_gold", inventoryData.Lunar);
-        ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("playerInventory_items", inventoryData.inventoryItems, settings);
+        ES3.Save("playerInventory_gold", inventoryData.Lunar, settings);
+        ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems, settings);
     }
 
     public void Load()

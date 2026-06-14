@@ -38,7 +38,9 @@ public class PointsManager : Singleton<PointsManager>, ISaveable
 
     public void Save()
     {
-        ES3.Save("points", currentScore);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("points", currentScore, settings);
     }
 
     public void Load()

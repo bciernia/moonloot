@@ -13,7 +13,9 @@ public class DialogueEntryManager : Singleton<DialogueEntryManager>, ISaveable
     
     public void Save()
     {
-        ES3.Save("NpcDialogueDictionary", NpcDialogueEntryDictionary);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("NpcDialogueDictionary", NpcDialogueEntryDictionary, settings);
     }
 
     public void Load()

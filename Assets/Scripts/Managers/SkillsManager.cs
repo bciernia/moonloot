@@ -451,7 +451,9 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
             });
         }
 
-        ES3.Save("player_chosen_skills", saveList);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("player_chosen_skills", saveList, settings);
     }
 
     public void Load()

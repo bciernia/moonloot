@@ -4,6 +4,8 @@ public class PauseManager : Singleton<PauseManager>
 {
     private int _pauseRequests = 0;
 
+    public int pauseRequests => _pauseRequests;
+    
     public void RequestPause()
     {
         _pauseRequests++;
@@ -21,5 +23,11 @@ public class PauseManager : Singleton<PauseManager>
         Time.timeScale = _pauseRequests > 0 ? 0f : 1f;
     }
 
-    public int pauseRequests => _pauseRequests;
+    public void ClearAllPauses()
+    {
+        _pauseRequests = 0;
+        UpdateTimeScale();
+    }
+    
+    public bool IsGamePaused => _pauseRequests > 0;
 }

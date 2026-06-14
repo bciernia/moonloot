@@ -61,18 +61,21 @@ public class NPCManager : Singleton<NPCManager>, ISaveable
 
         if (nextLevelData == null)
         {
+            ToastrPanelManager.Instance.Show("Max level reached");
             Debug.Log("Max level reached");
             return false;
         }
 
         if (!InventoryController.Instance.HasUserQuestItem(nextLevelData.Item.Name, nextLevelData.RequiredAmount))
         {
+            ToastrPanelManager.Instance.Show("Not enough items");
             Debug.Log("Not enough items");
             return false;
         }
 
         if (!InventoryController.Instance.ChangeGoldAmount(-nextLevelData.GoldAmount))
         {
+            ToastrPanelManager.Instance.Show("Not enough items");
             Debug.Log("Not enough gold");
             return false;
         }
@@ -131,8 +134,10 @@ public class NPCManager : Singleton<NPCManager>, ISaveable
                 Level = pair.Value
             });
         }
+        
+        var settings = SaveLoadManager.Instance.GetSettings();
 
-        ES3.Save("npc_levels", saveData);
+        ES3.Save("npc_levels", saveData, settings);
     }
 
     public void Load()
