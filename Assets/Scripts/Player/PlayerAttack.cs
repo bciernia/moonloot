@@ -55,7 +55,7 @@ public class PlayerAttack : MonoBehaviour
     private void Attack()
     {
         if (!canAttack || DialogueManager.Instance.IsInDialogue() ||
-            GameManager.Instance.CurrentMode == GameMode.WorldMap) return;
+            GameManager.Instance.CurrentMode == GameMode.WorldMap || PauseManager.Instance.IsGamePaused) return;
 
         var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
 
@@ -236,12 +236,17 @@ public class PlayerAttack : MonoBehaviour
     
     private void OnEnable()
     {
-        _playerInput.actions["Attack"].performed += _ => Attack();
+        _playerInput.actions["Attack"].performed += OnAttackPerformed;
     }
 
     private void OnDisable()
     {
-        _playerInput.actions["Attack"].performed -= _ => Attack();
+        _playerInput.actions["Attack"].performed -= OnAttackPerformed;
+    }
+    
+    private void OnAttackPerformed(InputAction.CallbackContext ctx)
+    {
+        Attack();
     }
     
     public void RecalculateDamage()

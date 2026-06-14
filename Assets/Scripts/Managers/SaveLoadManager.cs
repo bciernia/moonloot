@@ -1,20 +1,13 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SaveLoadManager : Singleton<SaveLoadManager>
 {
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Save();
-            Debug.Log("Game saved");
-        }
-    }
-    
+    [SerializeField] private ES3SlotManager slotManager;
+
     private ES3Settings CurrentSettings
     {
         get
@@ -27,72 +20,93 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
             return new ES3Settings(ES3SlotManager.selectedSlotPath)
             {
-                format = ES3.Format.JSON,
+                format = ES3.Format.JSON
             };
         }
     }
 
+    public ES3Settings GetSettings() =>  CurrentSettings;
+
+    public void CreateNewSaveForNewGame()
+    {
+        var slotName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+
+        var slot =
+            slotManager.CreateNewSlot(slotName);
+
+        ES3SlotManager.selectedSlotPath =
+            slot.GetSlotPath();
+
+        // ES3.DeleteFile(
+            // ES3SlotManager.selectedSlotPath);
+
+        ES3.Save(
+            "SceneName",
+            "Base", CurrentSettings);
+        
+        Debug.Log(
+            "Slot path: " +
+            ES3SlotManager.selectedSlotPath
+        );
+
+        Debug.Log(
+            "File exists: " +
+            ES3.FileExists(
+                ES3SlotManager.selectedSlotPath
+            )
+        );
+
+        ES3.Save(
+            "CurrentNight",
+            1, CurrentSettings);
+    }
+
     public void Save()
     {
-        if(string.IsNullOrEmpty(ES3SlotManager.selectedSlotPath)) return;
+        if (string.IsNullOrEmpty(
+                ES3SlotManager.selectedSlotPath))
+            return;
 
-        ES3.Save("SceneName", SceneManager.GetActiveScene().name);
-        
-        var saveables = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISaveable>();
+        var saveables = FindObjectsOfType<MonoBehaviour>(true);
 
-        Debug.Log($"Save to {ES3SlotManager.selectedSlotPath}");
-        
-        foreach (var s in saveables)
+        foreach (var mono in saveables)
         {
-            s.Save();
+            if (mono is ISaveable saveable)
+            {
+                saveable.Save();
+            }
         }
 
-        ES3SlotManager.selectedSlotPath = null;
+        ES3.Save(
+            "CurrentNight",
+            HordeManager.Instance.currentHorde, CurrentSettings);
+
+        ES3.Save(
+            "LastSavedAt",
+            System.DateTime.Now.ToBinary(), CurrentSettings);
     }
 
-    public void Load()
+    public async void Load()
     {
-        Debug.Log($"Loaded: {ES3SlotManager.selectedSlotPath}"); 
+        if (string.IsNullOrEmpty(
+                ES3SlotManager.selectedSlotPath))
+            return;
 
-        if (string.IsNullOrEmpty(ES3SlotManager.selectedSlotPath)) return;
+        var sceneName =
+            ES3.Load<string>(
+                "SceneName");
 
-        var sceneName = ES3.Load<string>("SceneName", CurrentSettings);
+        await LoadingSceneManager.Instance.LoadScene(
+            sceneName);
 
-        StartCoroutine(LoadSceneAndApplySave(sceneName));
-    }
-    
-    private IEnumerator LoadSceneAndApplySave(string sceneName)
-    {
-        var asyncOp = SceneManager.LoadSceneAsync(sceneName);
-        while (!asyncOp.isDone)
+        var saveables =
+            FindObjectsByType<MonoBehaviour>(
+                    FindObjectsSortMode.None)
+                .OfType<ISaveable>();
+
+        foreach (var saveable in saveables)
         {
-            yield return null;
+            saveable.Load();
         }
-
-        var saveables = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISaveable>();
-        foreach (var s in saveables)
-        {
-            s.Load();
-        }
-
-        Debug.Log($"Loaded scene {sceneName} with save {ES3SlotManager.selectedSlotPath}");
-
-        ES3SlotManager.selectedSlotPath = null;
     }
-
-    // protected override void Awake()
-    // {
-    //     base.Awake();
-    //     SceneManager.sceneLoaded += OnSceneLoaded;
-    // }
-    //
-    // private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    // {
-    //     Load();
-    // }
-    //
-    // private void OnDestroy()
-    // {
-    //     SceneManager.sceneLoaded -= OnSceneLoaded;
-    // }
 }

@@ -197,4 +197,10 @@ public class PlayerStatsSO : ScriptableObject
         else
             _eqFlatBonuses[bonus.Type] = bonus.Value;
     }
+    
+    public void ResetNpcBonuses()
+    {
+        _npcBonuses.Clear();
+        _npcFlatBonuses.Clear();
+    }
 }

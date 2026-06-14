@@ -41,11 +41,18 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
 
     public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
     {
+        if (PauseManager.Instance)
+        {
+            PauseManager.Instance.ClearAllPauses();
+        }
+        
+        PersistentMenuManager.Instance.HideAllPersistentPanels();
+        
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
         loadingScreen.SetActive(true);
 
-        SaveGame();
+        // SaveGame();
 
         var timer = 0f;
 

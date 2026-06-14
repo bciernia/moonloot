@@ -113,9 +113,38 @@ public class PlayerMovement : MonoBehaviour
     
     private void ReadAim()
     {
-        var aimDirection = _playerInput.actions["Aim"].ReadValue<Vector2>().normalized;
-        if (playerAim != null)
-            playerAim.UpdateAim(aimDirection);
+
+        if (SettingsManager.Instance.AimMode == AimMode.Keyboard)
+        {
+            ReadKeyboardAim();
+        }
+        else
+        {
+            ReadMouseAim();
+        }
+    }
+
+    private void ReadKeyboardAim()
+    {
+        var aimDirection =
+            _playerInput.actions["Aim"]
+                .ReadValue<Vector2>()
+                .normalized;
+
+        playerAim?.UpdateAim(aimDirection);
+    }
+    
+    private void ReadMouseAim()
+    {
+        var mousePos = Mouse.current.position.ReadValue();
+
+        var worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        worldMousePos.z = 0;
+
+        var aimDirection =
+            ((Vector2)worldMousePos - (Vector2)transform.position).normalized;
+
+        playerAim?.UpdateAim(aimDirection);
     }
 
     private void OnGameModeChanged(GameMode mode)

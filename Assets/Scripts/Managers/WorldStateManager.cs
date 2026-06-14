@@ -21,7 +21,9 @@ public class WorldStateManager : Singleton<WorldStateManager>, ISaveable
 
     public void Save()
     {
-        ES3.Save("world_states", new List<string>(states));
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("world_states", new List<string>(states), settings);
     }
 
     public void Load()

@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class WorldManager : Singleton<WorldManager>
+public class WorldManager : Singleton<WorldManager>, ISaveable
 {
     private List<VillageNpcRuntime> _rescuedNPCs = new();
+    private List<WorkerSaveData> _loadedWorkers;
     private Dictionary<VillageNpcRuntime, string> _npcPlacements = new();
 
     public IReadOnlyList<VillageNpcRuntime> RescuedNpcs => _rescuedNPCs;
+
+    [SerializeField] private NpcDatabase _npcDatabase;
 
     private HashSet<string> _rescuedNpcIDs = new();
     
@@ -20,12 +23,18 @@ public class WorldManager : Singleton<WorldManager>
         if (existingNpc != null)
         {
             npc.CurrentJob = existingNpc.CurrentJob;
-
-            Debug.Log(
-                $"NPC already exists, restored job: " +
-                $"{npc.Name} | {npc.CurrentJob}");
-
             return;
+        }
+        
+        if (_loadedWorkers != null)
+        {
+            var savedData = _loadedWorkers
+                .FirstOrDefault(x => x.RuntimeID == npc.RuntimeID);
+
+            if (savedData != null)
+            {
+                npc.CurrentJob = savedData.CurrentJob;
+            }
         }
 
         _rescuedNPCs.Add(npc);
@@ -131,5 +140,82 @@ public class WorldManager : Singleton<WorldManager>
                 point.IsOccupied = true;
             }
         }
+    }
+    
+    private VillageNpcData GetNpcData(
+        string npcName,
+        string profession)
+    {
+        var worker = HordeManager.Instance.workerPool
+            .FirstOrDefault(x =>
+                x.Name == npcName &&
+                x.Profession == profession);
+
+        if (worker != null)
+            return worker as VillageNpcData;
+
+        return _npcDatabase.NpcDatas
+            .FirstOrDefault(x =>
+                x.Name == npcName &&
+                x.Profession == profession);
+    }
+
+    public void Save()
+    {
+        var workers = new List<WorkerSaveData>();
+
+        foreach (var npc in _rescuedNPCs)
+        {
+            workers.Add(new WorkerSaveData
+            {
+                RuntimeID = npc.RuntimeID,
+                NpcName = npc.Name,
+                Profession = npc.Profession,
+                CurrentJob = npc.CurrentJob,
+                GrantedSkillId = npc.GrantedSkill?.Id
+            });
+        }
+
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("workers", workers, settings);
+    }
+
+    public void Load()
+    {
+        if (!ES3.KeyExists("workers"))
+            return;
+
+        var savedNpcs =
+            ES3.Load<List<WorkerSaveData>>("workers");
+
+        _rescuedNPCs.Clear();
+
+        foreach (var data in savedNpcs)
+        {
+            var npcData = GetNpcData(data.NpcName, data.Profession);
+            
+            if (npcData == null)
+                continue;
+
+            var runtime = new VillageNpcRuntime(npcData);
+
+            runtime.RuntimeID = data.RuntimeID;
+            runtime.CurrentJob = data.CurrentJob;
+
+            if (!string.IsNullOrEmpty(data.GrantedSkillId))
+            {
+                runtime.GrantedSkill =
+                    SkillDatabase.Get(data.GrantedSkillId);
+            }
+
+            _rescuedNPCs.Add(runtime);
+        }
+
+        AssignPlacesIfNeeded();
+        SpawnNPCs();
+        
+        NPCManager.Instance.ReapplyBonuses();
+        Debug.Log($"Loaded NPC count: {_rescuedNPCs.Count}");
     }
 }

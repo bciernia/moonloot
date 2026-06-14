@@ -15,6 +15,8 @@ public class SkillDatabase : Singleton<SkillDatabase>
 
     public static Skill Get(string id)
     {
+        if (string.IsNullOrEmpty(id)) return null;
+        
         if (_skills.TryGetValue(id, out var skill))
             return skill;
 

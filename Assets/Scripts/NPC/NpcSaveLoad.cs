@@ -21,7 +21,9 @@ public class NpcSaveLoad : MonoBehaviour, ISaveable
     
     public void Save()
     {
-        ES3.Save($"npc_{npcId}", transform.position);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save($"npc_{npcId}", transform.position, settings);
     }
 
     public void Load()

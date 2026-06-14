@@ -30,7 +30,9 @@ public class EnemyStateManager : Singleton<EnemyStateManager>, ISaveable
 
     public void Save()
     {
-        ES3.Save("dead_enemies", new List<string>(deadEnemies));
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("dead_enemies", new List<string>(deadEnemies), settings);
     }
 
     public void Load()

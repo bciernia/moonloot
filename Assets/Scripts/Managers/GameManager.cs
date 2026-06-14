@@ -16,13 +16,13 @@ public class GameManager : Singleton<GameManager>
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            _player.ResetPlayer();
-        }
-    }
+    // private void Update()
+    // {
+        // if (Input.GetKeyDown(KeyCode.R))
+        // {
+            // _player.ResetPlayer();
+        // }
+    // }
     
 
     public GameMode CurrentMode { get; private set; } = GameMode.Location;

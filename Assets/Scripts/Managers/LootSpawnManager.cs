@@ -38,7 +38,7 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 
     private void TrySpawnItem(ObjectsSpawner spawner, List<Vector3> spawnedPositions)
     {
-        var maxAttempts = 10;
+        var maxAttempts = 20;
 
         for (var attempt = 0; attempt < maxAttempts; attempt++)
         {

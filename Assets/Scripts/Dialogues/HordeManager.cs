@@ -10,7 +10,7 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class HordeManager : Singleton<HordeManager>
+public class HordeManager : Singleton<HordeManager>, ISaveable
 {
     [Header("Horde Settings")]
     public int currentHorde = 1;
@@ -36,7 +36,7 @@ public class HordeManager : Singleton<HordeManager>
     [SerializeField] private GameObject exitPrefab;
     
     [Header("Villagers")]
-    [SerializeField] private List<VillageNpcData> workerPool;
+    [SerializeField] public List<VillageNpcData> workerPool;
     
     [SerializeField] private NpcDatabase _npcDatabase;
     
@@ -1084,6 +1084,7 @@ public class HordeManager : Singleton<HordeManager>
             DeathScreenManager.Instance.ShowWinScreen(points);
             return;
         }
+        
         OnHordeFinished?.Invoke(currentHorde - 1);
     }
 
@@ -1109,10 +1110,13 @@ public class HordeManager : Singleton<HordeManager>
         }
 
         LoadingSceneManager.Instance.LoadScene(_previousScene, true);
-
+        
         var cycle = FindObjectOfType<DayNightCycle>();
         if (cycle != null)
             cycle.ResetCycle();
+
+        ToastrPanelManager.Instance.Show("SAVING");
+        SaveLoadManager.Instance.Save();
     }
 
     public int GetEnemyCount()
@@ -1402,4 +1406,33 @@ public class HordeManager : Singleton<HordeManager>
     }
 
     public bool IsBossAlive() => _bossAlive;
+
+    #region Save/Load
+
+    public void Save()
+    {
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("currentHorde", currentHorde, settings);
+        ES3.Save("nightCycleStep", NightCycleStep, settings);
+        ES3.Save("enemiesPerHorde", enemiesPerHorde, settings);
+    }
+
+    public void Load()
+    {
+        if(ES3.KeyExists("currentHorde"))
+            currentHorde = ES3.Load<int>("currentHorde");
+        if(ES3.KeyExists("nightCycleStep"))
+            NightCycleStep = ES3.Load<int>("nightCycleStep");
+        if(ES3.KeyExists("enemiesPerHorde"))
+            enemiesPerHorde = ES3.Load<int>("enemiesPerHorde");
+        
+        if (NightCycleStep == 3)
+        {
+            GenerateHeroNight();
+        }
+    }
+    
+    #endregion
+
 }

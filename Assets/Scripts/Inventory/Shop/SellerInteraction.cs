@@ -74,7 +74,9 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
             lunar = _sellerInventory.Lunar
         };
         
-        ES3.Save($"shop_{sellerId}", data);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save($"shop_{sellerId}", data, settings);
     }
 
     public void Load()

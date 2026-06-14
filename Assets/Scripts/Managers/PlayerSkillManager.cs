@@ -131,7 +131,9 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
 
     public void Save()
     {
-        ES3.Save("player_unlocked_skills", _unlockedSkillIds.ToList());
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("player_unlocked_skills", _unlockedSkillIds.ToList(), settings);
     }
 
     public void Load()

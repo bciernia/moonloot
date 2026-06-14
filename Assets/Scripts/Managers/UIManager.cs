@@ -30,11 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _manaBarEq;
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
-
-    [Header("Main menu Panel")]
-    [SerializeField] private GameObject _mainMenuPanel;
-    [SerializeField] private GameObject _optionsPanel;
-
+    
     [Header("Enemy info")]
     [SerializeField] private GameObject _enemyInfoPanel;
     [SerializeField] private TextMeshProUGUI _enemyName;
@@ -54,10 +50,6 @@ public class UIManager : MonoBehaviour
     
     [Header("Task table")]
     [SerializeField] private GameObject _taskTablePanel;
-    
-    [Header("Save/Load panel")]
-    [SerializeField] private GameObject _savePanel;
-    [SerializeField] private GameObject _loadPanel;
     
     [Header("Player Game UI")]
     [SerializeField] private GameObject _mainGamePanel;
@@ -149,6 +141,15 @@ public class UIManager : MonoBehaviour
     private bool _portalSpawned;
     
     private Coroutine _objectiveFlashRoutine;
+    
+    private GameObject MainMenuPanel =>
+        PersistentMenuManager.Instance.MainMenuPanel;
+
+    private GameObject OptionsPanel =>
+        PersistentMenuManager.Instance.OptionsPanel;
+
+    private GameObject LoadPanel =>
+        PersistentMenuManager.Instance.LoadPanel;
     
     private void Awake()
     {
@@ -397,12 +398,12 @@ public class UIManager : MonoBehaviour
         if (TryCloseAnyPanel())
             return;
             
-        OpenClosePanel(_mainMenuPanel);
+        OpenClosePanel(MainMenuPanel);
     }
 
     private bool TryCloseAnyPanel()
     {
-        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel, _mainMenuPanel };
+        GameObject[] panels = { _gameMenu, OptionsPanel, _taskTablePanel, LoadPanel, MainMenuPanel };
 
         foreach (var panel in panels)
         {
@@ -413,7 +414,7 @@ public class UIManager : MonoBehaviour
             if (panel == _gameMenu || panel == _taskTablePanel)
                 PauseManager.Instance.ReleasePause();
 
-            if (panel == _optionsPanel)
+            if (panel == OptionsPanel)
                 UpdateKeyTexts();
 
             return true;
@@ -423,7 +424,7 @@ public class UIManager : MonoBehaviour
     }
     private void CloseAllPanels()
     {
-        GameObject[] panels = { _gameMenu, _optionsPanel, _taskTablePanel, _loadPanel, _savePanel, _mainMenuPanel };
+        GameObject[] panels = { _gameMenu, OptionsPanel, _taskTablePanel, LoadPanel, MainMenuPanel };
 
         foreach (var panel in panels)
         {

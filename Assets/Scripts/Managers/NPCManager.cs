@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NPCManager : Singleton<NPCManager>
+public class NPCManager : Singleton<NPCManager>, ISaveable
 {
     [SerializeField] private PlayerStatsSO _playerStats;
 
@@ -61,18 +61,21 @@ public class NPCManager : Singleton<NPCManager>
 
         if (nextLevelData == null)
         {
+            ToastrPanelManager.Instance.Show("Max level reached");
             Debug.Log("Max level reached");
             return false;
         }
 
         if (!InventoryController.Instance.HasUserQuestItem(nextLevelData.Item.Name, nextLevelData.RequiredAmount))
         {
+            ToastrPanelManager.Instance.Show("Not enough items");
             Debug.Log("Not enough items");
             return false;
         }
 
         if (!InventoryController.Instance.ChangeGoldAmount(-nextLevelData.GoldAmount))
         {
+            ToastrPanelManager.Instance.Show("Not enough items");
             Debug.Log("Not enough gold");
             return false;
         }
@@ -82,5 +85,74 @@ public class NPCManager : Singleton<NPCManager>
         Debug.Log($"{npc.Name} upgraded to level {nextLevel}");
 
         return true;
+    }
+    
+    private void ApplyLevelBonuses(
+        VillageNpcRuntime npc,
+        int level)
+    {
+        if (npc.Data.Group != NPCGroup.Stat)
+            return;
+
+        var levelData = npc.Data.UpgradeLevels.Find(x => x.Level == level);
+
+        if (levelData == null)
+            return;
+
+        foreach (var bonus in levelData.Bonuses)
+        {
+            _playerStats.AddNpcBonus(bonus);
+        }
+    }
+    
+    public void ReapplyBonuses()
+    {
+        _playerStats.ResetNpcBonuses();
+
+        foreach (var npc in WorldManager.Instance.RescuedNpcs)
+        {
+            var level = GetLevel(npc);
+
+            for (var i = 1; i <= level; i++)
+            {
+                ApplyLevelBonuses(npc, i);
+            }
+        }
+
+        Player.Instance.PlayerAttack.RecalculateDamage();
+    }
+
+    public void Save()
+    {
+        var saveData = new List<NPCLevelSaveData>();
+
+        foreach (var pair in _npcLevels)
+        {
+            saveData.Add(new NPCLevelSaveData
+            {
+                RuntimeID = pair.Key,
+                Level = pair.Value
+            });
+        }
+        
+        var settings = SaveLoadManager.Instance.GetSettings();
+
+        ES3.Save("npc_levels", saveData, settings);
+    }
+
+    public void Load()
+    {
+        if (!ES3.KeyExists("npc_levels"))
+            return;
+
+        var saveData =
+            ES3.Load<List<NPCLevelSaveData>>("npc_levels");
+
+        _npcLevels.Clear();
+
+        foreach (var npc in saveData)
+        {
+            _npcLevels[npc.RuntimeID] = npc.Level;
+        }
     }
 }

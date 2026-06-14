@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -92,7 +90,7 @@ public class Projectile : MonoBehaviour
 
         SoundManager.Instance.PlaySound(ProjectileSo.HitSound);
 
-        other.GetComponent<IDamageable>()?.TakeDamage(Damage, Shooter.transform);
+        other.GetComponent<IDamageable>()?.TakeDamage(Mathf.Round(Damage), Shooter.transform);
         other.GetComponent<KnockBack>()?.GetKnockedBack(transform, ProjectileSo.KnockBackThrust);
 
         if (Shooter.CompareTag("Player"))

@@ -527,9 +527,11 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     public void TryRemoveQuestItems(string itemName, int quantity) => inventoryData.RemoveItemByName(itemName, quantity);
     public void Save()
     {
-        ES3.Save("playerInventory_items", inventoryData.inventoryItems);
-        ES3.Save("playerInventory_gold", inventoryData.Lunar);
-        ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("playerInventory_items", inventoryData.inventoryItems, settings);
+        ES3.Save("playerInventory_gold", inventoryData.Lunar, settings);
+        ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems, settings);
     }
 
     public void Load()
@@ -546,13 +548,13 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             inventoryData.Lunar = gold;
         }
 
-        inventoryData.NotifyInventoryUpdated();
+        // inventoryData.NotifyInventoryUpdated();
 
         if (ES3.KeyExists("playerInventory_equippedItems"))
         {
            var equipped = ES3.Load<List<InventoryItem>>("playerInventory_equippedItems");
            equippedItemsManager.EquippedItems = equipped;
-           equippedItemsManager.InitializeEquippedSlots();
+           // equippedItemsManager.InitializeEquippedSlots();
            WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState, true);
            ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState, true);
            OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
@@ -561,6 +563,11 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
            QuickItemManager.Instance.SetQuickItem((EdibleItemSO)equippedItemsManager.EquippedItems[5].item, equippedItemsManager.EquippedItems[5].itemState, equippedItemsManager.EquippedItems[5].quantity,5, true);
            QuickItemManager.Instance.SetQuickItem((EdibleItemSO)equippedItemsManager.EquippedItems[6].item, equippedItemsManager.EquippedItems[6].itemState,equippedItemsManager.EquippedItems[6].quantity, 6,true);
         }
+        
+        inventoryData.NotifyInventoryUpdated();
+        Debug.Log("Equipped loaded");
+        equippedItemsManager.InitializeEquippedSlots();
+        Debug.Log("Equipped UI refreshed");
     }
     
     private void OnDestroy()
