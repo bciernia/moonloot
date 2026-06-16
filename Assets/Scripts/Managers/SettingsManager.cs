@@ -1,24 +1,31 @@
+using UnityEngine;
+
 public class SettingsManager : Singleton<SettingsManager>
 {
-    public AimMode AimMode { get; private set; } = AimMode.Keyboard;
-
     public bool UseGamepad { get; private set; }
     
-    public void SetAimMode(int dropdownValue)
-    {
-        AimMode = (AimMode)dropdownValue;
+    private const string AimModeKey = "AimMode";
 
-        var settings = SaveLoadManager.Instance.GetSettings();
-        
-        ES3.Save("AimMode", dropdownValue, settings);
+    public AimMode AimMode { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        AimMode = (AimMode)PlayerPrefs.GetInt(
+            AimModeKey,
+            (int)AimMode.Keyboard);
     }
 
-    private void Start()
+    public void SetAimMode(int value)
     {
-        if (ES3.KeyExists("AimMode"))
-        {
-            AimMode = (AimMode)ES3.Load<int>("AimMode");
-        }
+        AimMode = (AimMode)value;
+
+        PlayerPrefs.SetInt(
+            AimModeKey,
+            value);
+
+        PlayerPrefs.Save();
     }
 
     public void SetGamepadState(bool isGamepad)

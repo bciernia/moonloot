@@ -30,12 +30,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         PrepareStatistics();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.O))
-            TakeDamage(99, null, DamageType.Physical);   
-    }
-
     private void PrepareStatistics()
     {
         // PlayerStatisticsManager.Instance.SetLevel(_playerStats.Level);

@@ -233,7 +233,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     public void OnPlayerExit()
     {
-        Debug.Log("Player exited");
         SoundManager.Instance.StopCombatMusic();
 
         StopNight();

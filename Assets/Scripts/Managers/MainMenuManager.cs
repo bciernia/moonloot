@@ -8,6 +8,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject[] _buttonsMenu;
     
     private GameObject _loadPanel;
+    private GameObject _optionsPanel;
 
     public void StartGame()
     {
@@ -85,7 +86,20 @@ public class MainMenuManager : MonoBehaviour
         {
             _loadPanel.SetActive(isActive);
         }
-    }
+    }    
+    
+    public void SetActiveOptionsPanel(bool isActive)
+    {
+        if (_optionsPanel == null)
+        {
+            FindOptionsPanel();
+        }
+
+        if (_optionsPanel != null)
+        {
+            _optionsPanel.SetActive(isActive);
+        }
+    }    
     
     private void FindLoadPanel()
     {
@@ -104,5 +118,24 @@ public class MainMenuManager : MonoBehaviour
         }
 
         Debug.LogError("LoadPanel not found!");
+    }
+    
+    private void FindOptionsPanel()
+    {
+        var transforms =
+            FindObjectsByType<Transform>(
+                FindObjectsInactive.Include,
+                FindObjectsSortMode.None);
+
+        foreach (var t in transforms)
+        {
+            if (!t.CompareTag("OptionsMenu"))
+                continue;
+
+            _optionsPanel = t.gameObject;
+            return;
+        }
+
+        Debug.LogError("OptionsPanel not found!");
     }
 }
