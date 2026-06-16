@@ -51,9 +51,11 @@ public class PlayerAnimations : MonoBehaviour
         
         var currentFloorClip = SoundManager.Instance.GetCurrentFloorClip(transform.position);
 
+        
+        
         if (currentFloorClip != null)
         {
-            _audioSource.PlayOneShot(currentFloorClip, 1f);
+            _audioSource.PlayOneShot(currentFloorClip);
         }
     }
 }

@@ -201,10 +201,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         );
 
         StartCoroutine(WaitForSceneAndSpawn());
-        SoundManager.Instance.PlayCombatMusic(1f);
+        SoundManager.Instance.PlayCombatMusic();
     }
 
-    private System.Collections.IEnumerator WaitForSceneAndSpawn()
+    private IEnumerator WaitForSceneAndSpawn()
     {
         yield return null;
 

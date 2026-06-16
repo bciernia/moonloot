@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class SoundManager : Singleton<SoundManager>
 {
+    [SerializeField] private AudioMixer _audioMixer;
+    
     [SerializeField] private Tilemap _map;
     [SerializeField] private List<TileSoundSO> _tileSounds;
     [SerializeField] private SoundList[] _soundList;
@@ -55,23 +58,42 @@ public class SoundManager : Singleton<SoundManager>
                 _dataFromTile.Add(tile, tileData);
             }
         }
+        
+        SetMusicVolume(
+            PlayerPrefs.GetFloat(
+                "MusicVolume",
+                1f));
 
-        PlayMusic(SceneManager.GetActiveScene().name);
+        SetSfxVolume(
+            PlayerPrefs.GetFloat(
+                "SfxVolume",
+                1f));
+        
     }
 
     private void Start()
     {
         FindMapForSoundManager();
+        
+        SetMusicVolume(
+            PlayerPrefs.GetFloat(
+                "MusicVolume",
+                1f));
+
+        SetSfxVolume(
+            PlayerPrefs.GetFloat(
+                "SfxVolume",
+                1f));
     }
     
-    public void PlaySound(SoundType sound, float volume = 1f)
+    public void PlaySound(SoundType sound)
     {
         var clips = GetSoundsByType(sound);
         var randomClip = clips[Random.Range(0, clips.Length)];
 
         if (randomClip != null)
         {
-            PlaySFX(randomClip, volume);
+            PlaySFX(randomClip);
         }
         else
         {
@@ -79,11 +101,11 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void PlaySound(AudioClip sound, float volume = 1f)
+    public void PlaySound(AudioClip sound)
     {
         if (sound != null)
         {
-            PlaySFX(sound, volume);
+            PlaySFX(sound);
         }
         else
         {
@@ -91,22 +113,24 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    public void PlayMusic(string sceneName, float volume = 1f)
+    public void PlayMusic(string sceneName)
     {
         var sceneClip = _sceneMusicList.FirstOrDefault(clip => clip.name == sceneName);
         
         if (sceneClip != null)
         {
-            ConfigureAndPlayMusic(sceneClip, volume);
+            ConfigureAndPlayMusic(sceneClip);
         }
         else
         {
-            ConfigureAndPlayMusic(_sceneMusicList[0], volume);
+            ConfigureAndPlayMusic(_sceneMusicList[0]);
             Debug.Log($"Music for scene {sceneName} is missing!");
         }
+        
+        SetMusicVolume(PlayerPrefs.GetFloat("MusicVolume", 1f));
     }
 
-    private void ConfigureAndPlayMusic(AudioClip clip, float volume = 1f)
+    private void ConfigureAndPlayMusic(AudioClip clip)
     {
         if (_explorationSource == null)
             return;
@@ -115,12 +139,11 @@ public class SoundManager : Singleton<SoundManager>
         _explorationSource.gameObject.SetActive(true);
 
         _explorationSource.clip = clip;
-        _explorationSource.volume = volume;
         _explorationSource.loop = true;
         _explorationSource.Play();
     }
 
-    public void PlayCombatMusic(float volume = 1f)
+    public void PlayCombatMusic()
     {
         if (_combatMusicList.Count == 0)
             return;
@@ -131,7 +154,6 @@ public class SoundManager : Singleton<SoundManager>
             _combatMusicList[Random.Range(0, _combatMusicList.Count)];
 
         _combatSource.clip = randomClip;
-        _combatSource.volume = volume;
         _combatSource.loop = true;
         _combatSource.Play();
 
@@ -233,7 +255,7 @@ public class SoundManager : Singleton<SoundManager>
         return _soundList[0].Sounds;
     }
 
-    private void PlaySFX(AudioClip clip, float volume)
+    private void PlaySFX(AudioClip clip)
     {
         if (_lastPlayedTimes.TryGetValue(clip, out var lastTime))
         {
@@ -245,14 +267,14 @@ public class SoundManager : Singleton<SoundManager>
 
         foreach (var source in _sfxSources.Where(source => !source.isPlaying))
         {
-            source.PlayOneShot(clip, volume);
+            source.PlayOneShot(clip);
             return;
         }
 
         var fallback = _sfxSources[0];
 
         fallback.Stop();
-        fallback.PlayOneShot(clip, volume);
+        fallback.PlayOneShot(clip);
     }
 
     public float CalculateDistFromPlayerForVolume(Vector2 worldPosition)
@@ -277,7 +299,7 @@ public class SoundManager : Singleton<SoundManager>
         PlayMusic(scene.name);
     }
     
-    public void PlayDeathMusic(float volume = 1f)
+    public void PlayDeathMusic()
     {
         StopAllCoroutines();
 
@@ -292,12 +314,11 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         _explorationSource.clip = _deathMusic;
-        _explorationSource.volume = volume;
         _explorationSource.loop = false;
         _explorationSource.Play();
     }
 
-    public void PlayWinMusic(float volume = 1f)
+    public void PlayWinMusic()
     {
         StopAllCoroutines();
 
@@ -312,7 +333,6 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         _explorationSource.clip = _winMusic;
-        _explorationSource.volume = volume;
         _explorationSource.loop = false;
         _explorationSource.Play();
     }
@@ -330,10 +350,29 @@ public class SoundManager : Singleton<SoundManager>
         var randomClip =
             _pickUpSfx[Random.Range(0, _pickUpSfx.Count)];
 
-        PlaySFX(randomClip, 1f);
+        PlaySFX(randomClip);
     }
     
     #endregion
+    
+    public void SetMusicVolume(float value)
+    {
+        value = Mathf.Clamp(value, 0.0001f, 1f);
+
+        _audioMixer.SetFloat(
+            "MusicVolume",
+            Mathf.Log10(value) * 20f);
+    }
+
+    public void SetSfxVolume(float value)
+    {
+        value = Mathf.Clamp(value, 0.0001f, 1f);
+
+        _audioMixer.SetFloat(
+            "SfxVolume",
+            Mathf.Log10(value) * 20f);
+    }
+    
 }
 
 [Serializable]

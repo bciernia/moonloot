@@ -102,9 +102,9 @@ public class PlayerAttack : MonoBehaviour
         StartCoroutine(AttackCooldown());
     }
 
-    private void PlayWeaponSound(SoundType soundType, float volume = 1f)
+    private void PlayWeaponSound(SoundType soundType)
     {
-        SoundManager.Instance.PlaySound(soundType, volume);
+        SoundManager.Instance.PlaySound(soundType);
     }
 
     private IEnumerator AttackCooldown()
