@@ -40,6 +40,13 @@ public class Player : MonoBehaviour, ISaveable
         _playerAnimations = GetComponent<PlayerAnimations>();
         _playerInput = GetComponent<PlayerInput>();
 
+        var rebinds = PlayerPrefs.GetString("rebinds");
+        
+        if (!string.IsNullOrEmpty(rebinds))
+        {
+            _playerInput.actions.LoadBindingOverridesFromJson(rebinds);
+        }
+        
         _playerStats.ResetPlayerStats();
         
         foreach (var map in _playerInput.actions.actionMaps)
@@ -87,7 +94,9 @@ public class Player : MonoBehaviour, ISaveable
             //     : null
         };
 
-        ES3.Save("player_stats", stats);
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save("player_stats", stats, settings);
     }
 
     public void Load()

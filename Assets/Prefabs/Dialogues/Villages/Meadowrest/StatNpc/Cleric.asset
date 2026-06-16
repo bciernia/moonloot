@@ -1,2331 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
-  m_Name: Cleric
-  m_EditorClassIdentifier: 
-  version: 1.8.4
-  creationTime: 2026-04-12@15:40:14
-  editTime: 2026-06-06@09:57:09
-  nodes:
-  - rid: 154562892784468256
-  - rid: 154562892784468257
-  - rid: 154562892784468258
-  - rid: 154562892784468259
-  - rid: 154562892784468260
-  - rid: 154562892784468261
-  - rid: 154562892784468262
-  - rid: 154562892784468263
-  - rid: 154562892784468264
-  - rid: 154562892784468265
-  - rid: 154562892784468266
-  - rid: 154562892784468267
-  - rid: 154562892784468268
-  - rid: 154562892784468269
-  - rid: 154562892784468270
-  - rid: 154562892784468271
-  - rid: 154562892784468272
-  - rid: 154562892784468273
-  - rid: 154562892784468274
-  - rid: 154562892784468275
-  - rid: 154562892784468276
-  - rid: 154562892784468277
-  - rid: 154562892784468278
-  - rid: 154562892784468279
-  - rid: 154562892784468280
-  - rid: 154562892784468281
-  - rid: 154562892784468282
-  - rid: 154562892784468283
-  - rid: 154562892784468284
-  - rid: 154562892784468285
-  - rid: 154562892784468286
-  - rid: 154562892784468287
-  - rid: 154562892784468288
-  - rid: 154562892784468289
-  - rid: 154562892784468290
-  - rid: 154562892784468291
-  - rid: 154562892784468292
-  - rid: 154562892784468293
-  - rid: 154562892784468294
-  - rid: 154562892784468295
-  - rid: 154562892784468296
-  - rid: 154562892784468297
-  - rid: 154562892784468298
-  - rid: 154562892784468299
-  - rid: 154562892784468300
-  - rid: 154562892784468301
-  - rid: 154562892784468302
-  - rid: 154562892784468303
-  - rid: 154562892784468304
-  - rid: 154562892784468305
-  - rid: 154562892784468306
-  - rid: 154562892784468307
-  - rid: 154562892784468308
-  - rid: 154562892784468309
-  - rid: 154562892784468310
-  - rid: 154562892784468311
-  - rid: 154562892784468312
-  - rid: 154562892784468313
-  - rid: 154562892784468314
-  - rid: 154562892784468315
-  - rid: 154562892784468316
-  - rid: 154562892784468317
-  - rid: 154562892784468318
-  - rid: 154562892784468319
-  - rid: 154562892784468320
-  - rid: 154562892784468321
-  - rid: 154562892784468322
-  - rid: 154562892784468323
-  - rid: 154562892784468324
-  translationLibrary: {fileID: 2893971933833677304}
-  maxID: 4519
-  references:
-    version: 2
-    RefIds:
-    - rid: 154562892784468256
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3528
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3529
-          attachedIds: ce0e0000
-          ownerId: 3528
-          connectionType: 1
-        outputs:
-        - id: 3530
-          attachedIds: ce0d0000
-          ownerId: 3528
-          connectionType: 1
-        width: 268
-        height: 159.62502
-        xPosition: -245.39584
-        yPosition: -178.45627
-        items:
-        - rid: 154562892784468325
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468257
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3531
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 3532
-          attachedIds: d40d0000
-          ownerId: 3531
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: 235.65826
-        yPosition: 269.31534
-        exitPointName: 
-    - rid: 154562892784468258
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3533
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 3534
-          attachedIds: ca0d0000f00d0000
-          ownerId: 3533
-          connectionType: 1
-        - id: 3535
-          attachedIds: 
-          ownerId: 3533
-          connectionType: 7
-        - id: 3536
-          attachedIds: 970e0000
-          ownerId: 3533
-          connectionType: 7
-        - id: 4146
-          attachedIds: 
-          ownerId: 3533
-          connectionType: 7
-        - id: 3537
-          attachedIds: 
-          ownerId: 3533
-          connectionType: 7
-        outputs:
-        - id: 3538
-          attachedIds: d60d0000
-          ownerId: 3533
-          connectionType: 1
-        - id: 3539
-          attachedIds: a10e0000
-          ownerId: 3533
-          connectionType: 1
-        - id: 4147
-          attachedIds: 05100000
-          ownerId: 3533
-          connectionType: 1
-        - id: 3540
-          attachedIds: cc0d0000
-          ownerId: 3533
-          connectionType: 1
-        width: 228
-        height: 215.75
-        xPosition: 170.94849
-        yPosition: 34.869675
-        items:
-        - rid: 154562892784468326
-        - rid: 154562892784468327
-        - rid: 154562892784468328
-        - rid: 154562892784468329
-    - rid: 154562892784468259
-      type: {class: BuildStringNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3541
-        name: BUILD STRING
-        nodeType: 30
-        inputs:
-        - id: 3542
-          attachedIds: d20d0000
-          ownerId: 3541
-          connectionType: 1
-        - id: 3543
-          attachedIds: 
-          ownerId: 3541
-          connectionType: 9
-        - id: 3544
-          attachedIds: e20d0000
-          ownerId: 3541
-          connectionType: 9
-        - id: 3545
-          attachedIds: 
-          ownerId: 3541
-          connectionType: 9
-        outputs:
-        - id: 3546
-          attachedIds: 2f0e0000
-          ownerId: 3541
-          connectionType: 5
-        - id: 3547
-          attachedIds: f20d0000
-          ownerId: 3541
-          connectionType: 1
-        width: 226
-        height: 222
-        xPosition: 398.67834
-        yPosition: -339.96594
-        items:
-        - rid: 154562892784468330
-        - rid: 154562892784468331
-        - rid: 154562892784468332
-    - rid: 154562892784468260
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3548
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3549
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 1
-        - id: 3550
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 9
-        - id: 3551
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 9
-        - id: 3552
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 9
-        - id: 3553
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 9
-        outputs:
-        - id: 3554
-          attachedIds: d80d0000
-          ownerId: 3548
-          connectionType: 5
-        - id: 3555
-          attachedIds: 
-          ownerId: 3548
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 72.657104
-        yPosition: -524.71265
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetNewLevel
-        methodSignature: GetNewLevel():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468261
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3556
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 3557
-          attachedIds: f30d0000
-          ownerId: 3556
-          connectionType: 1
-        - id: 3558
-          attachedIds: 
-          ownerId: 3556
-          connectionType: 7
-        - id: 3559
-          attachedIds: 
-          ownerId: 3556
-          connectionType: 7
-        outputs:
-        - id: 3560
-          attachedIds: f70d0000
-          ownerId: 3556
-          connectionType: 1
-        - id: 3561
-          attachedIds: eb0d0000
-          ownerId: 3556
-          connectionType: 1
-        width: 235.8125
-        height: 138.50002
-        xPosition: 1007.05273
-        yPosition: -96.48016
-        items:
-        - rid: 154562892784468333
-        - rid: 154562892784468334
-    - rid: 154562892784468262
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3562
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 3563
-          attachedIds: e90d0000
-          ownerId: 3562
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: 1260.283
-        yPosition: 51.715088
-        key: MAIN
-    - rid: 154562892784468263
-      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3564
-        name: JUMPIN
-        nodeType: 9
-        inputs: []
-        outputs:
-        - id: 3565
-          attachedIds: ef0d0000
-          ownerId: 3564
-          connectionType: 1
-        width: 148
-        height: 75
-        xPosition: -934.8457
-        yPosition: 370.4122
-        key: MAIN
-    - rid: 154562892784468264
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3566
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3567
-          attachedIds: ed0d0000
-          ownerId: 3566
-          connectionType: 1
-        outputs:
-        - id: 3568
-          attachedIds: ce0d0000
-          ownerId: 3566
-          connectionType: 1
-        width: 268
-        height: 145.5625
-        xPosition: -174.33612
-        yPosition: 297.10904
-        items:
-        - rid: 154562892784468335
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468265
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3569
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3570
-          attachedIds: db0d0000
-          ownerId: 3569
-          connectionType: 1
-        outputs:
-        - id: 3571
-          attachedIds: e50d0000
-          ownerId: 3569
-          connectionType: 1
-        width: 268
-        height: 149
-        xPosition: 675.63904
-        yPosition: -160.51892
-        items:
-        - rid: 154562892784468336
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468266
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3572
-        name: VARIABLE
-        nodeType: 27
-        inputs: []
-        outputs:
-        - id: 3573
-          attachedIds: 
-          ownerId: 3572
-          connectionType: 5
-        width: 170
-        height: 150
-        xPosition: -809.18964
-        yPosition: -800.8165
-        variableName: levelUpgradeInfo
-        variableValue: 
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468267
-      type: {class: BuildStringNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3574
-        name: BUILD STRING
-        nodeType: 30
-        inputs:
-        - id: 3575
-          attachedIds: e80d0000
-          ownerId: 3574
-          connectionType: 1
-        - id: 3576
-          attachedIds: 
-          ownerId: 3574
-          connectionType: 9
-        - id: 3577
-          attachedIds: 050e0000
-          ownerId: 3574
-          connectionType: 9
-        - id: 3578
-          attachedIds: 
-          ownerId: 3574
-          connectionType: 9
-        - id: 3579
-          attachedIds: 0d0e0000
-          ownerId: 3574
-          connectionType: 9
-        - id: 3580
-          attachedIds: 
-          ownerId: 3574
-          connectionType: 9
-        outputs:
-        - id: 3581
-          attachedIds: 110e0000
-          ownerId: 3574
-          connectionType: 5
-        - id: 3582
-          attachedIds: 140e0000
-          ownerId: 3574
-          connectionType: 1
-        width: 226
-        height: 294
-        xPosition: 1357.3322
-        yPosition: -261.41324
-        items:
-        - rid: 154562892784468337
-        - rid: 154562892784468338
-        - rid: 154562892784468339
-        - rid: 154562892784468340
-        - rid: 154562892784468341
-    - rid: 154562892784468268
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3583
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3584
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 1
-        - id: 3585
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 9
-        - id: 3586
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 9
-        - id: 3587
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 9
-        - id: 3588
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 9
-        outputs:
-        - id: 3589
-          attachedIds: f90d0000
-          ownerId: 3583
-          connectionType: 5
-        - id: 3590
-          attachedIds: 
-          ownerId: 3583
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 927.3324
-        yPosition: -924.9132
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetItemAmountToUpgrade
-        methodSignature: GetItemAmountToUpgrade():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468269
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3591
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3592
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 1
-        - id: 3593
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 9
-        - id: 3594
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 9
-        - id: 3595
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 9
-        - id: 3596
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 9
-        outputs:
-        - id: 3597
-          attachedIds: fb0d0000
-          ownerId: 3591
-          connectionType: 5
-        - id: 3598
-          attachedIds: 
-          ownerId: 3591
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 937.13257
-        yPosition: -565.85046
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetItemNameToUpgrade
-        methodSignature: GetItemNameToUpgrade():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468270
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3599
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3600
-          attachedIds: 
-          ownerId: 3599
-          connectionType: 1
-        - id: 3601
-          attachedIds: fd0d0000
-          ownerId: 3599
-          connectionType: 5
-        outputs:
-        - id: 3602
-          attachedIds: 
-          ownerId: 3599
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: 1719.1855
-        yPosition: -335.7275
-        variableName: levelUpgradeInfo
-        variableValue: 
-    - rid: 154562892784468271
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3603
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3604
-          attachedIds: fe0d0000
-          ownerId: 3603
-          connectionType: 1
-        outputs:
-        - id: 3605
-          attachedIds: 190e0000
-          ownerId: 3603
-          connectionType: 1
-        width: 268
-        height: 158.76569
-        xPosition: 1731.2949
-        yPosition: -97.837006
-        items:
-        - rid: 154562892784468342
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468272
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3606
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 3607
-          attachedIds: 290e00002c0e0000
-          ownerId: 3606
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: 3236.4482
-        yPosition: 151.18484
-        key: MAIN
-    - rid: 154562892784468273
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3608
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 3609
-          attachedIds: 150e0000
-          ownerId: 3608
-          connectionType: 1
-        - id: 3610
-          attachedIds: 250e0000
-          ownerId: 3608
-          connectionType: 2
-        - id: 3611
-          attachedIds: 
-          ownerId: 3608
-          connectionType: 2
-        outputs:
-        - id: 3612
-          attachedIds: 
-          ownerId: 3608
-          connectionType: 2
-        - id: 3613
-          attachedIds: 3e0e0000
-          ownerId: 3608
-          connectionType: 10
-        - id: 3614
-          attachedIds: 280e0000
-          ownerId: 3608
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: 2354.262
-        yPosition: 46.38797
-        logicOperation: 4
-    - rid: 154562892784468274
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3615
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3616
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 1
-        - id: 3617
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 9
-        - id: 3618
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 9
-        - id: 3619
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 9
-        - id: 3620
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 9
-        outputs:
-        - id: 3621
-          attachedIds: 1a0e0000
-          ownerId: 3615
-          connectionType: 2
-        - id: 3622
-          attachedIds: 
-          ownerId: 3615
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 2071.0205
-        yPosition: -311.55768
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: TryUpgrade
-        methodSignature: TryUpgrade():bool
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468275
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3623
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3624
-          attachedIds: 1e0e0000
-          ownerId: 3623
-          connectionType: 1
-        outputs:
-        - id: 3625
-          attachedIds: 170e0000
-          ownerId: 3623
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 2559.4426
-        yPosition: 174.96268
-        items:
-        - rid: 154562892784468343
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468276
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3626
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3627
-          attachedIds: 400e0000
-          ownerId: 3626
-          connectionType: 1
-        outputs:
-        - id: 3628
-          attachedIds: 170e0000
-          ownerId: 3626
-          connectionType: 1
-        width: 268
-        height: 182.49998
-        xPosition: 2886.8923
-        yPosition: -17.38733
-        items:
-        - rid: 154562892784468344
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468277
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3629
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3630
-          attachedIds: 
-          ownerId: 3629
-          connectionType: 1
-        - id: 3631
-          attachedIds: da0d0000
-          ownerId: 3629
-          connectionType: 5
-        outputs:
-        - id: 3632
-          attachedIds: 
-          ownerId: 3629
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: 693.511
-        yPosition: -340.0187
-        variableName: newLevel
-        variableValue: 
-    - rid: 154562892784468278
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3633
-        name: VARIABLE
-        nodeType: 27
-        inputs: []
-        outputs:
-        - id: 3634
-          attachedIds: 
-          ownerId: 3633
-          connectionType: 5
-        width: 170
-        height: 150
-        xPosition: -352.9016
-        yPosition: -789.3529
-        variableName: newLevel
-        variableValue: 
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468279
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3635
-        name: VARIABLE
-        nodeType: 27
-        inputs: []
-        outputs:
-        - id: 3636
-          attachedIds: 
-          ownerId: 3635
-          connectionType: 5
-        width: 170
-        height: 150
-        xPosition: -586.61127
-        yPosition: -795.67615
-        variableName: level
-        variableValue: 1
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468280
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3637
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3638
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 1
-        - id: 3639
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 9
-        - id: 3640
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 9
-        - id: 3641
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 9
-        - id: 3642
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 9
-        outputs:
-        - id: 3643
-          attachedIds: 3f0e0000
-          ownerId: 3637
-          connectionType: 5
-        - id: 3644
-          attachedIds: 
-          ownerId: 3637
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 2354.7776
-        yPosition: -462.28162
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetLevelAsText
-        methodSignature: GetLevelAsText():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468281
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3645
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3646
-          attachedIds: 1d0e0000
-          ownerId: 3645
-          connectionType: 1
-        - id: 3647
-          attachedIds: 3b0e0000
-          ownerId: 3645
-          connectionType: 5
-        outputs:
-        - id: 3648
-          attachedIds: 2b0e0000
-          ownerId: 3645
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: 2632.3555
-        yPosition: -48.297363
-        variableName: level
-        variableValue: 
-    - rid: 154562892784468282
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3649
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3650
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 1
-        - id: 3651
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 9
-        - id: 3652
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 9
-        - id: 3653
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 9
-        - id: 3654
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 9
-        outputs:
-        - id: 3655
-          attachedIds: 4b0e0000
-          ownerId: 3649
-          connectionType: 5
-        - id: 3656
-          attachedIds: 
-          ownerId: 3649
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -1261.2389
-        yPosition: -625.2623
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetLevelAsText
-        methodSignature: GetLevelAsText():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468283
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3657
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3658
-          attachedIds: 740e0000
-          ownerId: 3657
-          connectionType: 1
-        - id: 3659
-          attachedIds: 470e0000
-          ownerId: 3657
-          connectionType: 5
-        outputs:
-        - id: 3660
-          attachedIds: cc0e0000
-          ownerId: 3657
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: -864.3952
-        yPosition: -247.88744
-        variableName: level
-        variableValue: 
-    - rid: 154562892784468284
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3663
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3664
-          attachedIds: 640e0000
-          ownerId: 3663
-          connectionType: 1
-        - id: 3665
-          attachedIds: 
-          ownerId: 3663
-          connectionType: 9
-        - id: 3666
-          attachedIds: 
-          ownerId: 3663
-          connectionType: 9
-        - id: 3667
-          attachedIds: 
-          ownerId: 3663
-          connectionType: 9
-        - id: 3668
-          attachedIds: 
-          ownerId: 3663
-          connectionType: 9
-        outputs:
-        - id: 3669
-          attachedIds: 
-          ownerId: 3663
-          connectionType: 9
-        - id: 3670
-          attachedIds: 580e0000
-          ownerId: 3663
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -2193.83
-        yPosition: -481.17413
-        triggeredClassName: RescueNpc
-        triggeredMethodName: SetSaveNpc
-        methodSignature: SetSaveNpc()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468285
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3671
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3672
-          attachedIds: 560e0000
-          ownerId: 3671
-          connectionType: 1
-        outputs:
-        - id: 3673
-          attachedIds: 660e0000
-          ownerId: 3671
-          connectionType: 1
-        width: 268
-        height: 197.81248
-        xPosition: -1898.2675
-        yPosition: -243.79916
-        items:
-        - rid: 154562892784468345
-        characterName: Cleric
-        icon: 
-    - rid: 154562892784468286
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3674
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 3675
-          attachedIds: 720e0000
-          ownerId: 3674
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: -1022.35065
-        yPosition: 133.91849
-        exitPointName: 
-    - rid: 154562892784468287
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3676
-        name: VARIABLE
-        nodeType: 24
-        inputs: []
-        outputs:
-        - id: 3677
-          attachedIds: 
-          ownerId: 3676
-          connectionType: 2
-        width: 170
-        height: 150
-        xPosition: -1464.8945
-        yPosition: -774.6481
-        variableName: isSaved
-        variableValue: False
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468288
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3678
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 3679
-          attachedIds: 
-          ownerId: 3678
-          connectionType: 1
-        - id: 3680
-          attachedIds: 7b0e0000
-          ownerId: 3678
-          connectionType: 2
-        - id: 3681
-          attachedIds: 
-          ownerId: 3678
-          connectionType: 2
-        outputs:
-        - id: 3682
-          attachedIds: 
-          ownerId: 3678
-          connectionType: 2
-        - id: 3683
-          attachedIds: 6a0e0000
-          ownerId: 3678
-          connectionType: 10
-        - id: 3684
-          attachedIds: 500e0000
-          ownerId: 3678
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: -2510.69
-        yPosition: -517.1042
-        logicOperation: 4
-    - rid: 154562892784468289
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3685
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3686
-          attachedIds: 590e0000
-          ownerId: 3685
-          connectionType: 1
-        - id: 3687
-          attachedIds: 
-          ownerId: 3685
-          connectionType: 5
-        outputs:
-        - id: 3688
-          attachedIds: 6c0e0000
-          ownerId: 3685
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: -1534.7577
-        yPosition: -163.10524
-        variableName: isSaved
-        variableValue: true
-    - rid: 154562892784468290
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3689
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 3690
-          attachedIds: 630e0000
-          ownerId: 3689
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: -2206.1646
-        yPosition: -664.7313
-        key: START
-    - rid: 154562892784468291
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3691
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3692
-          attachedIds: 680e0000
-          ownerId: 3691
-          connectionType: 1
-        - id: 3693
-          attachedIds: 
-          ownerId: 3691
-          connectionType: 9
-        - id: 3694
-          attachedIds: 
-          ownerId: 3691
-          connectionType: 9
-        - id: 3695
-          attachedIds: 
-          ownerId: 3691
-          connectionType: 9
-        - id: 3696
-          attachedIds: 
-          ownerId: 3691
-          connectionType: 9
-        outputs:
-        - id: 3697
-          attachedIds: 
-          ownerId: 3691
-          connectionType: 9
-        - id: 3698
-          attachedIds: 5b0e0000
-          ownerId: 3691
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -1294.8157
-        yPosition: -116.77426
-        triggeredClassName: RescueNpc
-        triggeredMethodName: HideNpc
-        methodSignature: HideNpc()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468292
-      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3699
-        name: JUMPIN
-        nodeType: 9
-        inputs: []
-        outputs:
-        - id: 3700
-          attachedIds: 4a0e0000
-          ownerId: 3699
-          connectionType: 1
-        width: 148
-        height: 75
-        xPosition: -1177.5498
-        yPosition: -257.5614
-        key: START
-    - rid: 154562892784468293
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3701
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3702
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 1
-        - id: 3703
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 9
-        - id: 3704
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 9
-        - id: 3705
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 9
-        - id: 3706
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 9
-        outputs:
-        - id: 3707
-          attachedIds: 600e0000
-          ownerId: 3701
-          connectionType: 2
-        - id: 3708
-          attachedIds: 
-          ownerId: 3701
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -2823.6526
-        yPosition: -847.0447
-        triggeredClassName: RescueNpc
-        triggeredMethodName: IsSaved
-        methodSignature: IsSaved():bool
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468294
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3709
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3710
-          attachedIds: a30e0000
-          ownerId: 3709
-          connectionType: 1
-        outputs:
-        - id: 3711
-          attachedIds: a50e0000
-          ownerId: 3709
-          connectionType: 1
-        width: 268
-        height: 143.62502
-        xPosition: 1042.171
-        yPosition: 207.42386
-        items:
-        - rid: 154562892784468346
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468295
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3712
-        name: VARIABLE
-        nodeType: 27
-        inputs: []
-        outputs:
-        - id: 3713
-          attachedIds: 
-          ownerId: 3712
-          connectionType: 5
-        width: 170
-        height: 150
-        xPosition: -135.22504
-        yPosition: -793.4214
-        variableName: skillName
-        variableValue: 
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468296
-      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3714
-        name: VARIABLE
-        nodeType: 27
-        inputs: []
-        outputs:
-        - id: 3715
-          attachedIds: 
-          ownerId: 3714
-          connectionType: 5
-        width: 170
-        height: 150
-        xPosition: 98.37494
-        yPosition: -800.02136
-        variableName: skillDescription
-        variableValue: 
-        resetOnEntry: 1
-        isGlobal: 0
-    - rid: 154562892784468297
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3716
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3717
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 1
-        - id: 3718
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 9
-        - id: 3719
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 9
-        - id: 3720
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 9
-        - id: 3721
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 9
-        outputs:
-        - id: 3722
-          attachedIds: a20e0000
-          ownerId: 3716
-          connectionType: 5
-        - id: 3723
-          attachedIds: 
-          ownerId: 3716
-          connectionType: 1
-        width: 220
-        height: 326.25
-        xPosition: 479.79407
-        yPosition: 347.47598
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: get_GetGrantedSkillDescription
-        methodSignature: get_GetGrantedSkillDescription():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468298
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3724
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 3725
-          attachedIds: 
-          ownerId: 3724
-          connectionType: 1
-        - id: 3726
-          attachedIds: 9e0e0000
-          ownerId: 3724
-          connectionType: 2
-        - id: 3727
-          attachedIds: 
-          ownerId: 3724
-          connectionType: 2
-        outputs:
-        - id: 3728
-          attachedIds: 950e0000960e0000
-          ownerId: 3724
-          connectionType: 2
-        - id: 3729
-          attachedIds: 
-          ownerId: 3724
-          connectionType: 10
-        - id: 3730
-          attachedIds: 
-          ownerId: 3724
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: -322.01083
-        yPosition: 93.689606
-        logicOperation: 5
-    - rid: 154562892784468299
-      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3731
-        name: OPTION_FILTER
-        nodeType: 13
-        inputs:
-        - id: 3732
-          attachedIds: 
-          ownerId: 3731
-          connectionType: 5
-        - id: 3733
-          attachedIds: 900e0000
-          ownerId: 3731
-          connectionType: 2
-        - id: 3734
-          attachedIds: 900e0000
-          ownerId: 3731
-          connectionType: 2
-        outputs:
-        - id: 3735
-          attachedIds: d00d0000
-          ownerId: 3731
-          connectionType: 7
-        width: 150
-        height: 145
-        xPosition: -112.71399
-        yPosition: 59.54898
-        isDisplayed: 1
-        isSelectable: 0
-    - rid: 154562892784468300
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3736
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3737
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 1
-        - id: 3738
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 9
-        - id: 3739
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 9
-        - id: 3740
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 9
-        - id: 3741
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 9
-        outputs:
-        - id: 3742
-          attachedIds: 8e0e0000
-          ownerId: 3736
-          connectionType: 2
-        - id: 3743
-          attachedIds: 
-          ownerId: 3736
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -569.3717
-        yPosition: -51.284363
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: IsSkillUnlocked
-        methodSignature: IsSkillUnlocked():bool
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468301
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3744
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3745
-          attachedIds: d30d0000
-          ownerId: 3744
-          connectionType: 1
-        - id: 3746
-          attachedIds: 8a0e0000
-          ownerId: 3744
-          connectionType: 5
-        outputs:
-        - id: 3747
-          attachedIds: 7e0e0000
-          ownerId: 3744
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: 757.4143
-        yPosition: 142.99606
-        variableName: skillDescription
-        variableValue: 
-    - rid: 154562892784468302
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3748
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 3749
-          attachedIds: 7f0e0000
-          ownerId: 3748
-          connectionType: 1
-        - id: 3750
-          attachedIds: 
-          ownerId: 3748
-          connectionType: 7
-        - id: 3751
-          attachedIds: 
-          ownerId: 3748
-          connectionType: 7
-        outputs:
-        - id: 3752
-          attachedIds: ad0e0000
-          ownerId: 3748
-          connectionType: 1
-        - id: 3753
-          attachedIds: ab0e0000
-          ownerId: 3748
-          connectionType: 1
-        width: 235.8125
-        height: 138.50002
-        xPosition: 1375.7522
-        yPosition: 283.03104
-        items:
-        - rid: 154562892784468347
-        - rid: 154562892784468348
-    - rid: 154562892784468303
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3754
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 3755
-          attachedIds: a90e0000
-          ownerId: 3754
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: 1803.5645
-        yPosition: 508.96854
-        key: MAIN
-    - rid: 154562892784468304
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3756
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3757
-          attachedIds: a80e0000
-          ownerId: 3756
-          connectionType: 1
-        - id: 3758
-          attachedIds: 
-          ownerId: 3756
-          connectionType: 9
-        - id: 3759
-          attachedIds: 
-          ownerId: 3756
-          connectionType: 9
-        - id: 3760
-          attachedIds: 
-          ownerId: 3756
-          connectionType: 9
-        - id: 3761
-          attachedIds: 
-          ownerId: 3756
-          connectionType: 9
-        outputs:
-        - id: 3762
-          attachedIds: 
-          ownerId: 3756
-          connectionType: 2
-        - id: 3763
-          attachedIds: b50e0000
-          ownerId: 3756
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 1664.1636
-        yPosition: 75.041016
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: TryUnlockSkill
-        methodSignature: TryUnlockSkill():bool
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468305
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3764
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 3765
-          attachedIds: b30e0000
-          ownerId: 3764
-          connectionType: 1
-        - id: 3766
-          attachedIds: 
-          ownerId: 3764
-          connectionType: 2
-        - id: 3767
-          attachedIds: 
-          ownerId: 3764
-          connectionType: 2
-        outputs:
-        - id: 3768
-          attachedIds: 
-          ownerId: 3764
-          connectionType: 2
-        - id: 3769
-          attachedIds: bc0e0000
-          ownerId: 3764
-          connectionType: 10
-        - id: 3770
-          attachedIds: bf0e0000
-          ownerId: 3764
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: 1954.6902
-        yPosition: 324.2535
-        logicOperation: 4
-    - rid: 154562892784468306
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3771
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3772
-          attachedIds: b90e0000
-          ownerId: 3771
-          connectionType: 1
-        outputs:
-        - id: 3773
-          attachedIds: c20e0000
-          ownerId: 3771
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 2169.565
-        yPosition: 303.93008
-        items:
-        - rid: 154562892784468349
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468307
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3774
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 3775
-          attachedIds: ba0e0000
-          ownerId: 3774
-          connectionType: 1
-        outputs:
-        - id: 3776
-          attachedIds: c20e0000
-          ownerId: 3774
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 2175.815
-        yPosition: 515.18005
-        items:
-        - rid: 154562892784468350
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468308
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3777
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 3778
-          attachedIds: bd0e0000c00e0000
-          ownerId: 3777
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: 2583.315
-        yPosition: 426.43008
-        key: MAIN
-    - rid: 154562892784468309
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3779
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 3780
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 1
-        - id: 3781
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 9
-        - id: 3782
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 9
-        - id: 3783
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 9
-        - id: 3784
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 9
-        outputs:
-        - id: 3785
-          attachedIds: cd0e0000
-          ownerId: 3779
-          connectionType: 5
-        - id: 3786
-          attachedIds: 
-          ownerId: 3779
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -749.60974
-        yPosition: -611.4038
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: GetGrantedSkillName
-        methodSignature: GetGrantedSkillName():string
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468310
-      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 3787
-        name: SET VARIABLE
-        nodeType: 29
-        inputs:
-        - id: 3788
-          attachedIds: 4c0e0000
-          ownerId: 3787
-          connectionType: 1
-        - id: 3789
-          attachedIds: c90e0000
-          ownerId: 3787
-          connectionType: 5
-        outputs:
-        - id: 3790
-          attachedIds: c90d0000
-          ownerId: 3787
-          connectionType: 1
-        width: 200
-        height: 100
-        xPosition: -538.35974
-        yPosition: -232.65387
-        variableName: skillName
-        variableValue: 
-    - rid: 154562892784468311
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4100
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 4101
-          attachedIds: 33100000
-          ownerId: 4100
-          connectionType: 1
-        - id: 4102
-          attachedIds: 
-          ownerId: 4100
-          connectionType: 9
-        - id: 4103
-          attachedIds: 
-          ownerId: 4100
-          connectionType: 9
-        - id: 4104
-          attachedIds: 
-          ownerId: 4100
-          connectionType: 9
-        - id: 4105
-          attachedIds: 
-          ownerId: 4100
-          connectionType: 9
-        outputs:
-        - id: 4106
-          attachedIds: 
-          ownerId: 4100
-          connectionType: 2
-        - id: 4107
-          attachedIds: 0d100000
-          ownerId: 4100
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: 809.4588
-        yPosition: 777.70935
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: TryUpgradeSkill
-        methodSignature: TryUpgradeSkill():bool
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468312
-      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4108
-        name: BOOL LOGIC
-        nodeType: 20
-        inputs:
-        - id: 4109
-          attachedIds: 0b100000
-          ownerId: 4108
-          connectionType: 1
-        - id: 4110
-          attachedIds: 
-          ownerId: 4108
-          connectionType: 2
-        - id: 4111
-          attachedIds: 
-          ownerId: 4108
-          connectionType: 2
-        outputs:
-        - id: 4112
-          attachedIds: 
-          ownerId: 4108
-          connectionType: 2
-        - id: 4113
-          attachedIds: 14100000
-          ownerId: 4108
-          connectionType: 10
-        - id: 4114
-          attachedIds: 17100000
-          ownerId: 4108
-          connectionType: 11
-        width: 160
-        height: 120
-        xPosition: 1403.1375
-        yPosition: 991.807
-        logicOperation: 4
-    - rid: 154562892784468313
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4115
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 4116
-          attachedIds: 11100000
-          ownerId: 4115
-          connectionType: 1
-        outputs:
-        - id: 4117
-          attachedIds: 1a100000
-          ownerId: 4115
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 1828.5586
-        yPosition: 940.23376
-        items:
-        - rid: 154562892784468351
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468314
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4118
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 4119
-          attachedIds: 12100000
-          ownerId: 4118
-          connectionType: 1
-        outputs:
-        - id: 4120
-          attachedIds: 1a100000
-          ownerId: 4118
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: 1834.8086
-        yPosition: 1151.4838
-        items:
-        - rid: 154562892784468352
-        characterName: Cleric (@level) level
-        icon: 
-    - rid: 154562892784468315
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4121
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 4122
-          attachedIds: 1510000018100000
-          ownerId: 4121
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: 2242.3086
-        yPosition: 1062.7338
-        key: MAIN
-    - rid: 154562892784468316
-      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4457
-        name: ENTRY
-        nodeType: 1
-        inputs: []
-        outputs:
-        - id: 4458
-          attachedIds: 6c110000
-          ownerId: 4457
-          connectionType: 1
-        width: 110
-        height: 75
-        xPosition: -3976.957
-        yPosition: 320.0691
-        entryPointName: 
-    - rid: 154562892784468317
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4459
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 4460
-          attachedIds: 6a110000
-          ownerId: 4459
-          connectionType: 1
-        outputs:
-        - id: 4461
-          attachedIds: 6f110000
-          ownerId: 4459
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: -3747.596
-        yPosition: 418.54724
-        items:
-        - rid: 154562892784468353
-        characterName: Alakfein the Cleric
-        icon: 
-    - rid: 154562892784468318
-      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4462
-        name: OPTION
-        nodeType: 4
-        inputs:
-        - id: 4463
-          attachedIds: 6d11000087110000
-          ownerId: 4462
-          connectionType: 1
-        - id: 4464
-          attachedIds: 
-          ownerId: 4462
-          connectionType: 7
-        - id: 4465
-          attachedIds: 
-          ownerId: 4462
-          connectionType: 7
-        outputs:
-        - id: 4466
-          attachedIds: 75110000
-          ownerId: 4462
-          connectionType: 1
-        - id: 4467
-          attachedIds: 7d110000
-          ownerId: 4462
-          connectionType: 1
-        width: 228
-        height: 136
-        xPosition: -3349.471
-        yPosition: 434.60974
-        items:
-        - rid: 154562892784468354
-        - rid: 154562892784468355
-    - rid: 154562892784468319
-      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4468
-        name: TRIGGER
-        nodeType: 8
-        inputs:
-        - id: 4469
-          attachedIds: 72110000
-          ownerId: 4468
-          connectionType: 1
-        - id: 4470
-          attachedIds: 
-          ownerId: 4468
-          connectionType: 9
-        - id: 4471
-          attachedIds: 
-          ownerId: 4468
-          connectionType: 9
-        - id: 4472
-          attachedIds: 
-          ownerId: 4468
-          connectionType: 9
-        - id: 4473
-          attachedIds: 
-          ownerId: 4468
-          connectionType: 9
-        outputs:
-        - id: 4474
-          attachedIds: 
-          ownerId: 4468
-          connectionType: 9
-        - id: 4475
-          attachedIds: 83110000
-          ownerId: 4468
-          connectionType: 1
-        width: 220
-        height: 320
-        xPosition: -2858.4124
-        yPosition: 303.70068
-        triggeredClassName: NPCStatUpgrade
-        triggeredMethodName: OpenStatPanel
-        methodSignature: OpenStatPanel()
-        parameterTypes: []
-        parameterValues: []
-        triggerType: 0
-        objectTagOrName: 
-    - rid: 154562892784468320
-      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4476
-        name: EXIT
-        nodeType: 2
-        inputs:
-        - id: 4477
-          attachedIds: 73110000
-          ownerId: 4476
-          connectionType: 1
-        outputs: []
-        width: 110
-        height: 75
-        xPosition: -2927.0703
-        yPosition: 697.2924
-        exitPointName: 
-    - rid: 154562892784468321
-      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4478
-        name: JUMPIN
-        nodeType: 9
-        inputs: []
-        outputs:
-        - id: 4479
-          attachedIds: 86110000
-          ownerId: 4478
-          connectionType: 1
-        width: 148
-        height: 75
-        xPosition: -4015.5312
-        yPosition: 775.4858
-        key: A
-    - rid: 154562892784468322
-      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4480
-        name: JUMPOUT
-        nodeType: 10
-        inputs:
-        - id: 4481
-          attachedIds: 84110000
-          ownerId: 4480
-          connectionType: 1
-        outputs: []
-        width: 148
-        height: 75
-        xPosition: -2173.6401
-        yPosition: 548.2575
-        key: A
-    - rid: 154562892784468323
-      type: {class: PauseNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4482
-        name: PAUSE
-        nodeType: 35
-        inputs:
-        - id: 4483
-          attachedIds: 7b110000
-          ownerId: 4482
-          connectionType: 1
-        outputs:
-        - id: 4484
-          attachedIds: 81110000
-          ownerId: 4482
-          connectionType: 1
-        width: 181.25002
-        height: 75
-        xPosition: -2488.7654
-        yPosition: 555.0723
-        signalId: 
-    - rid: 154562892784468324
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 4485
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 4486
-          attachedIds: 7f110000
-          ownerId: 4485
-          connectionType: 1
-        outputs:
-        - id: 4487
-          attachedIds: 6f110000
-          ownerId: 4485
-          connectionType: 1
-        width: 268
-        height: 140
-        xPosition: -3780.333
-        yPosition: 673.1193
-        items:
-        - rid: 154562892784468356
-        characterName: Alakfein the Cleric
-        icon: 
-    - rid: 154562892784468325
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: I can help you with your health.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468326
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Level up
-    - rid: 154562892784468327
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Unlock (@skillName)
-    - rid: 154562892784468328
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Upgrade (@skillName)
-    - rid: 154562892784468329
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Good bye
-    - rid: 154562892784468330
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: 'Do you want to upgrade to '
-    - rid: 154562892784468331
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: 
-    - rid: 154562892784468332
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: ' level?'
-    - rid: 154562892784468333
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Yes
-    - rid: 154562892784468334
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: No
-    - rid: 154562892784468335
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: How can I help you?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468336
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: (@newLevel)
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468337
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: 'I need '
-    - rid: 154562892784468338
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: 
-    - rid: 154562892784468339
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: ' '
-    - rid: 154562892784468340
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: 
-    - rid: 154562892784468341
-      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
-      data:
-        text: .
-    - rid: 154562892784468342
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: (@levelUpgradeInfo)
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468343
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: You don't have enough items.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468344
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Thank you! You will be much stronger now.
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468345
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Thank you for saving! Go find portal!
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468346
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: (@skillDescription)
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468347
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Yes
-    - rid: 154562892784468348
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: No
-    - rid: 154562892784468349
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Skill unlocked
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468350
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Sorry, you can't unlock skill
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468351
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Skill upgraded
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468352
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Sorry, you can't upgrade skill
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468353
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: 'Hello adventurer! '
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
-    - rid: 154562892784468354
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Teach me
-    - rid: 154562892784468355
-      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Exit
-    - rid: 154562892784468356
-      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        text: Do you need something else?
-        audioClip: {fileID: 0}
-        audioClipFile: 
-        audioAssetID: 0
---- !u!114 &2893971933833677304
+--- !u!114 &-6743956855511892704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2339,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalLanguage: en
   translationSets:
-  - counter: 40
+  - counter: 41
     languageCode: en
     translations:
     - id: 0
@@ -2462,3 +137,2331 @@ MonoBehaviour:
     - id: 39
       language: en
       text: Alakfein the Cleric
+    - id: 40
+      language: en
+      text: Erevan the Cleric
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Cleric
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-04-12@15:40:14
+  editTime: 2026-06-16@19:34:15
+  nodes:
+  - rid: 154563123191480628
+  - rid: 154563123191480629
+  - rid: 154563123191480630
+  - rid: 154563123191480631
+  - rid: 154563123191480632
+  - rid: 154563123191480633
+  - rid: 154563123191480634
+  - rid: 154563123191480635
+  - rid: 154563123191480636
+  - rid: 154563123191480637
+  - rid: 154563123191480638
+  - rid: 154563123191480639
+  - rid: 154563123191480640
+  - rid: 154563123191480641
+  - rid: 154563123191480642
+  - rid: 154563123191480643
+  - rid: 154563123191480644
+  - rid: 154563123191480645
+  - rid: 154563123191480646
+  - rid: 154563123191480647
+  - rid: 154563123191480648
+  - rid: 154563123191480649
+  - rid: 154563123191480650
+  - rid: 154563123191480651
+  - rid: 154563123191480652
+  - rid: 154563123191480653
+  - rid: 154563123191480654
+  - rid: 154563123191480655
+  - rid: 154563123191480656
+  - rid: 154563123191480657
+  - rid: 154563123191480658
+  - rid: 154563123191480659
+  - rid: 154563123191480660
+  - rid: 154563123191480661
+  - rid: 154563123191480662
+  - rid: 154563123191480663
+  - rid: 154563123191480664
+  - rid: 154563123191480665
+  - rid: 154563123191480666
+  - rid: 154563123191480667
+  - rid: 154563123191480668
+  - rid: 154563123191480669
+  - rid: 154563123191480670
+  - rid: 154563123191480671
+  - rid: 154563123191480672
+  - rid: 154563123191480673
+  - rid: 154563123191480674
+  - rid: 154563123191480675
+  - rid: 154563123191480676
+  - rid: 154563123191480677
+  - rid: 154563123191480678
+  - rid: 154563123191480679
+  - rid: 154563123191480680
+  - rid: 154563123191480681
+  - rid: 154563123191480682
+  - rid: 154563123191480683
+  - rid: 154563123191480684
+  - rid: 154563123191480685
+  - rid: 154563123191480686
+  - rid: 154563123191480687
+  - rid: 154563123191480688
+  - rid: 154563123191480689
+  - rid: 154563123191480690
+  - rid: 154563123191480691
+  - rid: 154563123191480692
+  - rid: 154563123191480693
+  - rid: 154563123191480694
+  - rid: 154563123191480695
+  - rid: 154563123191480696
+  translationLibrary: {fileID: -6743956855511892704}
+  maxID: 4520
+  references:
+    version: 2
+    RefIds:
+    - rid: 154563123191480628
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3528
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3529
+          attachedIds: ce0e0000
+          ownerId: 3528
+          connectionType: 1
+        outputs:
+        - id: 3530
+          attachedIds: ce0d0000
+          ownerId: 3528
+          connectionType: 1
+        width: 268
+        height: 159.62502
+        xPosition: -245.39584
+        yPosition: -178.45627
+        items:
+        - rid: 154563123191480697
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480629
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3531
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3532
+          attachedIds: d40d0000
+          ownerId: 3531
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: 235.65826
+        yPosition: 269.31534
+        exitPointName: 
+    - rid: 154563123191480630
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3533
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 3534
+          attachedIds: ca0d0000f00d0000
+          ownerId: 3533
+          connectionType: 1
+        - id: 3535
+          attachedIds: 
+          ownerId: 3533
+          connectionType: 7
+        - id: 3536
+          attachedIds: 970e0000
+          ownerId: 3533
+          connectionType: 7
+        - id: 4146
+          attachedIds: 
+          ownerId: 3533
+          connectionType: 7
+        - id: 3537
+          attachedIds: 
+          ownerId: 3533
+          connectionType: 7
+        outputs:
+        - id: 3538
+          attachedIds: d60d0000
+          ownerId: 3533
+          connectionType: 1
+        - id: 3539
+          attachedIds: a10e0000
+          ownerId: 3533
+          connectionType: 1
+        - id: 4147
+          attachedIds: 05100000
+          ownerId: 3533
+          connectionType: 1
+        - id: 3540
+          attachedIds: cc0d0000
+          ownerId: 3533
+          connectionType: 1
+        width: 228
+        height: 215.75
+        xPosition: 170.94849
+        yPosition: 34.869675
+        items:
+        - rid: 154563123191480698
+        - rid: 154563123191480699
+        - rid: 154563123191480700
+        - rid: 154563123191480701
+    - rid: 154563123191480631
+      type: {class: BuildStringNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3541
+        name: BUILD STRING
+        nodeType: 30
+        inputs:
+        - id: 3542
+          attachedIds: d20d0000
+          ownerId: 3541
+          connectionType: 1
+        - id: 3543
+          attachedIds: 
+          ownerId: 3541
+          connectionType: 9
+        - id: 3544
+          attachedIds: e20d0000
+          ownerId: 3541
+          connectionType: 9
+        - id: 3545
+          attachedIds: 
+          ownerId: 3541
+          connectionType: 9
+        outputs:
+        - id: 3546
+          attachedIds: 2f0e0000
+          ownerId: 3541
+          connectionType: 5
+        - id: 3547
+          attachedIds: f20d0000
+          ownerId: 3541
+          connectionType: 1
+        width: 226
+        height: 222
+        xPosition: 398.67834
+        yPosition: -339.96594
+        items:
+        - rid: 154563123191480702
+        - rid: 154563123191480703
+        - rid: 154563123191480704
+    - rid: 154563123191480632
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3548
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3549
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 1
+        - id: 3550
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 9
+        - id: 3551
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 9
+        - id: 3552
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 9
+        - id: 3553
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 9
+        outputs:
+        - id: 3554
+          attachedIds: d80d0000
+          ownerId: 3548
+          connectionType: 5
+        - id: 3555
+          attachedIds: 
+          ownerId: 3548
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 72.657104
+        yPosition: -524.71265
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetNewLevel
+        methodSignature: GetNewLevel():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480633
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3556
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 3557
+          attachedIds: f30d0000
+          ownerId: 3556
+          connectionType: 1
+        - id: 3558
+          attachedIds: 
+          ownerId: 3556
+          connectionType: 7
+        - id: 3559
+          attachedIds: 
+          ownerId: 3556
+          connectionType: 7
+        outputs:
+        - id: 3560
+          attachedIds: f70d0000
+          ownerId: 3556
+          connectionType: 1
+        - id: 3561
+          attachedIds: eb0d0000
+          ownerId: 3556
+          connectionType: 1
+        width: 235.8125
+        height: 138.50002
+        xPosition: 1007.05273
+        yPosition: -96.48016
+        items:
+        - rid: 154563123191480705
+        - rid: 154563123191480706
+    - rid: 154563123191480634
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3562
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 3563
+          attachedIds: e90d0000
+          ownerId: 3562
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 1260.283
+        yPosition: 51.715088
+        key: MAIN
+    - rid: 154563123191480635
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3564
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 3565
+          attachedIds: ef0d0000
+          ownerId: 3564
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -934.8457
+        yPosition: 370.4122
+        key: MAIN
+    - rid: 154563123191480636
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3566
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3567
+          attachedIds: ed0d0000
+          ownerId: 3566
+          connectionType: 1
+        outputs:
+        - id: 3568
+          attachedIds: ce0d0000
+          ownerId: 3566
+          connectionType: 1
+        width: 268
+        height: 145.5625
+        xPosition: -174.33612
+        yPosition: 297.10904
+        items:
+        - rid: 154563123191480707
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480637
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3569
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3570
+          attachedIds: db0d0000
+          ownerId: 3569
+          connectionType: 1
+        outputs:
+        - id: 3571
+          attachedIds: e50d0000
+          ownerId: 3569
+          connectionType: 1
+        width: 268
+        height: 149
+        xPosition: 675.63904
+        yPosition: -160.51892
+        items:
+        - rid: 154563123191480708
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480638
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3572
+        name: VARIABLE
+        nodeType: 27
+        inputs: []
+        outputs:
+        - id: 3573
+          attachedIds: 
+          ownerId: 3572
+          connectionType: 5
+        width: 170
+        height: 150
+        xPosition: -809.18964
+        yPosition: -800.8165
+        variableName: levelUpgradeInfo
+        variableValue: 
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480639
+      type: {class: BuildStringNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3574
+        name: BUILD STRING
+        nodeType: 30
+        inputs:
+        - id: 3575
+          attachedIds: e80d0000
+          ownerId: 3574
+          connectionType: 1
+        - id: 3576
+          attachedIds: 
+          ownerId: 3574
+          connectionType: 9
+        - id: 3577
+          attachedIds: 050e0000
+          ownerId: 3574
+          connectionType: 9
+        - id: 3578
+          attachedIds: 
+          ownerId: 3574
+          connectionType: 9
+        - id: 3579
+          attachedIds: 0d0e0000
+          ownerId: 3574
+          connectionType: 9
+        - id: 3580
+          attachedIds: 
+          ownerId: 3574
+          connectionType: 9
+        outputs:
+        - id: 3581
+          attachedIds: 110e0000
+          ownerId: 3574
+          connectionType: 5
+        - id: 3582
+          attachedIds: 140e0000
+          ownerId: 3574
+          connectionType: 1
+        width: 226
+        height: 294
+        xPosition: 1357.3322
+        yPosition: -261.41324
+        items:
+        - rid: 154563123191480709
+        - rid: 154563123191480710
+        - rid: 154563123191480711
+        - rid: 154563123191480712
+        - rid: 154563123191480713
+    - rid: 154563123191480640
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3583
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3584
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 1
+        - id: 3585
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 9
+        - id: 3586
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 9
+        - id: 3587
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 9
+        - id: 3588
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 9
+        outputs:
+        - id: 3589
+          attachedIds: f90d0000
+          ownerId: 3583
+          connectionType: 5
+        - id: 3590
+          attachedIds: 
+          ownerId: 3583
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 927.3324
+        yPosition: -924.9132
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetItemAmountToUpgrade
+        methodSignature: GetItemAmountToUpgrade():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480641
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3591
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3592
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 1
+        - id: 3593
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 9
+        - id: 3594
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 9
+        - id: 3595
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 9
+        - id: 3596
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 9
+        outputs:
+        - id: 3597
+          attachedIds: fb0d0000
+          ownerId: 3591
+          connectionType: 5
+        - id: 3598
+          attachedIds: 
+          ownerId: 3591
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 937.13257
+        yPosition: -565.85046
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetItemNameToUpgrade
+        methodSignature: GetItemNameToUpgrade():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480642
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3599
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3600
+          attachedIds: 
+          ownerId: 3599
+          connectionType: 1
+        - id: 3601
+          attachedIds: fd0d0000
+          ownerId: 3599
+          connectionType: 5
+        outputs:
+        - id: 3602
+          attachedIds: 
+          ownerId: 3599
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 1719.1855
+        yPosition: -335.7275
+        variableName: levelUpgradeInfo
+        variableValue: 
+    - rid: 154563123191480643
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3603
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3604
+          attachedIds: fe0d0000
+          ownerId: 3603
+          connectionType: 1
+        outputs:
+        - id: 3605
+          attachedIds: 190e0000
+          ownerId: 3603
+          connectionType: 1
+        width: 268
+        height: 158.76569
+        xPosition: 1731.2949
+        yPosition: -97.837006
+        items:
+        - rid: 154563123191480714
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480644
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3606
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 3607
+          attachedIds: 290e00002c0e0000
+          ownerId: 3606
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 3236.4482
+        yPosition: 151.18484
+        key: MAIN
+    - rid: 154563123191480645
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3608
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3609
+          attachedIds: 150e0000
+          ownerId: 3608
+          connectionType: 1
+        - id: 3610
+          attachedIds: 250e0000
+          ownerId: 3608
+          connectionType: 2
+        - id: 3611
+          attachedIds: 
+          ownerId: 3608
+          connectionType: 2
+        outputs:
+        - id: 3612
+          attachedIds: 
+          ownerId: 3608
+          connectionType: 2
+        - id: 3613
+          attachedIds: 3e0e0000
+          ownerId: 3608
+          connectionType: 10
+        - id: 3614
+          attachedIds: 280e0000
+          ownerId: 3608
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 2354.262
+        yPosition: 46.38797
+        logicOperation: 4
+    - rid: 154563123191480646
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3615
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3616
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 1
+        - id: 3617
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 9
+        - id: 3618
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 9
+        - id: 3619
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 9
+        - id: 3620
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 9
+        outputs:
+        - id: 3621
+          attachedIds: 1a0e0000
+          ownerId: 3615
+          connectionType: 2
+        - id: 3622
+          attachedIds: 
+          ownerId: 3615
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2071.0205
+        yPosition: -311.55768
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: TryUpgrade
+        methodSignature: TryUpgrade():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480647
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3623
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3624
+          attachedIds: 1e0e0000
+          ownerId: 3623
+          connectionType: 1
+        outputs:
+        - id: 3625
+          attachedIds: 170e0000
+          ownerId: 3623
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2559.4426
+        yPosition: 174.96268
+        items:
+        - rid: 154563123191480715
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480648
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3626
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3627
+          attachedIds: 400e0000
+          ownerId: 3626
+          connectionType: 1
+        outputs:
+        - id: 3628
+          attachedIds: 170e0000
+          ownerId: 3626
+          connectionType: 1
+        width: 268
+        height: 182.49998
+        xPosition: 2886.8923
+        yPosition: -17.38733
+        items:
+        - rid: 154563123191480716
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480649
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3629
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3630
+          attachedIds: 
+          ownerId: 3629
+          connectionType: 1
+        - id: 3631
+          attachedIds: da0d0000
+          ownerId: 3629
+          connectionType: 5
+        outputs:
+        - id: 3632
+          attachedIds: 
+          ownerId: 3629
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 693.511
+        yPosition: -340.0187
+        variableName: newLevel
+        variableValue: 
+    - rid: 154563123191480650
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3633
+        name: VARIABLE
+        nodeType: 27
+        inputs: []
+        outputs:
+        - id: 3634
+          attachedIds: 
+          ownerId: 3633
+          connectionType: 5
+        width: 170
+        height: 150
+        xPosition: -352.9016
+        yPosition: -789.3529
+        variableName: newLevel
+        variableValue: 
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480651
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3635
+        name: VARIABLE
+        nodeType: 27
+        inputs: []
+        outputs:
+        - id: 3636
+          attachedIds: 
+          ownerId: 3635
+          connectionType: 5
+        width: 170
+        height: 150
+        xPosition: -586.61127
+        yPosition: -795.67615
+        variableName: level
+        variableValue: 1
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480652
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3637
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3638
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 1
+        - id: 3639
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 9
+        - id: 3640
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 9
+        - id: 3641
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 9
+        - id: 3642
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 9
+        outputs:
+        - id: 3643
+          attachedIds: 3f0e0000
+          ownerId: 3637
+          connectionType: 5
+        - id: 3644
+          attachedIds: 
+          ownerId: 3637
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 2354.7776
+        yPosition: -462.28162
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetLevelAsText
+        methodSignature: GetLevelAsText():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480653
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3645
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3646
+          attachedIds: 1d0e0000
+          ownerId: 3645
+          connectionType: 1
+        - id: 3647
+          attachedIds: 3b0e0000
+          ownerId: 3645
+          connectionType: 5
+        outputs:
+        - id: 3648
+          attachedIds: 2b0e0000
+          ownerId: 3645
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 2632.3555
+        yPosition: -48.297363
+        variableName: level
+        variableValue: 
+    - rid: 154563123191480654
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3649
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3650
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 1
+        - id: 3651
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 9
+        - id: 3652
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 9
+        - id: 3653
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 9
+        - id: 3654
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 9
+        outputs:
+        - id: 3655
+          attachedIds: 4b0e0000
+          ownerId: 3649
+          connectionType: 5
+        - id: 3656
+          attachedIds: 
+          ownerId: 3649
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -1261.2389
+        yPosition: -625.2623
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetLevelAsText
+        methodSignature: GetLevelAsText():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480655
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3657
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3658
+          attachedIds: 740e0000
+          ownerId: 3657
+          connectionType: 1
+        - id: 3659
+          attachedIds: 470e0000
+          ownerId: 3657
+          connectionType: 5
+        outputs:
+        - id: 3660
+          attachedIds: cc0e0000
+          ownerId: 3657
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -864.3952
+        yPosition: -247.88744
+        variableName: level
+        variableValue: 
+    - rid: 154563123191480656
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3663
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3664
+          attachedIds: 640e0000
+          ownerId: 3663
+          connectionType: 1
+        - id: 3665
+          attachedIds: 
+          ownerId: 3663
+          connectionType: 9
+        - id: 3666
+          attachedIds: 
+          ownerId: 3663
+          connectionType: 9
+        - id: 3667
+          attachedIds: 
+          ownerId: 3663
+          connectionType: 9
+        - id: 3668
+          attachedIds: 
+          ownerId: 3663
+          connectionType: 9
+        outputs:
+        - id: 3669
+          attachedIds: 
+          ownerId: 3663
+          connectionType: 9
+        - id: 3670
+          attachedIds: 580e0000
+          ownerId: 3663
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -2193.83
+        yPosition: -481.17413
+        triggeredClassName: RescueNpc
+        triggeredMethodName: SetSaveNpc
+        methodSignature: SetSaveNpc()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480657
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3671
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3672
+          attachedIds: 560e0000
+          ownerId: 3671
+          connectionType: 1
+        outputs:
+        - id: 3673
+          attachedIds: 660e0000
+          ownerId: 3671
+          connectionType: 1
+        width: 268
+        height: 197.81248
+        xPosition: -1898.2675
+        yPosition: -243.79916
+        items:
+        - rid: 154563123191480717
+        characterName: Cleric
+        icon: 
+    - rid: 154563123191480658
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3674
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 3675
+          attachedIds: 720e0000
+          ownerId: 3674
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -1022.35065
+        yPosition: 133.91849
+        exitPointName: 
+    - rid: 154563123191480659
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3676
+        name: VARIABLE
+        nodeType: 24
+        inputs: []
+        outputs:
+        - id: 3677
+          attachedIds: 
+          ownerId: 3676
+          connectionType: 2
+        width: 170
+        height: 150
+        xPosition: -1464.8945
+        yPosition: -774.6481
+        variableName: isSaved
+        variableValue: False
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480660
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3678
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3679
+          attachedIds: 
+          ownerId: 3678
+          connectionType: 1
+        - id: 3680
+          attachedIds: 7b0e0000
+          ownerId: 3678
+          connectionType: 2
+        - id: 3681
+          attachedIds: 
+          ownerId: 3678
+          connectionType: 2
+        outputs:
+        - id: 3682
+          attachedIds: 
+          ownerId: 3678
+          connectionType: 2
+        - id: 3683
+          attachedIds: 6a0e0000
+          ownerId: 3678
+          connectionType: 10
+        - id: 3684
+          attachedIds: 500e0000
+          ownerId: 3678
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -2510.69
+        yPosition: -517.1042
+        logicOperation: 4
+    - rid: 154563123191480661
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3685
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3686
+          attachedIds: 590e0000
+          ownerId: 3685
+          connectionType: 1
+        - id: 3687
+          attachedIds: 
+          ownerId: 3685
+          connectionType: 5
+        outputs:
+        - id: 3688
+          attachedIds: 6c0e0000
+          ownerId: 3685
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -1534.7577
+        yPosition: -163.10524
+        variableName: isSaved
+        variableValue: true
+    - rid: 154563123191480662
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3689
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 3690
+          attachedIds: 630e0000
+          ownerId: 3689
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -2206.1646
+        yPosition: -664.7313
+        key: START
+    - rid: 154563123191480663
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3691
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3692
+          attachedIds: 680e0000
+          ownerId: 3691
+          connectionType: 1
+        - id: 3693
+          attachedIds: 
+          ownerId: 3691
+          connectionType: 9
+        - id: 3694
+          attachedIds: 
+          ownerId: 3691
+          connectionType: 9
+        - id: 3695
+          attachedIds: 
+          ownerId: 3691
+          connectionType: 9
+        - id: 3696
+          attachedIds: 
+          ownerId: 3691
+          connectionType: 9
+        outputs:
+        - id: 3697
+          attachedIds: 
+          ownerId: 3691
+          connectionType: 9
+        - id: 3698
+          attachedIds: 5b0e0000
+          ownerId: 3691
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -1294.8157
+        yPosition: -116.77426
+        triggeredClassName: RescueNpc
+        triggeredMethodName: HideNpc
+        methodSignature: HideNpc()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480664
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3699
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 3700
+          attachedIds: 4a0e0000
+          ownerId: 3699
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -1177.5498
+        yPosition: -257.5614
+        key: START
+    - rid: 154563123191480665
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3701
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3702
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 1
+        - id: 3703
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 9
+        - id: 3704
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 9
+        - id: 3705
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 9
+        - id: 3706
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 9
+        outputs:
+        - id: 3707
+          attachedIds: 600e0000
+          ownerId: 3701
+          connectionType: 2
+        - id: 3708
+          attachedIds: 
+          ownerId: 3701
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -2823.6526
+        yPosition: -847.0447
+        triggeredClassName: RescueNpc
+        triggeredMethodName: IsSaved
+        methodSignature: IsSaved():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480666
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3709
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3710
+          attachedIds: a30e0000
+          ownerId: 3709
+          connectionType: 1
+        outputs:
+        - id: 3711
+          attachedIds: a50e0000
+          ownerId: 3709
+          connectionType: 1
+        width: 268
+        height: 143.62502
+        xPosition: 1042.171
+        yPosition: 207.42386
+        items:
+        - rid: 154563123191480718
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480667
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3712
+        name: VARIABLE
+        nodeType: 27
+        inputs: []
+        outputs:
+        - id: 3713
+          attachedIds: 
+          ownerId: 3712
+          connectionType: 5
+        width: 170
+        height: 150
+        xPosition: -135.22504
+        yPosition: -793.4214
+        variableName: skillName
+        variableValue: 
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480668
+      type: {class: VariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3714
+        name: VARIABLE
+        nodeType: 27
+        inputs: []
+        outputs:
+        - id: 3715
+          attachedIds: 
+          ownerId: 3714
+          connectionType: 5
+        width: 170
+        height: 150
+        xPosition: 98.37494
+        yPosition: -800.02136
+        variableName: skillDescription
+        variableValue: 
+        resetOnEntry: 1
+        isGlobal: 0
+    - rid: 154563123191480669
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3716
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3717
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 1
+        - id: 3718
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 9
+        - id: 3719
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 9
+        - id: 3720
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 9
+        - id: 3721
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 9
+        outputs:
+        - id: 3722
+          attachedIds: a20e0000
+          ownerId: 3716
+          connectionType: 5
+        - id: 3723
+          attachedIds: 
+          ownerId: 3716
+          connectionType: 1
+        width: 220
+        height: 326.25
+        xPosition: 479.79407
+        yPosition: 347.47598
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: get_GetGrantedSkillDescription
+        methodSignature: get_GetGrantedSkillDescription():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480670
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3724
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3725
+          attachedIds: 
+          ownerId: 3724
+          connectionType: 1
+        - id: 3726
+          attachedIds: 9e0e0000
+          ownerId: 3724
+          connectionType: 2
+        - id: 3727
+          attachedIds: 
+          ownerId: 3724
+          connectionType: 2
+        outputs:
+        - id: 3728
+          attachedIds: 950e0000960e0000
+          ownerId: 3724
+          connectionType: 2
+        - id: 3729
+          attachedIds: 
+          ownerId: 3724
+          connectionType: 10
+        - id: 3730
+          attachedIds: 
+          ownerId: 3724
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: -322.01083
+        yPosition: 93.689606
+        logicOperation: 5
+    - rid: 154563123191480671
+      type: {class: OptionModifierNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3731
+        name: OPTION_FILTER
+        nodeType: 13
+        inputs:
+        - id: 3732
+          attachedIds: 
+          ownerId: 3731
+          connectionType: 5
+        - id: 3733
+          attachedIds: 900e0000
+          ownerId: 3731
+          connectionType: 2
+        - id: 3734
+          attachedIds: 900e0000
+          ownerId: 3731
+          connectionType: 2
+        outputs:
+        - id: 3735
+          attachedIds: d00d0000
+          ownerId: 3731
+          connectionType: 7
+        width: 150
+        height: 145
+        xPosition: -112.71399
+        yPosition: 59.54898
+        isDisplayed: 1
+        isSelectable: 0
+    - rid: 154563123191480672
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3736
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3737
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 1
+        - id: 3738
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 9
+        - id: 3739
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 9
+        - id: 3740
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 9
+        - id: 3741
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 9
+        outputs:
+        - id: 3742
+          attachedIds: 8e0e0000
+          ownerId: 3736
+          connectionType: 2
+        - id: 3743
+          attachedIds: 
+          ownerId: 3736
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -569.3717
+        yPosition: -51.284363
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: IsSkillUnlocked
+        methodSignature: IsSkillUnlocked():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480673
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3744
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3745
+          attachedIds: d30d0000
+          ownerId: 3744
+          connectionType: 1
+        - id: 3746
+          attachedIds: 8a0e0000
+          ownerId: 3744
+          connectionType: 5
+        outputs:
+        - id: 3747
+          attachedIds: 7e0e0000
+          ownerId: 3744
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: 757.4143
+        yPosition: 142.99606
+        variableName: skillDescription
+        variableValue: 
+    - rid: 154563123191480674
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3748
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 3749
+          attachedIds: 7f0e0000
+          ownerId: 3748
+          connectionType: 1
+        - id: 3750
+          attachedIds: 
+          ownerId: 3748
+          connectionType: 7
+        - id: 3751
+          attachedIds: 
+          ownerId: 3748
+          connectionType: 7
+        outputs:
+        - id: 3752
+          attachedIds: ad0e0000
+          ownerId: 3748
+          connectionType: 1
+        - id: 3753
+          attachedIds: ab0e0000
+          ownerId: 3748
+          connectionType: 1
+        width: 235.8125
+        height: 138.50002
+        xPosition: 1375.7522
+        yPosition: 283.03104
+        items:
+        - rid: 154563123191480719
+        - rid: 154563123191480720
+    - rid: 154563123191480675
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3754
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 3755
+          attachedIds: a90e0000
+          ownerId: 3754
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 1803.5645
+        yPosition: 508.96854
+        key: MAIN
+    - rid: 154563123191480676
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3756
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3757
+          attachedIds: a80e0000
+          ownerId: 3756
+          connectionType: 1
+        - id: 3758
+          attachedIds: 
+          ownerId: 3756
+          connectionType: 9
+        - id: 3759
+          attachedIds: 
+          ownerId: 3756
+          connectionType: 9
+        - id: 3760
+          attachedIds: 
+          ownerId: 3756
+          connectionType: 9
+        - id: 3761
+          attachedIds: 
+          ownerId: 3756
+          connectionType: 9
+        outputs:
+        - id: 3762
+          attachedIds: 
+          ownerId: 3756
+          connectionType: 2
+        - id: 3763
+          attachedIds: b50e0000
+          ownerId: 3756
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 1664.1636
+        yPosition: 75.041016
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: TryUnlockSkill
+        methodSignature: TryUnlockSkill():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480677
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3764
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 3765
+          attachedIds: b30e0000
+          ownerId: 3764
+          connectionType: 1
+        - id: 3766
+          attachedIds: 
+          ownerId: 3764
+          connectionType: 2
+        - id: 3767
+          attachedIds: 
+          ownerId: 3764
+          connectionType: 2
+        outputs:
+        - id: 3768
+          attachedIds: 
+          ownerId: 3764
+          connectionType: 2
+        - id: 3769
+          attachedIds: bc0e0000
+          ownerId: 3764
+          connectionType: 10
+        - id: 3770
+          attachedIds: bf0e0000
+          ownerId: 3764
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 1954.6902
+        yPosition: 324.2535
+        logicOperation: 4
+    - rid: 154563123191480678
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3771
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3772
+          attachedIds: b90e0000
+          ownerId: 3771
+          connectionType: 1
+        outputs:
+        - id: 3773
+          attachedIds: c20e0000
+          ownerId: 3771
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2169.565
+        yPosition: 303.93008
+        items:
+        - rid: 154563123191480721
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480679
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3774
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 3775
+          attachedIds: ba0e0000
+          ownerId: 3774
+          connectionType: 1
+        outputs:
+        - id: 3776
+          attachedIds: c20e0000
+          ownerId: 3774
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 2175.815
+        yPosition: 515.18005
+        items:
+        - rid: 154563123191480722
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480680
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3777
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 3778
+          attachedIds: bd0e0000c00e0000
+          ownerId: 3777
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 2583.315
+        yPosition: 426.43008
+        key: MAIN
+    - rid: 154563123191480681
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3779
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 3780
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 1
+        - id: 3781
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 9
+        - id: 3782
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 9
+        - id: 3783
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 9
+        - id: 3784
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 9
+        outputs:
+        - id: 3785
+          attachedIds: cd0e0000
+          ownerId: 3779
+          connectionType: 5
+        - id: 3786
+          attachedIds: 
+          ownerId: 3779
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -749.60974
+        yPosition: -611.4038
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: GetGrantedSkillName
+        methodSignature: GetGrantedSkillName():string
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480682
+      type: {class: SetVariableNode, ns: EasyTalk.Nodes.Variable, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 3787
+        name: SET VARIABLE
+        nodeType: 29
+        inputs:
+        - id: 3788
+          attachedIds: 4c0e0000
+          ownerId: 3787
+          connectionType: 1
+        - id: 3789
+          attachedIds: c90e0000
+          ownerId: 3787
+          connectionType: 5
+        outputs:
+        - id: 3790
+          attachedIds: c90d0000
+          ownerId: 3787
+          connectionType: 1
+        width: 200
+        height: 100
+        xPosition: -538.35974
+        yPosition: -232.65387
+        variableName: skillName
+        variableValue: 
+    - rid: 154563123191480683
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4100
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4101
+          attachedIds: 33100000
+          ownerId: 4100
+          connectionType: 1
+        - id: 4102
+          attachedIds: 
+          ownerId: 4100
+          connectionType: 9
+        - id: 4103
+          attachedIds: 
+          ownerId: 4100
+          connectionType: 9
+        - id: 4104
+          attachedIds: 
+          ownerId: 4100
+          connectionType: 9
+        - id: 4105
+          attachedIds: 
+          ownerId: 4100
+          connectionType: 9
+        outputs:
+        - id: 4106
+          attachedIds: 
+          ownerId: 4100
+          connectionType: 2
+        - id: 4107
+          attachedIds: 0d100000
+          ownerId: 4100
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: 809.4588
+        yPosition: 777.70935
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: TryUpgradeSkill
+        methodSignature: TryUpgradeSkill():bool
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480684
+      type: {class: LogicNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4108
+        name: BOOL LOGIC
+        nodeType: 20
+        inputs:
+        - id: 4109
+          attachedIds: 0b100000
+          ownerId: 4108
+          connectionType: 1
+        - id: 4110
+          attachedIds: 
+          ownerId: 4108
+          connectionType: 2
+        - id: 4111
+          attachedIds: 
+          ownerId: 4108
+          connectionType: 2
+        outputs:
+        - id: 4112
+          attachedIds: 
+          ownerId: 4108
+          connectionType: 2
+        - id: 4113
+          attachedIds: 14100000
+          ownerId: 4108
+          connectionType: 10
+        - id: 4114
+          attachedIds: 17100000
+          ownerId: 4108
+          connectionType: 11
+        width: 160
+        height: 120
+        xPosition: 1403.1375
+        yPosition: 991.807
+        logicOperation: 4
+    - rid: 154563123191480685
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4115
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 4116
+          attachedIds: 11100000
+          ownerId: 4115
+          connectionType: 1
+        outputs:
+        - id: 4117
+          attachedIds: 1a100000
+          ownerId: 4115
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1828.5586
+        yPosition: 940.23376
+        items:
+        - rid: 154563123191480723
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480686
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4118
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 4119
+          attachedIds: 12100000
+          ownerId: 4118
+          connectionType: 1
+        outputs:
+        - id: 4120
+          attachedIds: 1a100000
+          ownerId: 4118
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: 1834.8086
+        yPosition: 1151.4838
+        items:
+        - rid: 154563123191480724
+        characterName: Cleric (@level) level
+        icon: 
+    - rid: 154563123191480687
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4121
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 4122
+          attachedIds: 1510000018100000
+          ownerId: 4121
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: 2242.3086
+        yPosition: 1062.7338
+        key: MAIN
+    - rid: 154563123191480688
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4457
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 4458
+          attachedIds: 6c110000
+          ownerId: 4457
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -3976.957
+        yPosition: 320.0691
+        entryPointName: 
+    - rid: 154563123191480689
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4459
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 4460
+          attachedIds: 6a110000
+          ownerId: 4459
+          connectionType: 1
+        outputs:
+        - id: 4461
+          attachedIds: 6f110000
+          ownerId: 4459
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -3747.596
+        yPosition: 418.54724
+        items:
+        - rid: 154563123191480725
+        characterName: Erevan the Cleric
+        icon: 
+    - rid: 154563123191480690
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4462
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 4463
+          attachedIds: 6d11000087110000
+          ownerId: 4462
+          connectionType: 1
+        - id: 4464
+          attachedIds: 
+          ownerId: 4462
+          connectionType: 7
+        - id: 4465
+          attachedIds: 
+          ownerId: 4462
+          connectionType: 7
+        outputs:
+        - id: 4466
+          attachedIds: 75110000
+          ownerId: 4462
+          connectionType: 1
+        - id: 4467
+          attachedIds: 7d110000
+          ownerId: 4462
+          connectionType: 1
+        width: 228
+        height: 136
+        xPosition: -3349.471
+        yPosition: 434.60974
+        items:
+        - rid: 154563123191480726
+        - rid: 154563123191480727
+    - rid: 154563123191480691
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4468
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 4469
+          attachedIds: 72110000
+          ownerId: 4468
+          connectionType: 1
+        - id: 4470
+          attachedIds: 
+          ownerId: 4468
+          connectionType: 9
+        - id: 4471
+          attachedIds: 
+          ownerId: 4468
+          connectionType: 9
+        - id: 4472
+          attachedIds: 
+          ownerId: 4468
+          connectionType: 9
+        - id: 4473
+          attachedIds: 
+          ownerId: 4468
+          connectionType: 9
+        outputs:
+        - id: 4474
+          attachedIds: 
+          ownerId: 4468
+          connectionType: 9
+        - id: 4475
+          attachedIds: 83110000
+          ownerId: 4468
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -2858.4124
+        yPosition: 303.70068
+        triggeredClassName: NPCStatUpgrade
+        triggeredMethodName: OpenStatPanel
+        methodSignature: OpenStatPanel()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563123191480692
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4476
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 4477
+          attachedIds: 73110000
+          ownerId: 4476
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -2927.0703
+        yPosition: 697.2924
+        exitPointName: 
+    - rid: 154563123191480693
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4478
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 4479
+          attachedIds: 86110000
+          ownerId: 4478
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -4015.5312
+        yPosition: 775.4858
+        key: A
+    - rid: 154563123191480694
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4480
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 4481
+          attachedIds: 84110000
+          ownerId: 4480
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -2173.6401
+        yPosition: 548.2575
+        key: A
+    - rid: 154563123191480695
+      type: {class: PauseNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4482
+        name: PAUSE
+        nodeType: 35
+        inputs:
+        - id: 4483
+          attachedIds: 7b110000
+          ownerId: 4482
+          connectionType: 1
+        outputs:
+        - id: 4484
+          attachedIds: 81110000
+          ownerId: 4482
+          connectionType: 1
+        width: 181.25002
+        height: 75
+        xPosition: -2488.7654
+        yPosition: 555.0723
+        signalId: 
+    - rid: 154563123191480696
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 4485
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 4486
+          attachedIds: 7f110000
+          ownerId: 4485
+          connectionType: 1
+        outputs:
+        - id: 4487
+          attachedIds: 6f110000
+          ownerId: 4485
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -3780.333
+        yPosition: 673.1193
+        items:
+        - rid: 154563123191480728
+        characterName: Erevan the Cleric
+        icon: 
+    - rid: 154563123191480697
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: I can help you with your health.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480698
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Level up
+    - rid: 154563123191480699
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Unlock (@skillName)
+    - rid: 154563123191480700
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Upgrade (@skillName)
+    - rid: 154563123191480701
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Good bye
+    - rid: 154563123191480702
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Do you want to upgrade to '
+    - rid: 154563123191480703
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: 
+    - rid: 154563123191480704
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: ' level?'
+    - rid: 154563123191480705
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yes
+    - rid: 154563123191480706
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: No
+    - rid: 154563123191480707
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: How can I help you?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480708
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: (@newLevel)
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480709
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'I need '
+    - rid: 154563123191480710
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: 
+    - rid: 154563123191480711
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: ' '
+    - rid: 154563123191480712
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: 
+    - rid: 154563123191480713
+      type: {class: StringItem, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        text: .
+    - rid: 154563123191480714
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: (@levelUpgradeInfo)
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480715
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: You don't have enough items.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480716
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you! You will be much stronger now.
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480717
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Thank you for saving! Go find portal!
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480718
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: (@skillDescription)
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480719
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Yes
+    - rid: 154563123191480720
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: No
+    - rid: 154563123191480721
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Skill unlocked
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480722
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Sorry, you can't unlock skill
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480723
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Skill upgraded
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480724
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Sorry, you can't upgrade skill
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480725
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Hello adventurer! '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 154563123191480726
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Teach me
+    - rid: 154563123191480727
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Exit
+    - rid: 154563123191480728
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Do you need something else?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0

@@ -176,8 +176,6 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             return;
 
         _currentCycle = cycle;
-
-        Debug.Log("Subscribed to DayNightCycle");
     }
 
     private void OnDestroy()

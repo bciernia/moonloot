@@ -333,7 +333,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         runtime.activeTimer = GetSkillDuration(skill);
         runtime.cooldownTimer = GetSkillCooldown(skill);
 
-        SoundManager.Instance.PlaySound(skill.SFX, 1f);
+        SoundManager.Instance.PlaySound(skill.SFX);
     }
 
     #endregion

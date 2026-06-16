@@ -93,16 +93,11 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
 
         if (_unlockedSkillIds.Contains(skill.Id))
         {
-            if (logUnlocks)
-                Debug.Log($"Skill already unlocked: {skill.name}");
             return false;
         }
 
         _unlockedSkillIds.Add(skill.Id);
         _unlockedSkills.Add(skill);
-
-        if (logUnlocks)
-            Debug.Log($"Unlocked skill: {skill.name}");
 
         OnSkillsChanged?.Invoke();
         return true;
