@@ -19,11 +19,11 @@ public class UIManager : MonoBehaviour
 
     [Header("Bars")]
     [SerializeField] private Image _healthBar;
-    [SerializeField] private Image _manaBar;
+    [SerializeField] private Image _levelBar;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI _healthTMP;
-    [SerializeField] private TextMeshProUGUI _manaTMP;
+    [SerializeField] private TextMeshProUGUI _levelTMP;
 
     [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
@@ -135,7 +135,7 @@ public class UIManager : MonoBehaviour
     private InputAction _menuAction;
 
     private float _displayedHp;
-    private float _displayedMp;
+    private float _displayedExp;
     private VillageNpcRuntime _selectedNPC;
 
     private bool _portalSpawned;
@@ -151,6 +151,8 @@ public class UIManager : MonoBehaviour
     private GameObject LoadPanel =>
         PersistentMenuManager.Instance.LoadPanel;
     
+    private int _lastLevel;
+
     private void Awake()
     {
         _playerInput = FindAnyObjectByType<PlayerInput>();
@@ -158,8 +160,9 @@ public class UIManager : MonoBehaviour
         if (_playerStatsSo != null)
         {
             _displayedHp = _playerStatsSo.HP;
-            _displayedMp = _playerStatsSo.MP;
+            _displayedExp = _playerStatsSo.Exp;
         }
+        _lastLevel = _playerStatsSo.Level;
     }
     
     private void Start()
@@ -229,6 +232,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameModeChanged += OnGameModeChanged;
 #pragma warning restore UDR0004
         HordeManager.OnHordeFinished += UpdateNightUI;
+        PlayerExp.OnLevelUp += HandleLevelUp;
+
     }
 
     private void OnDisable()
@@ -236,6 +241,8 @@ public class UIManager : MonoBehaviour
         GameManager.OnGameModeChanged -= OnGameModeChanged;
         HordeManager.OnHordeFinished -= UpdateNightUI;
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        PlayerExp.OnLevelUp -= HandleLevelUp;
+
     }
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -264,6 +271,11 @@ public class UIManager : MonoBehaviour
         var pos = moonInformation.anchoredPosition;
         pos.x = hiddenPositionX;
         moonInformation.anchoredPosition = pos;
+    }
+    
+    private void HandleLevelUp(int obj)
+    {
+        _displayedExp = 0;
     }
 
     private void OnGameModeChanged(GameMode mode)
@@ -326,24 +338,30 @@ public class UIManager : MonoBehaviour
     {
         if (_playerStatsSo == null) return;
 
+        if (_playerStatsSo.Level > _lastLevel)
+        {
+            _displayedExp = _playerStatsSo.Exp;
+            _lastLevel = _playerStatsSo.Level;
+        }
+        
         _displayedHp = Mathf.MoveTowards(_displayedHp, _playerStatsSo.HP, 100f * Time.unscaledDeltaTime);
-        _displayedMp = Mathf.MoveTowards(_displayedMp, _playerStatsSo.MP, 100f * Time.unscaledDeltaTime);
+        _displayedExp = Mathf.MoveTowards(_displayedExp, _playerStatsSo.Exp, 100f * Time.unscaledDeltaTime);
 
         var maxHpWithBonuses = _playerStatsSo.GetMaxHp();
-        var maxMpWithBonuses = _playerStatsSo.GetMaxMp();
         
         var hpRatio = _displayedHp / maxHpWithBonuses;
-        var mpRatio = _displayedMp / maxMpWithBonuses;
+        var expRatio = _displayedExp / _playerStatsSo.NextLevelExp;
         
         _healthBar.fillAmount = hpRatio;
-        _manaBar.fillAmount = mpRatio;
         _healthBarEq.fillAmount = hpRatio;
-        _manaBarEq.fillAmount = mpRatio;
+        _levelBar.fillAmount = expRatio;
+        
+        _levelTMP.text =
+            $"Lv. {_playerStatsSo.Level} | {(int)_displayedExp}/{(int)_playerStatsSo.NextLevelExp}";
 
+        
         _healthTMP.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
-        _manaTMP.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
         _healthTMPEq.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
-        _manaTMPEq.text = $"{(int)_displayedMp}/{maxMpWithBonuses}";
     }
     #endregion
 
