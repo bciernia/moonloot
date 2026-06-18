@@ -36,37 +36,15 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         }
     }
 
-    private void TrySpawnItem(ObjectsSpawner spawner, List<Vector3> spawnedPositions)
+    private void TrySpawnItem(
+        ObjectsSpawner spawner,
+        List<Vector3> spawnedPositions)
     {
-        var maxAttempts = 20;
-
-        for (var attempt = 0; attempt < maxAttempts; attempt++)
-        {
-            var randomPos = GetRandomPoint(spawner);
-
-            if (randomPos.HasValue &&
-                IsPositionFree(randomPos.Value, spawner) &&
-                IsFarEnough(randomPos.Value, spawnedPositions, 1.5f))
-            {
-                var obj = GetRandomObject();
-                var go = Instantiate(obj, spawner.spawnPoint.position, Quaternion.identity);
-
-                var mover = go.GetComponent<LootDropMover>();
-                if (mover != null)
-                {
-                    mover.MoveToPosition(randomPos.Value);
-                }
-                else
-                {
-                    go.transform.position = randomPos.Value;
-                }
-                spawnedPositions.Add(randomPos.Value); 
-                
-                return;
-            }
-        }
-
-        Debug.LogWarning("Nie znaleziono miejsca do spawnu");
+        SpawnObject(
+            GetRandomObject(),
+            spawner,
+            spawnedPositions,
+            0.1f);
     }
     
     private bool IsFarEnough(Vector3 newPos, List<Vector3> spawnedPositions, float minDistance)
@@ -82,26 +60,51 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 
     private Vector3? GetRandomPoint(ObjectsSpawner spawner)
     {
-        var maxAttempts = 15;
+        if (spawner.spawnArea == null)
+            return null;
 
-        for (var i = 0; i < maxAttempts; i++)
+        var bounds = spawner.spawnArea.bounds;
+
+        return new Vector3(
+            Random.Range(bounds.min.x, bounds.max.x),
+            Random.Range(bounds.min.y, bounds.max.y),
+            0f
+        );
+    }
+    
+    private void SpawnObject(
+        GameObject prefab,
+        ObjectsSpawner spawner,
+        List<Vector3> spawnedPositions,
+        float minDistance)
+    {
+        if (!TryGetSpawnPosition(
+                spawner,
+                spawnedPositions,
+                minDistance,
+                out var spawnPos))
         {
-            var circle = Random.insideUnitCircle * spawner.spawnRadius;
-
-            var rawPoint = spawner.spawnPoint.position +
-                           new Vector3(circle.x, 0f, circle.y);
-
-            if (NavMesh.SamplePosition(
-                    rawPoint,
-                    out NavMeshHit hit,
-                    2f,
-                    NavMesh.AllAreas))
-            {
-                return hit.position;
-            }
+            Debug.LogWarning("Nie znaleziono miejsca do spawnu");
+            return;
         }
 
-        return null;
+        var go = Instantiate(
+            prefab,
+            spawner.spawnPoint.position,
+            Quaternion.identity);
+
+        var mover = go.GetComponent<LootDropMover>();
+
+        if (mover != null)
+        {
+            mover.MoveToPosition(spawnPos);
+        }
+        else
+        {
+            go.transform.position = spawnPos;
+        }
+
+        spawnedPositions.Add(spawnPos);
     }
 
     public void SpawnObjectiveItems(GameObject prefab, int amount)
@@ -128,6 +131,31 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
                 spawnedPositions
             );
         }
+    }
+    
+    private bool TryGetSpawnPosition(
+        ObjectsSpawner spawner,
+        List<Vector3> spawnedPositions,
+        float minDistance,
+        out Vector3 position)
+    {
+        const int maxAttempts = 20;
+
+        for (var attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            var randomPos = GetRandomPoint(spawner);
+
+            if (randomPos.HasValue &&
+                IsPositionFree(randomPos.Value, spawner) &&
+                IsFarEnough(randomPos.Value, spawnedPositions, minDistance))
+            {
+                position = randomPos.Value;
+                return true;
+            }
+        }
+
+        position = Vector3.zero;
+        return false;
     }
     
     private void TrySpawnSpecificItem(
@@ -169,13 +197,15 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         }
     }
 
-    private bool IsPositionFree(Vector3 position, ObjectsSpawner spawner)
+    private bool IsPositionFree(
+        Vector3 position,
+        ObjectsSpawner spawner)
     {
-        return !Physics.CheckSphere(
-            position,
-            spawner.checkRadius,
-            spawner.collisionMask
-        );
+        return Physics2D.OverlapCircle(
+                   position,
+                   spawner.checkRadius,
+                   spawner.collisionMask)
+               == null;
     }
 
     private GameObject GetRandomObject()

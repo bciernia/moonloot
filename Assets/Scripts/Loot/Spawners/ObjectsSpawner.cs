@@ -3,7 +3,8 @@ using UnityEngine;
 public class ObjectsSpawner : MonoBehaviour
 {
     public Transform spawnPoint;
-
+    public BoxCollider2D spawnArea { get; private set; }
+    
     [Header("Spawn Settings")]
     public int minItems = 1;
     public int maxItems = 3;
@@ -22,5 +23,7 @@ public class ObjectsSpawner : MonoBehaviour
     {
         if (spawnPoint == null)
             spawnPoint = transform;
+        
+        spawnArea = GetComponent<BoxCollider2D>();
     }
 }
