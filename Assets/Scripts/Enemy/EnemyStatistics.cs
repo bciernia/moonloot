@@ -145,6 +145,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
+            Player.Instance.PlayerExp.AddExp(Mathf.RoundToInt(ExpForEnemy * HordeManager.Instance.CurrentHordeMultiplier));
 
             if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();
             
@@ -155,7 +156,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         else
         {
             ShouldRunAway = true;
-            
+  
             _feelEffects?.PlayFeedbacks();
             _enemySounds?.Hit();
             _enemyAnimator.SetDamagedAnimation();

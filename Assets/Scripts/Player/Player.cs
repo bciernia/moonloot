@@ -13,6 +13,8 @@ public class Player : MonoBehaviour, ISaveable
     public PlayerMana PlayerMana { get; private set; }
     public PlayerAttack PlayerAttack { get; private set; }
     
+    public PlayerExp PlayerExp { get; private set; }
+    
     public bool IsNearBlacksmith { get; set; }
     
 
@@ -37,6 +39,7 @@ public class Player : MonoBehaviour, ISaveable
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerMana = GetComponent<PlayerMana>();
         PlayerAttack = GetComponent<PlayerAttack>();
+        PlayerExp = GetComponent<PlayerExp>();
         _playerAnimations = GetComponent<PlayerAnimations>();
         _playerInput = GetComponent<PlayerInput>();
 

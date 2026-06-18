@@ -31,11 +31,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMPEq;
     [SerializeField] private TextMeshProUGUI _manaTMPEq;
     
-    [Header("Enemy info")]
-    [SerializeField] private GameObject _enemyInfoPanel;
-    [SerializeField] private TextMeshProUGUI _enemyName;
-    [SerializeField] private Image _enemyHealthBar;
-
     [Header("Skill buttons")]
     [SerializeField] private TextMeshProUGUI _skill1KeyText;
     [SerializeField] private TextMeshProUGUI _skill2KeyText;
@@ -356,14 +351,30 @@ public class UIManager : MonoBehaviour
         _healthBarEq.fillAmount = hpRatio;
         _levelBar.fillAmount = expRatio;
         
-        _levelTMP.text =
-            $"Lv. {_playerStatsSo.Level} | {(int)_displayedExp}/{(int)_playerStatsSo.NextLevelExp}";
+        _healthTMP.text =
+            $"{FormatNumber(_displayedHp)}/{FormatNumber(maxHpWithBonuses)}";
 
+        _healthTMPEq.text =
+            $"{FormatNumber(_displayedHp)}/{FormatNumber(maxHpWithBonuses)}";
         
-        _healthTMP.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
-        _healthTMPEq.text = $"{(int)_displayedHp}/{maxHpWithBonuses}";
+        _levelTMP.text =
+            $"Lv. {_playerStatsSo.Level} | {FormatNumber(_displayedExp)}/{FormatNumber(_playerStatsSo.NextLevelExp)}";
     }
     #endregion
+    
+    private string FormatNumber(float value)
+    {
+        if (value >= 1_000_000_000)
+            return $"{value / 1_000_000_000f:0.#}B";
+
+        if (value >= 1_000_000)
+            return $"{value / 1_000_000f:0.#}M";
+
+        if (value >= 1_000)
+            return $"{value / 1_000f:0.#}K";
+
+        return Mathf.RoundToInt(value).ToString();
+    }
 
     #region Input Callbacks
     private void OnEquipmentPressed(InputAction.CallbackContext ctx) => OpenCloseEquipmentPanel(0);

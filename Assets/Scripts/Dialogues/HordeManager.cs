@@ -1248,11 +1248,17 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     public int NpcRescuedCount() => _rescuedNpcCount;
     
+    public float CurrentHordeMultiplier { get; private set; }
+    
     private float GetHordeMultiplier()
     {
-        return 1f + (currentHorde - 1) * 0.02f;
+        var multiplier = 1f + (currentHorde - 1) * 0.08f;
+
+        CurrentHordeMultiplier = multiplier;
+
+        return multiplier;
     }
-    
+
     public void AddObjectiveProgress(int amount = 1)
     {
         var oldProgress = CurrentObjectiveProgress;
