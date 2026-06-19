@@ -60,6 +60,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         
         _playerStats.HP -= reducedDamage;
         FloatingTextManager.Instance.ShowDamageText(reducedDamage, transform);
+        
+        FeelManager.Instance.PlayDamage();
+        
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;
