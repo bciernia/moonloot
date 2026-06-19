@@ -34,6 +34,12 @@ public class FloatingTextManager : Singleton<FloatingTextManager>
     {
         var floatingText = Instantiate(textPrefab, parent);
         floatingText.SetFloatingWarningText(text);
+    }    
+    
+    public void ShowErrorText(string text, Transform parent)
+    {
+        var floatingText = Instantiate(textPrefab, parent);
+        floatingText.SetFloatingErrorText(text);
     }
 
     public void ShowGoldText(int goldForEnemy, Transform parent)
