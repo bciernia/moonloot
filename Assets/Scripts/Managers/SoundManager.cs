@@ -259,12 +259,12 @@ public class SoundManager : Singleton<SoundManager>
     {
         if (_lastPlayedTimes.TryGetValue(clip, out var lastTime))
         {
-            if (Time.time - lastTime < 0.05f)
+            if (Time.unscaledTime - lastTime < 0.05f)
                 return;
         }
 
-        _lastPlayedTimes[clip] = Time.time;
-
+        _lastPlayedTimes[clip] = Time.unscaledTime;
+        
         foreach (var source in _sfxSources.Where(source => !source.isPlaying))
         {
             source.PlayOneShot(clip);

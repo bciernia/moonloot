@@ -41,7 +41,7 @@ public class NPCInfoManager : Singleton<NPCInfoManager>
         _displayedHp = Mathf.MoveTowards(
             _displayedHp,
             _enemyStatistics.CurrentHP,
-            100f * Time.deltaTime);
+            Mathf.Max(100f, _enemyStatistics.MaxHP * 1.5f) * Time.deltaTime);
         
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, _enemyStatistics.CurrentHP / _enemyStatistics.MaxHP,
             10f * Time.deltaTime);

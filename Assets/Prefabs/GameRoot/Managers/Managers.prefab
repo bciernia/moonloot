@@ -284,6 +284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f858e830d1768140bd7c98d98e3d2ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _npcDatabase: {fileID: 0}
 --- !u!1 &843044316025071082
 GameObject:
   m_ObjectHideFlags: 0
@@ -652,6 +653,7 @@ Transform:
   - {fileID: 8537953693479268941}
   - {fileID: 6982993810105831001}
   - {fileID: 5185536571393342959}
+  - {fileID: 1767135792028371816}
   - {fileID: 8641956755457585595}
   - {fileID: 657000957186184500}
   - {fileID: 5221434252800001642}
@@ -806,7 +808,7 @@ GameObject:
   - component: {fileID: 7430855188818398059}
   - component: {fileID: 6004688289286348878}
   m_Layer: 0
-  m_Name: NPCManager
+  m_Name: NpcManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,6 +1049,62 @@ MonoBehaviour:
   _npcInfoPanel: {fileID: 0}
   _healthBar: {fileID: 0}
   _npcName: {fileID: 0}
+  _enemyHpTMP: {fileID: 0}
+--- !u!1 &3498733967016772815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1767135792028371816}
+  - component: {fileID: 2446669930145738523}
+  m_Layer: 0
+  m_Name: LevelUpManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1767135792028371816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498733967016772815}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2446669930145738523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3498733967016772815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3a0d4616937bd4eb84edd14d3470ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _upgrades:
+  - {fileID: 11400000, guid: 02d7d1c851a63254ea5decb73cd67c65, type: 2}
+  - {fileID: 11400000, guid: 57d5dda76855d794faabcc5b3a7fa6fd, type: 2}
+  - {fileID: 11400000, guid: a4ef534bc6e93024ca0dc2f0397d0136, type: 2}
+  - {fileID: 11400000, guid: d8c01a3f80879384abd5c9f2ebdbf339, type: 2}
+  - {fileID: 11400000, guid: e7317735016eaac4788c290e8d90367b, type: 2}
+  - {fileID: 11400000, guid: 37944ce3c290fe44f91b81527d785485, type: 2}
+  _panel: {fileID: 0}
+  _cardsParent: {fileID: 0}
+  _cardPrefab: {fileID: 3964628684351975026, guid: 8a050f6491cfe7043b161ec2e973b77d, type: 3}
+  _selectedCardPoint: {fileID: 0}
 --- !u!1 &3849436242032148410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1116,7 +1174,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2514460604508008450
 Transform:
   m_ObjectHideFlags: 0
@@ -2077,16 +2135,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerStatsSo: {fileID: 11400000, guid: a43e26c59625d144f85766c4107ab012, type: 2}
   _healthBar: {fileID: 0}
-  _manaBar: {fileID: 0}
+  _levelBar: {fileID: 0}
   _healthTMP: {fileID: 0}
-  _manaTMP: {fileID: 0}
+  _levelTMP: {fileID: 0}
   _healthBarEq: {fileID: 0}
   _manaBarEq: {fileID: 0}
   _healthTMPEq: {fileID: 0}
   _manaTMPEq: {fileID: 0}
-  _enemyInfoPanel: {fileID: 0}
-  _enemyName: {fileID: 0}
-  _enemyHealthBar: {fileID: 0}
   _skill1KeyText: {fileID: 0}
   _skill2KeyText: {fileID: 0}
   _quickItem1KeyText: {fileID: 0}
