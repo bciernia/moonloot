@@ -279,8 +279,8 @@ public class SoundManager : Singleton<SoundManager>
 
     public float CalculateDistFromPlayerForVolume(Vector2 worldPosition)
     {
-        var distance = Vector2.Distance(GameObject.FindWithTag("Player").transform.position, worldPosition);
-        return Mathf.Clamp01(1 - distance / 15f);
+        var distance = Vector2.Distance(Player.Instance.transform.position, worldPosition);
+        return Mathf.Clamp01(1 - distance / 20f);
     }
     
     private void OnEnable()

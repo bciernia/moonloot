@@ -57,15 +57,15 @@ public class EnemySounds : MonoBehaviour
     public void Hit()
     {
         if (_audioSource == null) return;
-        var dmgSound = GetEnemySound(_enemyStatistics.DmgSounds);
-        SoundManager.Instance.PlaySound(dmgSound);
+        var attackSound = GetEnemySound(_enemyStatistics.AttackSounds);
+        PlayLocalSound(attackSound);
     }
 
     public void Die()
     {
         if (_audioSource == null) return;
         var deathSound = GetEnemySound(_enemyStatistics.DeathSounds);
-        SoundManager.Instance.PlaySound(deathSound);
+        PlayLocalSound(deathSound);
     }
 
     private AudioClip GetEnemySound(List<AudioClip> enemySounds)
@@ -88,14 +88,28 @@ public class EnemySounds : MonoBehaviour
     private void PlayEnemySound()
     {
         if (_enemyStatistics.IdleSounds == null || _enemyStatistics.IdleSounds.Count == 0)
-          return;
+            return;
 
         var idleSound = GetEnemySound(_enemyStatistics.IdleSounds);
-        var calculatedVolume = SoundManager.Instance.CalculateDistFromPlayerForVolume(transform.position);
 
-        if (idleSound != null)
-        {
-          SoundManager.Instance.PlaySound(idleSound);
-        }
+        PlayLocalSound(idleSound);
+    }
+    
+    private void PlayLocalSound(AudioClip clip)
+    {
+        if (clip == null)
+            return;
+
+        var volume =
+            SoundManager.Instance
+                .CalculateDistFromPlayerForVolume(
+                    transform.position);
+
+        if (volume <= 0.05f)
+            return;
+
+        _audioSource.PlayOneShot(
+            clip,
+            volume);
     }
 }
