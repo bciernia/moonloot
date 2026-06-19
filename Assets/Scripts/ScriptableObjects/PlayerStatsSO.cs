@@ -38,6 +38,9 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _eqBonuses = new();
     private Dictionary<BonusType, float> _npcFlatBonuses = new();
     private Dictionary<BonusType, float> _eqFlatBonuses = new();
+    private Dictionary<BonusType, float> _levelBonuses = new();
+    private Dictionary<BonusType, float> _levelFlatBonuses = new();
+    
     
     public void ResetPlayerStats()
     {
@@ -96,6 +99,29 @@ public class PlayerStatsSO : ScriptableObject
             _npcFlatBonuses[bonus.Type] = bonus.Value;
     }
     
+    public void AddLevelBonus(StatBonus bonus)
+    {
+        if (bonus.Type == BonusType.Damage ||
+            bonus.Type == BonusType.MoveSpeed ||
+            bonus.Type == BonusType.CritChance ||
+            bonus.Type == BonusType.AttackCooldownReduction)
+        {
+            var normalized = bonus.Value / 100f;
+
+            if (_levelBonuses.ContainsKey(bonus.Type))
+                _levelBonuses[bonus.Type] += normalized;
+            else
+                _levelBonuses[bonus.Type] = normalized;
+
+            return;
+        }
+
+        if (_levelFlatBonuses.ContainsKey(bonus.Type))
+            _levelFlatBonuses[bonus.Type] += bonus.Value;
+        else
+            _levelFlatBonuses[bonus.Type] = bonus.Value;
+    }
+    
     private float GetMultiplier(BonusType type)
     {
         var total = 1f;
@@ -105,6 +131,9 @@ public class PlayerStatsSO : ScriptableObject
 
         if (_eqBonuses.TryGetValue(type, out var eq))
             total += eq;
+        
+        if (_levelBonuses.TryGetValue(type, out var level))
+            total += level;
 
         return total;
     }
@@ -160,9 +189,14 @@ public class PlayerStatsSO : ScriptableObject
     private float GetEqFlatBonus(BonusType type)
     {
         return _eqFlatBonuses.GetValueOrDefault(type, 0f);
+    }    
+    
+    private float GetLevelFlatBonus(BonusType type)
+    {
+        return _levelFlatBonuses.GetValueOrDefault(type, 0f);
     }
 
-    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp);
+    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp);
     public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp);
     
     public void ResetEquipmentBonuses()

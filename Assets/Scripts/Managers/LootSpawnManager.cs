@@ -19,6 +19,11 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 
             SpawnFromSpawner(spawner);
         }
+        
+        foreach (var spawner in spawners)
+        {
+            Destroy(spawner.gameObject);
+        }
     }
 
     private void SpawnFromSpawner(ObjectsSpawner spawner)

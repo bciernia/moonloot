@@ -1,4 +1,4 @@
-﻿using Unity.VisualScripting.Antlr3.Runtime.Misc;
+﻿using System;
 using UnityEngine;
 
 public class PlayerExp : MonoBehaviour
@@ -6,20 +6,23 @@ public class PlayerExp : MonoBehaviour
     [Header("Configuration")]
     [SerializeField] private PlayerStatsSO _playerStats;
 
+    public static event Action<int> OnLevelUp;
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            AddExp(100f);
+            AddExp(30f);
         }
     }
 
-    private void AddExp(float amount)
+    public void AddExp(float amount)
     {
         _playerStats.Exp += amount;
-        if (_playerStats.Exp >= _playerStats.NextLevelExp)
+        while (_playerStats.Exp >= _playerStats.NextLevelExp)
         {
             _playerStats.Exp -= _playerStats.NextLevelExp;
+
             NextLevel();
         }
     }
@@ -30,5 +33,10 @@ public class PlayerExp : MonoBehaviour
         var currentExpRequired = _playerStats.NextLevelExp;
         var newNextLevelExp = Mathf.Round(currentExpRequired + _playerStats.NextLevelExp * (_playerStats.ExpMultiplier / 100f));
         _playerStats.NextLevelExp = newNextLevelExp;
+        
+        Debug.Log(
+            $"LEVEL UP! Level {_playerStats.Level}");
+        
+        OnLevelUp?.Invoke(_playerStats.Level);
     }
 }

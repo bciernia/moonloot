@@ -30,6 +30,14 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         PrepareStatistics();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            TakeDamage(10f, transform, DamageType.Physical);
+        }
+    }
+
     private void PrepareStatistics()
     {
         // PlayerStatisticsManager.Instance.SetLevel(_playerStats.Level);
@@ -52,6 +60,9 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         
         _playerStats.HP -= reducedDamage;
         FloatingTextManager.Instance.ShowDamageText(reducedDamage, transform);
+        
+        FeelManager.Instance.PlayDamage();
+        
         if (_playerStats.HP <= 0f)
         {
             _playerStats.HP = 0;

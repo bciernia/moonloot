@@ -10,5 +10,7 @@ public enum SoundType
     BLUNT_HIT,
     ARROW_HIT,
     SPELL_HIT,
-    PUNCH
+    PUNCH,
+    UI_HOVER,
+    UI_CLICK
 }
