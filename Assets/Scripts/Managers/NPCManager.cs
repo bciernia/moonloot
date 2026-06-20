@@ -154,5 +154,7 @@ public class NPCManager : Singleton<NPCManager>, ISaveable
         {
             _npcLevels[npc.RuntimeID] = npc.Level;
         }
+        
+        ReapplyBonuses();
     }
 }

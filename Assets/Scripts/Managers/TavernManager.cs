@@ -1,16 +1,43 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TavernManager : Singleton<TavernManager>, ISaveable
 {
     private const string SaveKey = "TavernRooms";
+    [SerializeField] private PlayerStatsSO _playerStats;
 
     [SerializeField] private List<TavernRoomSO> _rooms = new();
     [SerializeField] private List<TavernRoomSlot> _roomsPosition = new();
-
     [SerializeField]
     private List<TavernRoomData> _roomsData = new();
 
+    public IReadOnlyList<TavernRoomSO> Rooms => _rooms;
+    
+    private readonly Dictionary<int, GameObject> _spawnedRooms = new();
+    
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name != "Base")
+        {
+            return;
+        }
+        
+        RefreshSlots();
+        RespawnRooms();
+    }
+    
     public bool IsRoomUnlocked(string roomId)
     {
         return GetRoomData(roomId) != null;
@@ -93,6 +120,16 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
     
     private void SpawnRoom(TavernRoomData roomData)
     {
+        if (_spawnedRooms.TryGetValue(roomData.RoomSlotId, out var roomObject))
+        {
+            if (roomObject != null)
+            {
+                return;
+            }
+
+            _spawnedRooms.Remove(roomData.RoomSlotId);
+        }
+        
         TavernRoomSO room = GetRoom(roomData.RoomId);
 
         if (room == null)
@@ -100,18 +137,42 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             return;
         }
 
-        TavernRoomSlot slot = GetRoomSlot(roomData.RoomSlotId);
+        var slot = GetRoomSlot(roomData.RoomSlotId);
 
         if (slot == null)
         {
             return;
         }
 
-        Instantiate(
+        var spawnedRoom = Instantiate(
             room.RoomPrefab,
             slot.SpawnPoint.position,
             slot.SpawnPoint.rotation,
             slot.SpawnPoint);
+
+        _spawnedRooms[roomData.RoomSlotId] = spawnedRoom;
+    }
+    
+    public void RemoveRoom(int slotId)
+    {
+        var roomData = GetRoomBySlot(slotId);
+
+        if (roomData == null)
+        {
+            return;
+        }
+
+        _roomsData.Remove(roomData);
+
+        if (_spawnedRooms.TryGetValue(slotId, out GameObject roomObject))
+        {
+            Destroy(roomObject);
+            _spawnedRooms.Remove(slotId);
+        }
+        
+        ReapplyRoomBonuses();
+
+        Save();
     }
     
     private TavernRoomSlot GetRoomSlot(int slotId)
@@ -179,27 +240,189 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
 
         return false;
     }
-
-    public void Save()
+    
+    public TavernRoomData GetRoomBySlot(int slotId)
     {
-        ES3.Save(SaveKey, _roomsData);
-    }
-
-    public void Load()
-    {
-        if (!ES3.KeyExists(SaveKey))
+        foreach (var roomData in _roomsData)
         {
-            _roomsData = new List<TavernRoomData>();
-            return;
+            if (roomData.RoomSlotId == slotId)
+            {
+                return roomData;
+            }
         }
 
-        _roomsData = ES3.Load<List<TavernRoomData>>(SaveKey);
+        return null;
+    }
+    
+    public TavernRoomSlot GetSlot(int slotId)
+    {
+        foreach (var slot in _roomsPosition)
+        {
+            if (slot.SlotId == slotId)
+            {
+                return slot;
+            }
+        }
+
+        return null;
+    }
+    
+    public bool BuyUpgrade(int slotId, RoomUpgradeSO upgrade)
+    {
+        TavernRoomData roomData = GetRoomBySlot(slotId);
+
+        if (roomData == null)
+        {
+            return false;
+        }
+
+        if (roomData.PurchasedUpgrades.Contains(upgrade.Id))
+        {
+            return false;
+        }
+
+        if (!InventoryController.Instance.ChangeGoldAmount(upgrade.Cost))
+        {
+            FloatingTextManager.Instance.ShowWarningText(
+                "Not enough gold.",
+                transform);
+
+            return false;
+        }
+
+        roomData.PurchasedUpgrades.Add(upgrade.Id);
+
+        ReapplyRoomBonuses();
+        
+        Save();
+
+        return true;
+    }
+    
+    public bool HasUpgrade(int slotId, string upgradeId)
+    {
+        var roomData = GetRoomBySlot(slotId);
+
+        if (roomData == null)
+        {
+            return false;
+        }
+
+        return roomData.PurchasedUpgrades.Contains(upgradeId);
+    }
+    
+    public void ReapplyRoomBonuses()
+    {
+        _playerStats.ResetTavernBonuses();
+
+        foreach (var roomData in _roomsData)
+        {
+            TavernRoomSO room = GetRoom(roomData.RoomId);
+
+            if (room == null)
+            {
+                continue;
+            }
+
+            foreach (var purchasedUpgradeId in roomData.PurchasedUpgrades)
+            {
+                var upgrade = room.Upgrades.FirstOrDefault(
+                    x => x.Id == purchasedUpgradeId);
+
+                if (upgrade == null)
+                {
+                    continue;
+                }
+
+                _playerStats.AddTavernBonus(
+                    new StatBonus
+                    {
+                        Type = upgrade.BonusType,
+                        Value = upgrade.Value
+                    });
+            }
+        }
+
+        Player.Instance.PlayerAttack.RecalculateDamage();
+    }
+    
+    public void RespawnRooms()
+    {
+        _spawnedRooms.Clear();
 
         foreach (var roomData in _roomsData)
         {
             SpawnRoom(roomData);
         }
     }
+    
+    public void RefreshSlots()
+    {
+        _roomsPosition.Clear();
+
+        var markers = FindObjectsByType<TavernRoomSlotMarker>(
+            FindObjectsSortMode.None);
+
+        foreach (var marker in markers)
+        {
+            _roomsPosition.Add(new TavernRoomSlot
+            {
+                SlotId = marker.SlotId,
+                SpawnPoint = marker.transform
+            });
+        }
+    }
+    
+    public int GetWorkerCapacity(WorkerJob job)
+    {
+        var capacity = 0;
+
+        foreach (var roomData in _roomsData)
+        {
+            var room = GetRoom(roomData.RoomId);
+
+            if (room == null)
+                continue;
+
+            if (room.WorkerJob != job)
+                continue;
+
+            capacity += room.WorkerCapacity;
+        }
+
+        return capacity;
+    }
+    
+    #region Save/Load
+    public void Save()
+    {
+        var settings = SaveLoadManager.Instance.GetSettings();
+        
+        ES3.Save(SaveKey, _roomsData, settings);
+    }
+
+    public void Load()
+    {
+        var settings = SaveLoadManager.Instance.GetSettings();
+
+        if (!ES3.KeyExists(SaveKey, settings))
+        {
+            _roomsData = new List<TavernRoomData>();
+            return;
+        }
+
+        _roomsData = ES3.Load<List<TavernRoomData>>(
+            SaveKey,
+            settings);
+
+        foreach (var roomData in _roomsData)
+        {
+            SpawnRoom(roomData);
+        }
+
+        ReapplyRoomBonuses();
+    }
+    #endregion
 }
 
 [System.Serializable]
@@ -210,6 +433,8 @@ public class TavernRoomData
 
     public int Level;
     public int AssignedNpcCount;
+    
+    public List<string> PurchasedUpgrades = new();
 }
 
 [System.Serializable]

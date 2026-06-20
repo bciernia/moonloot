@@ -342,6 +342,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (CurrentMoon == null)
             return;
 
+        
+        
         switch (CurrentMoon.ObjectiveType)
         {
             case MoonObjectiveType.CollectKnowledge:

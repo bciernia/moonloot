@@ -14,18 +14,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1.8.4
   creationTime: 2026-03-27@20:29:40
-  editTime: 2026-05-30@13:48:19
+  editTime: 2026-06-19@19:29:50
   nodes:
-  - rid: 4348855053382844416
-  - rid: 4348855053382844417
-  - rid: 4348855053382844418
-  - rid: 4348855053382844419
-  translationLibrary: {fileID: 2767970370104310347}
-  maxID: 76705
+  - rid: 154563192610881747
+  - rid: 154563192610881748
+  - rid: 154563192610881749
+  - rid: 154563192610881750
+  - rid: 154563192610881751
+  - rid: 154563192610881752
+  - rid: 154563192610881753
+  - rid: 154563192610881754
+  - rid: 154563192610881755
+  translationLibrary: {fileID: 1595642154546012550}
+  maxID: 76745
   references:
     version: 2
     RefIds:
-    - rid: 4348855053382844416
+    - rid: 154563192610881747
       type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76694
@@ -42,7 +47,7 @@ MonoBehaviour:
         xPosition: -2985.6755
         yPosition: -3830.609
         entryPointName: 
-    - rid: 4348855053382844417
+    - rid: 154563192610881748
       type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76696
@@ -55,7 +60,7 @@ MonoBehaviour:
           connectionType: 1
         outputs:
         - id: 76698
-          attachedIds: 9c2b0100
+          attachedIds: a42b0100
           ownerId: 76696
           connectionType: 1
         width: 268
@@ -63,34 +68,10 @@ MonoBehaviour:
         xPosition: -2803.7402
         yPosition: -3831.1438
         items:
-        - rid: 4348855053382844420
+        - rid: 154563192610881756
         characterName: Bartender
         icon: 
-    - rid: 4348855053382844418
-      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
-      data:
-        nodeId: 76699
-        name: CONVERSATION
-        nodeType: 3
-        inputs:
-        - id: 76700
-          attachedIds: 9a2b0100
-          ownerId: 76699
-          connectionType: 1
-        outputs:
-        - id: 76701
-          attachedIds: 9f2b0100
-          ownerId: 76699
-          connectionType: 1
-        width: 268
-        height: 210.3125
-        xPosition: -2481.2402
-        yPosition: -3770.8313
-        items:
-        - rid: 4348855053382844421
-        characterName: Bartender
-        icon: 
-    - rid: 4348855053382844419
+    - rid: 154563192610881749
       type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         nodeId: 76702
@@ -98,7 +79,7 @@ MonoBehaviour:
         nodeType: 2
         inputs:
         - id: 76703
-          attachedIds: 9d2b0100
+          attachedIds: a82b0100
           ownerId: 76702
           connectionType: 1
         outputs: []
@@ -107,21 +88,194 @@ MonoBehaviour:
         xPosition: -2003.1777
         yPosition: -3541.144
         exitPointName: 
-    - rid: 4348855053382844420
+    - rid: 154563192610881750
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76707
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 76708
+          attachedIds: 9a2b0100bd2b0100
+          ownerId: 76707
+          connectionType: 1
+        - id: 76709
+          attachedIds: 
+          ownerId: 76707
+          connectionType: 7
+        - id: 76711
+          attachedIds: 
+          ownerId: 76707
+          connectionType: 7
+        outputs:
+        - id: 76710
+          attachedIds: c32b0100
+          ownerId: 76707
+          connectionType: 1
+        - id: 76712
+          attachedIds: 9f2b0100
+          ownerId: 76707
+          connectionType: 1
+        width: 228
+        height: 312.5625
+        xPosition: -2380.0967
+        yPosition: -3925.916
+        items:
+        - rid: 154563192610881757
+        - rid: 154563192610881758
+    - rid: 154563192610881751
+      type: {class: PauseNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76713
+        name: PAUSE
+        nodeType: 35
+        inputs:
+        - id: 76714
+          attachedIds: c92b0100
+          ownerId: 76713
+          connectionType: 1
+        outputs:
+        - id: 76715
+          attachedIds: ad2b0100
+          ownerId: 76713
+          connectionType: 1
+        width: 180
+        height: 75
+        xPosition: -1729.4717
+        yPosition: -3823.916
+        signalId: 
+    - rid: 154563192610881752
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76716
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 76717
+          attachedIds: ab2b0100
+          ownerId: 76716
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -1467.5968
+        yPosition: -3815.4785
+        key: A
+    - rid: 154563192610881753
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76718
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 76719
+          attachedIds: bc2b0100
+          ownerId: 76718
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -2991.6592
+        yPosition: -3509.4785
+        key: A
+    - rid: 154563192610881754
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76731
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 76732
+          attachedIds: af2b0100
+          ownerId: 76731
+          connectionType: 1
+        outputs:
+        - id: 76733
+          attachedIds: a42b0100
+          ownerId: 76731
+          connectionType: 1
+        width: 268
+        height: 143.125
+        xPosition: -2797.3467
+        yPosition: -3606.3535
+        items:
+        - rid: 154563192610881759
+        characterName: Bartender
+        icon: 
+    - rid: 154563192610881755
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 76738
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 76739
+          attachedIds: a62b0100
+          ownerId: 76738
+          connectionType: 1
+        - id: 76740
+          attachedIds: 
+          ownerId: 76738
+          connectionType: 9
+        - id: 76741
+          attachedIds: 
+          ownerId: 76738
+          connectionType: 9
+        - id: 76742
+          attachedIds: 
+          ownerId: 76738
+          connectionType: 9
+        - id: 76743
+          attachedIds: 
+          ownerId: 76738
+          connectionType: 9
+        outputs:
+        - id: 76744
+          attachedIds: 
+          ownerId: 76738
+          connectionType: 9
+        - id: 76745
+          attachedIds: aa2b0100
+          ownerId: 76738
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -2082.6265
+        yPosition: -4015.6143
+        triggeredClassName: TavernUpgrade
+        triggeredMethodName: OpenTavernUpgrade
+        methodSignature: OpenTavernUpgrade()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 154563192610881756
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
         text: Welcome to my inn.
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
-    - rid: 4348855053382844421
+    - rid: 154563192610881757
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Upgrade tavern
+
+'
+    - rid: 154563192610881758
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Exit
+
+'
+    - rid: 154563192610881759
       type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
       data:
-        text: This is where you will meet  heroes and villagers you will save.
+        text: What else?
         audioClip: {fileID: 0}
         audioClipFile: 
         audioAssetID: 0
---- !u!114 &2767970370104310347
+--- !u!114 &1595642154546012550
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalLanguage: en
   translationSets:
-  - counter: 75
+  - counter: 78
     languageCode: en
     translations:
     - id: 0
@@ -384,7 +538,20 @@ MonoBehaviour:
     - id: 74
       language: en
       text: This is where you will meet  heroes and villagers you will save.
-  - counter: 75
+    - id: 75
+      language: en
+      text: 'Upgrade tavern
+
+'
+    - id: 76
+      language: en
+      text: 'Exit
+
+'
+    - id: 77
+      language: en
+      text: What else?
+  - counter: 77
     languageCode: es
     translations:
     - id: 0
@@ -498,7 +665,16 @@ MonoBehaviour:
     - id: 74
       language: es
       text: 
-  - counter: 75
+    - id: 75
+      language: es
+      text: 
+    - id: 76
+      language: es
+      text: 
+    - id: 77
+      language: es
+      text: 
+  - counter: 77
     languageCode: fr
     translations:
     - id: 0
@@ -610,5 +786,14 @@ MonoBehaviour:
       language: fr
       text: 
     - id: 74
+      language: fr
+      text: 
+    - id: 75
+      language: fr
+      text: 
+    - id: 76
+      language: fr
+      text: 
+    - id: 77
       language: fr
       text: 
