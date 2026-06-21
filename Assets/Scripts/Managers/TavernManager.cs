@@ -107,13 +107,46 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             return false;
         }
         
+        var freeWorkers =
+            WorldManager.Instance.GetFreeWorkers(
+                room.RequiredWorkers);
+
+        if (freeWorkers.Count < room.RequiredWorkers)
+        {
+            FloatingTextManager.Instance.ShowWarningText(
+                $"Need {room.RequiredWorkers} free workers.",
+                transform);
+
+            return false;
+        }
+        
         if (!InventoryController.Instance.ChangeGoldAmount(room.Cost))
         {
             FloatingTextManager.Instance.ShowWarningText("Not enough gold to unlock this room.", transform);
             return false;
         }
 
+        foreach (var worker in freeWorkers)
+        {
+            worker.IsAssignedToRoom = true;
+            worker.AssignedRoomSlotId = slotId;
+
+            WorldManager.Instance.HideWorker(worker);
+        }
+        
         UnlockRoom(room.RoomId, slotId);
+        
+        var roomData = GetRoomBySlot(slotId);
+
+        if (roomData != null)
+        {
+            foreach (var worker in freeWorkers)
+            {
+                roomData.AssignedWorkers.Add(
+                    worker.RuntimeID);
+            }
+        }
+        
         Save();
         return true;
     }
@@ -130,7 +163,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             _spawnedRooms.Remove(roomData.RoomSlotId);
         }
         
-        TavernRoomSO room = GetRoom(roomData.RoomId);
+        var room = GetRoom(roomData.RoomId);
 
         if (room == null)
         {
@@ -162,6 +195,23 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             return;
         }
 
+        foreach (var workerId in roomData.AssignedWorkers.ToList())
+        {
+            var npc = WorldManager.Instance.RescuedNpcs
+                .FirstOrDefault(x => x.RuntimeID == workerId);
+
+            if (npc == null)
+            {
+                continue;
+            }
+
+            RemoveWorkerFromRoom(npc);
+
+            WorkManager.Instance.TryAssignWorker(
+                npc,
+                WorkerJob.None);
+        }
+        
         _roomsData.Remove(roomData);
 
         if (_spawnedRooms.TryGetValue(slotId, out GameObject roomObject))
@@ -173,6 +223,13 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         ReapplyRoomBonuses();
 
         Save();
+    }
+    
+    public int GetAssignedWorkersCount(int slotId)
+    {
+        var roomData = GetRoomBySlot(slotId);
+
+        return roomData?.AssignedWorkers.Count ?? 0;
     }
     
     private TavernRoomSlot GetRoomSlot(int slotId)
@@ -393,6 +450,54 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         return capacity;
     }
     
+    public bool AssignWorkerToRoom(
+        VillageNpcRuntime npc,
+        int slotId)
+    {
+        var roomData = GetRoomBySlot(slotId);
+
+        if (roomData == null)
+        {
+            return false;
+        }
+
+        if (roomData.AssignedWorkers.Contains(npc.RuntimeID))
+        {
+            return false;
+        }
+
+        roomData.AssignedWorkers.Add(npc.RuntimeID);
+
+        npc.IsAssignedToRoom = true;
+        npc.AssignedRoomSlotId = slotId;
+
+        Save();
+
+        return true;
+    }
+    
+    public void RemoveWorkerFromRoom(VillageNpcRuntime npc)
+    {
+        if (!npc.IsAssignedToRoom)
+        {
+            return;
+        }
+
+        var roomData = GetRoomBySlot(
+            npc.AssignedRoomSlotId);
+
+        if (roomData != null)
+        {
+            roomData.AssignedWorkers.Remove(
+                npc.RuntimeID);
+        }
+
+        npc.IsAssignedToRoom = false;
+        npc.AssignedRoomSlotId = -1;
+
+        Save();
+    }
+    
     #region Save/Load
     public void Save()
     {
@@ -435,6 +540,7 @@ public class TavernRoomData
     public int AssignedNpcCount;
     
     public List<string> PurchasedUpgrades = new();
+    public List<string> AssignedWorkers = new();
 }
 
 [System.Serializable]

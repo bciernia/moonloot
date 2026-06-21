@@ -229,12 +229,57 @@ public class WorkManager : Singleton<WorkManager>
 
     private int GetWorkersCount(WorkerJob job) => WorldManager.Instance.RescuedNpcs.Count(npc => npc.IsWorker && npc.CurrentJob == job);
 
-    public bool TryAssignWorker(VillageNpcRuntime npc, WorkerJob newJob)
+    public bool TryAssignWorker(
+        VillageNpcRuntime npc,
+        int roomSlotId,
+        WorkerJob job)
     {
-        Debug.Log($"{npc.Name} | {npc.RuntimeID} | {npc.CurrentJob}");
-        
+        var assignedCount =
+            WorldManager.Instance.RescuedNpcs.Count(
+                x => x.CurrentJob == job);
+
+        var maxWorkers =
+            TavernManager.Instance.GetWorkerCapacity(job);
+
+        if (assignedCount >= maxWorkers)
+        {
+            return false;
+        }
+
+        TavernManager.Instance.AssignWorkerToRoom(
+            npc,
+            roomSlotId);
+
+        npc.CurrentJob = job;
+
+        HideNpc(npc);
+
+        return true;
+    }
+    
+    public WorkerPoint GetSpawnPointForWorker(
+        WorkerJob job)
+    {
         EnsurePoints();
-        
+
+        var point = _points.FirstOrDefault(
+            p => p.JobType == job &&
+                 !p.IsOccupied);
+
+        if (point != null)
+        {
+            point.IsOccupied = true;
+        }
+
+        return point;
+    }
+    
+    public bool TryAssignWorker(
+        VillageNpcRuntime npc,
+        WorkerJob newJob)
+    {
+        EnsurePoints();
+
         if (!npc.IsWorker)
             return false;
 
@@ -248,13 +293,12 @@ public class WorkManager : Singleton<WorkManager>
         }
 
         var freePoint = _points
-            .FirstOrDefault(p => p.JobType == newJob && !p.IsOccupied);
+            .FirstOrDefault(
+                p => p.JobType == newJob &&
+                     !p.IsOccupied);
 
         if (freePoint == null)
-        {
-            Debug.Log($"Brak miejsca dla {newJob}");
             return false;
-        }
 
         freePoint.IsOccupied = true;
 
@@ -263,6 +307,38 @@ public class WorkManager : Singleton<WorkManager>
         npc.CurrentJob = newJob;
 
         return true;
+    }
+    
+    private void HideNpc(VillageNpcRuntime npc)
+    {
+        var npcGO = FindNpc(npc);
+
+        if (npcGO == null)
+        {
+            return;
+        }
+
+        npcGO.SetActive(false);
+    }
+    
+    public void RemoveWorkerFromRoom(
+        VillageNpcRuntime npc)
+    {
+        npc.CurrentJob = WorkerJob.None;
+
+        ShowNpc(npc);
+    }
+    
+    private void ShowNpc(VillageNpcRuntime npc)
+    {
+        var npcGO = FindNpc(npc);
+
+        if (npcGO == null)
+        {
+            return;
+        }
+
+        npcGO.SetActive(true);
     }
 
     private void MoveNpcToPoint(VillageNpcRuntime npc, WorkerPoint point)

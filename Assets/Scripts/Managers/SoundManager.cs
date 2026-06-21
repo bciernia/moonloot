@@ -58,17 +58,16 @@ public class SoundManager : Singleton<SoundManager>
                 _dataFromTile.Add(tile, tileData);
             }
         }
-        
-        SetMusicVolume(
-            PlayerPrefs.GetFloat(
-                "MusicVolume",
-                1f));
 
-        SetSfxVolume(
-            PlayerPrefs.GetFloat(
-                "SfxVolume",
-                1f));
-        
+        // SetMusicVolume(
+        //     PlayerPrefs.GetFloat(
+        //         "MusicVolume",
+        //         1f));
+        //
+        // SetSfxVolume(
+        //     PlayerPrefs.GetFloat(
+        //         "SfxVolume",
+        //         1f));
     }
 
     private void Start()

@@ -11,7 +11,7 @@ public class VolumeSlider : MonoBehaviour
     {
         _slider.value =
             PlayerPrefs.GetFloat(
-                "MusicVolume",
+                $"{_volumeType}Volume",
                 1f);
 
         OnValueChanged(_slider.value);

@@ -10,7 +10,7 @@ public class RoomUpgradeSO : ScriptableObject
     public string Description;
 
     public int Cost;
-    public int RequiredVillagers;
+    public int RequiredWorkers;
 
     public BonusType BonusType;
     public float Value;

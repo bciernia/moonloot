@@ -12,7 +12,8 @@ public class TavernRoomSO : ScriptableObject
     public string Description;
     
     public int Cost;
-
+    public int RequiredWorkers;
+    
     public GameObject RoomPrefab;
     
     [SerializeField] private List<RoomUpgradeSO> _upgrades = new();

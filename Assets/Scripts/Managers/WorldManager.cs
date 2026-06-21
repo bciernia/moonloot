@@ -34,6 +34,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             if (savedData != null)
             {
                 npc.CurrentJob = savedData.CurrentJob;
+                npc.IsAssignedToRoom = savedData.IsAssignedToRoom;
+                npc.AssignedRoomSlotId = savedData.AssignedRoomSlotId;
             }
         }
 
@@ -73,23 +75,19 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
         foreach (var (npc, pointID) in _npcPlacements)
         {
+            var existingWorker =
+                FindObjectsByType<WorkerNpcController>(
+                        FindObjectsSortMode.None)
+                    .FirstOrDefault(x => x.GetRuntime() == npc);
+
+            if (existingWorker != null)
+            {
+                continue;
+            }
+            
             if (npc.IsWorker)
             {
-                var go = Instantiate(npc.Data.Character, Vector3.zero, Quaternion.identity);
-
-                var rescue = go.GetComponent<RescueNpc>();
-                if (rescue != null)
-                    rescue.SetRuntime(npc);
-
-                var worker = go.GetComponent<WorkerNpcController>();
-                if (worker != null)
-                    worker.SetRuntime(npc);
-
-                if (LoadingSceneManager.Instance.IsSceneBase())
-                {
-                    StartCoroutine(AssignNextFrame(npc));
-                }
-                
+                StartCoroutine(SpawnWorkerNextFrame(npc));
                 continue;
             }
 
@@ -105,14 +103,36 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         }
     }
     
-    private IEnumerator AssignNextFrame(VillageNpcRuntime npc)
+    private IEnumerator SpawnWorkerNextFrame(
+        VillageNpcRuntime npc)
     {
         yield return null;
 
-        if (WorkManager.Instance != null)
+        var spawnPoint =
+            WorkManager.Instance.GetSpawnPointForWorker(
+                npc.CurrentJob);
+
+        if (spawnPoint == null)
         {
-            WorkManager.Instance.TryAssignWorker(npc, npc.CurrentJob);
+            Debug.LogWarning(
+                $"No WorkerPoint found for {npc.Name}");
+            yield break;
         }
+
+        var go = Instantiate(
+            npc.Data.Character,
+            spawnPoint.transform.position,
+            Quaternion.identity);
+
+        var rescue = go.GetComponent<RescueNpc>();
+
+        if (rescue != null)
+            rescue.SetRuntime(npc);
+
+        var worker = go.GetComponent<WorkerNpcController>();
+
+        if (worker != null)
+            worker.SetRuntime(npc);
     }
     
     public void ResetSpawnPoints()
@@ -159,7 +179,56 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 x.Name == npcName &&
                 x.Profession == profession);
     }
+    
+    public List<VillageNpcRuntime> GetFreeWorkers(int count)
+    {
+        return _rescuedNPCs
+            .Where(x =>
+                x.IsWorker &&
+                !x.IsAssignedToRoom)
+            .Take(count)
+            .ToList();
+    }
+    
+    public void HideWorker(VillageNpcRuntime npc)
+    {
+        var worker = FindObjectsByType<WorkerNpcController>(
+                FindObjectsSortMode.None)
+            .FirstOrDefault(x => x.GetRuntime() == npc);
 
+        if (worker != null)
+        {
+            worker.transform.position = new Vector3(
+                9999f,
+                9999f,
+                9999f);
+        }
+    }
+
+    public void ShowWorker(VillageNpcRuntime npc)
+    {
+        var worker = FindObjectsByType<WorkerNpcController>(
+                FindObjectsSortMode.None)
+            .FirstOrDefault(x => x.GetRuntime() == npc);
+
+        if (worker == null)
+        {
+            return;
+        }
+
+        var spawnPoint = FindObjectsByType<NPCSpawnPoint>(
+                FindObjectsSortMode.None)
+            .FirstOrDefault(x =>
+                x.ID == _npcPlacements[npc]);
+
+        if (spawnPoint != null)
+        {
+            worker.transform.position =
+                spawnPoint.transform.position;
+        }
+    }
+    
+    #region Save/Load
     public void Save()
     {
         var workers = new List<WorkerSaveData>();
@@ -172,7 +241,9 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 NpcName = npc.Name,
                 Profession = npc.Profession,
                 CurrentJob = npc.CurrentJob,
-                GrantedSkillId = npc.GrantedSkill?.Id
+                GrantedSkillId = npc.GrantedSkill?.Id,
+                IsAssignedToRoom = npc.IsAssignedToRoom,
+                AssignedRoomSlotId = npc.AssignedRoomSlotId,
             });
         }
 
@@ -190,7 +261,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             ES3.Load<List<WorkerSaveData>>("workers");
 
         _rescuedNPCs.Clear();
-
+        _npcPlacements.Clear();
+        
         foreach (var data in savedNpcs)
         {
             var npcData = GetNpcData(data.NpcName, data.Profession);
@@ -202,7 +274,9 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
             runtime.RuntimeID = data.RuntimeID;
             runtime.CurrentJob = data.CurrentJob;
-
+            runtime.IsAssignedToRoom = data.IsAssignedToRoom;
+            runtime.AssignedRoomSlotId = data.AssignedRoomSlotId;
+            
             if (!string.IsNullOrEmpty(data.GrantedSkillId))
             {
                 runtime.GrantedSkill =
@@ -218,4 +292,5 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         NPCManager.Instance.ReapplyBonuses();
         Debug.Log($"Loaded NPC count: {_rescuedNPCs.Count}");
     }
+    #endregion
 }
