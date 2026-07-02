@@ -648,6 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _confirmPanel: {fileID: 0}
+  _informationPanel: {fileID: 0}
 --- !u!1 &1779513055182608045
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,6 +770,7 @@ Transform:
   - {fileID: 2727742030006375562}
   - {fileID: 8988933973375486928}
   - {fileID: 292004161124321017}
+  - {fileID: 2732212454612246836}
   - {fileID: 784894288118565270}
   - {fileID: 3154219595600858475}
   - {fileID: 1140512172106513131}
@@ -1414,6 +1416,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a3a03ac7e8449a8ad877a1056f4ca50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &4348929284385780131
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2732212454612246836}
+  - component: {fileID: 433101253755616150}
+  m_Layer: 0
+  m_Name: TavernBonusManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2732212454612246836
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348929284385780131}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8677820375361216353}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &433101253755616150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4348929284385780131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba6e91db867a499da47cc0dd9be3d7c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4388942648249249681

@@ -12,6 +12,8 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
     [SerializeField] private List<TavernRoomSlot> _roomsPosition = new();
     [SerializeField]
     private List<TavernRoomData> _roomsData = new();
+    
+    public IReadOnlyList<TavernRoomData> RoomDatas => _roomsData;
 
     public IReadOnlyList<TavernRoomSO> Rooms => _rooms;
     
@@ -137,7 +139,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             WorldManager.Instance.HideWorker(worker);
         }
 
-        InventoryController.Instance.ChangeGoldAmount(room.Cost);
+        InventoryController.Instance.ChangeGoldAmount(-room.Cost);
         
         WorldManager.Instance.Save();
         
@@ -155,6 +157,8 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         }
         
         Save();
+        
+        TavernBonusManager.Instance.Rebuild();
     }
     
     private void SpawnRoom(TavernRoomData roomData)
@@ -234,6 +238,8 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         ReapplyRoomBonuses();
 
         Save();
+        
+        TavernBonusManager.Instance.Rebuild();
     }
     
     public int GetAssignedWorkersCount(int slotId)
@@ -337,7 +343,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
     
     public bool BuyUpgrade(int slotId, RoomUpgradeSO upgrade)
     {
-        TavernRoomData roomData = GetRoomBySlot(slotId);
+        var roomData = GetRoomBySlot(slotId);
 
         if (roomData == null)
         {
@@ -364,6 +370,8 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         
         Save();
 
+        TavernBonusManager.Instance.Rebuild();
+        
         return true;
     }
     
@@ -538,6 +546,8 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         }
 
         ReapplyRoomBonuses();
+        
+        TavernBonusManager.Instance.Rebuild();
     }
     #endregion
 }

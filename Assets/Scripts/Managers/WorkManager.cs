@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -196,35 +197,39 @@ public class WorkManager : Singleton<WorkManager>
 
     private void ProcessAlchemists()
     {
-        var alchemistsCount = GetWorkersCount(WorkerJob.Alchemist);
+        if(!TavernBonusManager.Instance) return;
+        
+        var potionCount =
+            TavernBonusManager.Instance.GetValue(
+                TavernEffectType.FreePotion);
 
-        if (alchemistsCount <= 0)
+        if (potionCount <= 0)
             return;
 
-        var inventory = TryGetChestInventory(WorkerJob.Alchemist);
+        var inventory =
+            TryGetChestInventory(WorkerJob.Alchemist);
 
         if (inventory == null)
             return;
-        
-        foreach (var item in inventory.Items)
-        {
-            if (!item.IsEmpty)
-                continue;
 
-            inventory.AddItem(potion, alchemistsCount);
-            break;
-        }
+        inventory.AddItem(potion, potionCount);
 
-        inventory.NotifyInventoryUpdated();    
+        inventory.NotifyInventoryUpdated();
     }
 
     private void ProcessScavengers()
     {
-        var count = GetWorkersCount(WorkerJob.Scavenger);
-        var gold = Random.Range(10, 20) * count;
-        InventoryController.Instance.ChangeGoldAmount(gold);
+        if (!TavernBonusManager.Instance) return;
         
-        Debug.Log($"Scavengers found {gold} gold");
+        var scavengers =
+            TavernBonusManager.Instance.GetValue(
+                TavernEffectType.Scavengers);
+
+        if (scavengers <= 0)
+            return;
+        
+        var gold = Random.Range(10, 20) * scavengers;
+        InventoryController.Instance.ChangeGoldAmount(gold);
     }
 
     private int GetWorkersCount(WorkerJob job) => WorldManager.Instance.RescuedNpcs.Count(npc => npc.IsWorker && npc.CurrentJob == job);

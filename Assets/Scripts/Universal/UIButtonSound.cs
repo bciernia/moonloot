@@ -9,7 +9,6 @@ public class UIButtonSound :
     public void OnPointerEnter(
         PointerEventData eventData)
     {
-        Debug.Log("A");
         SoundManager.Instance.PlaySound(
             SoundType.UI_HOVER);
     }

@@ -21,4 +21,9 @@ public class TavernRoomSO : ScriptableObject
 
     public WorkerJob WorkerJob;
     public int WorkerCapacity;
+    
+    [SerializeField]
+    private List<TavernEffect> _effects = new();
+
+    public IReadOnlyList<TavernEffect> Effects => _effects;
 }
