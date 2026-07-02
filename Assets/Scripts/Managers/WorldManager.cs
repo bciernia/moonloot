@@ -85,6 +85,13 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 continue;
             }
             
+            if (npc.IsAssignedToRoom)
+            {
+                Debug.Log(
+                    $"Skipping {npc.Name} because assigned to room");
+                continue;
+            }
+            
             if (npc.IsWorker)
             {
                 StartCoroutine(SpawnWorkerNextFrame(npc));
@@ -101,6 +108,11 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             if (rescueHero != null)
                 rescueHero.SetRuntime(npc);
         }
+    }
+    
+    public void SpawnWorker(VillageNpcRuntime npc)
+    {
+        StartCoroutine(SpawnWorkerNextFrame(npc));
     }
     
     private IEnumerator SpawnWorkerNextFrame(
@@ -228,6 +240,13 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         }
     }
     
+    public bool HasEnoughFreeWorkers(int count)
+    {
+        return _rescuedNPCs.Count(x =>
+            x.IsWorker &&
+            !x.IsAssignedToRoom) >= count;
+    }
+    
     #region Save/Load
     public void Save()
     {
@@ -265,6 +284,11 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         
         foreach (var data in savedNpcs)
         {
+            Debug.Log(
+                $"{data.NpcName} | " +
+                $"Assigned: {data.IsAssignedToRoom} | " +
+                $"Room: {data.AssignedRoomSlotId}");
+            
             var npcData = GetNpcData(data.NpcName, data.Profession);
             
             if (npcData == null)

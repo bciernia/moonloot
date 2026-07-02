@@ -87,44 +87,47 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         return _roomsData;
     }
 
-    public bool TryBuyRoom(TavernRoomSO room, int slotId)
+    public bool CheckIfCanBuyRoom(TavernRoomSO room, int slotId)
     {
         if (HasRoomType(room.RoomType))
         {
-            FloatingTextManager.Instance.ShowWarningText("You already have this room type.", transform);
+            ConfirmationManager.Instance.ShowInformation("You already have this room type.");
             return false;
         }
 
         if (IsSlotOccupied(slotId))
         {
-            FloatingTextManager.Instance.ShowWarningText("This room is occupied.", transform);
+            ConfirmationManager.Instance.ShowInformation("This room is occupied.");
             return false;
         }
         
         if (GetRoomSlot(slotId) == null)
         {
-            FloatingTextManager.Instance.ShowErrorText("Invalid room slot.", transform);
+            ConfirmationManager.Instance.ShowInformation("Invalid room slot.");
             return false;
         }
         
+        if (!InventoryController.Instance.HasPlayerEnoughGold(room.Cost))
+        {
+            ConfirmationManager.Instance.ShowInformation("Not enough lunars to unlock this room.");
+            return false;
+        }
+        
+        if (!WorldManager.Instance.HasEnoughFreeWorkers(room.RequiredWorkers))
+        {
+            ConfirmationManager.Instance.ShowInformation($"Need {room.RequiredWorkers} free workers.");
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public void TryBuyRoom(TavernRoomSO room, int slotId)
+    {
         var freeWorkers =
             WorldManager.Instance.GetFreeWorkers(
                 room.RequiredWorkers);
-
-        if (freeWorkers.Count < room.RequiredWorkers)
-        {
-            FloatingTextManager.Instance.ShowWarningText(
-                $"Need {room.RequiredWorkers} free workers.",
-                transform);
-
-            return false;
-        }
-        
-        if (!InventoryController.Instance.ChangeGoldAmount(room.Cost))
-        {
-            FloatingTextManager.Instance.ShowWarningText("Not enough gold to unlock this room.", transform);
-            return false;
-        }
 
         foreach (var worker in freeWorkers)
         {
@@ -133,6 +136,10 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
 
             WorldManager.Instance.HideWorker(worker);
         }
+
+        InventoryController.Instance.ChangeGoldAmount(room.Cost);
+        
+        WorldManager.Instance.Save();
         
         UnlockRoom(room.RoomId, slotId);
         
@@ -148,7 +155,6 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         }
         
         Save();
-        return true;
     }
     
     private void SpawnRoom(TavernRoomData roomData)
@@ -206,6 +212,11 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             }
 
             RemoveWorkerFromRoom(npc);
+            
+            if (WorkManager.Instance.FindNpc(npc) == null)
+            {
+                WorldManager.Instance.SpawnWorker(npc);
+            }
 
             WorkManager.Instance.TryAssignWorker(
                 npc,
@@ -496,6 +507,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         npc.AssignedRoomSlotId = -1;
 
         Save();
+        WorldManager.Instance.Save();
     }
     
     #region Save/Load

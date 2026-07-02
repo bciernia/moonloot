@@ -25,7 +25,7 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
 
     public void SetCritMultiplier(float critMultiplier)
     {
-        CritMultiplier.text = critMultiplier.ToString("0.0", CultureInfo.InvariantCulture);
+        CritMultiplier.text = "x" + critMultiplier.ToString("0.00", CultureInfo.InvariantCulture);
     }
     
     public void SetShieldReductionPercent(float percent)

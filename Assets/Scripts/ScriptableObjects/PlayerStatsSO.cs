@@ -170,6 +170,8 @@ public class PlayerStatsSO : ScriptableObject
 
         bonus += _npcFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _eqFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _levelFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _tavernFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
 
         return baseCrit + bonus;
     }
@@ -180,6 +182,8 @@ public class PlayerStatsSO : ScriptableObject
 
         total += _npcBonuses.GetValueOrDefault(type, 0f);
         total += _eqBonuses.GetValueOrDefault(type, 0f);
+        total += _levelBonuses.GetValueOrDefault(type, 0f);
+        total += _tavernBonuses.GetValueOrDefault(type, 0f);
 
         return total;
     }

@@ -366,7 +366,7 @@ public class WorkManager : Singleton<WorkManager>
         MoveNpcToPoint(npc, freePoint);
     }
 
-    private GameObject FindNpc(VillageNpcRuntime npc)
+    public GameObject FindNpc(VillageNpcRuntime npc)
     {
         var all = FindObjectsOfType<RescueNpc>();
 

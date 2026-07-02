@@ -135,22 +135,13 @@ public class TavernUpgradeUI : MonoBehaviour
 
         _roomDescriptionPanel.SetActive(true);
 
-        var availableWorkers =
-            WorldManager.Instance.RescuedNpcs.Count(
-                x => x.IsWorker &&
-                     !x.IsAssignedToRoom);
-        
-        var enoughWorkers =
-            availableWorkers >= room.RequiredWorkers;
-
         _roomDescriptionText.text = room.Description;
-        _roomCostText.text =
-            $"Cost: {room.Cost} Gold | " +
-            $"{room.RequiredWorkers}x Villager " +
-            $"(<color={(enoughWorkers ? "green" : "red")}>{availableWorkers}</color>)";
-        
-        RefreshRoomActions();
 
+        UpdateCostText(
+            room.Cost,
+            room.RequiredWorkers);
+
+        RefreshRoomActions();
         ShowRoomPreview(room);
     }
     
@@ -208,6 +199,11 @@ public class TavernUpgradeUI : MonoBehaviour
             return;
         }
         
+        if (!TavernManager.Instance.CheckIfCanBuyRoom(_selectedRoom, _selectedSlotId))
+        {
+            return;
+        }
+        
         ConfirmationManager.Instance.ShowConfirmation(
             "Are you sure you want to create this room?",
             confirmed =>
@@ -215,13 +211,10 @@ public class TavernUpgradeUI : MonoBehaviour
                 if (!confirmed)
                     return;
 
-                if (!TavernManager.Instance.TryBuyRoom(_selectedRoom, _selectedSlotId))
-                {
-                    return;
-                }
+                TavernManager.Instance.TryBuyRoom(_selectedRoom, _selectedSlotId);
 
                 ClearRoomPreview();
-        
+                RefreshAddRoomButtons();
                 _selectedRoom = null;
                 _roomDescriptionPanel.SetActive(false);
         
@@ -341,9 +334,42 @@ public class TavernUpgradeUI : MonoBehaviour
 
         _roomDescriptionText.text = upgrade.Description;
 
+        UpdateCostText(
+            upgrade.Cost,
+            upgrade.RequiredWorkers);
+
         _createButton.SetActive(false);
         _upgradeButton.SetActive(true);
         _removeButton.SetActive(true);
+    }
+    
+    private void UpdateCostText(
+        int cost,
+        int requiredWorkers)
+    {
+        var availableWorkers =
+            WorldManager.Instance.RescuedNpcs.Count(
+                x => x.IsWorker &&
+                     !x.IsAssignedToRoom);
+
+        var enoughWorkers =
+            availableWorkers >= requiredWorkers;
+
+        var playerGold =
+            InventoryController.Instance
+                .inventoryData
+                .Lunar;
+
+        var enoughGold =
+            playerGold >= cost;
+
+        _roomCostText.text =
+            $"Cost: " +
+            $"<color={(enoughGold ? "green" : "red")}>{cost}</color> Lunars " +
+            $"(<color={(enoughGold ? "green" : "red")}>{playerGold}</color>)" +
+            "\n" +
+            $"Villagers: {requiredWorkers} " +
+            $"(<color={(enoughWorkers ? "green" : "red")}>{availableWorkers}</color>)";
     }
 }
 

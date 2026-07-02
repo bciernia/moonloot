@@ -4,6 +4,7 @@ using UnityEngine;
 public class ConfirmationManager : Singleton<ConfirmationManager>
 {
     [SerializeField] private ConfirmPanelUI _confirmPanel;
+    [SerializeField] private InformationPanelUI _informationPanel;
 
     public void ShowConfirmation(
         string description,
@@ -12,5 +13,10 @@ public class ConfirmationManager : Singleton<ConfirmationManager>
         _confirmPanel.Show(
             description,
             callback);
+    }
+
+    public void ShowInformation(string description)
+    {
+        _informationPanel.Show(description);
     }
 }
