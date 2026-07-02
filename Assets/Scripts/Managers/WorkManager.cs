@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -196,45 +197,94 @@ public class WorkManager : Singleton<WorkManager>
 
     private void ProcessAlchemists()
     {
-        var alchemistsCount = GetWorkersCount(WorkerJob.Alchemist);
+        if(!TavernBonusManager.Instance) return;
+        
+        var potionCount =
+            TavernBonusManager.Instance.GetValue(
+                TavernEffectType.FreePotion);
 
-        if (alchemistsCount <= 0)
+        if (potionCount <= 0)
             return;
 
-        var inventory = TryGetChestInventory(WorkerJob.Alchemist);
+        var inventory =
+            TryGetChestInventory(WorkerJob.Alchemist);
 
         if (inventory == null)
             return;
-        
-        foreach (var item in inventory.Items)
-        {
-            if (!item.IsEmpty)
-                continue;
 
-            inventory.AddItem(potion, alchemistsCount);
-            break;
-        }
+        inventory.AddItem(potion, potionCount);
 
-        inventory.NotifyInventoryUpdated();    
+        inventory.NotifyInventoryUpdated();
     }
 
     private void ProcessScavengers()
     {
-        var count = GetWorkersCount(WorkerJob.Scavenger);
-        var gold = Random.Range(10, 20) * count;
-        InventoryController.Instance.ChangeGoldAmount(gold);
+        if (!TavernBonusManager.Instance) return;
         
-        Debug.Log($"Scavengers found {gold} gold");
+        var scavengers =
+            TavernBonusManager.Instance.GetValue(
+                TavernEffectType.Scavengers);
+
+        if (scavengers <= 0)
+            return;
+        
+        var gold = Random.Range(10, 20) * scavengers;
+        InventoryController.Instance.ChangeGoldAmount(gold);
     }
 
     private int GetWorkersCount(WorkerJob job) => WorldManager.Instance.RescuedNpcs.Count(npc => npc.IsWorker && npc.CurrentJob == job);
 
-    public bool TryAssignWorker(VillageNpcRuntime npc, WorkerJob newJob)
+    public bool TryAssignWorker(
+        VillageNpcRuntime npc,
+        int roomSlotId,
+        WorkerJob job)
     {
-        Debug.Log($"{npc.Name} | {npc.RuntimeID} | {npc.CurrentJob}");
-        
+        var assignedCount =
+            WorldManager.Instance.RescuedNpcs.Count(
+                x => x.CurrentJob == job);
+
+        var maxWorkers =
+            TavernManager.Instance.GetWorkerCapacity(job);
+
+        if (assignedCount >= maxWorkers)
+        {
+            return false;
+        }
+
+        TavernManager.Instance.AssignWorkerToRoom(
+            npc,
+            roomSlotId);
+
+        npc.CurrentJob = job;
+
+        HideNpc(npc);
+
+        return true;
+    }
+    
+    public WorkerPoint GetSpawnPointForWorker(
+        WorkerJob job)
+    {
         EnsurePoints();
-        
+
+        var point = _points.FirstOrDefault(
+            p => p.JobType == job &&
+                 !p.IsOccupied);
+
+        if (point != null)
+        {
+            point.IsOccupied = true;
+        }
+
+        return point;
+    }
+    
+    public bool TryAssignWorker(
+        VillageNpcRuntime npc,
+        WorkerJob newJob)
+    {
+        EnsurePoints();
+
         if (!npc.IsWorker)
             return false;
 
@@ -248,13 +298,12 @@ public class WorkManager : Singleton<WorkManager>
         }
 
         var freePoint = _points
-            .FirstOrDefault(p => p.JobType == newJob && !p.IsOccupied);
+            .FirstOrDefault(
+                p => p.JobType == newJob &&
+                     !p.IsOccupied);
 
         if (freePoint == null)
-        {
-            Debug.Log($"Brak miejsca dla {newJob}");
             return false;
-        }
 
         freePoint.IsOccupied = true;
 
@@ -263,6 +312,38 @@ public class WorkManager : Singleton<WorkManager>
         npc.CurrentJob = newJob;
 
         return true;
+    }
+    
+    private void HideNpc(VillageNpcRuntime npc)
+    {
+        var npcGO = FindNpc(npc);
+
+        if (npcGO == null)
+        {
+            return;
+        }
+
+        npcGO.SetActive(false);
+    }
+    
+    public void RemoveWorkerFromRoom(
+        VillageNpcRuntime npc)
+    {
+        npc.CurrentJob = WorkerJob.None;
+
+        ShowNpc(npc);
+    }
+    
+    private void ShowNpc(VillageNpcRuntime npc)
+    {
+        var npcGO = FindNpc(npc);
+
+        if (npcGO == null)
+        {
+            return;
+        }
+
+        npcGO.SetActive(true);
     }
 
     private void MoveNpcToPoint(VillageNpcRuntime npc, WorkerPoint point)
@@ -290,7 +371,7 @@ public class WorkManager : Singleton<WorkManager>
         MoveNpcToPoint(npc, freePoint);
     }
 
-    private GameObject FindNpc(VillageNpcRuntime npc)
+    public GameObject FindNpc(VillageNpcRuntime npc)
     {
         var all = FindObjectsOfType<RescueNpc>();
 

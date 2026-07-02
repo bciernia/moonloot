@@ -184,4 +184,22 @@ public class InventoryRuntime
 
         NotifyInventoryUpdated();
     }
+    
+    public int CountItem(ItemSO item)
+    {
+        var amount = 0;
+
+        foreach (var inventoryItem in Items)
+        {
+            if (inventoryItem.IsEmpty)
+                continue;
+
+            if (inventoryItem.item == item)
+            {
+                amount += inventoryItem.quantity;
+            }
+        }
+
+        return amount;
+    }
 }

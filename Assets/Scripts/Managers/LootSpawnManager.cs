@@ -126,7 +126,7 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 
         var spawnedPositions = new List<Vector3>();
 
-        for (int i = 0; i < amount; i++)
+        for (var i = 0; i < amount; i++)
         {
             var spawner = spawners[Random.Range(0, spawners.Count)];
 
@@ -168,15 +168,14 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         ObjectsSpawner spawner,
         List<Vector3> spawnedPositions)
     {
-        var maxAttempts = 10;
+        var maxAttempts = 50;
 
         for (var attempt = 0; attempt < maxAttempts; attempt++)
         {
             var randomPos = GetRandomPoint(spawner);
 
-            if (randomPos.HasValue &&
-                IsPositionFree(randomPos.Value, spawner) &&
-                IsFarEnough(randomPos.Value, spawnedPositions, 1.5f))
+            // if (randomPos.HasValue && IsPositionFree(randomPos.Value, spawner) && IsFarEnough(randomPos.Value, spawnedPositions, 0.1f))
+            if (randomPos.HasValue)
             {
                 var go = Instantiate(
                     prefab,

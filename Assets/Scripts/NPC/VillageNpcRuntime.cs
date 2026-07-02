@@ -20,6 +20,9 @@ public class VillageNpcRuntime
 
     public bool IsWorker => Data.Type == NPCType.Worker;
     
+    public bool IsAssignedToRoom;
+    public int AssignedRoomSlotId = -1;
+    
     public VillageNpcRuntime(VillageNpcData data)
     {
         var id = GenerateID(data);

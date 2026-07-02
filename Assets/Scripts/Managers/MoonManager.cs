@@ -22,9 +22,6 @@ public class MoonManager : Singleton<MoonManager>
     public void RollMoon()
     {
         CurrentMoon = moons[Random.Range(0, moons.Count)];
-
-        Debug.Log($"Current moon: {CurrentMoon.DisplayName}");
-
         OnMoonChanged?.Invoke(CurrentMoon);
     }
 }
