@@ -48,16 +48,16 @@ public class ActionAttack : FSMAction
 
         var baseDamage = _enemyStatistics.Damage;
 
-        var minDamage =
-            baseDamage * (1f - damageVariancePercent);
+        var minDamage = baseDamage * (1f - damageVariancePercent);
 
-        var maxDamage =
-            baseDamage * (1f + damageVariancePercent);
+        var maxDamage = baseDamage * (1f + damageVariancePercent);
 
         var finalDamage = RNGManager.Instance.GetRandomFloat(minDamage, maxDamage);
 
         playerDamage?.TakeDamage(Mathf.Round(finalDamage));
 
+        _enemyStatistics.TryTriggerAttackReaction(finalDamage);
+        
         HasAttacked = true;
 
         AddStateForPlayer();

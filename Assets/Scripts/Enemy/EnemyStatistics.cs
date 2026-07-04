@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using MoreMountains.Tools;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -78,6 +79,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     private float _deathEffectDamageMultiplier = 1f;
     
     private List<HitReactionEntry> _hitReactions = new();
+    private readonly List<AttackReactionEntry> _attackReactions = new();
     
     private void Awake()
     {
@@ -746,8 +748,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         });
     }
 
-    public void SetHitReactions(
-        IReadOnlyList<HitReactionEntry> reactions)
+    public void SetHitReactions(IReadOnlyList<HitReactionEntry> reactions)
     {
         ClearHitReactions();
 
@@ -758,6 +759,57 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
                 reaction.Chance,
                 reaction.Duration,
                 reaction.Distance);
+        }
+    }
+    
+    public void SetAttackReactions(IReadOnlyList<AttackReactionEntry> reactions)
+    {
+        _attackReactions.Clear();
+
+        foreach (var reaction in reactions)
+        {
+            _attackReactions.Add(new AttackReactionEntry
+            {
+                Effect = reaction.Effect,
+                Chance = reaction.Chance,
+                Value = reaction.Value
+            });
+        }
+    }
+    
+    public void TryTriggerAttackReaction(float damageDealt)
+    {
+        if (_attackReactions == null || _attackReactions.Count == 0)
+            return;
+
+        var roll = RNGManager.Instance.GetRandomFloat(0f, 100f);
+
+        var accumulated = 0f;
+
+        foreach (var reaction in _attackReactions)
+        {
+            accumulated += reaction.Chance;
+
+            if (roll <= accumulated)
+            {
+                TriggerAttackReaction(
+                    reaction,
+                    damageDealt);
+
+                return;
+            }
+        }
+    }
+    
+    private void TriggerAttackReaction(
+        AttackReactionEntry reaction,
+        float damageDealt)
+    {
+        switch (reaction.Effect)
+        {
+            case AttackReactionType.Heal:
+                RestoreHealth(Mathf.Round(damageDealt));
+                break;
         }
     }
 }
