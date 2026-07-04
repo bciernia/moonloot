@@ -771,6 +771,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             
             ApplyMutation(stats);
             ApplyMoonObjectiveEffects(stats);
+            ApplyMoonHitEffects(stats);
         }
 
         _aliveEnemies++;
@@ -1446,6 +1447,42 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         AddObjectiveProgress(1);
 
         Debug.Log($"Activated obelisks: {_activatedObelisks}/{_spawnedObelisks}");
+    }
+    
+    private HitReactionProfileSO GetRandomHitReactionProfile(
+        IReadOnlyList<HitReactionProfileSO> profiles)
+    {
+        var totalWeight = profiles.Sum(x => x.Weight);
+
+        var roll = RNGManager.Instance.GetRandomInt(0, totalWeight);
+
+        var current = 0;
+
+        foreach (var profile in profiles)
+        {
+            current += profile.Weight;
+
+            if (roll < current)
+                return profile;
+        }
+
+        return profiles[^1];
+    }
+    
+    private void ApplyMoonHitEffects(
+        EnemyStatistics stats)
+    {
+        if (CurrentMoon == null)
+            return;
+
+        var profiles = CurrentMoon.EnemyHitProfiles;
+
+        if (profiles == null || profiles.Count == 0)
+            return;
+
+        var profile = GetRandomHitReactionProfile(profiles);
+
+        stats.SetHitReactions(profile.Effects);
     }
 
     public bool IsBossAlive() => _bossAlive;

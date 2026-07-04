@@ -500,10 +500,22 @@ MonoBehaviour:
     EffectPrefab: {fileID: 7373839765300060858, guid: 2ea7e85442355c34ebf55ef9961775bd, type: 3}
     RangePrefab: {fileID: 3759880039309635326, guid: 6da1b8cd24cc1e749b29d900bb8ff020, type: 3}
     FreezingEffect: {fileID: 11400000, guid: 0938e3edf57158d44a7e9496f275c41a, type: 2}
+    PoisonEffect: {fileID: 0}
   - Type: 1
     EffectPrefab: {fileID: 7373839765300060858, guid: 2ea7e85442355c34ebf55ef9961775bd, type: 3}
     RangePrefab: {fileID: 3759880039309635326, guid: 6da1b8cd24cc1e749b29d900bb8ff020, type: 3}
     FreezingEffect: {fileID: 0}
+    PoisonEffect: {fileID: 0}
+  - Type: 2
+    EffectPrefab: {fileID: 7373839765300060858, guid: 2ea7e85442355c34ebf55ef9961775bd, type: 3}
+    RangePrefab: {fileID: 3759880039309635326, guid: 6da1b8cd24cc1e749b29d900bb8ff020, type: 3}
+    FreezingEffect: {fileID: 0}
+    PoisonEffect: {fileID: 11400000, guid: 1761ad3f3e5075347b2ee1d4d698b0b7, type: 2}
+  - Type: 0
+    EffectPrefab: {fileID: 7373839765300060858, guid: 2ea7e85442355c34ebf55ef9961775bd, type: 3}
+    RangePrefab: {fileID: 3759880039309635326, guid: 6da1b8cd24cc1e749b29d900bb8ff020, type: 3}
+    FreezingEffect: {fileID: 0}
+    PoisonEffect: {fileID: 0}
 --- !u!1 &1057825172906946352
 GameObject:
   m_ObjectHideFlags: 0
@@ -628,6 +640,55 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1070728297535531426
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 135408260752646995}
+  - component: {fileID: 5780309177802450511}
+  m_Layer: 0
+  m_Name: HitReactionDB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &135408260752646995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070728297535531426}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 459707523639994451}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5780309177802450511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1070728297535531426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a637eb4dec340f7a1866b80fe6ed2ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _reactions:
+  - Type: 1
+    StartEffectPrefab: {fileID: 5902042451961540310, guid: 7c168c12937ec684797a663389a125b7, type: 3}
+    EndEffectPrefab: {fileID: 0}
+    Sound: {fileID: 8300000, guid: e4d167d12129d624dac77e548fd65199, type: 3}
 --- !u!1 &1126104818068410170
 GameObject:
   m_ObjectHideFlags: 0
@@ -3640,6 +3701,7 @@ Transform:
   - {fileID: 3663672287438975498}
   - {fileID: 6167780249734323630}
   - {fileID: 1503430529498776100}
+  - {fileID: 135408260752646995}
   m_Father: {fileID: 5798895507799208133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7725960895782174306
@@ -6507,6 +6569,114 @@ PrefabInstance:
       propertyPath: PhysicalResistance
       value: 
       objectReference: {fileID: 1093728112664990774}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[0].enemyHitProfiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[4].enemyHitProfiles.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[0].enemyDeathProfiles.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[1].enemyDeathProfiles.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[2].enemyDeathProfiles.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[3].enemyDeathProfiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: moons.Array.data[4].enemyDeathProfiles.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyHitProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b0a66badd619f3c429a0a608acb07aa6, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[4].enemyHitProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: b0a66badd619f3c429a0a608acb07aa6, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 1b742b043903f3643ac0127f692e66a9, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 21f7defacc961034e9c3586d90a085e0, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: be49d80077326914dafa1afe25473f05, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a2aee050b8164634d8a9f1d54c22a469, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e10e17b75a01194dbb196030e799b53, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ba81a38b6e38a464fb32bd92f6be71b4, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[0].enemyDeathProfiles.Array.data[6]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 3bb7495b0e5070844b82f45bc9340404, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[1].enemyDeathProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50dedbf3aae0aa241ba1f56512cb9b69, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[1].enemyDeathProfiles.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d7211846c4b86074db1774fe7783495a, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[1].enemyDeathProfiles.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 379cf85403d35674caddae75c15411d6, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[1].enemyDeathProfiles.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5daaa630af06db14ab81edb6884f520b, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[2].enemyDeathProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 50dedbf3aae0aa241ba1f56512cb9b69, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[2].enemyDeathProfiles.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d7211846c4b86074db1774fe7783495a, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[2].enemyDeathProfiles.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: f6be9d2f3191ef44190da003c393043b, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[3].enemyDeathProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5af1425683f9b364a8476b421dda28c3, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[3].enemyDeathProfiles.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5daaa630af06db14ab81edb6884f520b, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[4].enemyDeathProfiles.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a2aee050b8164634d8a9f1d54c22a469, type: 2}
+    - target: {fileID: 6084885202445281944, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: 'moons.Array.data[4].enemyDeathProfiles.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5daaa630af06db14ab81edb6884f520b, type: 2}
     - target: {fileID: 6192086032565516409, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
       propertyPath: _quickItem1Image
       value: 

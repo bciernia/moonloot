@@ -77,6 +77,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     
     private float _deathEffectDamageMultiplier = 1f;
     
+    private List<HitReactionEntry> _hitReactions = new();
+    
     private void Awake()
     {
         _circleCollider = GetComponent<CircleCollider2D>();
@@ -146,6 +148,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);
         }
         
+        TryTriggerHitReaction(damageSourceTransform);
+
         if (CurrentHP <= 0)
         {
             // _enemySelector.NoSelectionCallback();
@@ -179,7 +183,81 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyAnimator.SetDamagedAnimation();
         }
     }
-    
+
+    private void TryTriggerHitReaction(Transform attacker)
+    {
+        if (CurrentHP <= 0)
+            return;
+
+        if (_hitReactions == null || _hitReactions.Count == 0)
+            return;
+
+        var roll = RNGManager.Instance.GetRandomFloat(0f, 100f);
+
+        var accumulated = 0f;
+
+        foreach (var reaction in _hitReactions)
+        {
+            accumulated += reaction.Chance;
+
+            if (roll <= accumulated)
+            {
+                TriggerHitReaction(
+                    reaction,
+                    attacker);
+
+                return;
+            }
+        }
+    }
+
+    private void TriggerHitReaction(
+        HitReactionEntry reaction,
+        Transform attacker)
+    {
+        switch (reaction.Effect)
+        {
+            case HitReactionType.Teleport:
+                TriggerTeleport(attacker, reaction.Distance);
+                break;
+        }
+    }
+
+    private void TriggerTeleport(Transform attacker, float distance)
+    {
+        if (attacker == null)
+            return;
+
+        var data =
+            HitReactionDatabase.Instance.Get(HitReactionType.Teleport);
+
+        if (data == null)
+            return;
+        
+        var startPos = transform.position;
+
+        if (data.StartEffectPrefab != null)
+        {
+            Destroy(
+                Instantiate(
+                    data.StartEffectPrefab,
+                    startPos,
+                    Quaternion.identity),
+                5f);
+        }
+        
+        if (data.Sound != null)
+        {
+            AudioSource.PlayClipAtPoint(
+                data.Sound,
+                startPos);
+        }
+        
+        var direction = (transform.position - attacker.position).normalized;
+        var targetPos = transform.position + direction * distance;
+        transform.position = targetPos;
+    }
+
     private void TryTriggerDeathEffect()
     {
         _willExplode = false;
@@ -198,6 +276,13 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
 
             if (roll <= accumulated)
             {
+                if (effect.Effect == DeathEffectType.None)
+                {
+                    _selectedDeathEffect = null;
+                    _willExplode = false;
+                    return;
+                }
+                
                 _selectedDeathEffect = effect;
                 _willExplode = true;
 
@@ -289,6 +374,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
                 * nightMultiplier
                 * _deathEffectDamageMultiplier;
 
+            SoundManager.Instance.PlaySound(data.Sound);
+            
             hit.GetComponent<IDamageable>()
                 ?.TakeDamage(
                     damage,
@@ -406,6 +493,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
                     damage,
                     transform);
 
+            SoundManager.Instance.PlaySound(data.Sound);
+            
             data.PoisonEffect
                 ?.Apply(
                     hit.gameObject,
@@ -464,6 +553,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
                 ?.TakeDamage(
                     damage,
                     transform);
+            
+            SoundManager.Instance.PlaySound(data.Sound);
 
             data.FreezingEffect
                 ?.Apply(
@@ -633,5 +724,40 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             Chance = chance,
             Radius = radius,
         });
+    }
+    
+    public void ClearHitReactions()
+    {
+        _hitReactions.Clear();
+    }
+
+    public void AddHitReaction(
+        HitReactionType effect,
+        float chance,
+        float duration,
+        float distance)
+    {
+        _hitReactions.Add(new HitReactionEntry
+        {
+            Effect = effect,
+            Chance = chance,
+            Duration = duration,
+            Distance = distance
+        });
+    }
+
+    public void SetHitReactions(
+        IReadOnlyList<HitReactionEntry> reactions)
+    {
+        ClearHitReactions();
+
+        foreach (var reaction in reactions)
+        {
+            AddHitReaction(
+                reaction.Effect,
+                reaction.Chance,
+                reaction.Duration,
+                reaction.Distance);
+        }
     }
 }

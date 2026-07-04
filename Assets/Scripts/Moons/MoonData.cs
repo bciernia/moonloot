@@ -43,4 +43,10 @@ public class MoonData
     
     public IReadOnlyList<DeathEffectProfileSO> EnemyDeathProfiles
         => enemyDeathProfiles;
+    
+    [SerializeField]
+    private List<HitReactionProfileSO> enemyHitProfiles;
+
+    public IReadOnlyList<HitReactionProfileSO> EnemyHitProfiles
+        => enemyHitProfiles;
 }

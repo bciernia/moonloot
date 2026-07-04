@@ -22,6 +22,9 @@ public class DeathEffectDatabase : Singleton<DeathEffectDatabase>
 
     public DeathEffectData Get(DeathEffectType type)
     {
-        return _lookup[type];
+        if (!_lookup.TryGetValue(type, out var data))
+            return null;
+
+        return data;
     }
 }

@@ -10,4 +10,6 @@ public class DeathEffectData
 
     public FreezingEffect FreezingEffect;
     public PoisonEffect PoisonEffect;
+    
+    public AudioClip Sound;
 }

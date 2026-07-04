@@ -21,7 +21,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private List<AudioClip> _combatMusicList;
     
     [SerializeField] private List<AudioClip> _pickUpSfx;
-
+    
     [SerializeField] private Transform _sfxSourcesParent;
     private List<AudioSource> _sfxSources;
     
@@ -351,7 +351,7 @@ public class SoundManager : Singleton<SoundManager>
 
         PlaySFX(randomClip);
     }
-    
+
     #endregion
     
     public void SetMusicVolume(float value)
