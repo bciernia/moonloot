@@ -26,6 +26,7 @@ public class PlayerAttack : MonoBehaviour
     private PlayerStamina _playerStamina;
     private PlayerInput _playerInput;
     private SlashEffect _slash;
+    private PlayerMovement _movement;
     
     private float _currentDmgMultiplier = 1f;
     private float _attackCooldownMultiplier = 1f;
@@ -34,6 +35,7 @@ public class PlayerAttack : MonoBehaviour
         _playerMana = GetComponent<PlayerMana>();
         _playerStamina = GetComponent<PlayerStamina>();
         _playerInput = GetComponent<PlayerInput>();
+        _movement = GetComponent<PlayerMovement>();
     }
 
     private void Start()
@@ -110,6 +112,9 @@ public class PlayerAttack : MonoBehaviour
     private IEnumerator AttackCooldown()
     {
         canAttack = false;
+        
+        _movement.SetAttackSlow(true);
+        
         var elapsed = 0f;
 
         cooldownImage.fillAmount = 0f;
@@ -124,6 +129,8 @@ public class PlayerAttack : MonoBehaviour
         }
 
         cooldownImage.fillAmount = 1f;
+        
+        _movement.SetAttackSlow(false);
         canAttack = true;
     }
     

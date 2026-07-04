@@ -28,10 +28,16 @@ public class ActiveEffect : MonoBehaviour
 
         if (timer >= duration)
         {
+            Effect?.Expire(gameObject);
+
             DestroyUI();
-            if (VisualObject != null) Destroy(VisualObject);
-            Destroy(this);
+
+            if (VisualObject != null)
+                Destroy(VisualObject);
+
             StatusEffectUIManager.Instance.RemoveEffectUI(Effect.Name);
+
+            Destroy(this);
         }
     }
 

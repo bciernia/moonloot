@@ -341,8 +341,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         
         if (CurrentMoon == null)
             return;
-
-        
         
         switch (CurrentMoon.ObjectiveType)
         {
@@ -770,13 +768,52 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == eliteEnemies,
                 pool == bossEnemies
             );
-
+            
             ApplyMutation(stats);
+            ApplyMoonObjectiveEffects(stats);
         }
 
         _aliveEnemies++;
     }
     
+    private DeathEffectProfileSO GetRandomDeathProfile(
+        IReadOnlyList<DeathEffectProfileSO> profiles)
+    {
+        var totalWeight = profiles.Sum(x => x.Weight);
+
+        var roll = RNGManager.Instance.GetRandomInt(0, totalWeight);
+
+        var current = 0;
+
+        foreach (var profile in profiles)
+        {
+            current += profile.Weight;
+
+            if (roll < current)
+                return profile;
+        }
+
+        return profiles[^1];
+    }
+
+    private void ApplyMoonObjectiveEffects(
+        EnemyStatistics stats)
+    {
+        if (CurrentMoon == null)
+            return;
+
+        var profiles = CurrentMoon.EnemyDeathProfiles;
+
+        if (profiles == null || profiles.Count == 0)
+            return;
+
+        var profile = GetRandomDeathProfile(profiles);
+
+        stats.SetDeathEffects(
+            profile.Effects,
+            profile.DamageMultiplier);
+    }
+
     private List<GameObject> GetEnemyPool()
     {
         return Random.value < CurrentMoon.EliteChanceBonus
@@ -1131,7 +1168,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     private void ApplyMutation(EnemyStatistics stats)
     {
-        Debug.Log($"Mutation active: {_currentMutation}");
         switch (_currentMutation)
         {
             case HordeMutation.StrongEnemies:
@@ -1145,7 +1181,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 break;
 
             case HordeMutation.BrutalEnemies:
-                // stats.Damage *= 1.5f;
+                stats.Damage *= 1.25f;
                 break;
             case HordeMutation.None:
             default:

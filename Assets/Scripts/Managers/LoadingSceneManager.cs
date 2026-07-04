@@ -156,6 +156,10 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         WorldManager.Instance.AssignPlacesIfNeeded();
         WorldManager.Instance.SpawnNPCs();
 
+        Player.Instance?
+            .GetComponent<PlayerMovement>()
+            ?.ResetTemporaryMovementModifiers();
+
         if (IsSceneBase())
         {
             SoundManager.Instance.StopCombatMusic();

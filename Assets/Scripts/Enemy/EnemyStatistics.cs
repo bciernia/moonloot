@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using MoreMountains.Feedbacks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable, IConfusionable, IHealth
@@ -40,6 +41,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public List<AudioClip> AttackSounds {get; private set; }
     public List<AudioClip> DeathSounds {get; private set; }
     
+    private GameObject _currentExplosionRange;
+    
     private CircleCollider2D _circleCollider;
     private EnemyBrain _enemyBrain;
     private EnemyAnimator _enemyAnimator;
@@ -52,16 +55,27 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public Action<EnemyStatistics> OnDeath;
     public Action OnHit;
 
+    private bool _isFrozen;
     public bool _isRooted;
     public bool _isConfused;
     private Coroutine _rootCoroutine;
     private Coroutine _confusionCoroutine;
-    
+    private Coroutine _freezeCoroutine;
+
     private bool _initialized = false;
 
     private MMF_Player _feelEffects;
     
+    private const float DeathAnimationLength = 2f;
+    
     public bool ShouldRunAway { get; private set; }
+    
+    private bool _willExplode;
+    
+    private List<DeathEffectEntry> _deathEffects;
+    private DeathEffectEntry _selectedDeathEffect;
+    
+    private float _deathEffectDamageMultiplier = 1f;
     
     private void Awake()
     {
@@ -109,6 +123,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         DmgSounds = _enemyStats.DmgSounds;
         AttackSounds = _enemyStats.AttackSounds;
         DeathSounds = _enemyStats.DeathSounds;
+        
+        _deathEffects = new List<DeathEffectEntry>(_enemyStats.DeathEffects);
     }
 
     private float RandomizeStat(float min, float max) => RNGManager.Instance.GetRandomFloat(min, max);
@@ -125,7 +141,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyBrain.ForceTarget(damageSourceTransform, 3f);
         } 
         
-        if (!_isRooted && damageSourceTransform != null && _knockBack != null)
+        if (!_isRooted && !_isFrozen && damageSourceTransform != null && _knockBack != null)
         {
             _knockBack.GetKnockedBack(damageSourceTransform, 5f);
         }
@@ -143,6 +159,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             
             //TODO używane przy zapisywaniu martwych miedzy scenami
             //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
+            TryTriggerDeathEffect();
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
             Player.Instance.PlayerExp.AddExp(Mathf.RoundToInt(ExpForEnemy * HordeManager.Instance.CurrentHordeMultiplier));
@@ -162,16 +179,303 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemyAnimator.SetDamagedAnimation();
         }
     }
+    
+    private void TryTriggerDeathEffect()
+    {
+        _willExplode = false;
+        _selectedDeathEffect = null;
 
+        if (_deathEffects == null || _deathEffects.Count == 0)
+            return;
+
+        var roll = RNGManager.Instance.GetRandomFloat(0f, 100f);
+
+        var accumulated = 0f;
+
+        foreach (var effect in _deathEffects)
+        {
+            accumulated += effect.Chance;
+
+            if (roll <= accumulated)
+            {
+                _selectedDeathEffect = effect;
+                _willExplode = true;
+
+                ShowExplosionRange();
+
+                return;
+            }
+        }
+    }
+    
+    private void ShowExplosionRange()
+    {
+        var data =
+            DeathEffectDatabase.Instance.Get(
+                _selectedDeathEffect.Effect);
+        
+        if (data.RangePrefab == null)
+            return;
+
+        _currentExplosionRange = Instantiate(
+            data.RangePrefab,
+            transform.position,
+            Quaternion.identity,
+            transform);
+
+        var colors =
+            DeathEffectColors.GetColors(
+                _selectedDeathEffect.Effect);
+
+        _currentExplosionRange
+            .GetComponent<DeathEffectParticleColor>()
+            ?.SetColors(colors.min, colors.max);
+
+        var ps =
+            _currentExplosionRange
+                .GetComponentInChildren<ParticleSystem>();
+
+        if (ps != null)
+        {
+            var shape = ps.shape;
+            shape.radius = _selectedDeathEffect.Radius;
+        }
+    }
+    
+    private void TriggerExplosion()
+    {
+        var data =
+            DeathEffectDatabase.Instance.Get(
+                _selectedDeathEffect.Effect);
+        
+        if (data.EffectPrefab != null)
+        {
+            var effect = Instantiate(
+                data.EffectPrefab,
+                transform.position,
+                Quaternion.identity);
+
+            var colors =
+                DeathEffectColors.GetColors(
+                    _selectedDeathEffect.Effect);
+
+            effect.GetComponent<DeathEffectParticleColor>()
+                ?.SetColors(colors.min, colors.max);
+
+            effect.GetComponentInChildren<ExplosionParticles>()
+                ?.SetRadius(_selectedDeathEffect.Radius);
+
+            effect.transform.localScale =
+                Vector3.one * _selectedDeathEffect.Radius;
+        }
+
+        var hits = Physics2D.OverlapCircleAll(
+            transform.position,
+            _selectedDeathEffect.Radius);
+
+        foreach (var hit in hits)
+        {
+            if (!hit.CompareTag("Player"))
+                continue;
+
+            _feelEffects?.PlayFeedbacks();
+
+            var nightMultiplier = HordeManager.Instance.CurrentHordeMultiplier;
+
+            var damage =
+                RNGManager.Instance.GetRandomFloat(
+                    Damage * 1.2f,
+                    Damage * 1.5f)
+                * nightMultiplier
+                * _deathEffectDamageMultiplier;
+
+            hit.GetComponent<IDamageable>()
+                ?.TakeDamage(
+                    damage,
+                    transform);
+        }
+    }
+
+    public void SetDeathEffects(IReadOnlyList<DeathEffectEntry> effects, float damageMultiplier)
+    {
+        ClearDeathEffects();
+
+        _deathEffectDamageMultiplier = damageMultiplier;
+
+        foreach (var effect in effects)
+        {
+            AddDeathEffect(
+                effect.Effect,
+                effect.Chance,
+                effect.Radius);
+        }
+    }
+    
     private IEnumerator HandleDeathAnimation()
     {
-        const float deathAnimLength = 1f;
-        yield return new WaitForSeconds(deathAnimLength);
+        yield return new WaitForSeconds(DeathAnimationLength);
 
+        if (_currentExplosionRange != null)
+        {
+            Destroy(_currentExplosionRange);
+        }
+
+        if (_willExplode)
+        {
+            TriggerDeathEffect();
+        }
+
+        yield return new WaitForSeconds(0.2f);
+        
         if (!IsBoss)
         {
             Destroy(gameObject);
         }
+    }
+    
+    private void TriggerDeathEffect()
+    {
+        if (_selectedDeathEffect == null)
+            return;
+
+        switch (_selectedDeathEffect.Effect)
+        {
+            case DeathEffectType.Explosion:
+                TriggerExplosion();
+                break;
+
+            case DeathEffectType.IceNova:
+                TriggerIceNova();
+                break;
+            
+            case DeathEffectType.PoisonCloud:
+                TriggerPoisonCloud();
+                break;
+        }
+    }
+
+    private void TriggerPoisonCloud()
+    {
+        var data =
+            DeathEffectDatabase.Instance.Get(
+                _selectedDeathEffect.Effect);
+        
+        if (data.EffectPrefab != null)
+        {
+            var effect = Instantiate(
+                data.EffectPrefab,
+                transform.position,
+                Quaternion.identity);
+
+            var colors =
+                DeathEffectColors.GetColors(
+                    _selectedDeathEffect.Effect);
+
+            effect.GetComponent<DeathEffectParticleColor>()
+                ?.SetColors(colors.min, colors.max);
+
+            effect.GetComponentInChildren<ExplosionParticles>()
+                ?.SetRadius(_selectedDeathEffect.Radius);
+
+            effect.transform.localScale =
+                Vector3.one * _selectedDeathEffect.Radius;
+        }
+
+        var hits = Physics2D.OverlapCircleAll(
+            transform.position,
+            _selectedDeathEffect.Radius);
+
+        foreach (var hit in hits)
+        {
+            if (!hit.CompareTag("Player"))
+                continue;
+
+            _feelEffects?.PlayFeedbacks();
+
+            var nightMultiplier = HordeManager.Instance.CurrentHordeMultiplier;
+
+            var damage =
+                RNGManager.Instance.GetRandomFloat(
+                    Damage * 1.2f,
+                    Damage * 1.5f)
+                * nightMultiplier
+                * _deathEffectDamageMultiplier;
+
+            hit.GetComponent<IDamageable>()
+                ?.TakeDamage(
+                    damage,
+                    transform);
+
+            data.PoisonEffect
+                ?.Apply(
+                    hit.gameObject,
+                    null,
+                    100f);
+        }    }
+
+    private void TriggerIceNova()
+    {
+        var data =
+            DeathEffectDatabase.Instance.Get(
+                _selectedDeathEffect.Effect);
+        
+        if (data.EffectPrefab != null)
+        {
+            var effect = Instantiate(
+                data.EffectPrefab,
+                transform.position,
+                Quaternion.identity);
+
+            var colors =
+                DeathEffectColors.GetColors(
+                    _selectedDeathEffect.Effect);
+
+            effect.GetComponent<DeathEffectParticleColor>()
+                ?.SetColors(colors.min, colors.max);
+
+            effect.GetComponentInChildren<ExplosionParticles>()
+                ?.SetRadius(_selectedDeathEffect.Radius);
+
+            effect.transform.localScale =
+                Vector3.one * _selectedDeathEffect.Radius;
+        }
+
+        var hits = Physics2D.OverlapCircleAll(
+            transform.position,
+            _selectedDeathEffect.Radius);
+
+        foreach (var hit in hits)
+        {
+            if (!hit.CompareTag("Player"))
+                continue;
+
+            _feelEffects?.PlayFeedbacks();
+
+            var nightMultiplier = HordeManager.Instance.CurrentHordeMultiplier;
+
+            var damage =
+                RNGManager.Instance.GetRandomFloat(
+                    Damage * 1.2f,
+                    Damage * 1.5f)
+                * nightMultiplier
+                * _deathEffectDamageMultiplier;
+
+            hit.GetComponent<IDamageable>()
+                ?.TakeDamage(
+                    damage,
+                    transform);
+
+            data.FreezingEffect
+                ?.Apply(
+                    hit.gameObject,
+                    null,
+                    100f);
+        }
+    }
+    
+    public void ClearDeathEffects()
+    {
+        _deathEffects.Clear();
     }
 
     public void RestoreHealth(float amount)
@@ -270,5 +574,64 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public void StopRunningAway()
     {
         ShouldRunAway = false;
+    }
+    
+    public void ApplyFreeze(float duration, GameObject effect)
+    {
+        if (_freezeCoroutine != null)
+            StopCoroutine(_freezeCoroutine);
+
+        _freezeCoroutine = StartCoroutine(
+            FreezeRoutine(duration, effect));
+    }
+    
+    private IEnumerator FreezeRoutine(
+        float duration,
+        GameObject effect)
+    {
+        _isFrozen = true;
+
+        var originalSpeed = Speed;
+        var originalChaseSpeed = ChaseSpeed;
+
+        var currentEffect = Instantiate(
+            effect,
+            transform.position + Vector3.down * 0.5f,
+            Quaternion.identity,
+            transform);
+
+        Speed = 0f;
+        ChaseSpeed = 0f;
+
+        if (_rb2D != null)
+            _rb2D.linearVelocity = Vector2.zero;
+
+        yield return new WaitForSeconds(duration);
+
+        Speed = originalSpeed;
+        ChaseSpeed = originalChaseSpeed;
+
+        _isFrozen = false;
+
+        if (currentEffect != null)
+            Destroy(currentEffect);
+    }
+    
+    public void AddDeathEffect(
+        DeathEffectType effect,
+        float chance,
+        float radius)
+    {
+        if (_deathEffects == null)
+        {
+            _deathEffects = new List<DeathEffectEntry>();
+        }
+
+        _deathEffects.Add(new DeathEffectEntry
+        {
+            Effect = effect,
+            Chance = chance,
+            Radius = radius,
+        });
     }
 }

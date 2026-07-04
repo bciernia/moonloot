@@ -41,4 +41,9 @@ public class EnemyStatsSO : ScriptableObject
     public List<AudioClip> DmgSounds;
     public List<AudioClip> AttackSounds;
     public List<AudioClip> DeathSounds;
+    
+    [SerializeField]
+    private List<DeathEffectEntry> _deathEffects = new();
+
+    public IReadOnlyList<DeathEffectEntry> DeathEffects => _deathEffects;
 }

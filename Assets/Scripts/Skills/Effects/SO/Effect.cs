@@ -15,6 +15,19 @@ public abstract class Effect : ScriptableObject
 
     protected abstract void OnTick(GameObject target);
 
+    protected virtual void OnApply(GameObject target)
+    {
+    }
+
+    protected virtual void OnExpire(GameObject target)
+    {
+    }
+    
+    public void Expire(GameObject target)
+    {
+        OnExpire(target);
+    }
+    
     public void Apply(GameObject target, Skill sourceSkill = null, float hitChance = 0)
     {
         var uiObj = target.CompareTag("Player") ? StatusEffectUIManager.Instance.CreateEffectUI(this) : null;
@@ -40,6 +53,7 @@ public abstract class Effect : ScriptableObject
         {
             activeEffect = target.AddComponent<ActiveDmgOverTime>();
             activeEffect.InitializeEffect(this, sourceSkill, target, uiObj, OnTick);
+            OnApply(target);
         }
 
         if (VisualPrefab != null)

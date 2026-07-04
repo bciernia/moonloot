@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
@@ -22,7 +23,6 @@ public class MoonData
 
     [TextArea]
     public string ObjectiveTextLong;
-
     
     public float EnemyHealthMultiplier = 1f;
     public float EnemyDamageMultiplier = 1f;
@@ -38,4 +38,9 @@ public class MoonData
     [SerializeField] private InventoryItem requiredItem;
 
     public InventoryItem RequiredItem => requiredItem;
+    
+    [SerializeField] private List<DeathEffectProfileSO> enemyDeathProfiles;
+    
+    public IReadOnlyList<DeathEffectProfileSO> EnemyDeathProfiles
+        => enemyDeathProfiles;
 }

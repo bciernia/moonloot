@@ -17,7 +17,14 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private float worldMapSpeedMultiplier = 0.4f;
     private float _currentSpeedMultiplier = 1f;
+    private float _attackSpeedMultiplier = 1f;
+    private float _contactSpeedMultiplier = 1f;
+    private float _effectSpeedMultiplier = 1f;
 
+    [SerializeField] private float enemyContactRadius = 0.8f;
+    private readonly Collider2D[] _enemyBuffer = new Collider2D[32];
+    [SerializeField] private LayerMask enemyLayer;
+    private int _enemyContactCount;
     public float BaseSpeed => speed;
     
     private void Awake()
@@ -32,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ReadMovement();
         ReadAim();
+        CheckEnemyContact();
     }
 
     private void FixedUpdate()
@@ -51,8 +59,15 @@ public class PlayerMovement : MonoBehaviour
     {
         var bonusMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
         
+        var finalMultiplier =
+            _currentSpeedMultiplier *
+            _attackSpeedMultiplier *
+            _contactSpeedMultiplier *
+            _effectSpeedMultiplier *
+            bonusMultiplier;
+        
         return _rb2D.position +
-               _moveDirection * (speed * _currentSpeedMultiplier * bonusMultiplier * Time.fixedDeltaTime);
+               _moveDirection * (speed * finalMultiplier * Time.fixedDeltaTime);
     }
 
     public void ApplySpeedMultiplier(float multiplier, float duration)
@@ -83,6 +98,39 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(duration);
 
         speed = originalSpeed;
+    }
+    
+    public void EnterEnemyContact()
+    {
+        _enemyContactCount++;
+        Debug.Log(_enemyContactCount);
+
+        _contactSpeedMultiplier = 0.5f;
+    }
+
+    public void ExitEnemyContact()
+    {
+        _enemyContactCount--;
+
+        if (_enemyContactCount <= 0)
+        {
+            _enemyContactCount = 0;
+            _contactSpeedMultiplier = 1f;
+        }
+    }
+    
+    public void SetEffectSpeedMultiplier(float multiplier)
+    {
+        _effectSpeedMultiplier = multiplier;
+    }
+    
+    public void ResetTemporaryMovementModifiers()
+    {
+        _enemyContactCount = 0;
+
+        _contactSpeedMultiplier = 1f;
+        _attackSpeedMultiplier = 1f;
+        _effectSpeedMultiplier = 1f;
     }
     
     // private IEnumerator DashCoroutine(float dashAmount, float duration)
@@ -167,6 +215,40 @@ public class PlayerMovement : MonoBehaviour
         var currentMultiplier = _currentSpeedMultiplier <= 0 ? 1f : _currentSpeedMultiplier;
 
         return speed * currentMultiplier * baseMultiplier;
+    }
+    
+    public void SetAttackSlow(bool enabled)
+    {
+        _attackSpeedMultiplier =
+            enabled ? 0.8f : 1f;
+    }
+    
+    private void CheckEnemyContact()
+    {
+        var count = Physics2D.OverlapCircleNonAlloc(
+            transform.position,
+            enemyContactRadius,
+            _enemyBuffer,
+            enemyLayer);
+
+        var hasEnemyNearby = false;
+
+        for (var i = 0; i < count; i++)
+        {
+            var enemy =
+                _enemyBuffer[i].GetComponent<EnemyStatistics>();
+
+            if (enemy == null)
+                continue;
+
+            hasEnemyNearby = true;
+            break;
+        }
+
+        _contactSpeedMultiplier =
+            hasEnemyNearby
+                ? 0.75f
+                : 1f;
     }
     
     private void OnEnable()
