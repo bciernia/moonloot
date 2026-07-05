@@ -158,10 +158,14 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             _enemySounds?.Die();
             _enemyAnimator.TryFlipSpriteX();
             _enemyAnimator.SetDeadAnimation();
-
+            Speed = 0f;
+            ChaseSpeed = 0f;
+            
             _enemyBrain.enabled = false;
             _circleCollider.enabled = false;
             _rb2D.bodyType = RigidbodyType2D.Static;
+            _rb2D.linearVelocity = Vector2.zero;
+            _rb2D.angularVelocity = 0f;
             
             //TODO używane przy zapisywaniu martwych miedzy scenami
             //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
@@ -565,8 +569,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
                     100f);
         }
     }
-    
-    public void ClearDeathEffects()
+
+    private void ClearDeathEffects()
     {
         _deathEffects.Clear();
     }
@@ -710,7 +714,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             Destroy(currentEffect);
     }
     
-    public void AddDeathEffect(
+    private void AddDeathEffect(
         DeathEffectType effect,
         float chance,
         float radius)
@@ -728,12 +732,12 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         });
     }
     
-    public void ClearHitReactions()
+    private void ClearHitReactions()
     {
         _hitReactions.Clear();
     }
 
-    public void AddHitReaction(
+    private void AddHitReaction(
         HitReactionType effect,
         float chance,
         float duration,
