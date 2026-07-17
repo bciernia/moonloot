@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -370,6 +371,8 @@ public class SoundManager : Singleton<SoundManager>
         _audioMixer.SetFloat(
             "SfxVolume",
             Mathf.Log10(value) * 20f);
+        
+        Debug.Log("SFX VALUE: " +value);
     }
     
 }
