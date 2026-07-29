@@ -18,4 +18,6 @@ public class ProjectileSO : ScriptableObject
     [field: SerializeField] public float EffectChance;
     [field: SerializeField] public bool CanBounce;
     [field: SerializeField] public int BounceNumber;
+
+    public GameObject ImpactPrefab;
 }
