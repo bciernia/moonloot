@@ -11,6 +11,8 @@ public class RangeIndicator : MonoBehaviour
         shape.donutRadius = 0.1f;
     }
 
+    // dorobić zasięg wybuchu przeciwników, dodać mutacje która sprawi że przeciwnik ma np 10% na wybuch po smierci
+    
     public void SetRangeIndicatorColor(Color minColor, Color maxColor)
     {
         var main = particle.main;

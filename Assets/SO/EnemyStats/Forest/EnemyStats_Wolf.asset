@@ -14,14 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Wolf
   Description: Wolf woof woof
-  MaxHP: 25
-  Exp: 34
+  MinHP: 25
+  MaxHP: 50
+  Exp: 15
   AttackRange: 1
-  DetectRange: 10
+  DetectRange: 999999
   IsMelee: 1
-  Damage: 7
-  TimeBetweenAttack: 4
+  MinDamage: 4
+  MaxDamage: 8
+  TimeBetweenAttack: 3
   Speed: 2
+  IsElite: 0
   IsBoss: 0
   ChaseSpeed: 3
   StopRange: 1
@@ -36,3 +39,4 @@ MonoBehaviour:
   DmgSounds: []
   AttackSounds: []
   DeathSounds: []
+  _deathEffects: []

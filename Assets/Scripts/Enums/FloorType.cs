@@ -2,5 +2,12 @@ public enum FloorType
 {
     Grass,
     Dirt,
-    Wooden
+    Wooden,
+    HellDirt,
+    Stone,
+    Metal,
+    Water,
+    Snow,
+    Sand,
+    Ice,
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -21,7 +22,7 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] private List<AudioClip> _combatMusicList;
     
     [SerializeField] private List<AudioClip> _pickUpSfx;
-
+    
     [SerializeField] private Transform _sfxSourcesParent;
     private List<AudioSource> _sfxSources;
     
@@ -351,7 +352,7 @@ public class SoundManager : Singleton<SoundManager>
 
         PlaySFX(randomClip);
     }
-    
+
     #endregion
     
     public void SetMusicVolume(float value)
@@ -370,6 +371,8 @@ public class SoundManager : Singleton<SoundManager>
         _audioMixer.SetFloat(
             "SfxVolume",
             Mathf.Log10(value) * 20f);
+        
+        Debug.Log("SFX VALUE: " +value);
     }
     
 }

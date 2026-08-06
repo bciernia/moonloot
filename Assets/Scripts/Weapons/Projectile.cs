@@ -82,7 +82,8 @@ public class Projectile : MonoBehaviour
             other.gameObject.CompareTag("CameraBoundQuest") ||
             other.gameObject.CompareTag("NPC") ||
             other.gameObject.CompareTag("DroppedItem") ||
-            other.gameObject.CompareTag("Roof"))
+            other.gameObject.CompareTag("Roof") || 
+            other.gameObject.CompareTag("InvisibleWall"))
             return;
 
         if (other.gameObject == _lastHitTarget)
@@ -113,6 +114,7 @@ public class Projectile : MonoBehaviour
 
             if (nextTarget == null)
             {
+                SpawnImpact();
                 Destroy(gameObject);
                 return;
             }
@@ -126,6 +128,7 @@ public class Projectile : MonoBehaviour
             return;
         }
 
+        SpawnImpact();
         Destroy(gameObject);
     }
     
@@ -138,6 +141,20 @@ public class Projectile : MonoBehaviour
             baseDamage * (1f + damageVariancePercent);
 
         return Mathf.Round(RNGManager.Instance.GetRandomFloat(minDamage, maxDamage));
+    }
+    
+    private void SpawnImpact()
+    {
+        if (ProjectileSo == null)
+            return;
+
+        if (ProjectileSo.ImpactPrefab == null)
+            return;
+
+        Instantiate(
+            ProjectileSo.ImpactPrefab,
+            transform.position,
+            transform.rotation);
     }
     
     private GameObject FindNextTarget(GameObject currentTarget)

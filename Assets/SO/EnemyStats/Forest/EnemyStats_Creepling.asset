@@ -14,19 +14,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Creeper Alpha
   Description: Forest creeper alpha
-  MaxHP: 20
-  Exp: 100
+  MinHP: 15
+  MaxHP: 30
+  Exp: 15
   AttackRange: 0.75
-  DetectRange: 20
+  DetectRange: 999999
   IsMelee: 1
-  Damage: 3
-  TimeBetweenAttack: 1
+  MinDamage: 2
+  MaxDamage: 5
+  TimeBetweenAttack: 1.5
   Speed: 3
+  IsElite: 0
   IsBoss: 0
-  ChaseSpeed: 1
+  ChaseSpeed: 3
   StopRange: 0.75
   SpecialAttackTimeInterval: 0
   MaxAttackTimeInterval: 0
   SpecialAttacks: []
-  Effect: {fileID: 0}
-  EffectChance: 0
+  Effect: {fileID: 11400000, guid: 1761ad3f3e5075347b2ee1d4d698b0b7, type: 2}
+  EffectChance: 3
+  SoundInterval: 0
+  IdleSounds: []
+  MoveSounds: []
+  DmgSounds: []
+  AttackSounds: []
+  DeathSounds: []
+  _deathEffects: []

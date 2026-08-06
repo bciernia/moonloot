@@ -2,5 +2,12 @@ public enum TavernRoomType
 {
     Blacksmith,
     Alchemist,
-    Scavenger
+    Scavenger,
+    Classroom,
+    HeroRoom,
+    ChefsRoom,
+    JewerlyRoom,
+    LearherworkRoom,
+    MerchantsRoom,
+    TailorRoom,
 }
