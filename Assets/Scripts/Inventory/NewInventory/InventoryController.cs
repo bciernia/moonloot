@@ -25,6 +25,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
     }
     
+    
     private void ChangeGoldAmount(GoldItemSO gold)
     {
         var goldAmount = gold.Amount;
@@ -138,6 +139,31 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             inventoryUI.AddAction("Drop one", () => DropItem(itemIndex, 1));
             inventoryUI.AddAction("Drop all", () => DropItem(itemIndex, inventoryItem.quantity));
         }
+    }
+    
+    public bool RemoveItem(
+        InventoryItem item,
+        int quantity)
+    {
+        for (var i = 0; i < inventoryData.inventoryItems.Count; i++)
+        {
+            var inventoryItem =
+                inventoryData.inventoryItems[i];
+
+            if (inventoryItem.IsEmpty)
+                continue;
+
+            if (inventoryItem.item.Name != item.item.Name)
+                continue;
+
+            inventoryData.RemoveItem(i, quantity);
+
+            OnInventoryChanged?.Invoke();
+
+            return true;
+        }
+
+        return false;
     }
 
     public void DropItem(int itemIndex, int quantity)
@@ -615,6 +641,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             _ => -1
         };
     }
+    
+    
     
     public int GetItemCount(InventoryItem item)
     {

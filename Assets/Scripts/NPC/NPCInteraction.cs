@@ -4,12 +4,13 @@ using UnityEngine;
 public class NPCInteraction : MonoBehaviour, IInteractable
 {
     [SerializeField] private string NpcName;
+    [SerializeField] private bool canInteractOutsideBase;
 
     private Waypoint _waypoint;
     private NPCMovement _npcMovement;
     private EnemyBrain _enemyBrain;
     private InteractionManager _interactionManager;
-
+    
     private RescueNpc _rescueNpc;
     
     private void Awake()
@@ -23,7 +24,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && CanInteractOutsideBase())
         {
             if (!DialogueManager.Instance.IsInDialogue())
             {
@@ -54,7 +55,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
         
         if(_rescueNpc != null && !_rescueNpc.IsSaved())
         {
-            _rescueNpc.SetSaveNpc();
+            _rescueNpc.Rescue();
             if (DialogueManager.Instance.NPCSelected == this)
             {
                 DialogueManager.Instance.NPCSelected = null;
@@ -79,6 +80,8 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private void DisableNpcMovement() => SetNpcMovementEnabled(false);
     public void EnableNpcMovement() => SetNpcMovementEnabled(true);
 
+    private bool CanInteractOutsideBase() => canInteractOutsideBase || gameObject.scene.name == "Base";
+    
     public string GetInteractionText()
     {
         var npcName = GetComponent<NPCStatUpgrade>()?.GetNpcName();

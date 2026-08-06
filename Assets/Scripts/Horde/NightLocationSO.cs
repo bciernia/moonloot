@@ -17,6 +17,9 @@ public class NightLocationSO : ScriptableObject
 
     public bool IsBossArena;
     
+    public EnemyPoolSO EnemyPool;
+    public ItemPoolSO ItemPool;
+    
 // public SceneReference Scene;
     // public AudioClip Music;
     public Color AmbientColor;

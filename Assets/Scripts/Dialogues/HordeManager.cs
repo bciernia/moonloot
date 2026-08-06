@@ -1,10 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using MoreMountains.Feedbacks;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -18,10 +15,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public int enemiesIncreasePerHorde = 1;
 
     [Header("Enemies")]
-    [SerializeField] private List<GameObject> normalEnemies;
-    [SerializeField] private List<GameObject> eliteEnemies;
-    [SerializeField] private List<GameObject> bossEnemies;
     [SerializeField] private GameObject corruptedVillager;
+    
+    private EnemyPoolSO CurrentEnemyPool =>
+        CurrentNightLocation.EnemyPool;
     
     [SerializeField] private HordeConfigSO hordeConfig;
     private string _previousScene;
@@ -37,6 +34,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     [Header("Villagers")]
     [SerializeField] public List<VillageNpcData> workerPool;
+    [SerializeField] private GameObject rescueCagePrefab;
     
     [SerializeField] private NpcDatabase _npcDatabase;
     
@@ -44,6 +42,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     [Header("Obelisk Objective")]
     [SerializeField] private GameObject obeliskPrefab;
+    
+    [SerializeField]
+    private GameObject searchChestPrefab;
+
+    [SerializeField]
+    private GameObject killChestPrefab;
 
     private int _activatedObelisks;
     private int _spawnedObelisks;
@@ -170,8 +174,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             availableLocations = pool.ToList();
         }
 
-        CurrentNightLocation =
-            availableLocations[Random.Range(0, availableLocations.Count)];
+        // CurrentNightLocation = availableLocations[Random.Range(0, availableLocations.Count)];
+        CurrentNightLocation = availableLocations[0];
         
         _lastNightLocation = CurrentNightLocation;
 
@@ -215,8 +219,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         yield return new WaitForSeconds(0.2f);
         
-        LootSpawnManager.Instance.SpawnAll();
+        LootSpawnManager.Instance.SpawnAll(CurrentNightLocation, currentHorde);
         SpawnObjectiveItems();
+        SpawnSpecialChests();
         SpawnNPC();
         SpawnHorde();
     }
@@ -571,7 +576,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         var randomSpawner = spawners[Random.Range(0, spawners.Length)];
 
-        var prefab = GetRandomEnemy(bossEnemies);
+        var prefab = GetRandomEnemy(CurrentEnemyPool.BossEnemies);
 
         var bossGO = Instantiate(
             prefab,
@@ -579,7 +584,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             randomSpawner.transform.rotation
         );
 
-        SetupEnemy(bossGO, data, bossEnemies);
+        SetupEnemy(bossGO, data, CurrentEnemyPool.BossEnemies);
 
         _bossAlive = true;
 
@@ -765,8 +770,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 data.hpMultiplier * hordeMultiplier * CurrentMoon.EnemyHealthMultiplier,
                 data.damageMultiplier * hordeMultiplier * CurrentMoon.EnemyDamageMultiplier,
                 1f * hordeMultiplier * CurrentMoon.EnemySpeedMultiplier,
-                pool == eliteEnemies,
-                pool == bossEnemies
+                pool == CurrentEnemyPool.EliteEnemies,
+                pool == CurrentEnemyPool.BossEnemies
             );
             
             ApplyMutation(stats);
@@ -776,6 +781,29 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         }
 
         _aliveEnemies++;
+    }
+    
+    private void SpawnSpecialChests()
+    {
+        var spawners = FindObjectsOfType<ChestSpawner>().ToList();
+
+        if (spawners.Count < 2)
+        {
+            Debug.LogWarning("Need at least 2 ChestSpawners!");
+            return;
+        }
+
+        Shuffle(spawners);
+
+        Instantiate(
+            searchChestPrefab,
+            spawners[0].spawnPoint.position,
+            Quaternion.identity);
+
+        Instantiate(
+            killChestPrefab,
+            spawners[1].spawnPoint.position,
+            Quaternion.identity);
     }
     
     private DeathEffectProfileSO GetRandomDeathProfile(
@@ -839,8 +867,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private List<GameObject> GetEnemyPool()
     {
         return Random.value < CurrentMoon.EliteChanceBonus
-            ? normalEnemies
-            : eliteEnemies;
+            ? CurrentEnemyPool.NormalEnemies
+            : CurrentEnemyPool.EliteEnemies;
     }
     #endregion
 
@@ -921,11 +949,11 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         var roll = Random.value;
 
         if (roll < 0.7f)
-            pool = normalEnemies;
+            pool = CurrentEnemyPool.NormalEnemies;
         else if (roll < 0.95f)
-            pool = eliteEnemies;
+            pool = CurrentEnemyPool.EliteEnemies;
         else
-            pool = bossEnemies;
+            pool = CurrentEnemyPool.BossEnemies;
 
         var prefab = GetRandomEnemy(pool);
 
@@ -959,8 +987,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 finalHpMultiplier,
                 data.damageMultiplier,
                 1f,
-                pool == eliteEnemies,
-                pool == bossEnemies
+                pool == CurrentEnemyPool.EliteEnemies,
+                pool == CurrentEnemyPool.BossEnemies
             );
 
             ApplyMutation(stats);
@@ -986,13 +1014,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private System.Collections.IEnumerator SpawnHordeRoutine(EnemySpawner[] spawners, HordeData data)
     {
         // NORMAL
-        yield return StartCoroutine(SpawnGroupRoutine(data.normalEnemies, spawners, false, false, data, normalEnemies));
+        yield return StartCoroutine(SpawnGroupRoutine(data.normalEnemies, spawners, false, false, data, CurrentEnemyPool.NormalEnemies));
 
         // ELITE
-        yield return StartCoroutine(SpawnGroupRoutine(data.eliteEnemies, spawners, true, false, data, eliteEnemies));
+        yield return StartCoroutine(SpawnGroupRoutine(data.eliteEnemies, spawners, true, false, data, CurrentEnemyPool.EliteEnemies));
 
         // BOSS
-        yield return StartCoroutine(SpawnGroupRoutine(data.bossEnemies, spawners, false, true, data, bossEnemies));
+        yield return StartCoroutine(SpawnGroupRoutine(data.bossEnemies, spawners, false, true, data, CurrentEnemyPool.BossEnemies));
 
         Debug.Log("All enemies spawned");
     }
@@ -1298,6 +1326,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             if (rescue != null)
             {
                 rescue.SetRuntime(npc);
+                
+                var cage = Instantiate(
+                    rescueCagePrefab,
+                    npcGO.transform.position,
+                    Quaternion.identity);
+
+                cage.GetComponent<RescueCage>().Initialize(rescue);
             }
 
             Debug.Log($"Spawned NPC: {npc.Name} | Type: {npc.Data.Type}");
@@ -1524,6 +1559,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public bool IsBossAlive() => _bossAlive;
 
+    public int GetCurrentHordeNumber() => currentHorde;
+    
     #region Save/Load
 
     public void Save()

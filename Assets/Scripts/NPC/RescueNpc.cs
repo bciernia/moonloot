@@ -16,7 +16,7 @@ public class RescueNpc : MonoBehaviour
         _runtime = runtime;
     }
     
-    public void SetSaveNpc()
+    public void Rescue()
     {
         if (_runtime == null || _alreadySaved)
             return;
