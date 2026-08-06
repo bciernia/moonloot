@@ -163,15 +163,17 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             
             _enemyBrain.enabled = false;
             _circleCollider.enabled = false;
-            _rb2D.bodyType = RigidbodyType2D.Static;
             _rb2D.linearVelocity = Vector2.zero;
             _rb2D.angularVelocity = 0f;
+            _rb2D.simulated = false;
             
             //TODO używane przy zapisywaniu martwych miedzy scenami
             //EnemyStateManager.Instance.MarkEnemyDead(_enemyBrain.EnemyID);
             TryTriggerDeathEffect();
             _enemyLoot.DropItems();
             OnDeath?.Invoke(this);
+            EnemyEvents.RaiseEnemyKilled(this);
+            
             Player.Instance.PlayerExp.AddExp(Mathf.RoundToInt(ExpForEnemy * HordeManager.Instance.CurrentHordeMultiplier));
 
             if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();

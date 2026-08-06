@@ -113,8 +113,7 @@ public class ObjectiveObelisk : MonoBehaviour
 
         _currentTime += Time.deltaTime;
 
-        var progress =
-            Mathf.Clamp01(_currentTime / activationTime);
+        var progress = Mathf.Clamp01(_currentTime / activationTime);
 
         UpdateVisuals(progress);
 

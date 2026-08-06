@@ -6,8 +6,8 @@ public class ObjectsSpawner : MonoBehaviour
     public BoxCollider2D spawnArea { get; private set; }
     
     [Header("Spawn Settings")]
-    public int minItems = 1;
-    public int maxItems = 3;
+    public int minItems = 0;
+    public int maxItems = 2;
     public bool spawnOnStart = true;
     
     [Header("Spawn Area")]

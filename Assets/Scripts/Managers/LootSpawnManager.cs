@@ -8,8 +8,13 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
 {
     [SerializeField] private ObjectsDatabase _objectsDatabase;
 
-    public void SpawnAll()
+    private NightLocationSO _currentNightLocation;
+    private int _hordeNumber;
+    
+    public void SpawnAll(NightLocationSO nightLocationSo, int hordeNumber)
     {
+        _currentNightLocation = nightLocationSo;
+        _hordeNumber = hordeNumber;
         var spawners = FindObjectsOfType<ObjectsSpawner>();
 
         foreach (var spawner in spawners)
@@ -212,9 +217,5 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
                == null;
     }
 
-    private GameObject GetRandomObject()
-    {
-        var index = Random.Range(0, _objectsDatabase.Objects.Count);
-        return _objectsDatabase.Objects[index];
-    }
+    private GameObject GetRandomObject() => _currentNightLocation.ItemPool.GetRandomItem(_hordeNumber);
 }

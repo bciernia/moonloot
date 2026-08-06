@@ -1,9 +1,14 @@
+using System;
 using UnityEngine;
 
 public class ItemStatistics : MonoBehaviour, IDamageable
 {
     [SerializeField] private ItemStatsSO _itemStatistics;
     [SerializeField] private ParticleSystem _destroyParticles;
+
+    private ShakeOnHit _shake;
+    
+    public event Action OnDestroyed;
     
     public string Name { get; private set; }
     [TextArea] public string Description { get; private set; }
@@ -12,7 +17,12 @@ public class ItemStatistics : MonoBehaviour, IDamageable
     public Effect Effect { get; private set; }
 
     public int ChanceForHit;
-    
+
+    private void Awake()
+    {
+        _shake = GetComponent<ShakeOnHit>();
+    }
+
     private void Start()
     {
         Name = _itemStatistics.Name;
@@ -32,13 +42,28 @@ public class ItemStatistics : MonoBehaviour, IDamageable
         CurrentHP = Mathf.Max(CurrentHP - amount, 0);
         FloatingTextManager.Instance.ShowDamageText(amount, transform);
 
+        _shake?.Shake();
+        
         if (CurrentHP <= 0f)
         {
-            if (_destroyParticles == null) return;
-            var particles = Instantiate(_destroyParticles, transform.position, Quaternion.identity);
-            var main = particles.main;
-            particles.Play();
-            Destroy(particles.gameObject, main.duration + main.startLifetime.constantMax);
+            OnDestroyed?.Invoke();
+
+            if (_destroyParticles != null)
+            {
+                var particles = Instantiate(
+                    _destroyParticles,
+                    transform.position,
+                    Quaternion.identity);
+
+                var main = particles.main;
+
+                particles.Play();
+
+                Destroy(
+                    particles.gameObject,
+                    main.duration + main.startLifetime.constantMax);
+            }
+
             Destroy(gameObject);
         }
     }
