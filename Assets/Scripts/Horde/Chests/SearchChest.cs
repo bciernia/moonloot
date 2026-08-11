@@ -65,6 +65,10 @@ public class SearchChest : MonoBehaviour, IChestUnlockCondition
         progressCanvas.enabled = value;
     }
 
+    public void StopInteract()
+    {
+    }
+
     public bool CanOpen()
     {
         return IsOpened;

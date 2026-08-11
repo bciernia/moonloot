@@ -80,6 +80,10 @@ public class KeyChest : MonoBehaviour, IChestUnlockCondition
             UpdateUI();
     }
 
+    public void StopInteract()
+    {
+    }
+
     private void UpdateUI()
     {
         if (progressText != null)

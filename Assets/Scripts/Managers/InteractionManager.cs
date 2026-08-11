@@ -11,6 +11,7 @@ public class InteractionManager : MonoBehaviour
     private IInteractable _currentInteractable;
 
     private Action<InputAction.CallbackContext> _interactionAction;
+    private Action<InputAction.CallbackContext> _interactionCanceledAction;
     
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _interactionBox;
@@ -20,17 +21,26 @@ public class InteractionManager : MonoBehaviour
     {
         _playerInput = FindAnyObjectByType<PlayerInput>();
         _interactionAction = ctx => Interact();
+        _interactionCanceledAction = ctx => StopInteract();
     }
 
     private void OnEnable()
     {
-        _playerInput.actions["Interaction"].performed += _interactionAction;
+        var interaction = _playerInput.actions["Interaction"];
+
+        interaction.performed += _interactionAction;
+        interaction.canceled += _interactionCanceledAction;
+        
         GameManager.OnGameModeChanged += OnGameModeChanged;
     }
 
     private void OnDisable()
     {
-        _playerInput.actions["Interaction"].performed -= _interactionAction;
+        var interaction = _playerInput.actions["Interaction"];
+
+        interaction.performed -= _interactionAction;
+        interaction.canceled -= _interactionCanceledAction;
+        
         GameManager.OnGameModeChanged -= OnGameModeChanged;
     }
     
@@ -41,6 +51,18 @@ public class InteractionManager : MonoBehaviour
             return;
 
         _currentInteractable?.Interact();
+    }
+    
+    private void StopInteract()
+    {
+        if (_currentInteractable == null)
+            return;
+
+        var condition =
+            (_currentInteractable as MonoBehaviour)
+            ?.GetComponent<IChestUnlockCondition>();
+
+        condition?.StopInteract();
     }
 
     public void RegisterInteractable(IInteractable interactable)
