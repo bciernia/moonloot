@@ -117,6 +117,8 @@ public class UIManager : MonoBehaviour
     private TextMeshProUGUI _enemyTMP;
     private TextMeshProUGUI _timerTMP;
     private TextMeshProUGUI _defendHpTMP;
+    private TextMeshProUGUI _waveNumberTMP;
+    private TextMeshProUGUI _nextWaveTMP;
 
     private float _clockTimer = 0f;
     private bool _isTransition = false;
@@ -690,21 +692,11 @@ public class UIManager : MonoBehaviour
         _hordeInfoContainer.SetActive(true);
 
         ClearHordeUI();
-
+        CreateWaveUI();
+        
         var objective = HordeManager.Instance.CurrentObjective;
 
-        switch (objective)
-        {
-            case HordeObjective.KillAll:
-            case HordeObjective.EliteHunt:
-            case HordeObjective.NightExploration:
-                CreateEnemyCounter();
-                break;
-
-            case HordeObjective.DefendObject:
-                CreateDefendUI();
-                break;
-        }
+        if(objective == HordeObjective.DefendObject) CreateDefendUI();
     }
     
     private void ClearHordeUI()
@@ -717,14 +709,31 @@ public class UIManager : MonoBehaviour
         _enemyTMP = null;
         _timerTMP = null;
         _defendHpTMP = null;
+        _waveNumberTMP = null;
+        _nextWaveTMP = null;
     }
     
-    private void CreateEnemyCounter()
+    private void CreateWaveUI()
     {
         var obj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _enemyTMP = obj.GetComponentInChildren<TextMeshProUGUI>();
+        _enemyTMP = obj
+            .transform
+            .Find("EnemiesNumber")
+            .GetComponent<TextMeshProUGUI>();
 
+        _waveNumberTMP = obj
+            .transform
+            .Find("WaveNumber")
+            .GetComponent<TextMeshProUGUI>();
+
+        _nextWaveTMP = obj
+            .transform
+            .Find("NextWave")
+            .GetComponent<TextMeshProUGUI>();
+        
         _enemyTMP.text = "Enemies: 0";
+        _waveNumberTMP.text = "Wave: 1";
+        _nextWaveTMP.text = "Next wave in: 90";
     }
     
     private void CreateDefendUI()
@@ -743,6 +752,18 @@ public class UIManager : MonoBehaviour
     {
         if (!_hordeInfoContainer.activeSelf) return;
 
+        if (_waveNumberTMP != null)
+        {
+            _waveNumberTMP.text =
+                $"WaveNumber: {HordeManager.Instance.GetCurrentWave()}";
+        }
+
+        if (_nextWaveTMP != null)
+        {
+            var time = Mathf.CeilToInt(HordeManager.Instance.GetTimeToNextWave());
+            _nextWaveTMP.text = $"Time to next wave: {time}";
+        }
+        
         if (_enemyTMP != null)
         {
             var alive = HordeManager.Instance.GetRemainEnemies();

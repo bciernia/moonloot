@@ -77,7 +77,11 @@ namespace Horde
 
             progressCanvas.enabled = value;
         }
-        
+
+        public void StopInteract()
+        {
+        }
+
         private void UpdateText()
         {
             if (progressText == null)

@@ -9,4 +9,5 @@ public interface IChestUnlockCondition
     string GetProgressText();
     
     void ShowProgress(bool value);
+    void StopInteract();
 }

@@ -48,7 +48,41 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     [SerializeField]
     private GameObject killChestPrefab;
-
+    
+    [Header("Wave count")]
+    [SerializeField] private int wavesCount = 5;
+    [SerializeField] private float timeBetweenWaves = 90f;
+    [SerializeField] private int baseEnemiesPerWave = 25;
+    [SerializeField] private int additionalEnemiesPerWave = 5;
+    [SerializeField] private float spawnDelay = 0.5f;
+    
+    [Header("Elite chances")]
+    [SerializeField] private float eliteChanceStart = 0f;
+    [SerializeField] private float eliteChanceIncreasePerWave = 0.08f;
+    [SerializeField] private float eliteChanceMax = 0.6f;
+    
+    [Header("Endless")]
+    [SerializeField] private float endlessSpawnInterval = 2f;
+    [SerializeField] private float endlessMinSpawnInterval = 0.25f;
+    [SerializeField] private float endlessDifficultyIncreaseTime = 30f;
+    [SerializeField] private float endlessDifficultyIncrease = 0.15f;
+    [SerializeField] private float endlessSpeedIncrease = 0.08f;
+    [SerializeField] private float endlessEliteChanceIncrease = 0.05f;
+    [SerializeField] private float endlessEliteChanceMax = 0.9f;
+    [SerializeField] private int endlessMaxAliveEnemies = 50;
+    [SerializeField] private float bossToEndlessTime = 90f;
+    [SerializeField] private float endlessSpawnIntervalDecrease = 0.15f;
+    
+    private int _endlessStage;
+    private float _endlessTime;
+    private float _bossToEndlessTimer;
+    private bool _endlessStarted;
+    
+    private float _timeToNextWave;
+    private int _currentWave;
+    private bool _isWaveActive;
+    private bool _isWaitingForNextWave;
+    
     private int _activatedObelisks;
     private int _spawnedObelisks;
 
@@ -78,6 +112,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private bool _hordePrepared;
 
     private GameObject _spawnedExit;
+    private bool _isExitSpawned = false;
     
     private bool _objectiveCompleted;
     
@@ -136,6 +171,150 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         _previousScene = SceneManager.GetActiveScene().name;
     }
     
+    private IEnumerator HordeWaveRoutine(
+        EnemySpawner[] spawners,
+        HordeData data)
+    {
+        _isNightRunning = true;
+        _currentWave = 1;
+        _endlessStarted = false;
+
+        while (_currentWave <= wavesCount)
+        {
+            Debug.Log($"Starting wave {_currentWave}/{wavesCount}");
+
+            if (_currentWave < wavesCount)
+            {
+                _timeToNextWave = timeBetweenWaves;
+
+                StartCoroutine(SpawnWave(spawners, data));
+
+                yield return StartCoroutine(WaveTimer());
+
+                _currentWave++;
+
+                continue;
+            }
+
+            yield return StartCoroutine(SpawnBossWave(spawners, data));
+
+            yield return StartCoroutine(BossToEndlessTimer(spawners));
+
+            yield break;
+        }
+    }
+    private IEnumerator SpawnBossWave(
+        EnemySpawner[] spawners,
+        HordeData data)
+    {
+        Debug.Log("BOSS WAVE STARTED");
+
+        // Boss
+        SpawnBoss(data);
+
+        // Od razu po pojawieniu się bossa uruchamiamy timer Endless
+        StartCoroutine(BossToEndlessTimer(spawners));
+
+        // Przeciwnicy towarzyszący bossowi
+        var enemiesToSpawn = baseEnemiesPerWave +
+                             (_currentWave - 1) * additionalEnemiesPerWave;
+
+        enemiesToSpawn = Mathf.RoundToInt(enemiesToSpawn * 0.5f);
+
+        for (var i = 0; i < enemiesToSpawn; i++)
+        {
+            SpawnEnemyNearPlayer(spawners, data);
+
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+    
+    private IEnumerator BossToEndlessTimer(EnemySpawner[] spawners)
+    {
+        _bossToEndlessTimer = bossToEndlessTime;
+
+        Debug.Log(
+            $"Boss spawned. Endless mode starts in {_bossToEndlessTimer} seconds."
+        );
+
+        while (_bossToEndlessTimer > 0f && !_endlessStarted)
+        {
+            _bossToEndlessTimer -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        if (_endlessStarted)
+            yield break;
+
+        _bossToEndlessTimer = 0f;
+
+        StartEndlessMode(spawners);
+    }
+    
+    private void StartEndlessMode(EnemySpawner[] spawners)
+    {
+        if (_endlessStarted)
+            return;
+
+        _endlessStarted = true;
+
+        Debug.Log("BOSS TIMER ENDED - ENDLESS MODE STARTED!");
+
+        _isNightRunning = true;
+        _endlessStage = 0;
+        _endlessTime = 0f;
+
+        StartCoroutine(EndlessRoutine(spawners));
+    }
+    
+    private IEnumerator WaveTimer()
+    {
+        while (_timeToNextWave > 0f)
+        {
+            _timeToNextWave -= Time.deltaTime;
+
+            yield return null;
+        }
+
+        _timeToNextWave = 0f;
+    }
+    
+    private IEnumerator SpawnWave(
+        EnemySpawner[] spawners,
+        HordeData data)
+    {
+        var enemiesToSpawn =
+            baseEnemiesPerWave +
+            (_currentWave - 1) * additionalEnemiesPerWave;
+
+        for (var i = 0; i < enemiesToSpawn; i++)
+        {
+            SpawnEnemyNearPlayer(spawners, data);
+
+            yield return new WaitForSeconds(spawnDelay);
+        }
+    }
+    
+    private IEnumerator WaitForNextWave()
+    {
+        _isWaitingForNextWave = true;
+
+        var timer = timeBetweenWaves;
+
+        while (timer > 0f)
+        {
+            timer -= Time.deltaTime;
+
+            // Później:
+            // HordeTimerUI.Instance.SetTime(timer);
+
+            yield return null;
+        }
+
+        _isWaitingForNextWave = false;
+    }
+    
     public void PrepareHorde()
     {
         if (_hordePrepared)
@@ -182,6 +361,18 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         Debug.Log($"SELECTED NIGHT: {CurrentNightLocation.name}");
         Debug.Log($"SCENE TO LOAD: {CurrentNightLocation.SceneName}");
     }
+    
+    private bool ShouldSpawnElite()
+    {
+        var chance = eliteChanceStart +
+                     (_currentWave - 1) * eliteChanceIncreasePerWave;
+
+        chance = Mathf.Min(chance, eliteChanceMax);
+
+        chance += CurrentMoon.EliteChanceBonus;
+
+        return Random.value < chance;
+    }
 
     public void StartHorde()
     {
@@ -190,7 +381,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         SavePreviousScene();
 
         Debug.Log($"Starting Horde {currentHorde}");
-
+        _isExitSpawned = false;
         if (CurrentNightLocation == null)
         {
             Debug.LogError("No night location selected!");
@@ -457,8 +648,20 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         }
     }
 
-    #region NightExploration
-    private IEnumerator StartNightExploration(EnemySpawner[] spawners, HordeData data)
+    #region NightExploration STARE
+    private IEnumerator StartNightExploration(
+        EnemySpawner[] spawners,
+        HordeData data)
+    {
+        _aliveEnemies = 0;
+
+        yield return StartCoroutine(
+            HordeWaveRoutine(spawners, data)
+        );
+
+        Debug.Log("Night Exploration Stopped");
+    }
+    private IEnumerator StartNightExplorationOLD(EnemySpawner[] spawners, HordeData data)
     {
         _isNightRunning = true;
 
@@ -544,7 +747,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         _spawnedExit = Instantiate(exitPrefab, chosen.transform.position, Quaternion.identity);
 
         OnExitSpawned?.Invoke(_spawnedExit.transform);
-        
+        _isExitSpawned = true;
         Debug.Log("Exit spawned!");
     }
 
@@ -866,9 +1069,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     private List<GameObject> GetEnemyPool()
     {
-        return Random.value < CurrentMoon.EliteChanceBonus
-            ? CurrentEnemyPool.NormalEnemies
-            : CurrentEnemyPool.EliteEnemies;
+        return ShouldSpawnElite()
+            ? CurrentEnemyPool.EliteEnemies
+            : CurrentEnemyPool.NormalEnemies;
     }
     #endregion
 
@@ -1073,38 +1276,145 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     }
     
     #endregion
+    
+    private IEnumerator EndlessRoutine(EnemySpawner[] spawners)
+    {
+        while (_isNightRunning)
+        {
+            _endlessTime += Time.deltaTime;
 
+            _endlessStage = Mathf.FloorToInt(
+                _endlessTime / endlessDifficultyIncreaseTime
+            );
+
+            var spawnInterval = Mathf.Max(
+                endlessMinSpawnInterval,
+                endlessSpawnInterval -
+                _endlessStage * endlessSpawnIntervalDecrease
+            );
+
+            if (_aliveEnemies < endlessMaxAliveEnemies)
+            {
+                SpawnEndlessEnemy(spawners);
+
+                yield return new WaitForSeconds(spawnInterval);
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+    
+    private List<GameObject> GetEndlessEnemyPool()
+    {
+        var chance = eliteChanceStart +
+                     _endlessStage * endlessEliteChanceIncrease;
+
+        chance = Mathf.Min(
+            chance,
+            endlessEliteChanceMax
+        );
+
+        if (CurrentMoon != null)
+        {
+            chance += CurrentMoon.EliteChanceBonus;
+        }
+
+        return Random.value < chance
+            ? CurrentEnemyPool.EliteEnemies
+            : CurrentEnemyPool.NormalEnemies;
+    }
+    
+    private void SpawnEndlessEnemy(EnemySpawner[] spawners)
+    {
+        if (spawners == null || spawners.Length == 0)
+        {
+            Debug.LogWarning("No EnemySpawners available for endless mode!");
+            return;
+        }
+
+        var pool = GetEndlessEnemyPool();
+        var prefab = GetRandomEnemy(pool);
+
+        var spawner = spawners[
+            Random.Range(0, spawners.Length)
+        ];
+
+        var enemyGO = Instantiate(
+            prefab,
+            spawner.spawnPoint.position,
+            Quaternion.identity
+        );
+
+        var stats = enemyGO.GetComponent<EnemyStatistics>();
+
+        if (stats != null)
+        {
+            stats.DetectRange = 9999999;
+            stats.Initialize();
+
+            var difficultyMultiplier =
+                1f + _endlessStage * endlessDifficultyIncrease;
+
+            var speedMultiplier =
+                1f + _endlessStage * endlessSpeedIncrease;
+
+            stats.ApplyHordeScaling(
+                PreparedData.hpMultiplier *
+                GetHordeMultiplier() *
+                difficultyMultiplier,
+
+                PreparedData.damageMultiplier *
+                GetHordeMultiplier() *
+                difficultyMultiplier,
+
+                GetHordeMultiplier() *
+                speedMultiplier,
+
+                pool == CurrentEnemyPool.EliteEnemies,
+                false
+            );
+
+            ApplyMutation(stats);
+            ApplyMoonObjectiveEffects(stats);
+            ApplyMoonHitEffects(stats);
+            ApplyMoonAttackEffects(stats);
+        }
+
+        _aliveEnemies++;
+    }
+    
     public void OnEnemyKilled(bool isElite, bool isBoss)
     {
         var goldForEnemy = GetGoldForEnemy(isBoss, isElite);
-        
-        if (_currentObjective == HordeObjective.BossArena && isBoss)
+
+        if (isBoss)
         {
             _bossAlive = false;
 
             CombatStatsManager.Instance.BossEnemiesKilled++;
 
             PointsManager.Instance.AddScore(1000);
-            StartCoroutine(FinalKillSequence());
 
             Debug.Log("Boss defeated!");
 
-            var hero = SpawnHeroNpc();
+            StartCoroutine(FinalKillSlowMo());
 
-            if (hero != null)
+            if (!_isExitSpawned)
             {
                 SpawnExit();
             }
-
+            
             return;
         }
-        
+
         if (_currentObjective != HordeObjective.BossArena &&
             CurrentMoon.ObjectiveType == MoonObjectiveType.KilledEnemies)
         {
             AddObjectiveProgress(1);
         }
-        
+
         if (isElite)
         {
             CombatStatsManager.Instance.EliteEnemiesKilled++;
@@ -1115,13 +1425,17 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             CombatStatsManager.Instance.NormalEnemiesKilled++;
             PointsManager.Instance.AddScore(50);
         }
-        
+
         CombatStatsManager.Instance.GoldEarned += goldForEnemy;
-        
-        FloatingTextManager.Instance.ShowGoldText(goldForEnemy, Player.Instance.transform);
-        
-        if (_currentObjective == HordeObjective.DefendObject) return;
-        
+
+        FloatingTextManager.Instance.ShowGoldText(
+            goldForEnemy,
+            Player.Instance.transform
+        );
+
+        if (_currentObjective == HordeObjective.DefendObject)
+            return;
+
         _aliveEnemies--;
 
         Debug.Log($"Enemy killed. Remaining: {_aliveEnemies}");
@@ -1129,6 +1443,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (_aliveEnemies <= 0)
         {
             StartCoroutine(FinalKillSequence());
+
             Debug.Log("All enemies defeated!");
         }
     }
@@ -1434,7 +1749,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (completed && !_objectiveCompleted)
         {
             _objectiveCompleted = true;
-            SpawnExit();
+            if (_isExitSpawned)
+            {
+                SpawnExit();
+            }
         }
         else if (!completed && _objectiveCompleted)
         {
@@ -1589,4 +1907,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     #endregion
 
+    public float GetTimeToNextWave() => _timeToNextWave;
+
+    public string GetCurrentWave() => _currentWave.ToString();
 }

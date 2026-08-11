@@ -28,10 +28,15 @@ public class HordeChestInteraction : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
-            FindFirstObjectByType<InteractionManager>().UnregisterInteractable(this);
-            
-            GetComponent<IChestUnlockCondition>()
-                ?.ShowProgress(false);
+            var condition = GetComponent<IChestUnlockCondition>();
+
+            if (condition is LockpickChest lockpickChest)
+                lockpickChest.StopInteract();
+
+            FindFirstObjectByType<InteractionManager>()
+                .UnregisterInteractable(this);
+
+            condition?.ShowProgress(false);
         }
     }
     
@@ -59,6 +64,11 @@ public class HordeChestInteraction : MonoBehaviour, IInteractable
             }
         }
 
+        OpenChest();
+    }
+    
+    public void OpenChest()
+    {
         var lootDropper =
             GetComponent<LootDropper>();
 
