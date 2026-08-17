@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum HordeMutation
 {
     None,
@@ -11,3 +13,13 @@ public enum HordeMutation
  * Wybuchajacy przeciwnicy
  * Wampiryczni (leczący się)
  */
+ 
+ [System.Serializable]
+ public class MutationData
+ {
+     public HordeMutation Mutation;
+     public string DisplayName;
+     [TextArea]
+     public string Description;
+     public Sprite Icon;
+ }

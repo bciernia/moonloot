@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -49,7 +50,6 @@ public class UIManager : MonoBehaviour
     [Header("Player Game UI")]
     [SerializeField] private GameObject _mainGamePanel;
     [SerializeField] private GameObject _equippedPanel;
-    [SerializeField] private GameObject _pointsPanel;
 
     [Header("Day Night Timer")] 
     [SerializeField] private GameObject _dayNightContainer;
@@ -72,7 +72,11 @@ public class UIManager : MonoBehaviour
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
-    [SerializeField] private GameObject _hordeInfo;
+    [SerializeField] private TextMeshProUGUI _enemyTMP;
+    [SerializeField] private TextMeshProUGUI _waveNumberTMP;
+    [SerializeField] private TextMeshProUGUI _nextWaveTMP;
+    [SerializeField] private TextMeshProUGUI _timerTMP;
+    [SerializeField] private TextMeshProUGUI _objectiveTMP;
 
     [Header("Choose npc buttons")] 
     [SerializeField] private NpcDatabase _npcDatabase;
@@ -81,44 +85,27 @@ public class UIManager : MonoBehaviour
     
     [Header("Night selection")]
     [SerializeField] private TextMeshProUGUI _nightTitle;
-    [SerializeField] private TextMeshProUGUI _nightDescription;
+    [SerializeField] private TextMeshProUGUI _nightObjective;
+    [SerializeField] private Image _nightObjectiveImage;
+    [SerializeField] private TextMeshProUGUI _mutation;
+    [SerializeField] private Image _mutationImage;
+    [SerializeField] private TextMeshProUGUI _locationName;
+    [SerializeField] private GameObject _nightRewardContainer;
+    [SerializeField] private RewardElement _nightRewardPrefab;
 
     [SerializeField] private Image _nightPreviewImage;
 
     [SerializeField] private Button _startNightButton;
 
-    [Header("Hero night")]
-    [SerializeField] private GameObject _heroContainer;
-    [SerializeField] private Image _heroPortrait;
-    [SerializeField] private TextMeshProUGUI _heroName;
-    [SerializeField] private TextMeshProUGUI _heroProfession;
-    [SerializeField] private TextMeshProUGUI _heroDescription;
-
-    [Header("MoonObjectiveUI")]
-    [SerializeField] private GameObject _moonObjectiveContainer;
+    [Header("Moon objective")]
+    [SerializeField] private Image _moonObjectiveImageFinished;
     [SerializeField] private TextMeshProUGUI _moonObjectiveText;
-    
-    [Header("Moon Information")]
-    [SerializeField] private RectTransform moonInformation;
-    [SerializeField] private TextMeshProUGUI objectiveText;
-
-    [SerializeField] private float showPositionX = -10f;
-    [SerializeField] private float hiddenPositionX = 1210f;
-
-    [SerializeField] private float moveSpeed = 2000f;
-    [SerializeField] private float visibleTime = 5f;
     
     [Header("Minimap")]
     [SerializeField] private GameObject _minimapContainer;
     
     private float _waveTime;
     private bool _isTimerActive;
-    
-    private TextMeshProUGUI _enemyTMP;
-    private TextMeshProUGUI _timerTMP;
-    private TextMeshProUGUI _defendHpTMP;
-    private TextMeshProUGUI _waveNumberTMP;
-    private TextMeshProUGUI _nextWaveTMP;
 
     private float _clockTimer = 0f;
     private bool _isTransition = false;
@@ -190,6 +177,7 @@ public class UIManager : MonoBehaviour
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
         
         RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
     }
 
     private void OnPortalSpawned(Transform exitTransform)
@@ -246,6 +234,7 @@ public class UIManager : MonoBehaviour
     {
         RefreshObjectiveVisibility();
         RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
         
         if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
         {
@@ -255,19 +244,9 @@ public class UIManager : MonoBehaviour
 
     private void HidePersistentGameplayUI()
     {
-        _moonObjectiveContainer.SetActive(false);
         _hordeInfoContainer.SetActive(false);
         _nightSummaryPanel.SetActive(false);
         _startNightPanel.SetActive(false);
-
-        if (_moonInformationRoutine != null)
-        {
-            StopCoroutine(_moonInformationRoutine);
-        }
-
-        var pos = moonInformation.anchoredPosition;
-        pos.x = hiddenPositionX;
-        moonInformation.anchoredPosition = pos;
     }
     
     private void HandleLevelUp(int obj)
@@ -278,10 +257,14 @@ public class UIManager : MonoBehaviour
     private void OnGameModeChanged(GameMode mode)
     {
         var isLocation = mode == GameMode.Location;
+        
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
-        _pointsPanel.SetActive(isLocation);
         _dayNightTimerImage.gameObject.SetActive(isLocation);
+        
+        RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
+        
         CloseAllPanels();
     }
 
@@ -590,7 +573,6 @@ public class UIManager : MonoBehaviour
 
         _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
-        _moonObjectiveContainer.SetActive(false);
 
         HordeManager.Instance.ReturnToPreviousScene();
         RefreshObjectiveVisibility();
@@ -640,17 +622,6 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    private string GetMutationDescription(HordeMutation obj)
-    {
-        return obj switch
-        {
-            HordeMutation.BrutalEnemies => "Enemies attacks deal more damage",
-            HordeMutation.FastEnemies => "Enemies will be very fast",
-            HordeMutation.StrongEnemies => "Enemies are very tough",
-            _ => "No mutations"
-        };
-    }
-    
     public void OnStartNightClicked(VillageNpcRuntime chosenNpc)
     {
         SelectNPC(chosenNpc);
@@ -675,77 +646,33 @@ public class UIManager : MonoBehaviour
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
     }
+    
+    private void SetupHordeInfoUI()
+    {
+        // _enemyTMP.text = "Enemies: 0";
+        _waveNumberTMP.text = "Wave: 1";
+        _nextWaveTMP.text = "Next wave in: 90";
+
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon != null)
+        {
+            _objectiveTMP.text =
+                $"{moon.ObjectiveText}: {HordeManager.Instance.CurrentObjectiveProgress}/{HordeManager.Instance.CurrentObjectiveTarget}";
+        }
+
+        _isTimerActive = false;
+    }
 
     private void SetupHordeUI()
     {
         RefreshObjectiveVisibility();
         RefreshMoonObjective();
-        
-        var moon = MoonManager.Instance.CurrentMoon;
 
-        if (moon != null && !HordeManager.Instance.IsHeroNight)
-        {
-            ShowMoonInformation(moon.ObjectiveTextLong);
-        }
-
+        _moonObjectiveImageFinished.gameObject.SetActive(false);
         _dayNightContainer.SetActive(false);
-        _hordeInfoContainer.SetActive(true);
 
-        ClearHordeUI();
-        CreateWaveUI();
-        
-        var objective = HordeManager.Instance.CurrentObjective;
-
-        if(objective == HordeObjective.DefendObject) CreateDefendUI();
-    }
-    
-    private void ClearHordeUI()
-    {
-        foreach (Transform child in _hordeInfoContainer.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        _enemyTMP = null;
-        _timerTMP = null;
-        _defendHpTMP = null;
-        _waveNumberTMP = null;
-        _nextWaveTMP = null;
-    }
-    
-    private void CreateWaveUI()
-    {
-        var obj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _enemyTMP = obj
-            .transform
-            .Find("EnemiesNumber")
-            .GetComponent<TextMeshProUGUI>();
-
-        _waveNumberTMP = obj
-            .transform
-            .Find("WaveNumber")
-            .GetComponent<TextMeshProUGUI>();
-
-        _nextWaveTMP = obj
-            .transform
-            .Find("NextWave")
-            .GetComponent<TextMeshProUGUI>();
-        
-        _enemyTMP.text = "Enemies: 0";
-        _waveNumberTMP.text = "Wave: 1";
-        _nextWaveTMP.text = "Next wave in: 90";
-    }
-    
-    private void CreateDefendUI()
-    {
-        var timerObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _timerTMP = timerObj.GetComponentInChildren<TextMeshProUGUI>();
-
-        _waveTime = 60f;
-        _isTimerActive = true;
-
-        var hpObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _defendHpTMP = hpObj.GetComponentInChildren<TextMeshProUGUI>();
+        SetupHordeInfoUI();
     }
     
     private void UpdateHordeUI()
@@ -761,13 +688,21 @@ public class UIManager : MonoBehaviour
         if (_nextWaveTMP != null)
         {
             var time = Mathf.CeilToInt(HordeManager.Instance.GetTimeToNextWave());
-            _nextWaveTMP.text = $"Time to next wave: {time}";
+            _nextWaveTMP.text = time.ToString();
         }
         
         if (_enemyTMP != null)
         {
             var alive = HordeManager.Instance.GetRemainEnemies();
             _enemyTMP.text = $"Enemies: {alive}";
+        }
+        
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon != null)
+        {
+            _objectiveTMP.text =
+                $"{moon.ObjectiveText}: {HordeManager.Instance.CurrentObjectiveProgress}/{HordeManager.Instance.CurrentObjectiveTarget}";
         }
 
         if (_isTimerActive && _timerTMP != null)
@@ -781,17 +716,6 @@ public class UIManager : MonoBehaviour
             var s = Mathf.FloorToInt(_waveTime % 60f);
 
             _timerTMP.text = $"{m:00}:{s:00}";
-        }
-
-        if (_defendHpTMP != null && HordeManager.Instance.DefendTarget != null)
-        {
-            var stats = HordeManager.Instance.DefendTarget.GetComponent<DefendTarget>();
-
-            if (stats != null)
-            {
-                var percent = stats.currentHp / stats.maxHp * 100f;
-                _defendHpTMP.text = $"HP: {percent:0}%";
-            }
         }
     }
     
@@ -992,18 +916,19 @@ public class UIManager : MonoBehaviour
         if (location == null)
             return;
 
-        _nightTitle.text = location.Title;
-        _nightDescription.text = location.Description;
+        _nightTitle.text = $"NIGHT {HordeManager.Instance.currentHorde}";
         _nightPreviewImage.sprite = location.PreviewImage;
-
-        _heroContainer.SetActive(false);
+        _nightObjective.text = HordeManager.Instance.CurrentMoon.ObjectiveTextLong;
+        _nightObjectiveImage.sprite = HordeManager.Instance.CurrentMoon.Image;
+        _mutation.text = HordeManager.Instance.PreparedMutation.Description;
+        _mutationImage.sprite = HordeManager.Instance.PreparedMutation.Icon;
+        _locationName.text = location.SceneName;
+        SetupNightRewards();
+        
+        //TODO
+        // CreateNightRewards(location.Rewards);
 
         _startNightButton.onClick.RemoveAllListeners();
-
-        if (HordeManager.Instance.IsHeroNight)
-        {
-            SetupHeroNight();
-        }
 
         _startNightButton.onClick.AddListener(() =>
         {
@@ -1015,31 +940,60 @@ public class UIManager : MonoBehaviour
         });
     }
     
-    private void SetupNormalNight(
-        string title,
-        string description,
-        Sprite preview)
+    private void SetupNightRewards()
     {
-        _nightTitle.text = title;
-        _nightDescription.text = description;
-        _nightPreviewImage.sprite = preview;
+        ClearNightRewards();
+
+        var rewards = HordeManager.Instance.PreparedRewards;
+
+        foreach (var reward in rewards)
+        {
+            var obj = Instantiate(
+                _nightRewardPrefab,
+                _nightRewardContainer.transform
+            );
+
+            obj.Setup(
+                reward.Item.Image,
+                reward.Amount
+            );
+        }
     }
     
-    private void SetupHeroNight()
+    private void CreateNightRewards(List<NightReward> rewards)
     {
-        var hero = HordeManager.Instance.CurrentHeroNpc;
+        ClearNightRewards();
 
-        _heroContainer.SetActive(true);
+        foreach (var rewardData in rewards)
+        {
+            var reward = Instantiate(
+                _nightRewardPrefab,
+                _nightRewardContainer.transform
+            );
 
-        if (hero == null)
-            return;
+            reward.Setup(
+                rewardData.Item.Image,
+                rewardData.Amount
+            );
+        }
+    }
+    
+    private void ClearNightRewards()
+    {
+        foreach (Transform child in _nightRewardContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
+    private void CreateNightReward(Sprite sprite, int amount)
+    {
+        var reward = Instantiate(
+            _nightRewardPrefab,
+            _nightRewardContainer.transform
+        );
 
-        _heroPortrait.sprite = hero.Data.Portrait;
-        _heroName.text = hero.Name;
-        _heroProfession.text = hero.Data.Type.ToString();
-
-        var startingBonus = FormatBonus(hero.UpgradeLevels[0].Bonuses[0]);
-        _heroDescription.text = startingBonus;
+        reward.Setup(sprite, amount);
     }
     
     private void SelectNPC(VillageNpcRuntime npc)
@@ -1131,9 +1085,6 @@ public class UIManager : MonoBehaviour
     {
         RefreshObjectiveVisibility();
 
-        if (!_moonObjectiveContainer.activeSelf)
-            return;
-
         string newText;
 
         if (HordeManager.Instance.CurrentObjective ==
@@ -1146,6 +1097,12 @@ public class UIManager : MonoBehaviour
         else if (_portalSpawned)
         {
             newText = "Find the portal";
+            _moonObjectiveImageFinished.gameObject.SetActive(true);
+        }
+        else if (current >= target)
+        {
+            newText = "Find the portal";
+            _moonObjectiveImageFinished.gameObject.SetActive(true);
         }
         else
         {
@@ -1161,7 +1118,6 @@ public class UIManager : MonoBehaviour
         if (_moonObjectiveText.text != newText)
         {
             _moonObjectiveText.text = newText;
-
             NotifyObjectiveChanged();
         }
     }
@@ -1178,9 +1134,6 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ObjectiveFlashRoutine()
     {
-        var rect = _moonObjectiveContainer.GetComponent<RectTransform>();
-
-        var originalScale = rect.localScale;
         var originalColor = _moonObjectiveText.color;
 
         var flashColor = Color.yellow;
@@ -1192,13 +1145,7 @@ public class UIManager : MonoBehaviour
         {
             timer += Time.unscaledDeltaTime;
 
-            float t = timer / duration;
-
-            rect.localScale = Vector3.Lerp(
-                originalScale,
-                originalScale * 1.15f,
-                t
-            );
+            var t = timer / duration;
 
             _moonObjectiveText.color = Color.Lerp(
                 originalColor,
@@ -1217,12 +1164,6 @@ public class UIManager : MonoBehaviour
 
             var t = timer / duration;
 
-            rect.localScale = Vector3.Lerp(
-                originalScale * 1.15f,
-                originalScale,
-                t
-            );
-
             _moonObjectiveText.color = Color.Lerp(
                 flashColor,
                 originalColor,
@@ -1232,15 +1173,11 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        rect.localScale = originalScale;
         _moonObjectiveText.color = originalColor;
     }
     
     private void RefreshObjectiveVisibility()
     {
-        if (_moonObjectiveContainer == null)
-            return;
-
         var isTown =
             LoadingSceneManager.Instance.IsSceneBase() || LoadingSceneManager.Instance.IsInMainMenu();
 
@@ -1255,61 +1192,22 @@ public class UIManager : MonoBehaviour
             !isTown &&
             hasMoon &&
             !isBossArena;
-
-        _moonObjectiveContainer.SetActive(shouldShow);
     }
     
-    private Coroutine _moonInformationRoutine;
-
-    private void ShowMoonInformation(string text)
-    {
-        if (_moonInformationRoutine != null)
-        {
-            StopCoroutine(_moonInformationRoutine);
-        }
-
-        _moonInformationRoutine = StartCoroutine(MoonInformationRoutine(text));
-    }
-
-    private IEnumerator MoonInformationRoutine(string text)
-    {
-        objectiveText.text = text;
-
-        var startPos = moonInformation.anchoredPosition;
-        startPos.x = hiddenPositionX;
-        moonInformation.anchoredPosition = startPos;
-
-        yield return MoveMoonInformation(showPositionX);
-
-        yield return new WaitForSecondsRealtime(visibleTime);
-
-        yield return MoveMoonInformation(hiddenPositionX);
-    }
-
-    private IEnumerator MoveMoonInformation(float targetX)
-    {
-        while (Mathf.Abs(moonInformation.anchoredPosition.x - targetX) > 1f)
-        {
-            var pos = moonInformation.anchoredPosition;
-
-            pos.x = Mathf.MoveTowards(
-                pos.x,
-                targetX,
-                moveSpeed * Time.unscaledDeltaTime
-            );
-
-            moonInformation.anchoredPosition = pos;
-
-            yield return null;
-        }
-
-        var finalPos = moonInformation.anchoredPosition;
-        finalPos.x = targetX;
-        moonInformation.anchoredPosition = finalPos;
-    }
-
     #endregion
 
+    private void RefreshHordeInfoVisibility()
+    {
+        if (_hordeInfoContainer == null)
+            return;
+
+        var shouldShow =
+            !LoadingSceneManager.Instance.IsSceneBase()
+            && !LoadingSceneManager.Instance.IsInMainMenu();
+
+        _hordeInfoContainer.SetActive(shouldShow);
+    }
+    
     #region Minimap
 
     private void RefreshMinimapVisibility()
