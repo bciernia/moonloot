@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -49,7 +50,6 @@ public class UIManager : MonoBehaviour
     [Header("Player Game UI")]
     [SerializeField] private GameObject _mainGamePanel;
     [SerializeField] private GameObject _equippedPanel;
-    [SerializeField] private GameObject _pointsPanel;
 
     [Header("Day Night Timer")] 
     [SerializeField] private GameObject _dayNightContainer;
@@ -72,7 +72,11 @@ public class UIManager : MonoBehaviour
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
-    [SerializeField] private GameObject _hordeInfo;
+    [SerializeField] private TextMeshProUGUI _enemyTMP;
+    [SerializeField] private TextMeshProUGUI _waveNumberTMP;
+    [SerializeField] private TextMeshProUGUI _nextWaveTMP;
+    [SerializeField] private TextMeshProUGUI _timerTMP;
+    [SerializeField] private TextMeshProUGUI _objectiveTMP;
 
     [Header("Choose npc buttons")] 
     [SerializeField] private NpcDatabase _npcDatabase;
@@ -93,31 +97,15 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Button _startNightButton;
 
-    [Header("MoonObjectiveUI")]
-    [SerializeField] private GameObject _moonObjectiveContainer;
+    [Header("Moon objective")]
+    [SerializeField] private Image _moonObjectiveImageFinished;
     [SerializeField] private TextMeshProUGUI _moonObjectiveText;
-    
-    [Header("Moon Information")]
-    [SerializeField] private RectTransform moonInformation;
-    [SerializeField] private TextMeshProUGUI objectiveText;
-
-    [SerializeField] private float showPositionX = -10f;
-    [SerializeField] private float hiddenPositionX = 1210f;
-
-    [SerializeField] private float moveSpeed = 2000f;
-    [SerializeField] private float visibleTime = 5f;
     
     [Header("Minimap")]
     [SerializeField] private GameObject _minimapContainer;
     
     private float _waveTime;
     private bool _isTimerActive;
-    
-    private TextMeshProUGUI _enemyTMP;
-    private TextMeshProUGUI _timerTMP;
-    private TextMeshProUGUI _defendHpTMP;
-    private TextMeshProUGUI _waveNumberTMP;
-    private TextMeshProUGUI _nextWaveTMP;
 
     private float _clockTimer = 0f;
     private bool _isTransition = false;
@@ -189,6 +177,7 @@ public class UIManager : MonoBehaviour
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
         
         RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
     }
 
     private void OnPortalSpawned(Transform exitTransform)
@@ -245,6 +234,7 @@ public class UIManager : MonoBehaviour
     {
         RefreshObjectiveVisibility();
         RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
         
         if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
         {
@@ -254,19 +244,9 @@ public class UIManager : MonoBehaviour
 
     private void HidePersistentGameplayUI()
     {
-        _moonObjectiveContainer.SetActive(false);
         _hordeInfoContainer.SetActive(false);
         _nightSummaryPanel.SetActive(false);
         _startNightPanel.SetActive(false);
-
-        if (_moonInformationRoutine != null)
-        {
-            StopCoroutine(_moonInformationRoutine);
-        }
-
-        var pos = moonInformation.anchoredPosition;
-        pos.x = hiddenPositionX;
-        moonInformation.anchoredPosition = pos;
     }
     
     private void HandleLevelUp(int obj)
@@ -277,10 +257,14 @@ public class UIManager : MonoBehaviour
     private void OnGameModeChanged(GameMode mode)
     {
         var isLocation = mode == GameMode.Location;
+        
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
-        _pointsPanel.SetActive(isLocation);
         _dayNightTimerImage.gameObject.SetActive(isLocation);
+        
+        RefreshMinimapVisibility();
+        RefreshHordeInfoVisibility();
+        
         CloseAllPanels();
     }
 
@@ -589,7 +573,6 @@ public class UIManager : MonoBehaviour
 
         _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
-        _moonObjectiveContainer.SetActive(false);
 
         HordeManager.Instance.ReturnToPreviousScene();
         RefreshObjectiveVisibility();
@@ -663,80 +646,33 @@ public class UIManager : MonoBehaviour
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
     }
+    
+    private void SetupHordeInfoUI()
+    {
+        // _enemyTMP.text = "Enemies: 0";
+        _waveNumberTMP.text = "Wave: 1";
+        _nextWaveTMP.text = "Next wave in: 90";
+
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon != null)
+        {
+            _objectiveTMP.text =
+                $"{moon.ObjectiveText}: {HordeManager.Instance.CurrentObjectiveProgress}/{HordeManager.Instance.CurrentObjectiveTarget}";
+        }
+
+        _isTimerActive = false;
+    }
 
     private void SetupHordeUI()
     {
         RefreshObjectiveVisibility();
         RefreshMoonObjective();
-        
-        var moon = MoonManager.Instance.CurrentMoon;
 
-        if (moon != null && !HordeManager.Instance.IsHeroNight)
-        {
-            ShowMoonInformation(moon.ObjectiveTextLong);
-        }
-
+        _moonObjectiveImageFinished.gameObject.SetActive(false);
         _dayNightContainer.SetActive(false);
-        _hordeInfoContainer.SetActive(true);
 
-        ClearHordeUI();
-        CreateWaveUI();
-        
-        var objective = HordeManager.Instance.CurrentObjective;
-
-        if(objective == HordeObjective.DefendObject) CreateDefendUI();
-    }
-    
-    private void ClearHordeUI()
-    {
-        foreach (Transform child in _hordeInfoContainer.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-        _enemyTMP = null;
-        _timerTMP = null;
-        _defendHpTMP = null;
-        _waveNumberTMP = null;
-        _nextWaveTMP = null;
-    }
-    
-    private void CreateWaveUI()
-    {
-        var obj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        // _enemyTMP = obj
-            // .transform
-            // .Find("EnemiesNumber")
-            // .GetComponent<TextMeshProUGUI>();
-
-        _waveNumberTMP = obj
-            .transform
-            .Find("WaveNumberPanel")
-            .Find("WaveNumber")
-            .GetComponent<TextMeshProUGUI>();
-
-        _nextWaveTMP = obj
-            .transform
-            .Find("NextWaveInPanel")
-            .Find("NextWave")
-            .Find("NextWaveInTMP")
-            .GetComponent<TextMeshProUGUI>();
-        
-        _enemyTMP.text = "Enemies: 0";
-        _waveNumberTMP.text = "Wave: 1";
-        _nextWaveTMP.text = "90";
-    }
-    
-    private void CreateDefendUI()
-    {
-        var timerObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _timerTMP = timerObj.GetComponentInChildren<TextMeshProUGUI>();
-
-        _waveTime = 60f;
-        _isTimerActive = true;
-
-        var hpObj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _defendHpTMP = hpObj.GetComponentInChildren<TextMeshProUGUI>();
+        SetupHordeInfoUI();
     }
     
     private void UpdateHordeUI()
@@ -752,13 +688,21 @@ public class UIManager : MonoBehaviour
         if (_nextWaveTMP != null)
         {
             var time = Mathf.CeilToInt(HordeManager.Instance.GetTimeToNextWave());
-            _nextWaveTMP.text = $"Time to next wave: {time}";
+            _nextWaveTMP.text = time.ToString();
         }
         
         if (_enemyTMP != null)
         {
             var alive = HordeManager.Instance.GetRemainEnemies();
             _enemyTMP.text = $"Enemies: {alive}";
+        }
+        
+        var moon = MoonManager.Instance.CurrentMoon;
+
+        if (moon != null)
+        {
+            _objectiveTMP.text =
+                $"{moon.ObjectiveText}: {HordeManager.Instance.CurrentObjectiveProgress}/{HordeManager.Instance.CurrentObjectiveTarget}";
         }
 
         if (_isTimerActive && _timerTMP != null)
@@ -772,17 +716,6 @@ public class UIManager : MonoBehaviour
             var s = Mathf.FloorToInt(_waveTime % 60f);
 
             _timerTMP.text = $"{m:00}:{s:00}";
-        }
-
-        if (_defendHpTMP != null && HordeManager.Instance.DefendTarget != null)
-        {
-            var stats = HordeManager.Instance.DefendTarget.GetComponent<DefendTarget>();
-
-            if (stats != null)
-            {
-                var percent = stats.currentHp / stats.maxHp * 100f;
-                _defendHpTMP.text = $"HP: {percent:0}%";
-            }
         }
     }
     
@@ -1152,9 +1085,6 @@ public class UIManager : MonoBehaviour
     {
         RefreshObjectiveVisibility();
 
-        if (!_moonObjectiveContainer.activeSelf)
-            return;
-
         string newText;
 
         if (HordeManager.Instance.CurrentObjective ==
@@ -1167,6 +1097,12 @@ public class UIManager : MonoBehaviour
         else if (_portalSpawned)
         {
             newText = "Find the portal";
+            _moonObjectiveImageFinished.gameObject.SetActive(true);
+        }
+        else if (current >= target)
+        {
+            newText = "Find the portal";
+            _moonObjectiveImageFinished.gameObject.SetActive(true);
         }
         else
         {
@@ -1182,7 +1118,6 @@ public class UIManager : MonoBehaviour
         if (_moonObjectiveText.text != newText)
         {
             _moonObjectiveText.text = newText;
-
             NotifyObjectiveChanged();
         }
     }
@@ -1199,9 +1134,6 @@ public class UIManager : MonoBehaviour
 
     private IEnumerator ObjectiveFlashRoutine()
     {
-        var rect = _moonObjectiveContainer.GetComponent<RectTransform>();
-
-        var originalScale = rect.localScale;
         var originalColor = _moonObjectiveText.color;
 
         var flashColor = Color.yellow;
@@ -1213,13 +1145,7 @@ public class UIManager : MonoBehaviour
         {
             timer += Time.unscaledDeltaTime;
 
-            float t = timer / duration;
-
-            rect.localScale = Vector3.Lerp(
-                originalScale,
-                originalScale * 1.15f,
-                t
-            );
+            var t = timer / duration;
 
             _moonObjectiveText.color = Color.Lerp(
                 originalColor,
@@ -1238,12 +1164,6 @@ public class UIManager : MonoBehaviour
 
             var t = timer / duration;
 
-            rect.localScale = Vector3.Lerp(
-                originalScale * 1.15f,
-                originalScale,
-                t
-            );
-
             _moonObjectiveText.color = Color.Lerp(
                 flashColor,
                 originalColor,
@@ -1253,15 +1173,11 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        rect.localScale = originalScale;
         _moonObjectiveText.color = originalColor;
     }
     
     private void RefreshObjectiveVisibility()
     {
-        if (_moonObjectiveContainer == null)
-            return;
-
         var isTown =
             LoadingSceneManager.Instance.IsSceneBase() || LoadingSceneManager.Instance.IsInMainMenu();
 
@@ -1276,61 +1192,22 @@ public class UIManager : MonoBehaviour
             !isTown &&
             hasMoon &&
             !isBossArena;
-
-        _moonObjectiveContainer.SetActive(shouldShow);
     }
     
-    private Coroutine _moonInformationRoutine;
-
-    private void ShowMoonInformation(string text)
-    {
-        if (_moonInformationRoutine != null)
-        {
-            StopCoroutine(_moonInformationRoutine);
-        }
-
-        _moonInformationRoutine = StartCoroutine(MoonInformationRoutine(text));
-    }
-
-    private IEnumerator MoonInformationRoutine(string text)
-    {
-        objectiveText.text = text;
-
-        var startPos = moonInformation.anchoredPosition;
-        startPos.x = hiddenPositionX;
-        moonInformation.anchoredPosition = startPos;
-
-        yield return MoveMoonInformation(showPositionX);
-
-        yield return new WaitForSecondsRealtime(visibleTime);
-
-        yield return MoveMoonInformation(hiddenPositionX);
-    }
-
-    private IEnumerator MoveMoonInformation(float targetX)
-    {
-        while (Mathf.Abs(moonInformation.anchoredPosition.x - targetX) > 1f)
-        {
-            var pos = moonInformation.anchoredPosition;
-
-            pos.x = Mathf.MoveTowards(
-                pos.x,
-                targetX,
-                moveSpeed * Time.unscaledDeltaTime
-            );
-
-            moonInformation.anchoredPosition = pos;
-
-            yield return null;
-        }
-
-        var finalPos = moonInformation.anchoredPosition;
-        finalPos.x = targetX;
-        moonInformation.anchoredPosition = finalPos;
-    }
-
     #endregion
 
+    private void RefreshHordeInfoVisibility()
+    {
+        if (_hordeInfoContainer == null)
+            return;
+
+        var shouldShow =
+            !LoadingSceneManager.Instance.IsSceneBase()
+            && !LoadingSceneManager.Instance.IsInMainMenu();
+
+        _hordeInfoContainer.SetActive(shouldShow);
+    }
+    
     #region Minimap
 
     private void RefreshMinimapVisibility()

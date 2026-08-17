@@ -186,8 +186,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         while (_currentWave <= wavesCount)
         {
-            Debug.Log($"Starting wave {_currentWave}/{wavesCount}");
-
             if (_currentWave < wavesCount)
             {
                 _timeToNextWave = timeBetweenWaves;
@@ -730,7 +728,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
             if (spawnTimer >= spawnInterval)
             {
-                PointsManager.Instance.AddScore(3);
                 if (_aliveEnemies < 50)
                 {
                     SpawnEnemyNearPlayer(spawners, data);
