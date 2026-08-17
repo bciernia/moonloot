@@ -20,6 +20,8 @@ public class NightLocationSO : ScriptableObject
     public EnemyPoolSO EnemyPool;
     public ItemPoolSO ItemPool;
     
+    public List<NightReward> Rewards;
+    
 // public SceneReference Scene;
     // public AudioClip Music;
     public Color AmbientColor;

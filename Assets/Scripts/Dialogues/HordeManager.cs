@@ -37,6 +37,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     [SerializeField] private GameObject rescueCagePrefab;
     
     [SerializeField] private NpcDatabase _npcDatabase;
+    [SerializeField] private MutationDatabase _mutationDatabase;
     
     [SerializeField] private NightDatabaseSO _nightDatabase;
     
@@ -89,7 +90,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public NightLocationSO CurrentNightLocation { get; private set; }
     
     public HordeData PreparedData { get; private set; }
-    public HordeMutation PreparedMutation { get; private set; }
+    public MutationData PreparedMutation { get; private set; }
     
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
@@ -100,7 +101,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private const float _defendDuration = 60f;
     private const int _maxAliveEnemies = 5;
 
-    private HordeMutation _currentMutation;
+    private HordeMutation _currentMutationType;
     private bool _bossSpawned = false;
     private int _rescuedNpcCount = 0;
     
@@ -132,6 +133,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public VillageNpcRuntime CurrentHeroNpc { get; private set; }
     
     public int CurrentObjectiveProgress { get; private set; }
+    
+    private List<NightReward> _preparedRewards = new();
+
+    public IReadOnlyList<NightReward> PreparedRewards => _preparedRewards;
     
     public int CurrentObjectiveTarget =>
         CurrentMoon != null
@@ -252,6 +257,32 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         StartEndlessMode(spawners);
     }
     
+    private void PrepareRewards()
+    {
+        _preparedRewards.Clear();
+
+        var location = CurrentNightLocation;
+
+        if (location == null || location.Rewards == null || location.Rewards.Count == 0)
+            return;
+
+        var rewardCount = GetRewardCount(currentHorde);
+
+        var availableRewards = location.Rewards
+            .OrderBy(_ => Random.value)
+            .ToList();
+
+        for (var i = 0; i < rewardCount && i < availableRewards.Count; i++)
+        {
+            _preparedRewards.Add(availableRewards[i]);
+        }
+    }
+    
+    private int GetRewardCount(int night)
+    {
+        return Mathf.CeilToInt(night / 5f);
+    }
+    
     private void StartEndlessMode(EnemySpawner[] spawners)
     {
         if (_endlessStarted)
@@ -330,6 +361,24 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         PreparedMutation = GetRandomMutation();
 
         GenerateNightLocation();
+        PrepareRewards();
+    }
+    
+    private void GrantRewards()
+    {
+        foreach (var reward in _preparedRewards)
+        {
+            GiveReward(reward);
+        }
+    }
+    
+    private void GiveReward(NightReward reward)
+    {
+        InventoryController.Instance.AddItem( new InventoryItem()
+        {
+            item = reward.Item,
+            quantity = reward.Amount
+        });
     }
     
     private void GenerateNightLocation()
@@ -463,7 +512,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             ? HordeObjective.BossArena
             : HordeObjective.NightExploration;
         
-        _currentMutation = PreparedMutation;
+        _currentMutationType = PreparedMutation.Mutation;
 
         _aliveEnemies = 0;
         
@@ -1488,6 +1537,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             return;
         }
         
+        GrantRewards();
         OnHordeFinished?.Invoke(currentHorde - 1);
     }
 
@@ -1522,18 +1572,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         SaveLoadManager.Instance.Save();
     }
 
-    public int GetEnemyCount()
-    {
-        return enemiesPerHorde;
-    }
-
     public int GetRemainEnemies() => _aliveEnemies;
 
-    private HordeMutation GetRandomMutation() => EnumUtils.GetRandomEnum<HordeMutation>();
+    private MutationData GetRandomMutation() => _mutationDatabase.Mutations[Random.Range(0, _mutationDatabase.Mutations.Count)];
 
     private void ApplyMutation(EnemyStatistics stats)
     {
-        switch (_currentMutation)
+        switch (_currentMutationType)
         {
             case HordeMutation.StrongEnemies:
                 stats.MaxHP *= 1.5f;
@@ -1749,7 +1794,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (completed && !_objectiveCompleted)
         {
             _objectiveCompleted = true;
-            if (_isExitSpawned)
+            if (!_isExitSpawned)
             {
                 SpawnExit();
             }

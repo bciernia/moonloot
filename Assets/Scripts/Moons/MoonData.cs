@@ -14,6 +14,8 @@ public class MoonData
     public Sprite MoonSprite;
     [TextArea]
     public string Description;
+
+    public Sprite Image;
     
     [Header("Gameplay")]
     public MoonObjectiveType ObjectiveType;

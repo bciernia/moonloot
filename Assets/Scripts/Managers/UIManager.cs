@@ -81,18 +81,17 @@ public class UIManager : MonoBehaviour
     
     [Header("Night selection")]
     [SerializeField] private TextMeshProUGUI _nightTitle;
-    [SerializeField] private TextMeshProUGUI _nightDescription;
+    [SerializeField] private TextMeshProUGUI _nightObjective;
+    [SerializeField] private Image _nightObjectiveImage;
+    [SerializeField] private TextMeshProUGUI _mutation;
+    [SerializeField] private Image _mutationImage;
+    [SerializeField] private TextMeshProUGUI _locationName;
+    [SerializeField] private GameObject _nightRewardContainer;
+    [SerializeField] private RewardElement _nightRewardPrefab;
 
     [SerializeField] private Image _nightPreviewImage;
 
     [SerializeField] private Button _startNightButton;
-
-    [Header("Hero night")]
-    [SerializeField] private GameObject _heroContainer;
-    [SerializeField] private Image _heroPortrait;
-    [SerializeField] private TextMeshProUGUI _heroName;
-    [SerializeField] private TextMeshProUGUI _heroProfession;
-    [SerializeField] private TextMeshProUGUI _heroDescription;
 
     [Header("MoonObjectiveUI")]
     [SerializeField] private GameObject _moonObjectiveContainer;
@@ -640,17 +639,6 @@ public class UIManager : MonoBehaviour
         };
     }
     
-    private string GetMutationDescription(HordeMutation obj)
-    {
-        return obj switch
-        {
-            HordeMutation.BrutalEnemies => "Enemies attacks deal more damage",
-            HordeMutation.FastEnemies => "Enemies will be very fast",
-            HordeMutation.StrongEnemies => "Enemies are very tough",
-            _ => "No mutations"
-        };
-    }
-    
     public void OnStartNightClicked(VillageNpcRuntime chosenNpc)
     {
         SelectNPC(chosenNpc);
@@ -716,24 +704,27 @@ public class UIManager : MonoBehaviour
     private void CreateWaveUI()
     {
         var obj = Instantiate(_hordeInfo, _hordeInfoContainer.transform);
-        _enemyTMP = obj
-            .transform
-            .Find("EnemiesNumber")
-            .GetComponent<TextMeshProUGUI>();
+        // _enemyTMP = obj
+            // .transform
+            // .Find("EnemiesNumber")
+            // .GetComponent<TextMeshProUGUI>();
 
         _waveNumberTMP = obj
             .transform
+            .Find("WaveNumberPanel")
             .Find("WaveNumber")
             .GetComponent<TextMeshProUGUI>();
 
         _nextWaveTMP = obj
             .transform
+            .Find("NextWaveInPanel")
             .Find("NextWave")
+            .Find("NextWaveInTMP")
             .GetComponent<TextMeshProUGUI>();
         
         _enemyTMP.text = "Enemies: 0";
         _waveNumberTMP.text = "Wave: 1";
-        _nextWaveTMP.text = "Next wave in: 90";
+        _nextWaveTMP.text = "90";
     }
     
     private void CreateDefendUI()
@@ -992,18 +983,19 @@ public class UIManager : MonoBehaviour
         if (location == null)
             return;
 
-        _nightTitle.text = location.Title;
-        _nightDescription.text = location.Description;
+        _nightTitle.text = $"NIGHT {HordeManager.Instance.currentHorde}";
         _nightPreviewImage.sprite = location.PreviewImage;
-
-        _heroContainer.SetActive(false);
+        _nightObjective.text = HordeManager.Instance.CurrentMoon.ObjectiveTextLong;
+        _nightObjectiveImage.sprite = HordeManager.Instance.CurrentMoon.Image;
+        _mutation.text = HordeManager.Instance.PreparedMutation.Description;
+        _mutationImage.sprite = HordeManager.Instance.PreparedMutation.Icon;
+        _locationName.text = location.SceneName;
+        SetupNightRewards();
+        
+        //TODO
+        // CreateNightRewards(location.Rewards);
 
         _startNightButton.onClick.RemoveAllListeners();
-
-        if (HordeManager.Instance.IsHeroNight)
-        {
-            SetupHeroNight();
-        }
 
         _startNightButton.onClick.AddListener(() =>
         {
@@ -1015,31 +1007,60 @@ public class UIManager : MonoBehaviour
         });
     }
     
-    private void SetupNormalNight(
-        string title,
-        string description,
-        Sprite preview)
+    private void SetupNightRewards()
     {
-        _nightTitle.text = title;
-        _nightDescription.text = description;
-        _nightPreviewImage.sprite = preview;
+        ClearNightRewards();
+
+        var rewards = HordeManager.Instance.PreparedRewards;
+
+        foreach (var reward in rewards)
+        {
+            var obj = Instantiate(
+                _nightRewardPrefab,
+                _nightRewardContainer.transform
+            );
+
+            obj.Setup(
+                reward.Item.Image,
+                reward.Amount
+            );
+        }
     }
     
-    private void SetupHeroNight()
+    private void CreateNightRewards(List<NightReward> rewards)
     {
-        var hero = HordeManager.Instance.CurrentHeroNpc;
+        ClearNightRewards();
 
-        _heroContainer.SetActive(true);
+        foreach (var rewardData in rewards)
+        {
+            var reward = Instantiate(
+                _nightRewardPrefab,
+                _nightRewardContainer.transform
+            );
 
-        if (hero == null)
-            return;
+            reward.Setup(
+                rewardData.Item.Image,
+                rewardData.Amount
+            );
+        }
+    }
+    
+    private void ClearNightRewards()
+    {
+        foreach (Transform child in _nightRewardContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
+    private void CreateNightReward(Sprite sprite, int amount)
+    {
+        var reward = Instantiate(
+            _nightRewardPrefab,
+            _nightRewardContainer.transform
+        );
 
-        _heroPortrait.sprite = hero.Data.Portrait;
-        _heroName.text = hero.Name;
-        _heroProfession.text = hero.Data.Type.ToString();
-
-        var startingBonus = FormatBonus(hero.UpgradeLevels[0].Bonuses[0]);
-        _heroDescription.text = startingBonus;
+        reward.Setup(sprite, amount);
     }
     
     private void SelectNPC(VillageNpcRuntime npc)
