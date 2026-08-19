@@ -138,6 +138,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private List<NightReward> _preparedRewards = new();
 
     public IReadOnlyList<NightReward> PreparedRewards => _preparedRewards;
+    public NightStartType NightStartType => _nightStartType;
     
     public int CurrentObjectiveTarget =>
         CurrentMoon != null
@@ -367,8 +368,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     {
         StopNight();
 
-        CurrentMoon = MoonManager.Instance.CurrentMoon;
-
+        CurrentMoon = bossLocation.BossMoon;
         CurrentNightLocation = bossLocation;
 
         PreparedData = hordeConfig.GetHorde(currentHorde - 1);

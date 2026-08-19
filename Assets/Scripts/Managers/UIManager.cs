@@ -66,6 +66,10 @@ public class UIManager : MonoBehaviour
     
     [Header("Boss night panel")]
     [SerializeField] private GameObject _bossFightPanel;
+    [SerializeField] private TextMeshProUGUI _bossNameTMP;
+    [SerializeField] private TextMeshProUGUI _bossDescriptionTMP;
+    [SerializeField] private Image _bossImage;
+    [SerializeField] private Button _bossNightButton;
 
     [Header("Night summary panel")] 
     [SerializeField] private GameObject _bonusesSummaryPanel;
@@ -176,7 +180,6 @@ public class UIManager : MonoBehaviour
 
         RefreshMoonObjective();
 
-        RefreshObjectiveVisibility();
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
         
         RefreshMinimapVisibility();
@@ -235,7 +238,6 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
-        RefreshObjectiveVisibility();
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
         
@@ -578,7 +580,6 @@ public class UIManager : MonoBehaviour
         _hordeInfoContainer.SetActive(false);
 
         HordeManager.Instance.ReturnToPreviousScene();
-        RefreshObjectiveVisibility();
     }
 
     private void ShowStartNightPanel()
@@ -590,19 +591,17 @@ public class UIManager : MonoBehaviour
         _startNightPanel.SetActive(true);
 
         PauseManager.Instance.RequestPause();
-        RefreshObjectiveVisibility();
     }
 
     public void ShowStartBossNightPanel(NightLocationSO nightLocationSo)
     {
         HordeManager.Instance.PrepareBossFight(nightLocationSo);
 
-        SetupBossNightPanel();
+        SetupBossNightPanel(nightLocationSo.BossMoon);
 
         _bossFightPanel.SetActive(true);
 
         PauseManager.Instance.RequestPause();
-        RefreshObjectiveVisibility();
     }
     
     private void StartSelectedNight(VillageNpcRuntime npc)
@@ -615,6 +614,7 @@ public class UIManager : MonoBehaviour
         }
 
         _startNightPanel.SetActive(false);
+        _bossFightPanel.SetActive(false);
 
         if (HordeManager.Instance.CurrentNightLocation.IsBossArena)
         {
@@ -624,23 +624,6 @@ public class UIManager : MonoBehaviour
         
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
-    }
-    
-    private void UpdateStartNightUI()
-    {
-        var data = HordeManager.Instance.PreparedData;
-        var mutation = HordeManager.Instance.PreparedMutation;
-    }
-    
-    private string GetObjectiveDescription(HordeObjective obj)
-    {
-        return obj switch
-        {
-            HordeObjective.KillAll => "Kill all enemies",
-            HordeObjective.DefendObject => "Defend the crystal",
-            HordeObjective.EliteHunt => "Hunt elite enemies",
-            _ => obj.ToString()
-        };
     }
     
     public void OnStartNightClicked(VillageNpcRuntime chosenNpc)
@@ -687,7 +670,6 @@ public class UIManager : MonoBehaviour
 
     private void SetupHordeUI()
     {
-        RefreshObjectiveVisibility();
         RefreshMoonObjective();
 
         _moonObjectiveImageFinished.gameObject.SetActive(false);
@@ -961,21 +943,20 @@ public class UIManager : MonoBehaviour
         });
     }
     
-    private void SetupBossNightPanel()
+    private void SetupBossNightPanel(MoonData bossMoon)
     {
         var location = HordeManager.Instance.CurrentNightLocation;
-
+        
         if (location == null)
             return;
 
-        _nightTitle.text = $"NIGHT {HordeManager.Instance.currentHorde}";
+        _bossNameTMP.text = bossMoon.DisplayName;
+        _bossImage.sprite = bossMoon.Image;
+        _bossDescriptionTMP.text = bossMoon.Description;
         
-        //TODO
-        // CreateNightRewards(location.Rewards);
+        _bossNightButton.onClick.RemoveAllListeners();
 
-        _startNightButton.onClick.RemoveAllListeners();
-
-        _startNightButton.onClick.AddListener(() =>
+        _bossNightButton.onClick.AddListener(() =>
         {
             StartSelectedNight(
                 HordeManager.Instance.IsHeroNight
@@ -1128,8 +1109,6 @@ public class UIManager : MonoBehaviour
     
     private void UpdateMoonObjectiveUI(int current, int target)
     {
-        RefreshObjectiveVisibility();
-
         string newText;
 
         if (HordeManager.Instance.CurrentObjective ==
@@ -1221,24 +1200,6 @@ public class UIManager : MonoBehaviour
         _moonObjectiveText.color = originalColor;
     }
     
-    private void RefreshObjectiveVisibility()
-    {
-        var isTown =
-            LoadingSceneManager.Instance.IsSceneBase() || LoadingSceneManager.Instance.IsInMainMenu();
-
-        var hasMoon =
-            MoonManager.Instance.CurrentMoon != null;
-
-        var isBossArena =
-            HordeManager.Instance.CurrentObjective ==
-            HordeObjective.BossArena;
-
-        var shouldShow =
-            !isTown &&
-            hasMoon &&
-            !isBossArena;
-    }
-    
     #endregion
 
     private void RefreshHordeInfoVisibility()
@@ -1246,9 +1207,10 @@ public class UIManager : MonoBehaviour
         if (_hordeInfoContainer == null)
             return;
 
-        var shouldShow =
-            !LoadingSceneManager.Instance.IsSceneBase()
-            && !LoadingSceneManager.Instance.IsInMainMenu();
+        var isLocation = !LoadingSceneManager.Instance.IsSceneBase() && !LoadingSceneManager.Instance.IsInMainMenu();
+        var isBossFight = HordeManager.Instance.NightStartType == NightStartType.Boss;
+
+        var shouldShow = isLocation && !isBossFight;
 
         _hordeInfoContainer.SetActive(shouldShow);
     }

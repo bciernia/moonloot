@@ -30,8 +30,15 @@ public class BossSceneInteraction : MonoBehaviour, IInteractable
             return;
         }
 
-        FindFirstObjectByType<UIManager>().ShowStartBossNightPanel(_bossLocation);
-
+        ConfirmationManager.Instance.ShowConfirmation(
+            "Do you want to fight with one of the moons?",
+            confirmed =>
+            {
+                if (!confirmed)
+                    return;
+                FindFirstObjectByType<UIManager>().ShowStartBossNightPanel(_bossLocation);
+            });
+        
         FindFirstObjectByType<InteractionManager>()
             .UnregisterInteractable(this);
     }
