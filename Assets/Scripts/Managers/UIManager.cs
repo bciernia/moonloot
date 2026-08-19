@@ -63,6 +63,9 @@ public class UIManager : MonoBehaviour
     [Header("Day night panels")] 
     [SerializeField] private GameObject _startNightPanel;
     [SerializeField] private GameObject _nightSummaryPanel;
+    
+    [Header("Boss night panel")]
+    [SerializeField] private GameObject _bossFightPanel;
 
     [Header("Night summary panel")] 
     [SerializeField] private GameObject _bonusesSummaryPanel;
@@ -589,6 +592,18 @@ public class UIManager : MonoBehaviour
         PauseManager.Instance.RequestPause();
         RefreshObjectiveVisibility();
     }
+
+    public void ShowStartBossNightPanel(NightLocationSO nightLocationSo)
+    {
+        HordeManager.Instance.PrepareBossFight(nightLocationSo);
+
+        SetupBossNightPanel();
+
+        _bossFightPanel.SetActive(true);
+
+        PauseManager.Instance.RequestPause();
+        RefreshObjectiveVisibility();
+    }
     
     private void StartSelectedNight(VillageNpcRuntime npc)
     {
@@ -601,6 +616,12 @@ public class UIManager : MonoBehaviour
 
         _startNightPanel.SetActive(false);
 
+        if (HordeManager.Instance.CurrentNightLocation.IsBossArena)
+        {
+            HordeManager.Instance.StartBossFight();
+            return;
+        }
+        
         PauseManager.Instance.ReleasePause();
         HordeManager.Instance.StartHorde();
     }
@@ -924,6 +945,30 @@ public class UIManager : MonoBehaviour
         _mutationImage.sprite = HordeManager.Instance.PreparedMutation.Icon;
         _locationName.text = location.SceneName;
         SetupNightRewards();
+        
+        //TODO
+        // CreateNightRewards(location.Rewards);
+
+        _startNightButton.onClick.RemoveAllListeners();
+
+        _startNightButton.onClick.AddListener(() =>
+        {
+            StartSelectedNight(
+                HordeManager.Instance.IsHeroNight
+                    ? HordeManager.Instance.CurrentHeroNpc
+                    : null
+            );
+        });
+    }
+    
+    private void SetupBossNightPanel()
+    {
+        var location = HordeManager.Instance.CurrentNightLocation;
+
+        if (location == null)
+            return;
+
+        _nightTitle.text = $"NIGHT {HordeManager.Instance.currentHorde}";
         
         //TODO
         // CreateNightRewards(location.Rewards);

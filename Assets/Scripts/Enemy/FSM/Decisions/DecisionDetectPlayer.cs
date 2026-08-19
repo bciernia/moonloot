@@ -42,8 +42,8 @@ private bool DetectPlayer()
 
         EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent);
 
-        _enemyAnimator.SetIsMoving(true);
-        _enemyAnimator.SetMoveAnimation(new Vector2(direction.x, direction.y));
+        _enemyAnimator?.SetIsMoving(true);
+        _enemyAnimator?.SetMoveAnimation(new Vector2(direction.x, direction.y));
 
         return true;
     }
@@ -127,8 +127,8 @@ private bool DetectPlayer()
 
     EnemyNavMeshAgent.EnableNavMeshAgent(_navMeshAgent);
 
-    _enemyAnimator.SetIsMoving(true);
-    _enemyAnimator.SetMoveAnimation(new Vector2(directionToTarget.x, directionToTarget.y));
+    _enemyAnimator?.SetIsMoving(true);
+    _enemyAnimator?.SetMoveAnimation(new Vector2(directionToTarget.x, directionToTarget.y));
 
     return true;
 }

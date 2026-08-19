@@ -5,10 +5,77 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5345fbdf-332c-498b-b017-40494c512664" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/NightType.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Enums/NightType.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossEnemySpawnSkill.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossEnemySpawnSkill.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossSpawnEliteSkill.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossSpawnEliteSkill.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IBossSkill.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Interfaces/IBossSkill.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.lunaris-legends/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/Classic_UI_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/Classic_UI_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/Classic_UI_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/Classic_UI_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Classic_UI_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Classic_UI_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Use_Guidelines/Set_Use_Guidelines.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Use_Guidelines/Set_Use_Guidelines.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Classic_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Bg_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Bg_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/Grim_UI_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/_Grim_UI_Shadow.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/_Grim_UI_Shadow.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Grim_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_3.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Mock_Up_3.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/Stylized_UI_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/Stylized_UI_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/Stylized_UI_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/Stylized_UI_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/Stylized_Minifantasy_UI/_Use_Guidelines/Use_Guideline_Layer.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/Bubble_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/Bubble_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/Bubble_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/Bubble_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/_Bubble.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/_Bubble.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/_Emotions.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Character_Emotions/_Emotions.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/Controllers_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/Controllers_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/Controllers_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/Controllers_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/_Controllers.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/_Controllers.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/_Controllers_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Controller/_Controllers_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Characters_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Characters_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Keyboard_And_Mouse_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Keyboard_And_Mouse_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Keys_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/Keys_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/_Keyboard_And_Mouse.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/_Keyboard_And_Mouse.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/_Keyboard_And_Mouse_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Controls/Keyboard_Mouse/_Keyboard_And_Mouse_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Click_Effects/Click_Effects.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Click_Effects/Click_Effects.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Click_Effects/_GIF/CursorSamples.gif.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Click_Effects/_GIF/CursorSamples.gif.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Cursors_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Cursors_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Cursors_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/Cursors_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/_Cursors.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/_Cursors.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/_Cursors_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Cursors/_Cursors_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Grids/Grids.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Grids/Grids.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/Icons_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/Icons_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/Icons_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/Icons_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/_Icons.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Icons/_Icons.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/Labels_And_Tags_Only.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/Labels_And_Tags_Only.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/Labels_And_Tags_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/Labels_And_Tags_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/_Labels_And_Tags.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/_Labels_And_Tags.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/_Labels_And_Tags_Shadows.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Labels_And_Tags/_Labels_And_Tags_Shadows.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Selectors/Selectors_Outline.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Selectors/Selectors_Outline.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Selectors/_Selectors.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/UI/_Minifantasy_UI_Overhaul_Assets/_General_UI_Resources/Selectors/_Selectors.png.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/Easy Save 3/Resources/ES3/ES3GlobalReferences.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/GameRoot.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/PlayerUI.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/GameRoot/UI/PlayerUI.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Horde/NightHordeSO/HeroNights/Forest_Hero1.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Horde/NightHordeSO/HeroNights/Forest_Hero1.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/EnemyStatistics.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionAttack.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionChase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionChase.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWander.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWanderNavMesh.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Actions/ActionWanderNavMesh.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Enemy/FSM/Decisions/DecisionDetectPlayer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Environment/DayNightCycle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Environment/DayNightCycle.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Horde/NightLocationSO.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Horde/NightLocationSO.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/NPC/NPCMovement.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemyAim.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Slash/EnemyAim.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -217,6 +284,7 @@
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommendationAuthoringData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommendationType.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommendationUtils.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommenderSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommenderSystemData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Editor/Recommendations/RecommenderSystemDataObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://D:/Unity/6000.1.3f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.multiplayer.center/Tests/Editor/LogicTests.cs" root0="SKIP_HIGHLIGHTING" />
@@ -646,6 +714,9 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Extra/Singleton.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Helpers/DestroyAfterAnimation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/BlacksmithZone.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/BossController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossProjectileSkill.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossRotation.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/ExitInteraction.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/LootDropper.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Horde/ObjectiveObelisk.cs" root0="FORCE_HIGHLIGHTING" />
@@ -715,7 +786,6 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Quests/Triggers/ShowObjectWhenHaveDialogueFlag.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/SceneManagement/AreaExit.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/MutationSO.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/RewardSO.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/ScriptableObjects/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/Effects/Runtime/ActiveDmgOverTime.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Skills/SkillVisualEffectController.cs" root0="FORCE_HIGHLIGHTING" />
@@ -755,8 +825,10 @@
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@be6c4fd0abf5/InputSystem/Utilities/DelegateHelpers.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@35104b1b69f5/Editor/2D/Shadows/ShadowCaster2DEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.render-pipelines.universal@35104b1b69f5/Editor/2D/Shadows/ShadowProvider/ShadowShape2DProvider_ProperyDrawer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Editor/TMP/TMP_BaseEditorPanel.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Editor/UGUI/UI/CanvasScalerEditor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Editor/UGUI/UI/GraphicEditor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/TMP/TMP_Text.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/TMP/TextMeshPro.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/UGUI/EventSystem/EventData/PointerEventData.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.ugui@5c9fd4989cdd/Runtime/UGUI/EventSystem/ExecuteEvents.cs" root0="SKIP_HIGHLIGHTING" />
@@ -783,7 +855,7 @@
     &quot;Attach to Unity Editor.Attach to Unity Editor.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.05919003&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;iteration-36-UI-horde-and-new&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;iteration-37-bosses&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -1301,6 +1373,11 @@
       <workItem from="1786638404012" duration="5736000" />
       <workItem from="1786654701325" duration="2039000" />
       <workItem from="1786982605253" duration="1786000" />
+      <workItem from="1787008304865" duration="323000" />
+      <workItem from="1787044427666" duration="8657000" />
+      <workItem from="1787073746236" duration="2203000" />
+      <workItem from="1787151273098" duration="417000" />
+      <workItem from="1787154390913" duration="413000" />
     </task>
     <servers />
   </component>
@@ -1673,13 +1750,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs</url>
-          <line>1930</line>
+          <line>2000</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Dialogues\HordeManager.cs" containingFunctionPresentation="Method 'Load'">
             <startOffsets>
-              <option value="51510" />
+              <option value="53098" />
             </startOffsets>
             <endOffsets>
-              <option value="51543" />
+              <option value="53131" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="708" />
@@ -1919,19 +1996,6 @@
           <option name="timeStamp" value="779" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Weapons/Projectile.cs</url>
-          <line>79</line>
-          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Weapons\Projectile.cs" containingFunctionPresentation="Method 'OnTriggerEnter2D'">
-            <startOffsets>
-              <option value="2211" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2584" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="782" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/NPC/RescueNpc.cs</url>
           <line>20</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\NPC\RescueNpc.cs" containingFunctionPresentation="Method 'Rescue'">
@@ -1985,68 +2049,94 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>582</line>
+          <line>585</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'ShowStartNightPanel'">
             <startOffsets>
-              <option value="17599" />
+              <option value="17694" />
             </startOffsets>
             <endOffsets>
-              <option value="17617" />
+              <option value="17712" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="791" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>964</line>
+          <line>1009</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'SetupNightPanel'">
             <startOffsets>
-              <option value="29529" />
+              <option value="30740" />
             </startOffsets>
             <endOffsets>
-              <option value="29599" />
+              <option value="30810" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="793" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>961</line>
+          <line>1006</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'SetupNightPanel'">
             <startOffsets>
-              <option value="29312" />
+              <option value="30523" />
             </startOffsets>
             <endOffsets>
-              <option value="29377" />
+              <option value="30588" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="794" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/UIManager.cs</url>
-          <line>987</line>
+          <line>1032</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\UIManager.cs" containingFunctionPresentation="Method 'SetupNightRewards'">
             <startOffsets>
-              <option value="30282" />
+              <option value="31493" />
             </startOffsets>
             <endOffsets>
-              <option value="30302" />
+              <option value="31513" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="795" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/Dialogues/HordeManager.cs</url>
-          <line>261</line>
+          <line>262</line>
           <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Dialogues\HordeManager.cs" containingFunctionPresentation="Method 'PrepareRewards'">
             <startOffsets>
-              <option value="7963" />
+              <option value="8007" />
             </startOffsets>
             <endOffsets>
-              <option value="7988" />
+              <option value="8032" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="796" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Horde/Bosses/Skills/BossSpawnEliteSkill.cs</url>
+          <line>21</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Horde\Bosses\Skills\BossSpawnEliteSkill.cs" containingFunctionPresentation="Method 'Execute'">
+            <startOffsets>
+              <option value="510" />
+            </startOffsets>
+            <endOffsets>
+              <option value="575" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="797" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Managers/LootSpawnManager.cs</url>
+          <line>19</line>
+          <properties documentPath="E:\Projekty\LL\lunaris-legends\Assets\Scripts\Managers\LootSpawnManager.cs" containingFunctionPresentation="Method 'SpawnAll'">
+            <startOffsets>
+              <option value="576" />
+            </startOffsets>
+            <endOffsets>
+              <option value="609" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="798" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

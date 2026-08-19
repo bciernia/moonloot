@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NightLocation", menuName = "Horde/NightLocation")]
 public class NightLocationSO : ScriptableObject

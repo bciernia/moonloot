@@ -46,9 +46,9 @@ public class ActionWander : FSMAction
 
         if (Vector3.Distance(transform.position, movePosition) >= 1f)
         {
-            _enemyAnimator.SetIsMoving(true);
+            _enemyAnimator?.SetIsMoving(true);
 
-            _enemyAnimator.SetMoveAnimation(
+            _enemyAnimator?.SetMoveAnimation(
                 new Vector2(moveDirection.x, moveDirection.y));
 
             transform.Translate(movement);
@@ -61,7 +61,7 @@ public class ActionWander : FSMAction
         }
         else
         {
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
         }
 
         if (timer <= 0f)

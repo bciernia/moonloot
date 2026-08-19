@@ -82,7 +82,7 @@ public class NPCMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) < 0.2f)
         {
             isMovingToTarget = false;
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
             OnDestinationReached?.Invoke();
         }
     }

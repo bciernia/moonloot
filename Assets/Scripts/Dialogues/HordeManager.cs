@@ -86,7 +86,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private int _activatedObelisks;
     private int _spawnedObelisks;
-
+    private NightStartType _nightStartType;
+    
     public NightLocationSO CurrentNightLocation { get; private set; }
     
     public HordeData PreparedData { get; private set; }
@@ -150,7 +151,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public Action<int, int> OnObjectiveProgressChanged;
     public static Action<Transform> OnExitSpawned;
     public static Action OnExitRemoved;
-    
+
     private void Start()
     {
         if (InventoryController.Instance != null)
@@ -362,6 +363,22 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         PrepareRewards();
     }
     
+    public void PrepareBossFight(NightLocationSO bossLocation)
+    {
+        StopNight();
+
+        CurrentMoon = MoonManager.Instance.CurrentMoon;
+
+        CurrentNightLocation = bossLocation;
+
+        PreparedData = hordeConfig.GetHorde(currentHorde - 1);
+
+        _preparedRewards.Clear();
+        _hordePrepared = true;
+
+        _nightStartType = NightStartType.Boss;
+    }
+    
     private void GrantRewards()
     {
         foreach (var reward in _preparedRewards)
@@ -444,6 +461,59 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         StartCoroutine(WaitForSceneAndSpawn());
         SoundManager.Instance.PlayCombatMusic();
+    }
+    
+    public void StartBossFight()
+    {
+        StopNight();
+
+        SavePreviousScene();
+
+        if (CurrentNightLocation == null)
+        {
+            Debug.LogError("No night location selected!");
+            return;
+        }
+
+        Debug.Log($"Starting Boss Fight: {CurrentNightLocation.SceneName}");
+
+        LoadingSceneManager.Instance.LoadScene(
+            CurrentNightLocation.SceneName,
+            true
+        );
+
+        StartCoroutine(WaitForBossScene());
+    
+        SoundManager.Instance.PlayCombatMusic();
+    }
+    
+    private IEnumerator WaitForBossScene()
+    {
+        yield return null;
+
+        yield return new WaitUntil(() =>
+            FindObjectsOfType<BossSpawner>().Length > 0
+        );
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        LootSpawnManager.Instance.SpawnAll(
+            CurrentNightLocation,
+            currentHorde
+        );
+
+        StartBossFightRoutine();
+    }
+    
+    private void StartBossFightRoutine()
+    {
+        _isNightRunning = true;
+
+        _bossAlive = false;
+
+        CurrentObjectiveProgress = 0;
+        
+        SpawnBoss(PreparedData);
     }
 
     private IEnumerator WaitForSceneAndSpawn()
@@ -1438,7 +1508,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (isBoss)
         {
             _bossAlive = false;
-
+            
             CombatStatsManager.Instance.BossEnemiesKilled++;
 
             PointsManager.Instance.AddScore(1000);
@@ -1952,4 +2022,55 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public float GetTimeToNextWave() => _timeToNextWave;
 
     public string GetCurrentWave() => _currentWave.ToString();
+
+    public void SpawnEnemyFromBoss(Vector3 position)
+    {
+        if (CurrentNightLocation == null)
+            return;
+
+        var pool = CurrentNightLocation.EnemyPool;
+
+        if (pool == null || pool.NormalEnemies == null || pool.NormalEnemies.Count == 0)
+        {
+            Debug.LogWarning("No normal enemies configured for current night location.");
+            return;
+        }
+
+        var prefab = GetRandomEnemy(pool.NormalEnemies);
+
+        var enemyGO = Instantiate(
+            prefab,
+            position,
+            Quaternion.identity
+        );
+
+        SetupEnemy(
+            enemyGO,
+            PreparedData,
+            pool.NormalEnemies
+        );
+    }
+
+    public void SpawnBossElite(Vector3 position)
+    {
+        if (CurrentNightLocation == null)
+            return;
+
+        var pool = CurrentNightLocation.EnemyPool.EliteEnemies;
+
+        if (pool == null)
+            return;
+
+        var enemyGO = Instantiate(
+            pool[0],
+            position,
+            Quaternion.identity
+        );
+
+        SetupEnemy(
+            enemyGO,
+            PreparedData,
+            pool
+        );
+    }
 }

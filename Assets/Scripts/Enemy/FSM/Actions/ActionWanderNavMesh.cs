@@ -44,7 +44,7 @@ public class ActionWanderNavMesh : FSMAction
         {
             _waitTimer -= Time.deltaTime;
 
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
 
             if (_waitTimer <= 0f)
             {
@@ -58,13 +58,13 @@ public class ActionWanderNavMesh : FSMAction
 
         if (_navMeshAgent.velocity.magnitude > 0.1f)
         {
-            _enemyAnimator.SetIsMoving(true);
-            _enemyAnimator.SetMoveAnimation(
+            _enemyAnimator?.SetIsMoving(true);
+            _enemyAnimator?.SetMoveAnimation(
                 new Vector2(velocity.x, velocity.y));
         }
         else
         {
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
         }
 
         var distance = Vector3.Distance(

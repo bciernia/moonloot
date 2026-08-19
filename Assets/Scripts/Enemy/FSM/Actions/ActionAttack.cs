@@ -32,7 +32,7 @@ public class ActionAttack : FSMAction
 
         if (_enemyBrain.CanAttack())
         {
-            _enemyAnimator.SetAttackAnimation();
+            _enemyAnimator?.SetAttackAnimation();
             _enemyBrain.ResetAttackCooldown();
             HasAttacked = false;
         } 

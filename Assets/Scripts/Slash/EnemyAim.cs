@@ -16,9 +16,9 @@ public class EnemyAim : MonoBehaviour
     {
         if (player == null) return;
         
-        Vector3 direction = player.position - transform.position; 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; 
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
+        var direction = player.position - transform.position; 
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg; 
+        var rotation = Quaternion.AngleAxis(angle, Vector3.forward); 
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, rotateSpeed * Time.deltaTime);
     }
 }

@@ -156,8 +156,8 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
         {
             // _enemySelector.NoSelectionCallback();
             _enemySounds?.Die();
-            _enemyAnimator.TryFlipSpriteX();
-            _enemyAnimator.SetDeadAnimation();
+            _enemyAnimator?.TryFlipSpriteX();
+            _enemyAnimator?.SetDeadAnimation();
             Speed = 0f;
             ChaseSpeed = 0f;
             
@@ -176,7 +176,15 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
             
             Player.Instance.PlayerExp.AddExp(Mathf.RoundToInt(ExpForEnemy * HordeManager.Instance.CurrentHordeMultiplier));
 
-            if(IsBoss) NPCInfoManager.Instance.HideNpcInfo();
+            if (IsBoss)
+            {
+                NPCInfoManager.Instance.HideNpcInfo();
+            }
+
+            if (_enemyAnimator == null)
+            {
+                Destroy(gameObject);
+            }
             
             HordeManager.Instance.OnEnemyKilled(IsElite, IsBoss);
             StartCoroutine(HandleDeathAnimation());
@@ -188,7 +196,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
   
             _feelEffects?.PlayFeedbacks();
             _enemySounds?.Hit();
-            _enemyAnimator.SetDamagedAnimation();
+            _enemyAnimator?.SetDamagedAnimation();
         }
     }
 
