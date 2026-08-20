@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "NightLocation", menuName = "Horde/NightLocation")]
 public class NightLocationSO : ScriptableObject
@@ -14,14 +13,12 @@ public class NightLocationSO : ScriptableObject
     [Header("Night Type")] public NightLocationType NightType;
 
     [Header("Scene")] public string SceneName;
-
-    public bool IsBossArena;
     
     public EnemyPoolSO EnemyPool;
     public ItemPoolSO ItemPool;
     
     public List<NightReward> Rewards;
-    
+
 // public SceneReference Scene;
     // public AudioClip Music;
     public Color AmbientColor;
@@ -29,4 +26,8 @@ public class NightLocationSO : ScriptableObject
     
     public float DifficultyModifier = 1;
     // public List<LootTable> ExtraLoot;
+    
+    [Header("Boss config")]
+    public bool IsBossArena;
+    public MoonData BossMoon;
 }

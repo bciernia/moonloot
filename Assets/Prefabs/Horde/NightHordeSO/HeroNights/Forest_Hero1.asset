@@ -12,12 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0eb494889234be5be928f174b63d62a, type: 3}
   m_Name: Forest_Hero1
   m_EditorClassIdentifier: 
-  Title: Hero forest
+  Title: Udros boss
   Description: There is a new hero to find!
   PreviewImage: {fileID: 9085546173938197295, guid: d9afc7c1202288a4b830e9a93b33511e, type: 3}
   NightType: 1
-  SceneName: Forest_Boss1
-  IsBossArena: 1
+  SceneName: Udros_Boss
+  EnemyPool: {fileID: 11400000, guid: 5864c8ce3e137c74c9612b2d6b085c27, type: 2}
+  ItemPool: {fileID: 11400000, guid: 6b84abdaa2dad2a4f9f5787787c121db, type: 2}
+  Rewards: []
   AmbientColor: {r: 0.4156863, g: 0.6156863, b: 0.1764706, a: 0}
   ForcedMutation: 0
   DifficultyModifier: 1.8
+  IsBossArena: 1
+  BossMoon:
+    Type: 0
+    DisplayName: Udros
+    EveningColor: {r: 0.7735849, g: 0, b: 0, a: 0}
+    NightColor: {r: 0.31132078, g: 0, b: 0, a: 0}
+    MoonSprite: {fileID: 4769134837912430429, guid: 01005c7ac893ebd47a3ef779e55688e6, type: 3}
+    Description: Defeat Udros and restore peace, or die trying.
+    Image: {fileID: 4769134837912430429, guid: 01005c7ac893ebd47a3ef779e55688e6, type: 3}
+    ObjectiveType: 0
+    RequiredAmount: 10
+    ObjectiveText: 
+    ObjectiveTextLong: 
+    EnemyHealthMultiplier: 1
+    EnemyDamageMultiplier: 1
+    EnemySpeedMultiplier: 1
+    LootMultiplier: 1
+    GoldMultiplier: 1
+    EliteChanceBonus: 0.75
+    requiredItem:
+      quantity: 0
+      item: {fileID: 0}
+      itemState: []
+    enemyDeathProfiles: []
+    enemyHitProfiles: []
+    enemyAttackProfiles: []

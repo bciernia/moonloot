@@ -31,6 +31,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     [Header("ExitPrefab")]
     [SerializeField] private GameObject exitPrefab;
+    [Header("BossExitPrefab")]
+    [SerializeField] private GameObject bossExitPrefab;
     
     [Header("Villagers")]
     [SerializeField] public List<VillageNpcData> workerPool;
@@ -86,7 +88,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private int _activatedObelisks;
     private int _spawnedObelisks;
-
+    private NightStartType _nightStartType;
+    
     public NightLocationSO CurrentNightLocation { get; private set; }
     
     public HordeData PreparedData { get; private set; }
@@ -137,6 +140,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private List<NightReward> _preparedRewards = new();
 
     public IReadOnlyList<NightReward> PreparedRewards => _preparedRewards;
+    public NightStartType NightStartType => _nightStartType;
     
     public int CurrentObjectiveTarget =>
         CurrentMoon != null
@@ -150,7 +154,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public Action<int, int> OnObjectiveProgressChanged;
     public static Action<Transform> OnExitSpawned;
     public static Action OnExitRemoved;
-    
+    public static Action OnEndlessStarted;
+
     private void Start()
     {
         if (InventoryController.Instance != null)
@@ -212,17 +217,14 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     {
         Debug.Log("BOSS WAVE STARTED");
 
-        // Boss
         SpawnBoss(data);
 
-        // Od razu po pojawieniu się bossa uruchamiamy timer Endless
-        StartCoroutine(BossToEndlessTimer(spawners));
+        var enemiesToSpawn =
+            baseEnemiesPerWave +
+            (_currentWave - 1) * additionalEnemiesPerWave;
 
-        // Przeciwnicy towarzyszący bossowi
-        var enemiesToSpawn = baseEnemiesPerWave +
-                             (_currentWave - 1) * additionalEnemiesPerWave;
-
-        enemiesToSpawn = Mathf.RoundToInt(enemiesToSpawn * 0.5f);
+        enemiesToSpawn =
+            Mathf.RoundToInt(enemiesToSpawn * 0.5f);
 
         for (var i = 0; i < enemiesToSpawn; i++)
         {
@@ -240,6 +242,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             $"Boss spawned. Endless mode starts in {_bossToEndlessTimer} seconds."
         );
 
+        _endlessStarted = true;
+        
         while (_bossToEndlessTimer > 0f && !_endlessStarted)
         {
             _bossToEndlessTimer -= Time.deltaTime;
@@ -287,6 +291,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             return;
 
         _endlessStarted = true;
+        
+        OnEndlessStarted?.Invoke();
 
         Debug.Log("BOSS TIMER ENDED - ENDLESS MODE STARTED!");
 
@@ -360,6 +366,23 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         GenerateNightLocation();
         PrepareRewards();
+        
+        _nightStartType = NightStartType.Horde;
+    }
+    
+    public void PrepareBossFight(NightLocationSO bossLocation)
+    {
+        StopNight();
+
+        CurrentMoon = bossLocation.BossMoon;
+        CurrentNightLocation = bossLocation;
+
+        PreparedData = hordeConfig.GetHorde(currentHorde - 1);
+
+        _preparedRewards.Clear();
+        _hordePrepared = true;
+
+        _nightStartType = NightStartType.Boss;
     }
     
     private void GrantRewards()
@@ -428,7 +451,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         SavePreviousScene();
 
         Debug.Log($"Starting Horde {currentHorde}");
+        
         _isExitSpawned = false;
+        _endlessStarted = false;
+        _currentWave = 1;
+        _timeToNextWave = 0f;
+
         if (CurrentNightLocation == null)
         {
             Debug.LogError("No night location selected!");
@@ -444,6 +472,62 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         StartCoroutine(WaitForSceneAndSpawn());
         SoundManager.Instance.PlayCombatMusic();
+    }
+    
+    public void StartBossFight()
+    {
+        StopNight();
+
+        SavePreviousScene();
+        
+        _isExitSpawned = false;
+        _spawnedExit = null;
+
+        if (CurrentNightLocation == null)
+        {
+            Debug.LogError("No night location selected!");
+            return;
+        }
+
+        Debug.Log($"Starting Boss Fight: {CurrentNightLocation.SceneName}");
+
+        LoadingSceneManager.Instance.LoadScene(
+            CurrentNightLocation.SceneName,
+            true
+        );
+
+        StartCoroutine(WaitForBossScene());
+    
+        SoundManager.Instance.PlayCombatMusic();
+    }
+    
+    private IEnumerator WaitForBossScene()
+    {
+        yield return null;
+
+        yield return new WaitUntil(() =>
+            FindObjectsOfType<BossSpawner>().Length > 0
+        );
+        
+        yield return new WaitForSeconds(0.2f);
+        
+        LootSpawnManager.Instance.SpawnAll(
+            CurrentNightLocation,
+            currentHorde
+        );
+
+        StartBossFightRoutine();
+    }
+    
+    private void StartBossFightRoutine()
+    {
+        _isNightRunning = true;
+
+        _bossAlive = false;
+
+        CurrentObjectiveProgress = 0;
+        
+        SpawnBoss(PreparedData);
     }
 
     private IEnumerator WaitForSceneAndSpawn()
@@ -481,6 +565,15 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         StopNight();
 
         CleanupEnemies();
+        
+        NPCInfoManager.Instance.HideNpcInfo();
+
+        
+        if (_nightStartType == NightStartType.Boss)
+        {
+            ShowBossWinScreen();
+            return;
+        }
         
         CompleteHorde();
     }
@@ -1431,6 +1524,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         _aliveEnemies++;
     }
     
+    private void ShowBossWinScreen()
+    {
+        var points = PointsManager.Instance.GetCurrentScore();
+        DeathScreenManager.Instance.ShowWinScreen(points);
+    }
+    
     public void OnEnemyKilled(bool isElite, bool isBoss)
     {
         var goldForEnemy = GetGoldForEnemy(isBoss, isElite);
@@ -1438,7 +1537,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         if (isBoss)
         {
             _bossAlive = false;
-
+            
             CombatStatsManager.Instance.BossEnemiesKilled++;
 
             PointsManager.Instance.AddScore(1000);
@@ -1526,13 +1625,6 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         currentHorde++;
         enemiesPerHorde += enemiesIncreasePerHorde;
         PointsManager.Instance.AddScore(100);
-
-        if (currentHorde > 9)
-        {
-            var points = PointsManager.Instance.GetCurrentScore();
-            DeathScreenManager.Instance.ShowWinScreen(points);
-            return;
-        }
         
         GrantRewards();
         OnHordeFinished?.Invoke(currentHorde - 1);
@@ -1552,7 +1644,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public void ReturnToPreviousScene()
     {
         SoundManager.Instance.StopCombatMusic();
-        
+
+        NPCInfoManager.Instance.HideNpcInfo();
+
         if (string.IsNullOrEmpty(_previousScene))
         {
             Debug.LogWarning("No previous scene saved!");
@@ -1950,6 +2044,60 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     #endregion
 
     public float GetTimeToNextWave() => _timeToNextWave;
+    
+    public bool IsEndlessStarted => _endlessStarted;
+    public bool IsLastWave => _currentWave >= wavesCount;
 
     public string GetCurrentWave() => _currentWave.ToString();
+
+    public void SpawnEnemyFromBoss(Vector3 position)
+    {
+        if (CurrentNightLocation == null)
+            return;
+
+        var pool = CurrentNightLocation.EnemyPool;
+
+        if (pool == null || pool.NormalEnemies == null || pool.NormalEnemies.Count == 0)
+        {
+            Debug.LogWarning("No normal enemies configured for current night location.");
+            return;
+        }
+
+        var prefab = GetRandomEnemy(pool.NormalEnemies);
+
+        var enemyGO = Instantiate(
+            prefab,
+            position,
+            Quaternion.identity
+        );
+
+        SetupEnemy(
+            enemyGO,
+            PreparedData,
+            pool.NormalEnemies
+        );
+    }
+
+    public void SpawnBossElite(Vector3 position)
+    {
+        if (CurrentNightLocation == null)
+            return;
+
+        var pool = CurrentNightLocation.EnemyPool.EliteEnemies;
+
+        if (pool == null)
+            return;
+
+        var enemyGO = Instantiate(
+            pool[0],
+            position,
+            Quaternion.identity
+        );
+
+        SetupEnemy(
+            enemyGO,
+            PreparedData,
+            pool
+        );
+    }
 }

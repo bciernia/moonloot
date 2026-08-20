@@ -76,7 +76,7 @@ public class ActionChase : FSMAction
         if (_enemyStatistics._isRooted || DialogueManager.Instance.IsInDialogue())
         {
             _navMeshAgent.isStopped = true;
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
             return;
         }
         
@@ -91,15 +91,15 @@ public class ActionChase : FSMAction
         {
             _navMeshAgent.isStopped = false;
             _navMeshAgent.SetDestination(_enemyBrain.Player.position);
-            _enemyAnimator.SetIsMoving(true);
+            _enemyAnimator?.SetIsMoving(true);
         }
         else
         {
             _navMeshAgent.isStopped = true;
-            _enemyAnimator.SetIsMoving(false);
+            _enemyAnimator?.SetIsMoving(false);
         }
 
-        _enemyAnimator.FlipSpriteXOff();
+        _enemyAnimator?.FlipSpriteXOff();
     }
     
     public void DisableMove()

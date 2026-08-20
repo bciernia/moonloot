@@ -79,7 +79,14 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
-        if(!hordePending) UpdateLighting();
+        if (hordePending)
+            return;
+
+        if (HordeManager.Instance != null &&
+            HordeManager.Instance.NightStartType == NightStartType.Boss)
+            return;
+
+        UpdateLighting();
     }
 
     private void UpdateLighting()
@@ -230,11 +237,6 @@ public class DayNightCycle : MonoBehaviour
         OnDayStarted?.Invoke();
     }
 
-    public float GetTimeNormalized()
-    {
-        return timer / dayDuration;
-    }
-
     private void HandleDialogueEnded()
     {
         if (hordePending) StartCoroutine(StartHordeWithDelay());
@@ -242,7 +244,6 @@ public class DayNightCycle : MonoBehaviour
 
     private IEnumerator StartHordeWithDelay()
     {
-        Debug.Log("Odliczanieee");
         yield return new WaitForSeconds(.5f);
         StartHorde();
     }

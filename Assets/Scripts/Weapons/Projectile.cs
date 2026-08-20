@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     public float Damage { get; set; }
     public GameObject Shooter { get; set; }
     public bool IsEnemy { get; set; }
-
+    
     public ProjectileSO ProjectileSo;
 
     private Vector3 _startPosition;

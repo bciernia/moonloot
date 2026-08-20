@@ -20,7 +20,6 @@ public class ExitInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
-        Debug.Log("EXIT USED");
         HordeManager.Instance.OnPlayerExit();
         Destroy(gameObject);
     }
