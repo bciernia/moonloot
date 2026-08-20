@@ -79,7 +79,14 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
-        if(!hordePending) UpdateLighting();
+        if (hordePending)
+            return;
+
+        if (HordeManager.Instance != null &&
+            HordeManager.Instance.NightStartType == NightStartType.Boss)
+            return;
+
+        UpdateLighting();
     }
 
     private void UpdateLighting()

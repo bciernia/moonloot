@@ -44,7 +44,7 @@ public abstract class Effect : ScriptableObject
         
         ActiveDmgOverTime activeEffect;
 
-        if (existing != null)
+         if (existing != null)
         {
             existing.ResetEffect();
             activeEffect = existing; 

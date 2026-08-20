@@ -79,6 +79,9 @@ public class UIManager : MonoBehaviour
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
+    [SerializeField] private GameObject _waveInfoContainer;
+    [SerializeField] private GameObject _endlessWaveInfoContainer;
+    [SerializeField] private GameObject _endlessWaveInfoTMP;
     [SerializeField] private TextMeshProUGUI _enemyTMP;
     [SerializeField] private TextMeshProUGUI _waveNumberTMP;
     [SerializeField] private TextMeshProUGUI _nextWaveTMP;
@@ -166,6 +169,8 @@ public class UIManager : MonoBehaviour
         HordeManager.OnExitSpawned += OnPortalSpawned;
         HordeManager.OnExitRemoved += OnPortalRemoved;
         SceneManager.sceneLoaded += OnSceneLoaded;
+        HordeManager.OnEndlessStarted += ShowEndlessUI;
+
         
         CacheInputActions();
         EnableInputActions();
@@ -184,6 +189,12 @@ public class UIManager : MonoBehaviour
         
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
+    }
+
+    private void ShowEndlessUI()
+    {
+        _waveNumberTMP.text = "ENDLESS";
+        _nextWaveTMP.text = "";
     }
 
     private void OnPortalSpawned(Transform exitTransform)
@@ -210,7 +221,8 @@ public class UIManager : MonoBehaviour
         HordeManager.OnHordeFinished -= ShowSummaryPanel;
         HordeManager.OnExitSpawned -= OnPortalSpawned;
         HordeManager.OnExitRemoved -= OnPortalRemoved;
-        
+        HordeManager.OnEndlessStarted -= ShowEndlessUI;
+
         if (HordeManager.Instance != null)
         {
             HordeManager.Instance.OnObjectiveProgressChanged -= UpdateMoonObjectiveUI;
@@ -578,7 +590,8 @@ public class UIManager : MonoBehaviour
 
         _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
-
+        _waveInfoContainer.SetActive(true);
+        _endlessWaveInfoContainer.SetActive(false);
         HordeManager.Instance.ReturnToPreviousScene();
     }
 
@@ -653,7 +666,9 @@ public class UIManager : MonoBehaviour
     
     private void SetupHordeInfoUI()
     {
-        // _enemyTMP.text = "Enemies: 0";
+        _waveInfoContainer.SetActive(true);
+        _endlessWaveInfoContainer.SetActive(false);
+        
         _waveNumberTMP.text = "Wave: 1";
         _nextWaveTMP.text = "Next wave in: 90";
 
@@ -680,18 +695,37 @@ public class UIManager : MonoBehaviour
     
     private void UpdateHordeUI()
     {
-        if (!_hordeInfoContainer.activeSelf) return;
+        if (!_hordeInfoContainer.activeSelf)
+            return;
 
         if (_waveNumberTMP != null)
         {
-            _waveNumberTMP.text =
-                $"WaveNumber: {HordeManager.Instance.GetCurrentWave()}";
+            if (HordeManager.Instance.IsEndlessStarted)
+            {
+                _waveInfoContainer.SetActive(false);
+                _endlessWaveInfoContainer.SetActive(true);
+            }
+            else
+            {
+                _waveNumberTMP.text =
+                    $"Wave: {HordeManager.Instance.GetCurrentWave()}";
+            }
         }
 
         if (_nextWaveTMP != null)
         {
-            var time = Mathf.CeilToInt(HordeManager.Instance.GetTimeToNextWave());
-            _nextWaveTMP.text = time.ToString();
+            if (HordeManager.Instance.IsEndlessStarted)
+            {
+                _nextWaveTMP.text = "";
+            }
+            else
+            {
+                var time = Mathf.CeilToInt(
+                    HordeManager.Instance.GetTimeToNextWave()
+                );
+
+                _nextWaveTMP.text = time.ToString();
+            }
         }
         
         if (_enemyTMP != null)
