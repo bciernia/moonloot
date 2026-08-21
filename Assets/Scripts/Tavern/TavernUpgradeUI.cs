@@ -82,9 +82,7 @@ public class TavernUpgradeUI : MonoBehaviour
 
         ClearRoomPreview();
 
-        CameraFocusManager.Instance.SetFocus(
-            _tavernOverviewPoint,
-            18f);
+        CameraFocusManager.Instance.SetFocus(_tavernOverviewPoint, 32f);
 
         yield return new WaitUntil(() =>
             CameraFocusManager.Instance.IsAtTarget());
