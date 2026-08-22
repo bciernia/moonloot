@@ -17,6 +17,8 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         _hordeNumber = hordeNumber;
         var spawners = FindObjectsOfType<ObjectsSpawner>();
 
+        SpawnObligatoryItems(spawners);
+        
         foreach (var spawner in spawners)
         {
             if (!spawner.spawnOnStart)
@@ -28,6 +30,101 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
         foreach (var spawner in spawners)
         {
             Destroy(spawner.gameObject);
+        }
+    }
+    
+    private void SpawnObligatoryItems(ObjectsSpawner[] spawners)
+    {
+        var pool = _currentNightLocation.ObligatoryItemPool;
+
+        if (pool == null)
+            return;
+
+        var availableItems =
+            pool.GetAvailableItems(_hordeNumber);
+
+        if (availableItems.Count == 0)
+            return;
+
+        var spawnedPositions = new List<Vector3>();
+
+        foreach (var itemData in availableItems)
+        {
+            for (var i = 0; i < itemData.Amount; i++)
+            {
+                SpawnObligatoryItem(
+                    itemData.Item.ItemToDrop,
+                    spawners,
+                    spawnedPositions
+                );
+            }
+        }
+    }
+    
+    private void SpawnObligatoryItem(
+        GameObject prefab,
+        ObjectsSpawner[] spawners,
+        List<Vector3> spawnedPositions)
+    {
+        if (spawners.Length == 0)
+            return;
+
+        const int maxAttempts = 50;
+
+        for (var attempt = 0; attempt < maxAttempts; attempt++)
+        {
+            var spawner =
+                spawners[Random.Range(0, spawners.Length)];
+
+            var randomPos = GetRandomPoint(spawner);
+
+            if (!randomPos.HasValue)
+                continue;
+
+            if (!IsPositionFree(randomPos.Value, spawner))
+                continue;
+
+            if (!IsFarEnough(
+                    randomPos.Value,
+                    spawnedPositions,
+                    0.1f))
+            {
+                continue;
+            }
+
+            SpawnObjectAtPosition(
+                prefab,
+                spawner,
+                randomPos.Value);
+
+            spawnedPositions.Add(randomPos.Value);
+
+            return;
+        }
+
+        Debug.LogWarning(
+            $"Nie znaleziono miejsca dla obligatoryjnego itemu: {prefab.name}");
+    }
+    
+    private void SpawnObjectAtPosition(
+        GameObject prefab,
+        ObjectsSpawner spawner,
+        Vector3 position)
+    {
+        var go = Instantiate(
+            prefab,
+            spawner.spawnPoint.position,
+            Quaternion.identity);
+
+        var mover = go.GetComponent<LootDropMover>();
+
+        if (mover != null)
+        {
+            mover.MoveToPosition(position);
+        }
+        else
+        {
+            go.transform.position = position;
         }
     }
 
@@ -98,21 +195,10 @@ public class LootSpawnManager : Singleton<LootSpawnManager>
             return;
         }
 
-        var go = Instantiate(
+        SpawnObjectAtPosition(
             prefab,
-            spawner.spawnPoint.position,
-            Quaternion.identity);
-
-        var mover = go.GetComponent<LootDropMover>();
-
-        if (mover != null)
-        {
-            mover.MoveToPosition(spawnPos);
-        }
-        else
-        {
-            go.transform.position = spawnPos;
-        }
+            spawner,
+            spawnPos);
 
         spawnedPositions.Add(spawnPos);
     }

@@ -34,7 +34,6 @@ public abstract class ItemSO : ScriptableObject
     [field: SerializeField] public int MaxNight { get; set; } = 9999;
     [field: SerializeField] public int Weight { get; set; } = 10;
     [field: SerializeField] public ItemRarity Rarity { get; set; }
-    [field: SerializeField] public GameObject Prefab { get; set; }
 
     public virtual string GetStatsDescription() => "";
 

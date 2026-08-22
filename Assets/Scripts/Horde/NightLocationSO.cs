@@ -16,6 +16,7 @@ public class NightLocationSO : ScriptableObject
     
     public EnemyPoolSO EnemyPool;
     public ItemPoolSO ItemPool;
+    public ObligatoryItemPoolSO ObligatoryItemPool;
     
     public List<NightReward> Rewards;
 
@@ -31,3 +32,4 @@ public class NightLocationSO : ScriptableObject
     public bool IsBossArena;
     public MoonData BossMoon;
 }
+
