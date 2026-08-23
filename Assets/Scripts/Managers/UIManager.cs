@@ -52,10 +52,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _equippedPanel;
 
     [Header("Day Night Timer")] 
-    [SerializeField] private GameObject _dayNightContainer;
-    [SerializeField] private Image _dayNightTimerImage;
-    [SerializeField] private Sprite[] _timeSprites;
-    [SerializeField] private float _transitionDuration = 0.5f;
+    // [SerializeField] private GameObject _dayNightContainer;
+    // [SerializeField] private Image _dayNightTimerImage;
+    // [SerializeField] private Sprite[] _timeSprites;
+    // [SerializeField] private float _transitionDuration = 0.5f;
 
     [Header("Info panel")] 
     [SerializeField] private TextMeshProUGUI _nightNumber;
@@ -63,6 +63,11 @@ public class UIManager : MonoBehaviour
     [Header("Day night panels")] 
     [SerializeField] private GameObject _startNightPanel;
     [SerializeField] private GameObject _nightSummaryPanel;
+    
+    [Header("Night selection")]
+    [SerializeField] private Transform _nightOptionsContainer;
+    [SerializeField] private NightOptionUI _nightOptionPrefab;
+    [SerializeField] private TextMeshProUGUI _nightStartPanelNumber;
     
     [Header("Boss night panel")]
     [SerializeField] private GameObject _bossFightPanel;
@@ -105,8 +110,8 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private Image _nightPreviewImage;
 
-    [SerializeField] private Button _startNightButton;
-
+    [SerializeField] private float _nightSelectionDelay = 0.5f;
+    
     [Header("Moon objective")]
     [SerializeField] private Image _moonObjectiveImageFinished;
     [SerializeField] private TextMeshProUGUI _moonObjectiveText;
@@ -146,7 +151,8 @@ public class UIManager : MonoBehaviour
         PersistentMenuManager.Instance.LoadPanel;
     
     private int _lastLevel;
-
+    private int _selectedNightIndex = -1;
+    
     private void Awake()
     {
         _playerInput = FindAnyObjectByType<PlayerInput>();
@@ -162,7 +168,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _dayNightCycle = FindAnyObjectByType<DayNightCycle>();
-        _dayNightCycle.OnDayStarted += ResetClock;
+        // _dayNightCycle.OnDayStarted += ResetClock;
         _dayNightCycle.HordeAttack += ShowStartNightPanel;
         HordeManager.OnHordeStarted += SetupHordeUI;
         HordeManager.OnHordeFinished += ShowSummaryPanel;
@@ -181,7 +187,7 @@ public class UIManager : MonoBehaviour
         
         //_playerStatsSo.ResetBonuses();
         UpdateStatsPanel();
-        InitializeClock();
+        // InitializeClock();
 
         RefreshMoonObjective();
 
@@ -277,7 +283,7 @@ public class UIManager : MonoBehaviour
         
         _mainGamePanel.SetActive(isLocation);
         _equippedPanel.SetActive(isLocation);
-        _dayNightTimerImage.gameObject.SetActive(isLocation);
+        // _dayNightTimerImage.gameObject.SetActive(isLocation);
         
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
@@ -321,7 +327,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         UpdatePlayerUI();
-        UpdateClock();
+        // UpdateClock();
         UpdateHordeUI();
         
         if (_gameMenu.activeSelf)
@@ -485,77 +491,77 @@ public class UIManager : MonoBehaviour
     }
     
     #region Day/Night Timer
-    private void InitializeClock()
-    {
-        if (_dayNightCycle == null || _timeSprites.Length == 0)
-            return;
-
-        var spriteCount = _timeSprites.Length;
-
-        var mainFrames = (spriteCount + 1) / 2;
-        var transitions = spriteCount / 2;
-
-        var totalTransitionTime = transitions * _transitionDuration;
-
-        _mainFrameDuration = (_dayNightCycle.dayDuration - totalTransitionTime) / mainFrames;
-
-        _currentClockIndex = 0;
-        _clockTimer = 0f;
-        _isTransition = false;
-
-        _dayNightTimerImage.sprite = _timeSprites[0];
-    }
+    // private void InitializeClock()
+    // {
+    //     if (_dayNightCycle == null || _timeSprites.Length == 0)
+    //         return;
+    //
+    //     var spriteCount = _timeSprites.Length;
+    //
+    //     var mainFrames = (spriteCount + 1) / 2;
+    //     var transitions = spriteCount / 2;
+    //
+    //     var totalTransitionTime = transitions * _transitionDuration;
+    //
+    //     _mainFrameDuration = (_dayNightCycle.dayDuration - totalTransitionTime) / mainFrames;
+    //
+    //     _currentClockIndex = 0;
+    //     _clockTimer = 0f;
+    //     _isTransition = false;
+    //
+    //     _dayNightTimerImage.sprite = _timeSprites[0];
+    // }
     
-    private void UpdateClock()
-    {
-        if (_timeSprites.Length == 0)
-            return;
-
-        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
-            return;
-        
-        _clockTimer += Time.deltaTime;
-
-        if (!_isTransition)
-        {
-            if (_clockTimer >= _mainFrameDuration)
-            {
-                _clockTimer = 0f;
-
-                if (_currentClockIndex + 1 < _timeSprites.Length)
-                {
-                    _currentClockIndex++; 
-                    _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
-
-                    _isTransition = true;
-                }
-            }
-        }
-        else
-        {
-            if (_clockTimer >= _transitionDuration)
-            {
-                _clockTimer = 0f;
-
-                if (_currentClockIndex + 1 < _timeSprites.Length)
-                {
-                    _currentClockIndex++; 
-                    _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
-                }
-
-                _isTransition = false;
-            }
-        }
-    }
+    // private void UpdateClock()
+    // {
+    //     if (_timeSprites.Length == 0)
+    //         return;
+    //
+    //     if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+    //         return;
+    //     
+    //     _clockTimer += Time.deltaTime;
+    //
+    //     if (!_isTransition)
+    //     {
+    //         if (_clockTimer >= _mainFrameDuration)
+    //         {
+    //             _clockTimer = 0f;
+    //
+    //             if (_currentClockIndex + 1 < _timeSprites.Length)
+    //             {
+    //                 _currentClockIndex++; 
+    //                 _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
+    //
+    //                 _isTransition = true;
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         if (_clockTimer >= _transitionDuration)
+    //         {
+    //             _clockTimer = 0f;
+    //
+    //             if (_currentClockIndex + 1 < _timeSprites.Length)
+    //             {
+    //                 _currentClockIndex++; 
+    //                 _dayNightTimerImage.sprite = _timeSprites[_currentClockIndex];
+    //             }
+    //
+    //             _isTransition = false;
+    //         }
+    //     }
+    // }
     
-    private void ResetClock()
-    {
-        _currentClockIndex = 0;
-        _clockTimer = 0f;
-        _isTransition = false;
-
-        _dayNightTimerImage.sprite = _timeSprites[0];
-    }
+    // private void ResetClock()
+    // {
+    //     _currentClockIndex = 0;
+    //     _clockTimer = 0f;
+    //     _isTransition = false;
+    //
+    //     _dayNightTimerImage.sprite = _timeSprites[0];
+    // }
     #endregion
 
     private void UpdateNightUI(int night)
@@ -588,7 +594,7 @@ public class UIManager : MonoBehaviour
 
         PauseManager.Instance.ReleasePause();
 
-        _dayNightContainer.SetActive(true);
+        // _dayNightContainer.SetActive(true);
         _hordeInfoContainer.SetActive(false);
         _waveInfoContainer.SetActive(true);
         _endlessWaveInfoContainer.SetActive(false);
@@ -688,7 +694,7 @@ public class UIManager : MonoBehaviour
         RefreshMoonObjective();
 
         _moonObjectiveImageFinished.gameObject.SetActive(false);
-        _dayNightContainer.SetActive(false);
+        // _dayNightContainer.SetActive(false);
 
         SetupHordeInfoUI();
     }
@@ -948,33 +954,100 @@ public class UIManager : MonoBehaviour
     }
     private void SetupNightPanel()
     {
-        var location = HordeManager.Instance.CurrentNightLocation;
+        ClearNightOptions();
 
-        if (location == null)
+        var options = HordeManager.Instance.PreparedNightOptions;
+        _nightStartPanelNumber.text = $"NIGHT {HordeManager.Instance.currentHorde}";
+        for (var i = 0; i < options.Count; i++)
+        {
+            var option = Instantiate(
+                _nightOptionPrefab,
+                _nightOptionsContainer);
+
+            option.Setup(
+                options[i],
+                i,
+                this);
+        }
+    }
+    
+    private void ClearNightOptions()
+    {
+        foreach (Transform child in _nightOptionsContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+    
+    public void SelectNight(int index)
+    {
+        var options = HordeManager.Instance.PreparedNightOptions;
+
+        if (index < 0 || index >= options.Count)
             return;
 
-        _nightTitle.text = $"NIGHT {HordeManager.Instance.currentHorde}";
-        _nightPreviewImage.sprite = location.PreviewImage;
-        _nightObjective.text = HordeManager.Instance.CurrentMoon.ObjectiveTextLong;
-        _nightObjectiveImage.sprite = HordeManager.Instance.CurrentMoon.Image;
-        _mutation.text = HordeManager.Instance.PreparedMutation.Description;
-        _mutationImage.sprite = HordeManager.Instance.PreparedMutation.Icon;
-        _locationName.text = location.SceneName;
-        SetupNightRewards();
+        HordeManager.Instance.SelectNightOption(index);
         
-        //TODO
-        // CreateNightRewards(location.Rewards);
+        StartCoroutine(PlayNightSelectionAnimation(index));
+    }
+    
+    private IEnumerator PlayNightSelectionAnimation(int selectedIndex)
+    {
+        var selectedCard =
+            _nightOptionsContainer
+                .GetChild(selectedIndex)
+                .GetComponent<NightOptionUI>();
 
-        _startNightButton.onClick.RemoveAllListeners();
+        if (selectedCard == null)
+            yield break;
 
-        _startNightButton.onClick.AddListener(() =>
+        var containerRect =
+            _nightOptionsContainer
+                .GetComponent<RectTransform>();
+
+        var centerPosition =
+            containerRect.rect.center;
+
+        for (var i = 0; i < _nightOptionsContainer.childCount; i++)
         {
-            StartSelectedNight(
-                HordeManager.Instance.IsHeroNight
-                    ? HordeManager.Instance.CurrentHeroNpc
-                    : null
-            );
-        });
+            var card =
+                _nightOptionsContainer
+                    .GetChild(i)
+                    .GetComponent<NightOptionUI>();
+
+            if (card == null)
+                continue;
+
+            if (i == selectedIndex)
+            {
+                card.PlaySelectedAnimation(
+                    centerPosition,
+                    true);
+            }
+            else
+            {
+                card.PlaySelectedAnimation(
+                    Vector3.zero,
+                    false);
+            }
+        }
+
+        yield return new WaitForSecondsRealtime(
+            _nightSelectionDelay);
+
+        StartNight();
+    }
+
+    private void StartNight()
+    {
+        CombatStatsManager.Instance.ResetStats(
+            Player.Instance.transform);
+
+        _startNightPanel.SetActive(false);
+
+        PauseManager.Instance.ReleasePause();
+
+        HordeManager.Instance.StartHorde();
     }
     
     private void SetupBossNightPanel(MoonData bossMoon)
