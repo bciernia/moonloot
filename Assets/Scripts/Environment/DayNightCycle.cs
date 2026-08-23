@@ -31,6 +31,12 @@ public class DayNightCycle : MonoBehaviour
     public float nightLightIntensity = 2f;
     public float dayLightIntensity = 0f;
     
+    [SerializeField] private Color _dayColor = Color.white;
+    [SerializeField] private Color _nightColor = new Color(0.12f, 0.15f, 0.3f);
+
+    [SerializeField] private float _nightLightIntensity = 2f;
+    [SerializeField] private float _dayLightIntensity = 0f;
+    
     public Action OnDayStarted;
     public Action OnEveningStarted;
     public Action OnNightStarted;
@@ -48,7 +54,7 @@ public class DayNightCycle : MonoBehaviour
     private void Awake()
     {
         AssignLights();
-        ApplyInitialLighting();
+        // ApplyInitialLighting();
     }
 
     private void Start()
@@ -74,19 +80,43 @@ public class DayNightCycle : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         AssignLights();
-        ApplyInitialLighting();
+        // ApplyInitialLighting();
     }
 
     private void Update()
     {
-        if (hordePending)
+        // if (hordePending)
+        //     return;
+        //
+        // if (HordeManager.Instance != null &&
+        //     HordeManager.Instance.NightStartType == NightStartType.Boss)
+        //     return;
+
+        // UpdateLighting();
+    }
+    
+    public void SetNightLighting()
+    {
+        if (globalLight == null)
+            AssignLights();
+
+        if (globalLight == null)
             return;
 
-        if (HordeManager.Instance != null &&
-            HordeManager.Instance.NightStartType == NightStartType.Boss)
+        globalLight.color = _nightColor;
+        SetLights(_nightLightIntensity);
+    }
+
+    public void SetDayLighting()
+    {
+        if (globalLight == null)
+            AssignLights();
+        
+        if (globalLight == null)
             return;
 
-        UpdateLighting();
+        globalLight.color = _dayColor;
+        SetLights(_dayLightIntensity);
     }
 
     private void UpdateLighting()
@@ -188,27 +218,35 @@ public class DayNightCycle : MonoBehaviour
 
     private void AssignLights()
     {
+        globalLight = null;
+
+        foreach (var light in FindObjectsByType<Light2D>(
+                     FindObjectsSortMode.None))
+        {
+            if (light.lightType == Light2D.LightType.Global)
+            {
+                globalLight = light;
+                break;
+            }
+        }
+
         if (globalLight == null)
         {
-            foreach (var l in FindObjectsByType<Light2D>(FindObjectsSortMode.None))
-            {
-                if (l.lightType == Light2D.LightType.Global)
-                {
-                    globalLight = l;
-                    break;
-                }
-            }
-
-            if (globalLight == null)
-                Debug.LogWarning("No Global Light2D found in the scene!");
+            Debug.LogWarning(
+                $"No Global Light2D found in scene {SceneManager.GetActiveScene().name}!");
         }
 
         lights.Clear();
+
         foreach (var obj in GameObject.FindGameObjectsWithTag("Light"))
         {
             var sceneLight = obj.GetComponent<Light2D>();
-            if (sceneLight != null && sceneLight.lightType != Light2D.LightType.Global)
+
+            if (sceneLight != null &&
+                sceneLight.lightType != Light2D.LightType.Global)
+            {
                 lights.Add(sceneLight);
+            }
         }
     }
 
@@ -220,21 +258,13 @@ public class DayNightCycle : MonoBehaviour
                 light.intensity = intensity;
         }
     }
-
+    
     public void ResetCycle()
     {
-        MoonManager.Instance.RollMoon();
-        
-        timer = 0f;
-        isEvening = false;
-        isNight = false;
+        SetDayLighting();
+
         hordeStarted = false;
-
-        SetLights(dayLightIntensity);
-
-        globalLight.color = dayColor;
-        
-        OnDayStarted?.Invoke();
+        hordePending = false;
     }
 
     private void HandleDialogueEnded()
@@ -253,16 +283,16 @@ public class DayNightCycle : MonoBehaviour
         if (hordeStarted)
             return;
 
-        timer = dayDuration;
+        // timer = dayDuration;
 
-        isEvening = true;
-        isNight = true;
+        // isEvening = true;
+        // isNight = true;
 
-        globalLight.color = CurrentNightColor;
+        // globalLight.color = CurrentNightColor;
 
-        SetLights(nightLightIntensity);
+        // SetLights(nightLightIntensity);
 
-        OnNightStarted?.Invoke();
+        // OnNightStarted?.Invoke();
 
         if (DialogueManager.Instance != null &&
             DialogueManager.Instance.IsInDialogue())

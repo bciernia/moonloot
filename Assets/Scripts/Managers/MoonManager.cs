@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -21,8 +22,20 @@ public class MoonManager : Singleton<MoonManager>
 
     public void RollMoon()
     {
-        // CurrentMoon = moons[Random.Range(0, moons.Count)];
-        CurrentMoon = moons[3];
+        CurrentMoon = moons[Random.Range(0, moons.Count)];
         OnMoonChanged?.Invoke(CurrentMoon);
+    }
+    
+    public List<MoonData> GetRandomMoons(int count)
+    {
+        if (moons == null || moons.Count == 0)
+            return new List<MoonData>();
+
+        var availableMoons = moons
+            .OrderBy(_ => Random.value)
+            .Take(count)
+            .ToList();
+
+        return availableMoons;
     }
 }

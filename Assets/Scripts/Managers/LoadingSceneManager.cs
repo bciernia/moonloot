@@ -34,9 +34,9 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     {
         await LoadScene(sceneName, true);
 
-        var cycle = FindObjectOfType<DayNightCycle>();
-        if (cycle != null)
-            cycle.ResetCycle();
+        // var cycle = FindObjectOfType<DayNightCycle>();
+        // if (cycle != null)
+        //     cycle.ResetCycle();
     }
 
     public async Task LoadScene(string sceneName, bool setPlayerInSpawnPoint = false)
@@ -89,8 +89,8 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         {
             var cycle = FindObjectOfType<DayNightCycle>();
             SoundManager.Instance.StopCombatMusic();
-            if (cycle != null)
-                cycle.ResetCycle();
+            // if (cycle != null)
+            //     cycle.ResetCycle();
         }
 
         await Task.Delay(500);       

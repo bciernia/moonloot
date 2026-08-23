@@ -89,11 +89,17 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private int _activatedObelisks;
     private int _spawnedObelisks;
     private NightStartType _nightStartType;
+    private Coroutine _waveSpawnRoutine;
     
     public NightLocationSO CurrentNightLocation { get; private set; }
     
     public HordeData PreparedData { get; private set; }
     public MutationData PreparedMutation { get; private set; }
+    
+    private readonly List<PreparedNightOption> _preparedNightOptions = new();
+
+    public IReadOnlyList<PreparedNightOption> PreparedNightOptions =>
+        _preparedNightOptions;
     
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
@@ -195,10 +201,17 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             {
                 _timeToNextWave = timeBetweenWaves;
 
-                StartCoroutine(SpawnWave(spawners, data));
-
+                _waveSpawnRoutine =
+                    StartCoroutine(SpawnWave(spawners, data));
+                
                 yield return StartCoroutine(WaveTimer());
 
+                if (_waveSpawnRoutine != null)
+                {
+                    StopCoroutine(_waveSpawnRoutine);
+                    _waveSpawnRoutine = null;
+                }
+                
                 _currentWave++;
 
                 continue;
@@ -259,14 +272,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         StartEndlessMode(spawners);
     }
     
-    private void PrepareRewards()
+    private List<NightReward> GetRandomRewards(NightLocationSO location)
     {
-        _preparedRewards.Clear();
+        var rewards = new List<NightReward>();
 
-        var location = CurrentNightLocation;
-
-        if (location == null || location.Rewards == null || location.Rewards.Count == 0)
-            return;
+        if (location == null ||
+            location.Rewards == null ||
+            location.Rewards.Count == 0)
+        {
+            return rewards;
+        }
 
         var rewardCount = GetRewardCount(currentHorde);
 
@@ -274,10 +289,38 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             .OrderBy(_ => Random.value)
             .ToList();
 
-        for (var i = 0; i < rewardCount && i < availableRewards.Count; i++)
+        for (var i = 0;
+             i < rewardCount && i < availableRewards.Count;
+             i++)
         {
-            _preparedRewards.Add(availableRewards[i]);
+            rewards.Add(availableRewards[i]);
         }
+
+        return rewards;
+    }
+    
+    public void SelectNightOption(int index)
+    {
+        if (index < 0 || index >= _preparedNightOptions.Count)
+        {
+            Debug.LogWarning($"Invalid night option index: {index}");
+            return;
+        }
+
+        var option = _preparedNightOptions[index];
+
+        CurrentNightLocation = option.Location;
+        CurrentMoon = option.Moon;
+        PreparedMutation = option.Mutation;
+
+        _preparedRewards.Clear();
+        _preparedRewards.AddRange(option.Rewards);
+
+        _lastNightLocation = CurrentNightLocation;
+
+        Debug.Log(
+            $"Selected night: {CurrentNightLocation.name}"
+        );
     }
     
     private int GetRewardCount(int night)
@@ -325,7 +368,20 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         for (var i = 0; i < enemiesToSpawn; i++)
         {
-            SpawnEnemyNearPlayer(spawners, data);
+            if (!_isNightRunning)
+                yield break;
+
+            if (spawners == null || spawners.Length == 0)
+                yield break;
+
+            var validSpawners = spawners
+                .Where(x => x != null && x.spawnPoint != null)
+                .ToArray();
+
+            if (validSpawners.Length == 0)
+                yield break;
+
+            SpawnEnemyNearPlayer(validSpawners, data);
 
             yield return new WaitForSeconds(spawnDelay);
         }
@@ -357,17 +413,64 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             Debug.Log("Horde is prepared");
             return;
         }
-        CurrentMoon = MoonManager.Instance.CurrentMoon;
-        
-        _hordePrepared = true;
-        
-        PreparedData = hordeConfig.GetHorde(currentHorde - 1);
-        PreparedMutation = GetRandomMutation();
 
-        GenerateNightLocation();
-        PrepareRewards();
-        
+        PreparedData = hordeConfig.GetHorde(currentHorde - 1);
+
+        GenerateNightOptions();
+
+        _hordePrepared = true;
         _nightStartType = NightStartType.Horde;
+    }
+    
+    private void GenerateNightOptions()
+    {
+        _preparedNightOptions.Clear();
+
+        var pool = _nightDatabase.NormalNights;
+
+        if (pool == null || pool.Count == 0)
+        {
+            Debug.LogWarning("No night locations available.");
+            return;
+        }
+
+        var availableLocations = pool
+            .Where(x => x != _lastNightLocation)
+            .OrderBy(_ => Random.value)
+            .ToList();
+
+        if (availableLocations.Count == 0)
+        {
+            availableLocations = pool
+                .OrderBy(_ => Random.value)
+                .ToList();
+        }
+        
+        var moonOptions = MoonManager.Instance.GetRandomMoons(3);
+
+        var count = Mathf.Min(3, availableLocations.Count);
+
+        for (var i = 0; i < count; i++)
+        {
+            var location = availableLocations[i];
+
+            var option = new PreparedNightOption
+            {
+                Location = location,
+                Moon = moonOptions[i],
+                Mutation = GetRandomMutation()
+            };
+
+            option.Rewards.AddRange(
+                GetRandomRewards(location)
+            );
+
+            _preparedNightOptions.Add(option);
+
+            Debug.Log(
+                $"Night option {i + 1}: {location.name}"
+            );
+        }
     }
     
     public void PrepareBossFight(NightLocationSO bossLocation)
@@ -517,6 +620,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         );
 
         StartBossFightRoutine();
+        
+        var cycle = FindFirstObjectByType<DayNightCycle>();
+
+        if (cycle != null)
+        {
+            cycle.SetNightLighting();
+        }
     }
     
     private void StartBossFightRoutine()
@@ -540,12 +650,19 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         );
 
         yield return new WaitForSeconds(0.2f);
-        
+
         LootSpawnManager.Instance.SpawnAll(CurrentNightLocation, currentHorde);
         SpawnObjectiveItems();
         SpawnSpecialChests();
         SpawnNPC();
         SpawnHorde();
+        
+        var cycle = FindFirstObjectByType<DayNightCycle>();
+
+        if (cycle != null)
+        {
+            cycle.SetNightLighting();
+        }
     }
     
     public void CleanupEnemies()
@@ -855,6 +972,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             StopCoroutine(_nightRoutine);
             _nightRoutine = null;
         }
+
+        if (_waveSpawnRoutine != null)
+        {
+            StopCoroutine(_waveSpawnRoutine);
+            _waveSpawnRoutine = null;
+        }
     }
     
     private void IncreaseEnemiesSpeed()
@@ -957,26 +1080,43 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         );
     }
     
-    private void SpawnEnemyNearPlayer(EnemySpawner[] spawners, HordeData data)
+    private void SpawnEnemyNearPlayer(
+        EnemySpawner[] spawners,
+        HordeData data)
     {
+        if (!_isNightRunning)
+            return;
+
         if (spawners != null && spawners.Length > 0)
         {
-            var spawner = spawners[Random.Range(0, spawners.Length)];
+            var validSpawners = spawners
+                .Where(x => x != null && x.spawnPoint != null)
+                .ToArray();
 
-            var pool = GetEnemyPool();
-            var prefab = GetRandomEnemy(pool);
+            if (validSpawners.Length > 0)
+            {
+                var spawner =
+                    validSpawners[Random.Range(
+                        0,
+                        validSpawners.Length)];
 
-            var enemyGO = Instantiate(
-                prefab,
-                spawner.spawnPoint.position,
-                Quaternion.identity
-            );
+                var pool = GetEnemyPool();
+                var prefab = GetRandomEnemy(pool);
 
-            SetupEnemy(enemyGO, data, pool);
+                var enemyGO = Instantiate(
+                    prefab,
+                    spawner.spawnPoint.position,
+                    Quaternion.identity);
 
-            return;
+                SetupEnemy(enemyGO, data, pool);
+
+                return;
+            }
         }
-        
+
+        if (Player.Instance == null)
+            return;
+
         var playerPos = Player.Instance.transform.position;
         var minDistance = 12f;
         var maxDistance = 20f;
@@ -984,20 +1124,39 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         for (var i = 0; i < maxAttempts; i++)
         {
-            var rawPos = GetRandomSpawnPosition(playerPos, minDistance, maxDistance);
-            
-            if (IsValidSpawnPosition(rawPos, playerPos, out Vector3 finalPos))
+            if (!_isNightRunning)
+                return;
+
+            var rawPos =
+                GetRandomSpawnPosition(
+                    playerPos,
+                    minDistance,
+                    maxDistance);
+
+            if (IsValidSpawnPosition(
+                    rawPos,
+                    playerPos,
+                    out var finalPos))
             {
                 var pool = GetEnemyPool();
                 var prefab = GetRandomEnemy(pool);
 
-                var enemyGO = Instantiate(prefab, finalPos, Quaternion.identity);
-                SetupEnemy(enemyGO, data, pool);
+                var enemyGO = Instantiate(
+                    prefab,
+                    finalPos,
+                    Quaternion.identity);
+
+                SetupEnemy(
+                    enemyGO,
+                    data,
+                    pool);
+
                 return;
             }
         }
 
-        Debug.LogWarning("Nie znaleziono dobrej pozycji spawnu");
+        Debug.LogWarning(
+            "Nie znaleziono dobrej pozycji spawnu");
     }
     
     private RescueNpc SpawnHeroNpc()
@@ -1655,9 +1814,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         LoadingSceneManager.Instance.LoadScene(_previousScene, true);
         
-        var cycle = FindObjectOfType<DayNightCycle>();
+        var cycle = FindFirstObjectByType<DayNightCycle>();
+
         if (cycle != null)
+        {
             cycle.ResetCycle();
+        }
 
         ToastrPanelManager.Instance.Show("SAVING");
         SaveLoadManager.Instance.Save();
