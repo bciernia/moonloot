@@ -12,7 +12,7 @@ public class PlayerExp : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
-            AddExp(30f);
+            AddExp(100f);
         }
     }
 

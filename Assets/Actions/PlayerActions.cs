@@ -263,6 +263,15 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""Value"",
+                    ""id"": ""2d7dd347-e480-440a-beac-20a6dd6e837d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -307,6 +316,17 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Main menu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5886326c-eeb8-462d-95d4-ed1e6d345c40"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -489,6 +509,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         m_UI_Journal = m_UI.FindAction("Journal", throwIfNotFound: true);
         m_UI_Skills = m_UI.FindAction("Skills", throwIfNotFound: true);
         m_UI_Mainmenu = m_UI.FindAction("Main menu", throwIfNotFound: true);
+        m_UI_Point = m_UI.FindAction("Point", throwIfNotFound: true);
         // Attack
         m_Attack = asset.FindActionMap("Attack", throwIfNotFound: true);
         m_Attack_Attack = m_Attack.FindAction("Attack", throwIfNotFound: true);
@@ -697,6 +718,7 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_Journal;
     private readonly InputAction m_UI_Skills;
     private readonly InputAction m_UI_Mainmenu;
+    private readonly InputAction m_UI_Point;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -724,6 +746,10 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Mainmenu".
         /// </summary>
         public InputAction @Mainmenu => m_Wrapper.m_UI_Mainmenu;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Point".
+        /// </summary>
+        public InputAction @Point => m_Wrapper.m_UI_Point;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -762,6 +788,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Mainmenu.started += instance.OnMainmenu;
             @Mainmenu.performed += instance.OnMainmenu;
             @Mainmenu.canceled += instance.OnMainmenu;
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
         }
 
         /// <summary>
@@ -785,6 +814,9 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
             @Mainmenu.started -= instance.OnMainmenu;
             @Mainmenu.performed -= instance.OnMainmenu;
             @Mainmenu.canceled -= instance.OnMainmenu;
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
         }
 
         /// <summary>
@@ -1207,6 +1239,13 @@ public partial class @PlayerActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMainmenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPoint(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Attack" which allows adding and removing callbacks.

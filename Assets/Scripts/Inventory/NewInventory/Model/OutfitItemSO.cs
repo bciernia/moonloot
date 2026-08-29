@@ -4,8 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Outfit", fileName = "Outfit_")]
 public class OutfitItemSO : EquippableItemSO, IItemAction
 {
+    [SerializeField] private float _aimDistanceBonus;
+    
     public AudioClip actionSfx { get; }
     public RuntimeAnimatorController RuntimeAnimatorController;
+    public float AimDistanceBonus => _aimDistanceBonus;
+    
+
     public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
         var outfitSystem = character.transform.parent.GetComponentInChildren<OutfitManager>();
