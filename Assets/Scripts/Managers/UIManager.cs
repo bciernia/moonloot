@@ -119,6 +119,14 @@ public class UIManager : MonoBehaviour
     [Header("Minimap")]
     [SerializeField] private GameObject _minimapContainer;
     
+    [Header("Find Portal")]
+    [SerializeField] private RectTransform _findPortalPanel;
+    [SerializeField] private float _findPortalStartX = 600f;
+    [SerializeField] private float _findPortalTargetX = 0f;
+    [SerializeField] private float _findPortalSlideDuration = 0.5f;
+
+    private Coroutine _findPortalCoroutine;
+    
     private float _waveTime;
     private bool _isTimerActive;
 
@@ -195,6 +203,16 @@ public class UIManager : MonoBehaviour
         
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
+        
+        if (_findPortalPanel == null)
+            return;
+
+        var position = _findPortalPanel.anchoredPosition;
+
+        position.x = _findPortalStartX;
+
+        _findPortalPanel.anchoredPosition = position;
+        _findPortalPanel.gameObject.SetActive(false);
     }
 
     private void ShowEndlessUI()
@@ -207,10 +225,8 @@ public class UIManager : MonoBehaviour
     {
         _portalSpawned = true;
 
-        UpdateMoonObjectiveUI(
-            HordeManager.Instance.CurrentObjectiveProgress,
-            HordeManager.Instance.CurrentObjectiveTarget
-        );
+        ShowFindPortal();        
+        UpdateMoonObjectiveUI(HordeManager.Instance.CurrentObjectiveProgress, HordeManager.Instance.CurrentObjectiveTarget);
     }
 
     private void OnPortalRemoved()
@@ -678,7 +694,7 @@ public class UIManager : MonoBehaviour
         _waveNumberTMP.text = "Wave: 1";
         _nextWaveTMP.text = "Next wave in: 90";
 
-        var moon = MoonManager.Instance.CurrentMoon;
+        var moon = HordeManager.Instance.CurrentMoon;
 
         if (moon != null)
         {
@@ -687,6 +703,82 @@ public class UIManager : MonoBehaviour
         }
 
         _isTimerActive = false;
+    }
+    
+    public void ShowFindPortal()
+    {
+        if (_findPortalPanel == null)
+            return;
+
+        if (_findPortalCoroutine != null)
+            StopCoroutine(_findPortalCoroutine);
+
+        _findPortalCoroutine = StartCoroutine(
+            ShowFindPortalCoroutine());
+    }
+    
+    private IEnumerator ShowFindPortalCoroutine()
+    {
+        _findPortalPanel.gameObject.SetActive(true);
+
+        var position = _findPortalPanel.anchoredPosition;
+
+        position.x = _findPortalStartX;
+        _findPortalPanel.anchoredPosition = position;
+
+        var elapsed = 0f;
+
+        while (elapsed < _findPortalSlideDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            var t = Mathf.Clamp01(
+                elapsed / _findPortalSlideDuration);
+
+            t = 1f - Mathf.Pow(1f - t, 3f);
+
+            position.x = Mathf.Lerp(
+                _findPortalStartX,
+                _findPortalTargetX,
+                t);
+
+            _findPortalPanel.anchoredPosition = position;
+
+            yield return null;
+        }
+
+        position.x = _findPortalTargetX;
+        _findPortalPanel.anchoredPosition = position;
+
+        yield return new WaitForSecondsRealtime(5f);
+
+        elapsed = 0f;
+
+        while (elapsed < _findPortalSlideDuration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+
+            var t = Mathf.Clamp01(
+                elapsed / _findPortalSlideDuration);
+
+            t = t * t * t;
+
+            position.x = Mathf.Lerp(
+                _findPortalTargetX,
+                _findPortalStartX,
+                t);
+
+            _findPortalPanel.anchoredPosition = position;
+
+            yield return null;
+        }
+
+        position.x = _findPortalStartX;
+        _findPortalPanel.anchoredPosition = position;
+
+        _findPortalPanel.gameObject.SetActive(false);
+
+        _findPortalCoroutine = null;
     }
 
     private void SetupHordeUI()
@@ -740,7 +832,7 @@ public class UIManager : MonoBehaviour
             _enemyTMP.text = $"Enemies: {alive}";
         }
         
-        var moon = MoonManager.Instance.CurrentMoon;
+        var moon = HordeManager.Instance.CurrentMoon;
 
         if (moon != null)
         {
@@ -1203,7 +1295,7 @@ public class UIManager : MonoBehaviour
 
     private void RefreshMoonObjective()
     {
-        var moon = MoonManager.Instance.CurrentMoon;
+        var moon = HordeManager.Instance.CurrentMoon;
 
         if (moon == null)
             return;
@@ -1218,8 +1310,7 @@ public class UIManager : MonoBehaviour
     {
         string newText;
 
-        if (HordeManager.Instance.CurrentObjective ==
-            HordeObjective.BossArena)
+        if (HordeManager.Instance.CurrentObjective == HordeObjective.BossArena)
         {
             newText = HordeManager.Instance.IsBossAlive()
                 ? "Kill the boss"
@@ -1236,14 +1327,13 @@ public class UIManager : MonoBehaviour
             _moonObjectiveImageFinished.gameObject.SetActive(true);
         }
         else
-        {
-            var moon = MoonManager.Instance.CurrentMoon;
+        {        
+            var moon = HordeManager.Instance.CurrentMoon;
 
             if (moon == null)
                 return;
 
-            newText =
-                $"{moon.ObjectiveText}: {current}/{target}";
+            newText = $"{moon.ObjectiveText}: {current}/{target}";
         }
 
         if (_moonObjectiveText.text != newText)

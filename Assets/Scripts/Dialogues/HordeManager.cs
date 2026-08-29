@@ -1834,13 +1834,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         switch (_currentMutationType)
         {
             case HordeMutation.StrongEnemies:
-                stats.MaxHP *= 1.5f;
+                stats.MaxHP *= 1.25f;
                 stats.RestoreHealthForEliteEnemy(stats.MaxHP);
                 break;
 
             case HordeMutation.FastEnemies:
-                stats.Speed *= 1.5f;
-                stats.ChaseSpeed *= 1.5f;
+                stats.Speed *= 1.1f;
+                stats.ChaseSpeed *= 1.1f;
                 break;
 
             case HordeMutation.BrutalEnemies:

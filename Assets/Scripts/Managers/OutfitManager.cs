@@ -9,6 +9,13 @@ public class OutfitManager : Singleton<OutfitManager>
     [SerializeField] private RuntimeAnimatorController _standardOutfit;
     [SerializeField] private OutfitItemSO _outfit;
     
+    private PlayerAim _playerAim;
+    
+    private void Awake()
+    {
+        _playerAim = FindAnyObjectByType<PlayerAim>();
+    }
+    
     public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {
         //Tworzy duplikat przy przeładowaniu gry, jesli coś było założone, dlatego dodano flage isFromLoading
@@ -50,9 +57,14 @@ public class OutfitManager : Singleton<OutfitManager>
         if (outfit == null)
         {
             FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = _standardOutfit;
+            
+            if (_playerAim != null) _playerAim.SetOutfitAimBonus(0f);
 
             return;
         }
+        
+        if (_playerAim != null)
+            _playerAim.SetOutfitAimBonus(outfit.AimDistanceBonus);
         FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
         EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit, 1, 2);
     }

@@ -25,7 +25,6 @@ public class CursorUI : MonoBehaviour
         if (Mouse.current == null)
             return;
 
-        _cursorTransform.position =
-            Mouse.current.position.ReadValue();
+        _cursorTransform.position = Mouse.current.position.ReadValue();
     }
 }
