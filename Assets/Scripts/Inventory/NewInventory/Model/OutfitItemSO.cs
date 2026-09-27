@@ -4,12 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Item/Outfit", fileName = "Outfit_")]
 public class OutfitItemSO : EquippableItemSO, IItemAction
 {
-    [SerializeField] private float _aimDistanceBonus;
+    [SerializeField] private float _rangeBonus;
     
     public AudioClip actionSfx { get; }
     public RuntimeAnimatorController RuntimeAnimatorController;
-    public float AimDistanceBonus => _aimDistanceBonus;
-    
+    public float RangeBonus => _rangeBonus;
 
     public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {

@@ -20,7 +20,7 @@ public class ShopManager : Singleton<ShopManager>
     public InventoryRuntime SellerInventory { get; private set; }
     private InventoryType InventoryType { get; set; }
     
-    public void InitializeShop(InventoryRuntime sellerInventory, string panelName, InventoryType inventoryType)
+    public void InitializeShop(InventoryRuntime sellerInventory, InventoryType inventoryType)
     {
         SellerInventory = sellerInventory;
         InventoryPanel.SetActive(true);

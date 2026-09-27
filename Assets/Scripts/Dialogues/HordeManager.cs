@@ -172,6 +172,12 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         CorruptedVillager.OnCorruptedVillagerKilled += RefreshObjective;
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.M))
+            GenerateNightOptions();
+    }
+
     private void OnDisable()
     {
         if (InventoryController.Instance != null)

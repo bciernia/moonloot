@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7316416379639250189}
   - component: {fileID: 4671347544437503802}
   - component: {fileID: 2888008647003564108}
+  - component: {fileID: 7481357812650336219}
   m_Layer: 0
   m_Name: Blacksmith
   m_TagString: Untagged
@@ -190,12 +191,26 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 0.5
+  m_Offset: {x: 0, y: -0.4330802}
+  m_Radius: 1.3661604
+--- !u!114 &7481357812650336219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2b53796bee44e8baa28a3fa064ae30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SellerInventory: {fileID: 11400000, guid: 7664df2a7f4d2844f9f0a86a75cbe122, type: 2}
+  sellerId: e307c515-6a9f-43fd-992d-194b5d8885d5
 --- !u!1 &3291251386058539851
 GameObject:
   m_ObjectHideFlags: 0

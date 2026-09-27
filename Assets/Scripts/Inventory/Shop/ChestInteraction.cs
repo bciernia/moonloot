@@ -58,7 +58,7 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
         
         if (PauseManager.Instance.pauseRequests > 0) return;
         
-        ShopManager.Instance.InitializeShop(_chestInventory, "Chest", InventoryType.Chest);
+        ShopManager.Instance.InitializeShop(_chestInventory, InventoryType.Chest);
     }
 
     public string GetInteractionText() => string.IsNullOrEmpty(interactionText) ? "Open chest" : interactionText;

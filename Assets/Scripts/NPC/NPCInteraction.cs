@@ -51,7 +51,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     {
         var enemyAnimator = GetComponent<EnemyAnimator>();
         var player = GameObject.FindGameObjectWithTag("Player");
-        enemyAnimator.SetNpcPositionForDialogue(player.transform.position, gameObject.transform.position);
+        enemyAnimator?.SetNpcPositionForDialogue(player.transform.position, gameObject.transform.position);
         
         if(_rescueNpc != null && !_rescueNpc.IsSaved())
         {

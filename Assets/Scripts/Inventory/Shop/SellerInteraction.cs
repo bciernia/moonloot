@@ -58,7 +58,7 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     {
         if (PauseManager.Instance.pauseRequests > 0) return;
         
-        ShopManager.Instance.InitializeShop(_sellerInventory, _enemyStatistics.Name, InventoryType.Shop);
+        ShopManager.Instance.InitializeShop(_sellerInventory, InventoryType.Shop);
     }
 
     public string GetInteractionText()
