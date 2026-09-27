@@ -21,6 +21,8 @@ public class CraftingRecipeSO : ScriptableObject
 
     [Header("Materials")]
     public List<CraftingMaterial> Materials;
+
+    [Header("Unlock")] public RoomUpgradeSO RequiredUpgrade;
 }
 
 [Serializable]

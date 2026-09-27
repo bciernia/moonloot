@@ -63,6 +63,14 @@ public class RoomOwnerPanelManager : Singleton<RoomOwnerPanelManager>
 
         foreach (var recipe in roomOwner.Recipes)
         {
+            if (recipe.RequiredUpgrade != null &&
+                !TavernManager.Instance.HasUpgrade(
+                    roomOwner.RoomSlotId,
+                    recipe.RequiredUpgrade.Id))
+            {
+                continue;
+            }
+
             var itemUI = Instantiate(
                 _recipePrefab,
                 _recipeContainer);

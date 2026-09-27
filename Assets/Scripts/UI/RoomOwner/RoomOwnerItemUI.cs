@@ -7,6 +7,9 @@ public class RoomOwnerItemUI : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
     [SerializeField] private TMP_Text _itemDescription;
+    
+    [Header("Feedback")]
+    [SerializeField] private CraftFeedbackUI _craftFeedbackUI;
 
     [Header("Price")]
     [SerializeField] private Transform _priceContainer;
@@ -45,10 +48,14 @@ public class RoomOwnerItemUI : MonoBehaviour
             var priceElement = Instantiate(
                 _priceElementUI,
                 _priceContainer);
-
+            
+            var ownedAmount = InventoryController.Instance.GetItemCount(material.Item);
+            
             priceElement.Setup(
                 material.Item.item.Image,
-                $"{material.Item.item.Name} x{material.Amount}");
+                material.Item.item.Name,
+                material.Amount,
+                ownedAmount);
         }
     }
 
@@ -57,6 +64,8 @@ public class RoomOwnerItemUI : MonoBehaviour
         if (_recipe == null)
             return;
 
+        SetupPrice();
+        
         var canCraft =
             CraftingManager.Instance.CanCraft(_recipe);
 
@@ -65,6 +74,9 @@ public class RoomOwnerItemUI : MonoBehaviour
 
     private void OnCreateClicked()
     {
-        CraftingManager.Instance.Craft(_recipe);
+        if (CraftingManager.Instance.Craft(_recipe))
+        {
+            _craftFeedbackUI.Show(_recipe.ResultItem.item.Image, _recipe.ResultAmount);
+        }
     }
 }

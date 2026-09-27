@@ -166,15 +166,21 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         skillUpgrade.text = _currentNpc.GetSkillUpgradeText();
         
         var item = _currentNpc.GetRequiredItem();
-
+        var requiredItemAmount = _currentNpc.GetRequiredAmount();
+        var ownedItemAmount = InventoryController.Instance.GetItemCount(new InventoryItem { item = item });
         var itemElement =
             Instantiate(pricePrefab, priceContainer.transform);
 
         itemElement.GetComponent<PriceElementUI>()
             .Setup(
                 item.Image,
-                $"{item.Name} x{_currentNpc.GetRequiredAmount()}"
+                item.Name,
+                requiredItemAmount,
+                ownedItemAmount
             );
+
+        var requiredGold = _currentNpc.GetRequiredGold();
+        var ownedGold = InventoryController.Instance.GetGoldAmount();
 
         var goldElement =
             Instantiate(pricePrefab, priceContainer.transform);
@@ -182,7 +188,9 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         goldElement.GetComponent<PriceElementUI>()
             .Setup(
                 goldSprite,
-                _currentNpc.GetRequiredGold().ToString()
+                "Gold",
+                requiredGold,
+                ownedGold
             );
     }
 

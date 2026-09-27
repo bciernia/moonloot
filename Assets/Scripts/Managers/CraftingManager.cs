@@ -20,10 +20,10 @@ public class CraftingManager : Singleton<CraftingManager>
         return true;
     }
 
-    public void Craft(CraftingRecipeSO recipe)
+    public bool Craft(CraftingRecipeSO recipe)
     {
         if (!CanCraft(recipe))
-            return;
+            return false;
 
         foreach (var material in recipe.Materials)
         {
@@ -40,5 +40,7 @@ public class CraftingManager : Singleton<CraftingManager>
         });
 
         OnInventoryChanged?.Invoke();
+
+        return true;
     }
 }

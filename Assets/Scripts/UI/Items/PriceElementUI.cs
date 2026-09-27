@@ -4,12 +4,21 @@ using UnityEngine.UI;
 
 public class PriceElementUI : MonoBehaviour
 {
-    [SerializeField] private Image icon;
-    [SerializeField] private TMP_Text amountText;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _text;
 
-    public void Setup(Sprite sprite, string text)
+    [Header("Colors")]
+    [SerializeField] private Color _enoughColor = Color.green;
+    [SerializeField] private Color _notEnoughColor = Color.red;
+
+    public void Setup(Sprite icon, string itemName, int requiredAmount, int ownedAmount)
     {
-        icon.sprite = sprite;
-        amountText.text = text;
+        _icon.sprite = icon;
+
+        _text.text = $"{itemName} x{requiredAmount} ({ownedAmount})";
+
+        _text.color = ownedAmount >= requiredAmount
+            ? _enoughColor
+            : _notEnoughColor;
     }
 }

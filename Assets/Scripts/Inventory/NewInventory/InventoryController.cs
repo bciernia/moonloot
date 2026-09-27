@@ -642,8 +642,6 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         };
     }
     
-    
-    
     public int GetItemCount(InventoryItem item)
     {
         var count = 0;
@@ -668,4 +666,6 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         inventoryUI.ResetSelection();
     }
+
+    public int GetGoldAmount() => inventoryData.Lunar;
 }
