@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, ISaveable
 {
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour, ISaveable
     private PlayerAnimations _playerAnimations;
     private PlayerInput _playerInput;
     private readonly Dictionary<BonusType, Coroutine> _timedStatEffects = new();
+    private bool _hasRunBonuses;
     
     private void Awake()
     {
@@ -70,8 +72,38 @@ public class Player : MonoBehaviour, ISaveable
 
         _timedStatEffects.Clear();
         _playerStats.ResetTemporaryBonuses();
+        _playerStats.ClearRunBonuses();
+        _hasRunBonuses = false;
         _playerStats.ResetPlayerStats();
         _playerAnimations.ResetPlayer();
+    }
+
+    public void ApplyRunStatBonus(StatBonus bonus)
+    {
+        if (bonus == null)
+            return;
+
+        _playerStats.SetRunBonus(bonus);
+        _hasRunBonuses = true;
+        RefreshBonusEffects(bonus.Type);
+    }
+
+    private void ClearRunStatBonuses()
+    {
+        if (!_hasRunBonuses)
+            return;
+
+        _playerStats.ClearRunBonuses();
+        _hasRunBonuses = false;
+        PlayerHealth.ClampHealth();
+        _playerStats.MP = Mathf.Min(_playerStats.MP, _playerStats.GetMaxMp());
+
+        PlayerAttack.RecalculateDamage();
+        if (PlayerStatisticsManager.Instance != null)
+        {
+            PlayerStatisticsManager.Instance.SetMoveSpeed(
+                _playerStats.GetMoveSpeedMultiplier());
+        }
     }
 
     public void ApplyTimedStatBonus(StatBonus bonus, float duration)
@@ -86,12 +118,7 @@ public class Player : MonoBehaviour, ISaveable
         _timedStatEffects[bonus.Type] = StartCoroutine(
             RemoveTimedStatBonus(bonus.Type, duration));
 
-        if (bonus.Type == BonusType.Damage)
-            PlayerAttack.RecalculateDamage();
-
-        if (bonus.Type == BonusType.MoveSpeed)
-            PlayerStatisticsManager.Instance.SetMoveSpeed(
-                _playerStats.GetMoveSpeedMultiplier());
+        RefreshBonusEffects(bonus.Type);
     }
 
     private IEnumerator RemoveTimedStatBonus(BonusType type, float duration)
@@ -101,12 +128,7 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.RemoveTemporaryBonus(type);
         _timedStatEffects.Remove(type);
 
-        if (type == BonusType.Damage)
-            PlayerAttack.RecalculateDamage();
-
-        if (type == BonusType.MoveSpeed)
-            PlayerStatisticsManager.Instance.SetMoveSpeed(
-                _playerStats.GetMoveSpeedMultiplier());
+        RefreshBonusEffects(type);
 
         if (type == BonusType.MaxHp)
             PlayerHealth.ClampHealth();
@@ -115,6 +137,32 @@ public class Player : MonoBehaviour, ISaveable
             _playerStats.MP = Mathf.Min(
                 _playerStats.MP,
                 _playerStats.GetMaxMp());
+    }
+
+    private void RefreshBonusEffects(BonusType type)
+    {
+        if (type == BonusType.Damage)
+            PlayerAttack.RecalculateDamage();
+
+        if (type == BonusType.MoveSpeed)
+            PlayerStatisticsManager.Instance.SetMoveSpeed(
+                _playerStats.GetMoveSpeedMultiplier());
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Base")
+            ClearRunStatBonuses();
     }
     
     public void Save()

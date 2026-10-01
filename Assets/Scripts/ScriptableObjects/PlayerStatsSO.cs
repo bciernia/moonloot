@@ -44,6 +44,8 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _tavernFlatBonuses = new();
     private Dictionary<BonusType, float> _temporaryBonuses = new();
     private Dictionary<BonusType, float> _temporaryFlatBonuses = new();
+    private Dictionary<BonusType, float> _runBonuses = new();
+    private Dictionary<BonusType, float> _runFlatBonuses = new();
     
     public void ResetPlayerStats()
     {
@@ -144,6 +146,9 @@ public class PlayerStatsSO : ScriptableObject
         if (_temporaryBonuses.TryGetValue(type, out var temporary))
             total += temporary;
 
+        if (_runBonuses.TryGetValue(type, out var run))
+            total += run;
+
         return total;
     }
 
@@ -178,6 +183,7 @@ public class PlayerStatsSO : ScriptableObject
         bonus += _levelFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _tavernFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _temporaryFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _runFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
 
         return baseCrit + bonus;
     }
@@ -191,6 +197,7 @@ public class PlayerStatsSO : ScriptableObject
         total += _levelBonuses.GetValueOrDefault(type, 0f);
         total += _tavernBonuses.GetValueOrDefault(type, 0f);
         total += _temporaryBonuses.GetValueOrDefault(type, 0f);
+        total += _runBonuses.GetValueOrDefault(type, 0f);
 
         return total;
     }
@@ -217,8 +224,35 @@ public class PlayerStatsSO : ScriptableObject
         return _tavernFlatBonuses.GetValueOrDefault(type, 0f);
     }
 
-    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
-    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
+    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+
+    public void SetRunBonus(StatBonus bonus)
+    {
+        if (IsPercentageBonus(bonus.Type))
+        {
+            _runBonuses[bonus.Type] = bonus.Value / 100f;
+            _runFlatBonuses.Remove(bonus.Type);
+            return;
+        }
+
+        _runFlatBonuses[bonus.Type] = bonus.Value;
+        _runBonuses.Remove(bonus.Type);
+    }
+
+    public void ClearRunBonuses()
+    {
+        _runBonuses.Clear();
+        _runFlatBonuses.Clear();
+    }
+
+    private bool IsPercentageBonus(BonusType type)
+    {
+        return type == BonusType.Damage ||
+               type == BonusType.MoveSpeed ||
+               type == BonusType.CritChance ||
+               type == BonusType.AttackCooldownReduction;
+    }
 
     public void SetTemporaryBonus(StatBonus bonus)
     {

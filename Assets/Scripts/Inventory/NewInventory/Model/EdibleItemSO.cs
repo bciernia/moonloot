@@ -18,14 +18,19 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 
         foreach (var effect in _timedEffects)
         {
-            if (effect == null || effect.Duration <= 0f)
+            if (effect == null ||
+                (!effect.UntilReturnToBase && effect.Duration <= 0f))
                 continue;
 
             var value = IsPercentageBonus(effect.Type)
                 ? $"{effect.Value:+0.#;-0.#;0}%"
                 : $"{effect.Value:+0.#;-0.#;0}";
 
-            description += $"{effect.Type}: {value} ({effect.Duration:0.#}s)\n";
+            var duration = effect.UntilReturnToBase
+                ? "until return to Base"
+                : $"{effect.Duration:0.#}s";
+
+            description += $"{effect.Type}: {value} ({duration})\n";
         }
 
         return description;
@@ -57,16 +62,37 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 
         foreach (var effect in _timedEffects)
         {
-            if (effect == null || effect.Duration <= 0f)
+            if (effect == null ||
+                (!effect.UntilReturnToBase && effect.Duration <= 0f))
                 continue;
 
-            GameManager.Instance.Player.ApplyTimedStatBonus(
-                new StatBonus
+            var bonus = new StatBonus
+            {
+                Type = effect.Type,
+                Value = effect.Value
+            };
+
+            if (effect.UntilReturnToBase)
+            {
+                GameManager.Instance.Player.ApplyRunStatBonus(bonus);
+
+                if (effect.Type == BonusType.MaxHp && effect.Value > 0f)
                 {
-                    Type = effect.Type,
-                    Value = effect.Value
-                },
-                effect.Duration);
+                    GameManager.Instance.Player.PlayerHealth.RestoreHealth(
+                        effect.Value);
+                }
+                else if (effect.Type == BonusType.MaxMp && effect.Value > 0f)
+                {
+                    GameManager.Instance.Player.PlayerHealth.RestoreMana(
+                        effect.Value);
+                }
+            }
+            else
+            {
+                GameManager.Instance.Player.ApplyTimedStatBonus(
+                    bonus,
+                    effect.Duration);
+            }
 
             restoredStats = true;
         }
@@ -95,6 +121,7 @@ public class TimedItemStatEffect
     public BonusType Type;
     public float Value;
     public float Duration = 5f;
+    public bool UntilReturnToBase;
 }
 
 public interface IDestroyableItem
