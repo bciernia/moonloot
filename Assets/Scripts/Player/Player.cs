@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +26,7 @@ public class Player : MonoBehaviour, ISaveable
     public PlayerStatsSO PlayerStats => _playerStats;
     private PlayerAnimations _playerAnimations;
     private PlayerInput _playerInput;
+    private readonly Dictionary<BonusType, Coroutine> _timedStatEffects = new();
     
     private void Awake()
     {
@@ -60,8 +63,58 @@ public class Player : MonoBehaviour, ISaveable
 
     public void ResetPlayer()
     {
+        foreach (var effect in _timedStatEffects.Values)
+        {
+            StopCoroutine(effect);
+        }
+
+        _timedStatEffects.Clear();
+        _playerStats.ResetTemporaryBonuses();
         _playerStats.ResetPlayerStats();
         _playerAnimations.ResetPlayer();
+    }
+
+    public void ApplyTimedStatBonus(StatBonus bonus, float duration)
+    {
+        if (bonus == null || duration <= 0f)
+            return;
+
+        if (_timedStatEffects.TryGetValue(bonus.Type, out var currentEffect))
+            StopCoroutine(currentEffect);
+
+        _playerStats.SetTemporaryBonus(bonus);
+        _timedStatEffects[bonus.Type] = StartCoroutine(
+            RemoveTimedStatBonus(bonus.Type, duration));
+
+        if (bonus.Type == BonusType.Damage)
+            PlayerAttack.RecalculateDamage();
+
+        if (bonus.Type == BonusType.MoveSpeed)
+            PlayerStatisticsManager.Instance.SetMoveSpeed(
+                _playerStats.GetMoveSpeedMultiplier());
+    }
+
+    private IEnumerator RemoveTimedStatBonus(BonusType type, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        _playerStats.RemoveTemporaryBonus(type);
+        _timedStatEffects.Remove(type);
+
+        if (type == BonusType.Damage)
+            PlayerAttack.RecalculateDamage();
+
+        if (type == BonusType.MoveSpeed)
+            PlayerStatisticsManager.Instance.SetMoveSpeed(
+                _playerStats.GetMoveSpeedMultiplier());
+
+        if (type == BonusType.MaxHp)
+            PlayerHealth.ClampHealth();
+
+        if (type == BonusType.MaxMp)
+            _playerStats.MP = Mathf.Min(
+                _playerStats.MP,
+                _playerStats.GetMaxMp());
     }
     
     public void Save()
