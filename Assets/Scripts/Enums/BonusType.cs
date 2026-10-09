@@ -9,5 +9,6 @@ public enum BonusType
     MaxMp,
 
     AttackCooldownReduction,
+    DamageReduction,
     
 }

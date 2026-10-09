@@ -58,17 +58,124 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
 
     public bool HasPlayerEnoughGold(int amount) => inventoryData.Lunar >= amount;
     
-    public void AddItem(InventoryItem item)
+    public int AddItem(InventoryItem item)
     {
+        if (item.IsEmpty || item.quantity <= 0)
+            return item.quantity;
+
         if (item.item is GoldItemSO _)
         {
-            ChangeGoldAmount(item.quantity);
-            return;
+            return ChangeGoldAmount(item.quantity) ? 0 : item.quantity;
         }
-        
-        inventoryData.AddItem(item, item.quantity);
+
+        var remaining = item.quantity;
+        if (item.item.IsStackable)
+        {
+            remaining = inventoryData.AddToExistingStacks(item.item, remaining);
+            remaining = AddToQuickSlotStacks(item.item, remaining);
+        }
+
+        if (remaining > 0)
+            remaining = inventoryData.AddItem(item.item, remaining, item.itemState);
         
         OnInventoryChanged?.Invoke();
+        return remaining;
+    }
+
+    public bool CanAddItem(ItemSO item, int quantity)
+    {
+        if (item == null || quantity <= 0)
+            return false;
+
+        if (item is GoldItemSO)
+            return true;
+
+        if (!item.IsStackable)
+            return inventoryData.inventoryItems.Count(i => i.IsEmpty) >= quantity;
+
+        long availableSpace = 0;
+
+        foreach (var inventoryItem in inventoryData.inventoryItems)
+        {
+            if (inventoryItem.IsEmpty)
+            {
+                availableSpace += item.MaxStackSize;
+                continue;
+            }
+
+            if (inventoryItem.item.Id == item.Id)
+            {
+                availableSpace += Mathf.Max(
+                    0,
+                    inventoryItem.item.MaxStackSize - inventoryItem.quantity);
+            }
+        }
+
+        if (item.ItemType == ItemType.Edible && equippedItemsManager != null)
+        {
+            for (var slotIndex = 5; slotIndex <= 6; slotIndex++)
+            {
+                if (slotIndex >= equippedItemsManager.EquippedItems.Count)
+                    continue;
+
+                var quickItem = equippedItemsManager.EquippedItems[slotIndex];
+                if (!quickItem.IsEmpty && quickItem.item.Id == item.Id)
+                {
+                    availableSpace += Mathf.Max(
+                        0,
+                        quickItem.item.MaxStackSize - quickItem.quantity);
+                }
+            }
+        }
+
+        return availableSpace >= quantity;
+    }
+
+    private int AddToQuickSlotStacks(ItemSO item, int quantity)
+    {
+        if (quantity <= 0 || !item.IsStackable ||
+            item.ItemType != ItemType.Edible || equippedItemsManager == null)
+            return quantity;
+
+        var addedAny = false;
+        for (var slotIndex = 5; slotIndex <= 6 && quantity > 0; slotIndex++)
+        {
+            if (slotIndex >= equippedItemsManager.EquippedItems.Count)
+                continue;
+
+            var quickItem = equippedItemsManager.EquippedItems[slotIndex];
+            if (quickItem.IsEmpty || quickItem.item.Id != item.Id)
+                continue;
+
+            var roomInStack = Mathf.Max(
+                0,
+                quickItem.item.MaxStackSize - quickItem.quantity);
+            var amountToAdd = Mathf.Min(quantity, roomInStack);
+            if (amountToAdd <= 0)
+                continue;
+
+            equippedItemsManager.EquippedItems[slotIndex] =
+                quickItem.ChangeQuantity(quickItem.quantity + amountToAdd);
+            quantity -= amountToAdd;
+            addedAny = true;
+        }
+
+        if (addedAny)
+            RefreshQuickSlotUI();
+
+        return quantity;
+    }
+
+    private void RefreshQuickSlotUI()
+    {
+        if (equippedItemsManager != null)
+            equippedItemsManager.InitializeEquippedSlots();
+
+        if (QuickItemManager.Instance != null)
+            QuickItemManager.Instance.RefreshUI();
+
+        if (SkillsManager.Instance != null)
+            SkillsManager.Instance.RefreshSlotUI();
     }
 
     public void PrepareSellerInventoryData(InventoryRuntime sellerInventory)
@@ -271,7 +378,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         item = equippedItemsManager.EquippedItems[0];
                 
                         //TODO zmienić na typ, żeby nie porównywać po nazwie
-                        if (item.item.Name == "Fists") return;
+                        if (item.IsEmpty || item.item.Name == "Fists" ||
+                            !CanReturnEquippedItem(item)) return;
                 
                         equippedItemsManager.EquippedItems[0] = InventoryItem.GetEmptyItem();
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[0].item, ItemType.Weapon,1 ,0);
@@ -283,6 +391,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                     
                     case "ArmorUI":
                         item = equippedItemsManager.EquippedItems[1];
+                        if (item.IsEmpty || !CanReturnEquippedItem(item)) return;
                 
                         equippedItemsManager.EquippedItems[1] = InventoryItem.GetEmptyItem();
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[1].item, ItemType.Armor,1 ,1);
@@ -294,6 +403,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                     
                     case "OutfitUI":
                         item = equippedItemsManager.EquippedItems[2];
+                        if (item.IsEmpty || !CanReturnEquippedItem(item)) return;
                 
                         equippedItemsManager.EquippedItems[2] = InventoryItem.GetEmptyItem();
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[2].item, ItemType.Outfit,1 ,2);
@@ -305,6 +415,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         break;
                     case "HelmetUI":
                         item = equippedItemsManager.EquippedItems[3];
+                        if (item.IsEmpty || !CanReturnEquippedItem(item)) return;
                         
                         equippedItemsManager.EquippedItems[3] = InventoryItem.GetEmptyItem();
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[3].item, ItemType.Helmet,1 ,3);
@@ -316,6 +427,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         break;
                     case "ShoesUI":
                         item = equippedItemsManager.EquippedItems[4];
+                        if (item.IsEmpty || !CanReturnEquippedItem(item)) return;
                         
                         equippedItemsManager.EquippedItems[4] = InventoryItem.GetEmptyItem();
                         equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[4].item, ItemType.Shoes,1 ,4);
@@ -326,26 +438,10 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
                         
                         break;                    
                     case "QuickSlot1":
-                        item = equippedItemsManager.EquippedItems[5];
-                        
-                        equippedItemsManager.EquippedItems[5] = InventoryItem.GetEmptyItem();
-                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[5].item, ItemType.Edible,1 ,5);
-                
-                        var edibleItemSo1 = (EdibleItemSO)item.item;
-                        edibleItemSo1.Unequip(gameObject);
-                        AddItem(item);
-                        
+                        if (!TryReturnQuickSlotToInventory(5)) return;
                         break;          
                     case "QuickSlot2":
-                        item = equippedItemsManager.EquippedItems[6];
-                        
-                        equippedItemsManager.EquippedItems[6] = InventoryItem.GetEmptyItem();
-                        equippedItemsManager.SetItemAsEquipped(equippedItemsManager.EquippedItems[6].item, ItemType.Edible,1 ,6);
-                
-                        var edibleItemSo2 = (EdibleItemSO)item.item;
-                        edibleItemSo2.Unequip(gameObject);
-                        AddItem(item);
-                        
+                        if (!TryReturnQuickSlotToInventory(6)) return;
                         break;
                     default:
                         throw new ArgumentException("Nie znaleziono przedmiotu do zamiany");
@@ -358,8 +454,9 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
 
                 if (item.item.ItemType == ItemType.Edible)
                 {
-                    EquipToQuickSlot(item, inventoryUiName);
-                    inventoryData.RemoveItem(itemIndex_2, item.quantity);
+                    var amountMoved = EquipToQuickSlot(item, inventoryUiName);
+                    if (amountMoved > 0)
+                        inventoryData.RemoveItem(itemIndex_2, amountMoved);
                     return;
                 }
 
@@ -370,26 +467,108 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         inventoryData.SwapItems(itemIndex_1, itemIndex_2);
     }
     
-    private void EquipToQuickSlot(InventoryItem newItem, string slotName)
+    private int EquipToQuickSlot(InventoryItem newItem, string slotName)
     {
         var slotIndex = slotName == "QuickSlot1" ? 5 : 6;
-
         var equipped = equippedItemsManager.EquippedItems[slotIndex];
+
+        if (!equipped.IsEmpty && equipped.item.Id == newItem.item.Id &&
+            equipped.item.IsStackable)
+        {
+            var roomInStack = Mathf.Max(
+                0,
+                equipped.item.MaxStackSize - equipped.quantity);
+            var amountToAdd = Mathf.Min(newItem.quantity, roomInStack);
+            if (amountToAdd <= 0)
+                return 0;
+
+            equippedItemsManager.EquippedItems[slotIndex] =
+                equipped.ChangeQuantity(equipped.quantity + amountToAdd);
+            RefreshQuickSlotUI();
+            return amountToAdd;
+        }
 
         if (!equipped.IsEmpty)
         {
-            AddItem(equipped);
+            equippedItemsManager.EquippedItems[slotIndex] = InventoryItem.GetEmptyItem();
+
+            if (!CanAddItem(equipped.item, equipped.quantity))
+            {
+                equippedItemsManager.EquippedItems[slotIndex] = equipped;
+                FloatingTextManager.Instance.ShowWarningText(
+                    "No room for the item currently in that quick slot",
+                    transform);
+                return 0;
+            }
+
+            var remaining = AddItem(equipped);
+            if (remaining > 0)
+            {
+                Debug.LogError($"Could not return all {equipped.item.Name} to inventory.");
+                equippedItemsManager.EquippedItems[slotIndex] =
+                    equipped.ChangeQuantity(remaining);
+                RefreshQuickSlotUI();
+                return 0;
+            }
         }
+
+        var maxQuickStack = newItem.item.IsStackable
+            ? newItem.item.MaxStackSize
+            : 1;
+        var amountMovedToSlot = Mathf.Min(newItem.quantity, maxQuickStack);
+        if (amountMovedToSlot <= 0)
+            return 0;
 
         equippedItemsManager.EquippedItems[slotIndex] = new InventoryItem()
         {
             item = newItem.item,
-            quantity = newItem.quantity,
+            quantity = amountMovedToSlot,
             itemState = newItem.itemState
         };
 
-        equippedItemsManager.InitializeEquippedSlots();
-        SkillsManager.Instance.RefreshSlotUI();
+        RefreshQuickSlotUI();
+        return amountMovedToSlot;
+    }
+
+    private bool CanReturnEquippedItem(InventoryItem item)
+    {
+        if (CanAddItem(item.item, item.quantity))
+            return true;
+
+        FloatingTextManager.Instance.ShowWarningText(
+            "Inventory is full",
+            transform);
+        return false;
+    }
+
+    private bool TryReturnQuickSlotToInventory(int slotIndex)
+    {
+        var item = equippedItemsManager.EquippedItems[slotIndex];
+        if (item.IsEmpty)
+            return false;
+
+        equippedItemsManager.EquippedItems[slotIndex] = InventoryItem.GetEmptyItem();
+        if (!CanAddItem(item.item, item.quantity))
+        {
+            equippedItemsManager.EquippedItems[slotIndex] = item;
+            FloatingTextManager.Instance.ShowWarningText(
+                "Inventory is full",
+                transform);
+            return false;
+        }
+
+        var remaining = AddItem(item);
+        if (remaining > 0)
+        {
+            equippedItemsManager.EquippedItems[slotIndex] =
+                item.ChangeQuantity(remaining);
+            RefreshQuickSlotUI();
+            Debug.LogError($"Could not return all {item.item.Name} to inventory.");
+            return false;
+        }
+
+        RefreshQuickSlotUI();
+        return true;
     }
     
     public void HandleDescriptionRequest(int itemIndex, bool isPlayerItem = true, string inventoryItemUiName = "")

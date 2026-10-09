@@ -237,19 +237,38 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         if (action == null) return;
 
         var player = GameManager.Instance.Player.gameObject;
+
+        if (action is IAsyncItemAction asyncAction)
+        {
+            var expectedItem = item.item;
+            asyncAction.PerformActionAsync(player, item, wasUsed =>
+            {
+                if (wasUsed)
+                    ConsumeQuickItem(index, expectedItem);
+            });
+            return;
+        }
+
         action.PerformAction(player, item, true);
+        ConsumeQuickItem(index, item.item);
+    }
+
+    private void ConsumeQuickItem(int index, ItemSO expectedItem)
+    {
+        var equipped = EquippedItemsManager.Instance;
+        if (index < 0 || index >= equipped.EquippedItems.Count)
+            return;
+
+        var item = equipped.EquippedItems[index];
+        if (item.IsEmpty || item.item != expectedItem)
+            return;
+
         item.quantity--;
-        
-        equipped.EquippedItems[index] = item;
 
         if (item.quantity <= 0)
-        {
             equipped.EquippedItems[index] = InventoryItem.GetEmptyItem();
-        }
         else
-        {
             equipped.EquippedItems[index] = item;
-        }
 
         RefreshSlotUI();
         QuickItemManager.Instance.RefreshUI();

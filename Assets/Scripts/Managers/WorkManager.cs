@@ -353,6 +353,7 @@ public class WorkManager : Singleton<WorkManager>
         if (npcGO == null) return;
 
         npcGO.transform.position = point.transform.position;
+        point.ConfigurePatrol(npcGO);
     }
 
     private void MoveNpcToFreePoint(VillageNpcRuntime npc)

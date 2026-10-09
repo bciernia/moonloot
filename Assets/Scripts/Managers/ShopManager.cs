@@ -99,6 +99,15 @@ public class ShopManager : Singleton<ShopManager>
 
     public void BuyItem(InventoryItem itemToBuy, int itemIndex)
     {
+        if (itemToBuy.item.ItemType != ItemType.Gold &&
+            !InventoryController.Instance.CanAddItem(itemToBuy.item, 1))
+        {
+            FloatingTextManager.Instance.ShowWarningText(
+                "Inventory is full",
+                transform);
+            return;
+        }
+
         if (InventoryType == InventoryType.Shop)
         {
             var playerGoldAmount = InventoryController.Instance.inventoryData.Lunar;
@@ -115,7 +124,7 @@ public class ShopManager : Singleton<ShopManager>
         }
         else
         {
-            InventoryController.Instance.inventoryData.AddItem(itemToBuy, 1);
+            InventoryController.Instance.AddItem(itemToBuy.ChangeQuantity(1));
         }
 
         SellerInventory.RemoveItem(itemIndex, 1);

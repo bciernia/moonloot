@@ -163,6 +163,7 @@ public class NPCStatUpgrade : MonoBehaviour
             BonusType.MaxHp => "Maximum HP",
             BonusType.MaxMp => "Maximum Mana",
             BonusType.AttackCooldownReduction => "Attack Speed",
+            BonusType.DamageReduction => "Damage Reduction",
             _ => bonusType.ToString()
         };
     }

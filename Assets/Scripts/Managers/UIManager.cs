@@ -1273,6 +1273,7 @@ public class UIManager : MonoBehaviour
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
             BonusType.AttackCooldownReduction => $"+{bonus.Value:0}% Attack Speed",
+            BonusType.DamageReduction => $"+{bonus.Value:0}% Damage Reduction",
             _ => bonus.Type.ToString()
         };
     }

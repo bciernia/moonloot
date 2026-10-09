@@ -213,7 +213,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     }
 
 
-    public bool IsSceneBase() => SceneManager.GetActiveScene().name == "Base";
+    public bool IsSceneBase() => SceneManager.GetActiveScene().name == "Base_Demo";
     public bool IsInMainMenu() => SceneManager.GetActiveScene().name == "MainMenu";
 
     public async void LoadMainMenu()

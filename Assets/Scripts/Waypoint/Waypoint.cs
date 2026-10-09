@@ -9,6 +9,34 @@ public class Waypoint : MonoBehaviour
     public Vector3[] Points => points;
     public Vector3 EntityPosition { get; set; }
 
+    public void SetWorldPoints(Transform[] worldPoints)
+    {
+        if (worldPoints == null || worldPoints.Length == 0)
+            return;
+
+        var validPointCount = 0;
+        foreach (var point in worldPoints)
+        {
+            if (point != null)
+                validPointCount++;
+        }
+
+        if (validPointCount == 0)
+            return;
+
+        EntityPosition = transform.position;
+        points = new Vector3[validPointCount];
+
+        var index = 0;
+        foreach (var point in worldPoints)
+        {
+            if (point == null)
+                continue;
+
+            points[index++] = point.position - EntityPosition;
+        }
+    }
+
 #pragma warning disable CS0414 // Field is assigned but its value is never used
     private bool gameStarted;
 #pragma warning restore CS0414 // Field is assigned but its value is never used

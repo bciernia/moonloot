@@ -23,9 +23,9 @@ public class ItemInteraction : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if(!InventoryController.Instance.IsEmptySlotInEquipment())
+        if (!InventoryController.Instance.CanAddItem(_inventoryItem, 1))
         {
-            FloatingTextManager.Instance.ShowWarningText("No empty slot in equipment", transform);
+            FloatingTextManager.Instance.ShowWarningText("Inventory is full", transform);
             return;
         }
         

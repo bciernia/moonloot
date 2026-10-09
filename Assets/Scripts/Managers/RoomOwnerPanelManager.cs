@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RoomOwnerPanelManager : Singleton<RoomOwnerPanelManager>
 {
     [Header("Panels")]
     [SerializeField] private GameObject mainPanel;
-
+    [SerializeField] private TextMeshProUGUI roomOwnerName;
+    
     [Header("Rects")]
     [SerializeField] private RectTransform upgradeRect;
 
@@ -60,7 +62,8 @@ public class RoomOwnerPanelManager : Singleton<RoomOwnerPanelManager>
         }
 
         _recipeItems.Clear();
-
+        roomOwnerName.text = roomOwner.RoomOwnerName;
+        
         foreach (var recipe in roomOwner.Recipes)
         {
             if (recipe.RequiredUpgrade != null &&

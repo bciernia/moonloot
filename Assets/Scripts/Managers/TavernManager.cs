@@ -31,7 +31,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name != "Base")
+        if (scene.name != "Base_Demo")
         {
             return;
         }

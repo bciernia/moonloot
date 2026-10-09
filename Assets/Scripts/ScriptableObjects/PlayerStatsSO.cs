@@ -46,6 +46,8 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _temporaryFlatBonuses = new();
     private Dictionary<BonusType, float> _runBonuses = new();
     private Dictionary<BonusType, float> _runFlatBonuses = new();
+    private Dictionary<BonusType, float> _runFoodBonuses = new();
+    private Dictionary<BonusType, float> _runFoodFlatBonuses = new();
     
     public void ResetPlayerStats()
     {
@@ -86,7 +88,8 @@ public class PlayerStatsSO : ScriptableObject
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
-            bonus.Type == BonusType.AttackCooldownReduction)
+            bonus.Type == BonusType.AttackCooldownReduction ||
+            bonus.Type == BonusType.DamageReduction)
         {
             var normalized = bonus.Value / 100f;
 
@@ -109,7 +112,8 @@ public class PlayerStatsSO : ScriptableObject
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
-            bonus.Type == BonusType.AttackCooldownReduction)
+            bonus.Type == BonusType.AttackCooldownReduction ||
+            bonus.Type == BonusType.DamageReduction)
         {
             var normalized = bonus.Value / 100f;
 
@@ -149,6 +153,9 @@ public class PlayerStatsSO : ScriptableObject
         if (_runBonuses.TryGetValue(type, out var run))
             total += run;
 
+        if (_runFoodBonuses.TryGetValue(type, out var runFood))
+            total += runFood;
+
         return total;
     }
 
@@ -184,6 +191,7 @@ public class PlayerStatsSO : ScriptableObject
         bonus += _tavernFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _temporaryFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _runFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _runFoodFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
 
         return baseCrit + bonus;
     }
@@ -198,6 +206,7 @@ public class PlayerStatsSO : ScriptableObject
         total += _tavernBonuses.GetValueOrDefault(type, 0f);
         total += _temporaryBonuses.GetValueOrDefault(type, 0f);
         total += _runBonuses.GetValueOrDefault(type, 0f);
+        total += _runFoodBonuses.GetValueOrDefault(type, 0f);
 
         return total;
     }
@@ -224,19 +233,60 @@ public class PlayerStatsSO : ScriptableObject
         return _tavernFlatBonuses.GetValueOrDefault(type, 0f);
     }
 
-    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
-    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFoodFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
+    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFoodFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+
+    public bool HasRunFoodBonuses =>
+        _runFoodBonuses.Count > 0 || _runFoodFlatBonuses.Count > 0;
+
+    public Dictionary<BonusType, float> GetRunFoodBonuses()
+    {
+        var bonuses = new Dictionary<BonusType, float>();
+
+        foreach (var pair in _runFoodBonuses)
+            bonuses[pair.Key] = pair.Value * 100f;
+
+        foreach (var pair in _runFoodFlatBonuses)
+            bonuses[pair.Key] = pair.Value;
+
+        return bonuses;
+    }
+
+    public float AddOrUpgradeRunFoodBonus(StatBonus bonus)
+    {
+        if (IsPercentageBonus(bonus.Type))
+        {
+            var hasCurrentValue = _runFoodBonuses.TryGetValue(bonus.Type, out var currentNormalized);
+            var currentValue = currentNormalized * 100f;
+            var upgradedValue = hasCurrentValue
+                ? Mathf.Max(currentValue, bonus.Value)
+                : bonus.Value;
+            _runFoodBonuses[bonus.Type] = upgradedValue / 100f;
+            _runFoodFlatBonuses.Remove(bonus.Type);
+            return upgradedValue - currentValue;
+        }
+
+        var hasCurrentFlatValue = _runFoodFlatBonuses.TryGetValue(bonus.Type, out var currentFlatValue);
+        var upgradedFlatValue = hasCurrentFlatValue
+            ? Mathf.Max(currentFlatValue, bonus.Value)
+            : bonus.Value;
+        _runFoodFlatBonuses[bonus.Type] = upgradedFlatValue;
+        _runFoodBonuses.Remove(bonus.Type);
+        return upgradedFlatValue - currentFlatValue;
+    }
 
     public void SetRunBonus(StatBonus bonus)
     {
         if (IsPercentageBonus(bonus.Type))
         {
-            _runBonuses[bonus.Type] = bonus.Value / 100f;
+            _runBonuses[bonus.Type] =
+                _runBonuses.GetValueOrDefault(bonus.Type, 0f) + bonus.Value / 100f;
             _runFlatBonuses.Remove(bonus.Type);
             return;
         }
 
-        _runFlatBonuses[bonus.Type] = bonus.Value;
+        _runFlatBonuses[bonus.Type] =
+            _runFlatBonuses.GetValueOrDefault(bonus.Type, 0f) + bonus.Value;
         _runBonuses.Remove(bonus.Type);
     }
 
@@ -244,6 +294,8 @@ public class PlayerStatsSO : ScriptableObject
     {
         _runBonuses.Clear();
         _runFlatBonuses.Clear();
+        _runFoodBonuses.Clear();
+        _runFoodFlatBonuses.Clear();
     }
 
     private bool IsPercentageBonus(BonusType type)
@@ -251,7 +303,8 @@ public class PlayerStatsSO : ScriptableObject
         return type == BonusType.Damage ||
                type == BonusType.MoveSpeed ||
                type == BonusType.CritChance ||
-               type == BonusType.AttackCooldownReduction;
+               type == BonusType.AttackCooldownReduction ||
+               type == BonusType.DamageReduction;
     }
 
     public void SetTemporaryBonus(StatBonus bonus)
@@ -261,7 +314,8 @@ public class PlayerStatsSO : ScriptableObject
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
-            bonus.Type == BonusType.AttackCooldownReduction)
+            bonus.Type == BonusType.AttackCooldownReduction ||
+            bonus.Type == BonusType.DamageReduction)
         {
             _temporaryBonuses[bonus.Type] = bonus.Value / 100f;
             return;
@@ -299,7 +353,8 @@ public class PlayerStatsSO : ScriptableObject
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
-            bonus.Type == BonusType.AttackCooldownReduction)
+            bonus.Type == BonusType.AttackCooldownReduction ||
+            bonus.Type == BonusType.DamageReduction)
         {
             if (_eqBonuses.ContainsKey(bonus.Type))
                 _eqBonuses[bonus.Type] += normalized;
@@ -320,7 +375,8 @@ public class PlayerStatsSO : ScriptableObject
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
-            bonus.Type == BonusType.AttackCooldownReduction)
+            bonus.Type == BonusType.AttackCooldownReduction ||
+            bonus.Type == BonusType.DamageReduction)
         {
             var normalized = bonus.Value / 100f;
 

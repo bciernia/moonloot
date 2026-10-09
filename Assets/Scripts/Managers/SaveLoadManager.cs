@@ -42,7 +42,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
         ES3.Save(
             "SceneName",
-            "Base", CurrentSettings);
+            "Base_Demo", CurrentSettings);
         
         Debug.Log(
             "Slot path: " +

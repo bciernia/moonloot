@@ -8,6 +8,11 @@ public class CraftingManager : Singleton<CraftingManager>
 
     public bool CanCraft(CraftingRecipeSO recipe)
     {
+        if (!InventoryController.Instance.CanAddItem(
+                recipe.ResultItem.item,
+                recipe.ResultAmount))
+            return false;
+
         foreach (var material in recipe.Materials)
         {
             var amount =

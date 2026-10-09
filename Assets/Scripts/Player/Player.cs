@@ -76,6 +76,7 @@ public class Player : MonoBehaviour, ISaveable
         _hasRunBonuses = false;
         _playerStats.ResetPlayerStats();
         _playerAnimations.ResetPlayer();
+        PlayerHealth.RefreshDamageReductionUI();
     }
 
     public void ApplyRunStatBonus(StatBonus bonus)
@@ -86,6 +87,41 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.SetRunBonus(bonus);
         _hasRunBonuses = true;
         RefreshBonusEffects(bonus.Type);
+    }
+
+    public bool HasRunFoodBonuses => _playerStats.HasRunFoodBonuses;
+
+    public Dictionary<BonusType, float> GetRunFoodBonuses() =>
+        _playerStats.GetRunFoodBonuses();
+
+    public void ApplyRunFoodBonuses(IReadOnlyCollection<StatBonus> bonuses)
+    {
+        if (bonuses == null || bonuses.Count == 0)
+            return;
+
+        _hasRunBonuses = true;
+
+        foreach (var bonus in bonuses)
+        {
+            if (bonus == null)
+                continue;
+
+            var increase = _playerStats.AddOrUpgradeRunFoodBonus(bonus);
+
+            if (Mathf.Approximately(increase, 0f))
+                continue;
+
+            RefreshBonusEffects(bonus.Type);
+
+            if (bonus.Type == BonusType.MaxHp && increase > 0f)
+                PlayerHealth.RestoreHealth(increase);
+            else if (bonus.Type == BonusType.MaxHp)
+                PlayerHealth.ClampHealth();
+            else if (bonus.Type == BonusType.MaxMp && increase > 0f)
+                PlayerHealth.RestoreMana(increase);
+            else if (bonus.Type == BonusType.MaxMp)
+                _playerStats.MP = Mathf.Min(_playerStats.MP, _playerStats.GetMaxMp());
+        }
     }
 
     private void ClearRunStatBonuses()
@@ -104,6 +140,7 @@ public class Player : MonoBehaviour, ISaveable
             PlayerStatisticsManager.Instance.SetMoveSpeed(
                 _playerStats.GetMoveSpeedMultiplier());
         }
+        PlayerHealth.RefreshDamageReductionUI();
     }
 
     public void ApplyTimedStatBonus(StatBonus bonus, float duration)
@@ -147,6 +184,9 @@ public class Player : MonoBehaviour, ISaveable
         if (type == BonusType.MoveSpeed)
             PlayerStatisticsManager.Instance.SetMoveSpeed(
                 _playerStats.GetMoveSpeedMultiplier());
+
+        if (type == BonusType.DamageReduction)
+            PlayerHealth.RefreshDamageReductionUI();
     }
 
     private void OnEnable()
@@ -161,7 +201,7 @@ public class Player : MonoBehaviour, ISaveable
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Base")
+        if (scene.name == "Base_Demo")
             ClearRunStatBonuses();
     }
     

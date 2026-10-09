@@ -103,6 +103,7 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             if (point == null || point.transform.childCount > 0) continue;
 
             var goHero = Instantiate(npc.Data.Character, point.transform.position, Quaternion.identity, point.transform);
+            point.ConfigurePatrol(goHero);
 
             var rescueHero = goHero.GetComponent<RescueNpc>();
             if (rescueHero != null)
@@ -135,6 +136,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             npc.Data.Character,
             spawnPoint.transform.position,
             Quaternion.identity);
+
+        spawnPoint.ConfigurePatrol(go);
 
         var rescue = go.GetComponent<RescueNpc>();
 
