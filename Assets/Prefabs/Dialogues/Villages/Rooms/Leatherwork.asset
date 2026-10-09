@@ -1,0 +1,308 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aaff45f3a1d794180acfe1b86e7406, type: 3}
+  m_Name: Leatherwork
+  m_EditorClassIdentifier: 
+  version: 1.8.4
+  creationTime: 2026-10-02@20:42:11
+  editTime: 2026-10-02@20:43:04
+  nodes:
+  - rid: 1828563768130142260
+  - rid: 1828563768130142261
+  - rid: 1828563768130142262
+  - rid: 1828563768130142263
+  - rid: 1828563768130142264
+  - rid: 1828563768130142265
+  - rid: 1828563768130142266
+  - rid: 1828563768130142267
+  - rid: 1828563768130142268
+  translationLibrary: {fileID: 1002661063324372507}
+  maxID: 118
+  references:
+    version: 2
+    RefIds:
+    - rid: 1828563768130142260
+      type: {class: EntryNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 56
+        name: ENTRY
+        nodeType: 1
+        inputs: []
+        outputs:
+        - id: 57
+          attachedIds: 3b000000
+          ownerId: 56
+          connectionType: 1
+        width: 110
+        height: 75
+        xPosition: -2343.2598
+        yPosition: 2233.744
+        entryPointName: 
+    - rid: 1828563768130142261
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 58
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 59
+          attachedIds: 39000000
+          ownerId: 58
+          connectionType: 1
+        outputs:
+        - id: 60
+          attachedIds: 3e000000
+          ownerId: 58
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -2120.1484
+        yPosition: 2332.222
+        items:
+        - rid: 1828563768130142269
+        characterName: Tanner
+        icon: 
+    - rid: 1828563768130142262
+      type: {class: OptionNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 61
+        name: OPTION
+        nodeType: 4
+        inputs:
+        - id: 62
+          attachedIds: 3c00000056000000
+          ownerId: 61
+          connectionType: 1
+        - id: 63
+          attachedIds: 
+          ownerId: 61
+          connectionType: 7
+        - id: 64
+          attachedIds: 
+          ownerId: 61
+          connectionType: 7
+        outputs:
+        - id: 65
+          attachedIds: 44000000
+          ownerId: 61
+          connectionType: 1
+        - id: 66
+          attachedIds: 4c000000
+          ownerId: 61
+          connectionType: 1
+        width: 228
+        height: 136
+        xPosition: -1720.461
+        yPosition: 2342.0344
+        items:
+        - rid: 1828563768130142270
+        - rid: 1828563768130142271
+    - rid: 1828563768130142263
+      type: {class: TriggerScriptNode, ns: EasyTalk.Nodes.Logic, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 67
+        name: TRIGGER
+        nodeType: 8
+        inputs:
+        - id: 68
+          attachedIds: 41000000
+          ownerId: 67
+          connectionType: 1
+        - id: 69
+          attachedIds: 
+          ownerId: 67
+          connectionType: 9
+        - id: 70
+          attachedIds: 
+          ownerId: 67
+          connectionType: 9
+        - id: 71
+          attachedIds: 
+          ownerId: 67
+          connectionType: 9
+        - id: 72
+          attachedIds: 
+          ownerId: 67
+          connectionType: 9
+        outputs:
+        - id: 73
+          attachedIds: 
+          ownerId: 67
+          connectionType: 9
+        - id: 74
+          attachedIds: 52000000
+          ownerId: 67
+          connectionType: 1
+        width: 220
+        height: 320
+        xPosition: -1224.7148
+        yPosition: 2217.3755
+        triggeredClassName: RoomOwner
+        triggeredMethodName: OpenRoomPanel
+        methodSignature: OpenRoomPanel()
+        parameterTypes: []
+        parameterValues: []
+        triggerType: 0
+        objectTagOrName: 
+    - rid: 1828563768130142264
+      type: {class: ExitNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 75
+        name: EXIT
+        nodeType: 2
+        inputs:
+        - id: 76
+          attachedIds: 42000000
+          ownerId: 75
+          connectionType: 1
+        outputs: []
+        width: 110
+        height: 75
+        xPosition: -1293.3729
+        yPosition: 2610.967
+        exitPointName: 
+    - rid: 1828563768130142265
+      type: {class: JumpInNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 77
+        name: JUMPIN
+        nodeType: 9
+        inputs: []
+        outputs:
+        - id: 78
+          attachedIds: 55000000
+          ownerId: 77
+          connectionType: 1
+        width: 148
+        height: 75
+        xPosition: -2381.834
+        yPosition: 2689.1604
+        key: A
+    - rid: 1828563768130142266
+      type: {class: JumpOutNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 79
+        name: JUMPOUT
+        nodeType: 10
+        inputs:
+        - id: 80
+          attachedIds: 53000000
+          ownerId: 79
+          connectionType: 1
+        outputs: []
+        width: 148
+        height: 75
+        xPosition: -603.22394
+        yPosition: 2609.9792
+        key: A
+    - rid: 1828563768130142267
+      type: {class: PauseNode, ns: EasyTalk.Nodes.Flow, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 81
+        name: PAUSE
+        nodeType: 35
+        inputs:
+        - id: 82
+          attachedIds: 4a000000
+          ownerId: 81
+          connectionType: 1
+        outputs:
+        - id: 83
+          attachedIds: 50000000
+          ownerId: 81
+          connectionType: 1
+        width: 181.25002
+        height: 75
+        xPosition: -912.9781
+        yPosition: 2571.872
+        signalId: 
+    - rid: 1828563768130142268
+      type: {class: ConversationNode, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        nodeId: 84
+        name: CONVERSATION
+        nodeType: 3
+        inputs:
+        - id: 85
+          attachedIds: 4e000000
+          ownerId: 84
+          connectionType: 1
+        outputs:
+        - id: 86
+          attachedIds: 3e000000
+          ownerId: 84
+          connectionType: 1
+        width: 268
+        height: 140
+        xPosition: -2146.6353
+        yPosition: 2586.7942
+        items:
+        - rid: 1828563768130142272
+        characterName: Tanner
+        icon: 
+    - rid: 1828563768130142269
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: 'Hello adventurer! '
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+    - rid: 1828563768130142270
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Let's create something
+    - rid: 1828563768130142271
+      type: {class: OptionItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Exit
+    - rid: 1828563768130142272
+      type: {class: ConversationItem, ns: EasyTalk.Nodes.Common, asm: games.okitoki.EasyTalk}
+      data:
+        text: Do you need something else?
+        audioClip: {fileID: 0}
+        audioClipFile: 
+        audioAssetID: 0
+--- !u!114 &1002661063324372507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5800231a05eaae43b00503881229245, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalLanguage: en
+  translationSets:
+  - counter: 6
+    languageCode: en
+    translations:
+    - id: 0
+      language: en
+      text: Alchemist
+    - id: 1
+      language: en
+      text: 'Hello adventurer! '
+    - id: 2
+      language: en
+      text: Let's create something
+    - id: 3
+      language: en
+      text: Exit
+    - id: 4
+      language: en
+      text: Do you need something else?
+    - id: 5
+      language: en
+      text: Tanner

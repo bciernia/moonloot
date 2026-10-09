@@ -8,10 +8,33 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
 
     [SerializeField] private float HealthValue;
     [SerializeField] private float ManaValue;
+    [SerializeField] private List<TimedItemStatEffect> _timedEffects = new();
 
     [field: SerializeField] public AudioClip actionSfx { get; private set; }
 
-    public override string GetStatsDescription() => $"Health: {HealthValue} \nMana: {ManaValue} \n";
+    public override string GetStatsDescription()
+    {
+        var description = $"Health: {HealthValue} \nMana: {ManaValue} \n";
+
+        foreach (var effect in _timedEffects)
+        {
+            if (effect == null ||
+                (!effect.UntilReturnToBase && effect.Duration <= 0f))
+                continue;
+
+            var value = IsPercentageBonus(effect.Type)
+                ? $"{effect.Value:+0.#;-0.#;0}%"
+                : $"{effect.Value:+0.#;-0.#;0}";
+
+            var duration = effect.UntilReturnToBase
+                ? "until return to Base"
+                : $"{effect.Duration:0.#}s";
+
+            description += $"{effect.Type}: {value} ({duration})\n";
+        }
+
+        return description;
+    }
     
     public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
     {
@@ -37,7 +60,52 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
             restoredStats = true;
         }
 
+        foreach (var effect in _timedEffects)
+        {
+            if (effect == null ||
+                (!effect.UntilReturnToBase && effect.Duration <= 0f))
+                continue;
+
+            var bonus = new StatBonus
+            {
+                Type = effect.Type,
+                Value = effect.Value
+            };
+
+            if (effect.UntilReturnToBase)
+            {
+                GameManager.Instance.Player.ApplyRunStatBonus(bonus);
+
+                if (effect.Type == BonusType.MaxHp && effect.Value > 0f)
+                {
+                    GameManager.Instance.Player.PlayerHealth.RestoreHealth(
+                        effect.Value);
+                }
+                else if (effect.Type == BonusType.MaxMp && effect.Value > 0f)
+                {
+                    GameManager.Instance.Player.PlayerHealth.RestoreMana(
+                        effect.Value);
+                }
+            }
+            else
+            {
+                GameManager.Instance.Player.ApplyTimedStatBonus(
+                    bonus,
+                    effect.Duration);
+            }
+
+            restoredStats = true;
+        }
+
         return restoredStats;
+    }
+
+    private bool IsPercentageBonus(BonusType type)
+    {
+        return type == BonusType.Damage ||
+               type == BonusType.MoveSpeed ||
+               type == BonusType.CritChance ||
+               type == BonusType.AttackCooldownReduction;
     }
     
     public void Unequip(GameObject character)
@@ -45,6 +113,15 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction
         var quickItemManager = character.transform.parent.GetComponentInChildren<QuickItemManager>();
         quickItemManager.SetQuickItem(null, null, 0, 5);
     }
+}
+
+[System.Serializable]
+public class TimedItemStatEffect
+{
+    public BonusType Type;
+    public float Value;
+    public float Duration = 5f;
+    public bool UntilReturnToBase;
 }
 
 public interface IDestroyableItem

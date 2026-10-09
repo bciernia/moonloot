@@ -193,6 +193,13 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             slot.SpawnPoint.rotation,
             slot.SpawnPoint);
 
+        var roomOwners = spawnedRoom.GetComponentsInChildren<RoomOwner>(true);
+
+        foreach (var roomOwner in roomOwners)
+        {
+            roomOwner.SetRoomSlotId(roomData.RoomSlotId);
+        }
+
         _spawnedRooms[roomData.RoomSlotId] = spawnedRoom;
     }
     

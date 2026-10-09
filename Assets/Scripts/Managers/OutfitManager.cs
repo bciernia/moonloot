@@ -64,7 +64,7 @@ public class OutfitManager : Singleton<OutfitManager>
         }
         
         if (_playerAim != null)
-            _playerAim.SetOutfitAimBonus(outfit.AimDistanceBonus);
+            _playerAim.SetOutfitAimBonus(outfit.RangeBonus);
         FindAnyObjectByType<Player>().GetComponent<Animator>().runtimeAnimatorController = outfit.RuntimeAnimatorController;
         EquippedItemsManager.Instance.SetItemAsEquipped(outfit, ItemType.Outfit, 1, 2);
     }

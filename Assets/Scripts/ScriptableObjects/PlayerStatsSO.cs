@@ -42,6 +42,10 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _levelFlatBonuses = new();
     private Dictionary<BonusType, float> _tavernBonuses = new();
     private Dictionary<BonusType, float> _tavernFlatBonuses = new();
+    private Dictionary<BonusType, float> _temporaryBonuses = new();
+    private Dictionary<BonusType, float> _temporaryFlatBonuses = new();
+    private Dictionary<BonusType, float> _runBonuses = new();
+    private Dictionary<BonusType, float> _runFlatBonuses = new();
     
     public void ResetPlayerStats()
     {
@@ -139,6 +143,12 @@ public class PlayerStatsSO : ScriptableObject
         if (_tavernBonuses.TryGetValue(type, out var tavern))
             total += tavern;
 
+        if (_temporaryBonuses.TryGetValue(type, out var temporary))
+            total += temporary;
+
+        if (_runBonuses.TryGetValue(type, out var run))
+            total += run;
+
         return total;
     }
 
@@ -172,6 +182,8 @@ public class PlayerStatsSO : ScriptableObject
         bonus += _eqFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _levelFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
         bonus += _tavernFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _temporaryFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
+        bonus += _runFlatBonuses.GetValueOrDefault(BonusType.CritMultiplier, 0f);
 
         return baseCrit + bonus;
     }
@@ -184,6 +196,8 @@ public class PlayerStatsSO : ScriptableObject
         total += _eqBonuses.GetValueOrDefault(type, 0f);
         total += _levelBonuses.GetValueOrDefault(type, 0f);
         total += _tavernBonuses.GetValueOrDefault(type, 0f);
+        total += _temporaryBonuses.GetValueOrDefault(type, 0f);
+        total += _runBonuses.GetValueOrDefault(type, 0f);
 
         return total;
     }
@@ -210,8 +224,63 @@ public class PlayerStatsSO : ScriptableObject
         return _tavernFlatBonuses.GetValueOrDefault(type, 0f);
     }
 
-    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp);
-    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp);
+    public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
+    public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+
+    public void SetRunBonus(StatBonus bonus)
+    {
+        if (IsPercentageBonus(bonus.Type))
+        {
+            _runBonuses[bonus.Type] = bonus.Value / 100f;
+            _runFlatBonuses.Remove(bonus.Type);
+            return;
+        }
+
+        _runFlatBonuses[bonus.Type] = bonus.Value;
+        _runBonuses.Remove(bonus.Type);
+    }
+
+    public void ClearRunBonuses()
+    {
+        _runBonuses.Clear();
+        _runFlatBonuses.Clear();
+    }
+
+    private bool IsPercentageBonus(BonusType type)
+    {
+        return type == BonusType.Damage ||
+               type == BonusType.MoveSpeed ||
+               type == BonusType.CritChance ||
+               type == BonusType.AttackCooldownReduction;
+    }
+
+    public void SetTemporaryBonus(StatBonus bonus)
+    {
+        RemoveTemporaryBonus(bonus.Type);
+
+        if (bonus.Type == BonusType.Damage ||
+            bonus.Type == BonusType.MoveSpeed ||
+            bonus.Type == BonusType.CritChance ||
+            bonus.Type == BonusType.AttackCooldownReduction)
+        {
+            _temporaryBonuses[bonus.Type] = bonus.Value / 100f;
+            return;
+        }
+
+        _temporaryFlatBonuses[bonus.Type] = bonus.Value;
+    }
+
+    public void RemoveTemporaryBonus(BonusType type)
+    {
+        _temporaryBonuses.Remove(type);
+        _temporaryFlatBonuses.Remove(type);
+    }
+
+    public void ResetTemporaryBonuses()
+    {
+        _temporaryBonuses.Clear();
+        _temporaryFlatBonuses.Clear();
+    }
     
     public void ResetEquipmentBonuses()
     {

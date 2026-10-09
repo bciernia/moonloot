@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 7316416379639250189}
   - component: {fileID: 8894895068003204084}
   - component: {fileID: 562810038414312811}
+  - component: {fileID: 2731573132192678337}
+  - component: {fileID: 3633071244340212630}
+  - component: {fileID: 6278693974544015083}
   m_Layer: 0
   m_Name: Alchemist
   m_TagString: Untagged
@@ -196,6 +199,127 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: -0.04096985, y: -0.42331982}
   m_Radius: 2.3277311
+--- !u!114 &2731573132192678337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3506905e8802eb04db6963c88d1c26fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipes:
+  - {fileID: 11400000, guid: ec366287089e4a645a293b873ce05e1b, type: 2}
+  - {fileID: 11400000, guid: 50a24ca6dec8dca48941c09d885f6ff6, type: 2}
+  - {fileID: 11400000, guid: f427bc4116f604f4ea6059ea91f3c303, type: 2}
+--- !u!114 &3633071244340212630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7f5d7b2175125498f40e57fad5d64c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugEnabled: 0
+  onContinue:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisplayOptions:
+    m_PersistentCalls:
+      m_Calls: []
+  onOptionChosen:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisplayLine:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueExited:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onStory:
+    m_PersistentCalls:
+      m_Calls: []
+  onVariableUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onAudioStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onAudioCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onActivateKey:
+    m_PersistentCalls:
+      m_Calls: []
+  onWait:
+    m_PersistentCalls:
+      m_Calls: []
+  onConversationEnding:
+    m_PersistentCalls:
+      m_Calls: []
+  onNodeChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPause:
+    m_PersistentCalls:
+      m_Calls: []
+  onExecuteAsyncNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onAppendText:
+    m_PersistentCalls:
+      m_Calls: []
+  onWaitingForNodeCompletion:
+    m_PersistentCalls:
+      m_Calls: []
+  onNodeEvaluationCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogue: {fileID: 11400000, guid: 04b37abf17c51844f9feffc7c43eac74, type: 2}
+  dialogueRegistry: {fileID: 0}
+  playbackType: 0
+  useDialogueDisplay: 1
+  dialogueDisplay: {fileID: 0}
+  conversationDisplay: {fileID: 0}
+  conversationDisplayID: 
+  audioSource: {fileID: 0}
+  dialogueListeners: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onStop:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6278693974544015083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d746152a8af349e092048163fea9435d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcName: Alchemist
+  canInteractOutsideBase: 0
 --- !u!1 &3291251386058539851
 GameObject:
   m_ObjectHideFlags: 0

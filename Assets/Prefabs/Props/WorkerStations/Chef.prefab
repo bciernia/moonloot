@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 7316416379639250189}
   - component: {fileID: 6445001804684371156}
   - component: {fileID: 5885464450489506585}
+  - component: {fileID: 4920592552792357767}
+  - component: {fileID: 5404953145027749641}
+  - component: {fileID: 2513626373397849286}
   m_Layer: 0
   m_Name: Chef
   m_TagString: Untagged
@@ -196,6 +199,128 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.2688599, y: 2.8991623}
   m_EdgeRadius: 0
+--- !u!114 &4920592552792357767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3506905e8802eb04db6963c88d1c26fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _recipes:
+  - {fileID: 11400000, guid: 0c3d5f01994b29346aec3c9e6eb99fea, type: 2}
+  - {fileID: 11400000, guid: 7320821debbf65a4b8580307a4e03e87, type: 2}
+  - {fileID: 11400000, guid: 2be23cd97518bfc439c8fd2d5d3e4afe, type: 2}
+  - {fileID: 11400000, guid: 4119095bcf5c05e4e89076aa9360144e, type: 2}
+--- !u!114 &5404953145027749641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb7f5d7b2175125498f40e57fad5d64c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debugEnabled: 0
+  onContinue:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisplayOptions:
+    m_PersistentCalls:
+      m_Calls: []
+  onOptionChosen:
+    m_PersistentCalls:
+      m_Calls: []
+  onDisplayLine:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  onDialogueExited:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onStory:
+    m_PersistentCalls:
+      m_Calls: []
+  onVariableUpdated:
+    m_PersistentCalls:
+      m_Calls: []
+  onCharacterChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onAudioStarted:
+    m_PersistentCalls:
+      m_Calls: []
+  onAudioCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  onActivateKey:
+    m_PersistentCalls:
+      m_Calls: []
+  onWait:
+    m_PersistentCalls:
+      m_Calls: []
+  onConversationEnding:
+    m_PersistentCalls:
+      m_Calls: []
+  onNodeChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onPause:
+    m_PersistentCalls:
+      m_Calls: []
+  onExecuteAsyncNode:
+    m_PersistentCalls:
+      m_Calls: []
+  onAppendText:
+    m_PersistentCalls:
+      m_Calls: []
+  onWaitingForNodeCompletion:
+    m_PersistentCalls:
+      m_Calls: []
+  onNodeEvaluationCompleted:
+    m_PersistentCalls:
+      m_Calls: []
+  dialogue: {fileID: 11400000, guid: 1fce983a1aa48a141b3e73954db910d8, type: 2}
+  dialogueRegistry: {fileID: 0}
+  playbackType: 0
+  useDialogueDisplay: 1
+  dialogueDisplay: {fileID: 0}
+  conversationDisplay: {fileID: 0}
+  conversationDisplayID: 
+  audioSource: {fileID: 0}
+  dialogueListeners: []
+  onPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  onStop:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &2513626373397849286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 127479014783113267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d746152a8af349e092048163fea9435d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcName: Chef
+  canInteractOutsideBase: 0
 --- !u!1 &3291251386058539851
 GameObject:
   m_ObjectHideFlags: 0
