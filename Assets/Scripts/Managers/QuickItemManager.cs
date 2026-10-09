@@ -46,9 +46,11 @@ public class QuickItemManager : Singleton<QuickItemManager>
 
     }
     
-    public void SetQuickItem(EdibleItemSO item, List<ItemParameter> itemState, int quantity, int slotIndex, bool isFromLoading = false)
+    public bool SetQuickItem(EdibleItemSO item, List<ItemParameter> itemState, int quantity, int slotIndex, bool isFromLoading = false)
     {
         var equipped = EquippedItemsManager.Instance;
+        if (slotIndex < 5 || slotIndex > 6)
+            return false;
     
         if (!isFromLoading)
         {
@@ -56,7 +58,23 @@ public class QuickItemManager : Singleton<QuickItemManager>
     
             if (!current.IsEmpty)
             {
-                InventoryController.Instance.AddItem(current);
+                equipped.EquippedItems[slotIndex] = InventoryItem.GetEmptyItem();
+
+                if (!InventoryController.Instance.CanAddItem(current.item, current.quantity))
+                {
+                    equipped.EquippedItems[slotIndex] = current;
+                    return false;
+                }
+
+                var remaining = InventoryController.Instance.AddItem(current);
+                if (remaining > 0)
+                {
+                    equipped.EquippedItems[slotIndex] = current.ChangeQuantity(remaining);
+                    equipped.InitializeEquippedSlots();
+                    RefreshUI();
+                    Debug.LogError($"Could not return all {current.item.Name} to inventory.");
+                    return false;
+                }
             }
         }
     
@@ -69,6 +87,7 @@ public class QuickItemManager : Singleton<QuickItemManager>
     
         equipped.InitializeEquippedSlots();
         RefreshUI();
+        return true;
     }
         
     public void RefreshUI()

@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private const string DEMO_START_SCENE = "Base";
+    private const string DEMO_START_SCENE = "Base_Demo";
     private const string MAIN_MENU = "MainMenu";
     [SerializeField] private GameObject[] _buttonsMenu;
     

@@ -80,7 +80,7 @@ public class NPCInteraction : MonoBehaviour, IInteractable
     private void DisableNpcMovement() => SetNpcMovementEnabled(false);
     public void EnableNpcMovement() => SetNpcMovementEnabled(true);
 
-    private bool CanInteractOutsideBase() => canInteractOutsideBase || gameObject.scene.name == "Base";
+    private bool CanInteractOutsideBase() => canInteractOutsideBase || gameObject.scene.name == "Base_Demo";
     
     public string GetInteractionText()
     {

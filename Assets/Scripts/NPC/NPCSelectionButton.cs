@@ -71,7 +71,9 @@ public class NPCSelectionButton : MonoBehaviour
     {
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
-            bonus.Type == BonusType.CritChance)
+            bonus.Type == BonusType.CritChance ||
+            bonus.Type == BonusType.DamageReduction ||
+            bonus.Type == BonusType.AttackCooldownReduction)
         {
             return bonus.Value + "%";
         }
@@ -87,6 +89,7 @@ public class NPCSelectionButton : MonoBehaviour
             BonusType.MoveSpeed => "Move Speed",
             BonusType.MaxHp => "Max HP",
             BonusType.CritChance => "Crit Chance",
+            BonusType.DamageReduction => "Damage Reduction",
             _ => type.ToString()
         };
     }

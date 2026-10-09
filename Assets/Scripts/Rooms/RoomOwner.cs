@@ -10,6 +10,7 @@ public class RoomOwner : MonoBehaviour
 
     public IReadOnlyList<CraftingRecipeSO> Recipes => _recipes;
     public int RoomSlotId => _roomSlotId;
+    public string RoomOwnerName => gameObject.name; 
 
     public void SetRoomSlotId(int slotId)
     {

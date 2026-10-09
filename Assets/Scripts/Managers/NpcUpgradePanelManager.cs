@@ -199,7 +199,8 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         if (bonus == BonusType.Damage ||
             bonus == BonusType.MoveSpeed ||
             bonus == BonusType.CritChance ||
-            bonus == BonusType.AttackCooldownReduction)
+            bonus == BonusType.AttackCooldownReduction ||
+            bonus == BonusType.DamageReduction)
         {
             return "%";
         }

@@ -46,8 +46,6 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         PlayerStatisticsManager.Instance.SetPhysicalResistance(_playerStats.GetPhysicalReductionPercent());
         // PlayerStatisticsManager.Instance.SetMagicResistance(_playerStats.GetMagicReductionPercent());
         
-        var shieldReductionPercent = (1f - _playerStats.ShieldResistance) * 100f;
-        PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
         RefreshResistanceUI();
     }
     
@@ -56,7 +54,10 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         if (_playerStats.HP <= 0) return;
         
         var afterArmor = ApplyResistance(amount, type);
-        var reducedDamage = afterArmor * _playerStats.ShieldResistance;
+        var bonusReduction = Mathf.Clamp01(
+            _playerStats.GetBonusValue(BonusType.DamageReduction));
+        var reducedDamage = afterArmor * _playerStats.ShieldResistance *
+                            (1f - bonusReduction);
         
         _playerStats.HP -= reducedDamage;
         FloatingTextManager.Instance.ShowDamageText(reducedDamage, transform);
@@ -138,8 +139,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
         PlayerStatisticsManager.Instance.SetPhysicalResistance(
             _playerStats.GetPhysicalReductionPercent());
 
-        var shieldReductionPercent = (1f - amount) * 100f;
-        PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
+        RefreshDamageReductionUI();
     }
     
     public void ClampHealth()
@@ -154,11 +154,23 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
 
         PlayerStatisticsManager.Instance.SetMoveSpeed(_playerStats.GetMoveSpeedMultiplier());
 
-        var shieldReductionPercent = (1f - _playerStats.ShieldResistance) * 100f;
-
-        PlayerStatisticsManager.Instance.SetShieldReductionPercent(shieldReductionPercent);
+        RefreshDamageReductionUI();
         
         ClampHealth();
+    }
+
+    public void RefreshDamageReductionUI()
+    {
+        if (PlayerStatisticsManager.Instance == null)
+            return;
+
+        var bonusReduction = Mathf.Clamp01(
+            _playerStats.GetBonusValue(BonusType.DamageReduction));
+        var totalMultiplier = _playerStats.ShieldResistance * (1f - bonusReduction);
+        var totalReductionPercent = (1f - totalMultiplier) * 100f;
+
+        PlayerStatisticsManager.Instance.SetShieldReductionPercent(
+            totalReductionPercent);
     }
 
     public float CurrentHealthPoints => CurrentHealth;

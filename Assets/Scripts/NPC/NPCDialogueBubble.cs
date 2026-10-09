@@ -35,7 +35,7 @@ public class NPCDialogueBubble : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name != "Base")
+        if (SceneManager.GetActiveScene().name != "Base_Demo")
             return;
 
         if (_dialogues.Count == 0)
