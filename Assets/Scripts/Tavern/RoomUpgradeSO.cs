@@ -15,6 +15,9 @@ public class RoomUpgradeSO : ScriptableObject
 
     public BonusType BonusType;
     public float Value;
+
+    [Header("Unlocks")]
+    public NPCHero HeroToUnlock;
     
     [SerializeField]
     private List<TavernEffect> _effects = new();

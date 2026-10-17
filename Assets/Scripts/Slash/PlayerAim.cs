@@ -9,6 +9,8 @@ public class PlayerAim : MonoBehaviour
 
     private Vector2 _lastAimDirection = Vector2.right;
 
+    public float OutfitAimBonus => _outfitAimBonus;
+
     public void UpdateAim(Vector2 input)
     {
         if (input.sqrMagnitude > 0.01f)
@@ -26,11 +28,8 @@ public class PlayerAim : MonoBehaviour
     {
         var direction = _lastAimDirection;
 
-        var currentDistance =
-            _aimDistance + _outfitAimBonus;
-
         transform.localPosition =
-            direction * currentDistance;
+            direction * _aimDistance;
 
         var angle = Mathf.Atan2(
             direction.y,

@@ -25,6 +25,7 @@ public sealed class EnemyMimicDisguise : MonoBehaviour, IInteractable
 
     private EnemyBrain _enemyBrain;
     private EnemyStatistics _enemyStatistics;
+    private EnemySounds _enemySounds;
     private EnemySelector _enemySelector;
     private Animator _animator;
     private NavMeshAgent _navMeshAgent;
@@ -39,6 +40,7 @@ public sealed class EnemyMimicDisguise : MonoBehaviour, IInteractable
     {
         _enemyBrain = GetComponent<EnemyBrain>();
         _enemyStatistics = GetComponent<EnemyStatistics>();
+        _enemySounds = GetComponent<EnemySounds>();
         _enemySelector = GetComponent<EnemySelector>();
         _animator = GetComponent<Animator>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
@@ -99,6 +101,7 @@ public sealed class EnemyMimicDisguise : MonoBehaviour, IInteractable
     private void EnterDisguisedState()
     {
         _state = MimicState.Disguised;
+        _enemySounds?.SetIdleSoundsEnabled(false);
 
         _enemyBrain.enabled = false;
 
@@ -165,6 +168,10 @@ public sealed class EnemyMimicDisguise : MonoBehaviour, IInteractable
             Debug.LogWarning($"{name}: no activation animation is assigned; activating immediately.", this);
         }
 
+        // Some spawn paths instantiate Mimics directly instead of going through
+        // HordeManager.SetupEnemy, so initialize their combat stats before enabling AI.
+        _enemyStatistics.Initialize();
+
         RestoreEnemyColliders();
 
         if (_enemySelector != null)
@@ -172,12 +179,52 @@ public sealed class EnemyMimicDisguise : MonoBehaviour, IInteractable
 
         _animator.enabled = true;
 
-        if (_navMeshAgent != null)
-            _navMeshAgent.enabled = true;
+        ReattachNavMeshAgent();
+
+        var player = Player.Instance;
+        if (player != null)
+            _enemyBrain.ForceTargetIndefinitely(player.transform);
 
         _enemyBrain.enabled = true;
         _state = MimicState.Active;
+        _enemySounds?.SetIdleSoundsEnabled(true);
         _activationCoroutine = null;
+
+        var hordeManager = HordeManager.Instance;
+        if (hordeManager != null &&
+            hordeManager.CurrentMoon != null &&
+            hordeManager.CurrentMoon.ObjectiveType == MoonObjectiveType.FindMimics &&
+            hordeManager.CurrentObjectiveProgress < hordeManager.CurrentObjectiveTarget)
+        {
+            hordeManager.AddObjectiveProgress(1);
+        }
+    }
+
+    private void ReattachNavMeshAgent()
+    {
+        if (_navMeshAgent == null)
+            return;
+
+        if (!_navMeshAgent.enabled)
+            _navMeshAgent.enabled = true;
+
+        if (!_navMeshAgent.isOnNavMesh)
+        {
+            if (!NavMesh.SamplePosition(
+                    transform.position,
+                    out var navMeshHit,
+                    3f,
+                    _navMeshAgent.areaMask) ||
+                !_navMeshAgent.Warp(navMeshHit.position))
+            {
+                Debug.LogWarning(
+                    $"{name}: couldn't reattach the Mimic to the NavMesh after activation.",
+                    this);
+                return;
+            }
+        }
+
+        _navMeshAgent.isStopped = false;
     }
 
     private void HandleEnemyDeath(EnemyStatistics enemy)

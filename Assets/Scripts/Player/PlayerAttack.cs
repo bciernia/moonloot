@@ -72,6 +72,13 @@ public class PlayerAttack : MonoBehaviour
         var slashObject = Instantiate(slashEffect, firePoint.position, firePoint.rotation);
         var slash = slashObject.GetComponent<SlashEffect>();
         slash.SetShooter(gameObject);
+
+        var playerAim = firePoint.GetComponentInParent<PlayerAim>();
+        var rangeBonus = _weapon.ProjectilePrefab == null && playerAim != null
+            ? playerAim.OutfitAimBonus
+            : 0f;
+        slash.SetRangeBonus(rangeBonus);
+
         CreateSlashEffect(slash); 
     }
 

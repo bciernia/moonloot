@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 public class TavernManager : Singleton<TavernManager>, ISaveable
 {
     private const string SaveKey = "TavernRooms";
+    private const string UnlockedHeroesSaveKey = "TavernUnlockedHeroes";
     [SerializeField] private PlayerStatsSO _playerStats;
 
     [SerializeField] private List<TavernRoomSO> _rooms = new();
     [SerializeField] private List<TavernRoomSlot> _roomsPosition = new();
     [SerializeField]
     private List<TavernRoomData> _roomsData = new();
+    private List<string> _unlockedHeroIds = new();
     
     public IReadOnlyList<TavernRoomData> RoomDatas => _roomsData;
+    public IReadOnlyList<string> UnlockedHeroIds => _unlockedHeroIds;
 
     public IReadOnlyList<TavernRoomSO> Rooms => _rooms;
     
@@ -38,6 +41,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         
         RefreshSlots();
         RespawnRooms();
+        SpawnUnlockedHeroes();
     }
     
     public bool IsRoomUnlocked(string roomId)
@@ -56,6 +60,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         });
         
         SpawnRoom(_roomsData[^1]);
+        SpawnUnlockedHeroes();
     }
 
     public TavernRoomSO GetRoom(string roomId)
@@ -373,12 +378,26 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
 
         roomData.PurchasedUpgrades.Add(upgrade.Id);
 
+        var unlockedHero = upgrade.HeroToUnlock != null &&
+                           AddUnlockedHero(upgrade.HeroToUnlock);
+
         ReapplyRoomBonuses();
         
         Save();
 
         TavernBonusManager.Instance.Rebuild();
-        
+
+        if (unlockedHero)
+        {
+            SpawnUnlockedHeroes();
+
+            if (ConfirmationManager.Instance != null)
+            {
+                ConfirmationManager.Instance.ShowInformation(
+                    $"Hero unlocked: {upgrade.HeroToUnlock.Name}");
+            }
+        }
+
         return true;
     }
     
@@ -392,6 +411,154 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         }
 
         return roomData.PurchasedUpgrades.Contains(upgradeId);
+    }
+
+    public bool IsHeroUnlocked(NPCHero hero)
+    {
+        if (hero == null)
+        {
+            return false;
+        }
+
+        return _unlockedHeroIds.Contains(hero.StableId);
+    }
+
+    public IReadOnlyList<NPCHero> GetUnlockedHeroes()
+    {
+        var heroesById = new Dictionary<string, NPCHero>();
+
+        foreach (var room in _rooms)
+        {
+            if (room == null)
+            {
+                continue;
+            }
+
+            foreach (var upgrade in room.Upgrades)
+            {
+                var hero = upgrade?.HeroToUnlock;
+                if (hero == null || string.IsNullOrEmpty(hero.StableId))
+                {
+                    continue;
+                }
+
+                if (!heroesById.ContainsKey(hero.StableId))
+                {
+                    heroesById.Add(hero.StableId, hero);
+                }
+            }
+        }
+
+        var unlockedHeroes = new List<NPCHero>();
+        foreach (var heroId in _unlockedHeroIds)
+        {
+            if (heroesById.TryGetValue(heroId, out var hero))
+            {
+                unlockedHeroes.Add(hero);
+            }
+        }
+
+        return unlockedHeroes;
+    }
+
+    private void SpawnUnlockedHeroes()
+    {
+        var heroes = GetUnlockedHeroes();
+        if (heroes.Count == 0)
+        {
+            return;
+        }
+
+        var positions = FindObjectsByType<HeroPosition>(FindObjectsSortMode.None)
+            .OrderBy(position => position.name)
+            .ToArray();
+
+        if (positions.Length == 0)
+        {
+            Debug.LogWarning("Unlocked heroes exist, but no HeroPosition was found in the scene.");
+            return;
+        }
+
+        var spawnedHeroIds = new HashSet<string>(
+            positions
+                .Where(position => position.SpawnedHero != null)
+                .Select(position => position.SpawnedHero.StableId));
+
+        foreach (var hero in heroes)
+        {
+            if (spawnedHeroIds.Contains(hero.StableId))
+            {
+                continue;
+            }
+
+            if (hero.Character == null)
+            {
+                Debug.LogWarning($"Unlocked hero '{hero.Name}' has no Character prefab assigned.");
+                continue;
+            }
+
+            var position = positions.FirstOrDefault(
+                candidate => !candidate.IsOccupied && candidate.transform.childCount == 0);
+
+            if (position == null)
+            {
+                Debug.LogWarning($"No free HeroPosition is available for unlocked hero '{hero.Name}'.");
+                return;
+            }
+
+            if (position.TrySpawn(hero))
+            {
+                spawnedHeroIds.Add(hero.StableId);
+            }
+        }
+    }
+
+    private bool AddUnlockedHero(NPCHero hero)
+    {
+        if (hero == null)
+        {
+            return false;
+        }
+
+        var heroId = hero.StableId;
+        if (string.IsNullOrEmpty(heroId) || _unlockedHeroIds.Contains(heroId))
+        {
+            return false;
+        }
+
+        _unlockedHeroIds.Add(heroId);
+        Debug.Log($"Unlocked hero: {hero.name} ({heroId})");
+        return true;
+    }
+
+    private bool RebuildHeroUnlocksFromPurchasedUpgrades()
+    {
+        var changed = false;
+
+        foreach (var roomData in _roomsData)
+        {
+            if (roomData.PurchasedUpgrades == null)
+            {
+                continue;
+            }
+
+            var room = GetRoom(roomData.RoomId);
+            if (room == null)
+            {
+                continue;
+            }
+
+            foreach (var upgradeId in roomData.PurchasedUpgrades)
+            {
+                var upgrade = room.Upgrades.FirstOrDefault(x => x.Id == upgradeId);
+                if (upgrade != null && upgrade.HeroToUnlock != null)
+                {
+                    changed |= AddUnlockedHero(upgrade.HeroToUnlock);
+                }
+            }
+        }
+
+        return changed;
     }
     
     public void ReapplyRoomBonuses()
@@ -531,26 +698,43 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         var settings = SaveLoadManager.Instance.GetSettings();
         
         ES3.Save(SaveKey, _roomsData, settings);
+        ES3.Save(UnlockedHeroesSaveKey, _unlockedHeroIds, settings);
     }
 
     public void Load()
     {
         var settings = SaveLoadManager.Instance.GetSettings();
 
-        if (!ES3.KeyExists(SaveKey, settings))
+        _roomsData = ES3.KeyExists(SaveKey, settings)
+            ? ES3.Load<List<TavernRoomData>>(SaveKey, settings)
+            : new List<TavernRoomData>();
+
+        if (_roomsData == null)
         {
             _roomsData = new List<TavernRoomData>();
-            return;
         }
 
-        _roomsData = ES3.Load<List<TavernRoomData>>(
-            SaveKey,
-            settings);
+        _unlockedHeroIds = ES3.KeyExists(UnlockedHeroesSaveKey, settings)
+            ? ES3.Load<List<string>>(UnlockedHeroesSaveKey, settings)
+            : new List<string>();
+
+        if (_unlockedHeroIds == null)
+        {
+            _unlockedHeroIds = new List<string>();
+        }
+
+        var migratedHeroUnlocks = RebuildHeroUnlocksFromPurchasedUpgrades();
+        if (migratedHeroUnlocks)
+        {
+            Save();
+        }
 
         foreach (var roomData in _roomsData)
         {
             SpawnRoom(roomData);
         }
+
+        SpawnUnlockedHeroes();
 
         ReapplyRoomBonuses();
         

@@ -97,6 +97,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private NpcDatabase _npcDatabase;
     [SerializeField] private Transform _npcContainer;
     [SerializeField] private GameObject _npcButtonPrefab;
+
+    [Header("Hero selection after mission selection")]
+    [SerializeField] private GameObject _heroSelectionPanel;
+    [SerializeField] private Transform _heroSelectionContainer;
+    [SerializeField] private CharacterOptionUI _heroOptionCardPrefab;
     
     [Header("Night selection")]
     [SerializeField] private TextMeshProUGUI _nightTitle;
@@ -111,6 +116,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _nightPreviewImage;
 
     [SerializeField] private float _nightSelectionDelay = 0.5f;
+    [SerializeField] private float _cardTransitionDuration = 0.55f;
+    [SerializeField] private float _cardTransitionDistance = 1600f;
+    [SerializeField] private float _locationCardSpinTurns = 1.25f;
     
     [Header("Moon objective")]
     [SerializeField] private Image _moonObjectiveImageFinished;
@@ -175,6 +183,11 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
+        if (_heroSelectionPanel != null)
+        {
+            _heroSelectionPanel.SetActive(false);
+        }
+
         _dayNightCycle = FindAnyObjectByType<DayNightCycle>();
         // _dayNightCycle.OnDayStarted += ResetClock;
         _dayNightCycle.HordeAttack += ShowStartNightPanel;
@@ -675,6 +688,45 @@ public class UIManager : MonoBehaviour
         
         // StartCoroutine(StartNightWithDelay());
     }
+
+    public void OnHeroSelected(NPCHero chosenHero)
+    {
+        if (chosenHero == null)
+        {
+            return;
+        }
+
+        if (_heroSelectionPanel != null)
+        {
+            _heroSelectionPanel.SetActive(false);
+        }
+
+        StartSelectedNight(new VillageNpcRuntime(chosenHero));
+    }
+
+    public void SelectHero(NPCHero hero, int index)
+    {
+        if (hero == null ||
+            _heroSelectionContainer == null ||
+            index < 0 ||
+            index >= _heroSelectionContainer.childCount)
+        {
+            return;
+        }
+
+        StartCoroutine(PlayHeroSelectionAnimation(hero, index));
+    }
+
+    public void BackToMissionSelection()
+    {
+        if (_heroSelectionPanel != null)
+        {
+            _heroSelectionPanel.SetActive(false);
+        }
+
+        SetupNightPanel();
+        _startNightPanel.SetActive(true);
+    }
     
     private IEnumerator StartNightWithDelay()
     {
@@ -1127,15 +1179,137 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(
             _nightSelectionDelay);
 
-        StartNight();
+        yield return selectedCard.PlaySpinAndFlyOut(
+            Vector3.left,
+            _cardTransitionDistance,
+            _cardTransitionDuration,
+            _locationCardSpinTurns);
+
+        yield return StartCoroutine(ShowHeroSelectionPanel());
+    }
+
+    private IEnumerator ShowHeroSelectionPanel()
+    {
+        var heroes = TavernManager.Instance.GetUnlockedHeroes();
+        if (heroes.Count == 0)
+        {
+            StartNight();
+            yield break;
+        }
+
+        if (_heroSelectionPanel == null ||
+            _heroSelectionContainer == null ||
+            _heroOptionCardPrefab == null)
+        {
+            Debug.LogWarning(
+                "Hero selection UI is not configured. Starting the mission without a hero choice.");
+            StartNight();
+            yield break;
+        }
+
+        ClearHeroSelectionButtons();
+
+        var createdButtonCount = 0;
+        foreach (var hero in heroes)
+        {
+            if (hero.Character == null)
+            {
+                Debug.LogWarning($"Unlocked hero '{hero.Name}' has no Character prefab assigned.");
+                continue;
+            }
+
+            var card = Instantiate(
+                _heroOptionCardPrefab,
+                _heroSelectionContainer);
+
+            card.Setup(hero, createdButtonCount, this);
+
+            createdButtonCount++;
+        }
+
+        if (createdButtonCount == 0)
+        {
+            StartNight();
+            yield break;
+        }
+
+        _startNightPanel.SetActive(false);
+        _heroSelectionPanel.SetActive(true);
+
+        Canvas.ForceUpdateCanvases();
+
+        for (var i = 0; i < _heroSelectionContainer.childCount; i++)
+        {
+            var card = _heroSelectionContainer
+                .GetChild(i)
+                .GetComponent<CharacterOptionUI>();
+
+            if (card != null)
+            {
+                card.PlayEnterFromRight(
+                    _cardTransitionDistance,
+                    _cardTransitionDuration);
+            }
+        }
+    }
+
+    private void ClearHeroSelectionButtons()
+    {
+        for (var i = _heroSelectionContainer.childCount - 1; i >= 0; i--)
+        {
+            Destroy(_heroSelectionContainer.GetChild(i).gameObject);
+        }
+    }
+
+    private IEnumerator PlayHeroSelectionAnimation(
+        NPCHero hero,
+        int selectedIndex)
+    {
+        var selectedCard = _heroSelectionContainer
+            .GetChild(selectedIndex)
+            .GetComponent<CharacterOptionUI>();
+
+        if (selectedCard == null)
+        {
+            yield break;
+        }
+
+        var containerRect = _heroSelectionContainer.GetComponent<RectTransform>();
+        var centerPosition = containerRect.rect.center;
+
+        for (var i = 0; i < _heroSelectionContainer.childCount; i++)
+        {
+            var card = _heroSelectionContainer
+                .GetChild(i)
+                .GetComponent<CharacterOptionUI>();
+
+            if (card == null)
+            {
+                continue;
+            }
+
+            card.PlaySelectedAnimation(
+                i == selectedIndex ? centerPosition : Vector3.zero,
+                i == selectedIndex);
+        }
+
+        yield return new WaitForSecondsRealtime(_nightSelectionDelay);
+        OnHeroSelected(hero);
     }
 
     private void StartNight()
     {
+        _selectedNPC = null;
+        HordeManager.Instance.SelectedNpc = null;
+
         CombatStatsManager.Instance.ResetStats(
             Player.Instance.transform);
 
         _startNightPanel.SetActive(false);
+        if (_heroSelectionPanel != null)
+        {
+            _heroSelectionPanel.SetActive(false);
+        }
 
         PauseManager.Instance.ReleasePause();
 

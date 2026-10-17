@@ -617,6 +617,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         yield return new WaitUntil(() =>
             FindObjectsOfType<BossSpawner>().Length > 0
         );
+
+        ApplySelectedHeroAppearance();
         
         yield return new WaitForSeconds(0.2f);
         
@@ -655,6 +657,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             FindObjectsOfType<EnemyObjectiveSpawner>().Length > 0
         );
 
+        ApplySelectedHeroAppearance();
+
         yield return new WaitForSeconds(0.2f);
 
         LootSpawnManager.Instance.SpawnAll(CurrentNightLocation, currentHorde);
@@ -669,6 +673,18 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         {
             cycle.SetNightLighting();
         }
+    }
+
+    private void ApplySelectedHeroAppearance()
+    {
+        var selectedHero = SelectedNpc != null
+            ? SelectedNpc.Data as NPCHero
+            : null;
+
+        if (selectedHero == null || selectedHero.Outfit == null)
+            return;
+
+        OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
     }
     
     public void CleanupEnemies()

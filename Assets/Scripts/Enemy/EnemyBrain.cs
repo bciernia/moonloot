@@ -15,6 +15,7 @@ public class EnemyBrain : MonoBehaviour
 
     private EnemyStatistics _enemyStatistics;
     private bool _isRegisteredInCombat;
+    private bool _hasPermanentForcedTarget;
     
     public FSMState CurrentState { get; private set; }
     public Transform Player { get; set; }
@@ -83,7 +84,18 @@ public class EnemyBrain : MonoBehaviour
     
     private void HandleForcedTarget()
     {
-        if (_forcedTarget == null) return;
+        if (_forcedTarget == null)
+        {
+            _forcedTargetTimer = 0f;
+            _hasPermanentForcedTarget = false;
+            return;
+        }
+
+        if (_hasPermanentForcedTarget)
+        {
+            Player = _forcedTarget;
+            return;
+        }
 
         _forcedTargetTimer -= Time.deltaTime;
 
@@ -198,8 +210,22 @@ public class EnemyBrain : MonoBehaviour
     
     public void ForceTarget(Transform target, float duration)
     {
+        if (_hasPermanentForcedTarget)
+            return;
+
         _forcedTarget = target;
         _forcedTargetTimer = duration;
+    }
+
+    public void ForceTargetIndefinitely(Transform target)
+    {
+        if (target == null)
+            return;
+
+        _forcedTarget = target;
+        _forcedTargetTimer = 0f;
+        _hasPermanentForcedTarget = true;
+        Player = target;
     }
     
     public bool HasForcedTarget => _forcedTarget != null;

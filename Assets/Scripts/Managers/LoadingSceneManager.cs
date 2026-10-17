@@ -160,6 +160,15 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             .GetComponent<PlayerMovement>()
             ?.ResetTemporaryMovementModifiers();
 
+        if (scene.name == "Base_Demo" && MainMenuManager.SelectedHeroForNewGame != null &&
+            Player.Instance != null)
+        {
+            var selectedHero = MainMenuManager.SelectedHeroForNewGame;
+            OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
+
+            MainMenuManager.ClearSelectedHeroForNewGame();
+        }
+
         if (IsSceneBase())
         {
             SoundManager.Instance.StopCombatMusic();
