@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3309021524241675244, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      propertyPath: dialogue
+      value: 
+      objectReference: {fileID: 11400000, guid: f75bc0a14f6083b4caa1a4934b21f4b7, type: 2}
     - target: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
       propertyPath: m_Name
       value: NPC_Villager2
@@ -59,5 +63,45 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6627305069156149048}
+    - targetCorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -5795025192258829242}
   m_SourcePrefab: {fileID: 100100000, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+--- !u!1 &1924373158044024723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6577220292667468455, guid: ccb98c929d7dd204fb2918526f76fcae, type: 3}
+  m_PrefabInstance: {fileID: 4751935543559705908}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6627305069156149048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924373158044024723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb4eb5a058a4cd8a83a942c4d88a566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _quests: []
+  _giverID: 
+  _giverDisplayName: 
+  _giverPortrait: {fileID: 0}
+--- !u!114 &-5795025192258829242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924373158044024723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d9c94e7efc43cd8ffcf7243e61e1ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questToEntries: []

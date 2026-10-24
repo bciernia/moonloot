@@ -13,6 +13,7 @@ public class AreaExit : MonoBehaviour
 
     public void ExitArea()
     {
+        QuestObjectiveEvents.RaiseCurrentMapCompleted();
         LoadingSceneManager.Instance.LoadScene(sceneToLoad);
         FindAnyObjectByType<Player>().areaTransitionName = areaTransitionName;
     }

@@ -27,15 +27,8 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
     private void Awake()
     {
         _enemyStatistics = GetComponent<EnemyStatistics>();
-        
-        if (ES3.KeyExists($"shop_{sellerId}"))
-        {
-            Load();
-        }
-        else
-        {
-            _sellerInventory = new InventoryRuntime(SellerInventory);
-        }
+        _sellerInventory = new InventoryRuntime(SellerInventory);
+        Load();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -81,14 +74,20 @@ public class SellerInteraction : MonoBehaviour, IInteractable, ISaveable
 
     public void Load()
     {
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
         if (_sellerInventory == null)
         {
             _sellerInventory = new InventoryRuntime(SellerInventory);
         }
+
+        if (settings == null)
+            return;
         
-        if (ES3.KeyExists($"shop_{sellerId}"))
+        if (ES3.KeyExists($"shop_{sellerId}", settings))
         {
-            var data = ES3.Load<ShopSaveData>($"shop_{sellerId}");
+            var data = ES3.Load<ShopSaveData>($"shop_{sellerId}", settings);
             _sellerInventory.LoadData(data.items, data.lunar);
 
             _sellerInventory.NotifyInventoryUpdated();

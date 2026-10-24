@@ -119,6 +119,7 @@ public class NPCStatUpgrade : MonoBehaviour
     
     public string GetNpcName() => npc.Name;
     public string GetNpcProfession() => npc.Profession;
+    public Sprite GetNpcPortrait() => npc != null ? npc.Portrait : null;
 
     public bool TryUnlockSkill() => _runtimeNpc.GrantedSkill != null && PlayerSkillManager.Instance.UnlockSkill(_runtimeNpc.GrantedSkill);
     

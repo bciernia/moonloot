@@ -477,10 +477,11 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists("player_chosen_skills"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("player_chosen_skills", settings))
             return;
 
-        var loaded = ES3.Load<List<SkillSaveData>>("player_chosen_skills");
+        var loaded = ES3.Load<List<SkillSaveData>>("player_chosen_skills", settings);
 
         _skillRuntime.Clear();
 

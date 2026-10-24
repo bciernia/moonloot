@@ -130,7 +130,7 @@ public class MainMenuManager : MonoBehaviour
         
         // ES3.DeleteFile();
         
-        SaveLoadManager.Instance.CreateNewSaveForNewGame();
+        SaveLoadManager.Instance.CreateNewSaveForNewGame(_selectedHero.Outfit);
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }

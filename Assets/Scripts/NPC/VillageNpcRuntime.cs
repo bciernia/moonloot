@@ -15,6 +15,7 @@ public class VillageNpcRuntime
     
     public string Profession;
     public List<NPCUpgradeLevel> UpgradeLevels;
+    public string AssignedQuestId;
 
     public WorkerJob CurrentJob;
 

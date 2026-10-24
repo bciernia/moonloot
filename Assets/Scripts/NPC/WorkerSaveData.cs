@@ -6,6 +6,7 @@ public class WorkerSaveData
     public string Profession;
     public WorkerJob CurrentJob;
     public string GrantedSkillId;
+    public string AssignedQuestId;
     public bool IsAssignedToRoom;
     public int AssignedRoomSlotId;
 }

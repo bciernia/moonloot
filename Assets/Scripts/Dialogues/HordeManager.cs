@@ -681,7 +681,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             ? SelectedNpc.Data as NPCHero
             : null;
 
-        if (selectedHero == null || selectedHero.Outfit == null)
+        if (selectedHero == null)
             return;
 
         OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
@@ -1822,7 +1822,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         ReturnToPreviousScene();
     }
 
-    public void ReturnToPreviousScene()
+    public async void ReturnToPreviousScene()
     {
         SoundManager.Instance.StopCombatMusic();
 
@@ -1834,8 +1834,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             return;
         }
 
-        LoadingSceneManager.Instance.LoadScene(_previousScene, true);
-        
+        await LoadingSceneManager.Instance.LoadScene(_previousScene, true);
+
         var cycle = FindFirstObjectByType<DayNightCycle>();
 
         if (cycle != null)
@@ -2212,12 +2212,18 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public void Load()
     {
-        if(ES3.KeyExists("currentHorde"))
-            currentHorde = ES3.Load<int>("currentHorde");
-        if(ES3.KeyExists("nightCycleStep"))
-            NightCycleStep = ES3.Load<int>("nightCycleStep");
-        if(ES3.KeyExists("enemiesPerHorde"))
-            enemiesPerHorde = ES3.Load<int>("enemiesPerHorde");
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+        if (settings == null)
+            return;
+
+        if (ES3.KeyExists("currentHorde", settings))
+            currentHorde = ES3.Load<int>("currentHorde", settings);
+        if (ES3.KeyExists("nightCycleStep", settings))
+            NightCycleStep = ES3.Load<int>("nightCycleStep", settings);
+        if (ES3.KeyExists("enemiesPerHorde", settings))
+            enemiesPerHorde = ES3.Load<int>("enemiesPerHorde", settings);
         
         if (NightCycleStep == 3)
         {

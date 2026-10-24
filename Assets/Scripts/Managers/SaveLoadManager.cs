@@ -27,7 +27,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
     public ES3Settings GetSettings() =>  CurrentSettings;
 
-    public void CreateNewSaveForNewGame()
+    public void CreateNewSaveForNewGame(OutfitItemSO startingHeroOutfit = null)
     {
         var slotName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
@@ -59,6 +59,11 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         ES3.Save(
             "CurrentNight",
             1, CurrentSettings);
+
+        ES3.Save(
+            OutfitManager.HeroOutfitSaveKey,
+            OutfitManager.GetOutfitSaveId(startingHeroOutfit),
+            CurrentSettings);
     }
 
     public void Save()
@@ -66,6 +71,12 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         if (string.IsNullOrEmpty(
                 ES3SlotManager.selectedSlotPath))
             return;
+
+        var settings = CurrentSettings;
+        if (settings == null)
+            return;
+
+        ES3.Save("SceneName", SceneManager.GetActiveScene().name, settings);
 
         var saveables = FindObjectsOfType<MonoBehaviour>(true);
 
@@ -92,12 +103,18 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
                 ES3SlotManager.selectedSlotPath))
             return;
 
-        var sceneName =
-            ES3.Load<string>(
-                "SceneName");
+        var settings = CurrentSettings;
+        if (settings == null || !ES3.KeyExists("SceneName", settings))
+        {
+            Debug.LogWarning("The selected save has no saved scene name.", this);
+            return;
+        }
+
+        var sceneName = ES3.Load<string>("SceneName", settings);
 
         await LoadingSceneManager.Instance.LoadScene(
-            sceneName);
+            sceneName,
+            true);
 
         var saveables =
             FindObjectsByType<MonoBehaviour>(
@@ -108,5 +125,28 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         {
             saveable.Load();
         }
+
+        MigrateLegacyEquippedOutfitIfNeeded();
     }
+
+    private void MigrateLegacyEquippedOutfitIfNeeded()
+    {
+        var settings = CurrentSettings;
+        if (settings == null || ES3.KeyExists(OutfitManager.HeroOutfitSaveKey, settings))
+            return;
+
+        var equippedItemsManager = EquippedItemsManager.Instance;
+        var equippedItems = equippedItemsManager != null ? equippedItemsManager.EquippedItems : null;
+        if (equippedItems == null || equippedItems.Count <= 2 ||
+            equippedItems[2].item is not OutfitItemSO legacyOutfit)
+            return;
+
+        OutfitManager.ApplyHeroOutfit(legacyOutfit);
+        equippedItems[2] = InventoryItem.GetEmptyItem();
+        equippedItemsManager.InitializeEquippedSlots();
+
+        ES3.Save(OutfitManager.HeroOutfitSaveKey, OutfitManager.GetOutfitSaveId(legacyOutfit), settings);
+        ES3.Save("playerInventory_equippedItems", equippedItems, settings);
+    }
+
 }

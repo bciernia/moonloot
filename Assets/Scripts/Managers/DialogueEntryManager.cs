@@ -20,10 +20,11 @@ public class DialogueEntryManager : Singleton<DialogueEntryManager>, ISaveable
 
     public void Load()
     {
-        if (ES3.KeyExists("NpcDialogueDictionary"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (ES3.KeyExists("NpcDialogueDictionary", settings))
         {
             NpcDialogueEntryDictionary =
-                ES3.Load<Dictionary<string, string>>("NpcDialogueDictionary");
+                ES3.Load<Dictionary<string, string>>("NpcDialogueDictionary", settings);
         }
         else
         {

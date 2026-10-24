@@ -65,7 +65,11 @@ public class QuestTableManager : Singleton<QuestTableManager>
         QuestDescriptionPanel.SetActive(true);
         ChosenQuest = quest;
         QuestTitle.text = quest.GetQuestTitle();
-        QuestDescription.text = quest.GetQuestDescription();
+        var taskDescription = quest.GetQuestDescription();
+        var storyDescription = quest.GetStoryDescription();
+        QuestDescription.text = string.IsNullOrWhiteSpace(storyDescription)
+            ? taskDescription
+            : $"{taskDescription}\n\n{storyDescription}";
         QuestReward.text = PrepareRewardForQuest(quest.GetRewards().ToList());
         QuestButton.onClick.RemoveAllListeners();
         QuestButton.onClick.AddListener(() => GetTask(quest));
@@ -77,7 +81,11 @@ public class QuestTableManager : Singleton<QuestTableManager>
         sb.AppendLine("Reward: ");
         foreach (var reward in rewards)
         {
-            sb.AppendLine($"{reward.item.item.name} x{reward.item.quantity}");
+            if (reward == null || reward.item.item == null)
+                continue;
+
+            var quantity = reward.item.quantity > 0 ? reward.item.quantity : Mathf.Max(1, reward.number);
+            sb.AppendLine($"{reward.item.item.Name} x{quantity}");
         }
 
         return sb.ToString();
@@ -85,7 +93,11 @@ public class QuestTableManager : Singleton<QuestTableManager>
 
     private void GetTask(QuestSO quest)
     {
-        PlayerQuests.AddQuest(quest, QUEST_TAKEN_FROM_TABLE);
+        PlayerQuests.AddQuest(
+            quest,
+            QUEST_TAKEN_FROM_TABLE,
+            TaskTableInteraction.QuestSourceID,
+            TaskTableInteraction.QuestSourceName);
         RemoveQuestCard(quest);
         QuestDescriptionPanel.SetActive(false);
     }

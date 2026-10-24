@@ -142,11 +142,12 @@ public class NPCManager : Singleton<NPCManager>, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists("npc_levels"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("npc_levels", settings))
             return;
 
         var saveData =
-            ES3.Load<List<NPCLevelSaveData>>("npc_levels");
+            ES3.Load<List<NPCLevelSaveData>>("npc_levels", settings);
 
         _npcLevels.Clear();
 

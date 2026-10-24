@@ -80,12 +80,13 @@ public class ChestInteraction : MonoBehaviour, IInteractable, ISaveable
 
     public void Load()
     {
+        var settings = SaveLoadManager.Instance.GetSettings();
         if (_chestInventory == null)
             _chestInventory = new InventoryRuntime(ChestLoot);
 
-        if (ES3.KeyExists($"chest_{chestId}"))
+        if (ES3.KeyExists($"chest_{chestId}", settings))
         {
-            var data = ES3.Load<ChestSaveData>($"chest_{chestId}");
+            var data = ES3.Load<ChestSaveData>($"chest_{chestId}", settings);
 
             _chestInventory.LoadData(data.items, 0); // chest raczej nie ma waluty
         }

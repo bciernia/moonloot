@@ -37,10 +37,11 @@ public class EnemyStateManager : Singleton<EnemyStateManager>, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists("dead_enemies"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("dead_enemies", settings))
             return;
 
-        var list = ES3.Load<List<string>>("dead_enemies");
+        var list = ES3.Load<List<string>>("dead_enemies", settings);
         deadEnemies = new HashSet<string>(list);
 
         RemoveDeadEnemiesFromScene();

@@ -28,9 +28,10 @@ public class WorldStateManager : Singleton<WorldStateManager>, ISaveable
 
     public void Load()
     {
-        if (ES3.KeyExists("world_states"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (ES3.KeyExists("world_states", settings))
         {
-            var loaded = ES3.Load<List<string>>("world_states");
+            var loaded = ES3.Load<List<string>>("world_states", settings);
             states = new HashSet<string>(loaded);
         }
     }

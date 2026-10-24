@@ -742,28 +742,37 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
 
     public void Load()
     {
-        if (ES3.KeyExists("playerInventory_items"))
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+        if (settings == null)
+            return;
+
+        if (ES3.KeyExists("playerInventory_items", settings))
         {
-            var items = ES3.Load<List<InventoryItem>>("playerInventory_items");
+            var items = ES3.Load<List<InventoryItem>>("playerInventory_items", settings);
             inventoryData.inventoryItems = items;
         }
 
-        if (ES3.KeyExists("playerInventory_gold"))
+        if (ES3.KeyExists("playerInventory_gold", settings))
         {
-            var gold = ES3.Load<int>("playerInventory_gold");
+            var gold = ES3.Load<int>("playerInventory_gold", settings);
             inventoryData.Lunar = gold;
         }
 
         // inventoryData.NotifyInventoryUpdated();
 
-        if (ES3.KeyExists("playerInventory_equippedItems"))
+        if (ES3.KeyExists("playerInventory_equippedItems", settings))
         {
-           var equipped = ES3.Load<List<InventoryItem>>("playerInventory_equippedItems");
+           var equipped = ES3.Load<List<InventoryItem>>("playerInventory_equippedItems", settings);
            equippedItemsManager.EquippedItems = equipped;
+           while (equippedItemsManager.EquippedItems.Count < 7)
+               equippedItemsManager.EquippedItems.Add(InventoryItem.GetEmptyItem());
+
            // equippedItemsManager.InitializeEquippedSlots();
            WeaponManager.Instance.SetWeapon((WeaponItemSO)equippedItemsManager.EquippedItems[0].item, equippedItemsManager.EquippedItems[0].itemState, true);
            ArmorManager.Instance.SetArmor((ArmorItemSO)equippedItemsManager.EquippedItems[1].item, equippedItemsManager.EquippedItems[1].itemState, true);
-           OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
+           // OutfitManager.Instance.SetOutfit((OutfitItemSO)equippedItemsManager.EquippedItems[2].item, equippedItemsManager.EquippedItems[2].itemState, true);
            ArmorManager.Instance.SetHelmet((HelmetItemSO)equippedItemsManager.EquippedItems[3].item, equippedItemsManager.EquippedItems[3].itemState, true);
            ArmorManager.Instance.SetShoes((ShoesItemSO)equippedItemsManager.EquippedItems[4].item, equippedItemsManager.EquippedItems[4].itemState, true);
            QuickItemManager.Instance.SetQuickItem((EdibleItemSO)equippedItemsManager.EquippedItems[5].item, equippedItemsManager.EquippedItems[5].itemState, equippedItemsManager.EquippedItems[5].quantity,5, true);

@@ -20,6 +20,7 @@ public class ExitInteraction : MonoBehaviour, IInteractable
     
     public void Interact()
     {
+        QuestObjectiveEvents.RaiseCurrentMapCompleted();
         HordeManager.Instance.OnPlayerExit();
         Destroy(gameObject);
     }

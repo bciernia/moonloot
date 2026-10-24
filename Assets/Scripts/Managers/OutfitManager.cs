@@ -1,19 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OutfitManager : Singleton<OutfitManager>
+public class OutfitManager : Singleton<OutfitManager>, ISaveable
 {
+    public const string HeroOutfitSaveKey = "player_selected_hero_outfit";
+
     [Header("Config")]
     [SerializeField] private InventorySO _inventoryData;
     [SerializeField] private List<ItemParameter> _parametersToModify, _itemCurrentState;
     [SerializeField] private RuntimeAnimatorController _standardOutfit;
     [SerializeField] private OutfitItemSO _outfit;
+    private OutfitItemSO _heroOutfit;
+    private readonly List<OutfitItemSO> _knownOutfits = new List<OutfitItemSO>();
     
     private PlayerAim _playerAim;
     
     private void Awake()
     {
         _playerAim = FindAnyObjectByType<PlayerAim>();
+        CacheKnownOutfits();
     }
     
     public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState, bool isFromLoading = false)
@@ -25,6 +30,7 @@ public class OutfitManager : Singleton<OutfitManager>
         }
         
         _outfit = outfitItem;
+        _heroOutfit = outfitItem;
         
         if (itemState != null)
         {
@@ -41,6 +47,9 @@ public class OutfitManager : Singleton<OutfitManager>
     /// </summary>
     public static void ApplyHeroOutfit(OutfitItemSO heroOutfit)
     {
+        if (Instance != null)
+            Instance._heroOutfit = heroOutfit;
+
         var player = FindAnyObjectByType<Player>();
         if (player == null)
         {
@@ -88,6 +97,63 @@ public class OutfitManager : Singleton<OutfitManager>
             Instance._outfit = null;
             Instance._itemCurrentState = new List<ItemParameter>();
         }
+    }
+
+    public void Save()
+    {
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+
+        if (settings == null)
+            return;
+
+        ES3.Save(HeroOutfitSaveKey, GetOutfitSaveId(_heroOutfit), settings);
+    }
+
+    public void Load()
+    {
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+
+        if (settings == null || !ES3.KeyExists(HeroOutfitSaveKey, settings))
+            return;
+
+        var outfitSaveId = ES3.Load<string>(HeroOutfitSaveKey, settings);
+        _heroOutfit = FindOutfitBySaveId(outfitSaveId);
+
+        if (!string.IsNullOrEmpty(outfitSaveId) && _heroOutfit == null)
+        {
+            Debug.LogWarning($"Saved hero outfit '{outfitSaveId}' was not found in the OutfitManager inventory catalog.", this);
+        }
+
+        ApplyHeroOutfit(_heroOutfit);
+    }
+
+    public static string GetOutfitSaveId(OutfitItemSO outfit) => outfit != null ? outfit.name : string.Empty;
+
+    private void CacheKnownOutfits()
+    {
+        if (_inventoryData == null || _inventoryData.inventoryItems == null)
+            return;
+
+        foreach (var inventoryItem in _inventoryData.inventoryItems)
+        {
+            if (inventoryItem.item is OutfitItemSO outfit && !_knownOutfits.Contains(outfit))
+                _knownOutfits.Add(outfit);
+        }
+    }
+
+    private OutfitItemSO FindOutfitBySaveId(string outfitSaveId)
+    {
+        if (string.IsNullOrWhiteSpace(outfitSaveId))
+            return null;
+
+        if (_knownOutfits.Count == 0)
+            CacheKnownOutfits();
+
+        return _knownOutfits.Find(outfit => outfit != null && outfit.name == outfitSaveId);
     }
     
     private void ModifyParameters()

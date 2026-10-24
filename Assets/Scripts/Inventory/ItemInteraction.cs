@@ -29,7 +29,12 @@ public class ItemInteraction : MonoBehaviour, IInteractable
             return;
         }
         
-        InventoryController.Instance.AddItem(new InventoryItem() { item = _inventoryItem, quantity = 1});
+        var remaining = InventoryController.Instance.AddItem(
+            new InventoryItem { item = _inventoryItem, quantity = 1 });
+        if (remaining > 0)
+            return;
+
+        QuestObjectiveEvents.RaiseItemCollected(_inventoryItem, 1);
         SoundManager.Instance.PlayPickUpSFX();
         TriggerParticles();
         Destroy(gameObject);

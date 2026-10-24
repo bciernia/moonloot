@@ -207,7 +207,13 @@ public class Player : MonoBehaviour, ISaveable
     
     public void Save()
     {
-        // ES3.Save("player_position", transform.position);
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+        if (settings == null)
+            return;
+
+        ES3.Save("player_position", transform.position, settings);
 
         var stats = new PlayerStatsData
         {
@@ -238,22 +244,24 @@ public class Player : MonoBehaviour, ISaveable
             //     : null
         };
 
-        var settings = SaveLoadManager.Instance.GetSettings();
-        
         ES3.Save("player_stats", stats, settings);
     }
 
     public void Load()
     {
-        // if (ES3.KeyExists("player_position"))
-        // {
-            // transform.position = ES3.Load<Vector3>("player_position");
-        // }
-
-        if (!ES3.KeyExists("player_stats"))
+        var settings = SaveLoadManager.Instance != null
+            ? SaveLoadManager.Instance.GetSettings()
+            : null;
+        if (settings == null)
             return;
 
-        var data = ES3.Load<PlayerStatsData>("player_stats");
+        if (ES3.KeyExists("player_position", settings))
+            transform.position = ES3.Load<Vector3>("player_position", settings);
+
+        if (!ES3.KeyExists("player_stats", settings))
+            return;
+
+        var data = ES3.Load<PlayerStatsData>("player_stats", settings);
 
         _playerStats.Level = data.level;
 

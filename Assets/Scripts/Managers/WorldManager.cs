@@ -36,8 +36,11 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 npc.CurrentJob = savedData.CurrentJob;
                 npc.IsAssignedToRoom = savedData.IsAssignedToRoom;
                 npc.AssignedRoomSlotId = savedData.AssignedRoomSlotId;
+                npc.AssignedQuestId = savedData.AssignedQuestId;
             }
         }
+
+        AssignRandomQuestIfAvailable(npc);
 
         _rescuedNPCs.Add(npc);
         _rescuedNpcIDs.Add(npc.RuntimeID);
@@ -108,6 +111,8 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             var rescueHero = goHero.GetComponent<RescueNpc>();
             if (rescueHero != null)
                 rescueHero.SetRuntime(npc);
+
+            BindQuestGiver(goHero, npc);
         }
     }
     
@@ -148,8 +153,63 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
         if (worker != null)
             worker.SetRuntime(npc);
+
+        BindQuestGiver(go, npc);
     }
-    
+
+    private static void BindQuestGiver(GameObject npcObject, VillageNpcRuntime runtime)
+    {
+        var questGiver = npcObject.GetComponentInChildren<QuestGiver>(true);
+        if (questGiver != null)
+        {
+            questGiver.SetRuntimeNpc(runtime);
+        }
+        else if (runtime != null && !string.IsNullOrWhiteSpace(runtime.AssignedQuestId))
+        {
+            Debug.LogWarning(
+                $"NPC '{runtime.Name}' has an assigned quest but its character prefab has no QuestGiver component.",
+                npcObject);
+        }
+    }
+
+    private void AssignRandomQuestIfAvailable(VillageNpcRuntime npc)
+    {
+        if (npc == null || !string.IsNullOrWhiteSpace(npc.AssignedQuestId))
+            return;
+
+        var unavailableIds = new HashSet<string>(
+            _rescuedNPCs
+                .Where(existing => existing != null && !string.IsNullOrWhiteSpace(existing.AssignedQuestId))
+                .Select(existing => existing.AssignedQuestId));
+
+        var player = GameObject.FindGameObjectWithTag("Player");
+        var journal = player != null ? player.GetComponent<QuestJournal>() : null;
+        if (journal != null)
+        {
+            foreach (var status in journal.GetQuestStatuses())
+            {
+                if (status != null && !string.IsNullOrWhiteSpace(status._questID))
+                    unavailableIds.Add(status._questID);
+            }
+        }
+
+        var availableQuests = QuestDatabase.GetRescuedNpcQuestPool()
+            .Where(quest => quest != null && !unavailableIds.Contains(quest.Id))
+            .ToList();
+
+        if (availableQuests.Count == 0)
+        {
+            Debug.LogWarning(
+                $"No unused quest is available in the rescued NPC quest pool for {npc.Name}.",
+                this);
+            return;
+        }
+
+        var selectedQuest = availableQuests[Random.Range(0, availableQuests.Count)];
+        npc.AssignedQuestId = selectedQuest.Id;
+        Debug.Log($"Assigned quest '{selectedQuest.GetQuestTitle()}' to rescued NPC {npc.Name}.", this);
+    }
+
     public void ResetSpawnPoints()
     {
         var points = FindObjectsOfType<NPCSpawnPoint>();
@@ -264,6 +324,7 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 Profession = npc.Profession,
                 CurrentJob = npc.CurrentJob,
                 GrantedSkillId = npc.GrantedSkill?.Id,
+                AssignedQuestId = npc.AssignedQuestId,
                 IsAssignedToRoom = npc.IsAssignedToRoom,
                 AssignedRoomSlotId = npc.AssignedRoomSlotId,
             });
@@ -276,14 +337,16 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists("workers"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("workers", settings))
             return;
 
         var savedNpcs =
-            ES3.Load<List<WorkerSaveData>>("workers");
+            ES3.Load<List<WorkerSaveData>>("workers", settings);
 
         _rescuedNPCs.Clear();
         _npcPlacements.Clear();
+        _loadedWorkers = savedNpcs;
         
         foreach (var data in savedNpcs)
         {
@@ -303,6 +366,7 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             runtime.CurrentJob = data.CurrentJob;
             runtime.IsAssignedToRoom = data.IsAssignedToRoom;
             runtime.AssignedRoomSlotId = data.AssignedRoomSlotId;
+            runtime.AssignedQuestId = data.AssignedQuestId;
             
             if (!string.IsNullOrEmpty(data.GrantedSkillId))
             {
@@ -312,6 +376,9 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
             _rescuedNPCs.Add(runtime);
         }
+
+        foreach (var npc in _rescuedNPCs)
+            AssignRandomQuestIfAvailable(npc);
 
         AssignPlacesIfNeeded();
         SpawnNPCs();
