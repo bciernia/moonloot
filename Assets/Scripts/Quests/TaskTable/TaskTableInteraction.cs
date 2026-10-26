@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TaskTableInteraction : MonoBehaviour, IInteractable
 {
+    public const string QuestSourceID = "task_board";
+    public const string QuestSourceName = "Task Board";
+
     [SerializeField] private List<QuestSO> QuestList = new List<QuestSO>();
 
     private void OnTriggerEnter2D(Collider2D other)

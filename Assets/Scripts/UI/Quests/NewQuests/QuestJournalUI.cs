@@ -7,8 +7,14 @@ public class QuestJournalUI : MonoBehaviour
 
     private void Start()
     {
-        _questJournal = GameObject.FindGameObjectWithTag("Player")
-            .GetComponent<QuestJournal>();
+        var player = GameObject.FindGameObjectWithTag("Player");
+        _questJournal = player != null ? player.GetComponent<QuestJournal>() : null;
+
+        if (_questJournal == null)
+        {
+            Debug.LogWarning("QuestJournalUI could not find QuestJournal on the Player.", this);
+            return;
+        }
 
         _questJournal.onUpdate += Redraw;
         Redraw();
@@ -26,7 +32,8 @@ public class QuestJournalUI : MonoBehaviour
     {
         if (this == null) return;
 
-        transform.DetachChildren();
+        for (var i = transform.childCount - 1; i >= 0; i--)
+            Destroy(transform.GetChild(i).gameObject);
 
         foreach (var questStatus in _questJournal.GetQuestStatuses())
         {

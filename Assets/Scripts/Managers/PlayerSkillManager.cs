@@ -133,13 +133,14 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists("player_unlocked_skills"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("player_unlocked_skills", settings))
         {
             _isLoaded = false;
             return;
         }
 
-        var ids = ES3.Load<List<string>>("player_unlocked_skills");
+        var ids = ES3.Load<List<string>>("player_unlocked_skills", settings);
 
         _unlockedSkillIds.Clear();
         _unlockedSkills.Clear();

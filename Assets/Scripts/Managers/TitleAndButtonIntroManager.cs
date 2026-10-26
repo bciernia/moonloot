@@ -27,6 +27,8 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
 
     public Vector3 titleEndOffset = new(0,3,0);
     public float buttonsMoveDistance = 500f;
+    [Header("Character selection")]
+    public Vector3 characterSelectionTitleOffset = new(0, 2, 0);
 
 
     private Vector3 cameraStartPos;
@@ -42,6 +44,7 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
 
     private bool isShowingCredits;
     private bool isAnimating;
+    private Coroutine characterSelectionTitleRoutine;
 
 
     [SerializeField]
@@ -93,6 +96,36 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     {
         if(isShowingCredits && Input.GetKeyDown(KeyCode.Escape))
             CloseCredits();
+    }
+
+    public void SetCharacterSelectionTitle(bool isSelectingCharacter)
+    {
+        if (title == null || isShowingCredits)
+            return;
+
+        if (characterSelectionTitleRoutine != null)
+            StopCoroutine(characterSelectionTitleRoutine);
+
+        var targetPosition = isSelectingCharacter
+            ? titleEndPos + characterSelectionTitleOffset * 0.5f
+            : titleEndPos;
+        characterSelectionTitleRoutine = StartCoroutine(MoveCharacterSelectionTitle(targetPosition));
+    }
+
+    IEnumerator MoveCharacterSelectionTitle(Vector3 targetPosition)
+    {
+        var startPosition = title.position;
+        var elapsed = 0f;
+        while (elapsed < moveDuration)
+        {
+            var lerp = SmoothStep(elapsed / moveDuration);
+            title.position = Vector3.Lerp(startPosition, targetPosition, lerp);
+            elapsed += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        title.position = targetPosition;
+        characterSelectionTitleRoutine = null;
     }
 
 

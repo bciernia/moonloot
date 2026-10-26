@@ -12,8 +12,6 @@ public class NPCSelectionButton : MonoBehaviour
     [SerializeField] private Sprite _defaultPortrait;
 
     private UIManager _uiManager;
-    
-    
 
     public void Setup(VillageNpcRuntime data, UIManager uiManager)
     {

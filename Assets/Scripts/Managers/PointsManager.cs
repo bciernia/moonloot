@@ -45,9 +45,10 @@ public class PointsManager : Singleton<PointsManager>, ISaveable
 
     public void Load()
     {
-        if (ES3.KeyExists("points"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (ES3.KeyExists("points", settings))
         {
-            currentScore = ES3.Load<int>("points");
+            currentScore = ES3.Load<int>("points", settings);
             scoreText.text = currentScore.ToString();
         }
     }

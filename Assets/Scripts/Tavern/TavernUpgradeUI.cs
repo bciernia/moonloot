@@ -137,7 +137,8 @@ public class TavernUpgradeUI : MonoBehaviour
 
         UpdateCostText(
             room.Cost,
-            room.RequiredWorkers);
+            room.RequiredWorkers,
+            room.RequiredItems);
 
         RefreshRoomActions();
         ShowRoomPreview(room);
@@ -209,7 +210,8 @@ public class TavernUpgradeUI : MonoBehaviour
                 if (!confirmed)
                     return;
 
-                TavernManager.Instance.TryBuyRoom(_selectedRoom, _selectedSlotId);
+                if (!TavernManager.Instance.TryBuyRoom(_selectedRoom, _selectedSlotId))
+                    return;
 
                 ClearRoomPreview();
                 RefreshAddRoomButtons();
@@ -343,8 +345,15 @@ public class TavernUpgradeUI : MonoBehaviour
     
     private void UpdateCostText(
         int cost,
-        int requiredWorkers)
+        int requiredWorkers,
+        IReadOnlyList<RoomItemRequirement> requiredItems = null)
     {
+        // The cost area is a fixed-size part of the room panel. Let TMP shrink
+        // the text on smaller resolutions instead of drawing past its frame.
+        _roomCostText.enableAutoSizing = true;
+        _roomCostText.fontSizeMin = 16f;
+        _roomCostText.fontSizeMax = 28f;
+
         var availableWorkers =
             WorldManager.Instance.RescuedNpcs.Count(
                 x => x.IsWorker &&
@@ -361,13 +370,32 @@ public class TavernUpgradeUI : MonoBehaviour
         var enoughGold =
             playerGold >= cost;
 
-        _roomCostText.text =
-            $"Cost: " +
-            $"<color={(enoughGold ? "green" : "red")}>{cost}</color> Lunars " +
-            $"(<color={(enoughGold ? "green" : "red")}>{playerGold}</color>)" +
+        var costText =
+            $"Cost: <color={(enoughGold ? "green" : "red")}>{cost}</color> Lunars " +
+            $"(<color={(enoughGold ? "green" : "red")}>{playerGold} owned</color>)" +
             "\n" +
-            $"Villagers: {requiredWorkers} " +
-            $"(<color={(enoughWorkers ? "green" : "red")}>{availableWorkers}</color>)";
+            $"Villagers: <color={(enoughWorkers ? "green" : "red")}>{availableWorkers}/{requiredWorkers}</color> available";
+
+        if (requiredItems != null && requiredItems.Count > 0)
+        {
+            var materialsText = new List<string>();
+            foreach (var requirement in requiredItems)
+            {
+                if (requirement == null || requirement.Item == null || requirement.Amount <= 0)
+                    continue;
+
+                var ownedAmount = InventoryController.Instance.GetItemCount(
+                    new InventoryItem { item = requirement.Item });
+                var enoughItems = ownedAmount >= requirement.Amount;
+                materialsText.Add(
+                    $"<color={(enoughItems ? "green" : "red")}>{requirement.Item.Name} {ownedAmount}/{requirement.Amount}</color>");
+            }
+
+            if (materialsText.Count > 0)
+                costText += "\nMaterials: " + string.Join("  •  ", materialsText);
+        }
+
+        _roomCostText.text = costText;
     }
 }
 

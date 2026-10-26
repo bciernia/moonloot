@@ -35,7 +35,8 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
 
         if (PhysicalResistance > 0)
         {
-            description = $"Damage resistance: {PhysicalResistance}% \n";
+            var damageReduction = 100f * (1f - 100f / (100f + PhysicalResistance * 2f));
+            description = $"Damage resistance: {damageReduction:0.#}% \n";
         }
         
         if (AdditionalHp > 0)

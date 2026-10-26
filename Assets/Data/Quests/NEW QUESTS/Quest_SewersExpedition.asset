@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_SewersExpedition
+  m_EditorClassIdentifier: 
+  id: c79a72b5-9c64-473d-ae33-fb46b41a37ad
+  _name: Echoes Below
+  _description: Complete the Sewers map
+  _storyDescription: Strange sounds echo from below the town. Explore the sewers and return with the route cleared.
+  _activeQuestDialogue: 'Those sounds are still coming from below. Explore the sewers, clear the route, and come back to tell me what you found.'
+  _turnInDialogue: 'You cleared the route through the sewers and returned with a report. Thank you for facing the danger beneath our town.'
+  _completedQuestDialogueLines:
+  - 'You made it through the sewers and returned with a clear route. That is a relief.'
+  - 'The echoes below the town are less frightening now that we know what is down there.'
+  - 'Your report will help keep the next sewer crew safe. Thank you for going first.'
+  _objectives:
+  - type: 2
+    shortText: 'Complete Sewers:'
+    requiredAmount: 1
+    enemyType: {fileID: 0, guid: 00000000000000000000000000000000, type: 0}
+    item: {fileID: 0, guid: 00000000000000000000000000000000, type: 0}
+    sceneName: Sewers
+  _rewards:
+  - number: 8
+    item:
+      quantity: 8
+      item: {fileID: 11400000, guid: ea6e9061b9a657a4f98737a3e7d2c7eb, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

@@ -10,8 +10,12 @@ public class SlashEffect: MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
+    private SpriteRenderer _sizedSpriteRenderer;
+    private Transform _sizedSpriteTransform;
     private BoxCollider2D _boxCollider;
     private bool _isTriggered;
+    private float _rangeBonus;
+    private Vector2 _hitboxLocalCenterOffset;
     
     public WeaponItemSO weapon;
     public float speed = 3f;
@@ -33,13 +37,125 @@ public class SlashEffect: MonoBehaviour
         _animator.speed = speed;
         _animator.SetFloat(weaponType, (int)weapon.WeaponType);
 
-        if(!weapon.ProjectilePrefab) SetBoxCollider(weapon.SlashSize, weapon.SlashOffset);
+        if (!weapon.ProjectilePrefab)
+        {
+            SetBoxCollider(weapon.SlashSize, weapon.SlashOffset, _rangeBonus);
+            CreateSizedVisual();
+        }
     }
 
-    private void SetBoxCollider(Vector2 weaponColliderSize, Vector2 weaponColliderOffset)
+    public void SetRangeBonus(float rangeBonus)
     {
-        _boxCollider.size = weaponColliderSize;
-        _boxCollider.offset = weaponColliderOffset;
+        _rangeBonus = Mathf.Max(0f, rangeBonus);
+    }
+
+    private void SetBoxCollider(
+        Vector2 weaponColliderSize,
+        Vector2 weaponColliderOffset,
+        float rangeBonus)
+    {
+        var extendedSize = weaponColliderSize;
+        var extendedOffset = weaponColliderOffset;
+
+        if (rangeBonus > 0f)
+        {
+            var localRangeBonus = rangeBonus /
+                                  Mathf.Max(Mathf.Abs(transform.lossyScale.x), 0.0001f);
+
+            // Extend by the requested world-space range while keeping the near edge fixed.
+            extendedSize.x += localRangeBonus;
+            extendedOffset.x += localRangeBonus * 0.5f;
+        }
+
+        _boxCollider.size = extendedSize;
+        _hitboxLocalCenterOffset = extendedOffset;
+        _boxCollider.offset = Vector2.zero;
+    }
+
+    private void CreateSizedVisual()
+    {
+        if (_spriteRenderer == null || _boxCollider == null)
+            return;
+
+        var visual = new GameObject("SizedSlashVisual");
+        _sizedSpriteTransform = visual.transform;
+        _sizedSpriteTransform.SetParent(transform, false);
+
+        _sizedSpriteRenderer = visual.AddComponent<SpriteRenderer>();
+        _sizedSpriteRenderer.drawMode = SpriteDrawMode.Simple;
+        _sizedSpriteRenderer.sharedMaterial = _spriteRenderer.sharedMaterial;
+        _sizedSpriteRenderer.sortingLayerID = _spriteRenderer.sortingLayerID;
+        _sizedSpriteRenderer.sortingOrder = _spriteRenderer.sortingOrder;
+        _sizedSpriteRenderer.color = _spriteRenderer.color;
+        _sizedSpriteRenderer.maskInteraction = _spriteRenderer.maskInteraction;
+        _sizedSpriteRenderer.spriteSortPoint = _spriteRenderer.spriteSortPoint;
+
+        // The root Animator continues to control the source renderer's sprites.
+        // A second renderer mirrors those frames and can be scaled independently.
+        _spriteRenderer.enabled = false;
+        UpdateSizedVisual();
+    }
+
+    private void LateUpdate()
+    {
+        UpdateSizedVisual();
+    }
+
+    private void UpdateSizedVisual()
+    {
+        if (_sizedSpriteRenderer == null || _spriteRenderer == null ||
+            _sizedSpriteTransform == null || _boxCollider == null)
+        {
+            return;
+        }
+
+        var currentSprite = _spriteRenderer.sprite;
+        _sizedSpriteRenderer.sprite = currentSprite;
+        _sizedSpriteRenderer.flipX = _spriteRenderer.flipX;
+        _sizedSpriteRenderer.flipY = _spriteRenderer.flipY;
+
+        if (currentSprite == null)
+        {
+            _sizedSpriteRenderer.enabled = false;
+            return;
+        }
+
+        _sizedSpriteRenderer.enabled = true;
+        var visibleBounds = GetVisibleSpriteBounds(currentSprite);
+        var spriteSize = visibleBounds.size;
+        var scaleX = spriteSize.x > 0f
+            ? _boxCollider.size.x / spriteSize.x
+            : 1f;
+        var scaleY = spriteSize.y > 0f
+            ? _boxCollider.size.y / spriteSize.y
+            : 1f;
+
+        _sizedSpriteTransform.localScale = new Vector3(scaleX, scaleY, 1f);
+        var spriteCenter = visibleBounds.center;
+        if (_sizedSpriteRenderer.flipX)
+            spriteCenter.x *= -1f;
+        if (_sizedSpriteRenderer.flipY)
+            spriteCenter.y *= -1f;
+
+        _sizedSpriteTransform.localPosition = new Vector3(
+            -spriteCenter.x * scaleX,
+            -spriteCenter.y * scaleY,
+            0f);
+    }
+
+    private static Bounds GetVisibleSpriteBounds(Sprite sprite)
+    {
+        var vertices = sprite.vertices;
+        if (vertices == null || vertices.Length == 0)
+            return sprite.bounds;
+
+        var bounds = new Bounds(vertices[0], Vector3.zero);
+        for (var i = 1; i < vertices.Length; i++)
+        {
+            bounds.Encapsulate(vertices[i]);
+        }
+
+        return bounds;
     }
 
     public void EnableCollider()
@@ -66,8 +182,16 @@ public class SlashEffect: MonoBehaviour
     {
         if (_parent != null)
         {
-            transform.position = _parent.position;
             transform.rotation = _parent.rotation;
+
+            var scale = transform.lossyScale;
+            var colliderCenterOffset = new Vector3(
+                _hitboxLocalCenterOffset.x * scale.x,
+                _hitboxLocalCenterOffset.y * scale.y,
+                0f);
+
+            transform.position = _parent.position +
+                                transform.rotation * colliderCenterOffset;
         }
     }
 
@@ -137,24 +261,30 @@ public class SlashEffect: MonoBehaviour
     
     private void OnDrawGizmos()
     {
-        // Jeżeli collider nie istnieje w tym momencie — spróbuj go pobrać
-        if (_boxCollider == null)
-            _boxCollider = GetComponent<BoxCollider2D>();
+        if (!Application.isPlaying)
+            return;
 
-        if (_boxCollider == null) return;
+        var collider = _boxCollider != null
+            ? _boxCollider
+            : GetComponent<BoxCollider2D>();
 
-        Gizmos.color = Color.red;
+        if (collider == null || !collider.enabled)
+            return;
 
-        // Pozycja kolizji w world space
-        Vector3 worldCenter = transform.TransformPoint(_boxCollider.offset);
+        var previousMatrix = Gizmos.matrix;
+        var previousColor = Gizmos.color;
+        var gizmoSize = new Vector3(
+            collider.size.x,
+            collider.size.y,
+            0.01f);
 
-        // Rozmiar w world space (2D box → rysujemy jako 3D cube)
-        Vector3 worldSize = new Vector3(
-            _boxCollider.size.x * Mathf.Abs(transform.lossyScale.x),
-            _boxCollider.size.y * Mathf.Abs(transform.lossyScale.y),
-            0.01f // cienkie Z, żeby było widać
-        );
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.color = new Color(1f, 0.15f, 0.1f, 0.2f);
+        Gizmos.DrawCube(collider.offset, gizmoSize);
+        Gizmos.color = new Color(1f, 0.15f, 0.1f, 1f);
+        Gizmos.DrawWireCube(collider.offset, gizmoSize);
 
-        Gizmos.DrawWireCube(worldCenter, worldSize);
+        Gizmos.matrix = previousMatrix;
+        Gizmos.color = previousColor;
     }
 } 

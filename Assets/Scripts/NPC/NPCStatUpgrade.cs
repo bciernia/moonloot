@@ -11,8 +11,17 @@ public class NPCStatUpgrade : MonoBehaviour
 
     private void Awake()
     {
-        Id = $"{npc.Name}_{npc.Type.ToString()}";
+        Id = npc != null ? $"{npc.Name}_{npc.Type}" : string.Empty;
         _runtimeNpc = new VillageNpcRuntime(npc);
+    }
+
+    public void SetRuntimeNpc(VillageNpcRuntime runtime)
+    {
+        if (runtime == null)
+            return;
+
+        _runtimeNpc = runtime;
+        Id = runtime.RuntimeID;
     }
 
     //Musi być public bo użyte w dialogach
@@ -117,8 +126,9 @@ public class NPCStatUpgrade : MonoBehaviour
 
     public BonusType GetNpcBonus() => npc.UpgradeLevels[0].Bonuses[0].Type;
     
-    public string GetNpcName() => npc.Name;
-    public string GetNpcProfession() => npc.Profession;
+    public string GetNpcName() => _runtimeNpc != null ? _runtimeNpc.Name : npc.Name;
+    public string GetNpcProfession() => _runtimeNpc != null ? _runtimeNpc.Profession : npc.Profession;
+    public Sprite GetNpcPortrait() => npc != null ? npc.Portrait : null;
 
     public bool TryUnlockSkill() => _runtimeNpc.GrantedSkill != null && PlayerSkillManager.Instance.UnlockSkill(_runtimeNpc.GrantedSkill);
     

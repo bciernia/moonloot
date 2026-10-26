@@ -29,26 +29,26 @@ public class ItemSaveLoad : MonoBehaviour, ISaveable
     public void Save()
     {
         List<string> collected;
+        var settings = SaveLoadManager.Instance.GetSettings();
 
-        if (ES3.KeyExists("worldItems"))
-            collected = ES3.Load<List<string>>("worldItems");
+        if (ES3.KeyExists("worldItems", settings))
+            collected = ES3.Load<List<string>>("worldItems", settings);
         else
             collected = new List<string>();
 
         if (!collected.Contains(itemId))
             collected.Add(itemId);
 
-        var settings = SaveLoadManager.Instance.GetSettings();
-        
         ES3.Save("worldItems", collected, settings);    
     }
 
     public void Load()
     {
-        if (!ES3.KeyExists("worldItems"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists("worldItems", settings))
             return;
 
-        var collected = ES3.Load<List<string>>("worldItems");
+        var collected = ES3.Load<List<string>>("worldItems", settings);
 
         if (!collected.Contains(itemId))
             Destroy(gameObject);

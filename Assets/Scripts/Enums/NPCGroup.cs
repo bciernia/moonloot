@@ -17,4 +17,5 @@ public enum NPCType
     Rogue,
     Wizard,
     Worker,
+    ClassicGuy,
 }

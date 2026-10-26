@@ -32,6 +32,7 @@ public class EnemyStatistics : MonoBehaviour, IDamageable, IHealable, IRootable,
     public List<GameObject> SpecialAttacks { get; private set; }
     public bool IsBoss { get; private set; }
     public bool IsElite { get; private set; }
+    public EnemyStatsSO Stats => _enemyStats;
 
     public Effect Effect { get; private set; }
     public float EffectChance { get; private set; }

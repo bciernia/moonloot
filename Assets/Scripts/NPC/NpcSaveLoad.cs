@@ -28,9 +28,10 @@ public class NpcSaveLoad : MonoBehaviour, ISaveable
 
     public void Load()
     {
-        if (!ES3.KeyExists($"npc_{npcId}"))
+        var settings = SaveLoadManager.Instance.GetSettings();
+        if (!ES3.KeyExists($"npc_{npcId}", settings))
             return;
         
-        transform.position = ES3.Load<Vector3>($"npc_{npcId}");
+        transform.position = ES3.Load<Vector3>($"npc_{npcId}", settings);
     }
 }

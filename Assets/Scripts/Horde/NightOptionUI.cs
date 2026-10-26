@@ -34,6 +34,8 @@ public class NightOptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     private UIManager _uiManager;
     private int _index;
+    private NPCHero _hero;
+    private bool _isHeroSelection;
 
     private Vector3 _targetScale = Vector3.one;
     private Vector3 _startPosition;
@@ -57,6 +59,23 @@ public class NightOptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         _uiManager = uiManager;
         _index = index;
+        _hero = null;
+        _isHeroSelection = false;
+
+        if (_rewardContainer != null)
+        {
+            _rewardContainer.gameObject.SetActive(true);
+        }
+
+        if (_objectiveImage != null)
+        {
+            _objectiveImage.enabled = true;
+        }
+
+        if (_mutationImage != null)
+        {
+            _mutationImage.enabled = true;
+        }
 
         var location = option.Location;
         var moon = option.Moon;
@@ -79,8 +98,65 @@ public class NightOptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _button.onClick.AddListener(OnClick);
     }
 
+    public void SetupForHeroSelection(
+        NPCHero hero,
+        int index,
+        UIManager uiManager)
+    {
+        _uiManager = uiManager;
+        _index = index;
+        _hero = hero;
+        _isHeroSelection = true;
+
+        _locationName.text = hero.Name;
+
+        var spriteRenderer = hero.Character != null
+            ? hero.Character.GetComponentInChildren<SpriteRenderer>()
+            : null;
+        if (_locationImage != null)
+        {
+            _locationImage.sprite = spriteRenderer != null
+                ? spriteRenderer.sprite
+                : null;
+        }
+
+        if (_objectiveText != null)
+        {
+            _objectiveText.text = $"Strength: {hero.Strength}";
+        }
+
+        if (_objectiveImage != null)
+        {
+            _objectiveImage.enabled = false;
+        }
+
+        if (_mutationText != null)
+        {
+            _mutationText.text = $"Max HP: {hero.MaxHp}";
+        }
+
+        if (_mutationImage != null)
+        {
+            _mutationImage.enabled = false;
+        }
+
+        if (_rewardContainer != null)
+        {
+            _rewardContainer.gameObject.SetActive(false);
+        }
+
+        _button.onClick.RemoveAllListeners();
+        _button.onClick.AddListener(OnClick);
+    }
+
     private void OnClick()
     {
+        if (_isHeroSelection)
+        {
+            _uiManager.SelectHero(_hero, _index);
+            return;
+        }
+
         _uiManager.SelectNight(_index);
     }
 
@@ -100,6 +176,82 @@ public class NightOptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             StartCoroutine(
                 MoveOut());
         }
+    }
+
+    public IEnumerator PlaySpinAndFlyOut(
+        Vector3 direction,
+        float distance,
+        float duration,
+        float spinTurns)
+    {
+        StopAllCoroutines();
+        _hoverEnabled = false;
+        _button.interactable = false;
+
+        var startPosition = transform.localPosition;
+        var targetPosition = startPosition + direction.normalized * distance;
+        var startRotation = transform.localEulerAngles;
+        var timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            var t = Mathf.Clamp01(timer / duration);
+            var easedT = Mathf.SmoothStep(0f, 1f, t);
+
+            transform.localPosition = Vector3.Lerp(
+                startPosition,
+                targetPosition,
+                easedT);
+            transform.localEulerAngles = new Vector3(
+                startRotation.x,
+                startRotation.y,
+                startRotation.z + 360f * spinTurns * easedT);
+
+            yield return null;
+        }
+
+        transform.localPosition = targetPosition;
+        transform.localEulerAngles = new Vector3(
+            startRotation.x,
+            startRotation.y,
+            startRotation.z + 360f * spinTurns);
+    }
+
+    public void PlayEnterFromRight(float distance, float duration)
+    {
+        StopAllCoroutines();
+        _hoverEnabled = false;
+        _button.interactable = false;
+        _targetScale = Vector3.one;
+
+        var targetPosition = transform.localPosition;
+        transform.localPosition = targetPosition + Vector3.right * distance;
+        StartCoroutine(MoveIntoPlace(targetPosition, duration));
+    }
+
+    private IEnumerator MoveIntoPlace(Vector3 targetPosition, float duration)
+    {
+        var startPosition = transform.localPosition;
+        var timer = 0f;
+
+        while (timer < duration)
+        {
+            timer += Time.unscaledDeltaTime;
+            var t = Mathf.Clamp01(timer / duration);
+            t = Mathf.SmoothStep(0f, 1f, t);
+
+            transform.localPosition = Vector3.Lerp(
+                startPosition,
+                targetPosition,
+                t);
+
+            yield return null;
+        }
+
+        transform.localPosition = targetPosition;
+        _hoverEnabled = true;
+        _button.interactable = true;
     }
 
     private IEnumerator MoveToSelectedPosition(
@@ -207,6 +359,11 @@ public class NightOptionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private void SetupRewards(
         PreparedNightOption option)
     {
+        if (_rewardContainer == null || _rewardPrefab == null)
+        {
+            return;
+        }
+
         foreach (Transform child in _rewardContainer)
         {
             Destroy(child.gameObject);

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_BrotherhoodBlade
+  m_EditorClassIdentifier: 
+  id: 6c61b6a2-e4f2-4586-b9f9-71baefd42a79
+  _name: Silence the Blade
+  _description: Kill 5 Brotherhood Blades
+  _storyDescription: One of the Brotherhoods blade squads has been harassing travelers. Find them and put an end to it.
+  _activeQuestDialogue: 'The Blade squad is still threatening travelers. Please find them and make the road safe again.'
+  _turnInDialogue: 'The Brotherhood blades are gone from the road. Thank you for protecting the travelers and our village.'
+  _completedQuestDialogueLines:
+  - 'Travelers can use the road again without fearing the Brotherhood. Well done.'
+  - 'The Blade squad will trouble no one else. I am grateful you took care of them.'
+  - 'Word of your victory has already reached the village. Thank you for ending their threat.'
+  _objectives:
+  - type: 0
+    shortText: 'Brotherhood Blades:'
+    requiredAmount: 5
+    enemyType: {fileID: 11400000, guid: dceba5d6f467b8d449aa6ad26398cfe2, type: 2}
+    item: {fileID: 0}
+    sceneName: 
+  _rewards:
+  - number: 3
+    item:
+      quantity: 3
+      item: {fileID: 11400000, guid: ae1bc5c653e770042818cc6823051019, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

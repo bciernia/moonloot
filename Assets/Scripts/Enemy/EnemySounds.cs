@@ -9,6 +9,7 @@ public class EnemySounds : MonoBehaviour
     private EnemyStatistics _enemyStatistics;
 
     private Coroutine _idleCoroutine;
+    private bool _idleSoundsEnabled = true;
     
     [SerializeField] private float _idleMinDelay = 2f;
     [SerializeField] private float _idleMaxDelay = 5f;
@@ -21,13 +22,16 @@ public class EnemySounds : MonoBehaviour
     
     private void OnEnable()
     {
-        _idleCoroutine = StartCoroutine(IdleSoundRoutine());
+        StartIdleSounds();
     }
 
     private void OnDisable()
     {
         if (_idleCoroutine != null)
+        {
             StopCoroutine(_idleCoroutine);
+            _idleCoroutine = null;
+        }
     }
 
 
@@ -68,6 +72,32 @@ public class EnemySounds : MonoBehaviour
         PlayLocalSound(deathSound);
     }
 
+    public void SetIdleSoundsEnabled(bool enabled)
+    {
+        _idleSoundsEnabled = enabled;
+
+        if (!enabled)
+        {
+            if (_idleCoroutine != null)
+            {
+                StopCoroutine(_idleCoroutine);
+                _idleCoroutine = null;
+            }
+
+            return;
+        }
+
+        StartIdleSounds();
+    }
+
+    private void StartIdleSounds()
+    {
+        if (!isActiveAndEnabled || !_idleSoundsEnabled || _idleCoroutine != null)
+            return;
+
+        _idleCoroutine = StartCoroutine(IdleSoundRoutine());
+    }
+
     private AudioClip GetEnemySound(List<AudioClip> enemySounds)
     {
         var rndNumber = RNGManager.Instance.GetRandomInt(0, enemySounds.Count);
@@ -76,13 +106,16 @@ public class EnemySounds : MonoBehaviour
 
     private IEnumerator IdleSoundRoutine()
     {
-        while (true)
+        while (_idleSoundsEnabled)
         {
             var delay = UnityEngine.Random.Range(_idleMinDelay, _idleMaxDelay);
             yield return new WaitForSeconds(delay);
 
-            PlayEnemySound();
+            if (_idleSoundsEnabled)
+                PlayEnemySound();
         }
+
+        _idleCoroutine = null;
     }
 
     private void PlayEnemySound()
