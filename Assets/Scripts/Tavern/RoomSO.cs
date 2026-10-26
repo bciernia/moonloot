@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,9 @@ public class TavernRoomSO : ScriptableObject
     
     public int Cost;
     public int RequiredWorkers;
+
+    [SerializeField] private List<RoomItemRequirement> _requiredItems = new();
+    public IReadOnlyList<RoomItemRequirement> RequiredItems => _requiredItems;
     
     public GameObject RoomPrefab;
     
@@ -26,4 +30,11 @@ public class TavernRoomSO : ScriptableObject
     private List<TavernEffect> _effects = new();
 
     public IReadOnlyList<TavernEffect> Effects => _effects;
+}
+
+[Serializable]
+public class RoomItemRequirement
+{
+    public ItemSO Item;
+    [Min(1)] public int Amount = 1;
 }

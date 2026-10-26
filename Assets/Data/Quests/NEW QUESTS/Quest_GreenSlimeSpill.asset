@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_GreenSlimeSpill
+  m_EditorClassIdentifier: 
+  id: eff33ec0-650d-4d13-a710-8466c580fc0b
+  _name: A Rather Sticky Problem
+  _description: Kill 12 green slimes
+  _storyDescription: Green slime is spreading around the paths and sticking to boots, carts, and one very unlucky goat. Clear it out.
+  _activeQuestDialogue: 'Green slime is still spreading along the paths. Please clear it before it reaches the carts and the goat pens.'
+  _turnInDialogue: 'The green slime is gone from the paths and carts. Even the goat is grateful. Thank you for cleaning up the mess.'
+  _completedQuestDialogueLines:
+  - 'The paths are clear, and the goat has stopped sticking to everything. Thank you.'
+  - 'No more green slime on the carts. The traders will be glad to hear it.'
+  - 'You cleaned up that sticky mess before it spread further. I owe you a clean pair of boots.'
+  _objectives:
+  - type: 0
+    shortText: 'Green slimes:'
+    requiredAmount: 12
+    enemyType: {fileID: 11400000, guid: 0adc5ffb2ca1dc94d8a61548f77a6816, type: 2}
+    item: {fileID: 0}
+    sceneName: 
+  _rewards:
+  - number: 3
+    item:
+      quantity: 3
+      item: {fileID: 11400000, guid: ae1bc5c653e770042818cc6823051019, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

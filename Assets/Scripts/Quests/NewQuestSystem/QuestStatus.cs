@@ -134,11 +134,20 @@ public class QuestStatus
             if (summary.Length > 0)
                 summary.AppendLine();
 
+            var objective = objectives[i];
+            if (objective.type == QuestObjectiveType.CompleteMap)
+            {
+                summary.Append(string.IsNullOrWhiteSpace(objective.sceneName)
+                    ? "Complete the map"
+                    : $"Complete {objective.sceneName.Trim()}");
+                continue;
+            }
+
             summary.Append(quest.GetObjectiveShortText(i));
             summary.Append(' ');
             summary.Append(GetObjectiveProgress(i));
             summary.Append('/');
-            summary.Append(Mathf.Max(1, objectives[i].requiredAmount));
+            summary.Append(Mathf.Max(1, objective.requiredAmount));
         }
 
         if (IsQuestCompleted)

@@ -81,6 +81,10 @@ public class QuestJournal : MonoBehaviour, ISaveable
             {
                 GiveReward(quest);
             }
+            else
+            {
+                RecordCompletedQuestForNpcDialogue(quest, questStatus);
+            }
 
             OnQuestTurnedIn?.Invoke(questStatus);
             ShowQuestNotification($"Quest completed: {quest.GetQuestTitle()}");
@@ -91,6 +95,8 @@ public class QuestJournal : MonoBehaviour, ISaveable
     
     private void GiveReward(QuestSO quest)
     {
+        RecordCompletedQuestForNpcDialogue(quest, GetQuestStatus(quest));
+
         if (InventoryController.Instance == null)
         {
             Debug.LogWarning($"Cannot give rewards for quest {quest.GetQuestTitle()}: InventoryController was not found.", this);
@@ -109,6 +115,16 @@ public class QuestJournal : MonoBehaviour, ISaveable
             if (remaining > 0 && FloatingTextManager.Instance != null)
                 FloatingTextManager.Instance.ShowWarningText("Not enough inventory space for all quest rewards.", transform);
         }
+    }
+
+    private static void RecordCompletedQuestForNpcDialogue(QuestSO quest, QuestStatus status)
+    {
+        if (quest == null || HordeManager.Instance == null)
+            return;
+
+        HordeManager.Instance.RecordQuestCompleted(
+            quest.GetQuestTitle(),
+            status != null ? status.GiverName : string.Empty);
     }
 
     public bool CanTurnInQuest(QuestSO quest, string giverID = null)

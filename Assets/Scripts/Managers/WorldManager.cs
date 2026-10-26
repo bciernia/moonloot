@@ -14,6 +14,16 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
     [SerializeField] private NpcDatabase _npcDatabase;
 
     private HashSet<string> _rescuedNpcIDs = new();
+    private QuestGiverIdentityPools _questGiverIdentityPools;
+    private bool _questGiverIdentityPoolsLoaded;
+
+    [System.Serializable]
+    private class QuestGiverIdentityPools
+    {
+        public List<string> firstNames;
+        public List<string> lastNames;
+        public List<string> professions;
+    }
     
     public void AddNpc(VillageNpcRuntime npc)
     {
@@ -33,13 +43,18 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
             if (savedData != null)
             {
+                npc.Name = savedData.NpcName;
+                npc.Profession = savedData.Profession;
                 npc.CurrentJob = savedData.CurrentJob;
                 npc.IsAssignedToRoom = savedData.IsAssignedToRoom;
                 npc.AssignedRoomSlotId = savedData.AssignedRoomSlotId;
                 npc.AssignedQuestId = savedData.AssignedQuestId;
+                npc.QuestGiverName = savedData.QuestGiverName;
+                npc.QuestGiverProfession = savedData.QuestGiverProfession;
             }
         }
 
+        AssignRuntimeWorkerIdentityIfNeeded(npc);
         AssignRandomQuestIfAvailable(npc);
 
         _rescuedNPCs.Add(npc);
@@ -159,6 +174,10 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
     private static void BindQuestGiver(GameObject npcObject, VillageNpcRuntime runtime)
     {
+        var statUpgrade = npcObject.GetComponentInChildren<NPCStatUpgrade>(true);
+        if (statUpgrade != null)
+            statUpgrade.SetRuntimeNpc(runtime);
+
         var questGiver = npcObject.GetComponentInChildren<QuestGiver>(true);
         if (questGiver != null)
         {
@@ -174,40 +193,165 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
 
     private void AssignRandomQuestIfAvailable(VillageNpcRuntime npc)
     {
-        if (npc == null || !string.IsNullOrWhiteSpace(npc.AssignedQuestId))
+        if (npc == null)
             return;
 
-        var unavailableIds = new HashSet<string>(
-            _rescuedNPCs
-                .Where(existing => existing != null && !string.IsNullOrWhiteSpace(existing.AssignedQuestId))
-                .Select(existing => existing.AssignedQuestId));
-
-        var player = GameObject.FindGameObjectWithTag("Player");
-        var journal = player != null ? player.GetComponent<QuestJournal>() : null;
-        if (journal != null)
+        if (string.IsNullOrWhiteSpace(npc.AssignedQuestId))
         {
-            foreach (var status in journal.GetQuestStatuses())
+            var unavailableIds = new HashSet<string>(
+                _rescuedNPCs
+                    .Where(existing => existing != null && !string.IsNullOrWhiteSpace(existing.AssignedQuestId))
+                    .Select(existing => existing.AssignedQuestId));
+
+            var player = GameObject.FindGameObjectWithTag("Player");
+            var journal = player != null ? player.GetComponent<QuestJournal>() : null;
+            if (journal != null)
             {
-                if (status != null && !string.IsNullOrWhiteSpace(status._questID))
-                    unavailableIds.Add(status._questID);
+                foreach (var status in journal.GetQuestStatuses())
+                {
+                    if (status != null && !string.IsNullOrWhiteSpace(status._questID))
+                        unavailableIds.Add(status._questID);
+                }
             }
+
+            var availableQuests = QuestDatabase.GetRescuedNpcQuestPool()
+                .Where(quest => quest != null && !unavailableIds.Contains(quest.Id))
+                .ToList();
+
+            if (availableQuests.Count == 0)
+            {
+                Debug.LogWarning(
+                    $"No unused quest is available in the rescued NPC quest pool for {npc.Name}.",
+                    this);
+                return;
+            }
+
+            var selectedQuest = availableQuests[Random.Range(0, availableQuests.Count)];
+            npc.AssignedQuestId = selectedQuest.Id;
+            Debug.Log($"Assigned quest '{selectedQuest.GetQuestTitle()}' to rescued NPC {npc.Name}.", this);
         }
 
-        var availableQuests = QuestDatabase.GetRescuedNpcQuestPool()
-            .Where(quest => quest != null && !unavailableIds.Contains(quest.Id))
+        if (QuestDatabase.Get(npc.AssignedQuestId) != null)
+            AssignQuestGiverIdentityIfNeeded(npc);
+    }
+
+    private void AssignQuestGiverIdentityIfNeeded(VillageNpcRuntime npc)
+    {
+        LoadQuestGiverIdentityPools();
+
+        if (string.IsNullOrWhiteSpace(npc.QuestGiverName))
+            npc.QuestGiverName = npc.IsWorker
+                ? npc.Name
+                : GenerateUniqueQuestGiverName(npc);
+
+        if (string.IsNullOrWhiteSpace(npc.QuestGiverProfession))
+            npc.QuestGiverProfession = npc.IsWorker
+                ? npc.Profession
+                : GetRandomIdentityValue(
+                    _questGiverIdentityPools?.professions,
+                    "Keeper of Questionable Relics");
+    }
+
+    private void AssignRuntimeWorkerIdentityIfNeeded(VillageNpcRuntime npc)
+    {
+        if (npc == null || npc.Data == null || !npc.IsWorker)
+            return;
+
+        var needsName = string.IsNullOrWhiteSpace(npc.Name) || npc.Name == npc.Data.Name;
+        var needsProfession = string.IsNullOrWhiteSpace(npc.Profession) || npc.Profession == npc.Data.Profession;
+        if (!needsName && !needsProfession)
+            return;
+
+        LoadQuestGiverIdentityPools();
+
+        if (needsName)
+            npc.Name = GenerateUniqueRuntimeWorkerName(npc);
+
+        if (needsProfession)
+            npc.Profession = GetRandomIdentityValue(
+                _questGiverIdentityPools?.professions,
+                string.IsNullOrWhiteSpace(npc.Data.Profession) ? "Worker" : npc.Data.Profession);
+    }
+
+    private string GenerateUniqueRuntimeWorkerName(VillageNpcRuntime npc)
+    {
+        var firstNames = _questGiverIdentityPools?.firstNames;
+        var lastNames = _questGiverIdentityPools?.lastNames;
+        if (firstNames == null || firstNames.Count == 0 || lastNames == null || lastNames.Count == 0)
+            return npc.Data.Name;
+
+        var usedNames = new HashSet<string>(
+            _rescuedNPCs
+                .Where(existing => existing != null && existing != npc)
+                .Select(existing => existing.Name)
+                .Where(name => !string.IsNullOrWhiteSpace(name)));
+
+        var availableNames =
+            (from firstName in firstNames
+             where !string.IsNullOrWhiteSpace(firstName)
+             from lastName in lastNames
+             where !string.IsNullOrWhiteSpace(lastName)
+             let fullName = $"{firstName.Trim()} {lastName.Trim()}"
+             where !usedNames.Contains(fullName)
+             select fullName).ToList();
+
+        return availableNames.Count > 0
+            ? availableNames[Random.Range(0, availableNames.Count)]
+            : $"{firstNames[Random.Range(0, firstNames.Count)]} {lastNames[Random.Range(0, lastNames.Count)]}";
+    }
+
+    private void LoadQuestGiverIdentityPools()
+    {
+        if (_questGiverIdentityPoolsLoaded)
+            return;
+
+        _questGiverIdentityPoolsLoaded = true;
+        var json = Resources.Load<TextAsset>("QuestGiverIdentityPool");
+        if (json == null)
+        {
+            Debug.LogWarning("QuestGiverIdentityPool.json was not found in a Resources folder.", this);
+            return;
+        }
+
+        _questGiverIdentityPools = JsonUtility.FromJson<QuestGiverIdentityPools>(json.text);
+    }
+
+    private string GenerateUniqueQuestGiverName(VillageNpcRuntime npc)
+    {
+        var firstNames = _questGiverIdentityPools?.firstNames;
+        var lastNames = _questGiverIdentityPools?.lastNames;
+        if (firstNames == null || firstNames.Count == 0 || lastNames == null || lastNames.Count == 0)
+            return npc.Name;
+
+        var usedNames = new HashSet<string>(
+            _rescuedNPCs
+                .Where(existing => existing != null && existing != npc)
+                .Select(existing => existing.QuestGiverName)
+                .Where(name => !string.IsNullOrWhiteSpace(name)));
+
+        var availableNames =
+            (from firstName in firstNames
+             where !string.IsNullOrWhiteSpace(firstName)
+             from lastName in lastNames
+             where !string.IsNullOrWhiteSpace(lastName)
+             let fullName = $"{firstName.Trim()} {lastName.Trim()}"
+             where !usedNames.Contains(fullName)
+             select fullName).ToList();
+
+        return availableNames.Count > 0
+            ? availableNames[Random.Range(0, availableNames.Count)]
+            : $"{firstNames[Random.Range(0, firstNames.Count)]} {lastNames[Random.Range(0, lastNames.Count)]}";
+    }
+
+    private static string GetRandomIdentityValue(List<string> values, string fallback)
+    {
+        var availableValues = values?
+            .Where(value => !string.IsNullOrWhiteSpace(value))
             .ToList();
 
-        if (availableQuests.Count == 0)
-        {
-            Debug.LogWarning(
-                $"No unused quest is available in the rescued NPC quest pool for {npc.Name}.",
-                this);
-            return;
-        }
-
-        var selectedQuest = availableQuests[Random.Range(0, availableQuests.Count)];
-        npc.AssignedQuestId = selectedQuest.Id;
-        Debug.Log($"Assigned quest '{selectedQuest.GetQuestTitle()}' to rescued NPC {npc.Name}.", this);
+        return availableValues != null && availableValues.Count > 0
+            ? availableValues[Random.Range(0, availableValues.Count)].Trim()
+            : fallback;
     }
 
     public void ResetSpawnPoints()
@@ -238,9 +382,25 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
     }
     
     private VillageNpcData GetNpcData(
+        string dataId,
         string npcName,
         string profession)
     {
+        if (!string.IsNullOrWhiteSpace(dataId))
+        {
+            var workerById = HordeManager.Instance.workerPool
+                .FirstOrDefault(x => x != null && x.name == dataId);
+
+            if (workerById != null)
+                return workerById as VillageNpcData;
+
+            var npcById = _npcDatabase.NpcDatas
+                .FirstOrDefault(x => x != null && x.name == dataId);
+
+            if (npcById != null)
+                return npcById;
+        }
+
         var worker = HordeManager.Instance.workerPool
             .FirstOrDefault(x =>
                 x.Name == npcName &&
@@ -249,10 +409,48 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         if (worker != null)
             return worker as VillageNpcData;
 
-        return _npcDatabase.NpcDatas
+        var npcData = _npcDatabase.NpcDatas
             .FirstOrDefault(x =>
                 x.Name == npcName &&
                 x.Profession == profession);
+
+        if (npcData != null)
+            return npcData;
+
+        // Older saves stored placeholder worker names. Preserve those saves
+        // after replacing the placeholders with each worker's real identity.
+        if (profession == "Worker")
+        {
+            var legacyAssetName = string.IsNullOrWhiteSpace(npcName)
+                ? null
+                : npcName.Trim().ToLowerInvariant() switch
+                {
+                    "first worker" => "VillageNPC_Worker1",
+                    "second worker" => "VillageNPC_Worker2",
+                    "third worker" => "VillageNPC_Worker3",
+                    "fourth worker" => "VillageNPC_Worker4",
+                    "fifth worker" => "VillageNPC_Worker5",
+                    "sixth worker" => "VillageNPC_Worker6",
+                    "seventh worker" => "VillageNPC_Worker7",
+                    "eighth worker" => "VillageNPC_Worker8",
+                    "ninth villager" => "VillageNPC_Worker9",
+                    _ => null
+                };
+
+            if (!string.IsNullOrEmpty(legacyAssetName))
+            {
+                npcData = _npcDatabase.NpcDatas
+                    .FirstOrDefault(x => x != null && x.name == legacyAssetName);
+
+                if (npcData != null)
+                    return npcData;
+
+                npcData = HordeManager.Instance.workerPool
+                    .FirstOrDefault(x => x != null && x.name == legacyAssetName);
+            }
+        }
+
+        return npcData;
     }
     
     public List<VillageNpcRuntime> GetFreeWorkers(int count)
@@ -320,11 +518,14 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             workers.Add(new WorkerSaveData
             {
                 RuntimeID = npc.RuntimeID,
+                NpcDataId = npc.DataId,
                 NpcName = npc.Name,
                 Profession = npc.Profession,
                 CurrentJob = npc.CurrentJob,
                 GrantedSkillId = npc.GrantedSkill?.Id,
                 AssignedQuestId = npc.AssignedQuestId,
+                QuestGiverName = npc.QuestGiverName,
+                QuestGiverProfession = npc.QuestGiverProfession,
                 IsAssignedToRoom = npc.IsAssignedToRoom,
                 AssignedRoomSlotId = npc.AssignedRoomSlotId,
             });
@@ -347,6 +548,7 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         _rescuedNPCs.Clear();
         _npcPlacements.Clear();
         _loadedWorkers = savedNpcs;
+        var needsSaveMigration = false;
         
         foreach (var data in savedNpcs)
         {
@@ -355,7 +557,7 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
                 $"Assigned: {data.IsAssignedToRoom} | " +
                 $"Room: {data.AssignedRoomSlotId}");
             
-            var npcData = GetNpcData(data.NpcName, data.Profession);
+            var npcData = GetNpcData(data.NpcDataId, data.NpcName, data.Profession);
             
             if (npcData == null)
                 continue;
@@ -363,10 +565,29 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
             var runtime = new VillageNpcRuntime(npcData);
 
             runtime.RuntimeID = data.RuntimeID;
+            runtime.Name = data.NpcName;
+            runtime.Profession = data.Profession;
+            if (string.IsNullOrWhiteSpace(data.NpcDataId))
+            {
+                needsSaveMigration = true;
+
+                // Older saves used the ScriptableObject's fixed identity.
+                // Give those workers a runtime identity once and persist it.
+                if (runtime.IsWorker)
+                {
+                    runtime.Name = npcData.Name;
+                    runtime.Profession = npcData.Profession;
+                    AssignRuntimeWorkerIdentityIfNeeded(runtime);
+                    runtime.QuestGiverName = runtime.Name;
+                    runtime.QuestGiverProfession = runtime.Profession;
+                }
+            }
             runtime.CurrentJob = data.CurrentJob;
             runtime.IsAssignedToRoom = data.IsAssignedToRoom;
             runtime.AssignedRoomSlotId = data.AssignedRoomSlotId;
             runtime.AssignedQuestId = data.AssignedQuestId;
+            runtime.QuestGiverName = data.QuestGiverName;
+            runtime.QuestGiverProfession = data.QuestGiverProfession;
             
             if (!string.IsNullOrEmpty(data.GrantedSkillId))
             {
@@ -378,7 +599,12 @@ public class WorldManager : Singleton<WorldManager>, ISaveable
         }
 
         foreach (var npc in _rescuedNPCs)
+        {
             AssignRandomQuestIfAvailable(npc);
+        }
+
+        if (needsSaveMigration)
+            Save();
 
         AssignPlacesIfNeeded();
         SpawnNPCs();

@@ -127,11 +127,43 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             return false;
         }
 
+        foreach (var requirement in room.RequiredItems)
+        {
+            if (requirement == null || requirement.Item == null || requirement.Amount <= 0)
+                continue;
+
+            var ownedAmount = InventoryController.Instance.GetItemCount(new InventoryItem { item = requirement.Item });
+            if (ownedAmount < requirement.Amount)
+            {
+                ConfirmationManager.Instance.ShowInformation(
+                    $"Need {requirement.Amount} {requirement.Item.Name} ({ownedAmount}/{requirement.Amount}).");
+                return false;
+            }
+        }
+
         return true;
     }
 
-    public void TryBuyRoom(TavernRoomSO room, int slotId)
+    public bool TryBuyRoom(TavernRoomSO room, int slotId)
     {
+        if (!CheckIfCanBuyRoom(room, slotId))
+            return false;
+
+        if (!InventoryController.Instance.ChangeGoldAmount(-room.Cost))
+            return false;
+
+        foreach (var requirement in room.RequiredItems)
+        {
+            if (requirement == null || requirement.Item == null || requirement.Amount <= 0)
+                continue;
+
+            InventoryController.Instance.inventoryData.RemoveItemByName(
+                requirement.Item.Name,
+                requirement.Amount);
+        }
+
+        InventoryController.Instance.inventoryData.NotifyInventoryUpdated();
+
         var freeWorkers =
             WorldManager.Instance.GetFreeWorkers(
                 room.RequiredWorkers);
@@ -144,8 +176,6 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
             WorldManager.Instance.HideWorker(worker);
         }
 
-        InventoryController.Instance.ChangeGoldAmount(-room.Cost);
-        
         WorldManager.Instance.Save();
         
         UnlockRoom(room.RoomId, slotId);
@@ -164,6 +194,7 @@ public class TavernManager : Singleton<TavernManager>, ISaveable
         Save();
         
         TavernBonusManager.Instance.Rebuild();
+        return true;
     }
     
     private void SpawnRoom(TavernRoomData roomData)

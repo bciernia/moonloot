@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class VillageNpcRuntime
 {
     public VillageNpcData Data;
+    public string DataId;
 
     public string RuntimeID;
     
@@ -14,22 +15,23 @@ public class VillageNpcRuntime
     public Skill GrantedSkill;
     
     public string Profession;
+    public string QuestGiverName;
+    public string QuestGiverProfession;
     public List<NPCUpgradeLevel> UpgradeLevels;
     public string AssignedQuestId;
 
     public WorkerJob CurrentJob;
 
-    public bool IsWorker => Data.Type == NPCType.Worker;
+    public bool IsWorker => Data != null && Data.Type == NPCType.Worker;
     
     public bool IsAssignedToRoom;
     public int AssignedRoomSlotId = -1;
     
     public VillageNpcRuntime(VillageNpcData data)
     {
-        var id = GenerateID(data);
-        
         Data = data;
-        RuntimeID = id;
+        DataId = data != null ? data.name : string.Empty;
+        RuntimeID = System.Guid.NewGuid().ToString("N");
         Name = data.Name;
         PreferredRole = data.PreferredRole;
         AssignedRole = data.AssignedRole;
@@ -46,5 +48,4 @@ public class VillageNpcRuntime
         // }
     }
 
-    private string GenerateID(VillageNpcData data) => $"{data.Name}_{data.Profession}";
 }

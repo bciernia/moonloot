@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_DarkOrcPatrol
+  m_EditorClassIdentifier: 
+  id: 485c5f52-4c3e-43f7-bab6-56155095564c
+  _name: Break the Orc Patrol
+  _description: Kill 8 dark orcs
+  _storyDescription: A dark orc patrol has been spotted near the old route. Break it up before they reach the village.
+  _activeQuestDialogue: 'The dark orc patrol is still near the old route. Break it up before it reaches the village.'
+  _turnInDialogue: 'The dark orc patrol will not reach the village. Thank you for stopping them before they could attack.'
+  _completedQuestDialogueLines:
+  - 'The old route is clear again. You have done the village a great service.'
+  - 'The orc patrol will not march on our homes. Thank you for stopping them.'
+  - 'I can finally send travelers along the old road again. Well done.'
+  _objectives:
+  - type: 0
+    shortText: 'Dark orcs:'
+    requiredAmount: 8
+    enemyType: {fileID: 11400000, guid: 1f562f9e924e50046bda93854fda39b1, type: 2}
+    item: {fileID: 0}
+    sceneName: 
+  _rewards:
+  - number: 6
+    item:
+      quantity: 6
+      item: {fileID: 11400000, guid: ea6e9061b9a657a4f98737a3e7d2c7eb, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

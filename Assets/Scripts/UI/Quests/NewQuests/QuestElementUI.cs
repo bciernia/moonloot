@@ -44,7 +44,11 @@ public class QuestElementUI : MonoBehaviour
             var quest = questStatus.GetQuest();
             var hasObjectives = quest != null && quest.GetObjectives().Count > 0;
 
-            if (questStatus.IsReadyToTurnIn)
+            if (questStatus.IsQuestCompleted)
+            {
+                _objectiveProgress.text = "Completed";
+            }
+            else if (questStatus.IsReadyToTurnIn)
             {
                 _objectiveProgress.text = string.IsNullOrWhiteSpace(questStatus.GiverName)
                     ? "Return to the quest giver"

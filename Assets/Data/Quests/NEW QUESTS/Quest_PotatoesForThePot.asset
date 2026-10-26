@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_PotatoesForThePot
+  m_EditorClassIdentifier: 
+  id: dee9ff53-5ad8-4050-b7a5-4241744edde1
+  _name: Potatoes for the Pot
+  _description: Bring 10 potatoes
+  _storyDescription: A proper village meal needs potatoes. Ten of them, to be precise. The cook insists this is not negotiable.
+  _activeQuestDialogue: 'The cook needs ten potatoes for the village meal. Please bring them before the pot is taken off the fire.'
+  _turnInDialogue: 'The potatoes are in the pot, and dinner is saved. Thank you for keeping the village fed.'
+  _completedQuestDialogueLines:
+  - 'The potatoes are in the pot, and the cook is smiling again. Thank you.'
+  - 'You rescued dinner from becoming a very small stew. The whole village appreciates it.'
+  - 'The cook says this will be the best meal all week. I told them you made it possible.'
+  _objectives:
+  - type: 1
+    shortText: 'Potatoes:'
+    requiredAmount: 10
+    enemyType: {fileID: 0, guid: 00000000000000000000000000000000, type: 0}
+    item: {fileID: 11400000, guid: 4e4470040de85164faccdff5c0f2f620, type: 2}
+    sceneName: 
+  _rewards:
+  - number: 4
+    item:
+      quantity: 4
+      item: {fileID: 11400000, guid: ea6e9061b9a657a4f98737a3e7d2c7eb, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

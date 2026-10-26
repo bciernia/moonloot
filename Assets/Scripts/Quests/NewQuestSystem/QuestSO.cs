@@ -11,6 +11,13 @@ public class QuestSO : IdentifiableSO
     [Tooltip("What the player needs to do. Existing quests can keep using this as their description.")]
     [SerializeField][TextArea] private string _description;
     [SerializeField][TextArea] private string _storyDescription;
+    [Header("NPC dialogue")]
+    [Tooltip("What the quest giver says while this quest is active and still needs work.")]
+    [SerializeField][TextArea] private string _activeQuestDialogue;
+    [Tooltip("NPC line shown immediately after this quest is successfully turned in.")]
+    [SerializeField][TextArea] private string _turnInDialogue;
+    [Tooltip("Random lines the quest giver can say after the player completes this quest.")]
+    [SerializeField][TextArea(2, 5)] private List<string> _completedQuestDialogueLines = new List<string>();
     [SerializeField] private List<QuestObjective> _objectives = new List<QuestObjective>();
     [SerializeField] private List<Reward> _rewards = new List<Reward>();
     [SerializeField] private List<QuestItem> _questItems = new List<QuestItem>();
@@ -54,6 +61,47 @@ public class QuestSO : IdentifiableSO
     public string GetQuestDescription() => _description ?? string.Empty;
 
     public string GetStoryDescription() => _storyDescription ?? string.Empty;
+
+    public string GetActiveQuestDialogue()
+    {
+        if (!string.IsNullOrWhiteSpace(_activeQuestDialogue))
+            return _activeQuestDialogue.Trim();
+
+        if (!string.IsNullOrWhiteSpace(_storyDescription))
+            return _storyDescription.Trim();
+
+        return GetQuestDescription();
+    }
+
+    public string GetTurnInDialogue()
+    {
+        if (!string.IsNullOrWhiteSpace(_turnInDialogue))
+            return _turnInDialogue.Trim();
+
+        return $"Thank you for completing {GetQuestTitle()}. Your help means a great deal to me.";
+    }
+
+    public string GetRandomCompletedDialogueLine()
+    {
+        if (_completedQuestDialogueLines != null)
+        {
+            var usableLines = _completedQuestDialogueLines
+                .FindAll(line => !string.IsNullOrWhiteSpace(line));
+            if (usableLines.Count > 0)
+                return usableLines[UnityEngine.Random.Range(0, usableLines.Count)].Trim();
+        }
+
+        var questTitle = GetQuestTitle();
+        var fallbackLines = new[]
+        {
+            $"I still remember how you helped me with {questTitle}. Thank you.",
+            $"People are still talking about what you did for {questTitle}.",
+            $"I couldn't have finished {questTitle} without you.",
+            $"Things are much better now that {questTitle} is behind us. Thanks again."
+        };
+
+        return fallbackLines[UnityEngine.Random.Range(0, fallbackLines.Length)];
+    }
 
     public IEnumerable<Reward> GetRewards() => _rewards;
     public IEnumerable<QuestItem> GetQuestItems() => _questItems;

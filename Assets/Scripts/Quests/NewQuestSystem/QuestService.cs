@@ -136,6 +136,30 @@ public class QuestService : MonoBehaviour
         return quest != null && _questJournal.HasPlayerQuest(quest);
     }
 
+    public bool HasActiveQuestInJournal(int questIndex)
+    {
+        var quest = GetQuestAt(questIndex);
+        var status = quest != null ? _questJournal?.GetQuestStatus(quest) : null;
+        if (status == null || status.IsQuestCompleted)
+            return false;
+
+        var expectedGiverId = _questGiver != null ? _questGiver.GiverID : gameObject.name;
+        return string.IsNullOrWhiteSpace(status.GiverID) || status.GiverID == expectedGiverId;
+    }
+
+    // Used by the quest-giver dialogue to keep the conversation option available
+    // after the player has completed this NPC's quest.
+    public bool HasQuestFromGiverInJournal(int questIndex)
+    {
+        var quest = GetQuestAt(questIndex);
+        var status = quest != null ? _questJournal?.GetQuestStatus(quest) : null;
+        if (status == null)
+            return false;
+
+        var expectedGiverId = _questGiver != null ? _questGiver.GiverID : gameObject.name;
+        return string.IsNullOrWhiteSpace(status.GiverID) || status.GiverID == expectedGiverId;
+    }
+
     // Boolean helpers for EasyTalk dialogue conditions.
     public bool RequiresBringingItems(int questIndex)
     {

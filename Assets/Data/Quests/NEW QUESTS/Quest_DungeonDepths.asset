@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2398d16386fac234ab9d7b2d4cd93b62, type: 3}
+  m_Name: Quest_DungeonDepths
+  m_EditorClassIdentifier: 
+  id: b1c30fad-a3ab-45f6-8c11-336e329a8899
+  _name: Down Into the Dungeon
+  _description: Complete Dungeon
+  _storyDescription: The dungeon has gone quiet, which is usually worse than hearing something. Explore it and return.
+  _activeQuestDialogue: 'The dungeon has gone quiet, and that worries me. Explore its depths and return with word of what you find.'
+  _turnInDialogue: 'You explored the dungeon depths and made it back alive. Your courage has given the village valuable answers.'
+  _completedQuestDialogueLines:
+  - 'You returned from the dungeon with answers. That is a relief to everyone here.'
+  - 'The silence below no longer feels like a mystery. Thank you for going down there.'
+  - 'You faced whatever was waiting in those depths and came back. I am grateful.'
+  _objectives:
+  - type: 2
+    shortText: 'Complete Dungeon:'
+    requiredAmount: 1
+    enemyType: {fileID: 0, guid: 00000000000000000000000000000000, type: 0}
+    item: {fileID: 0}
+    sceneName: Dungeon
+  _rewards:
+  - number: 4
+    item:
+      quantity: 4
+      item: {fileID: 11400000, guid: ae1bc5c653e770042818cc6823051019, type: 2}
+      itemState: []
+  _questItems: []
+  _questJson: {fileID: 0}

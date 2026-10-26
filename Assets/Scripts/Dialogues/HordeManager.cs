@@ -7,6 +7,15 @@ using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+[Serializable]
+public class NpcDialogueHistoryEntry
+{
+    public int Sequence;
+    public string EventName;
+    public string Subject;
+    public string Detail;
+}
+
 public class HordeManager : Singleton<HordeManager>, ISaveable
 {
     [Header("Horde Settings")]
@@ -120,6 +129,39 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private bool _bossAlive;
     
     private bool _hordePrepared;
+
+    [Header("NPC dialogue history")]
+    [SerializeField] private string _lastDialogueLocation = string.Empty;
+    [SerializeField] private int _lastDialogueHordeNumber;
+    [SerializeField] private string _lastDialogueEvent = string.Empty;
+    [SerializeField] private string _lastDialogueEventSubject = string.Empty;
+    [SerializeField] private string _lastDialogueEventDetail = string.Empty;
+    [SerializeField] private int _dialogueEventSequence;
+    [SerializeField] private int _dialogueEventConsumedSequence;
+    [SerializeField] private List<NpcDialogueHistoryEntry> _dialogueEvents = new();
+
+    public string LastDialogueLocation => _lastDialogueLocation;
+    public int LastDialogueHordeNumber => _lastDialogueHordeNumber;
+    public string LastDialogueEvent => _lastDialogueEvent;
+    public string LastDialogueEventSubject => _lastDialogueEventSubject;
+    public string LastDialogueEventDetail => _lastDialogueEventDetail;
+    public int DialogueEventSequence => _dialogueEventSequence;
+
+    public NpcDialogueHistoryEntry GetNextPendingDialogueEvent()
+    {
+        return _dialogueEvents.FirstOrDefault(entry =>
+            entry != null && entry.Sequence > _dialogueEventConsumedSequence);
+    }
+
+    public bool TryConsumeDialogueEvent(int sequence)
+    {
+        if (sequence <= _dialogueEventConsumedSequence ||
+            !_dialogueEvents.Any(entry => entry != null && entry.Sequence == sequence))
+            return false;
+
+        _dialogueEventConsumedSequence = sequence;
+        return true;
+    }
 
     private GameObject _spawnedExit;
     private bool _isExitSpawned = false;
@@ -572,6 +614,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             return;
         }
 
+        _lastDialogueLocation = CurrentNightLocation.SceneName;
+        _lastDialogueHordeNumber = currentHorde;
+
         Debug.Log($"LOADING SCENE: {CurrentNightLocation.SceneName}");
 
         LoadingSceneManager.Instance.LoadScene(
@@ -597,6 +642,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             Debug.LogError("No night location selected!");
             return;
         }
+
+        _lastDialogueLocation = CurrentNightLocation.SceneName;
+        _lastDialogueHordeNumber = currentHorde;
 
         Debug.Log($"Starting Boss Fight: {CurrentNightLocation.SceneName}");
 
@@ -1461,6 +1509,30 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         
         PointsManager.Instance.AddScore(100);
         WorldManager.Instance.AddNpc(npc);
+        RecordDialogueEvent("NpcRescued", npc != null ? npc.Name : string.Empty);
+    }
+
+    public void RecordQuestCompleted(string questTitle, string giverName)
+    {
+        RecordDialogueEvent("QuestCompleted", questTitle, giverName);
+    }
+
+    private void RecordDialogueEvent(string eventName, string subject = "", string detail = "")
+    {
+        _lastDialogueEvent = eventName ?? string.Empty;
+        _lastDialogueEventSubject = subject ?? string.Empty;
+        _lastDialogueEventDetail = detail ?? string.Empty;
+        _dialogueEventSequence++;
+        _dialogueEvents.Add(new NpcDialogueHistoryEntry
+        {
+            Sequence = _dialogueEventSequence,
+            EventName = _lastDialogueEvent,
+            Subject = _lastDialogueEventSubject,
+            Detail = _lastDialogueEventDetail
+        });
+
+        if (_dialogueEvents.Count > 20)
+            _dialogueEvents.RemoveAt(0);
     }
     
     private void SpawnOneEnemy(EnemySpawner[] spawners, HordeData data)
@@ -1792,6 +1864,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private void CompleteHorde()
     {
         SoundManager.Instance.PlayWinMusic();
+
+        RecordDialogueEvent("HordeWon", _lastDialogueLocation, _lastDialogueHordeNumber.ToString());
         
         Debug.Log($"Horde {currentHorde} completed");
         AdvanceNightCycle();
@@ -1814,6 +1888,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private void FailHorde()
     {
         Debug.Log("Player died - Game Over");
+        RecordDialogueEvent("HordeLost", _lastDialogueLocation, _lastDialogueHordeNumber.ToString());
         StopNight();
         _hordePrepared = false;
 
@@ -2208,6 +2283,14 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         ES3.Save("currentHorde", currentHorde, settings);
         ES3.Save("nightCycleStep", NightCycleStep, settings);
         ES3.Save("enemiesPerHorde", enemiesPerHorde, settings);
+        ES3.Save("npcDialogueLastLocation", _lastDialogueLocation, settings);
+        ES3.Save("npcDialogueLastHorde", _lastDialogueHordeNumber, settings);
+        ES3.Save("npcDialogueLastEvent", _lastDialogueEvent, settings);
+        ES3.Save("npcDialogueLastEventSubject", _lastDialogueEventSubject, settings);
+        ES3.Save("npcDialogueLastEventDetail", _lastDialogueEventDetail, settings);
+        ES3.Save("npcDialogueEventSequence", _dialogueEventSequence, settings);
+        ES3.Save("npcDialogueEventConsumedSequence", _dialogueEventConsumedSequence, settings);
+        ES3.Save("npcDialogueEvents", _dialogueEvents, settings);
     }
 
     public void Load()
@@ -2224,6 +2307,23 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             NightCycleStep = ES3.Load<int>("nightCycleStep", settings);
         if (ES3.KeyExists("enemiesPerHorde", settings))
             enemiesPerHorde = ES3.Load<int>("enemiesPerHorde", settings);
+        if (ES3.KeyExists("npcDialogueLastLocation", settings))
+            _lastDialogueLocation = ES3.Load<string>("npcDialogueLastLocation", settings);
+        if (ES3.KeyExists("npcDialogueLastHorde", settings))
+            _lastDialogueHordeNumber = ES3.Load<int>("npcDialogueLastHorde", settings);
+        if (ES3.KeyExists("npcDialogueLastEvent", settings))
+            _lastDialogueEvent = ES3.Load<string>("npcDialogueLastEvent", settings);
+        if (ES3.KeyExists("npcDialogueLastEventSubject", settings))
+            _lastDialogueEventSubject = ES3.Load<string>("npcDialogueLastEventSubject", settings);
+        if (ES3.KeyExists("npcDialogueLastEventDetail", settings))
+            _lastDialogueEventDetail = ES3.Load<string>("npcDialogueLastEventDetail", settings);
+        if (ES3.KeyExists("npcDialogueEventSequence", settings))
+            _dialogueEventSequence = ES3.Load<int>("npcDialogueEventSequence", settings);
+        if (ES3.KeyExists("npcDialogueEventConsumedSequence", settings))
+            _dialogueEventConsumedSequence = ES3.Load<int>("npcDialogueEventConsumedSequence", settings);
+        if (ES3.KeyExists("npcDialogueEvents", settings))
+            _dialogueEvents = ES3.Load<List<NpcDialogueHistoryEntry>>("npcDialogueEvents", settings);
+        _dialogueEvents ??= new List<NpcDialogueHistoryEntry>();
         
         if (NightCycleStep == 3)
         {

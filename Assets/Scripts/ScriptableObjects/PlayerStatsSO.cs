@@ -67,12 +67,8 @@ public class PlayerStatsSO : ScriptableObject
     
     public float GetPhysicalReductionPercent()
     {
-        return PhysicalResistance;
-        
-        var armorMultiplier = 100f / (100f + PhysicalResistance);
-        var finalMultiplier = armorMultiplier * ShieldResistance;
-
-        return (1f - finalMultiplier) * 100f;
+        var damageMultiplier = 100f / (100f + PhysicalResistance * 2f);
+        return (1f - damageMultiplier) * 100f;
     }
     
     // public float GetMagicReductionPercent()

@@ -20,11 +20,15 @@ public class QuestGiver : MonoBehaviour
         : string.IsNullOrWhiteSpace(_giverID) ? GetFallbackGiverName() : _giverID.Trim();
 
     public string GiverDisplayName => _runtimeNpc != null
-        ? _runtimeNpc.Name
+        ? !string.IsNullOrWhiteSpace(_runtimeNpc.QuestGiverName)
+            ? _runtimeNpc.QuestGiverName
+            : _runtimeNpc.Name
         : string.IsNullOrWhiteSpace(_giverDisplayName) ? GetFallbackGiverName() : _giverDisplayName.Trim();
 
     public string GiverProfession => _runtimeNpc != null
-        ? _runtimeNpc.Profession
+        ? !string.IsNullOrWhiteSpace(_runtimeNpc.QuestGiverProfession)
+            ? _runtimeNpc.QuestGiverProfession
+            : _runtimeNpc.Profession
         : !string.IsNullOrWhiteSpace(_giverProfession)
             ? _giverProfession.Trim()
             : (GetComponent<NPCStatUpgrade>() ?? GetComponentInParent<NPCStatUpgrade>() ??
@@ -49,7 +53,41 @@ public class QuestGiver : MonoBehaviour
         return IsValidQuestIndex(questIndex) ? _quests[questIndex] : null;
     }
 
-    public string GetQuestStory(int questIndex = 0) => GetQuest(questIndex)?.GetQuestStory() ?? string.Empty;
+    public string GetGiverDisplayName() => GiverDisplayName;
+
+    public string GetQuestStory(int questIndex = 0)
+    {
+        var quest = GetQuest(questIndex);
+        if (quest == null)
+            return string.Empty;
+
+        var status = _questJournal != null ? _questJournal.GetQuestStatus(quest) : null;
+        if (status == null ||
+            (!string.IsNullOrWhiteSpace(status.GiverID) && status.GiverID != GiverID))
+        {
+            return quest.GetQuestStory();
+        }
+
+        if (status.IsQuestCompleted)
+            return quest.GetRandomCompletedDialogueLine();
+
+        if (status.IsReadyToTurnIn)
+            return $"You have completed {quest.GetQuestTitle()}. Let me give you your reward.";
+
+        return quest.GetActiveQuestDialogue();
+    }
+
+    public string GetQuestTurnInDialogue(int questIndex = 0)
+    {
+        var quest = GetQuest(questIndex);
+        var status = quest != null && _questJournal != null
+            ? _questJournal.GetQuestStatus(quest)
+            : null;
+
+        return status != null && status.IsQuestCompleted
+            ? quest.GetTurnInDialogue()
+            : string.Empty;
+    }
 
     public List<QuestSO> GetQuests() => _assignedQuest != null
         ? new List<QuestSO> { _assignedQuest }
