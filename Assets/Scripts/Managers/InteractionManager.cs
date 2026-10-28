@@ -12,6 +12,7 @@ public class InteractionManager : MonoBehaviour
 
     private Action<InputAction.CallbackContext> _interactionAction;
     private Action<InputAction.CallbackContext> _interactionCanceledAction;
+    private InputAction _interactionInputAction;
     
     [SerializeField] private Transform _playerTransform;
     [SerializeField] private GameObject _interactionBox;
@@ -19,35 +20,76 @@ public class InteractionManager : MonoBehaviour
 
     private void Awake()
     {
-        _playerInput = FindAnyObjectByType<PlayerInput>();
         _interactionAction = ctx => Interact();
         _interactionCanceledAction = ctx => StopInteract();
     }
 
     private void OnEnable()
     {
-        var interaction = _playerInput.actions["Interaction"];
-
-        interaction.performed += _interactionAction;
-        interaction.canceled += _interactionCanceledAction;
-        
         GameManager.OnGameModeChanged += OnGameModeChanged;
+        // Covers managers enabled after the sceneLoaded callback; the shared
+        // binder will reapply the context once the new scene is ready.
+        if (Player.Instance != null)
+            BindPlayerContext(Player.Instance);
     }
 
     private void OnDisable()
     {
-        var interaction = _playerInput.actions["Interaction"];
-
-        interaction.performed -= _interactionAction;
-        interaction.canceled -= _interactionCanceledAction;
-        
         GameManager.OnGameModeChanged -= OnGameModeChanged;
+        UnbindInput();
+    }
+
+    public void BindPlayerContext(Player player)
+    {
+        _playerTransform = player != null ? player.transform : null;
+        BindPlayerAndInput(player);
+        UpdateClosestInteractable();
+    }
+
+    private void BindPlayerAndInput(Player player)
+    {
+        var playerInput = player != null
+            ? player.GetComponent<PlayerInput>()
+            : FindAnyObjectByType<PlayerInput>();
+
+        var interactionAction = playerInput != null && playerInput.actions != null
+            ? playerInput.actions.FindAction("Interaction", false)
+            : null;
+
+        if (interactionAction == _interactionInputAction)
+            return;
+
+        UnbindInput();
+        _playerInput = playerInput;
+        _interactionInputAction = interactionAction;
+
+        if (_interactionInputAction != null)
+        {
+            _interactionInputAction.performed += _interactionAction;
+            _interactionInputAction.canceled += _interactionCanceledAction;
+        }
+        else if (_playerInput != null)
+        {
+            Debug.LogError("InteractionManager could not find the 'Interaction' input action.");
+        }
+    }
+
+    private void UnbindInput()
+    {
+        if (_interactionInputAction != null)
+        {
+            _interactionInputAction.performed -= _interactionAction;
+            _interactionInputAction.canceled -= _interactionCanceledAction;
+        }
+
+        _interactionInputAction = null;
+        _playerInput = null;
     }
     
     private void Interact()
     {
         // if (GameManager.Instance.CurrentMode == GameMode.MainMenu || CombatManager.Instance.IsPlayerInCombat)
-        if (GameManager.Instance.CurrentMode == GameMode.MainMenu)
+        if (GameManager.Instance != null && GameManager.Instance.CurrentMode == GameMode.MainMenu)
             return;
 
         _currentInteractable?.Interact();
@@ -99,6 +141,15 @@ public class InteractionManager : MonoBehaviour
     {
         RemoveNulls();
 
+        if (_playerTransform == null && Player.Instance != null)
+            _playerTransform = Player.Instance.transform;
+
+        if (_playerTransform == null)
+        {
+            ClearInteractable();
+            return;
+        }
+
         // if (_nearbyInteractables.Count == 0 || CombatManager.Instance.IsPlayerInCombat)
         if (_nearbyInteractables.Count == 0)
         {
@@ -137,21 +188,27 @@ public class InteractionManager : MonoBehaviour
         
         if (interactable != null)
         {
-            _interactionBox.SetActive(true);
-            _interactionBoxTMP.text = interactable.GetInteractionText();
+            if (_interactionBox != null)
+                _interactionBox.SetActive(true);
+            if (_interactionBoxTMP != null)
+                _interactionBoxTMP.text = interactable.GetInteractionText();
         }
         else
         {
-            _interactionBox.SetActive(false);
-            _interactionBoxTMP.text = "";
+            if (_interactionBox != null)
+                _interactionBox.SetActive(false);
+            if (_interactionBoxTMP != null)
+                _interactionBoxTMP.text = "";
         }
     }
 
     private void ClearInteractable()
     {
         _currentInteractable = null;
-        _interactionBox.SetActive(false);
-        _interactionBoxTMP.text = "";
+        if (_interactionBox != null)
+            _interactionBox.SetActive(false);
+        if (_interactionBoxTMP != null)
+            _interactionBoxTMP.text = "";
     }
     
     public void RefreshInteractable(IInteractable interactable)

@@ -112,6 +112,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
+    public bool IsTutorialRun => _tutorialRun;
     public bool IsHeroNight => NightCycleStep == 3;
 
     private GameObject _defendTarget;
@@ -129,6 +130,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     private bool _bossAlive;
     
     private bool _hordePrepared;
+    private bool _tutorialRun;
 
     [Header("NPC dialogue history")]
     [SerializeField] private string _lastDialogueLocation = string.Empty;
@@ -419,14 +421,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             if (!_isNightRunning)
                 yield break;
 
-            if (spawners == null || spawners.Length == 0)
+            if ((spawners == null || spawners.Length == 0) && !_tutorialRun)
                 yield break;
 
             var validSpawners = spawners
+                ?? Array.Empty<EnemySpawner>();
+            validSpawners = validSpawners
                 .Where(x => x != null && x.spawnPoint != null)
                 .ToArray();
 
-            if (validSpawners.Length == 0)
+            if (validSpawners.Length == 0 && !_tutorialRun)
                 yield break;
 
             SpawnEnemyNearPlayer(validSpawners, data);
@@ -597,6 +601,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public void StartHorde()
     {
+        _tutorialRun = false;
         StopNight();
         
         SavePreviousScene();
@@ -700,27 +705,152 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     {
         yield return null;
 
-        yield return new WaitUntil(() =>
-            FindObjectsOfType<EnemySpawner>().Length > 0 ||
-            FindObjectsOfType<EnemyObjectiveSpawner>().Length > 0
-        );
+        if (_tutorialRun)
+            yield return null;
+        else
+            yield return new WaitUntil(() =>
+                FindObjectsOfType<EnemySpawner>().Length > 0 ||
+                FindObjectsOfType<EnemyObjectiveSpawner>().Length > 0
+            );
 
         ApplySelectedHeroAppearance();
 
         yield return new WaitForSeconds(0.2f);
 
+        if (_tutorialRun)
+        {
+            if (MarkTutorialObjectiveSpawners())
+                SpawnObjectiveItems();
+            else
+                SpawnTutorialCrystalsNearPlayer();
+        }
+
         LootSpawnManager.Instance.SpawnAll(CurrentNightLocation, currentHorde);
-        SpawnObjectiveItems();
-        SpawnSpecialChests();
-        SpawnNPC();
+        if (!_tutorialRun)
+            SpawnObjectiveItems();
+        if (!_tutorialRun)
+            SpawnSpecialChests();
+        if (!_tutorialRun)
+            SpawnNPC();
         SpawnHorde();
         
         var cycle = FindFirstObjectByType<DayNightCycle>();
 
-        if (cycle != null)
+        if (cycle != null && !_tutorialRun)
         {
             cycle.SetNightLighting();
         }
+    }
+
+    public void StartTutorialMap()
+    {
+        if (SceneManager.GetActiveScene().name != "START_MAP")
+            return;
+
+        if (MoonManager.Instance == null ||
+            MoonManager.Instance.SetCurrentMoon(MoonType.Azure) == null)
+        {
+            Debug.LogError("Tutorial map needs the Aulla moon data (MoonType.Azure).");
+            return;
+        }
+
+        var normalLocations = _nightDatabase != null ? _nightDatabase.NormalNights : null;
+        var availableLocations = normalLocations != null
+            ? normalLocations
+                .Where(location => location != null && !location.IsBossArena &&
+                                   location.EnemyPool != null && location.ItemPool != null)
+                .ToList()
+            : new List<NightLocationSO>();
+
+        if (availableLocations.Count == 0)
+        {
+            Debug.LogError("Tutorial map needs at least one normal night with an enemy pool.");
+            return;
+        }
+
+        if (hordeConfig == null)
+        {
+            Debug.LogError("Tutorial map needs HordeConfig assigned to HordeManager.");
+            return;
+        }
+
+        CurrentMoon = MoonManager.Instance.CurrentMoon;
+        CurrentNightLocation = availableLocations[Random.Range(0, availableLocations.Count)];
+        PreparedData = hordeConfig.GetHorde(Mathf.Max(0, currentHorde - 1));
+        PreparedMutation = _mutationDatabase != null &&
+                           _mutationDatabase.Mutations != null &&
+                           _mutationDatabase.Mutations.Count > 0
+            ? _mutationDatabase.Mutations[Random.Range(0, _mutationDatabase.Mutations.Count)]
+            : new MutationData { Mutation = HordeMutation.None };
+        _previousScene = "Base_Demo";
+        _tutorialRun = true;
+        _hordePrepared = true;
+        _nightStartType = NightStartType.Horde;
+        _isExitSpawned = false;
+        _spawnedExit = null;
+        _endlessStarted = false;
+        StopNight();
+
+        Debug.Log("Starting the START_MAP tutorial run. The horde/night counter will not advance.");
+        StartCoroutine(WaitForSceneAndSpawn());
+        SoundManager.Instance?.PlayCombatMusic();
+    }
+
+    private bool MarkTutorialObjectiveSpawners()
+    {
+        var spawners = FindObjectsOfType<ObjectsSpawner>();
+        var objectiveSpawners = spawners
+            .Where(spawner => HasAncestorNamed(spawner.transform, "ItemsToGet"))
+            .ToList();
+
+        if (objectiveSpawners.Count == 0)
+            objectiveSpawners = spawners.ToList();
+
+        foreach (var spawner in objectiveSpawners)
+            spawner.isObjectiveSpawner = true;
+
+        return objectiveSpawners.Count > 0;
+    }
+
+    private void SpawnTutorialCrystalsNearPlayer()
+    {
+        var item = CurrentMoon != null ? CurrentMoon.RequiredItem.item : null;
+        var prefab = item != null ? item.ItemToDrop : null;
+        if (prefab == null || Player.Instance == null)
+        {
+            Debug.LogError("Could not spawn tutorial crystals: Aulla's item prefab or player is missing.");
+            return;
+        }
+
+        var playerPosition = Player.Instance.transform.position;
+        var offsets = new[]
+        {
+            new Vector3(-4f, 1f, 0f),
+            new Vector3(4f, 1f, 0f),
+            new Vector3(0f, -4f, 0f)
+        };
+
+        for (var i = 0; i < CurrentObjectiveTarget; i++)
+        {
+            var offset = offsets[i % offsets.Length];
+            var position = playerPosition + offset;
+            if (NavMesh.SamplePosition(position, out var hit, 3f, NavMesh.AllAreas))
+                position = hit.position;
+
+            Instantiate(prefab, position, Quaternion.identity);
+        }
+    }
+
+    private static bool HasAncestorNamed(Transform current, string objectName)
+    {
+        while (current != null)
+        {
+            if (current.name == objectName)
+                return true;
+            current = current.parent;
+        }
+
+        return false;
     }
 
     private void ApplySelectedHeroAppearance()
@@ -754,6 +884,22 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         CleanupEnemies();
         
         NPCInfoManager.Instance.HideNpcInfo();
+
+        if (_tutorialRun)
+        {
+            _tutorialRun = false;
+            _hordePrepared = false;
+            _isExitSpawned = false;
+            _spawnedExit = null;
+            CurrentMoon = null;
+            CurrentNightLocation = null;
+            CurrentObjectiveProgress = 0;
+            _objectiveCompleted = false;
+            _currentObjective = default;
+            OnExitRemoved?.Invoke();
+            LoadingSceneManager.Instance.ReturnFromTutorialToVillage();
+            return;
+        }
 
         
         if (_nightStartType == NightStartType.Boss)
@@ -1068,15 +1214,28 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
         if (exitSpawners.Length == 0)
         {
-            Debug.LogWarning("No ExitSpawners found!");
+            if (!_tutorialRun)
+            {
+                Debug.LogWarning("No ExitSpawners found!");
+                return;
+            }
+        }
+
+        if (_spawnedExit != null) return;
+
+        var spawnPosition = exitSpawners.Length > 0
+            ? exitSpawners[Random.Range(0, exitSpawners.Length)].transform.position
+            : Player.Instance != null
+                ? Player.Instance.transform.position + Vector3.right * 3f
+                : Vector3.zero;
+
+        if (exitPrefab == null)
+        {
+            Debug.LogError("Exit prefab is not assigned.");
             return;
         }
 
-        var chosen = exitSpawners[Random.Range(0, exitSpawners.Length)];
-
-        if (_spawnedExit != null) return;
-        
-        _spawnedExit = Instantiate(exitPrefab, chosen.transform.position, Quaternion.identity);
+        _spawnedExit = Instantiate(exitPrefab, spawnPosition, Quaternion.identity);
 
         OnExitSpawned?.Invoke(_spawnedExit.transform);
         _isExitSpawned = true;
@@ -1891,6 +2050,20 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         RecordDialogueEvent("HordeLost", _lastDialogueLocation, _lastDialogueHordeNumber.ToString());
         StopNight();
         _hordePrepared = false;
+
+        if (_tutorialRun)
+        {
+            _tutorialRun = false;
+            _hordePrepared = false;
+            CurrentMoon = null;
+            CurrentNightLocation = null;
+            CurrentObjectiveProgress = 0;
+            _objectiveCompleted = false;
+            _currentObjective = default;
+            OnExitRemoved?.Invoke();
+            LoadingSceneManager.Instance.ReturnFromTutorialToVillage();
+            return;
+        }
 
         // TODO: Game Over screen
         // SceneManager.LoadScene("MainMenu");

@@ -26,6 +26,12 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     protected override void Awake()
     {
         base.Awake();
+        if (Instance != this)
+            return;
+
+        while (EquippedItems.Count < 7)
+            EquippedItems.Add(InventoryItem.GetEmptyItem());
+
         EquippedItemsSlots.Add(WeaponSlot);
         EquippedItemsSlots.Add(ArmorSlot);
         EquippedItemsSlots.Add(OutfitSlot);
@@ -53,6 +59,9 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
 
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
     {
+        if (slot == null)
+            return;
+
         var itemToSet = equippedItem.item;
         
         if (itemToSet != null && itemToSet != InventoryItem.GetEmptyItem().item)
@@ -121,6 +130,9 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
     
     private void SetItemInSlot(UIInventoryItem slotToSet, ItemSO item, int quantity = 1)
     {
+        if (slotToSet == null)
+            return;
+
         if (item == null)
         {
             slotToSet.ResetData();

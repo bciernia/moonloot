@@ -16,6 +16,8 @@ public class PlayerAttack : MonoBehaviour
     
     [SerializeField] private ItemParameterSO damageBonusParameter;
 
+    private bool _usesGeneratedCooldownImage;
+
     [SerializeField] private float damageVariancePercent = 0.1f;
     
     public Transform firePoint;
@@ -38,12 +40,42 @@ public class PlayerAttack : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        WeaponManager.Instance.SetWeapon(EquippedItemsManager.Instance.EquippedItems[0].item as WeaponItemSO, null);
-        ArmorManager.Instance.SetArmor(EquippedItemsManager.Instance.EquippedItems[1].item as ArmorItemSO, null);
-        ArmorManager.Instance.SetHelmet(EquippedItemsManager.Instance.EquippedItems[3].item as HelmetItemSO, null);
-        ArmorManager.Instance.SetShoes(EquippedItemsManager.Instance.EquippedItems[4].item as ShoesItemSO, null);
+        // Let scene and save-load managers finish their Start initialization first.
+        yield return null;
+
+        var waitTime = 5f;
+        while ((WeaponManager.Instance == null || EquippedItemsManager.Instance == null) && waitTime > 0f)
+        {
+            waitTime -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        var equippedItems = EquippedItemsManager.Instance != null
+            ? EquippedItemsManager.Instance.EquippedItems
+            : null;
+
+        if (WeaponManager.Instance == null || equippedItems == null || equippedItems.Count < 5)
+        {
+            Debug.LogError("PlayerAttack could not initialize: weapon or equipped-item manager is missing or incomplete.");
+            yield break;
+        }
+
+        WeaponManager.Instance.SetWeapon(equippedItems[0].item as WeaponItemSO, equippedItems[0].itemState, true);
+
+        if (cooldownImage == null)
+        {
+            cooldownImage = WeaponManager.Instance.GetOrCreateAttackCooldownImage();
+            _usesGeneratedCooldownImage = cooldownImage != null;
+        }
+
+        if (ArmorManager.Instance != null)
+        {
+            ArmorManager.Instance.SetArmor(equippedItems[1].item as ArmorItemSO, equippedItems[1].itemState, true);
+            ArmorManager.Instance.SetHelmet(equippedItems[3].item as HelmetItemSO, equippedItems[3].itemState, true);
+            ArmorManager.Instance.SetShoes(equippedItems[4].item as ShoesItemSO, equippedItems[4].itemState, true);
+        }
     }
 
     private void Update()
@@ -56,8 +88,10 @@ public class PlayerAttack : MonoBehaviour
 
     private void Attack()
     {
-        if (!canAttack || DialogueManager.Instance.IsInDialogue() ||
-            GameManager.Instance.CurrentMode == GameMode.WorldMap || PauseManager.Instance.IsGamePaused) return;
+        if (!canAttack || _weapon == null ||
+            (DialogueManager.Instance != null && DialogueManager.Instance.IsInDialogue()) ||
+            (GameManager.Instance != null && GameManager.Instance.CurrentMode == GameMode.WorldMap) ||
+            (PauseManager.Instance != null && PauseManager.Instance.IsGamePaused)) return;
 
         var manaCost = _weapon.ProjectilePrefab ? _weapon.ProjectilePrefab.ProjectileSo.ManaCost : 0f;
 
@@ -124,18 +158,26 @@ public class PlayerAttack : MonoBehaviour
         
         var elapsed = 0f;
 
-        cooldownImage.fillAmount = 0f;
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = _usesGeneratedCooldownImage ? 1f : 0f;
 
         var cooldown = GetCurrentAttackCooldown();
         
         while (elapsed < cooldown)
         {
             elapsed += Time.deltaTime;
-            cooldownImage.fillAmount = Mathf.Clamp01(elapsed / cooldown);
+            if (cooldownImage != null)
+            {
+                var progress = Mathf.Clamp01(elapsed / cooldown);
+                cooldownImage.fillAmount = _usesGeneratedCooldownImage
+                    ? 1f - progress
+                    : progress;
+            }
             yield return null;
         }
 
-        cooldownImage.fillAmount = 1f;
+        if (cooldownImage != null)
+            cooldownImage.fillAmount = _usesGeneratedCooldownImage ? 0f : 1f;
         
         _movement.SetAttackSlow(false);
         canAttack = true;

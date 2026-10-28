@@ -10,10 +10,23 @@ public class GameManager : Singleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        if (!_player)
-        {
+        if (Instance != this)
+            return;
+
+        BindPlayer();
+    }
+
+    public void BindPlayer()
+    {
+        if (Player.Instance != null)
+            _player = Player.Instance;
+        else if (_player == null)
             _player = FindFirstObjectByType<Player>();
-        }
+    }
+
+    public void BindPlayerContext(Player player)
+    {
+        _player = player;
     }
 
     // private void Update()

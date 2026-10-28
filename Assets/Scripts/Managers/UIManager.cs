@@ -81,6 +81,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject _levelSummaryPanel;
     [SerializeField] private GameObject _summaryInfoObject;
     [SerializeField] private GameObject _exitSummaryBtn;
+
     
     [Header("Horde info")]
     [SerializeField] private GameObject _hordeInfoContainer;
@@ -171,18 +172,18 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
-        _playerInput = FindAnyObjectByType<PlayerInput>();
-
         if (_playerStatsSo != null)
         {
             _displayedHp = _playerStatsSo.HP;
             _displayedExp = _playerStatsSo.Exp;
         }
-        _lastLevel = _playerStatsSo.Level;
+        _lastLevel = _playerStatsSo != null ? _playerStatsSo.Level : 1;
     }
     
     private void Start()
     {
+        LocalizeSummaryControls();
+
         if (_heroSelectionPanel != null)
         {
             _heroSelectionPanel.SetActive(false);
@@ -199,9 +200,7 @@ public class UIManager : MonoBehaviour
         HordeManager.OnEndlessStarted += ShowEndlessUI;
 
         
-        CacheInputActions();
-        EnableInputActions();
-        RegisterInputCallbacks();
+        BindPlayerContext(Player.Instance);
 
         UpdateKeyTexts();
         UpdatePlayerUI(force: true);
@@ -294,6 +293,22 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void BindPlayerContext(Player player)
+    {
+        UnregisterInputCallbacks();
+        _playerInput = player != null
+            ? player.GetComponent<PlayerInput>()
+            : FindAnyObjectByType<PlayerInput>();
+
+        if (_playerInput == null || _playerInput.actions == null)
+            return;
+
+        CacheInputActions();
+        EnableInputActions();
+        RegisterInputCallbacks();
+        UpdateKeyTexts();
+    }
+
     private void HidePersistentGameplayUI()
     {
         _hordeInfoContainer.SetActive(false);
@@ -323,16 +338,19 @@ public class UIManager : MonoBehaviour
     #region Input System Setup
     private void CacheInputActions()
     {
+        if (_playerInput == null || _playerInput.actions == null)
+            return;
+
         var map = _playerInput.actions;
-        _equipmentAction = map["Equipment"];
-        _skillsAction = map["Skills"];
-        _journalAction = map["Journal"];
-        _menuAction = map["Main menu"];
+        _equipmentAction = map.FindAction("Equipment", false);
+        _skillsAction = map.FindAction("Skills", false);
+        _journalAction = map.FindAction("Journal", false);
+        _menuAction = map.FindAction("Main menu", false);
     }
 
     private void EnableInputActions()
     {
-        if (!_playerInput.actions.enabled)
+        if (_playerInput != null && _playerInput.actions != null && !_playerInput.actions.enabled)
             _playerInput.actions.Enable();
     }
 
@@ -910,26 +928,26 @@ public class UIManager : MonoBehaviour
     {
         var stats = CombatStatsManager.Instance;
 
-        CreateSummaryText("Night survived!", _bonusesSummaryPanel.transform);
+        CreateSummaryText("Noc przetrwana!", _bonusesSummaryPanel.transform);
 
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Zadane obrażenia: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Earned gold: {stats.GoldEarned}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Zebrane złoto: {stats.GoldEarned}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Defeated minions: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani zwykli przeciwnicy: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Defeated elites: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani elitarni przeciwnicy: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Defeated bosses: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani bossowie: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
 
-        CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
+        CreateSummaryText($"Przebyty dystans: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
 
         yield return new WaitForSecondsRealtime(.75f);
 
@@ -943,6 +961,9 @@ public class UIManager : MonoBehaviour
 
         foreach (Transform child in _levelSummaryPanel.transform)
             Destroy(child.gameObject);
+
+        CreateSummaryText("Nagrody", _bonusesSummaryPanel.transform);
+        CreateSummaryText("Wyniki nocy", _levelSummaryPanel.transform);
         
         if (_selectedNPC == null)
         {
@@ -971,17 +992,17 @@ public class UIManager : MonoBehaviour
                 break;
         }
             
-        CreateSummaryText($"Dealt damage: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Zadane obrażenia: {stats.DamageDealt:0}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Earned gold: {stats.GoldEarned}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Zebrane złoto: {stats.GoldEarned}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Defeated minions: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani zwykli przeciwnicy: {stats.NormalEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Defeated elites: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani elitarni przeciwnicy: {stats.EliteEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Defeated bosses: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
+        CreateSummaryText($"Pokonani bossowie: {stats.BossEnemiesKilled}", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
-        CreateSummaryText($"Distance traveled: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
+        CreateSummaryText($"Przebyty dystans: {Mathf.RoundToInt(stats.DistanceTraveled)}m", _levelSummaryPanel.transform);
         yield return new WaitForSecondsRealtime(.75f);
         
         _exitSummaryBtn.SetActive(true);
@@ -989,16 +1010,12 @@ public class UIManager : MonoBehaviour
 
     private void ShowNpcMerchantSummary(NPCMerchant merchantNpc)
     {
-        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
-        var tmp = obj.GetComponent<TextMeshProUGUI>();
-        tmp.text = $"Saved {merchantNpc.Name}";
+        CreateSummaryText($"Uratowano {merchantNpc.Name}", _bonusesSummaryPanel.transform);
     }
 
     private void ShowNpcHeroSummary(NPCHero heroNpc)
     {
-        var obj = Instantiate(_summaryInfoObject, _bonusesSummaryPanel.transform);
-        var tmp = obj.GetComponent<TextMeshProUGUI>();
-        tmp.text = $"Saved {heroNpc.Name}";   
+        CreateSummaryText($"Uratowano {heroNpc.Name}", _bonusesSummaryPanel.transform);
     }
 
     private IEnumerator ShowNpcStatSummary(NPCStat npc)
@@ -1007,7 +1024,7 @@ public class UIManager : MonoBehaviour
 
         if (NpcRescuedCount() == 0)
         {
-            CreateSummaryText("You did not find the peasant.", _bonusesSummaryPanel.transform, BonusType.Damage);
+            CreateSummaryText("Nie udało ci się znaleźć wieśniaka.", _bonusesSummaryPanel.transform, BonusType.Damage);
             yield return new WaitForSecondsRealtime(.75f);
 
         }
@@ -1015,7 +1032,7 @@ public class UIManager : MonoBehaviour
         {
             foreach (var bonus in _selectedNPC.UpgradeLevels[0].Bonuses)
             {
-                CreateSummaryText("New villager saved!", _bonusesSummaryPanel.transform);
+                CreateSummaryText("Uratowano nowego wieśniaka!", _bonusesSummaryPanel.transform);
                 var text = FormatBonus(bonus);
                 CreateSummaryText(text, _bonusesSummaryPanel.transform, bonus.Type);
                 yield return new WaitForSecondsRealtime(.75f);
@@ -1439,11 +1456,10 @@ public class UIManager : MonoBehaviour
     {
         return bonus.Type switch
         {
-            BonusType.Damage => $"+{bonus.Value:0}% Damage",
-            BonusType.MoveSpeed => $"+{bonus.Value:0}% Move Speed",
+            BonusType.Damage => $"+{bonus.Value:0}% Obrażenia",
+            BonusType.MoveSpeed => $"+{bonus.Value:0}% Szybkość ruchu",
             BonusType.CritChance => $"+{bonus.Value:0}% Crit Chance",
             BonusType.CritMultiplier => $"+{bonus.Value:0} Crit Multiplier",
-
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
             BonusType.AttackCooldownReduction => $"+{bonus.Value:0}% Attack Speed",
@@ -1456,16 +1472,73 @@ public class UIManager : MonoBehaviour
     {
         var obj = Instantiate(_summaryInfoObject, parent);
         var tmp = obj.GetComponent<TextMeshProUGUI>();
-        tmp.text = text;
+        var isHeading = text == "Nagrody" || text == "Wyniki nocy";
+        if (tmp == null)
+        {
+            Debug.LogWarning("Summary prefab is missing TextMeshProUGUI.");
+            return;
+        }
+
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.SetLocalizedText(tmp, text);
+        else
+            tmp.text = text;
+
+        tmp.fontSize = isHeading ? 30f : 23f;
+        tmp.fontStyle = isHeading ? FontStyles.Bold : FontStyles.Normal;
+        tmp.alignment = TextAlignmentOptions.MidlineLeft;
+        tmp.enableAutoSizing = true;
+        tmp.fontSizeMin = isHeading ? 20f : 16f;
+        tmp.fontSizeMax = isHeading ? 30f : 23f;
+
+        var layout = obj.GetComponent<LayoutElement>();
+        if (layout == null)
+            layout = obj.AddComponent<LayoutElement>();
+        layout.minHeight = isHeading ? 44f : 34f;
+        layout.preferredHeight = isHeading ? 48f : 38f;
+        layout.flexibleWidth = 1f;
+
         tmp.color = bonusType switch
         {
-            BonusType.MaxHp => Color.green,
-            BonusType.Damage => Color.red,
-            BonusType.MoveSpeed => Color.cyan,
+            BonusType.MaxHp => new Color(0.45f, 0.95f, 0.58f),
+            BonusType.Damage => new Color(1f, 0.5f, 0.38f),
+            BonusType.MoveSpeed => new Color(0.4f, 0.85f, 1f),
+            _ when isHeading => new Color(1f, 0.78f, 0.35f),
             _ => Color.white
         };
     }
 
+    private void LocalizeSummaryControls()
+    {
+        var font = _summaryInfoObject != null
+            ? _summaryInfoObject.GetComponent<TMP_Text>()?.font
+            : null;
+
+        if (_nightSummaryPanel != null)
+        {
+            var summaryLabel = _nightSummaryPanel.GetComponentsInChildren<TMP_Text>(true)
+                .FirstOrDefault(text => text != null && text.text == "Summary");
+            if (summaryLabel != null)
+            {
+                if (font != null)
+                    summaryLabel.font = font;
+                if (LocalizationManager.Instance != null)
+                    LocalizationManager.Instance.SetLocalizedText(summaryLabel, "Summary");
+            }
+        }
+
+        if (_exitSummaryBtn == null)
+            return;
+
+        var buttonLabel = _exitSummaryBtn.GetComponentInChildren<TMP_Text>(true);
+        if (buttonLabel == null)
+            return;
+
+        if (font != null)
+            buttonLabel.font = font;
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.SetLocalizedText(buttonLabel, "Wróć do wioski");
+    }
     #region Moon objective UI
 
     private void RefreshMoonObjective()
@@ -1473,7 +1546,18 @@ public class UIManager : MonoBehaviour
         var moon = HordeManager.Instance.CurrentMoon;
 
         if (moon == null)
+        {
+            if (_moonObjectiveText != null)
+            {
+                if (LocalizationManager.Instance != null)
+                    LocalizationManager.Instance.SetLocalizedText(_moonObjectiveText, string.Empty);
+                else
+                    _moonObjectiveText.text = string.Empty;
+            }
+            if (_moonObjectiveImageFinished != null)
+                _moonObjectiveImageFinished.gameObject.SetActive(false);
             return;
+        }
 
         UpdateMoonObjectiveUI(
             HordeManager.Instance.CurrentObjectiveProgress,
@@ -1508,12 +1592,18 @@ public class UIManager : MonoBehaviour
             if (moon == null)
                 return;
 
-            newText = $"{moon.ObjectiveText}: {current}/{target}";
+            var objectiveTitle = HordeManager.Instance.IsTutorialRun
+                ? "Aulla's Knowledge"
+                : moon.ObjectiveText;
+            newText = $"{objectiveTitle}: {current}/{target}";
         }
 
         if (_moonObjectiveText.text != newText)
         {
-            _moonObjectiveText.text = newText;
+            if (LocalizationManager.Instance != null)
+                LocalizationManager.Instance.SetLocalizedText(_moonObjectiveText, newText);
+            else
+                _moonObjectiveText.text = newText;
             NotifyObjectiveChanged();
         }
     }

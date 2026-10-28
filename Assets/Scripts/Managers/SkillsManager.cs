@@ -48,6 +48,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     [SerializeField] private int slotCount = 2;
 
     private PlayerInput _playerInput;
+    private bool _inputsRegistered;
 
     private Action<InputAction.CallbackContext> _skill1Started;
     private Action<InputAction.CallbackContext> _skill1Canceled;
@@ -68,7 +69,14 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     {
         base.Awake();
 
-        _playerInput = FindAnyObjectByType<PlayerInput>();
+        if (Instance != this)
+            return;
+
+        if (slots == null)
+            slots = new List<ActionSlot>();
+
+        if (user == null && Player.Instance != null)
+            user = Player.Instance.gameObject;
 
         _skill1Started  = ctx => OnSlotStarted(0);
         _skill1Canceled = ctx => OnSlotReleased(0);
@@ -105,9 +113,14 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private IEnumerator Start()
     {
-        yield return null;
+        var waitTime = 5f;
+        while (Player.Instance == null && waitTime > 0f)
+        {
+            waitTime -= Time.unscaledDeltaTime;
+            yield return null;
+        }
 
-        _playerInput = FindAnyObjectByType<PlayerInput>();
+        BindPlayerContext(Player.Instance);
 
         if (_playerInput == null)
         {
@@ -121,41 +134,87 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         
         Debug.Log("SKILLS MANAGER INITIALIZED");
     }
+
+    public void BindPlayerContext(Player player)
+    {
+        if (player != null)
+            user = player.gameObject;
+
+        var playerInput = player != null
+            ? player.GetComponent<PlayerInput>()
+            : FindAnyObjectByType<PlayerInput>();
+
+        if (playerInput == _playerInput)
+        {
+            RegisterInputs();
+            return;
+        }
+
+        UnregisterInputs();
+        _playerInput = playerInput;
+        RegisterInputs();
+        RefreshSlotUI();
+    }
     
     private void RegisterInputs()
     {
-        _playerInput.actions["Skill1"].started += _skill1Started;
-        _playerInput.actions["Skill1"].canceled += _skill1Canceled;
+        if (_inputsRegistered || _playerInput == null || _playerInput.actions == null)
+            return;
 
-        _playerInput.actions["Skill2"].started += _skill2Started;
-        _playerInput.actions["Skill2"].canceled += _skill2Canceled;
+        RegisterAction("Skill1", _skill1Started, _skill1Canceled);
+        RegisterAction("Skill2", _skill2Started, _skill2Canceled);
+        RegisterAction("QuickItem1", _quickItem1Started, _quickItem1Canceled);
+        RegisterAction("QuickItem2", _quickItem2Started, _quickItem2Canceled);
 
-        _playerInput.actions["QuickItem1"].started += _quickItem1Started;
-        _playerInput.actions["QuickItem1"].canceled += _quickItem1Canceled;
-
-        _playerInput.actions["QuickItem2"].started += _quickItem2Started;
-        _playerInput.actions["QuickItem2"].canceled += _quickItem2Canceled;
+        _inputsRegistered = true;
 
         Debug.Log("INPUTS REGISTERED");
-        
+    }
+
+    private void RegisterAction(
+        string actionName,
+        Action<InputAction.CallbackContext> started,
+        Action<InputAction.CallbackContext> canceled)
+    {
+        var action = _playerInput.actions.FindAction(actionName, false);
+        if (action == null)
+        {
+            Debug.LogError($"SkillsManager could not find the '{actionName}' input action.");
+            return;
+        }
+
+        action.started += started;
+        action.canceled += canceled;
     }
     
     private void OnDestroy()
     {
-        if (_playerInput == null)
+        UnregisterInputs();
+    }
+
+    private void UnregisterInputs()
+    {
+        if (!_inputsRegistered || _playerInput == null || _playerInput.actions == null)
             return;
 
-        _playerInput.actions["Skill1"].started -= _skill1Started;
-        _playerInput.actions["Skill1"].canceled -= _skill1Canceled;
+        UnregisterAction("Skill1", _skill1Started, _skill1Canceled);
+        UnregisterAction("Skill2", _skill2Started, _skill2Canceled);
+        UnregisterAction("QuickItem1", _quickItem1Started, _quickItem1Canceled);
+        UnregisterAction("QuickItem2", _quickItem2Started, _quickItem2Canceled);
+        _inputsRegistered = false;
+    }
 
-        _playerInput.actions["Skill2"].started -= _skill2Started;
-        _playerInput.actions["Skill2"].canceled -= _skill2Canceled;
+    private void UnregisterAction(
+        string actionName,
+        Action<InputAction.CallbackContext> started,
+        Action<InputAction.CallbackContext> canceled)
+    {
+        var action = _playerInput.actions.FindAction(actionName, false);
+        if (action == null)
+            return;
 
-        _playerInput.actions["QuickItem1"].started -= _quickItem1Started;
-        _playerInput.actions["QuickItem1"].canceled -= _quickItem1Canceled;
-
-        _playerInput.actions["QuickItem2"].started -= _quickItem2Started;
-        _playerInput.actions["QuickItem2"].canceled -= _quickItem2Canceled;
+        action.started -= started;
+        action.canceled -= canceled;
     }
 
     #endregion
@@ -207,7 +266,8 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
     {
         Debug.Log("SLOT STARTED: " + index);
         
-        if (index < 0 || index >= slots.Count || GameManager.Instance.CurrentMode == GameMode.WorldMap)
+        if (index < 0 || index >= slots.Count ||
+            (GameManager.Instance != null && GameManager.Instance.CurrentMode == GameMode.WorldMap))
             return;
 
         var slot = slots[index];
@@ -281,6 +341,14 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         if (entry.skill == null)
             return;
 
+        if (user == null && Player.Instance != null)
+            user = Player.Instance.gameObject;
+        if (user == null)
+        {
+            Debug.LogError("SkillsManager cannot activate a skill because its user player is missing.");
+            return;
+        }
+
         if (!PlayerSkillManager.Instance.IsUnlocked(entry.skill))
             return;
 
@@ -342,6 +410,17 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private void ActivateSkill(Skill skill)
     {
+        if (skill == null)
+            return;
+
+        if (user == null && Player.Instance != null)
+            user = Player.Instance.gameObject;
+        if (user == null)
+        {
+            Debug.LogError("SkillsManager cannot activate a skill because its user player is missing.");
+            return;
+        }
+
         Debug.Log("Skill activate: " + skill.Name);
         if (!skill.Activate(user))
             return;
@@ -369,6 +448,9 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
     private void RefreshSingleSlot(int index, Image image)
     {
+        if (image == null)
+            return;
+
         if (index >= slots.Count)
         {
             image.gameObject.SetActive(false);
@@ -391,6 +473,14 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
                 break;
 
             case ActionType.QuickItem:
+                if (EquippedItemsManager.Instance == null ||
+                    slot.quickSlotIndex < 0 ||
+                    slot.quickSlotIndex >= EquippedItemsManager.Instance.EquippedItems.Count)
+                {
+                    image.gameObject.SetActive(false);
+                    return;
+                }
+
                 var item = EquippedItemsManager.Instance.EquippedItems[slot.quickSlotIndex];
 
                 if (item.IsEmpty)

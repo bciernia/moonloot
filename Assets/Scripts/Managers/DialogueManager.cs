@@ -12,6 +12,8 @@ public class DialogueManager : Singleton<DialogueManager>
     private bool _dialogueStarted;
     private PlayerInput _playerInput;
     private GameObject _player;
+    private InputAction _mainMenuAction;
+    private System.Action<InputAction.CallbackContext> _mainMenuCallback;
 
     public static bool DialogueInProgress => Instance != null && Instance._dialogueStarted;
 
@@ -21,10 +23,30 @@ public class DialogueManager : Singleton<DialogueManager>
     protected override void Awake()
     {
         base.Awake();
-        _playerInput = FindAnyObjectByType<PlayerInput>();
-        _player = GameObject.FindWithTag("Player");
-        
-        _playerInput.actions["Main menu"].performed += _ => OnMainMenuPressed();
+        _mainMenuCallback = _ => OnMainMenuPressed();
+    }
+
+    public void BindPlayerContext(Player player)
+    {
+        if (_mainMenuAction != null && _mainMenuCallback != null)
+            _mainMenuAction.performed -= _mainMenuCallback;
+
+        _player = player != null ? player.gameObject : null;
+        _playerInput = player != null
+            ? player.GetComponent<PlayerInput>()
+            : FindAnyObjectByType<PlayerInput>();
+        _mainMenuAction = _playerInput != null && _playerInput.actions != null
+            ? _playerInput.actions.FindAction("Main menu", false)
+            : null;
+
+        if (_mainMenuAction != null && _mainMenuCallback != null)
+            _mainMenuAction.performed += _mainMenuCallback;
+    }
+
+    private void OnDestroy()
+    {
+        if (_mainMenuAction != null && _mainMenuCallback != null)
+            _mainMenuAction.performed -= _mainMenuCallback;
     }
 
     private void OnMainMenuPressed()
@@ -37,7 +59,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void StartDialogue()
     {
-        if (_dialogueStarted || !NPCSelected) return;
+        if (_dialogueStarted || !NPCSelected || _player == null) return;
         
         _dialogueStarted = true;
         OnDialogueStarted?.Invoke();
@@ -76,7 +98,8 @@ public class DialogueManager : Singleton<DialogueManager>
 
     public void EndDialogue()
     {
-        _player.GetComponent<PlayerMovement>().enabled = true;
+        if (_player != null && _player.TryGetComponent(out PlayerMovement playerMovement))
+            playerMovement.enabled = true;
 
         if (NPCSelected != null)
         {

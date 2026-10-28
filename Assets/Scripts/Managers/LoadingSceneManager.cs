@@ -23,6 +23,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     
     private float loadedValue;
     private DayNightCycle _currentCycle;
+    private bool _skipWorkerProcessingOnNextTownArrival;
 
     protected override void Awake()
     {
@@ -160,7 +161,8 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             .GetComponent<PlayerMovement>()
             ?.ResetTemporaryMovementModifiers();
 
-        if (scene.name == "Base_Demo" && MainMenuManager.SelectedHeroForNewGame != null &&
+        if ((scene.name == "Base_Demo" || scene.name == "START_MAP") &&
+            MainMenuManager.SelectedHeroForNewGame != null &&
             Player.Instance != null)
         {
             var selectedHero = MainMenuManager.SelectedHeroForNewGame;
@@ -172,8 +174,18 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         if (IsSceneBase())
         {
             SoundManager.Instance.StopCombatMusic();
-            ExecuteFunctionsForMainTownScene();
+            if (_skipWorkerProcessingOnNextTownArrival)
+                _skipWorkerProcessingOnNextTownArrival = false;
+            else
+                ExecuteFunctionsForMainTownScene();
         }
+    }
+
+    public async void ReturnFromTutorialToVillage()
+    {
+        _skipWorkerProcessingOnNextTownArrival = true;
+        await LoadScene("Base_Demo", true);
+        SaveLoadManager.Instance?.Save();
     }
 
     private void ExecuteFunctionsForMainTownScene()

@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
-    private const string DEMO_START_SCENE = "Base_Demo";
+    private const string DEMO_START_SCENE = "START_MAP";
+    // private const string DEMO_START_SCENE = "Base_Demo";
     private const string MAIN_MENU = "MainMenu";
     [SerializeField] private GameObject[] _buttonsMenu;
 
@@ -130,7 +131,7 @@ public class MainMenuManager : MonoBehaviour
         
         // ES3.DeleteFile();
         
-        SaveLoadManager.Instance.CreateNewSaveForNewGame(_selectedHero.Outfit);
+        SaveLoadManager.Instance.CreateNewSaveForNewGame(_selectedHero.Outfit, DEMO_START_SCENE);
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }
