@@ -176,13 +176,22 @@ public class MainMenuManager : MonoBehaviour
             _characterStartButton.interactable = true;
 
         if (_characterName != null)
-            _characterName.text = $"{hero.Name}, the {hero.Profession} ";
+        {
+            var characterName = $"{hero.Name}, the {hero.Profession}";
+            if (LocalizationManager.Instance != null)
+                LocalizationManager.Instance.SetLocalizedText(_characterName, characterName);
+            else
+                _characterName.text = characterName;
+        }
 
         if (_characterDescription != null)
         {
             if (!string.IsNullOrWhiteSpace(hero.MenuDescription))
             {
-                _characterDescription.text = hero.MenuDescription;
+                if (LocalizationManager.Instance != null)
+                    LocalizationManager.Instance.SetLocalizedText(_characterDescription, hero.MenuDescription);
+                else
+                    _characterDescription.text = hero.MenuDescription;
             }
         }
 
