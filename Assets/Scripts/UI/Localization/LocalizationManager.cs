@@ -345,6 +345,7 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Potwierdź", "Confirm", "Confirmer", "Confirmar", "Conferma", "Bestätigen", "Подтвердить");
         Add(result, "Tak", "Yes", "Oui", "Sí", "Sì", "Ja", "Да");
         Add(result, "Nie", "No", "Non", "No", "No", "Nein", "Нет");
+        Add(result, "Rozumiem", "Got it", "Compris", "Entendido", "Capito", "Verstanden", "Понятно");
         Add(result, "Ekwipunek", "Inventory", "Inventaire", "Inventario", "Inventario", "Inventar", "Инвентарь");
         Add(result, "Zadania", "Quests", "Quêtes", "Misiones", "Missioni", "Aufgaben", "Задания");
         Add(result, "Dziennik zadań", "Quest Journal", "Journal des quêtes", "Diario de misiones", "Diario delle missioni", "Questtagebuch", "Журнал заданий");

@@ -39,10 +39,16 @@ public class MainMenuManager : MonoBehaviour
     private bool _isStartingGame;
 
     public static NPCHero SelectedHeroForNewGame { get; private set; }
+    public static NPCHero SelectedHeroForTutorialIntro { get; private set; }
 
     public static void ClearSelectedHeroForNewGame()
     {
         SelectedHeroForNewGame = null;
+    }
+
+    public static void ClearSelectedHeroForTutorialIntro()
+    {
+        SelectedHeroForTutorialIntro = null;
     }
 
     private void Start()
@@ -123,6 +129,7 @@ public class MainMenuManager : MonoBehaviour
 
         _isStartingGame = true;
         SelectedHeroForNewGame = _selectedHero;
+        SelectedHeroForTutorialIntro = _selectedHero;
         var gameRoot = GameObject.FindWithTag("GameRoot");
         var player = GameObject.FindWithTag("Player");
 

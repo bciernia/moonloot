@@ -186,6 +186,32 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
         }
     }
 
+    public void LockCameraAtPlayerPosition(Transform playerTransform)
+    {
+        if (playerTransform == null)
+            return;
+
+        if (_playerTransform != playerTransform)
+            BindPlayerContext(playerTransform.GetComponent<Player>());
+
+        _currentTarget = playerTransform;
+        _followPlayer = true;
+        _cameraFollowLocked = true;
+
+        if (_cameraTarget != null)
+            _cameraTarget.position = playerTransform.position;
+    }
+
+    public void UnlockCameraFollow()
+    {
+        _cameraFollowLocked = false;
+        if (_playerTransform != null)
+        {
+            _currentTarget = _playerTransform;
+            _followPlayer = true;
+        }
+    }
+
     public void SetCameraOrthographicSize(float size = 8.5f)
     {
         if (_camera == null)
