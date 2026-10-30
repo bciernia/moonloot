@@ -1,4 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public sealed class TutorialPageDefinition
+{
+    [TextArea(3, 10)] public string Description;
+    public Sprite Illustration;
+    public Sprite[] AnimationFrames;
+    [Min(1f)] public float FramesPerSecond = 6f;
+    public bool LoopAnimation = true;
+}
 
 [CreateAssetMenu(fileName = "Tutorial", menuName = "Tutorials/Tutorial Definition")]
 public sealed class TutorialDefinitionSO : ScriptableObject
@@ -20,6 +31,9 @@ public sealed class TutorialDefinitionSO : ScriptableObject
     [SerializeField, Min(1f)] private float framesPerSecond = 6f;
     [SerializeField] private bool loopAnimation = true;
 
+    [Header("Pages (optional)")]
+    [SerializeField] private List<TutorialPageDefinition> pages = new();
+
     [Header("Optional condition")]
     [SerializeField] private TutorialConditionSO condition;
 
@@ -33,4 +47,24 @@ public sealed class TutorialDefinitionSO : ScriptableObject
     public float FramesPerSecond => framesPerSecond;
     public bool LoopAnimation => loopAnimation;
     public TutorialConditionSO Condition => condition;
+    public IReadOnlyList<TutorialPageDefinition> Pages => pages;
+
+    public void ConfigureRuntime(
+        string id,
+        string tutorialTitle,
+        string tutorialInstructions,
+        string tutorialActionHint,
+        bool showOnce = true,
+        List<TutorialPageDefinition> tutorialPages = null)
+    {
+        tutorialId = id;
+        title = tutorialTitle;
+        instructions = tutorialInstructions;
+        actionHint = tutorialActionHint;
+        showOncePerSave = showOnce;
+        condition = null;
+        illustration = null;
+        animationFrames = null;
+        pages = tutorialPages ?? new List<TutorialPageDefinition>();
+    }
 }

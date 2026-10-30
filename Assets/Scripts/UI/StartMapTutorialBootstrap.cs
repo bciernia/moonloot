@@ -17,20 +17,21 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
     private const string TutorialTitle = "Wiedza Aulli";
     private const string StoryText = "Biegłeś nocą przez las w poszukiwaniu schronienia, niestety potwory zdążyły cię dogonić. Znajdź kryształy Aulli, żeby dowiedzieć się, gdzie jest najbliższa wioska.";
     private const string ObjectiveText = "Znajdź trzy kryształy Aulli, aby otworzyć portal.";
+    private const string FirstTutorialId = "start_map_aulla_crystals";
+    private const string FirstTutorialPage1 = "Znajdź trzy niebieskie kryształy Aulli. Niebieskie kropki na mapie pokazują, gdzie ich szukać.";
+    private const string FirstTutorialPage2 = "Czerwone kropki oznaczają przeciwników. Po zebraniu wszystkich trzech kryształów pojawi się portal. Wejdź do niego, aby wrócić do wioski.";
+    private const string FirstTutorialPage3 = "Uważaj: im dłużej pozostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają. Dłuższy pobyt pozwala zebrać więcej łupów przydatnych w dalszej przygodzie.";
 
     private static StartMapTutorialBootstrap _instance;
     private GameObject _introCanvas;
     private Canvas _cursorCanvas;
     private Graphic _cursorGraphic;
-    private bool _addedCursorCanvas;
-    private RenderMode _previousCursorRenderMode;
-    private bool _previousCursorOverrideSorting;
-    private int _previousCursorSortingOrder;
-    private bool _previousCursorRaycastTarget;
+    private CursorUI _introCursor;
     private bool _pauseRequested;
     private bool _fallbackPauseRequested;
     private float _previousTimeScale = 1f;
     private bool _tutorialStarted;
+    private TutorialDefinitionSO _firstMapTutorial;
     private Coroutine _entranceRoutine;
     private PlayerInput _entrancePlayerInput;
     private PlayerMovement _entrancePlayerMovement;
@@ -322,6 +323,8 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         previewRoot.transform.position = Vector3.zero;
         previewRoot.SetActive(true);
         _entranceRunner = previewObject.transform;
+        var cameraFocus = CameraFocusManager.Instance;
+        cameraFocus?.LockCameraAtPosition(startPosition);
         SetPreviewMoving(_previewAnimator, true);
         DestroyIntro(restoreCursor: false);
 
@@ -331,7 +334,10 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         {
             elapsed += Time.unscaledDeltaTime;
             var t = Mathf.Clamp01(elapsed / entranceDuration);
-            _entranceRunner.position = Vector3.Lerp(startPosition, endPosition, t);
+            var easedT = t * t * (3f - 2f * t);
+            var currentPosition = Vector3.Lerp(startPosition, endPosition, easedT);
+            _entranceRunner.position = currentPosition;
+            cameraFocus?.LockCameraAtPosition(currentPosition);
             yield return null;
         }
 
@@ -349,12 +355,76 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         }
 
         RestoreCustomCursor();
-        RestoreEntranceState();
+        RestoreEntranceState(restoreCanvases: false);
+
+        var playerInput = player.GetComponent<PlayerInput>();
+        var playerMovement = player.GetComponent<PlayerMovement>();
+        var wasInputEnabled = playerInput != null && playerInput.enabled;
+        var wasMovementEnabled = playerMovement != null && playerMovement.enabled;
+        if (playerInput != null)
+            playerInput.enabled = false;
+        if (playerMovement != null)
+            playerMovement.enabled = false;
+
+        cameraFocus = CameraFocusManager.Instance;
+        var originalCameraSize = cameraFocus != null ? cameraFocus.CurrentOrthographicSize : 8.5f;
+        if (cameraFocus != null)
+        {
+            var closeCameraSize = Mathf.Max(2.5f, originalCameraSize - 3.5f);
+            yield return cameraFocus.AnimateCameraSizeUnscaled(closeCameraSize, 0.65f);
+        }
+
+        var speechBubble = CreateEntranceSpeechBubble(player.transform);
+        yield return new WaitForSecondsRealtime(1.8f);
+        if (speechBubble != null)
+            Destroy(speechBubble);
+
+        if (cameraFocus != null)
+            yield return cameraFocus.AnimateCameraSizeUnscaled(originalCameraSize, 0.65f);
+
+        if (playerMovement != null)
+            playerMovement.enabled = wasMovementEnabled;
+        if (playerInput != null)
+            playerInput.enabled = wasInputEnabled;
+
         CameraFocusManager.Instance?.UnlockCameraFollow();
         ReleaseIntroPause();
-        MainMenuManager.ClearSelectedHeroForTutorialIntro();
         HordeManager.Instance.StartTutorialMap();
+        RestoreGameplayCanvases();
+        MainMenuManager.ClearSelectedHeroForTutorialIntro();
+        ShowFirstMapTutorial(player);
         _entranceRoutine = null;
+    }
+
+    private void ShowFirstMapTutorial(Player player)
+    {
+        if (player == null || TutorialManager.Instance == null)
+        {
+            Debug.LogWarning("The first START_MAP tutorial could not be shown because its manager or player is missing.");
+            return;
+        }
+
+        if (_firstMapTutorial == null)
+        {
+            _firstMapTutorial = ScriptableObject.CreateInstance<TutorialDefinitionSO>();
+            _firstMapTutorial.name = "StartMapAullaCrystalsTutorial";
+            _firstMapTutorial.hideFlags = HideFlags.HideAndDontSave;
+            var pages = new List<TutorialPageDefinition>
+            {
+                new() { Description = FirstTutorialPage1 },
+                new() { Description = FirstTutorialPage2 },
+                new() { Description = FirstTutorialPage3 }
+            };
+            _firstMapTutorial.ConfigureRuntime(
+                FirstTutorialId,
+                TutorialTitle,
+                string.Empty,
+                string.Empty,
+                showOnce: true,
+                tutorialPages: pages);
+        }
+
+        TutorialManager.Instance.TryShow(_firstMapTutorial, player);
     }
 
     private void PreparePreviewCharacter(GameObject previewObject, Player player)
@@ -459,15 +529,10 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         }
     }
 
-    private void RestoreEntranceState()
+    private void RestoreEntranceState(bool restoreCanvases = true)
     {
-        for (var i = 0; i < _hiddenCanvases.Count; i++)
-        {
-            if (_hiddenCanvases[i] != null)
-                _hiddenCanvases[i].enabled = _hiddenCanvasStates[i];
-        }
-        _hiddenCanvases.Clear();
-        _hiddenCanvasStates.Clear();
+        if (restoreCanvases)
+            RestoreGameplayCanvases();
 
         if (_previewAnimator != null && _previewAnimatorWasPrepared)
         {
@@ -525,6 +590,17 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         _previewAnimator = null;
     }
 
+    private void RestoreGameplayCanvases()
+    {
+        for (var i = 0; i < _hiddenCanvases.Count; i++)
+        {
+            if (_hiddenCanvases[i] != null)
+                _hiddenCanvases[i].enabled = _hiddenCanvasStates[i];
+        }
+        _hiddenCanvases.Clear();
+        _hiddenCanvasStates.Clear();
+    }
+
     private static void EnsureEventSystem()
     {
         if (EventSystem.current != null)
@@ -550,50 +626,23 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
 
     private void BringCustomCursorAboveIntro()
     {
-        var cursor = FindFirstObjectByType<CursorUI>();
-        if (cursor == null)
+        _introCursor = FindFirstObjectByType<CursorUI>();
+        if (_introCursor == null)
             return;
 
-        _cursorCanvas = cursor.GetComponent<Canvas>();
-        _addedCursorCanvas = _cursorCanvas == null;
-        if (_addedCursorCanvas)
-            _cursorCanvas = cursor.gameObject.AddComponent<Canvas>();
-
-        _previousCursorRenderMode = _cursorCanvas.renderMode;
-        _previousCursorOverrideSorting = _cursorCanvas.overrideSorting;
-        _previousCursorSortingOrder = _cursorCanvas.sortingOrder;
-        _cursorCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        _cursorCanvas.overrideSorting = true;
-        _cursorCanvas.sortingOrder = 32767;
-
-        _cursorGraphic = cursor.GetComponent<Graphic>();
-        if (_cursorGraphic != null)
-        {
-            _previousCursorRaycastTarget = _cursorGraphic.raycastTarget;
-            _cursorGraphic.raycastTarget = false;
-        }
+        _introCursor.SetAboveModal(true);
+        _cursorCanvas = _introCursor.GetComponent<Canvas>();
+        _cursorGraphic = _introCursor.GetComponent<Graphic>();
+        if (_cursorGraphic == null)
+            _cursorGraphic = _introCursor.GetComponentInChildren<Graphic>(true);
     }
 
     private void RestoreCustomCursor()
     {
-        if (_cursorGraphic != null)
-            _cursorGraphic.raycastTarget = _previousCursorRaycastTarget;
-
-        if (_cursorCanvas != null)
-        {
-            if (_addedCursorCanvas)
-                Destroy(_cursorCanvas);
-            else
-            {
-                _cursorCanvas.renderMode = _previousCursorRenderMode;
-                _cursorCanvas.overrideSorting = _previousCursorOverrideSorting;
-                _cursorCanvas.sortingOrder = _previousCursorSortingOrder;
-            }
-        }
-
+        _introCursor?.SetAboveModal(false);
+        _introCursor = null;
         _cursorCanvas = null;
         _cursorGraphic = null;
-        _addedCursorCanvas = false;
     }
 
     private static Image CreateImage(string objectName, Transform parent, Color color)
@@ -604,6 +653,62 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         image.color = color;
         image.raycastTarget = true;
         return image;
+    }
+
+    private static GameObject CreateEntranceSpeechBubble(Transform character)
+    {
+        if (character == null)
+            return null;
+
+        var bubbleObject = new GameObject("EntranceSpeechBubble", typeof(RectTransform), typeof(Canvas));
+        bubbleObject.transform.SetParent(character, false);
+        bubbleObject.transform.localPosition = new Vector3(0f, 1.5f, 0f);
+        bubbleObject.transform.localScale = Vector3.one * 0.1f;
+
+        var bubbleRect = bubbleObject.GetComponent<RectTransform>();
+        bubbleRect.sizeDelta = new Vector2(55f, 15f);
+
+        var canvas = bubbleObject.GetComponent<Canvas>();
+        canvas.renderMode = RenderMode.WorldSpace;
+        canvas.overrideSorting = true;
+        canvas.sortingLayerName = "UI";
+        canvas.sortingOrder = 500;
+
+        var panelObject = new GameObject("Panel", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        panelObject.transform.SetParent(bubbleObject.transform, false);
+        var panelRect = panelObject.GetComponent<RectTransform>();
+        panelRect.anchorMin = Vector2.zero;
+        panelRect.anchorMax = Vector2.one;
+        panelRect.offsetMin = Vector2.zero;
+        panelRect.offsetMax = Vector2.zero;
+
+        var panel = panelObject.GetComponent<Image>();
+        panel.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
+        panel.type = Image.Type.Sliced;
+        panel.color = new Color(0f, 0f, 0f, 0.7f);
+        panel.raycastTarget = false;
+
+        var textObject = new GameObject("Text (TMP)", typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
+        textObject.transform.SetParent(bubbleObject.transform, false);
+        var textRect = textObject.GetComponent<RectTransform>();
+        textRect.anchorMin = Vector2.zero;
+        textRect.anchorMax = Vector2.one;
+        textRect.offsetMin = new Vector2(2f, 1f);
+        textRect.offsetMax = new Vector2(-2f, -1f);
+
+        var text = textObject.GetComponent<TextMeshProUGUI>();
+        text.text = "Let's fight!";
+        text.font = TMP_Settings.defaultFontAsset;
+        text.fontSize = 6.9f;
+        text.enableAutoSizing = true;
+        text.fontSizeMin = 2f;
+        text.fontSizeMax = 12f;
+        text.alignment = TextAlignmentOptions.Center;
+        text.color = Color.white;
+        text.enableWordWrapping = false;
+        text.raycastTarget = false;
+
+        return bubbleObject;
     }
 
     private static TextMeshProUGUI CreateText(
