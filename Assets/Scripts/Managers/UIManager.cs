@@ -155,6 +155,9 @@ public class UIManager : MonoBehaviour
     private VillageNpcRuntime _selectedNPC;
 
     private bool _portalSpawned;
+    private bool _playerHudVisibilityCached;
+    private bool _mainGamePanelWasVisible;
+    private bool _equippedPanelWasVisible;
     
     private Coroutine _objectiveFlashRoutine;
     
@@ -307,6 +310,33 @@ public class UIManager : MonoBehaviour
         EnableInputActions();
         RegisterInputCallbacks();
         UpdateKeyTexts();
+    }
+
+    public void SetPlayerHudVisible(bool visible)
+    {
+        if (_mainGamePanel == null && _equippedPanel == null)
+            return;
+
+        if (!visible)
+        {
+            if (!_playerHudVisibilityCached)
+            {
+                _mainGamePanelWasVisible = _mainGamePanel != null && _mainGamePanel.activeSelf;
+                _equippedPanelWasVisible = _equippedPanel != null && _equippedPanel.activeSelf;
+                _playerHudVisibilityCached = true;
+            }
+
+            if (_mainGamePanel != null) _mainGamePanel.SetActive(false);
+            if (_equippedPanel != null) _equippedPanel.SetActive(false);
+            return;
+        }
+
+        if (!_playerHudVisibilityCached)
+            return;
+
+        if (_mainGamePanel != null) _mainGamePanel.SetActive(_mainGamePanelWasVisible);
+        if (_equippedPanel != null) _equippedPanel.SetActive(_equippedPanelWasVisible);
+        _playerHudVisibilityCached = false;
     }
 
     private void HidePersistentGameplayUI()

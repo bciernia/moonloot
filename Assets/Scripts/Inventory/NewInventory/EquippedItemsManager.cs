@@ -57,6 +57,27 @@ public class EquippedItemsManager : Singleton<EquippedItemsManager>
         InitializeSlot(EquippedItems[6], QuickSlot2);
     }
 
+    public void RefreshEquippedSlot(UIInventoryItem slot)
+    {
+        if (slot == null || EquippedItems == null)
+            return;
+
+        if (slot == WeaponSlot && EquippedItems.Count > 0)
+            InitializeSlot(EquippedItems[0].item == null ? defaultWeapon : EquippedItems[0], WeaponSlot);
+        else if (slot == ArmorSlot && EquippedItems.Count > 1)
+            InitializeSlot(EquippedItems[1], ArmorSlot);
+        else if (slot == OutfitSlot && EquippedItems.Count > 2)
+            InitializeSlot(EquippedItems[2], OutfitSlot);
+        else if (slot == HelmetSlot && EquippedItems.Count > 3)
+            InitializeSlot(EquippedItems[3], HelmetSlot);
+        else if (slot == ShoesSlot && EquippedItems.Count > 4)
+            InitializeSlot(EquippedItems[4], ShoesSlot);
+        else if (slot == QuickSlot1 && EquippedItems.Count > 5)
+            InitializeSlot(EquippedItems[5], QuickSlot1);
+        else if (slot == QuickSlot2 && EquippedItems.Count > 6)
+            InitializeSlot(EquippedItems[6], QuickSlot2);
+    }
+
     private void InitializeSlot(InventoryItem equippedItem, UIInventoryItem slot)
     {
         if (slot == null)

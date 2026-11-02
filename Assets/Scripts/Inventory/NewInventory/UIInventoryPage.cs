@@ -127,6 +127,13 @@ public class UIInventoryPage : MonoBehaviour
         
         if (itemDraggedFrom == ItemDraggedFrom.Player && targetInventoryItemUi.CompareTag("ShopItem"))
         {
+            if (currentlyDraggedItemIndex < 0 && draggedInventoryItemUi.CompareTag("EquippedItem"))
+            {
+                if (draggedInventoryItemUi.name == "WeaponUI")
+                    InventoryController.Instance.TrySellEquippedWeapon();
+                return;
+            }
+
             var itemToSell = InventoryController.Instance.inventoryData.GetItemAt(currentlyDraggedItemIndex);
             ShopManager.Instance.SellItem(itemToSell, currentlyDraggedItemIndex);
             return;

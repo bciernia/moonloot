@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,10 +18,10 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
     private const string TutorialTitle = "Wiedza Aulli";
     private const string StoryText = "Biegłeś nocą przez las w poszukiwaniu schronienia, niestety potwory zdążyły cię dogonić. Znajdź kryształy Aulli, żeby dowiedzieć się, gdzie jest najbliższa wioska.";
     private const string ObjectiveText = "Znajdź trzy kryształy Aulli, aby otworzyć portal.";
-    private const string FirstTutorialId = "start_map_aulla_crystals";
-    private const string FirstTutorialPage1 = "Znajdź trzy niebieskie kryształy Aulli. Niebieskie kropki na mapie pokazują, gdzie ich szukać.";
-    private const string FirstTutorialPage2 = "Czerwone kropki oznaczają przeciwników. Po zebraniu wszystkich trzech kryształów pojawi się portal. Wejdź do niego, aby wrócić do wioski.";
-    private const string FirstTutorialPage3 = "Uważaj: im dłużej pozostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają. Dłuższy pobyt pozwala zebrać więcej łupów przydatnych w dalszej przygodzie.";
+    private const string TutorialPage1 = "Znajdź trzy niebieskie kryształy Aulli. Niebieskie kropki na mapie pokazują, gdzie ich szukać.";
+    private const string TutorialPage2 = "Czerwone kropki oznaczają przeciwników. Po zebraniu wszystkich trzech kryształów pojawi się portal. Wejdź do niego, aby wrócić do wioski.";
+    private const string TutorialPage3 = "Uważaj: im dłużej pozostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają. Dłuższy pobyt pozwala zebrać więcej łupów przydatnych w dalszej przygodzie.";
+    private const string TutorialId = "start_map_aulla_crystals";
 
     private static StartMapTutorialBootstrap _instance;
     private GameObject _introCanvas;
@@ -31,7 +32,6 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
     private bool _fallbackPauseRequested;
     private float _previousTimeScale = 1f;
     private bool _tutorialStarted;
-    private TutorialDefinitionSO _firstMapTutorial;
     private Coroutine _entranceRoutine;
     private PlayerInput _entrancePlayerInput;
     private PlayerMovement _entrancePlayerMovement;
@@ -374,7 +374,7 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
             yield return cameraFocus.AnimateCameraSizeUnscaled(closeCameraSize, 0.65f);
         }
 
-        var speechBubble = CreateEntranceSpeechBubble(player.transform);
+        var speechBubble = CreateEntranceSpeechBubble(player.transform, GetStartQuote(selectedHero));
         yield return new WaitForSecondsRealtime(1.8f);
         if (speechBubble != null)
             Destroy(speechBubble);
@@ -391,6 +391,7 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         ReleaseIntroPause();
         HordeManager.Instance.StartTutorialMap();
         RestoreGameplayCanvases();
+        EquipStartingHeroWeapon(selectedHero);
         MainMenuManager.ClearSelectedHeroForTutorialIntro();
         ShowFirstMapTutorial(player);
         _entranceRoutine = null;
@@ -404,27 +405,49 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
             return;
         }
 
-        if (_firstMapTutorial == null)
+        var tutorial = TutorialManager.Instance.StartMapTutorial;
+        if (tutorial == null)
         {
-            _firstMapTutorial = ScriptableObject.CreateInstance<TutorialDefinitionSO>();
-            _firstMapTutorial.name = "StartMapAullaCrystalsTutorial";
-            _firstMapTutorial.hideFlags = HideFlags.HideAndDontSave;
-            var pages = new List<TutorialPageDefinition>
-            {
-                new() { Description = FirstTutorialPage1 },
-                new() { Description = FirstTutorialPage2 },
-                new() { Description = FirstTutorialPage3 }
-            };
-            _firstMapTutorial.ConfigureRuntime(
-                FirstTutorialId,
+            tutorial = ScriptableObject.CreateInstance<TutorialDefinitionSO>();
+            tutorial.name = "StartMapAullaCrystalsTutorial_RuntimeFallback";
+            tutorial.hideFlags = HideFlags.HideAndDontSave;
+            tutorial.ConfigureRuntime(
+                TutorialId,
                 TutorialTitle,
                 string.Empty,
                 string.Empty,
                 showOnce: true,
-                tutorialPages: pages);
+                tutorialPages: new List<TutorialPageDefinition>
+                {
+                    new() { Description = TutorialPage1 },
+                    new() { Description = TutorialPage2 },
+                    new() { Description = TutorialPage3 }
+                });
         }
 
-        TutorialManager.Instance.TryShow(_firstMapTutorial, player);
+        TutorialManager.Instance.TryShow(tutorial, player);
+    }
+
+    private static void EquipStartingHeroWeapon(NPCHero hero)
+    {
+        if (hero == null || hero.StartingWeapon == null ||
+            EquippedItemsManager.Instance == null || WeaponManager.Instance == null)
+            return;
+
+        var equippedItems = EquippedItemsManager.Instance.EquippedItems;
+        if (equippedItems == null || equippedItems.Count == 0)
+            return;
+
+        var currentWeapon = equippedItems[0].item;
+        var defaultWeapon = EquippedItemsManager.Instance.defaultWeapon.item;
+        if (currentWeapon != null && currentWeapon != defaultWeapon)
+            return;
+
+        WeaponManager.Instance.SetWeapon(
+            hero.StartingWeapon,
+            hero.StartingWeapon.DefaultParametersList,
+            true);
+        EquippedItemsManager.Instance.InitializeEquippedSlots();
     }
 
     private void PreparePreviewCharacter(GameObject previewObject, Player player)
@@ -655,7 +678,46 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         return image;
     }
 
-    private static GameObject CreateEntranceSpeechBubble(Transform character)
+    private static string GetStartQuote(NPCHero hero)
+    {
+        if (hero == null)
+            return "Let's fight!";
+
+        if (hero.StartRunQuotes != null)
+        {
+            var customQuotes = hero.StartRunQuotes.FindAll(line => !string.IsNullOrWhiteSpace(line));
+            if (customQuotes.Count > 0)
+                return customQuotes[UnityEngine.Random.Range(0, customQuotes.Count)];
+        }
+
+        var identity = $"{hero.Name} {hero.HeroId} {hero.name}".ToLowerInvariant();
+        string[] quotePool;
+
+        if (identity.Contains("barbar"))
+            quotePool = new[] { "Finally. Something worth hitting!", "Let them come. I was getting bored.", "I'll make this quick. Probably." };
+        else if (identity.Contains("bard"))
+            quotePool = new[] { "Stay close. I'll make our escape sound heroic.", "A little danger makes a great song.", "Let's give them a chorus to remember." };
+        else if (identity.Contains("paladin"))
+            quotePool = new[] { "Stay behind me. No one falls today.", "By the light, we stand our ground.", "Monsters ahead. Keep your courage." };
+        else if (identity.Contains("ranger"))
+            quotePool = new[] { "I saw them first. Keep moving.", "Stay quiet. I'll clear the path.", "One shot at a time. We can do this." };
+        else if (identity.Contains("rogue"))
+            quotePool = new[] { "A perfect ambush. For us, I mean.", "Keep your eyes open. I'll handle the shadows.", "In and out. Quietly... preferably." };
+        else if (identity.Contains("wizard"))
+            quotePool = new[] { "I hope these creatures appreciate a little magic.", "Stand back. This could get spectacular.", "The forest is full of energy tonight." };
+        else if (identity.Contains("druid"))
+            quotePool = new[] { "The forest is restless. Stay close to me.", "Nature has teeth tonight.", "We'll get through this. The forest remembers its friends." };
+        else if (identity.Contains("cleric"))
+            quotePool = new[] { "Keep faith. We will find our way.", "Stay together, and I will protect you.", "May the light guide us through this forest." };
+        else if (identity.Contains("fighter"))
+            quotePool = new[] { "Eyes forward. We deal with what's ahead.", "Stay sharp. I'll hold the line.", "All right. Let's get through this together." };
+        else
+            quotePool = new[] { "All right. Let's get through this together.", "Stay close. We can handle whatever is out there.", "Let's find that village and keep moving." };
+
+        return quotePool[UnityEngine.Random.Range(0, quotePool.Length)];
+    }
+
+    private static GameObject CreateEntranceSpeechBubble(Transform character, string line)
     {
         if (character == null)
             return null;
@@ -683,8 +745,9 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         panelRect.offsetMax = Vector2.zero;
 
         var panel = panelObject.GetComponent<Image>();
-        panel.sprite = Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
-        panel.type = Image.Type.Sliced;
+        // A plain tinted Image works without depending on Unity's editor-only UI sprite resource.
+        panel.sprite = null;
+        panel.type = Image.Type.Simple;
         panel.color = new Color(0f, 0f, 0f, 0.7f);
         panel.raycastTarget = false;
 
@@ -697,8 +760,10 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         textRect.offsetMax = new Vector2(-2f, -1f);
 
         var text = textObject.GetComponent<TextMeshProUGUI>();
-        text.text = "Let's fight!";
-        text.font = TMP_Settings.defaultFontAsset;
+        text.text = line;
+        text.font = FindStartBubbleFont();
+        if (text.font == null)
+            text.font = TMP_Settings.defaultFontAsset;
         text.fontSize = 6.9f;
         text.enableAutoSizing = true;
         text.fontSizeMin = 2f;
@@ -709,6 +774,18 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         text.raycastTarget = false;
 
         return bubbleObject;
+    }
+
+    private static TMP_FontAsset FindStartBubbleFont()
+    {
+        var fonts = Resources.FindObjectsOfTypeAll<TMP_FontAsset>();
+        foreach (var font in fonts)
+        {
+            if (font != null && font.name.Contains("BreeSerif", StringComparison.OrdinalIgnoreCase))
+                return font;
+        }
+
+        return null;
     }
 
     private static TextMeshProUGUI CreateText(

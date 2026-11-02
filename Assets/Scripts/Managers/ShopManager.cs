@@ -145,4 +145,21 @@ public class ShopManager : Singleton<ShopManager>
         InventoryController.Instance.inventoryData.RemoveItem(itemIndex, 1);
         SellerInventory.AddItem(itemToSell, 1);
     }
+
+    public bool TrySellEquippedItem(InventoryItem itemToSell)
+    {
+        if (InventoryType != InventoryType.Shop || SellerInventory == null ||
+            itemToSell.IsEmpty || itemToSell.item == null)
+            return false;
+
+        if (itemToSell.item.SellPrice > SellerInventory.Lunar)
+            return false;
+
+        if (!InventoryController.Instance.ChangeGoldAmount(itemToSell.item.SellPrice))
+            return false;
+
+        SellerInventory.Lunar -= itemToSell.item.SellPrice;
+        SellerInventory.AddItem(itemToSell, 1);
+        return true;
+    }
 }

@@ -3,38 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public sealed class TutorialManager : MonoBehaviour, ISaveable
+public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
 {
     private const string SaveKey = "tutorials_seen";
-    private static TutorialManager _instance;
+    [Header("Tutorial asset")]
+    [SerializeField] private TutorialDefinitionSO startMapTutorial;
 
-    public static TutorialManager Instance => _instance;
+    [Header("Manual tutorial canvas")]
+    [SerializeField] private Canvas tutorialCanvas;
+    [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI instructionsText;
+    [SerializeField] private TextMeshProUGUI actionHintText;
+    [SerializeField] private TextMeshProUGUI pageCounterText;
+    [SerializeField] private Image illustrationImage;
+    [SerializeField] private Button previousButton;
+    [SerializeField] private Button nextButton;
+    [SerializeField] private Button acknowledgeButton;
+
+    public TutorialDefinitionSO StartMapTutorial => startMapTutorial;
 
     private readonly Queue<TutorialDefinitionSO> _queue = new();
     private readonly HashSet<string> _queuedIds = new();
     private readonly HashSet<string> _seenIds = new();
 
-    private GameObject _canvasObject;
     private GameObject _modalRoot;
     private TextMeshProUGUI _titleText;
     private TextMeshProUGUI _instructionsText;
     private TextMeshProUGUI _actionHintText;
-    private TextMeshProUGUI _closeButtonLabel;
     private TextMeshProUGUI _pageCounterText;
+    private TextMeshProUGUI _previousButtonText;
+    private TextMeshProUGUI _nextButtonText;
+    private TextMeshProUGUI _acknowledgeButtonText;
     private Image _illustrationImage;
-    private GameObject _illustrationFrame;
-    private RectTransform _instructionsRect;
-    private RectTransform _actionHintRect;
     private Button _previousButton;
     private Button _nextButton;
     private Button _acknowledgeButton;
-    private TextMeshProUGUI _previousButtonLabel;
-    private TextMeshProUGUI _nextButtonLabel;
     private Coroutine _animationRoutine;
     private TutorialDefinitionSO _currentTutorial;
     private int _currentPageIndex;
@@ -42,51 +48,34 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
     private bool _pauseHeld;
     private bool _fallbackPauseHeld;
     private float _previousTimeScale = 1f;
+    private bool _uiReady;
+    private UIManager _uiManager;
 
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
-    private static void ResetStatics()
+    protected override void Awake()
     {
-        _instance = null;
-    }
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void Bootstrap()
-    {
-        if (_instance != null)
+        base.Awake();
+        if (Instance != this)
             return;
 
-        var managerObject = new GameObject(nameof(TutorialManager));
-        managerObject.AddComponent<TutorialManager>();
-    }
-
-    private void Awake()
-    {
-        if (_instance != null && _instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        _instance = this;
         DontDestroyOnLoad(gameObject);
         SceneManager.sceneLoaded += OnSceneLoaded;
         BuildModal();
+        _uiManager = FindFirstObjectByType<UIManager>();
     }
 
     private void OnDestroy()
     {
-        if (_instance != this)
+        if (Instance != this)
             return;
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SetCursorAboveModal(false);
         ReleasePause();
-        _instance = null;
     }
 
     public bool TryShow(TutorialDefinitionSO tutorial, Player player)
     {
-        if (tutorial == null || player == null)
+        if (!_uiReady || tutorial == null || player == null)
             return false;
 
         var id = tutorial.Id;
@@ -134,6 +123,8 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
         {
             if (_modalRoot != null)
                 _modalRoot.SetActive(false);
+            if (_uiManager != null)
+                _uiManager.SetPlayerHudVisible(true);
             SetCursorAboveModal(false);
             ReleasePause();
             return;
@@ -150,24 +141,13 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
 
         RequestPause();
         SetCursorAboveModal(true);
+        if (_uiManager != null)
+            _uiManager.SetPlayerHudVisible(false);
         _modalRoot.SetActive(true);
-        var font = FindTutorialFont();
-        if (font == null)
-            font = TMP_Settings.defaultFontAsset;
-        if (font != null)
-        {
-            _titleText.font = font;
-            _instructionsText.font = font;
-            _actionHintText.font = font;
-            _closeButtonLabel.font = font;
-            _previousButtonLabel.font = font;
-            _nextButtonLabel.font = font;
-            _pageCounterText.font = font;
-        }
         SetLocalized(_titleText, _currentTutorial.Title);
-        SetLocalized(_closeButtonLabel, "Rozumiem");
-        SetLocalized(_previousButtonLabel, "Poprzednia");
-        SetLocalized(_nextButtonLabel, "Dalej");
+        SetLocalized(_previousButtonText, "Wstecz");
+        SetLocalized(_nextButtonText, "Następny");
+        SetLocalized(_acknowledgeButtonText, "Zamknij");
         _currentPageIndex = 0;
         DisplayCurrentPage();
     }
@@ -190,7 +170,7 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
 
         var page = hasPages ? pages[_currentPageIndex] : null;
         var description = page != null ? page.Description : _currentTutorial.Instructions;
-        SetLocalized(_instructionsText, description);
+        if (_instructionsText != null) SetLocalized(_instructionsText, description);
 
         var frames = page != null ? page.AnimationFrames : _currentTutorial.AnimationFrames;
         var fps = page != null ? page.FramesPerSecond : _currentTutorial.FramesPerSecond;
@@ -200,44 +180,35 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
         var hasAnimation = validFrames.Length > 0;
         var hasVisual = hasAnimation || illustration != null;
 
-        _illustrationFrame.SetActive(hasVisual);
-        _illustrationImage.gameObject.SetActive(hasVisual);
-        if (hasAnimation)
+        if (_illustrationImage != null) _illustrationImage.gameObject.SetActive(hasVisual);
+        if (_illustrationImage != null && hasAnimation)
         {
             _illustrationImage.sprite = validFrames[0];
             _animationRoutine = StartCoroutine(
                 PlayAnimation(_currentTutorial, _currentPageIndex, validFrames, fps, loopAnimation));
         }
-        else
+        else if (_illustrationImage != null)
         {
             _illustrationImage.sprite = illustration;
         }
 
-        _instructionsRect.sizeDelta = hasVisual
-            ? new Vector2(570f, 400f)
-            : new Vector2(1040f, 400f);
-        _instructionsRect.anchoredPosition = hasVisual
-            ? new Vector2(-255f, 5f)
-            : new Vector2(0f, 5f);
-        _actionHintRect.sizeDelta = hasVisual
-            ? new Vector2(570f, 110f)
-            : new Vector2(1000f, 110f);
-        _actionHintRect.anchoredPosition = hasVisual
-            ? new Vector2(-255f, -230f)
-            : new Vector2(0f, -230f);
-
         var hasMultiplePages = pageCount > 1;
-        _previousButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex > 0);
-        _nextButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex < pageCount - 1);
-        _acknowledgeButton.gameObject.SetActive(!hasMultiplePages || _currentPageIndex == pageCount - 1);
-        _pageCounterText.gameObject.SetActive(hasMultiplePages);
-        _pageCounterText.text = hasMultiplePages
-            ? $"{_currentPageIndex + 1} / {pageCount}"
-            : string.Empty;
+        if (_previousButton != null)
+            _previousButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex > 0);
+        if (_nextButton != null)
+            _nextButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex < pageCount - 1);
+        if (_acknowledgeButton != null)
+            _acknowledgeButton.gameObject.SetActive(!hasMultiplePages || _currentPageIndex == pageCount - 1);
+        if (_pageCounterText != null)
+        {
+            _pageCounterText.gameObject.SetActive(hasMultiplePages);
+            _pageCounterText.text = hasMultiplePages ? $"{_currentPageIndex + 1} / {pageCount}" : string.Empty;
+        }
 
-        var hasActionHint = !hasMultiplePages && !string.IsNullOrWhiteSpace(_currentTutorial.ActionHint);
-        _actionHintText.gameObject.SetActive(hasActionHint);
-        if (hasActionHint)
+        var hasActionHint = !string.IsNullOrWhiteSpace(_currentTutorial.ActionHint);
+        if (_actionHintText != null)
+            _actionHintText.gameObject.SetActive(hasActionHint);
+        if (hasActionHint && _actionHintText != null)
             SetLocalized(_actionHintText, _currentTutorial.ActionHint);
     }
 
@@ -352,150 +323,38 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
 
         if (_modalRoot != null)
             _modalRoot.SetActive(false);
+        if (_uiManager != null)
+            _uiManager.SetPlayerHudVisible(true);
         SetCursorAboveModal(false);
         ReleasePause();
     }
 
     private void BuildModal()
     {
-        _canvasObject = new GameObject("TutorialModalCanvas",
-            typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
-        _canvasObject.transform.SetParent(transform, false);
+        _modalRoot = tutorialCanvas != null ? tutorialCanvas.gameObject : null;
+        _titleText = titleText;
+        _instructionsText = instructionsText;
+        _actionHintText = actionHintText;
+        _pageCounterText = pageCounterText;
+        _illustrationImage = illustrationImage;
+        _previousButton = previousButton;
+        _nextButton = nextButton;
+        _acknowledgeButton = acknowledgeButton;
+        _previousButtonText = previousButton != null ? previousButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+        _nextButtonText = nextButton != null ? nextButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+        _acknowledgeButtonText = acknowledgeButton != null ? acknowledgeButton.GetComponentInChildren<TextMeshProUGUI>(true) : null;
 
-        var canvas = _canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 1200;
+        _uiReady = tutorialCanvas != null && _modalRoot != null;
+        if (!_uiReady)
+        {
+            Debug.LogError("TutorialManager: assign the manual Canvas in the Inspector.", this);
+            return;
+        }
 
-        var scaler = _canvasObject.GetComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.matchWidthOrHeight = 0.5f;
-
-        _modalRoot = CreateObject("TutorialModal", _canvasObject.transform, typeof(Image));
-        Stretch(_modalRoot.GetComponent<RectTransform>());
-        var dimmer = _modalRoot.GetComponent<Image>();
-        dimmer.sprite = GetUiSprite();
-        dimmer.color = new Color(0.015f, 0.02f, 0.04f, 0.88f);
-        dimmer.raycastTarget = true;
-
-        var panel = CreateObject("TutorialPanel", _modalRoot.transform, typeof(Image), typeof(Outline));
-        SetCentered(panel.GetComponent<RectTransform>(), new Vector2(1180f, 760f), Vector2.zero);
-        var panelImage = panel.GetComponent<Image>();
-        panelImage.sprite = GetUiSprite();
-        panelImage.type = Image.Type.Sliced;
-        panelImage.color = new Color(0.07f, 0.085f, 0.14f, 1f);
-        panelImage.raycastTarget = true;
-        var outline = panel.GetComponent<Outline>();
-        outline.effectColor = new Color(0.95f, 0.68f, 0.3f, 0.95f);
-        outline.effectDistance = new Vector2(2f, -2f);
-
-        _titleText = CreateText("Title", panel.transform, new Vector2(1000f, 86f),
-            new Vector2(0f, 310f), 44f, FontStyles.Bold, TextAlignmentOptions.Center);
-        _titleText.color = new Color(1f, 0.82f, 0.49f, 1f);
-
-        _instructionsText = CreateText("Instructions", panel.transform, new Vector2(570f, 400f),
-            new Vector2(-255f, 5f), 30f, FontStyles.Normal, TextAlignmentOptions.TopLeft);
-        _instructionsRect = _instructionsText.rectTransform;
-        _instructionsText.enableAutoSizing = true;
-        _instructionsText.fontSizeMin = 22f;
-        _instructionsText.fontSizeMax = 30f;
-
-        _actionHintText = CreateText("ActionHint", panel.transform, new Vector2(570f, 110f),
-            new Vector2(-255f, -230f), 27f, FontStyles.Bold, TextAlignmentOptions.MidlineLeft);
-        _actionHintRect = _actionHintText.rectTransform;
-        _actionHintText.color = new Color(0.45f, 0.9f, 0.68f, 1f);
-        _actionHintText.enableAutoSizing = true;
-        _actionHintText.fontSizeMin = 20f;
-        _actionHintText.fontSizeMax = 27f;
-
-        var visualFrame = CreateObject("IllustrationFrame", panel.transform, typeof(Image), typeof(Outline));
-        _illustrationFrame = visualFrame;
-        SetCentered(visualFrame.GetComponent<RectTransform>(), new Vector2(430f, 440f), new Vector2(335f, 5f));
-        var visualFrameImage = visualFrame.GetComponent<Image>();
-        visualFrameImage.sprite = GetUiSprite();
-        visualFrameImage.type = Image.Type.Sliced;
-        visualFrameImage.color = new Color(0.12f, 0.14f, 0.2f, 1f);
-        visualFrameImage.raycastTarget = false;
-        var visualOutline = visualFrame.GetComponent<Outline>();
-        visualOutline.effectColor = new Color(0.78f, 0.57f, 0.31f, 0.72f);
-        visualOutline.effectDistance = new Vector2(1f, -1f);
-
-        var imageObject = CreateObject("TutorialIllustration", visualFrame.transform, typeof(Image));
-        Stretch(imageObject.GetComponent<RectTransform>(), new Vector2(16f, 16f));
-        _illustrationImage = imageObject.GetComponent<Image>();
-        _illustrationImage.preserveAspect = true;
-        _illustrationImage.raycastTarget = false;
-
-        _acknowledgeButton = CreateFooterButton("AcknowledgeButton", panel.transform,
-            "Rozumiem", new Vector2(330f, 74f), new Vector2(0f, -320f),
-            CloseCurrentTutorial, out _closeButtonLabel);
-        _previousButton = CreateFooterButton("PreviousButton", panel.transform,
-            "Poprzednia", new Vector2(240f, 66f), new Vector2(-400f, -320f),
-            ShowPreviousPage, out _previousButtonLabel);
-        _nextButton = CreateFooterButton("NextButton", panel.transform,
-            "Dalej", new Vector2(240f, 66f), new Vector2(400f, -320f),
-            ShowNextPage, out _nextButtonLabel);
-        _pageCounterText = CreateText("PageCounter", panel.transform,
-            new Vector2(150f, 32f), new Vector2(0f, -270f),
-            20f, FontStyles.Normal, TextAlignmentOptions.Center);
-
-        SetLocalized(_closeButtonLabel, "Rozumiem");
-        SetLocalized(_previousButtonLabel, "Poprzednia");
-        SetLocalized(_nextButtonLabel, "Dalej");
-        _acknowledgeButton.gameObject.SetActive(true);
-        _previousButton.gameObject.SetActive(false);
-        _nextButton.gameObject.SetActive(false);
-        _pageCounterText.gameObject.SetActive(false);
-
-        EnsureEventSystem();
+        if (_previousButton != null) _previousButton.onClick.AddListener(ShowPreviousPage);
+        if (_nextButton != null) _nextButton.onClick.AddListener(ShowNextPage);
+        if (_acknowledgeButton != null) _acknowledgeButton.onClick.AddListener(CloseCurrentTutorial);
         _modalRoot.SetActive(false);
-    }
-
-    private Button CreateFooterButton(string objectName, Transform parent, string label,
-        Vector2 size, Vector2 position, UnityAction action, out TextMeshProUGUI labelText)
-    {
-        var buttonObject = CreateObject(objectName, parent, typeof(Image), typeof(Button), typeof(Outline));
-        SetCentered(buttonObject.GetComponent<RectTransform>(), size, position);
-
-        var buttonImage = buttonObject.GetComponent<Image>();
-        buttonImage.sprite = GetUiSprite();
-        buttonImage.type = Image.Type.Sliced;
-        buttonImage.color = new Color(0.58f, 0.28f, 0.09f, 1f);
-
-        var button = buttonObject.GetComponent<Button>();
-        button.targetGraphic = buttonImage;
-        button.onClick.AddListener(action);
-
-        var outline = buttonObject.GetComponent<Outline>();
-        outline.effectColor = new Color(1f, 0.73f, 0.34f, 1f);
-        outline.effectDistance = new Vector2(2f, -2f);
-
-        labelText = CreateText("ButtonLabel", buttonObject.transform,
-            size - new Vector2(20f, 8f), Vector2.zero, 24f,
-            FontStyles.Bold, TextAlignmentOptions.Center);
-        SetLocalized(labelText, label);
-        return button;
-    }
-
-    private TextMeshProUGUI CreateText(string objectName, Transform parent, Vector2 size,
-        Vector2 position, float fontSize, FontStyles style, TextAlignmentOptions alignment)
-    {
-        var textObject = CreateObject(objectName, parent, typeof(TextMeshProUGUI));
-        SetCentered(textObject.GetComponent<RectTransform>(), size, position);
-        var text = textObject.GetComponent<TextMeshProUGUI>();
-        var font = FindTutorialFont();
-        if (font == null)
-            font = TMP_Settings.defaultFontAsset;
-        if (font != null)
-            text.font = font;
-        text.fontSize = fontSize;
-        text.fontStyle = style;
-        text.alignment = alignment;
-        text.color = Color.white;
-        text.enableWordWrapping = true;
-        text.raycastTarget = false;
-        text.margin = new Vector4(12f, 8f, 12f, 8f);
-        return text;
     }
 
     private static void SetLocalized(TMP_Text text, string source)
@@ -504,52 +363,6 @@ public sealed class TutorialManager : MonoBehaviour, ISaveable
             LocalizationManager.Instance.SetLocalizedText(text, source ?? string.Empty);
         else if (text != null)
             text.text = source ?? string.Empty;
-    }
-
-    private static TMP_FontAsset FindTutorialFont()
-    {
-        return Resources.FindObjectsOfTypeAll<TMP_FontAsset>()
-            .FirstOrDefault(font => font != null && font.name.Contains("BreeSerif"));
-    }
-
-    private static GameObject CreateObject(string objectName, Transform parent, params System.Type[] components)
-    {
-        var gameObject = new GameObject(objectName, components);
-        gameObject.transform.SetParent(parent, false);
-        return gameObject;
-    }
-
-    private static void SetCentered(RectTransform rect, Vector2 size, Vector2 position)
-    {
-        rect.anchorMin = new Vector2(0.5f, 0.5f);
-        rect.anchorMax = new Vector2(0.5f, 0.5f);
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.sizeDelta = size;
-        rect.anchoredPosition = position;
-    }
-
-    private static void Stretch(RectTransform rect, Vector2 inset = default)
-    {
-        rect.anchorMin = Vector2.zero;
-        rect.anchorMax = Vector2.one;
-        rect.pivot = new Vector2(0.5f, 0.5f);
-        rect.offsetMin = inset;
-        rect.offsetMax = -inset;
-    }
-
-    private static Sprite GetUiSprite()
-    {
-        return Resources.GetBuiltinResource<Sprite>("UI/Skin/UISprite.psd");
-    }
-
-    private static void EnsureEventSystem()
-    {
-        if (EventSystem.current != null)
-            return;
-
-        var eventSystemObject = new GameObject("TutorialEventSystem",
-            typeof(EventSystem), typeof(StandaloneInputModule));
-        DontDestroyOnLoad(eventSystemObject);
     }
 
     public void Save()
