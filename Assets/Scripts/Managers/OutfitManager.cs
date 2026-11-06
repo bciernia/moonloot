@@ -20,6 +20,13 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
         _playerAim = FindAnyObjectByType<PlayerAim>();
         CacheKnownOutfits();
     }
+
+    public void BindPlayerContext(Player player)
+    {
+        _playerAim = player != null
+            ? player.GetComponentInChildren<PlayerAim>(true)
+            : null;
+    }
     
     public void SetOutfit(OutfitItemSO outfitItem, List<ItemParameter> itemState, bool isFromLoading = false)
     {

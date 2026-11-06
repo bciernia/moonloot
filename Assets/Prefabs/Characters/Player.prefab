@@ -517,7 +517,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69ac1dbf0f176774ab876ca4cf43abf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSource: {fileID: 0}
+  _audioSource: {fileID: 733470989634478623}
 --- !u!114 &7425774757852437938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -752,6 +752,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c778cbcd2348c4bcc4730ac54b46d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _questNotificationSound: {fileID: 0}
 --- !u!114 &7633764337396889276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,7 +776,7 @@ AudioSource:
   m_GameObject: {fileID: 5035096080699904585}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8003871345354527710, guid: dc64076463e7b874aa077f531b7d62b0, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -1317,7 +1318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 366bf087f97f80942874ffd399f4e917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotateSpeed: 5
+  _rotateSpeed: 5
+  _aimDistance: 0
 --- !u!1 &7416389031391205317
 GameObject:
   m_ObjectHideFlags: 0
@@ -1698,21 +1700,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3640270890684053759}
     m_Modifications:
+    - target: {fileID: 83801625291809899, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+      propertyPath: Damping.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 83801625291809899, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+      propertyPath: Damping.y
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 83801625291809899, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+      propertyPath: Damping.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 83801625291809899, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+      propertyPath: CameraDistance
+      value: 11.56
+      objectReference: {fileID: 0}
     - target: {fileID: 6446409035382191176, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: Target.TrackingTarget
       value: 
-      objectReference: {fileID: 3640270890684053759}
+      objectReference: {fileID: 0}
     - target: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10.879761
       objectReference: {fileID: 0}
     - target: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.491951
       objectReference: {fileID: 0}
     - target: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -30
+      value: -11.56
       objectReference: {fileID: 0}
     - target: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1749,8 +1767,39 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8490853440843176672, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3295950179048087512}
   m_SourcePrefab: {fileID: 100100000, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+--- !u!1 &7754673440522692641 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8490853440843176672, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}
+  m_PrefabInstance: {fileID: 2183032369527567041}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3295950179048087512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7754673440522692641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b2d199b96b516448144ab30fb26aed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ApplyAfter: 2
+  ChannelMask: 1
+  Gain: 1
+  Use2DDistance: 0
+  UseCameraSpace: 1
+  ReactionSettings:
+    m_SecondaryNoise: {fileID: 0}
+    AmplitudeGain: 1
+    FrequencyGain: 1
+    Duration: 1
+    m_NoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!4 &8104394314680230429 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7940734475450405084, guid: ffe49fe5d54a7e640a5306f0e4d6a354, type: 3}

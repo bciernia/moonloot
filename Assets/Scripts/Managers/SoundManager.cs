@@ -194,7 +194,8 @@ public class SoundManager : Singleton<SoundManager>
 
         while (time < _musicFadeDuration)
         {
-            time += Time.deltaTime;
+            // Music transitions should finish while a tutorial or other modal pauses gameplay.
+            time += Time.unscaledDeltaTime;
             var t = time / _musicFadeDuration;
 
             _explorationSource.volume =

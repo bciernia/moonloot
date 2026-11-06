@@ -27,7 +27,9 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
     public ES3Settings GetSettings() =>  CurrentSettings;
 
-    public void CreateNewSaveForNewGame(OutfitItemSO startingHeroOutfit = null)
+    public void CreateNewSaveForNewGame(
+        OutfitItemSO startingHeroOutfit = null,
+        string startingSceneName = "START_MAP")
     {
         var slotName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
@@ -42,7 +44,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
         ES3.Save(
             "SceneName",
-            "Base_Demo", CurrentSettings);
+            startingSceneName, CurrentSettings);
         
         Debug.Log(
             "Slot path: " +

@@ -29,6 +29,14 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IBeginDragHa
         Deselect();
     }
 
+    private void OnEnable()
+    {
+        // Equipped slots can become active after their first data assignment.
+        // Rebuild their icon from the manager's current equipment state.
+        if (EquippedItemsManager.Instance != null)
+            EquippedItemsManager.Instance.RefreshEquippedSlot(this);
+    }
+
     public void ResetData()
     {
         if(defaultImage == null)

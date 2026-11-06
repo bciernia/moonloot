@@ -273,6 +273,26 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         return false;
     }
 
+    public bool TrySellEquippedWeapon()
+    {
+        if (equippedItemsManager == null || ShopManager.Instance == null ||
+            equippedItemsManager.EquippedItems == null ||
+            equippedItemsManager.EquippedItems.Count == 0)
+            return false;
+
+        var equippedWeapon = equippedItemsManager.EquippedItems[0];
+        if (equippedWeapon.IsEmpty || equippedWeapon.item is not WeaponItemSO weapon ||
+            weapon.Name == "Fists")
+            return false;
+
+        if (!ShopManager.Instance.TrySellEquippedItem(equippedWeapon))
+            return false;
+
+        weapon.UnequipWeapon(gameObject);
+        equippedItemsManager.InitializeEquippedSlots();
+        return true;
+    }
+
     public void DropItem(int itemIndex, int quantity)
     {
         var itemToDrop = inventoryData.GetItemAt(itemIndex).item.ItemToDrop;

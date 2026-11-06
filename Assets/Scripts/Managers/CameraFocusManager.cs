@@ -33,14 +33,42 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
     {
         base.Awake();
 
-        _currentTarget = _playerTransform;
-        _targetOrthographicSize = _camera.Lens.OrthographicSize;
+        if (Instance != this)
+            return;
+
         _followPlayer = true;
-        
-        if (_cameraTarget != null && _playerTransform != null)
+        BindPlayerContext(Player.Instance);
+    }
+
+    public void BindPlayerContext(Player player)
+    {
+        _playerTransform = player != null ? player.transform : null;
+
+        if (_cameraTarget == null)
         {
-            _cameraTarget.position = _playerTransform.position;
+            var targetObject = GameObject.Find("CameraTarget");
+            _cameraTarget = targetObject != null
+                ? targetObject.transform
+                : _playerTransform;
         }
+
+        if (_camera == null && player != null)
+            _camera = player.GetComponentInChildren<CinemachineCamera>(true);
+
+        if (_camera == null)
+            _camera = FindFirstObjectByType<CinemachineCamera>();
+
+        if (_camera != null && _cameraTarget != null)
+            _camera.Target.TrackingTarget = _cameraTarget;
+
+        _currentTarget = _playerTransform;
+        _followPlayer = true;
+
+        if (_camera != null)
+            _targetOrthographicSize = _camera.Lens.OrthographicSize;
+
+        if (_cameraTarget != null && _playerTransform != null)
+            _cameraTarget.position = _playerTransform.position;
     }
 
     private void Update()
@@ -67,7 +95,7 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
                 Time.deltaTime * speed);
         }
         
-        if (_zoomSequenceCoroutine == null)
+        if (_camera != null && _zoomSequenceCoroutine == null)
         {
             _camera.Lens.OrthographicSize = Mathf.Lerp(
                 _camera.Lens.OrthographicSize,
@@ -78,6 +106,12 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
 
     private IEnumerator PlayZoomSequence()
     {
+        if (_camera == null)
+        {
+            _zoomSequenceCoroutine = null;
+            yield break;
+        }
+
         yield return AnimateCameraSize(_zoomSequenceStartSize);
         yield return new WaitForSeconds(_zoomSequencePause);
 
@@ -89,15 +123,33 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
         _zoomSequenceCoroutine = null;
     }
 
-    private IEnumerator AnimateCameraSize(float targetSize)
+    public float CurrentOrthographicSize => _camera != null
+        ? _camera.Lens.OrthographicSize
+        : _targetOrthographicSize > 0f ? _targetOrthographicSize : 8.5f;
+
+    public IEnumerator AnimateCameraSizeUnscaled(float targetSize, float duration)
+    {
+        CancelZoomSequence();
+        if (_camera == null)
+            yield break;
+
+        _zoomSequenceCoroutine = StartCoroutine(AnimateCameraSize(targetSize, duration, true));
+        yield return _zoomSequenceCoroutine;
+        _targetOrthographicSize = targetSize;
+        _zoomSequenceCoroutine = null;
+    }
+
+    private IEnumerator AnimateCameraSize(float targetSize, float duration = -1f, bool useUnscaledTime = false)
     {
         var startSize = _camera.Lens.OrthographicSize;
-        var duration = Mathf.Clamp(_zoomSequenceTransitionDuration, 0.01f, 2f);
+        duration = duration > 0f
+            ? Mathf.Clamp(duration, 0.01f, 2f)
+            : Mathf.Clamp(_zoomSequenceTransitionDuration, 0.01f, 2f);
         var elapsed = 0f;
 
         while (elapsed < duration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             var progress = Mathf.Clamp01(elapsed / duration);
             // SmoothStep gives a gentle start and stop while keeping the transition within duration.
             progress = progress * progress * (3f - 2f * progress);
@@ -152,8 +204,44 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
         }
     }
 
+    public void LockCameraAtPlayerPosition(Transform playerTransform)
+    {
+        if (playerTransform == null)
+            return;
+
+        if (_playerTransform != playerTransform)
+            BindPlayerContext(playerTransform.GetComponent<Player>());
+
+        _currentTarget = playerTransform;
+        _followPlayer = true;
+        _cameraFollowLocked = true;
+
+        if (_cameraTarget != null)
+            _cameraTarget.position = playerTransform.position;
+    }
+
+    public void LockCameraAtPosition(Vector3 worldPosition)
+    {
+        _cameraFollowLocked = true;
+        if (_cameraTarget != null)
+            _cameraTarget.position = worldPosition;
+    }
+
+    public void UnlockCameraFollow()
+    {
+        _cameraFollowLocked = false;
+        if (_playerTransform != null)
+        {
+            _currentTarget = _playerTransform;
+            _followPlayer = true;
+        }
+    }
+
     public void SetCameraOrthographicSize(float size = 8.5f)
     {
+        if (_camera == null)
+            return;
+
         CancelZoomSequence();
         _targetOrthographicSize = size;
     }

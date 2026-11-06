@@ -280,6 +280,9 @@ public class DayNightCycle : MonoBehaviour
     
     public void ForceStartNight()
     {
+        if (SceneManager.GetActiveScene().name == "START_MAP")
+            return;
+
         if (hordeStarted)
             return;
 

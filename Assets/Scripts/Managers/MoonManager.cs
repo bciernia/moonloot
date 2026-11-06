@@ -25,6 +25,18 @@ public class MoonManager : Singleton<MoonManager>
         CurrentMoon = moons[Random.Range(0, moons.Count)];
         OnMoonChanged?.Invoke(CurrentMoon);
     }
+
+    public MoonData SetCurrentMoon(MoonType type)
+    {
+        if (moons == null)
+            return null;
+
+        CurrentMoon = moons.FirstOrDefault(moon => moon != null && moon.Type == type);
+        if (CurrentMoon != null)
+            OnMoonChanged?.Invoke(CurrentMoon);
+
+        return CurrentMoon;
+    }
     
     public List<MoonData> GetRandomMoons(int count)
     {

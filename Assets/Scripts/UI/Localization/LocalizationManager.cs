@@ -20,6 +20,7 @@ public sealed class LocalizationManager : MonoBehaviour
     private const string LanguagePreferenceKey = "Moonloot.Language";
     private static LocalizationManager _instance;
     private static readonly Dictionary<string, string[]> Translations = BuildTranslations();
+    private static readonly Dictionary<string, string[]> TutorialTranslations = BuildTutorialTranslations();
 
     private readonly Dictionary<TMP_Text, TextState> _textStates = new();
 
@@ -30,6 +31,7 @@ public sealed class LocalizationManager : MonoBehaviour
     {
         public string Source;
         public string LastApplied;
+        public string[] LanguageOverrides;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -101,8 +103,34 @@ public sealed class LocalizationManager : MonoBehaviour
         }
 
         state.Source = source ?? string.Empty;
+        state.LanguageOverrides = null;
         state.LastApplied = Translate(state.Source);
         text.text = state.LastApplied;
+    }
+
+    public void SetLocalizedText(TMP_Text text, string source, string[] languageOverrides)
+    {
+        if (text == null)
+            return;
+
+        if (!_textStates.TryGetValue(text, out var state))
+        {
+            state = new TextState();
+            _textStates.Add(text, state);
+        }
+
+        state.Source = source ?? string.Empty;
+        state.LanguageOverrides = languageOverrides;
+        state.LastApplied = GetLocalizedStateText(state);
+        text.text = state.LastApplied;
+    }
+
+    public void SetTutorialLocalizedText(TMP_Text text, string key, string fallback)
+    {
+        if (TutorialTranslations.TryGetValue(key ?? string.Empty, out var values))
+            SetLocalizedText(text, fallback, values);
+        else
+            SetLocalizedText(text, fallback);
     }
 
     public static string GetLanguageName(GameLanguage language)
@@ -126,6 +154,49 @@ public sealed class LocalizationManager : MonoBehaviour
 
         if (Translations.TryGetValue(source, out var values))
             return ValueForLanguage(values, source);
+
+        // ScriptableObject text fields may contain line breaks or repeated spaces
+        // introduced by the Inspector/YAML serialization. Treat those as equivalent.
+        var normalizedSource = NormalizeTranslationKey(source);
+        if (!string.Equals(normalizedSource, source, System.StringComparison.Ordinal) &&
+            Translations.TryGetValue(normalizedSource, out values))
+            return ValueForLanguage(values, normalizedSource);
+
+        var progressLabelSeparator = source.LastIndexOf(": ", System.StringComparison.Ordinal);
+        if (progressLabelSeparator >= 0)
+        {
+            var label = source.Substring(0, progressLabelSeparator);
+            var progress = source.Substring(progressLabelSeparator + 2);
+            if (Translations.TryGetValue(label, out values))
+                return ValueForLanguage(values, label) + ": " + progress;
+        }
+
+        // Bonus rows contain a changing number followed by a stable stat label,
+        // for example "+15% Move Speed". Keep the value and translate the label.
+        if (source.StartsWith("+", System.StringComparison.Ordinal))
+        {
+            var labelStart = source.IndexOf(' ');
+            if (labelStart >= 0)
+            {
+                var value = source.Substring(0, labelStart);
+                var label = source.Substring(labelStart + 1);
+                if (Translations.TryGetValue(label, out values))
+                    return value + " " + ValueForLanguage(values, label);
+            }
+        }
+
+        var savedPrefixes = new[]
+        {
+            new[] { "Uratowano ", "Saved ", "Sauvé : ", "Salvado: ", "Salvato: ", "Gerettet: ", "Спасён: " }
+        };
+        foreach (var prefixSet in savedPrefixes)
+        {
+            foreach (var prefix in prefixSet)
+            {
+                if (source.StartsWith(prefix, System.StringComparison.Ordinal))
+                    return prefixSet[(int)CurrentLanguage] + source.Substring(prefix.Length);
+            }
+        }
 
         var lines = source.Split('\n');
         if (lines.Length > 1)
@@ -216,10 +287,22 @@ public sealed class LocalizationManager : MonoBehaviour
                 state.Source = text.text;
             }
 
-            state.LastApplied = Translate(state.Source);
+            state.LastApplied = GetLocalizedStateText(state);
             if (text.text != state.LastApplied)
                 text.text = state.LastApplied;
         }
+    }
+
+    private string GetLocalizedStateText(TextState state)
+    {
+        if (state.LanguageOverrides != null && (int)CurrentLanguage < state.LanguageOverrides.Length)
+        {
+            var localized = state.LanguageOverrides[(int)CurrentLanguage];
+            if (!string.IsNullOrWhiteSpace(localized))
+                return localized;
+        }
+
+        return Translate(state.Source);
     }
 
     private static bool IsInsideDropdown(Transform current)
@@ -309,6 +392,7 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Potwierdź", "Confirm", "Confirmer", "Confirmar", "Conferma", "Bestätigen", "Подтвердить");
         Add(result, "Tak", "Yes", "Oui", "Sí", "Sì", "Ja", "Да");
         Add(result, "Nie", "No", "Non", "No", "No", "Nein", "Нет");
+        Add(result, "Rozumiem", "Got it", "Compris", "Entendido", "Capito", "Verstanden", "Понятно");
         Add(result, "Ekwipunek", "Inventory", "Inventaire", "Inventario", "Inventario", "Inventar", "Инвентарь");
         Add(result, "Zadania", "Quests", "Quêtes", "Misiones", "Missioni", "Aufgaben", "Задания");
         Add(result, "Dziennik zadań", "Quest Journal", "Journal des quêtes", "Diario de misiones", "Diario delle missioni", "Questtagebuch", "Журнал заданий");
@@ -322,6 +406,27 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Szybkość", "Speed", "Vitesse", "Velocidad", "Velocità", "Geschwindigkeit", "Скорость");
         Add(result, "Atak", "Attack", "Attaque", "Ataque", "Attacco", "Angriff", "Атака");
         Add(result, "Obrona", "Defense", "Défense", "Defensa", "Difesa", "Verteidigung", "Защита");
+        Add(result, "Nagrody", "Rewards", "Récompenses", "Recompensas", "Ricompense", "Belohnungen", "Награды");
+        Add(result, "Wyniki nocy", "Night results", "Résultats de la nuit", "Resultados de la noche", "Risultati della notte", "Nachtergebnisse", "Итоги ночи");
+        Add(result, "Summary", "Night summary", "Bilan de la nuit", "Resumen de la noche", "Riepilogo della notte", "Nachtübersicht", "Итоги ночи");
+        Add(result, "Wróć do wioski", "Return to village", "Retourner au village", "Volver a la aldea", "Torna al villaggio", "Zurück ins Dorf", "Вернуться в деревню");
+        Add(result, "Noc przetrwana!", "Night survived!", "Nuit survécue !", "¡Noche superada!", "Notte superata!", "Nacht überlebt!", "Ночь пережита!");
+        Add(result, "Zadane obrażenia", "Dealt damage", "Dégâts infligés", "Daño infligido", "Danni inflitti", "Verursachter Schaden", "Нанесённый урон");
+        Add(result, "Zebrane złoto", "Earned gold", "Or gagné", "Oro obtenido", "Oro ottenuto", "Erhaltenes Gold", "Получено золота");
+        Add(result, "Pokonani zwykli przeciwnicy", "Defeated minions", "Ennemis vaincus", "Enemigos derrotados", "Nemici sconfitti", "Besiegte Gegner", "Побеждено обычных врагов");
+        Add(result, "Pokonani elitarni przeciwnicy", "Defeated elites", "Élites vaincues", "Élites derrotadas", "Élite sconfitti", "Besiegte Elitegegner", "Побеждено элитных врагов");
+        Add(result, "Pokonani bossowie", "Defeated bosses", "Boss vaincus", "Jefes derrotados", "Boss sconfitti", "Besiegte Bosse", "Побеждено боссов");
+        Add(result, "Przebyty dystans", "Distance traveled", "Distance parcourue", "Distancia recorrida", "Distanza percorsa", "Zurückgelegte Strecke", "Пройденное расстояние");
+        Add(result, "Nie udało ci się znaleźć wieśniaka.", "You did not find the peasant.", "Tu n'as pas trouvé le paysan.", "No encontraste al campesino.", "Non hai trovato il contadino.", "Du hast den Bauern nicht gefunden.", "Ты не нашёл крестьянина.");
+        Add(result, "Uratowano nowego wieśniaka!", "New villager saved!", "Un nouvel habitant a été sauvé !", "¡Has salvado a un nuevo aldeano!", "Hai salvato un nuovo abitante!", "Ein neuer Dorfbewohner wurde gerettet!", "Спасён новый житель!");
+        Add(result, "Uratowano ", "Saved ", "Sauvé : ", "Salvado: ", "Salvato: ", "Gerettet: ", "Спасён: ");
+        Add(result, "Move Speed", "Szybkość ruchu", "Vitesse de déplacement", "Velocidad de movimiento", "Velocità di movimento", "Bewegungsgeschwindigkeit", "Скорость передвижения");
+        Add(result, "Crit Chance", "Szansa na trafienie krytyczne", "Chance de coup critique", "Probabilidad de crítico", "Probabilità di critico", "Kritische Trefferchance", "Шанс критического удара");
+        Add(result, "Crit Multiplier", "Mnożnik trafienia krytycznego", "Multiplicateur critique", "Multiplicador crítico", "Moltiplicatore critico", "Kritischer Multiplikator", "Критический множитель");
+        Add(result, "Max HP", "Maks. zdrowie", "PV max", "Salud máx.", "PS max", "Max. LP", "Макс. здоровье");
+        Add(result, "Max Mana", "Maks. mana", "Mana max", "Maná máx.", "Mana max", "Max. Mana", "Макс. мана");
+        Add(result, "Attack Speed", "Szybkość ataku", "Vitesse d'attaque", "Velocidad de ataque", "Velocità d'attacco", "Angriffsgeschwindigkeit", "Скорость атаки");
+        Add(result, "Damage Reduction", "Redukcja obrażeń", "Réduction des dégâts", "Reducción de daño", "Riduzione dei danni", "Schadensreduktion", "Снижение урона");
         Add(result, "Kup", "Buy", "Acheter", "Comprar", "Compra", "Kaufen", "Купить");
         Add(result, "Sprzedaj", "Sell", "Vendre", "Vender", "Vendi", "Verkaufen", "Продать");
         Add(result, "Wytwórz", "Craft", "Fabriquer", "Fabricar", "Crea", "Herstellen", "Создать");
@@ -331,6 +436,19 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Naciśnij, aby kontynuować", "Press to continue", "Appuyez pour continuer", "Pulsa para continuar", "Premi per continuare", "Zum Fortfahren drücken", "Нажмите, чтобы продолжить");
         Add(result, "Naciśnij, aby interaktować", "Press to interact", "Appuyez pour interagir", "Pulsa para interactuar", "Premi per interagire", "Zum Interagieren drücken", "Нажмите для взаимодействия");
         Add(result, "Wybierz bohatera", "Choose a hero", "Choisissez un héros", "Elige un héroe", "Scegli un eroe", "Wähle einen Helden", "Выберите героя");
+        Add(result, "Wiedza Aulli", "Aulla's Knowledge", "Le savoir d'Aulla", "El conocimiento de Aulla", "La conoscenza di Aulla", "Aullas Wissen", "Знания Ауллы");
+        Add(result, "Znajdź portal", "Find the portal", "Trouve le portail", "Encuentra el portal", "Trova il portale", "Finde das Portal", "Найди портал");
+        Add(result, "Biegłeś nocą przez las w poszukiwaniu schronienia, niestety potwory zdążyły cię dogonić. Znajdź kryształy Aulli, żeby dowiedzieć się, gdzie jest najbliższa wioska.", "You ran through the forest at night looking for shelter, but the monsters caught up with you. Find Aulla's crystals to learn where the nearest village is.", "Tu as couru dans la forêt pendant la nuit à la recherche d'un abri, mais les monstres t'ont rattrapé. Trouve les cristaux d'Aulla pour découvrir où se trouve le village le plus proche.", "Corriste por el bosque de noche buscando refugio, pero los monstruos te alcanzaron. Encuentra los cristales de Aulla para averiguar dónde está la aldea más cercana.", "Hai corso nella foresta di notte in cerca di riparo, ma i mostri ti hanno raggiunto. Trova i cristalli di Aulla per scoprire dove si trova il villaggio più vicino.", "Du bist nachts auf der Suche nach einem Unterschlupf durch den Wald gerannt, doch die Monster haben dich eingeholt. Finde Aullas Kristalle, um herauszufinden, wo das nächste Dorf liegt.", "Ночью ты бежал через лес в поисках укрытия, но монстры настигли тебя. Найди кристаллы Ауллы, чтобы узнать, где находится ближайшая деревня.");
+        Add(result, "Znajdź trzy kryształy Aulli, aby otworzyć portal.", "Find three Aulla crystals to open the portal.", "Trouve trois cristaux d'Aulla pour ouvrir le portail.", "Encuentra tres cristales de Aulla para abrir el portal.", "Trova tre cristalli di Aulla per aprire il portale.", "Finde drei Aulla-Kristalle, um das Portal zu öffnen.", "Найди три кристалла Ауллы, чтобы открыть портал.");
+        Add(result, "Znajdź trzy niebieskie kryształy Aulli. Niebieskie kropki na mapie pokazują, gdzie ich szukać.", "Find three blue Aulla crystals. Blue dots on the map show where to look.", "Trouve trois cristaux bleus d’Aulla. Les points bleus sur la carte indiquent où chercher.", "Encuentra tres cristales azules de Aulla. Los puntos azules del mapa indican dónde buscarlos.", "Trova tre cristalli blu di Aulla. I punti blu sulla mappa indicano dove cercarli.", "Finde drei blaue Aulla-Kristalle. Blaue Punkte auf der Karte zeigen ihre Fundorte.", "Найди три синих кристалла Ауллы. Синие точки на карте показывают, где их искать.");
+        Add(result, "Czerwone kropki oznaczają przeciwników. Po zebraniu wszystkich trzech kryształów pojawi się portal. Wejdź do niego, aby wrócić do wioski.", "Red dots mark enemies. Once you collect all three crystals, a portal will appear. Enter it to return to the village.", "Les points rouges indiquent les ennemis. Lorsque tu auras récupéré les trois cristaux, un portail apparaîtra. Traverse-le pour retourner au village.", "Los puntos rojos indican enemigos. Cuando recojas los tres cristales, aparecerá un portal. Entra en él para volver a la aldea.", "I punti rossi indicano i nemici. Quando avrai raccolto tutti e tre i cristalli, apparirà un portale. Entraci per tornare al villaggio.", "Rote Punkte markieren Gegner. Sobald du alle drei Kristalle gesammelt hast, erscheint ein Portal. Betritt es, um ins Dorf zurückzukehren.", "Красные точки обозначают врагов. Когда соберёшь все три кристалла, появится портал. Войди в него, чтобы вернуться в деревню.");
+        Add(result, "Uważaj: im dłużej pozostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają. Dłuższy pobyt pozwala zebrać więcej łupów przydatnych w dalszej przygodzie.", "Be careful: the longer you stay on the map, the more monsters arrive and the stronger they become. Staying longer lets you gather more loot for the rest of your adventure.", "Attention : plus tu restes longtemps sur la carte, plus les monstres arrivent nombreux et deviennent puissants. En restant, tu peux récupérer davantage de butin pour la suite de l’aventure.", "Ten cuidado: cuanto más tiempo permanezcas en el mapa, más monstruos llegarán y más fuertes serán. Si te quedas, podrás reunir más botín para el resto de la aventura.", "Attenzione: più a lungo resti sulla mappa, più mostri arriveranno e più diventeranno forti. Restando più a lungo potrai raccogliere più bottino per il resto dell’avventura.", "Vorsicht: Je länger du auf der Karte bleibst, desto mehr Monster kommen und desto stärker werden sie. Bei längerem Aufenthalt kannst du mehr Beute für dein weiteres Abenteuer sammeln.", "Осторожно: чем дольше ты остаёшься на карте, тем больше и сильнее становится монстров. Зато за это время можно собрать больше добычи для дальнейшего приключения.");
+        Add(result, "Poprzednia", "Previous", "Précédent", "Anterior", "Indietro", "Zurück", "Назад");
+        Add(result, "Dalej", "Next", "Suivant", "Siguiente", "Avanti", "Weiter", "Далее");
+        Add(result, "Wstecz", "Back", "Retour", "Atrás", "Indietro", "Zurück", "Назад");
+        Add(result, "Następny", "Next", "Suivant", "Siguiente", "Successivo", "Weiter", "Далее");
+        Add(result, "Zamknij", "Close", "Fermer", "Cerrar", "Chiudi", "Schließen", "Закрыть");
+        Add(result, "Rozpocznij", "Begin", "Commencer", "Comenzar", "Inizia", "Beginnen", "Начать");
         Add(result, "Powrót do menu głównego", "Go to main menu", "Retour au menu principal", "Volver al menú principal", "Torna al menu principale", "Zurück zum Hauptmenü", "Вернуться в главное меню");
         Add(result, "Opcja A", "Option A", "Option A", "Opción A", "Opzione A", "Option A", "Вариант A");
         Add(result, "Nowy tekst", "New Text", "Nouveau texte", "Texto nuevo", "Nuovo testo", "Neuer Text", "Новый текст");
@@ -349,12 +467,41 @@ public sealed class LocalizationManager : MonoBehaviour
         return result;
     }
 
+    private static Dictionary<string, string[]> BuildTutorialTranslations()
+    {
+        var result = new Dictionary<string, string[]>(System.StringComparer.Ordinal);
+        AddTutorial(result, "start_map_aulla_crystals.title", "Wiedza Aulli", "Aulla's Knowledge", "Le savoir d'Aulla", "El conocimiento de Aulla", "La conoscenza di Aulla", "Aullas Wissen", "Знания Ауллы");
+
+        AddTutorial(result, "start_map_aulla_crystals.find_crystals.instructions", "Znajdź trzy kryształy Aulli.", "Find the three Aulla crystals.", "Trouve les trois cristaux d'Aulla.", "Encuentra los tres cristales de Aulla.", "Trova i tre cristalli di Aulla.", "Finde die drei Aulla-Kristalle.", "Найди три кристалла Ауллы.");
+        AddTutorial(result, "start_map_aulla_crystals.find_crystals.hint", "Niebieskie kropki na mapie wskazują kryształy.", "Blue dots on the map mark the crystals.", "Les points bleus sur la carte indiquent les cristaux.", "Los puntos azules del mapa señalan los cristales.", "I punti blu sulla mappa indicano i cristalli.", "Blaue Punkte auf der Karte markieren die Kristalle.", "Синие точки на карте указывают на кристаллы.");
+
+        AddTutorial(result, "start_map_aulla_crystals.enemies_and_portal.instructions", "Zbierz wszystkie trzy kryształy, aby pojawił się portal. Wejdź do niego, żeby wrócić do wioski.", "Collect all three crystals to reveal the portal. Enter it to return to the village.", "Récupère les trois cristaux pour faire apparaître le portail. Traverse-le pour retourner au village.", "Reúne los tres cristales para abrir el portal. Entra en él para volver a la aldea.", "Raccogli tutti e tre i cristalli per aprire il portale. Entraci per tornare al villaggio.", "Sammle alle drei Kristalle, damit das Portal erscheint. Betritt es, um ins Dorf zurückzukehren.", "Собери все три кристалла, чтобы открыть портал. Войди в него, чтобы вернуться в деревню.");
+        AddTutorial(result, "start_map_aulla_crystals.enemies_and_portal.hint", "Czerwone kropki oznaczają przeciwników.", "Red dots mark enemies.", "Les points rouges indiquent les ennemis.", "Los puntos rojos indican enemigos.", "I punti rossi indicano i nemici.", "Rote Punkte markieren Gegner.", "Красные точки обозначают врагов.");
+
+        AddTutorial(result, "start_map_aulla_crystals.stay_or_loot.instructions", "Uważaj: im dłużej zostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają.", "Be careful: the longer you stay on the map, the more monsters arrive and the stronger they become.", "Attention : plus tu restes longtemps sur la carte, plus les monstres arrivent nombreux et deviennent puissants.", "Ten cuidado: cuanto más tiempo permanezcas en el mapa, más monstruos llegarán y más fuertes serán.", "Attenzione: più a lungo resti sulla mappa, più mostri arriveranno e diventeranno forti.", "Vorsicht: Je länger du auf der Karte bleibst, desto mehr Monster kommen und desto stärker werden sie.", "Осторожно: чем дольше ты остаёшься на карте, тем больше и сильнее становится монстров.");
+        AddTutorial(result, "start_map_aulla_crystals.stay_or_loot.hint", "Zostając dłużej, zdobędziesz więcej łupów na dalszą przygodę.", "Stay longer to gather more loot for your adventure.", "Reste plus longtemps pour récupérer davantage de butin pour la suite de l'aventure.", "Quédate más tiempo para reunir más botín para tu aventura.", "Resta più a lungo per raccogliere più bottino per la tua avventura.", "Bleib länger, um mehr Beute für dein Abenteuer zu sammeln.", "Останься подольше, чтобы собрать больше добычи для приключения.");
+        return result;
+    }
+
+    private static void AddTutorial(Dictionary<string, string[]> map, string key, params string[] values)
+    {
+        map[key] = values;
+    }
+
     private static void Add(Dictionary<string, string[]> map, params string[] values)
     {
         foreach (var value in values)
         {
             if (!string.IsNullOrEmpty(value))
-                map[value] = values;
+                map[NormalizeTranslationKey(value)] = values;
         }
+    }
+
+    private static string NormalizeTranslationKey(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        return string.Join(" ", value.Split((char[])null, System.StringSplitOptions.RemoveEmptyEntries));
     }
 }
