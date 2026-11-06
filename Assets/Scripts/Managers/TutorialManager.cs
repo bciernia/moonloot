@@ -144,7 +144,7 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
         if (_uiManager != null)
             _uiManager.SetPlayerHudVisible(false);
         _modalRoot.SetActive(true);
-        SetLocalized(_titleText, _currentTutorial.Title);
+        SetLocalizedByKey(_titleText, $"{_currentTutorial.Id}.title", _currentTutorial.Title);
         SetLocalized(_previousButtonText, "Wstecz");
         SetLocalized(_nextButtonText, "Następny");
         SetLocalized(_acknowledgeButtonText, "Zamknij");
@@ -170,7 +170,10 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
 
         var page = hasPages ? pages[_currentPageIndex] : null;
         var description = page != null ? page.Description : _currentTutorial.Instructions;
-        if (_instructionsText != null) SetLocalized(_instructionsText, description);
+        var instructionKey = page != null && !string.IsNullOrWhiteSpace(page.StepId)
+            ? $"{_currentTutorial.Id}.{page.StepId}.instructions"
+            : $"{_currentTutorial.Id}.instructions";
+        if (_instructionsText != null) SetLocalizedByKey(_instructionsText, instructionKey, description);
 
         var frames = page != null ? page.AnimationFrames : _currentTutorial.AnimationFrames;
         var fps = page != null ? page.FramesPerSecond : _currentTutorial.FramesPerSecond;
@@ -193,23 +196,24 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
         }
 
         var hasMultiplePages = pageCount > 1;
-        if (_previousButton != null)
-            _previousButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex > 0);
-        if (_nextButton != null)
-            _nextButton.gameObject.SetActive(hasMultiplePages && _currentPageIndex < pageCount - 1);
-        if (_acknowledgeButton != null)
-            _acknowledgeButton.gameObject.SetActive(!hasMultiplePages || _currentPageIndex == pageCount - 1);
+        SetButtonVisible(_previousButton, hasMultiplePages && _currentPageIndex > 0);
+        SetButtonVisible(_nextButton, hasMultiplePages && _currentPageIndex < pageCount - 1);
+        SetButtonVisible(_acknowledgeButton, !hasMultiplePages || _currentPageIndex == pageCount - 1);
         if (_pageCounterText != null)
         {
             _pageCounterText.gameObject.SetActive(hasMultiplePages);
             _pageCounterText.text = hasMultiplePages ? $"{_currentPageIndex + 1} / {pageCount}" : string.Empty;
         }
 
-        var hasActionHint = !string.IsNullOrWhiteSpace(_currentTutorial.ActionHint);
+        var hint = page != null ? page.Hint : _currentTutorial.ActionHint;
+        var hintKey = page != null && !string.IsNullOrWhiteSpace(page.StepId)
+            ? $"{_currentTutorial.Id}.{page.StepId}.hint"
+            : $"{_currentTutorial.Id}.hint";
+        var hasActionHint = !string.IsNullOrWhiteSpace(hint);
         if (_actionHintText != null)
             _actionHintText.gameObject.SetActive(hasActionHint);
         if (hasActionHint && _actionHintText != null)
-            SetLocalized(_actionHintText, _currentTutorial.ActionHint);
+            SetLocalizedByKey(_actionHintText, hintKey, hint);
     }
 
     private IEnumerator PlayAnimation(
@@ -262,6 +266,20 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
 
         _currentPageIndex++;
         DisplayCurrentPage();
+    }
+
+    private static void SetButtonVisible(Button button, bool visible)
+    {
+        if (button == null)
+            return;
+
+        var canvasGroup = button.GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = button.gameObject.AddComponent<CanvasGroup>();
+
+        canvasGroup.alpha = visible ? 1f : 0f;
+        canvasGroup.interactable = visible;
+        canvasGroup.blocksRaycasts = visible;
     }
 
     private void SetCursorAboveModal(bool enabled)
@@ -363,6 +381,14 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
             LocalizationManager.Instance.SetLocalizedText(text, source ?? string.Empty);
         else if (text != null)
             text.text = source ?? string.Empty;
+    }
+
+    private static void SetLocalizedByKey(TMP_Text text, string key, string fallback)
+    {
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.SetTutorialLocalizedText(text, key, fallback);
+        else if (text != null)
+            text.text = fallback ?? string.Empty;
     }
 
     public void Save()

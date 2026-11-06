@@ -18,9 +18,6 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
     private const string TutorialTitle = "Wiedza Aulli";
     private const string StoryText = "Biegłeś nocą przez las w poszukiwaniu schronienia, niestety potwory zdążyły cię dogonić. Znajdź kryształy Aulli, żeby dowiedzieć się, gdzie jest najbliższa wioska.";
     private const string ObjectiveText = "Znajdź trzy kryształy Aulli, aby otworzyć portal.";
-    private const string TutorialPage1 = "Znajdź trzy niebieskie kryształy Aulli. Niebieskie kropki na mapie pokazują, gdzie ich szukać.";
-    private const string TutorialPage2 = "Czerwone kropki oznaczają przeciwników. Po zebraniu wszystkich trzech kryształów pojawi się portal. Wejdź do niego, aby wrócić do wioski.";
-    private const string TutorialPage3 = "Uważaj: im dłużej pozostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają. Dłuższy pobyt pozwala zebrać więcej łupów przydatnych w dalszej przygodzie.";
     private const string TutorialId = "start_map_aulla_crystals";
 
     private static StartMapTutorialBootstrap _instance;
@@ -419,9 +416,9 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
                 showOnce: true,
                 tutorialPages: new List<TutorialPageDefinition>
                 {
-                    new() { Description = TutorialPage1 },
-                    new() { Description = TutorialPage2 },
-                    new() { Description = TutorialPage3 }
+                    new() { StepId = "find_crystals", Description = "Znajdź trzy kryształy Aulli.", Hint = "Niebieskie kropki na mapie wskazują kryształy." },
+                    new() { StepId = "enemies_and_portal", Description = "Zbierz wszystkie trzy kryształy, aby pojawił się portal. Wejdź do niego, żeby wrócić do wioski.", Hint = "Czerwone kropki oznaczają przeciwników." },
+                    new() { StepId = "stay_or_loot", Description = "Uważaj: im dłużej zostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają.", Hint = "Zostając dłużej, zdobędziesz więcej łupów na dalszą przygodę." }
                 });
         }
 

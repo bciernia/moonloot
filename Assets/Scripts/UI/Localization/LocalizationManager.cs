@@ -20,6 +20,7 @@ public sealed class LocalizationManager : MonoBehaviour
     private const string LanguagePreferenceKey = "Moonloot.Language";
     private static LocalizationManager _instance;
     private static readonly Dictionary<string, string[]> Translations = BuildTranslations();
+    private static readonly Dictionary<string, string[]> TutorialTranslations = BuildTutorialTranslations();
 
     private readonly Dictionary<TMP_Text, TextState> _textStates = new();
 
@@ -30,6 +31,7 @@ public sealed class LocalizationManager : MonoBehaviour
     {
         public string Source;
         public string LastApplied;
+        public string[] LanguageOverrides;
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -101,8 +103,34 @@ public sealed class LocalizationManager : MonoBehaviour
         }
 
         state.Source = source ?? string.Empty;
+        state.LanguageOverrides = null;
         state.LastApplied = Translate(state.Source);
         text.text = state.LastApplied;
+    }
+
+    public void SetLocalizedText(TMP_Text text, string source, string[] languageOverrides)
+    {
+        if (text == null)
+            return;
+
+        if (!_textStates.TryGetValue(text, out var state))
+        {
+            state = new TextState();
+            _textStates.Add(text, state);
+        }
+
+        state.Source = source ?? string.Empty;
+        state.LanguageOverrides = languageOverrides;
+        state.LastApplied = GetLocalizedStateText(state);
+        text.text = state.LastApplied;
+    }
+
+    public void SetTutorialLocalizedText(TMP_Text text, string key, string fallback)
+    {
+        if (TutorialTranslations.TryGetValue(key ?? string.Empty, out var values))
+            SetLocalizedText(text, fallback, values);
+        else
+            SetLocalizedText(text, fallback);
     }
 
     public static string GetLanguageName(GameLanguage language)
@@ -126,6 +154,13 @@ public sealed class LocalizationManager : MonoBehaviour
 
         if (Translations.TryGetValue(source, out var values))
             return ValueForLanguage(values, source);
+
+        // ScriptableObject text fields may contain line breaks or repeated spaces
+        // introduced by the Inspector/YAML serialization. Treat those as equivalent.
+        var normalizedSource = NormalizeTranslationKey(source);
+        if (!string.Equals(normalizedSource, source, System.StringComparison.Ordinal) &&
+            Translations.TryGetValue(normalizedSource, out values))
+            return ValueForLanguage(values, normalizedSource);
 
         var progressLabelSeparator = source.LastIndexOf(": ", System.StringComparison.Ordinal);
         if (progressLabelSeparator >= 0)
@@ -252,10 +287,22 @@ public sealed class LocalizationManager : MonoBehaviour
                 state.Source = text.text;
             }
 
-            state.LastApplied = Translate(state.Source);
+            state.LastApplied = GetLocalizedStateText(state);
             if (text.text != state.LastApplied)
                 text.text = state.LastApplied;
         }
+    }
+
+    private string GetLocalizedStateText(TextState state)
+    {
+        if (state.LanguageOverrides != null && (int)CurrentLanguage < state.LanguageOverrides.Length)
+        {
+            var localized = state.LanguageOverrides[(int)CurrentLanguage];
+            if (!string.IsNullOrWhiteSpace(localized))
+                return localized;
+        }
+
+        return Translate(state.Source);
     }
 
     private static bool IsInsideDropdown(Transform current)
@@ -420,12 +467,41 @@ public sealed class LocalizationManager : MonoBehaviour
         return result;
     }
 
+    private static Dictionary<string, string[]> BuildTutorialTranslations()
+    {
+        var result = new Dictionary<string, string[]>(System.StringComparer.Ordinal);
+        AddTutorial(result, "start_map_aulla_crystals.title", "Wiedza Aulli", "Aulla's Knowledge", "Le savoir d'Aulla", "El conocimiento de Aulla", "La conoscenza di Aulla", "Aullas Wissen", "Знания Ауллы");
+
+        AddTutorial(result, "start_map_aulla_crystals.find_crystals.instructions", "Znajdź trzy kryształy Aulli.", "Find the three Aulla crystals.", "Trouve les trois cristaux d'Aulla.", "Encuentra los tres cristales de Aulla.", "Trova i tre cristalli di Aulla.", "Finde die drei Aulla-Kristalle.", "Найди три кристалла Ауллы.");
+        AddTutorial(result, "start_map_aulla_crystals.find_crystals.hint", "Niebieskie kropki na mapie wskazują kryształy.", "Blue dots on the map mark the crystals.", "Les points bleus sur la carte indiquent les cristaux.", "Los puntos azules del mapa señalan los cristales.", "I punti blu sulla mappa indicano i cristalli.", "Blaue Punkte auf der Karte markieren die Kristalle.", "Синие точки на карте указывают на кристаллы.");
+
+        AddTutorial(result, "start_map_aulla_crystals.enemies_and_portal.instructions", "Zbierz wszystkie trzy kryształy, aby pojawił się portal. Wejdź do niego, żeby wrócić do wioski.", "Collect all three crystals to reveal the portal. Enter it to return to the village.", "Récupère les trois cristaux pour faire apparaître le portail. Traverse-le pour retourner au village.", "Reúne los tres cristales para abrir el portal. Entra en él para volver a la aldea.", "Raccogli tutti e tre i cristalli per aprire il portale. Entraci per tornare al villaggio.", "Sammle alle drei Kristalle, damit das Portal erscheint. Betritt es, um ins Dorf zurückzukehren.", "Собери все три кристалла, чтобы открыть портал. Войди в него, чтобы вернуться в деревню.");
+        AddTutorial(result, "start_map_aulla_crystals.enemies_and_portal.hint", "Czerwone kropki oznaczają przeciwników.", "Red dots mark enemies.", "Les points rouges indiquent les ennemis.", "Los puntos rojos indican enemigos.", "I punti rossi indicano i nemici.", "Rote Punkte markieren Gegner.", "Красные точки обозначают врагов.");
+
+        AddTutorial(result, "start_map_aulla_crystals.stay_or_loot.instructions", "Uważaj: im dłużej zostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają.", "Be careful: the longer you stay on the map, the more monsters arrive and the stronger they become.", "Attention : plus tu restes longtemps sur la carte, plus les monstres arrivent nombreux et deviennent puissants.", "Ten cuidado: cuanto más tiempo permanezcas en el mapa, más monstruos llegarán y más fuertes serán.", "Attenzione: più a lungo resti sulla mappa, più mostri arriveranno e diventeranno forti.", "Vorsicht: Je länger du auf der Karte bleibst, desto mehr Monster kommen und desto stärker werden sie.", "Осторожно: чем дольше ты остаёшься на карте, тем больше и сильнее становится монстров.");
+        AddTutorial(result, "start_map_aulla_crystals.stay_or_loot.hint", "Zostając dłużej, zdobędziesz więcej łupów na dalszą przygodę.", "Stay longer to gather more loot for your adventure.", "Reste plus longtemps pour récupérer davantage de butin pour la suite de l'aventure.", "Quédate más tiempo para reunir más botín para tu aventura.", "Resta più a lungo per raccogliere più bottino per la tua avventura.", "Bleib länger, um mehr Beute für dein Abenteuer zu sammeln.", "Останься подольше, чтобы собрать больше добычи для приключения.");
+        return result;
+    }
+
+    private static void AddTutorial(Dictionary<string, string[]> map, string key, params string[] values)
+    {
+        map[key] = values;
+    }
+
     private static void Add(Dictionary<string, string[]> map, params string[] values)
     {
         foreach (var value in values)
         {
             if (!string.IsNullOrEmpty(value))
-                map[value] = values;
+                map[NormalizeTranslationKey(value)] = values;
         }
+    }
+
+    private static string NormalizeTranslationKey(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return string.Empty;
+
+        return string.Join(" ", value.Split((char[])null, System.StringSplitOptions.RemoveEmptyEntries));
     }
 }

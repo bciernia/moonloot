@@ -4,7 +4,10 @@ using UnityEngine;
 [System.Serializable]
 public sealed class TutorialPageDefinition
 {
+    [Tooltip("Stable localization key segment used with the tutorial ID.")]
+    public string StepId;
     [TextArea(3, 10)] public string Description;
+    [TextArea(1, 3)] public string Hint;
     public Sprite Illustration;
     public Sprite[] AnimationFrames;
     [Min(1f)] public float FramesPerSecond = 6f;
@@ -48,6 +51,7 @@ public sealed class TutorialDefinitionSO : ScriptableObject
     public bool LoopAnimation => loopAnimation;
     public TutorialConditionSO Condition => condition;
     public IReadOnlyList<TutorialPageDefinition> Pages => pages;
+
 
     public void ConfigureRuntime(
         string id,
