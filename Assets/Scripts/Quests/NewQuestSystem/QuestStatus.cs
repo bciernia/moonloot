@@ -137,9 +137,7 @@ public class QuestStatus
             var objective = objectives[i];
             if (objective.type == QuestObjectiveType.CompleteMap)
             {
-                summary.Append(string.IsNullOrWhiteSpace(objective.sceneName)
-                    ? "Complete the map"
-                    : $"Complete {objective.sceneName.Trim()}");
+                summary.Append(quest.GetObjectiveShortText(i));
                 continue;
             }
 
@@ -151,9 +149,9 @@ public class QuestStatus
         }
 
         if (IsQuestCompleted)
-            summary.AppendLine("Completed");
+            summary.AppendLine(Localize("Completed"));
         else if (AreObjectivesComplete && !string.IsNullOrWhiteSpace(_giverName))
-            summary.AppendLine($"Return to {_giverName}");
+            summary.AppendLine(string.Format(Localize("Return to {0}"), _giverName));
 
         return summary.ToString().TrimEnd();
     }
@@ -183,4 +181,7 @@ public class QuestStatus
     }
 
     public List<string> GetQuestEntries => _questEntries;
+
+    private static string Localize(string text) =>
+        LocalizationManager.Instance != null ? LocalizationManager.Instance.Translate(text) : text;
 }

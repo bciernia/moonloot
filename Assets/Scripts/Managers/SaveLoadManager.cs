@@ -39,6 +39,9 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         ES3SlotManager.selectedSlotPath =
             slot.GetSlotPath();
 
+        if (TutorialManager.Instance != null)
+            TutorialManager.Instance.InitializeForNewSave();
+
         // ES3.DeleteFile(
             // ES3SlotManager.selectedSlotPath);
 
@@ -113,6 +116,9 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         }
 
         var sceneName = ES3.Load<string>("SceneName", settings);
+
+        if (TutorialManager.Instance != null)
+            TutorialManager.Instance.BeginLoadingSeenTutorials();
 
         await LoadingSceneManager.Instance.LoadScene(
             sceneName,

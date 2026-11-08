@@ -56,19 +56,22 @@ public class QuestSO : IdentifiableSO
         public string sceneName;
     }
     
-    public string GetQuestTitle() => _name ?? name;
+    private static string Localize(string text) =>
+        LocalizationManager.Instance != null ? LocalizationManager.Instance.Translate(text) : text;
 
-    public string GetQuestDescription() => _description ?? string.Empty;
+    public string GetQuestTitle() => Localize(_name ?? name);
 
-    public string GetStoryDescription() => _storyDescription ?? string.Empty;
+    public string GetQuestDescription() => Localize(_description ?? string.Empty);
+
+    public string GetStoryDescription() => Localize(_storyDescription ?? string.Empty);
 
     public string GetActiveQuestDialogue()
     {
         if (!string.IsNullOrWhiteSpace(_activeQuestDialogue))
-            return _activeQuestDialogue.Trim();
+            return Localize(_activeQuestDialogue.Trim());
 
         if (!string.IsNullOrWhiteSpace(_storyDescription))
-            return _storyDescription.Trim();
+            return GetStoryDescription().Trim();
 
         return GetQuestDescription();
     }
@@ -76,9 +79,13 @@ public class QuestSO : IdentifiableSO
     public string GetTurnInDialogue()
     {
         if (!string.IsNullOrWhiteSpace(_turnInDialogue))
-            return _turnInDialogue.Trim();
+            return Localize(_turnInDialogue.Trim());
 
-        return $"Thank you for completing {GetQuestTitle()}. Your help means a great deal to me.";
+        var fallback = "Thank you for completing {0}. Your help means a great deal to me.";
+        var localized = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(fallback)
+            : fallback;
+        return string.Format(localized, GetQuestTitle());
     }
 
     public string GetRandomCompletedDialogueLine()
@@ -88,19 +95,23 @@ public class QuestSO : IdentifiableSO
             var usableLines = _completedQuestDialogueLines
                 .FindAll(line => !string.IsNullOrWhiteSpace(line));
             if (usableLines.Count > 0)
-                return usableLines[UnityEngine.Random.Range(0, usableLines.Count)].Trim();
+                return Localize(usableLines[UnityEngine.Random.Range(0, usableLines.Count)].Trim());
         }
 
         var questTitle = GetQuestTitle();
         var fallbackLines = new[]
         {
-            $"I still remember how you helped me with {questTitle}. Thank you.",
-            $"People are still talking about what you did for {questTitle}.",
-            $"I couldn't have finished {questTitle} without you.",
-            $"Things are much better now that {questTitle} is behind us. Thanks again."
+            "I still remember how you helped me with {0}. Thank you.",
+            "People are still talking about what you did for {0}.",
+            "I couldn't have finished {0} without you.",
+            "Things are much better now that {0} is behind us. Thanks again."
         };
 
-        return fallbackLines[UnityEngine.Random.Range(0, fallbackLines.Length)];
+        var fallbackLine = fallbackLines[UnityEngine.Random.Range(0, fallbackLines.Length)];
+        var localizedLine = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(fallbackLine)
+            : fallbackLine;
+        return string.Format(localizedLine, questTitle);
     }
 
     public IEnumerable<Reward> GetRewards() => _rewards;
@@ -120,16 +131,16 @@ public class QuestSO : IdentifiableSO
 
         var objective = _objectives[index];
         if (!string.IsNullOrWhiteSpace(objective.shortText))
-            return objective.shortText.Trim();
+            return Localize(objective.shortText.Trim());
 
         switch (objective.type)
         {
             case QuestObjectiveType.KillEnemy:
-                return $"Kill {GetEnemyName(objective.enemyType)}";
+                return Localize($"Kill {GetEnemyName(objective.enemyType)}");
             case QuestObjectiveType.CollectItem:
-                return $"Find {GetItemName(objective.item)}";
+                return Localize($"Find {GetItemName(objective.item)}");
             case QuestObjectiveType.CompleteMap:
-                return $"Complete {objective.sceneName}";
+                return Localize($"Complete {objective.sceneName}");
             default:
                 return "Objective";
         }
@@ -174,5 +185,5 @@ public class QuestSO : IdentifiableSO
 
     public Guid guid { get; }
 
-    public string GetQuestStory() => _storyDescription;
+    public string GetQuestStory() => GetStoryDescription();
 }
