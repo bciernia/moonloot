@@ -25,6 +25,9 @@ public class NPCHero : VillageNpcData
     [Tooltip("Weapon equipped when this hero starts a new game.")]
     public WeaponItemSO StartingWeapon;
 
+    [Tooltip("Optional profession skill unlocked and placed in the second skill slot when starting a new game as this hero.")]
+    public Skill StartingProfessionSkill;
+
     [TextArea(2,4)]
     public string MenuDescription;
 
@@ -32,4 +35,6 @@ public class NPCHero : VillageNpcData
     [Tooltip("Optional pool of lines used when this hero enters START_MAP. Leave empty to use the built-in class-specific lines.")]
     [TextArea(2, 3)]
     public List<string> StartRunQuotes = new();
+
+    public Sprite LargePortrait;
 }

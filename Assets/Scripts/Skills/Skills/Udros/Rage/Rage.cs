@@ -45,8 +45,10 @@ public class Rage : Skill
     public override string GetDescription()
     {
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+        var damageMultiplier = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.DamageMultiplier, DmgMultiplier);
+        var damageBonus = (damageMultiplier - 1f) * 100f;
 
         return
-            $"Pain feeds your strength.\nFor {duration} seconds, your damage is increased by 50%, as your blows strike with unrestrained fury.";
+            $"Turn pain into a weapon.\n\nPay {HealthCost:0.#} Health to increase your damage by {damageBonus:0.#}% for {duration:0.#} seconds. This true-damage cost cannot be reduced, and you need more than {HealthCost:0.#} Health to unleash the fury.";
     }
 }

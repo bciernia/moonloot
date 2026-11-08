@@ -32,13 +32,13 @@ public class UISkillBtn : MonoBehaviour
         var unlocked = PlayerSkillManager.Instance.IsUnlocked(Skill);
 
         if (_button != null)
-            _button.interactable = unlocked;
+            _button.interactable = true;
 
         if (Image != null)
         {
             Image.color = unlocked
                 ? Color.white
-                : new Color(1f, 1f, 1f, 0.3f);
+                : new Color(1f, 1f, 1f, 0.5f);
         }
     }
 }

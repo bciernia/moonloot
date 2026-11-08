@@ -25,9 +25,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     [Header("Enemies")]
     [SerializeField] private GameObject corruptedVillager;
-    
+
+    [Header("Tutorial map")]
+    [SerializeField] private EnemyPoolSO tutorialEnemyPool;
+
     private EnemyPoolSO CurrentEnemyPool =>
-        CurrentNightLocation.EnemyPool;
+        _tutorialRun && tutorialEnemyPool != null
+            ? tutorialEnemyPool
+            : CurrentNightLocation != null
+                ? CurrentNightLocation.EnemyPool
+                : null;
     
     [SerializeField] private HordeConfigSO hordeConfig;
     private string _previousScene;
@@ -758,13 +765,19 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
         var availableLocations = normalLocations != null
             ? normalLocations
                 .Where(location => location != null && !location.IsBossArena &&
-                                   location.EnemyPool != null && location.ItemPool != null)
+                                   location.ItemPool != null)
                 .ToList()
             : new List<NightLocationSO>();
 
         if (availableLocations.Count == 0)
         {
-            Debug.LogError("Tutorial map needs at least one normal night with an enemy pool.");
+            Debug.LogError("Tutorial map needs at least one normal night with an item pool.");
+            return;
+        }
+
+        if (tutorialEnemyPool == null)
+        {
+            Debug.LogError("Assign EnemyPool_Forest to HordeManager's Tutorial Map > Tutorial Enemy Pool field.");
             return;
         }
 
@@ -2515,10 +2528,9 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public void SpawnEnemyFromBoss(Vector3 position)
     {
-        if (CurrentNightLocation == null)
+        var pool = CurrentEnemyPool;
+        if (pool == null)
             return;
-
-        var pool = CurrentNightLocation.EnemyPool;
 
         if (pool == null || pool.NormalEnemies == null || pool.NormalEnemies.Count == 0)
         {
@@ -2543,10 +2555,11 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
     public void SpawnBossElite(Vector3 position)
     {
-        if (CurrentNightLocation == null)
+        var enemyPool = CurrentEnemyPool;
+        if (enemyPool == null)
             return;
 
-        var pool = CurrentNightLocation.EnemyPool.EliteEnemies;
+        var pool = enemyPool.EliteEnemies;
 
         if (pool == null)
             return;

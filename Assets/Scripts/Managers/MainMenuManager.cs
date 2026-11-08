@@ -206,7 +206,7 @@ public class MainMenuManager : MonoBehaviour
         foreach (var card in _characterCardsContainer.GetComponentsInChildren<CharacterMenuUI>(true))
             card.SetSelected(card == selectedCard);
 
-        ShowCharacterPreview(hero, selectedCard);
+        ShowCharacterPreview(hero);
     }
 
     private void SelectDefaultCharacter()
@@ -224,7 +224,7 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    private void ShowCharacterPreview(NPCHero hero, CharacterMenuUI selectedCard)
+    private void ShowCharacterPreview(NPCHero hero)
     {
         if (_characterPreviewObject == null)
         {
@@ -303,8 +303,6 @@ public class MainMenuManager : MonoBehaviour
         var bounds = visibleRenderers[0].bounds;
         for (var i = 1; i < visibleRenderers.Count; i++)
             bounds.Encapsulate(visibleRenderers[i].bounds);
-
-        selectedCard.SetPortrait(visibleRenderers[0].sprite);
 
         var center = bounds.center;
         _characterPreviewCamera.transform.position = center + Vector3.back * 20f;

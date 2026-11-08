@@ -29,6 +29,7 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     public float buttonsMoveDistance = 500f;
     [Header("Character selection")]
     public Vector3 characterSelectionTitleOffset = new(0, 2, 0);
+    [SerializeField, Min(0.01f)] private float characterSelectionTitleMoveDuration = 0.9f;
 
 
     private Vector3 cameraStartPos;
@@ -115,10 +116,11 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     IEnumerator MoveCharacterSelectionTitle(Vector3 targetPosition)
     {
         var startPosition = title.position;
+        var duration = Mathf.Max(0.01f, characterSelectionTitleMoveDuration);
         var elapsed = 0f;
-        while (elapsed < moveDuration)
+        while (elapsed < duration)
         {
-            var lerp = SmoothStep(elapsed / moveDuration);
+            var lerp = SmoothStep(elapsed / duration);
             title.position = Vector3.Lerp(startPosition, targetPosition, lerp);
             elapsed += Time.unscaledDeltaTime;
             yield return null;

@@ -275,7 +275,9 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.MaxStamina = data.maxStamina;
 
         _playerStats.Exp = data.exp;
-        _playerStats.NextLevelExp = data.nextLevelExp;
+        _playerStats.NextLevelExp = data.level <= 1
+            ? Mathf.Max(data.nextLevelExp, _playerStats.InitialNextLevelExp)
+            : data.nextLevelExp;
 
         _playerStats.BaseDamage = data.baseDamage;
         _playerStats.TotalDamage = data.totalDamage;

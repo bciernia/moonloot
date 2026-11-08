@@ -50,8 +50,15 @@ public class FierySalvo : Skill
     public override string GetDescription()
     {
         var skillDuration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, duration);
+        var projectileCount = interval > 0f ? Mathf.CeilToInt(skillDuration / interval) : 0;
+        var extraTargetsPerProjectile = _projectileSo != null && _projectileSo.ProjectileSo != null && _projectileSo.ProjectileSo.CanBounce
+            ? _projectileSo.ProjectileSo.BounceNumber
+            : 0;
+        var burnChance = _projectileSo != null && _projectileSo.ProjectileSo != null && _projectileSo.ProjectileSo.Effect != null
+            ? _projectileSo.ProjectileSo.EffectChance
+            : 0;
         
         return
-            $"Udros ignites your wrath.\nYou unleash a barrage of fireballs, one each second, culminating in a devastating fivefold inferno. Let the battlefield burn for {skillDuration} seconds.";
+            $"Udros unleashes a storm of fire through your weapon.\n\nFire {projectileCount} projectiles over {skillDuration:0.#} seconds. Each deals damage based on your current attack, can ricochet to {extraTargetsPerProjectile} additional foes, and has a {burnChance}% chance to inflict its burning effect.";
     }
 }

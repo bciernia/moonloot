@@ -59,7 +59,9 @@ public class FrenzyUnbound : Skill
     public override string GetDescription()
     {
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
+        var cooldownMultiplier = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Cooldown, AttackCooldownMultiplier);
+        var cooldownReduction = (1f - cooldownMultiplier) * 100f;
         
-        return $"Sacrifice health to unleash a furious battle trance, reducing attack cooldown for a {duration} seconds.";
+        return $"Enter Udros’s battle trance at a cost of {HealthCost:0.#} Health.\n\nReduce the time between your attacks by {cooldownReduction:0.#}% for {duration:0.#} seconds, letting you press the advantage before the trance fades.";
     }
 }

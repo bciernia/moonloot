@@ -78,8 +78,15 @@ public class AuraOfKnowledge : Skill
                 SkillStatType.Duration,
                 showCooldownDuration
             );
+
+        var radius =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Radius,
+                Radius
+            );
         
         return
-            $"You pierce the illusion of time itself.\nUp to {targetCount} enemies within range are marked with prophetic sigils, revealing the exact moment of their next strike for {duration} seconds.\n\nKnowledge is not power — it is survival.";
+            $"Aulla lets you read the rhythm of the hunt.\n\nReveal the attack cooldowns of up to {targetCount:0} nearby enemies within a radius of {radius:0.#} units for {duration:0.#} seconds. Knowledge is your warning before the next strike.";
     }
 }

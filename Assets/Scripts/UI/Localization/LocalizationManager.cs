@@ -384,6 +384,9 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Graj", "Play", "Jouer", "Jugar", "Gioca", "Spielen", "Играть");
         Add(result, "Wczytaj", "Load", "Charger", "Cargar", "Carica", "Laden", "Загрузить");
         Add(result, "Opcje", "Options", "Options", "Opciones", "Opzioni", "Optionen", "Настройки");
+        Add(result, "KUP ({0} kryształów Aulli)", "BUY ({0} Aulla Crystals)", "ACHETER ({0} cristaux d’Aulla)", "COMPRAR ({0} cristales de Aulla)", "ACQUISTA ({0} cristalli di Aulla)", "KAUFEN ({0} Aulla-Kristalle)", "КУПИТЬ ({0} кристаллов Ауллы)");
+        Add(result, "Nie masz wystarczającej liczby kryształów Aulli.", "You don't have enough Aulla Crystals.", "Vous n’avez pas assez de cristaux d’Aulla.", "No tienes suficientes cristales de Aulla.", "Non hai abbastanza cristalli di Aulla.", "Du hast nicht genug Aulla-Kristalle.", "Недостаточно кристаллов Ауллы.");
+        Add(result, "Odblokowano umiejętność", "Skill unlocked", "Compétence débloquée", "Habilidad desbloqueada", "Abilità sbloccata", "Fertigkeit freigeschaltet", "Навык разблокирован");
         Add(result, "Twórcy", "Credits", "Crédits", "Créditos", "Crediti", "Mitwirkende", "Авторы");
         Add(result, "Wyjście", "Exit", "Quitter", "Salir", "Esci", "Beenden", "Выход");
         Add(result, "Wyjdź z gry", "Exit game", "Quitter le jeu", "Salir del juego", "Esci dal gioco", "Spiel beenden", "Выйти из игры");

@@ -9,19 +9,45 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
-/// Shows the START_MAP story card and starts its fixed Aulla objective.
-/// It creates its UI at runtime so no extra scene references are required.
+/// Shows the START_MAP story card using the existing PlayerUI/StartPanel.
+/// The panel's button starts the entrance sequence and Aulla objective.
 /// </summary>
 public sealed class StartMapTutorialBootstrap : MonoBehaviour
 {
     private const string TutorialSceneName = "START_MAP";
     private const string TutorialTitle = "Wiedza Aulli";
-    private const string StoryText = "Biegłeś nocą przez las w poszukiwaniu schronienia, niestety potwory zdążyły cię dogonić. Znajdź kryształy Aulli, żeby dowiedzieć się, gdzie jest najbliższa wioska.";
-    private const string ObjectiveText = "Znajdź trzy kryształy Aulli, aby otworzyć portal.";
     private const string TutorialId = "start_map_aulla_crystals";
+    private static readonly string[][] IntroStoryPages =
+    {
+        new[]
+        {
+            "<size=125%><b><color=#E8B85A>ŚWIATŁO ZA PLECAMI</color></b></size>\n\nBiegłeś przez nocny las, nie oglądając się za siebie. Za tobą gasły ostatnie światła, a ścieżka urywała się wśród czarnych drzew.",
+            "<size=125%><b><color=#E8B85A>THE LIGHTS BEHIND YOU</color></b></size>\n\nYou ran through the forest night without looking back. The last lights faded behind you, and the trail vanished among the dark trees.",
+            "<size=125%><b><color=#E8B85A>LES LUEURS DERRIÈRE TOI</color></b></size>\n\nTu courais dans la forêt, sans regarder derrière toi. Les dernières lumières s’éteignaient et le sentier disparaissait parmi les arbres noirs.",
+            "<size=125%><b><color=#E8B85A>LAS LUCES A TU ESPALDA</color></b></size>\n\nCorrías por el bosque nocturno sin mirar atrás. Las últimas luces se apagaron y el sendero desapareció entre los árboles oscuros.",
+            "<size=125%><b><color=#E8B85A>LE LUCI ALLE TUE SPALLE</color></b></size>\n\nCorrevi nella foresta notturna senza voltarti. Le ultime luci si spensero e il sentiero svanì tra gli alberi scuri.",
+            "<size=125%><b><color=#E8B85A>DIE LICHTER HINTER DIR</color></b></size>\n\nDu ranntest durch den nächtlichen Wald, ohne zurückzublicken. Die letzten Lichter erloschen, und der Pfad verlor sich zwischen dunklen Bäumen.",
+            "<size=125%><b><color=#E8B85A>ОГНИ ПОЗАДИ</color></b></size>\n\nТы бежал сквозь ночной лес, не оглядываясь. Последние огни погасли, а тропа затерялась среди тёмных деревьев."
+        },
+        new[]
+        {
+            "Potwory dopadły cię, zanim znalazłeś schronienie. W mroku migoczą niebieskie kryształy Aulli. Zbierz trzy — ich blask wskaże drogę do najbliższej wioski.",
+            "The monsters caught you before you found shelter. Blue Aulla crystals shimmer in the darkness. Gather three—their light will reveal the way to the nearest village.",
+            "Les monstres t’ont rattrapé avant que tu trouves un refuge. Des cristaux bleus d’Aulla brillent dans l’obscurité. Récupères-en trois : leur lueur montrera le chemin du village le plus proche.",
+            "Los monstruos te alcanzaron antes de que encontraras refugio. En la oscuridad brillan cristales azules de Aulla. Reúne tres: su luz señalará el camino a la aldea más cercana.",
+            "I mostri ti hanno raggiunto prima che trovassi riparo. Nell’oscurità brillano i cristalli blu di Aulla. Raccogline tre: la loro luce indicherà la strada per il villaggio più vicino.",
+            "Die Monster holten dich ein, bevor du Schutz fandest. Blaue Aulla-Kristalle schimmern in der Dunkelheit. Sammle drei – ihr Licht weist dir den Weg zum nächsten Dorf.",
+            "Монстры настигли тебя прежде, чем ты нашёл укрытие. Во тьме мерцают синие кристаллы Ауллы. Собери три — их свет укажет путь к ближайшей деревне."
+        }
+    };
 
     private static StartMapTutorialBootstrap _instance;
-    private GameObject _introCanvas;
+    private GameObject _startPanel;
+    private TMP_Text _startStoryText;
+    private TMP_Text _secondStartStoryText;
+    private TMP_Text _startButtonText;
+    private Button _startButton;
+    private Coroutine _storySequence;
     private Canvas _cursorCanvas;
     private Graphic _cursorGraphic;
     private CursorUI _introCursor;
@@ -111,79 +137,73 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
     {
         DestroyIntro();
 
-        var canvasObject = new GameObject(
-            "StartMapTutorialIntro",
-            typeof(RectTransform),
-            typeof(Canvas),
-            typeof(CanvasScaler),
-            typeof(GraphicRaycaster));
-        _introCanvas = canvasObject;
-        canvasObject.transform.SetParent(transform, false);
+        _startPanel = FindLoadedStartPanel();
+        if (_startPanel == null)
+        {
+            Debug.LogError("StartMapTutorialBootstrap: could not find the existing StartPanel in the loaded UI.");
+            return;
+        }
 
-        var canvas = canvasObject.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-        canvas.sortingOrder = 32766;
+        _startButton = _startPanel.GetComponentInChildren<Button>(true);
+        var textElements = _startPanel.GetComponentsInChildren<TMP_Text>(true);
+        var storyTextCount = 0;
+        foreach (var text in textElements)
+        {
+            if (text == null)
+                continue;
 
-        var scaler = canvasObject.GetComponent<CanvasScaler>();
-        scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-        scaler.referenceResolution = new Vector2(1920f, 1080f);
-        scaler.matchWidthOrHeight = 0.5f;
+            if (_startButton != null && text.transform.IsChildOf(_startButton.transform))
+            {
+                if (_startButtonText == null)
+                    _startButtonText = text;
+                continue;
+            }
 
-        var dimmer = CreateImage("Dimmer", canvasObject.transform,
-            Color.black);
-        SetStretch(dimmer.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            // StartPanel also contains an old score label; it is not the second story field.
+            if (string.Equals(text.gameObject.name, "Score", StringComparison.OrdinalIgnoreCase))
+                continue;
 
-        var panel = CreateImage("StoryPanel", canvasObject.transform,
-            Color.black);
-        SetStretch(panel.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            if (storyTextCount == 0)
+                _startStoryText = text;
+            else if (storyTextCount == 1)
+                _secondStartStoryText = text;
 
-        var title = CreateText("Title", panel.transform, TutorialTitle, 54f, FontStyles.Bold);
-        SetAnchors(title.rectTransform, new Vector2(0.06f, 0.78f), new Vector2(0.94f, 0.97f));
-        title.alignment = TextAlignmentOptions.Center;
+            storyTextCount++;
+        }
 
-        var story = CreateText("Story", panel.transform, StoryText, 37f, FontStyles.Normal);
-        SetAnchors(story.rectTransform, new Vector2(0.09f, 0.37f), new Vector2(0.91f, 0.78f));
-        story.alignment = TextAlignmentOptions.Center;
-        story.enableAutoSizing = true;
-        story.fontSizeMin = 27f;
-        story.fontSizeMax = 37f;
+        if (_startStoryText == null || _startButton == null)
+        {
+            Debug.LogError("StartMapTutorialBootstrap: StartPanel needs a TMP story text and a Button.", _startPanel);
+            return;
+        }
 
-        var objective = CreateText("Objective", panel.transform, ObjectiveText, 32f, FontStyles.Bold);
-        SetAnchors(objective.rectTransform, new Vector2(0.08f, 0.22f), new Vector2(0.92f, 0.36f));
-        objective.alignment = TextAlignmentOptions.Center;
-        objective.color = new Color(1f, 0.82f, 0.36f, 1f);
-        objective.enableAutoSizing = true;
-        objective.fontSizeMin = 23f;
-        objective.fontSizeMax = 32f;
+        _startPanel.SetActive(true);
+        _startPanel.transform.SetAsLastSibling();
+        _startStoryText.alignment = TextAlignmentOptions.Center;
+        _startStoryText.enableWordWrapping = true;
+        _startStoryText.enableAutoSizing = true;
+        _startStoryText.fontSizeMin = 21f;
+        _startStoryText.fontSizeMax = 38f;
+        _startStoryText.margin = new Vector4(48f, 32f, 48f, 32f);
+        _startStoryText.color = new Color(0.96f, 0.94f, 0.87f, 1f);
+        if (_secondStartStoryText != null)
+        {
+            _secondStartStoryText.alignment = TextAlignmentOptions.Center;
+            _secondStartStoryText.enableWordWrapping = true;
+            _secondStartStoryText.enableAutoSizing = true;
+            _secondStartStoryText.fontSizeMin = 21f;
+            _secondStartStoryText.fontSizeMax = 38f;
+            _secondStartStoryText.margin = new Vector4(48f, 32f, 48f, 32f);
+            _secondStartStoryText.color = new Color(0.96f, 0.94f, 0.87f, 1f);
+            _secondStartStoryText.text = string.Empty;
+        }
+        if (_startButtonText != null)
+            Localize(_startButtonText, "Rozpocznij");
 
-        var buttonObject = new GameObject(
-            "BeginButton",
-            typeof(RectTransform),
-            typeof(CanvasRenderer),
-            typeof(Image),
-            typeof(Button));
-        buttonObject.transform.SetParent(panel.transform, false);
-        var buttonRect = buttonObject.GetComponent<RectTransform>();
-        buttonRect.anchorMin = new Vector2(0.5f, 0.045f);
-        buttonRect.anchorMax = new Vector2(0.5f, 0.045f);
-        buttonRect.pivot = new Vector2(0.5f, 0.5f);
-        buttonRect.sizeDelta = new Vector2(340f, 82f);
-
-        var buttonImage = buttonObject.GetComponent<Image>();
-        buttonImage.color = new Color(0.77f, 0.42f, 0.13f, 1f);
-        var button = buttonObject.GetComponent<Button>();
-        button.targetGraphic = buttonImage;
-        button.onClick.AddListener(BeginTutorial);
-
-        var buttonLabel = CreateText("Label", buttonObject.transform, "Rozpocznij", 30f, FontStyles.Bold);
-        SetStretch(buttonLabel.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-        buttonLabel.alignment = TextAlignmentOptions.Center;
-        buttonLabel.color = Color.white;
-
-        Localize(title, TutorialTitle);
-        Localize(story, StoryText);
-        Localize(objective, ObjectiveText);
-        Localize(buttonLabel, "Rozpocznij");
+        _startButton.interactable = false;
+        _startButton.gameObject.SetActive(false);
+        _startButton.onClick.RemoveListener(BeginTutorial);
+        _startButton.onClick.AddListener(BeginTutorial);
 
         BringCustomCursorAboveIntro();
 
@@ -200,6 +220,44 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         }
 
         EnsureEventSystem();
+        _storySequence = StartCoroutine(PlayIntroStorySequence());
+    }
+
+    private IEnumerator PlayIntroStorySequence()
+    {
+        for (var pageIndex = 0; pageIndex < IntroStoryPages.Length; pageIndex++)
+        {
+            if (_startPanel == null || !_startPanel.activeInHierarchy)
+                yield break;
+
+            if (pageIndex == 0 || _secondStartStoryText == null)
+                SetLocalizedStoryPage(pageIndex, _startStoryText);
+            else
+                SetLocalizedStoryPage(pageIndex, _secondStartStoryText);
+
+            yield return new WaitForSecondsRealtime(2f);
+        }
+
+        if (_startButton != null)
+        {
+            _startButton.gameObject.SetActive(true);
+            _startButton.interactable = true;
+        }
+
+        _storySequence = null;
+    }
+
+    private void SetLocalizedStoryPage(int pageIndex, TMP_Text target)
+    {
+        if (target == null || pageIndex < 0 || pageIndex >= IntroStoryPages.Length)
+            return;
+
+        var translations = IntroStoryPages[pageIndex];
+        var source = translations[(int)GameLanguage.Polish];
+        if (LocalizationManager.Instance != null)
+            LocalizationManager.Instance.SetLocalizedText(target, source, translations);
+        else
+            target.text = source;
     }
 
     private void BeginTutorial()
@@ -537,7 +595,7 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         var canvases = FindObjectsByType<Canvas>(FindObjectsSortMode.None);
         foreach (var canvas in canvases)
         {
-            if (canvas == null || canvas.gameObject == _introCanvas || canvas == _cursorCanvas)
+            if (canvas == null || canvas == _cursorCanvas)
                 continue;
 
             if (canvas.renderMode == RenderMode.WorldSpace)
@@ -665,16 +723,6 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         _cursorGraphic = null;
     }
 
-    private static Image CreateImage(string objectName, Transform parent, Color color)
-    {
-        var imageObject = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
-        imageObject.transform.SetParent(parent, false);
-        var image = imageObject.GetComponent<Image>();
-        image.color = color;
-        image.raycastTarget = true;
-        return image;
-    }
-
     private static string GetStartQuote(NPCHero hero)
     {
         if (hero == null)
@@ -785,26 +833,6 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
         return null;
     }
 
-    private static TextMeshProUGUI CreateText(
-        string objectName,
-        Transform parent,
-        string source,
-        float fontSize,
-        FontStyles style)
-    {
-        var textObject = new GameObject(objectName, typeof(RectTransform), typeof(CanvasRenderer), typeof(TextMeshProUGUI));
-        textObject.transform.SetParent(parent, false);
-        var text = textObject.GetComponent<TextMeshProUGUI>();
-        text.text = source;
-        text.fontSize = fontSize;
-        text.fontStyle = style;
-        text.color = Color.white;
-        text.enableWordWrapping = true;
-        text.raycastTarget = false;
-        text.margin = new Vector4(12f, 8f, 12f, 8f);
-        return text;
-    }
-
     private static void Localize(TMP_Text text, string source)
     {
         if (LocalizationManager.Instance != null)
@@ -813,33 +841,42 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
             text.text = source;
     }
 
-    private static void SetAnchors(RectTransform rect, Vector2 anchorMin, Vector2 anchorMax)
-    {
-        rect.anchorMin = anchorMin;
-        rect.anchorMax = anchorMax;
-        rect.offsetMin = Vector2.zero;
-        rect.offsetMax = Vector2.zero;
-    }
-
-    private static void SetStretch(
-        RectTransform rect,
-        Vector2 anchorMin,
-        Vector2 anchorMax,
-        Vector2 offsetMin,
-        Vector2 offsetMax)
-    {
-        rect.anchorMin = anchorMin;
-        rect.anchorMax = anchorMax;
-        rect.offsetMin = offsetMin;
-        rect.offsetMax = offsetMax;
-    }
-
     private void DestroyIntro(bool restoreCursor = true)
     {
+        if (_storySequence != null)
+        {
+            StopCoroutine(_storySequence);
+            _storySequence = null;
+        }
+
         if (restoreCursor)
             RestoreCustomCursor();
-        if (_introCanvas != null)
-            Destroy(_introCanvas);
-        _introCanvas = null;
+
+        if (_startButton != null)
+            _startButton.onClick.RemoveListener(BeginTutorial);
+        if (_startPanel != null)
+            _startPanel.SetActive(false);
+
+        _startPanel = null;
+        _startStoryText = null;
+        _secondStartStoryText = null;
+        _startButtonText = null;
+        _startButton = null;
+    }
+
+    private static GameObject FindLoadedStartPanel()
+    {
+        var transforms = Resources.FindObjectsOfTypeAll<Transform>();
+        foreach (var candidate in transforms)
+        {
+            if (candidate == null || candidate.name != "StartPanel")
+                continue;
+
+            var scene = candidate.gameObject.scene;
+            if (scene.IsValid() && scene.isLoaded)
+                return candidate.gameObject;
+        }
+
+        return null;
     }
 }
