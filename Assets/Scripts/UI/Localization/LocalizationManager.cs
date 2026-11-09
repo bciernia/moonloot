@@ -428,6 +428,13 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Zdrowie", "Health", "Santé", "Salud", "Salute", "Gesundheit", "Здоровье");
         Add(result, "Mana", "Mana", "Mana", "Maná", "Mana", "Mana", "Мана");
         Add(result, "Obrażenia", "Damage", "Dégâts", "Daño", "Danni", "Schaden", "Урон");
+        Add(result, "Statystyki", "Statistics", "Statistiques", "Estadísticas", "Statistiche", "Statistiken", "Характеристики");
+        Add(result, "Odporność fizyczna", "Damage resistance", "Résistance physique", "Resistencia física", "Resistenza fisica", "Physischer Widerstand", "Физическое сопротивление");
+        Add(result, "Szybkość ruchu", "Move speed", "Vitesse de déplacement", "Velocidad de movimiento", "Velocità di movimento", "Bewegungsgeschwindigkeit", "Скорость передвижения");
+        Add(result, "Redukcja czasu odnowienia", "Cooldown reduction", "Réduction du temps de recharge", "Reducción del tiempo de recarga", "Riduzione del tempo di recupero", "Abklingzeitverringerung", "Сокращение перезарядки");
+        Add(result, "Redukcja obrażeń", "Damage reduction", "Réduction des dégâts", "Reducción de daño", "Riduzione dei danni", "Schadensreduktion", "Снижение урона");
+        Add(result, "Mnożnik trafienia krytycznego", "Critical attack multiplier", "Multiplicateur de coup critique", "Multiplicador de golpe crítico", "Moltiplicatore del colpo critico", "Kritischer Schadensmultiplikator", "Множитель критического удара");
+        Add(result, "Szansa na trafienie krytyczne", "Critical attack chance", "Chance de coup critique", "Probabilidad de golpe crítico", "Probabilità di colpo critico", "Kritische Trefferchance", "Шанс критического удара");
         Add(result, "Szybkość", "Speed", "Vitesse", "Velocidad", "Velocità", "Geschwindigkeit", "Скорость");
         Add(result, "Atak", "Attack", "Attaque", "Ataque", "Attacco", "Angriff", "Атака");
         Add(result, "Obrona", "Defense", "Défense", "Defensa", "Difesa", "Verteidigung", "Защита");

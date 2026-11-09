@@ -78,14 +78,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log(_playerStats.TotalDamage);
-        }
-    }
-
     private void Attack()
     {
         if (!canAttack || _weapon == null ||
