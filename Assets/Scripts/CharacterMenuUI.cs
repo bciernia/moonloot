@@ -95,7 +95,7 @@ public class CharacterMenuUI : MonoBehaviour
             }
             else
             {
-                characterImage.sprite = hero.Portrait;
+                characterImage.sprite = hero.LargePortrait ?? hero.Portrait;
                 if (characterImage.sprite == null && hero.Character != null)
                 {
                     var spriteRenderer = hero.Character.GetComponentInChildren<SpriteRenderer>();

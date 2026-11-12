@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660478332a5a9fb47a291e77b77cf768, type: 3}
+  m_Name: Tutorial_Upgrade
+  m_EditorClassIdentifier: 
+  tutorialId: tarvern_upgrade_tut
+  showOncePerSave: 1
+  title: "Rozw\xF3j wioski"
+  instructions: "Rozwijaj swoj\u0105 wiosk\u0119, aby odblokowywa\u0107 nowe mo\u017Cliwo\u015Bci.
+    Porozmawiaj z zarz\u0105dc\u0105, wybierz budynek, a nast\u0119pnie kierunek
+    jego rozwoju. Ka\u017Cde ulepszenie pomo\u017Ce Ci lepiej przygotowa\u0107 si\u0119
+    na kolejne noce."
+  actionHint: "Podejd\u017A do zarz\u0105dcy, aby otworzy\u0107 panel rozwoju wioski."
+  illustration: {fileID: 0}
+  animationFrames: []
+  framesPerSecond: 6
+  loopAnimation: 1
+  pages:
+  - StepId: talk_to_manager
+    Description: "Znajdujesz si\u0119 w miejscu, w kt\xF3rym mo\u017Cesz rozwija\u0107
+      swoj\u0105 osad\u0119. Podejd\u017A do zarz\u0105dcy, aby rozpocz\u0105\u0107
+      rozbudow\u0119."
+    Hint: "Porozmawiaj z zarz\u0105dc\u0105."
+    Illustration: {fileID: 6656777990491782475, guid: ee175c39fe9e8f3409d4f81b1070968d, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: choose_room
+    Description: "Wybierz pomieszczenie, kt\xF3re chcesz rozwin\u0105\u0107. Ka\u017Cde
+      z nich oferuje inne mo\u017Cliwo\u015Bci i korzy\u015Bci dla Twojej osady."
+    Hint: "Wybierz pomieszczenie z listy dost\u0119pnych budynk\xF3w."
+    Illustration: {fileID: -6823302843864903724, guid: 1c250ed8b7bf5c74e9d038442f2ab8f2, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: create_rooms
+    Description: "Po wybraniu pomieszczenia mo\u017Cesz je stworzy\u0107, je\u015Bli
+      masz wymagane Lunary, materia\u0142y i pracownik\xF3w."
+    Hint: Wybierz pomieszczenie i kliknij przycisk tworzenia.
+    Illustration: {fileID: 8517870006439156754, guid: 41024181cf9e9b7488110511feee61b5, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: upgrade_rooms
+    Description: "Ulepszaj kupione pomieszczenia, aby odblokowa\u0107 ich dodatkowe
+      mo\u017Cliwo\u015Bci i zdoby\u0107 lepszy ekwipunek."
+    Hint: "Wybierz dost\u0119pne ulepszenie w panelu pomieszczenia."
+    Illustration: {fileID: 7620769085880508751, guid: 4ff13d62e4fac424d8527409e41e61d0, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: visit_room
+    Description: "Po zbudowaniu i ulepszeniu pomieszczenia odwied\u017A je, aby skorzysta\u0107
+      z jego oferty i przygotowa\u0107 ekwipunek na kolejn\u0105 wypraw\u0119."
+    Hint: "Wejd\u017A do pomieszczenia i sprawd\u017A, co mo\u017Cesz zdoby\u0107
+      lub kupi\u0107."
+    Illustration: {fileID: 1373392677170834428, guid: a48d1775cb4822442a303714fab51dfe, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  condition: {fileID: 0}

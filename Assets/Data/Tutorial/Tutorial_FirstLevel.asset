@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 660478332a5a9fb47a291e77b77cf768, type: 3}
+  m_Name: Tutorial_FirstLevel
+  m_EditorClassIdentifier: 
+  tutorialId: start_map_aulla_crystals
+  showOncePerSave: 1
+  title: Wiedza Aulli
+  instructions: "Znajd\u017A trzy kryszta\u0142y Aulli."
+  actionHint: 
+  illustration: {fileID: 0}
+  animationFrames: []
+  framesPerSecond: 6
+  loopAnimation: 1
+  pages:
+  - StepId: find_crystals
+    Description: "Znajd\u017A trzy kryszta\u0142y Aulli."
+    Hint: "Niebieskie kropki na mapie wskazuj\u0105 kryszta\u0142y."
+    Illustration: {fileID: -8868803461578586678, guid: dd69134d61f151e49a6a9651a4e9470e, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: enemies_and_portal
+    Description: "Po wykonaniu celu mapy, lub dotarciu do nieko\u0144cz\u0105cej
+      si\u0119 fali wrog\xF3w, pojawi si\u0119 portal."
+    Hint: "Czerwone kropki oznaczaj\u0105 przeciwnik\xF3w."
+    Illustration: {fileID: -9166084717782916886, guid: 9279a21f20b7ce54c996d1dedecb8a67, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  - StepId: stay_or_loot
+    Description: "Po pojawieniu si\u0119 portalu mo\u017Cesz dalej przeszukiwa\u0107
+      map\u0119, jednak pami\u0119taj \u017Ce przeciwnicy Ci nie odpuszcz\u0105."
+    Hint: "Zostaj\u0105c d\u0142u\u017Cej, zdob\u0119dziesz wi\u0119cej \u0142up\xF3w
+      na dalsz\u0105 przygod\u0119, ale przeciwnicy b\u0119d\u0105 coraz trudniejsi."
+    Illustration: {fileID: 2839294785017435275, guid: a26fb57df42c9dd4b9367984c662855b, type: 3}
+    AnimationFrames: []
+    FramesPerSecond: 6
+    LoopAnimation: 1
+  condition: {fileID: 0}

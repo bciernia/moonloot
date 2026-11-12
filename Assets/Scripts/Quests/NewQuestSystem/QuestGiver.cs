@@ -115,19 +115,30 @@ public class QuestGiver : MonoBehaviour
             return string.Empty;
 
         var status = _questJournal != null ? _questJournal.GetQuestStatus(quest) : null;
+        string dialogue;
         if (status == null ||
             (!string.IsNullOrWhiteSpace(status.GiverID) && status.GiverID != GiverID))
         {
-            return quest.GetQuestStory();
+            dialogue = quest.GetQuestStory();
         }
+        else if (status.IsQuestCompleted)
+            dialogue = quest.GetRandomCompletedDialogueLine();
+        else if (status.IsReadyToTurnIn)
+        {
+            var readyText = "You have completed {0}. Let me give you your reward.";
+            var localizedReadyText = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.Translate(readyText)
+                : readyText;
+            dialogue = string.Format(localizedReadyText, quest.GetQuestTitle());
+        }
+        else
+            dialogue = quest.GetActiveQuestDialogue();
 
-        if (status.IsQuestCompleted)
-            return quest.GetRandomCompletedDialogueLine();
-
-        if (status.IsReadyToTurnIn)
-            return $"You have completed {quest.GetQuestTitle()}. Let me give you your reward.";
-
-        return quest.GetActiveQuestDialogue();
+        // Resolve once more at the dialogue boundary. This covers callers which
+        // retrieve the ScriptableObject text before localization has initialized.
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(dialogue)
+            : dialogue;
     }
 
     public string GetQuestTurnInDialogue(int questIndex = 0)

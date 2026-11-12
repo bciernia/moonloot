@@ -155,6 +155,30 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
         RegisterInputs();
         RefreshSlotUI();
     }
+
+    public void ConfigureStartingSkills(Skill firstSkill, Skill professionSkill)
+    {
+        if (slots == null)
+            slots = new List<ActionSlot>();
+
+        while (slots.Count < slotCount)
+            slots.Add(new ActionSlot());
+
+        _skillRuntime.Clear();
+        _aimingSkillIndex = -1;
+
+        slots[0].type = ActionType.Skill;
+        slots[0].skill = firstSkill;
+        slots[1].type = ActionType.Skill;
+        slots[1].skill = professionSkill;
+
+        if (firstSkill != null)
+            GetRuntime(firstSkill);
+        if (professionSkill != null)
+            GetRuntime(professionSkill);
+
+        RefreshSlotUI();
+    }
     
     private void RegisterInputs()
     {

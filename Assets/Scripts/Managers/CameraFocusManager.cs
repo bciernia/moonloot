@@ -73,11 +73,12 @@ public class CameraFocusManager : Singleton<CameraFocusManager>
 
     private void Update()
     {
-        if (Input.GetKeyDown(_zoomSequenceKey) && _zoomSequenceCoroutine == null)
-            _zoomSequenceCoroutine = StartCoroutine(PlayZoomSequence());
+        // Debug shortcuts kept for later, but disabled during normal gameplay.
+        // if (Input.GetKeyDown(_zoomSequenceKey) && _zoomSequenceCoroutine == null)
+        //     _zoomSequenceCoroutine = StartCoroutine(PlayZoomSequence());
 
-        if (Input.GetKeyDown(_cameraFollowToggleKey))
-            ToggleCameraFollow();
+        // if (Input.GetKeyDown(_cameraFollowToggleKey))
+        //     ToggleCameraFollow();
 
         if (_cameraTarget == null || _currentTarget == null)
         {

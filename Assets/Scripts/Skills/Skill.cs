@@ -12,6 +12,13 @@ public class Skill : IdentifiableSO
     public float HealthCost;
     public float ManaCost;
 
+    [Header("Unlock")]
+    [SerializeField] private ItemSO unlockCurrency;
+    [SerializeField, Min(1)] private int aullaCrystalCost = 5;
+
+    public ItemSO UnlockCurrency => unlockCurrency;
+    public int AullaCrystalCost => Mathf.Max(1, aullaCrystalCost);
+
     public Sprite Icon;
 
     public Effect Effect;

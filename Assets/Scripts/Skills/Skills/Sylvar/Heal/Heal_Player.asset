@@ -14,16 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5390c47d-ff79-4a94-af4c-e4f464d171a1
   Name: Verdant Renewal
-  Description: 'Life answers your call.
-
-    Over 5 seconds, the forest mends your
-    wounds, restoring up to 30 Health.'
-  NpcDescription: "Nature\u2019s blessing flows through your body, restoring lost
-    health with the soothing power of the eternal forest."
+  Description: "Sylvar calls the forest's life back into your wounds.\n\nRestore 4 Health each second for 5 seconds, up to 20 Health in total. The healing arrives over time, so keep clear of danger while it takes hold."
+  NpcDescription: "The forest restores your health gradually over five seconds."
   Cooldown: 10
   ActiveTime: 5
   HealthCost: 0
   ManaCost: 0
+  unlockCurrency: {fileID: 11400000, guid: 5c8a706f3e2e8e54aa9e54127d30f074, type: 2}
+  aullaCrystalCost: 5
   Icon: {fileID: -7348709857896123731, guid: 9a9656be84a059d45ac10a8616dd4f05, type: 3}
   Effect: {fileID: 11400000, guid: 8ab4a1b1dd967294282db7c0c7928e3e, type: 2}
   SFX: {fileID: 0}
@@ -31,4 +29,4 @@ MonoBehaviour:
   Radius: 0
   RangeIndicatorMinColor: {r: 0, g: 0, b: 0, a: 0}
   RangeIndicatorMaxColor: {r: 0, g: 0, b: 0, a: 0}
-  healAmount: 2
+  healAmount: 4

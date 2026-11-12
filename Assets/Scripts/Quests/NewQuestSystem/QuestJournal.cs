@@ -87,7 +87,7 @@ public class QuestJournal : MonoBehaviour, ISaveable
             }
 
             OnQuestTurnedIn?.Invoke(questStatus);
-            ShowQuestNotification($"Quest completed: {quest.GetQuestTitle()}");
+            ShowQuestNotification(Translate("Quest completed: ") + quest.GetQuestTitle());
         }
         
         onUpdate?.Invoke();
@@ -149,7 +149,7 @@ public class QuestJournal : MonoBehaviour, ISaveable
         GiveReward(quest);
         onUpdate?.Invoke();
         OnQuestTurnedIn?.Invoke(status);
-        ShowQuestNotification($"Quest completed: {quest.GetQuestTitle()}");
+        ShowQuestNotification(Translate("Quest completed: ") + quest.GetQuestTitle());
         return true;
     }
 
@@ -212,15 +212,15 @@ public class QuestJournal : MonoBehaviour, ISaveable
                     status.FinishQuest();
                     GiveReward(quest);
                     OnQuestTurnedIn?.Invoke(status);
-                    ShowQuestNotification($"Quest completed: {quest.GetQuestTitle()}");
+                    ShowQuestNotification(Translate("Quest completed: ") + quest.GetQuestTitle());
                 }
                 else
                 {
                     OnQuestReadyToTurnIn?.Invoke(status);
                     var giverText = string.IsNullOrWhiteSpace(status.GiverName)
                         ? string.Empty
-                        : $" Return to {status.GiverName}.";
-                    ShowQuestNotification($"Quest objectives complete: {quest.GetQuestTitle()}.{giverText}");
+                        : " " + Translate("Return to {0}").Replace("{0}", status.GiverName) + ".";
+                    ShowQuestNotification(Translate("Quest objectives complete: ") + quest.GetQuestTitle() + "." + giverText);
                 }
             }
         }
@@ -237,6 +237,9 @@ public class QuestJournal : MonoBehaviour, ISaveable
         if (_questNotificationSound != null && SoundManager.Instance != null)
             SoundManager.Instance.PlaySound(_questNotificationSound);
     }
+
+    private static string Translate(string source) =>
+        LocalizationManager.Instance != null ? LocalizationManager.Instance.Translate(source) : source;
         
     [CanBeNull]
     private QuestStatus GetQuestStatus(string questId)

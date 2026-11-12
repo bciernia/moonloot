@@ -7,14 +7,6 @@ public class CameraShake : MonoBehaviour
     [SerializeField] private float shakeAmount = 0.2f;
     private bool isShaking = false;
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ShakeIt();
-        }
-    }
-
     private IEnumerator Shake()
     {
         if (isShaking) yield return null;

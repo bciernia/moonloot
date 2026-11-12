@@ -27,6 +27,6 @@ public class WolfSpeed : Skill
         var speed = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.SpeedMultiplier, SpeedMultiplier);
 
         return
-            $"The spirit of the hunt flows through you.\nYour movement speed is {speed} times increased for {duration} seconds, as swift and relentless as a prowling wolf.";
+            $"The spirit of the hunt surges through your limbs.\n\nYour movement speed becomes {speed:0.#}× its normal value for {duration:0.#} seconds. Use the burst to escape a closing horde or chase down a fleeing foe.";
     }
 }

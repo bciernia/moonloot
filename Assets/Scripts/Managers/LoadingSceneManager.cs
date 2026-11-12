@@ -162,11 +162,27 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             ?.ResetTemporaryMovementModifiers();
 
         if ((scene.name == "Base_Demo" || scene.name == "START_MAP") &&
-            MainMenuManager.SelectedHeroForNewGame != null &&
-            Player.Instance != null)
+            MainMenuManager.SelectedHeroForNewGame != null)
         {
             var selectedHero = MainMenuManager.SelectedHeroForNewGame;
-            OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
+            if (Player.Instance != null)
+                OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
+            else
+                Debug.LogWarning("Selected hero setup: Player is missing while loading the new game scene.");
+
+            var playerSkillManager = PlayerSkillManager.Instance;
+            var skillsManager = SkillsManager.Instance;
+            var baseSkill = playerSkillManager != null
+                ? playerSkillManager.DefaultStartingSkill
+                : null;
+
+            playerSkillManager?.ConfigureForNewHero(selectedHero.StartingProfessionSkill);
+            if (skillsManager != null)
+                skillsManager.ConfigureStartingSkills(baseSkill, selectedHero.StartingProfessionSkill);
+
+            // Persist the new hero's initial unlocks and Q/E setup immediately.
+            playerSkillManager?.Save();
+            skillsManager?.Save();
 
             MainMenuManager.ClearSelectedHeroForNewGame();
         }

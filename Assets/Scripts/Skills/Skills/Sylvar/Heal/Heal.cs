@@ -20,9 +20,11 @@ public class Heal : Skill
         var hpAmount = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.HealAmount, healAmount);
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, ActiveTime);
 
-        var totalHpAmount = hpAmount * 5;
+        var tickInterval = Effect != null ? Effect.TickInterval : 1f;
+        var tickCount = tickInterval > 0f ? Mathf.CeilToInt(duration / tickInterval) : 0;
+        var totalHpAmount = hpAmount * tickCount;
 
         return
-            $"Life answers your call.\n\nEvery second for {duration} seconds, the forest restores {hpAmount} Health, healing a total of {totalHpAmount} Health.";
+            $"Sylvar calls the forest’s life back into your wounds.\n\nRestore {hpAmount:0.#} Health each second for {duration:0.#} seconds, up to {totalHpAmount:0.#} Health in total. The healing arrives over time, so keep clear of danger while it takes hold.";
     }
 }

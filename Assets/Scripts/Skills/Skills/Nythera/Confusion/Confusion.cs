@@ -69,8 +69,15 @@ public class Confusion : Skill
                 SkillStatType.Duration,
                 ActiveTime
             );
+
+        var radius =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Radius,
+                Radius
+            );
         
         return
-            $"A hush falls upon the minds of your enemies.\nUp to {targetCount} foes lose all interest in you, abandoning their aggression and returning to their patrol as if you never existed for {duration} seconds.\n\nNythera does not command fear — she erases intent.";
+            $"Nythera buries your presence beneath a veil of whispers.\n\nUp to {targetCount:0} enemies within a radius of {radius:0.#} units lose track of you and abandon their pursuit for {duration:0.#} seconds. The spell deals no damage; use the opening to escape or reposition.";
     }
 }

@@ -77,7 +77,14 @@ public class Roots : Skill
                 ActiveTime
             );
 
+        var radius =
+            PlayerSkillManager.Instance.GetSkillStat(
+                this,
+                SkillStatType.Radius,
+                Radius
+            );
+
         return
-            $"Ancient roots burst from the earth, binding up to {targetCount} enemies in place for {duration} seconds.\n\nThe forest remembers every trespass.";
+            $"Sylvar answers with a snare of ancient roots.\n\nThe {targetCount:0} nearest enemies within a radius of {radius:0.#} units are rooted in place for {duration:0.#} seconds, giving you time to strike or flee. The forest remembers every trespass.";
     }
 }

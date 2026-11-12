@@ -8,14 +8,6 @@ public class PlayerExp : MonoBehaviour
 
     public static event Action<int> OnLevelUp;
     
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            AddExp(100f);
-        }
-    }
-
     public void AddExp(float amount)
     {
         _playerStats.Exp += amount;

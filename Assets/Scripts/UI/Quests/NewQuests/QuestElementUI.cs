@@ -71,7 +71,12 @@ public class QuestElementUI : MonoBehaviour
             _giverProfession.text = questStatus.GiverProfession;
 
         if (_story != null)
-            _story.text = GetQuestStory();
+        {
+            var story = GetQuestStory();
+            _story.text = LocalizationManager.Instance != null
+                ? LocalizationManager.Instance.Translate(story)
+                : story;
+        }
 
         if (_giverPortrait != null)
         {

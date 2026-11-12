@@ -15,17 +15,4 @@ public class TestDialogueWithPatron : MonoBehaviour
         _dialogueController = GetComponent<DialogueController>();
     }
 
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.M))
-        {
-            _dialogueController.PlayDialogue(EntryPointName);
-            PlayerUI.SetActive(false);
-            _dialogueController.onStop.AddListener(() =>
-            {
-                PlayerUI.SetActive(true);
-                SpeechBubble.SetActive(false);
-            });
-        }
-    }
 }

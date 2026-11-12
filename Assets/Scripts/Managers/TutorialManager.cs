@@ -50,6 +50,25 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
     private float _previousTimeScale = 1f;
     private bool _uiReady;
     private UIManager _uiManager;
+    private bool _seenTutorialDataReady = true;
+
+    public bool IsSeenTutorialDataReady => _seenTutorialDataReady;
+
+    public bool HasSeenTutorial(string tutorialId)
+    {
+        return !string.IsNullOrWhiteSpace(tutorialId) && _seenIds.Contains(tutorialId);
+    }
+
+    public void BeginLoadingSeenTutorials()
+    {
+        _seenTutorialDataReady = false;
+    }
+
+    public void InitializeForNewSave()
+    {
+        _seenIds.Clear();
+        _seenTutorialDataReady = true;
+    }
 
     protected override void Awake()
     {
@@ -75,7 +94,7 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
 
     public bool TryShow(TutorialDefinitionSO tutorial, Player player)
     {
-        if (!_uiReady || tutorial == null || player == null)
+        if (!_uiReady || !_seenTutorialDataReady || tutorial == null || player == null)
             return false;
 
         var id = tutorial.Id;
@@ -137,6 +156,12 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
             _currentTutorial = null;
             ShowNext();
             return;
+        }
+
+        if (_currentTutorial.ShowOncePerSave)
+        {
+            _seenIds.Add(_currentTutorial.Id);
+            SaveSeenIds();
         }
 
         RequestPause();
@@ -405,23 +430,35 @@ public sealed class TutorialManager : Singleton<TutorialManager>, ISaveable
 
     public void Load()
     {
+        _seenTutorialDataReady = false;
         _seenIds.Clear();
         if (string.IsNullOrEmpty(ES3SlotManager.selectedSlotPath))
+        {
+            _seenTutorialDataReady = true;
             return;
+        }
 
         var settings = SaveLoadManager.Instance != null ? SaveLoadManager.Instance.GetSettings() : null;
         if (settings == null || !ES3.KeyExists(SaveKey, settings))
+        {
+            _seenTutorialDataReady = true;
             return;
+        }
 
         var loadedIds = ES3.Load<List<string>>(SaveKey, settings);
         if (loadedIds == null)
+        {
+            _seenTutorialDataReady = true;
             return;
+        }
 
         foreach (var id in loadedIds)
         {
             if (!string.IsNullOrWhiteSpace(id))
                 _seenIds.Add(id);
         }
+
+        _seenTutorialDataReady = true;
     }
 
     private void SaveSeenIds()

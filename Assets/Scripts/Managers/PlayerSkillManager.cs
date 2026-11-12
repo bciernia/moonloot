@@ -15,6 +15,8 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
     private readonly List<Skill> _unlockedSkills = new();
 
     public IReadOnlyList<Skill> UnlockedSkills => _unlockedSkills;
+    public Skill DefaultStartingSkill =>
+        startingSkills != null && startingSkills.Count > 0 ? startingSkills[0] : null;
 
     private Dictionary<string, List<SkillStatModifier>> _skillModifiers = new();
 
@@ -103,10 +105,67 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
         return true;
     }
 
+    public bool TryPurchaseSkill(Skill skill)
+    {
+        if (skill == null || IsUnlocked(skill))
+            return false;
+
+        var inventory = InventoryController.Instance;
+        var currency = skill.UnlockCurrency;
+        var cost = skill.AullaCrystalCost;
+
+        if (inventory == null || currency == null)
+        {
+            Debug.LogWarning($"Cannot purchase skill '{skill.Name}': inventory or unlock currency is missing.");
+            return false;
+        }
+
+        if (!inventory.HasUserQuestItem(currency.Name, cost))
+        {
+            ShowPurchaseMessage(LocalizationManager.Instance?.Translate("Nie masz wystarczającej liczby kryształów Aulli.")
+                                ?? "Nie masz wystarczającej liczby kryształów Aulli.");
+            return false;
+        }
+
+        inventory.TryRemoveQuestItems(currency.Name, cost);
+        if (!UnlockSkill(skill))
+            return false;
+
+        SaveLoadManager.Instance?.Save();
+        ShowPurchaseMessage((LocalizationManager.Instance?.Translate("Odblokowano umiejętność")
+                             ?? "Odblokowano umiejętność") + $": {skill.Name}");
+        return true;
+    }
+
+    private static void ShowPurchaseMessage(string message)
+    {
+        if (ToastrPanelManager.Instance != null)
+            ToastrPanelManager.Instance.Show(message);
+    }
+
     public void ResetSkills()
     {
         _unlockedSkillIds.Clear();
         _unlockedSkills.Clear();
+        OnSkillsChanged?.Invoke();
+    }
+
+    public void ConfigureForNewHero(Skill professionSkill)
+    {
+        _unlockedSkillIds.Clear();
+        _unlockedSkills.Clear();
+
+        if (startingSkills != null)
+        {
+            foreach (var skill in startingSkills)
+                UnlockSkill(skill);
+        }
+
+        if (professionSkill != null)
+            UnlockSkill(professionSkill);
+
+        // Prevent Start() from reinitializing the list after scene loading.
+        _isLoaded = true;
         OnSkillsChanged?.Invoke();
     }
 

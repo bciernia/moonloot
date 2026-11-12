@@ -30,8 +30,9 @@ public class Shield : Skill
     {
         var reduceAmount = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.ShieldReduction, ReduceAmount);
         var duration = PlayerSkillManager.Instance.GetSkillStat(this, SkillStatType.Duration, Duration);
+        var reductionPercent = reduceAmount * 100f;
         
         return
-            $"Otton’s iron will manifests around you.\nFor {duration} seconds, incoming damage is reduced by {reduceAmount}%, as if your flesh were tempered steel.\n\nStand firm. Let the storm break upon you.";
+            $"Otton’s iron will forms an unyielding ward around you.\n\nFor {duration:0.#} seconds, the ward reduces incoming damage by {reductionPercent:0.#}%. Hold your ground while the storm breaks against your shield.";
     }
 }
