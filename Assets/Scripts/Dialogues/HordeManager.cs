@@ -26,6 +26,14 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     [Header("Enemies")]
     [SerializeField] private GameObject corruptedVillager;
 
+    [Header("Shared damage for normal enemies and elites")]
+    [SerializeField, Min(0f)] private float normalEnemyDamageMin = 1f;
+    [SerializeField, Min(0f)] private float normalEnemyDamageMax = 3f;
+    [SerializeField, Min(0f)] private float eliteEnemyDamageMin = 2f;
+    [SerializeField, Min(0f)] private float eliteEnemyDamageMax = 5f;
+    [SerializeField, Min(0f)] private float enemyDamageIncreasePerNight = 0.05f;
+    [SerializeField, Min(1f)] private float enemyDamageMultiplierCap = 1.75f;
+
     [Header("Tutorial map")]
     [SerializeField] private EnemyPoolSO tutorialEnemyPool;
 
@@ -70,15 +78,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     [Header("Wave count")]
     [SerializeField] private int wavesCount = 5;
-    [SerializeField] private float timeBetweenWaves = 90f;
+    [SerializeField] private float timeBetweenWaves = 60f;
     [SerializeField] private int baseEnemiesPerWave = 25;
     [SerializeField] private int additionalEnemiesPerWave = 5;
     [SerializeField] private float spawnDelay = 0.5f;
     
     [Header("Elite chances")]
-    [SerializeField] private float eliteChanceStart = 0f;
-    [SerializeField] private float eliteChanceIncreasePerWave = 0.08f;
-    [SerializeField] private float eliteChanceMax = 0.6f;
+    [SerializeField, Range(0f, 1f)] private float eliteChanceStart = 0.04f;
+    [SerializeField, Min(0f)] private float eliteChanceIncreasePerWave = 0.04f;
+    [Tooltip("Maximum final elite chance in a regular wave, including the moon bonus.")]
+    [SerializeField, Range(0f, 1f)] private float eliteChanceMax = 0.45f;
     
     [Header("Endless")]
     [SerializeField] private float endlessSpawnInterval = 2f;
@@ -590,12 +599,15 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private bool ShouldSpawnElite()
     {
-        var chance = eliteChanceStart +
-                     (_currentWave - 1) * eliteChanceIncreasePerWave;
-
-        chance = Mathf.Min(chance, eliteChanceMax);
-
-        chance += CurrentMoon.EliteChanceBonus;
+        var baseChance = Mathf.Max(
+            0f,
+            eliteChanceStart +
+            (_currentWave - 1) * eliteChanceIncreasePerWave);
+        var moonBonus = CurrentMoon != null
+            ? Mathf.Max(0f, CurrentMoon.EliteChanceBonus)
+            : 0f;
+        var chance = baseChance * (1f + moonBonus);
+        chance = Mathf.Clamp(chance, 0f, eliteChanceMax);
 
         return Random.value < chance;
     }
@@ -1510,6 +1522,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.EliteEnemies,
                 pool == CurrentEnemyPool.BossEnemies
             );
+
+            ApplySharedDamageProfile(stats);
             
             ApplyMutation(stats);
             ApplyMoonObjectiveEffects(stats);
@@ -1752,6 +1766,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.BossEnemies
             );
 
+            ApplySharedDamageProfile(stats);
             ApplyMutation(stats);
         }
 
@@ -1819,6 +1834,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                     isElite,
                     isBoss
                 );
+
+                ApplySharedDamageProfile(stats);
 
                 if (isBoss)
                 {
@@ -1933,6 +1950,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.EliteEnemies,
                 false
             );
+
+            ApplySharedDamageProfile(
+                stats,
+                1f + _endlessStage * endlessDifficultyIncrease);
 
             ApplyMutation(stats);
             ApplyMoonObjectiveEffects(stats);
@@ -2105,6 +2126,36 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public int GetRemainEnemies() => _aliveEnemies;
 
     private MutationData GetRandomMutation() => _mutationDatabase.Mutations[Random.Range(0, _mutationDatabase.Mutations.Count)];
+
+    private void ApplySharedDamageProfile(
+        EnemyStatistics stats,
+        float additionalDamageMultiplier = 1f)
+    {
+        if (stats == null || stats.IsBoss)
+            return;
+
+        var minDamage = stats.IsElite
+            ? eliteEnemyDamageMin
+            : normalEnemyDamageMin;
+        var maxDamage = stats.IsElite
+            ? eliteEnemyDamageMax
+            : normalEnemyDamageMax;
+
+        if (maxDamage < minDamage)
+            (minDamage, maxDamage) = (maxDamage, minDamage);
+
+        var nightMultiplier = 1f +
+                              Mathf.Max(0, currentHorde - 1) *
+                              enemyDamageIncreasePerNight;
+        var multiplierCap = Mathf.Max(1f, enemyDamageMultiplierCap);
+        var finalMultiplier = Mathf.Min(
+            nightMultiplier * Mathf.Max(1f, additionalDamageMultiplier),
+            multiplierCap);
+
+        // Centralize base damage for normal enemies and elites. Their existing
+        // attacks and effects keep their own behavior and are not reconfigured here.
+        stats.Damage = Random.Range(minDamage, maxDamage) * finalMultiplier;
+    }
 
     private void ApplyMutation(EnemyStatistics stats)
     {
