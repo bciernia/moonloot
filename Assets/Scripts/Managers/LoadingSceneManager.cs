@@ -12,6 +12,11 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     [SerializeField] private float minDisplayTime = 0.5f;
     [SerializeField] private RectTransform[] _moons;
 
+    [Header("Frame rate limits")]
+    [SerializeField, Min(1)] private int mainMenuMaxFrameRate = 60;
+    [SerializeField, Min(1)] private int loadingScreenMaxFrameRate = 60;
+    [SerializeField, Min(1)] private int gameplayMaxFrameRate = 150;
+
     private readonly float[] moonSpeeds =
     {
         10f,
@@ -28,6 +33,10 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
     protected override void Awake()
     {
         base.Awake();
+        if (Instance != this)
+            return;
+
+        ApplyFrameRateForScene(SceneManager.GetActiveScene().name);
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -48,6 +57,8 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         }
         
         PersistentMenuManager.Instance.HideAllPersistentPanels();
+
+        SetFrameRateLimit(loadingScreenMaxFrameRate);
         
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
@@ -97,6 +108,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         await Task.Delay(500);       
         
         loadingScreen.SetActive(false);
+        ApplyFrameRateForScene(SceneManager.GetActiveScene().name);
     }
 
     private void SetPlayerToSpawnPoint()
@@ -148,6 +160,11 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
 */
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        if (loadingScreen != null && loadingScreen.activeSelf)
+            SetFrameRateLimit(loadingScreenMaxFrameRate);
+        else
+            ApplyFrameRateForScene(scene.name);
+
         if (IsInMainMenu())
             return;
         
@@ -217,6 +234,21 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             return;
 
         _currentCycle = cycle;
+    }
+
+    private void ApplyFrameRateForScene(string sceneName)
+    {
+        SetFrameRateLimit(
+            sceneName == "MainMenu"
+                ? mainMenuMaxFrameRate
+                : gameplayMaxFrameRate);
+    }
+
+    private static void SetFrameRateLimit(int frameRate)
+    {
+        // Disable VSync so targetFrameRate controls the actual frame cap.
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = Mathf.Max(1, frameRate);
     }
 
     private void OnDestroy()
