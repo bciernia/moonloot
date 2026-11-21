@@ -22,6 +22,8 @@ public class CursorUI : MonoBehaviour
     private void Awake()
     {
         _cursorTransform = GetComponent<RectTransform>();
+        ConfigureCursorCanvas();
+
         _cursorGraphic = GetComponent<Graphic>();
         if (_cursorGraphic == null)
             _cursorGraphic = GetComponentInChildren<Graphic>(true);
@@ -31,6 +33,22 @@ public class CursorUI : MonoBehaviour
         _lastMousePosition = Mouse.current != null
             ? Mouse.current.position.ReadValue()
             : Vector2.zero;
+    }
+
+    private void ConfigureCursorCanvas()
+    {
+        var cursorCanvas = GetComponentInParent<Canvas>();
+        if (cursorCanvas == null || cursorCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
+            return;
+
+        if (cursorCanvas.worldCamera == null)
+            cursorCanvas.worldCamera = Camera.main;
+
+        // A Screen Space Camera canvas without a camera has no reliable
+        // screen-to-canvas mapping. Overlay mode keeps the cursor tied to the
+        // actual screen pixels if this scene has no Main Camera.
+        if (cursorCanvas.worldCamera == null)
+            cursorCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
     }
 
     private void OnEnable()
@@ -53,7 +71,7 @@ public class CursorUI : MonoBehaviour
             return;
 
         var mousePosition = Mouse.current.position.ReadValue();
-        _cursorTransform.position = mousePosition;
+        UpdateCursorPosition(mousePosition);
 
         if (mousePosition != _lastMousePosition)
         {
@@ -73,6 +91,33 @@ public class CursorUI : MonoBehaviour
         _idleTime += Time.unscaledDeltaTime;
         if (_idleTime >= _hideAfterIdleSeconds)
             SetCursorShown(false);
+    }
+
+    private void UpdateCursorPosition(Vector2 screenPosition)
+    {
+        // The cursor lives on a Screen Space Camera canvas. Screen coordinates
+        // cannot be assigned directly as a world position: the conversion
+        // changes with the canvas camera, scale, and game resolution.
+        var cursorCanvas = GetComponent<Canvas>();
+        if (cursorCanvas == null)
+            cursorCanvas = GetComponentInParent<Canvas>();
+
+        var canvasRect = cursorCanvas != null ? cursorCanvas.transform as RectTransform : null;
+        if (canvasRect == null)
+        {
+            _cursorTransform.position = screenPosition;
+            return;
+        }
+
+        Camera eventCamera = null;
+        if (cursorCanvas.renderMode != RenderMode.ScreenSpaceOverlay)
+            eventCamera = cursorCanvas.worldCamera != null ? cursorCanvas.worldCamera : Camera.main;
+
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+                canvasRect, screenPosition, eventCamera, out var worldPosition))
+        {
+            _cursorTransform.position = worldPosition;
+        }
     }
 
     private bool IsMenuOrPaused()
