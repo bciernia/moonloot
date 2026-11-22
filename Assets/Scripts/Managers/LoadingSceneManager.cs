@@ -63,52 +63,62 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         loadedValue = 0f;
         progressBar.fillAmount = 0f;
         loadingScreen.SetActive(true);
-
-        // SaveGame();
-
-        var timer = 0f;
-
-        var scene = SceneManager.LoadSceneAsync(sceneName);
-
-        scene.allowSceneActivation = false;
-
-        while (!scene.isDone)
+        try
         {
-            timer += Time.deltaTime;
+            // SaveGame();
 
-            loadedValue = Mathf.Clamp01(scene.progress / 0.9f);
+            var timer = 0f;
+            var scene = SceneManager.LoadSceneAsync(sceneName);
+            if (scene == null)
+                throw new InvalidOperationException($"Could not start loading scene '{sceneName}'.");
 
-            if (scene.progress >= 0.9f && timer >= minDisplayTime)
+            scene.allowSceneActivation = false;
+
+            while (!scene.isDone)
             {
-                loadedValue = 1f;
-                scene.allowSceneActivation = true;
+                timer += Time.unscaledDeltaTime;
+
+                loadedValue = Mathf.Clamp01(scene.progress / 0.9f);
+
+                if (scene.progress >= 0.9f && timer >= minDisplayTime)
+                {
+                    loadedValue = 1f;
+                    scene.allowSceneActivation = true;
+                }
+
+                await Task.Yield();
             }
 
-            await Task.Yield();
-        }
+            if (setPlayerInSpawnPoint)
+                SetPlayerToSpawnPoint();
 
-        if (setPlayerInSpawnPoint)
+            TryFindDayNightCycle();
+            CombatManager.Instance.ClearCombat();
+            SoundManager.Instance.FindMapForSoundManager();
+            SoundManager.Instance.PlayMusic(sceneName);
+
+            if (sceneName == "MainMenu")
+            {
+                var cycle = FindObjectOfType<DayNightCycle>();
+                SoundManager.Instance.StopCombatMusic();
+                // if (cycle != null)
+                //     cycle.ResetCycle();
+            }
+
+            await Task.Delay(500);
+        }
+        catch (Exception exception)
         {
-            SetPlayerToSpawnPoint();
+            Debug.LogException(exception);
+            throw;
         }
-
-        TryFindDayNightCycle();
-        CombatManager.Instance.ClearCombat();
-        SoundManager.Instance.FindMapForSoundManager();
-        SoundManager.Instance.PlayMusic(sceneName);
-
-        if (sceneName == "MainMenu")
+        finally
         {
-            var cycle = FindObjectOfType<DayNightCycle>();
-            SoundManager.Instance.StopCombatMusic();
-            // if (cycle != null)
-            //     cycle.ResetCycle();
+            loadedValue = 1f;
+            if (loadingScreen != null)
+                loadingScreen.SetActive(false);
+            ApplyFrameRateForScene(SceneManager.GetActiveScene().name);
         }
-
-        await Task.Delay(500);       
-        
-        loadingScreen.SetActive(false);
-        ApplyFrameRateForScene(SceneManager.GetActiveScene().name);
     }
 
     private void SetPlayerToSpawnPoint()
