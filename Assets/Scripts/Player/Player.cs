@@ -136,6 +136,17 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.HP = _playerStats.GetMaxHp();
     }
 
+    public void ResetForNewGame()
+    {
+        foreach (var effect in _timedStatEffects.Values)
+            if (effect != null) StopCoroutine(effect);
+        _timedStatEffects.Clear();
+        _hasRunBonuses = false;
+        _playerStats.ResetForNewGame();
+        GetComponent<PlayerMovement>()?.ResetTemporaryMovementModifiers();
+        GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(1f);
+    }
+
     public Dictionary<BonusType, float> GetRunFoodBonuses() =>
         _playerStats.GetRunFoodBonuses();
 
@@ -279,6 +290,8 @@ public class Player : MonoBehaviour, ISaveable
             exp = _playerStats.Exp,
             nextLevelExp = _playerStats.NextLevelExp,
             healthRegenerationLevelBonus = _playerStats.LevelHealthRegenerationBonus,
+            levelBonuses = _playerStats.GetLevelBonuses(),
+            levelFlatBonuses = _playerStats.GetLevelFlatBonuses(),
 
             baseDamage = _playerStats.BaseDamage,
             totalDamage = _playerStats.TotalDamage,
@@ -332,6 +345,7 @@ public class Player : MonoBehaviour, ISaveable
             : data.nextLevelExp;
         _playerStats.SetLevelHealthRegenerationBonus(
             data.healthRegenerationLevelBonus);
+        _playerStats.RestoreLevelBonuses(data.levelBonuses, data.levelFlatBonuses);
 
         _playerStats.BaseDamage = data.baseDamage;
         _playerStats.TotalDamage = data.totalDamage;
@@ -372,6 +386,8 @@ public class PlayerStatsData
     public float exp;
     public float nextLevelExp;
     public float healthRegenerationLevelBonus;
+    public Dictionary<BonusType, float> levelBonuses;
+    public Dictionary<BonusType, float> levelFlatBonuses;
 
     public float baseDamage;
     public float totalDamage;

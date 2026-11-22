@@ -199,6 +199,7 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
             var selectedHero = MainMenuManager.SelectedHeroForNewGame;
             if (Player.Instance != null)
             {
+                Player.Instance.ResetForNewGame();
                 Player.Instance.ApplyStartingHeroStats(selectedHero);
                 OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
             }

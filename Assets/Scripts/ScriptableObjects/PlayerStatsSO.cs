@@ -50,11 +50,66 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _runFoodBonuses = new();
     private Dictionary<BonusType, float> _runFoodFlatBonuses = new();
     private float _levelHealthRegenerationBonus;
+    private float _initialMaxHp, _initialMaxMp, _initialMaxStamina;
+    private float _initialBaseDamage, _initialPhysicalResistance, _initialMagicResistance, _initialShieldResistance;
+    private bool _initialValuesCaptured;
+
+    private void OnEnable()
+    {
+        _initialMaxHp = MaxHP;
+        _initialMaxMp = MaxMP;
+        _initialMaxStamina = MaxStamina;
+        _initialBaseDamage = BaseDamage;
+        _initialPhysicalResistance = PhysicalResistance;
+        _initialMagicResistance = MagicResistance;
+        _initialShieldResistance = ShieldResistance;
+        _initialValuesCaptured = true;
+    }
+
+    public void ResetForNewGame()
+    {
+        if (!_initialValuesCaptured)
+        {
+            Debug.LogError("Cannot reset player stats: initial values were not captured.", this);
+            return;
+        }
+
+        ResetNpcBonuses();
+        ResetTavernBonuses();
+        ResetEquipmentBonuses();
+        ResetEquipmentFlatBonuses();
+        ResetTemporaryBonuses();
+        ClearRunBonuses();
+
+        MaxHP = _initialMaxHp;
+        MaxMP = _initialMaxMp;
+        MaxStamina = _initialMaxStamina;
+        BaseDamage = _initialBaseDamage;
+        TotalDamage = _initialBaseDamage;
+        PhysicalResistance = _initialPhysicalResistance;
+        MagicResistance = _initialMagicResistance;
+        ShieldResistance = _initialShieldResistance;
+        AttackCooldownReduction = 1f;
+        currentWeapon = null;
+        ResetPlayerStats();
+        Stamina = MaxStamina;
+    }
 
     public float LevelHealthRegenerationBonus => _levelHealthRegenerationBonus;
+
+    public Dictionary<BonusType, float> GetLevelBonuses() => new(_levelBonuses);
+    public Dictionary<BonusType, float> GetLevelFlatBonuses() => new(_levelFlatBonuses);
+
+    public void RestoreLevelBonuses(Dictionary<BonusType, float> bonuses, Dictionary<BonusType, float> flatBonuses)
+    {
+        _levelBonuses = bonuses != null ? new Dictionary<BonusType, float>(bonuses) : new Dictionary<BonusType, float>();
+        _levelFlatBonuses = flatBonuses != null ? new Dictionary<BonusType, float>(flatBonuses) : new Dictionary<BonusType, float>();
+    }
     
     public void ResetPlayerStats()
     {
+        _levelBonuses.Clear();
+        _levelFlatBonuses.Clear();
         HP = GetMaxHp();
         MP = GetMaxMp();
         Level = 1;

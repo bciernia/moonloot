@@ -156,6 +156,7 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
     {
         _unlockedSkillIds.Clear();
         _unlockedSkills.Clear();
+        _skillModifiers.Clear();
 
         if (startingSkills != null)
         {

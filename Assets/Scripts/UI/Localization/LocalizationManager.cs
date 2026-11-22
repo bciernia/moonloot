@@ -385,6 +385,7 @@ public sealed class LocalizationManager : MonoBehaviour
     private static Dictionary<string, string[]> BuildTranslations()
     {
         var result = new Dictionary<string, string[]>(System.StringComparer.Ordinal);
+        Add(result, "Osiągnięto limit zapisów. Usuń zapis, aby rozpocząć nową grę.", "Save limit reached. Delete a save before starting a new game.", "Limite de sauvegardes atteinte. Supprime une sauvegarde avant de commencer une nouvelle partie.", "Límite de partidas alcanzado. Elimina una partida antes de comenzar una nueva.", "Limite di salvataggi raggiunto. Elimina un salvataggio prima di iniziare una nuova partita.", "Speicherlimit erreicht. Lösche einen Spielstand, bevor du ein neues Spiel beginnst.", "Достигнут предел сохранений. Удалите сохранение перед началом новой игры.", "Limite de salvamentos atingido. Exclua um salvamento antes de iniciar um novo jogo.");
         Add(result, "Graj", "Play", "Jouer", "Jugar", "Gioca", "Spielen", "Играть");
         Add(result, "Wczytaj", "Load", "Charger", "Cargar", "Carica", "Laden", "Загрузить");
         Add(result, "Opcje", "Options", "Options", "Opciones", "Opzioni", "Optionen", "Настройки");
