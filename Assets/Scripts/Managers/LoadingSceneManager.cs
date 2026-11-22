@@ -198,7 +198,10 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
 
             var selectedHero = MainMenuManager.SelectedHeroForNewGame;
             if (Player.Instance != null)
+            {
+                Player.Instance.ApplyStartingHeroStats(selectedHero);
                 OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);
+            }
             else
                 Debug.LogWarning("Selected hero setup: Player is missing while loading the new game scene.");
 

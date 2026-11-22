@@ -91,6 +91,51 @@ public class Player : MonoBehaviour, ISaveable
 
     public bool HasRunFoodBonuses => _playerStats.HasRunFoodBonuses;
 
+    public void ApplyStartingHeroStats(NPCHero hero)
+    {
+        if (hero == null)
+            return;
+
+        var profession = hero.Profession?.Trim();
+        var maxHp = 0f;
+        var baseDamage = 0f;
+        var moveSpeedMultiplier = 1f;
+
+        if (string.Equals(profession, "Barbarian", StringComparison.OrdinalIgnoreCase))
+        {
+            maxHp = 130f;
+            baseDamage = 3.5f;
+            moveSpeedMultiplier = 0.8f;
+        }
+        else if (string.Equals(profession, "Ranger", StringComparison.OrdinalIgnoreCase))
+        {
+            maxHp = 75f;
+            baseDamage = 1.5f;
+            moveSpeedMultiplier = 1.15f;
+        }
+
+        if (hero.StartingMaxHp > 0f)
+            maxHp = hero.StartingMaxHp;
+        else if (hero.MaxHp > 0f)
+            maxHp = hero.MaxHp;
+
+        if (hero.StartingBaseDamage > 0f)
+            baseDamage = hero.StartingBaseDamage;
+
+        if (hero.StartingMoveSpeedMultiplier > 0f)
+            moveSpeedMultiplier = hero.StartingMoveSpeedMultiplier;
+
+        if (maxHp > 0f)
+            _playerStats.MaxHP = maxHp;
+        if (baseDamage > 0f)
+            _playerStats.BaseDamage = baseDamage;
+
+        if (moveSpeedMultiplier > 0f)
+            GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(moveSpeedMultiplier);
+
+        _playerStats.HP = _playerStats.GetMaxHp();
+    }
+
     public Dictionary<BonusType, float> GetRunFoodBonuses() =>
         _playerStats.GetRunFoodBonuses();
 
@@ -242,6 +287,9 @@ public class Player : MonoBehaviour, ISaveable
             magicResistance = _playerStats.MagicResistance,
 
             shieldResistance = _playerStats.ShieldResistance,
+            heroMoveSpeedMultiplier = GetComponent<PlayerMovement>() != null
+                ? GetComponent<PlayerMovement>().HeroSpeedMultiplier
+                : 1f,
 
             // weaponID = _playerStats.currentWeapon != null
             //     ? _playerStats.currentWeapon.Id
@@ -292,6 +340,11 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.MagicResistance = data.magicResistance;
 
         _playerStats.ShieldResistance = data.shieldResistance;
+
+        GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(
+            data.heroMoveSpeedMultiplier > 0f
+                ? data.heroMoveSpeedMultiplier
+                : 1f);
         
         // if (!string.IsNullOrEmpty(data.weaponID))
         // {
@@ -327,6 +380,8 @@ public class PlayerStatsData
     public float magicResistance;
 
     public float shieldResistance;
+
+    public float heroMoveSpeedMultiplier;
 
     public string weaponID;
 }
