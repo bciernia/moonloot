@@ -14,6 +14,12 @@ public class InventorySO : ScriptableObject
     [field: SerializeField]
     public int Lunar { get; set; } = 500;
 
+    [field: SerializeField]
+    public int AullaCrystals { get; set; }
+
+    [field: SerializeField]
+    public int UdrosCrystals { get; set; }
+
     public event Action<Dictionary<int, InventoryItem>> OnInventoryUpdated; 
     
     public void Initialize()

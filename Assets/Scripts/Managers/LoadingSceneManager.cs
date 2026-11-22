@@ -191,6 +191,11 @@ public class LoadingSceneManager : Singleton<LoadingSceneManager>
         if ((scene.name == "Base_Demo" || scene.name == "START_MAP") &&
             MainMenuManager.SelectedHeroForNewGame != null)
         {
+            // Reapply the fresh-game reset after the destination scene has
+            // created its managers. The InventorySO asset is shared at runtime
+            // and can otherwise retain values from a previous play session.
+            InventoryController.ResetCrystalBalancesForNewGame();
+
             var selectedHero = MainMenuManager.SelectedHeroForNewGame;
             if (Player.Instance != null)
                 OutfitManager.ApplyHeroOutfit(selectedHero.Outfit);

@@ -26,6 +26,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _levelTMP;
 
+    [Header("Crystal currency")]
+    [SerializeField] private TextMeshProUGUI AullaCrystalTMP;
+    [SerializeField] private TextMeshProUGUI UdrosCrystalTMP;
+
     [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
     [SerializeField] private Image _manaBarEq;
@@ -175,6 +179,12 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
+        var childTexts = GetComponentsInChildren<TextMeshProUGUI>(true);
+        if (AullaCrystalTMP == null)
+            AullaCrystalTMP = childTexts.FirstOrDefault(text => text.name == "AullaCrystalTMP");
+        if (UdrosCrystalTMP == null)
+            UdrosCrystalTMP = childTexts.FirstOrDefault(text => text.name == "UdrosCrystalTMP");
+
         if (_playerStatsSo != null)
         {
             _displayedHp = _playerStatsSo.HP;
@@ -214,6 +224,10 @@ public class UIManager : MonoBehaviour
 
         RefreshMoonObjective();
 
+        var inventory = InventoryController.Instance;
+        if (inventory != null)
+            UpdateCrystalAmounts(inventory.inventoryData.AullaCrystals, inventory.inventoryData.UdrosCrystals);
+
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
         
         RefreshMinimapVisibility();
@@ -228,6 +242,15 @@ public class UIManager : MonoBehaviour
 
         _findPortalPanel.anchoredPosition = position;
         _findPortalPanel.gameObject.SetActive(false);
+    }
+
+    public void UpdateCrystalAmounts(int aullaAmount, int udrosAmount)
+    {
+        if (AullaCrystalTMP != null)
+            AullaCrystalTMP.text = aullaAmount.ToString();
+
+        if (UdrosCrystalTMP != null)
+            UdrosCrystalTMP.text = udrosAmount.ToString();
     }
 
     private void ShowEndlessUI()

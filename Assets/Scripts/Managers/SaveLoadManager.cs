@@ -39,6 +39,13 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         ES3SlotManager.selectedSlotPath =
             slot.GetSlotPath();
 
+        // InventorySO is a shared runtime asset and may still hold values from
+        // the previously loaded save. A genuinely new game starts with no crystals.
+        InventoryController.ResetCrystalBalancesForNewGame();
+
+        ES3.Save("playerInventory_aullaCrystals", 0, CurrentSettings);
+        ES3.Save("playerInventory_udrosCrystals", 0, CurrentSettings);
+
         if (TutorialManager.Instance != null)
             TutorialManager.Instance.InitializeForNewSave();
 

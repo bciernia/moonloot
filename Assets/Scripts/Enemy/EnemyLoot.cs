@@ -10,6 +10,11 @@ public class EnemyLoot : MonoBehaviour
     [SerializeField] private float _expDrop;
     [SerializeField] private DropItem[] _dropItems;
 
+    [Header("Rare crystal drop")]
+    [SerializeField, Range(0f, 100f)] private float normalCrystalDropChance = 1f;
+    [SerializeField, Range(0f, 100f)] private float eliteCrystalDropChance = 2f;
+    [SerializeField, Range(0f, 100f)] private float bossCrystalDropChance = 4f;
+
     private List<DropItem> Items { get; set; }
     private List<DropItem> ItemsFromParent { get; set; }
     public float ExpDrop => _expDrop;
@@ -52,65 +57,69 @@ public class EnemyLoot : MonoBehaviour
 
     public void DropItems()
     {
-        if (Items == null) return;
-        
-        foreach (var item in Items)
+        if (Items != null)
         {
-            if (!item.ItemToDrop) continue;
-
-            for (var i = 0; i < item.Quantity; i++)
+            foreach (var item in Items)
             {
-                var dropPosition = FindFreeDropPosition();
-                var drop = Instantiate(item.ItemToDrop, transform.position, Quaternion.identity);
-
-                var mover = drop.GetComponent<LootDropMover>();
-                if (mover != null)
-                {
-                    mover.MoveToPosition(dropPosition, Random.Range(0.25f, 0.5f));
-                }
-                else
-                {
-                    drop.transform.position = dropPosition;
-                }
-
-                var itemSo = item.ItemToDrop.GetComponent<ItemInteraction>().GetInventoryItem();
-
-                if (itemSo is GoldItemSO)
-                {
-                    
-                }
+                DropConfiguredItem(item);
             }
         }
 
-        if (ItemsFromParent == null) return;
-        
-        foreach (var item in ItemsFromParent)
+        if (ItemsFromParent != null)
         {
-            if (!item.ItemToDrop) continue;
-
-            for (var i = 0; i < item.Quantity; i++)
+            foreach (var item in ItemsFromParent)
             {
-                var dropPosition = FindFreeDropPosition();
-                var drop = Instantiate(item.ItemToDrop, transform.position, Quaternion.identity);
-
-                var mover = drop.GetComponent<LootDropMover>();
-                if (mover != null)
-                {
-                    mover.MoveToPosition(dropPosition, Random.Range(0.25f, 0.5f));
-                }
-                else
-                {
-                    drop.transform.position = dropPosition;
-                }
-
-                var itemSo = item.ItemToDrop.GetComponent<ItemInteraction>().GetInventoryItem();
-
-                if (itemSo is GoldItemSO)
-                {
-                    
-                }
+                DropConfiguredItem(item);
             }
         }
+
+        TryDropRareCrystal();
+    }
+
+    private void DropConfiguredItem(DropItem item)
+    {
+        if (item == null || item.ItemToDrop == null)
+            return;
+
+        for (var i = 0; i < item.Quantity; i++)
+            SpawnDrop(item.ItemToDrop);
+    }
+
+    private void TryDropRareCrystal()
+    {
+        var hordeManager = HordeManager.Instance;
+        if (hordeManager == null)
+            return;
+
+        var enemy = GetComponent<EnemyStatistics>();
+        var chance = enemy == null
+            ? normalCrystalDropChance
+            : enemy.IsBoss
+                ? bossCrystalDropChance
+                : enemy.IsElite
+                    ? eliteCrystalDropChance
+                    : normalCrystalDropChance;
+
+        if (Random.Range(0f, 100f) >= chance)
+            return;
+
+        var crystalItem = hordeManager.GetRandomDemoCrystalRewardItem();
+        if (crystalItem == null || crystalItem.ItemToDrop == null)
+            return;
+
+        SpawnDrop(crystalItem.ItemToDrop);
+    }
+
+    private void SpawnDrop(GameObject itemPrefab)
+    {
+        var dropPosition = FindFreeDropPosition();
+        var drop = Instantiate(itemPrefab, transform.position, Quaternion.identity);
+
+        var mover = drop.GetComponent<LootDropMover>();
+        if (mover != null)
+            mover.MoveToPosition(dropPosition, Random.Range(0.25f, 0.5f));
+        else
+            drop.transform.position = dropPosition;
     }
     
     private Vector3 FindFreeDropPosition()

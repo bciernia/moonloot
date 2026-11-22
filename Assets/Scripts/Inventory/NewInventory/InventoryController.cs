@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class InventoryController : Singleton<InventoryController>, ISaveable
 {
+    private static bool _resetCrystalBalancesOnStart;
+
     [SerializeField] private UIInventoryPage inventoryUI;
     [SerializeField] public InventorySO inventoryData;
     public List<InventoryItem> initialItems = new List<InventoryItem>();
@@ -14,15 +16,29 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private EquippedItemsManager equippedItemsManager;
     [SerializeField] private EquippedItemsManagerSO equippedItemsManagerSo;
+    [Header("Currency items")]
+    [SerializeField] private ItemSO aullaCrystalItem;
+    [SerializeField] private ItemSO aullaKnowledgeItem;
+    [SerializeField] private ItemSO udrosCrystalItem;
+
+    public ItemSO AullaCrystalItem => aullaCrystalItem;
+    public ItemSO UdrosCrystalItem => udrosCrystalItem;
     
     public Action OnInventoryChanged;
     
     private void Start()
     {
+        if (_resetCrystalBalancesOnStart)
+        {
+            ResetCrystalBalances();
+            _resetCrystalBalancesOnStart = false;
+        }
+
         PrepareUI();
         PrepareInventoryData();
         inventoryData.Lunar = 50;
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
+        UpdateCrystalAmountsUI();
     }
     
     
@@ -63,6 +79,13 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         if (item.IsEmpty || item.quantity <= 0)
             return item.quantity;
 
+        var crystalCurrency = GetCrystalCurrency(item.item);
+        if (crystalCurrency != CrystalCurrency.None)
+        {
+            ChangeCrystalAmount(crystalCurrency, item.quantity);
+            return 0;
+        }
+
         if (item.item is GoldItemSO _)
         {
             return ChangeGoldAmount(item.quantity) ? 0 : item.quantity;
@@ -86,6 +109,9 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     {
         if (item == null || quantity <= 0)
             return false;
+
+        if (GetCrystalCurrency(item) != CrystalCurrency.None)
+            return true;
 
         if (item is GoldItemSO)
             return true;
@@ -192,7 +218,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         {
             if(item.IsEmpty) continue;
             
-            inventoryData.AddItem(item, item.quantity);
+            AddItem(item);
         }
 
         OnInventoryChanged?.Invoke();
@@ -216,6 +242,7 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             inventoryUI.UpdateData(item.Key, item.Value.item.Image, item.Value.quantity);
         }
         inventoryUI.UpdateGoldAmount(inventoryData.Lunar);
+        UpdateCrystalAmountsUI();
     }
 
     private void PrepareUI()
@@ -767,6 +794,8 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         
         ES3.Save("playerInventory_items", inventoryData.inventoryItems, settings);
         ES3.Save("playerInventory_gold", inventoryData.Lunar, settings);
+        ES3.Save("playerInventory_aullaCrystals", inventoryData.AullaCrystals, settings);
+        ES3.Save("playerInventory_udrosCrystals", inventoryData.UdrosCrystals, settings);
         ES3.Save("playerInventory_equippedItems", equippedItemsManager.EquippedItems, settings);
     }
 
@@ -789,6 +818,15 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             var gold = ES3.Load<int>("playerInventory_gold", settings);
             inventoryData.Lunar = gold;
         }
+
+        inventoryData.AullaCrystals = ES3.KeyExists("playerInventory_aullaCrystals", settings)
+            ? Mathf.Max(0, ES3.Load<int>("playerInventory_aullaCrystals", settings))
+            : 0;
+        inventoryData.UdrosCrystals = ES3.KeyExists("playerInventory_udrosCrystals", settings)
+            ? Mathf.Max(0, ES3.Load<int>("playerInventory_udrosCrystals", settings))
+            : 0;
+
+        MigrateCrystalsOutOfInventory();
 
         // inventoryData.NotifyInventoryUpdated();
 
@@ -886,4 +924,135 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
     }
 
     public int GetGoldAmount() => inventoryData.Lunar;
+
+    public int GetCrystalAmount(ItemSO currencyItem)
+    {
+        return GetCrystalCurrency(currencyItem) switch
+        {
+            CrystalCurrency.Aulla => inventoryData.AullaCrystals,
+            CrystalCurrency.Udros => inventoryData.UdrosCrystals,
+            _ => 0
+        };
+    }
+
+    public bool HasCrystalCurrency(ItemSO currencyItem, int amount)
+    {
+        return amount >= 0 && GetCrystalAmount(currencyItem) >= amount &&
+               GetCrystalCurrency(currencyItem) != CrystalCurrency.None;
+    }
+
+    public bool TrySpendCrystalCurrency(ItemSO currencyItem, int amount)
+    {
+        var currency = GetCrystalCurrency(currencyItem);
+        if (currency == CrystalCurrency.None || amount <= 0 ||
+            GetCrystalAmount(currencyItem) < amount)
+            return false;
+
+        ChangeCrystalAmount(currency, -amount);
+        return true;
+    }
+
+    public void ResetCrystalBalances()
+    {
+        if (inventoryData == null)
+            return;
+
+        inventoryData.AullaCrystals = 0;
+        inventoryData.UdrosCrystals = 0;
+
+        if (inventoryData.inventoryItems != null)
+        {
+            for (var i = 0; i < inventoryData.inventoryItems.Count; i++)
+            {
+                var item = inventoryData.inventoryItems[i];
+                if (!item.IsEmpty && GetCrystalCurrency(item.item) != CrystalCurrency.None)
+                    inventoryData.inventoryItems[i] = InventoryItem.GetEmptyItem();
+            }
+
+            inventoryData.NotifyInventoryUpdated();
+        }
+
+        UpdateCrystalAmountsUI();
+        OnInventoryChanged?.Invoke();
+    }
+
+    public static void ResetCrystalBalancesForNewGame()
+    {
+        if (Instance != null)
+        {
+            Instance.ResetCrystalBalances();
+            _resetCrystalBalancesOnStart = false;
+            return;
+        }
+
+        // The inventory manager may only be created after the new game scene loads.
+        _resetCrystalBalancesOnStart = true;
+    }
+
+    private enum CrystalCurrency
+    {
+        None,
+        Aulla,
+        Udros
+    }
+
+    private CrystalCurrency GetCrystalCurrency(ItemSO item)
+    {
+        if (item == null)
+            return CrystalCurrency.None;
+
+        if (item == aullaCrystalItem || item == aullaKnowledgeItem ||
+            item.Name == "Aulla crystal" || item.Name == "Aulla's Knowledge")
+            return CrystalCurrency.Aulla;
+
+        if (item == udrosCrystalItem || item.Name == "Udros crystal")
+            return CrystalCurrency.Udros;
+
+        return CrystalCurrency.None;
+    }
+
+    private void ChangeCrystalAmount(CrystalCurrency currency, int amount)
+    {
+        switch (currency)
+        {
+            case CrystalCurrency.Aulla:
+                inventoryData.AullaCrystals = Mathf.Max(0, inventoryData.AullaCrystals + amount);
+                break;
+            case CrystalCurrency.Udros:
+                inventoryData.UdrosCrystals = Mathf.Max(0, inventoryData.UdrosCrystals + amount);
+                break;
+            default:
+                return;
+        }
+
+        UpdateCrystalAmountsUI();
+        OnInventoryChanged?.Invoke();
+    }
+
+    private void UpdateCrystalAmountsUI()
+    {
+        var uiManager = FindFirstObjectByType<UIManager>();
+        if (uiManager != null)
+            uiManager.UpdateCrystalAmounts(inventoryData.AullaCrystals, inventoryData.UdrosCrystals);
+    }
+
+    private void MigrateCrystalsOutOfInventory()
+    {
+        if (inventoryData.inventoryItems == null)
+            return;
+
+        for (var i = 0; i < inventoryData.inventoryItems.Count; i++)
+        {
+            var stack = inventoryData.inventoryItems[i];
+            if (stack.IsEmpty)
+                continue;
+
+            var currency = GetCrystalCurrency(stack.item);
+            if (currency == CrystalCurrency.None)
+                continue;
+
+            ChangeCrystalAmount(currency, stack.quantity);
+            inventoryData.inventoryItems[i] = InventoryItem.GetEmptyItem();
+        }
+    }
 }

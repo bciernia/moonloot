@@ -334,29 +334,118 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private List<NightReward> GetRandomRewards(NightLocationSO location)
     {
+        const int minCrystalReward = 3;
+        const int maxCrystalReward = 8;
         var rewards = new List<NightReward>();
 
-        if (location == null ||
-            location.Rewards == null ||
-            location.Rewards.Count == 0)
+        if (location != null &&
+            location.Rewards != null &&
+            location.Rewards.Count > 0)
         {
-            return rewards;
+            var rewardCount = GetRewardCount(currentHorde);
+
+            var availableRewards = location.Rewards
+                .Where(reward => reward != null && reward.Item != null && reward.Amount > 0)
+                // Crystal rewards are handled separately below so later-game
+                // crystals left in location lists cannot appear in the demo.
+                .Where(reward => !IsCrystalReward(reward.Item))
+                .OrderBy(_ => Random.value)
+                .ToList();
+
+            for (var i = 0;
+                 i < rewardCount && i < availableRewards.Count;
+                 i++)
+            {
+                rewards.Add(availableRewards[i]);
+            }
         }
 
-        var rewardCount = GetRewardCount(currentHorde);
+        // Keep the configured Aulla/Udros amount when the selected location has
+        // one; otherwise offer one of those two demo currencies as a bonus.
+        var configuredDemoCrystalReward = location != null && location.Rewards != null
+            ? location.Rewards.FirstOrDefault(reward =>
+                reward != null && reward.Item != null && reward.Amount > 0 &&
+                IsDemoCrystalReward(reward.Item))
+            : null;
 
-        var availableRewards = location.Rewards
-            .OrderBy(_ => Random.value)
-            .ToList();
-
-        for (var i = 0;
-             i < rewardCount && i < availableRewards.Count;
-             i++)
+        if (configuredDemoCrystalReward != null)
         {
-            rewards.Add(availableRewards[i]);
+            rewards.Add(new NightReward
+            {
+                Item = configuredDemoCrystalReward.Item,
+                Amount = Random.Range(minCrystalReward, maxCrystalReward + 1)
+            });
+        }
+        else
+        {
+            var crystalOptions = GetDemoCrystalRewardItems();
+            if (crystalOptions.Count > 0)
+            {
+                rewards.Add(new NightReward
+                {
+                    Item = crystalOptions[Random.Range(0, crystalOptions.Count)],
+                    Amount = Random.Range(minCrystalReward, maxCrystalReward + 1)
+                });
+            }
         }
 
         return rewards;
+    }
+
+    private List<ItemSO> GetDemoCrystalRewardItems()
+    {
+        var items = new List<ItemSO>();
+        var inventory = InventoryController.Instance;
+        if (inventory != null)
+        {
+            if (inventory.AullaCrystalItem != null)
+                items.Add(inventory.AullaCrystalItem);
+            if (inventory.UdrosCrystalItem != null)
+                items.Add(inventory.UdrosCrystalItem);
+        }
+
+        if (_nightDatabase != null && _nightDatabase.NormalNights != null)
+        {
+            items.AddRange(_nightDatabase.NormalNights
+                .Where(night => night != null && night.Rewards != null)
+                .SelectMany(night => night.Rewards)
+                .Where(reward => reward != null && reward.Item != null &&
+                                 IsDemoCrystalReward(reward.Item))
+                .Select(reward => reward.Item));
+        }
+
+        // Also cover scenes/database assets where the InventoryController
+        // currency fields are not assigned yet. The night database normally
+        // references these assets, but this fallback keeps reward previews safe.
+        items.AddRange(Resources.FindObjectsOfTypeAll<ItemSO>()
+            .Where(IsDemoCrystalReward));
+
+        return items.Distinct().ToList();
+    }
+
+    public ItemSO GetRandomDemoCrystalRewardItem()
+    {
+        var items = GetDemoCrystalRewardItems();
+        return items.Count > 0
+            ? items[Random.Range(0, items.Count)]
+            : null;
+    }
+
+    private static bool IsDemoCrystalReward(ItemSO item)
+    {
+        if (item == null || string.IsNullOrEmpty(item.Name))
+            return false;
+
+        return item.Name.Equals("Aulla crystal", StringComparison.OrdinalIgnoreCase) ||
+               item.Name.Equals("Udros crystal", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsCrystalReward(ItemSO item)
+    {
+        return item != null &&
+               (item.ItemType == ItemType.Crystal ||
+                (!string.IsNullOrEmpty(item.Name) &&
+                 item.Name.IndexOf("crystal", StringComparison.OrdinalIgnoreCase) >= 0));
     }
     
     public void SelectNightOption(int index)
@@ -2335,12 +2424,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
             case MoonObjectiveType.CollectKnowledge:
             {
-                var amount =
-                    InventoryController.Instance.GetItemCount(
-                        CurrentMoon.RequiredItem
-                    );
-
-                CurrentObjectiveProgress = amount;
+                // Collection objectives are counted from pickups in this run.
+                // The player's persistent crystal balances must not complete a
+                // later map's objective automatically.
+                CurrentObjectiveProgress = Mathf.Clamp(
+                    CurrentObjectiveProgress,
+                    0,
+                    CurrentObjectiveTarget);
 
                 break;
             }
@@ -2386,6 +2476,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             RemoveExit();
             CurrentObjectiveProgress = 0;
         }
+    }
+
+    public void RecordObjectiveItemCollected(ItemSO item, int amount = 1)
+    {
+        if (!_isNightRunning || _objectiveCompleted || amount <= 0 || CurrentMoon == null ||
+            CurrentMoon.ObjectiveType != MoonObjectiveType.CollectKnowledge ||
+            CurrentMoon.RequiredItem.item == null || CurrentMoon.RequiredItem.item != item)
+            return;
+
+        AddObjectiveProgress(amount);
     }
     
     private void SpawnCorruptedVillagers()

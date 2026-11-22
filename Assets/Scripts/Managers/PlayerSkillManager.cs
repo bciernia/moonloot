@@ -120,14 +120,16 @@ public class PlayerSkillManager : Singleton<PlayerSkillManager>, ISaveable
             return false;
         }
 
-        if (!inventory.HasUserQuestItem(currency.Name, cost))
+        if (!inventory.HasCrystalCurrency(currency, cost))
         {
             ShowPurchaseMessage(LocalizationManager.Instance?.Translate("Nie masz wystarczającej liczby kryształów Aulli.")
                                 ?? "Nie masz wystarczającej liczby kryształów Aulli.");
             return false;
         }
 
-        inventory.TryRemoveQuestItems(currency.Name, cost);
+        if (!inventory.TrySpendCrystalCurrency(currency, cost))
+            return false;
+
         if (!UnlockSkill(skill))
             return false;
 
