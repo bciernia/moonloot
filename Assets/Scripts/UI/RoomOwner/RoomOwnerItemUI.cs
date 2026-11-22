@@ -50,10 +50,13 @@ public class RoomOwnerItemUI : MonoBehaviour
                 _priceContainer);
             
             var ownedAmount = InventoryController.Instance.GetItemCount(material.Item);
+            var itemName = LocalizationManager.Instance != null
+                ? material.Item.item.GetLocalizedName(LocalizationManager.Instance.CurrentLanguage)
+                : material.Item.item.Name;
             
             priceElement.Setup(
                 material.Item.item.Image,
-                material.Item.item.Name,
+                itemName,
                 material.Amount,
                 ownedAmount);
         }

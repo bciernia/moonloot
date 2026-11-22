@@ -151,7 +151,10 @@ public class QuestElementUI : MonoBehaviour
             lines.Append(amount);
         }
 
-        return lines.Length > 0 ? lines.ToString() : status.GetObjectiveProgressSummary();
+        var result = lines.Length > 0 ? lines.ToString() : status.GetObjectiveProgressSummary();
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(result)
+            : result;
     }
 
     public void SetQuestDescription()

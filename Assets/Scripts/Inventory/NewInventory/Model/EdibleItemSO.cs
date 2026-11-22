@@ -200,7 +200,10 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction, IAsyncItemAct
 
     private string FormatFoodBonus(BonusType type, float value)
     {
-        var formattedValue = value.ToString("+0.#;-0.#;0");
+        var valueFormat = type == BonusType.HealthRegeneration
+            ? "+0.##;-0.##;0"
+            : "+0.#;-0.#;0";
+        var formattedValue = value.ToString(valueFormat);
         if (IsPercentageBonus(type))
             formattedValue += "%";
 
@@ -209,6 +212,7 @@ public class EdibleItemSO : ItemSO, IDestroyableItem, IItemAction, IAsyncItemAct
             BonusType.MoveSpeed => "Move Speed",
             BonusType.CritChance => "Critical Chance",
             BonusType.CritMultiplier => "Critical Damage",
+            BonusType.HealthRegeneration => "Health Regeneration",
             BonusType.MaxHp => "Maximum HP",
             BonusType.MaxMp => "Maximum Mana",
             BonusType.AttackCooldownReduction => "Attack Speed",

@@ -13,6 +13,14 @@ public class NPCHero : VillageNpcData
     public float MaxHp;
     public float Hp;
 
+    [Header("Starting combat stats")]
+    [Tooltip("Optional starting max HP override. If zero, the profession's default is used.")]
+    [Min(0f)] public float StartingMaxHp;
+    [Tooltip("Optional base damage override. If zero, the profession's default is used.")]
+    [Min(0f)] public float StartingBaseDamage;
+    [Tooltip("Optional movement speed multiplier. If zero, the profession's default is used.")]
+    [Min(0f)] public float StartingMoveSpeedMultiplier;
+
     [TextArea(2, 4)]
     public string Pros;
 

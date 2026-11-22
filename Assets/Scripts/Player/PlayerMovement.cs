@@ -20,12 +20,14 @@ public class PlayerMovement : MonoBehaviour
     private float _attackSpeedMultiplier = 1f;
     private float _contactSpeedMultiplier = 1f;
     private float _effectSpeedMultiplier = 1f;
+    private float _heroSpeedMultiplier = 1f;
 
     [SerializeField] private float enemyContactRadius = 0.8f;
     private readonly Collider2D[] _enemyBuffer = new Collider2D[32];
     [SerializeField] private LayerMask enemyLayer;
     private int _enemyContactCount;
     public float BaseSpeed => speed;
+    public float HeroSpeedMultiplier => _heroSpeedMultiplier;
     
     private void Awake()
     {
@@ -60,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         var bonusMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
         
         var finalMultiplier =
+            _heroSpeedMultiplier *
             _currentSpeedMultiplier *
             _attackSpeedMultiplier *
             _contactSpeedMultiplier *
@@ -214,7 +217,12 @@ public class PlayerMovement : MonoBehaviour
         var baseMultiplier = _player.PlayerStats.GetMoveSpeedMultiplier();
         var currentMultiplier = _currentSpeedMultiplier <= 0 ? 1f : _currentSpeedMultiplier;
 
-        return speed * currentMultiplier * baseMultiplier;
+        return speed * _heroSpeedMultiplier * currentMultiplier * baseMultiplier;
+    }
+
+    public void SetHeroSpeedMultiplier(float multiplier)
+    {
+        _heroSpeedMultiplier = multiplier > 0f ? multiplier : 1f;
     }
     
     public void SetAttackSlow(bool enabled)

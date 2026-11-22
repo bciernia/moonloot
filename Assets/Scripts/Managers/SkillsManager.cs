@@ -605,7 +605,7 @@ public class SkillsManager : Singleton<SkillsManager>, ISaveable
 
             slots[i].skill = SkillDatabase.Get(data.skillID);
 
-            if (data.skillID == null)
+            if (string.IsNullOrEmpty(data.skillID) || slots[i].skill == null)
                 continue;
 
             var runtime = GetRuntime(slots[i].skill);

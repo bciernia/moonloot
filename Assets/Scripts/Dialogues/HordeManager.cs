@@ -26,6 +26,14 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     [Header("Enemies")]
     [SerializeField] private GameObject corruptedVillager;
 
+    [Header("Shared damage for normal enemies and elites")]
+    [SerializeField, Min(0f)] private float normalEnemyDamageMin = 1f;
+    [SerializeField, Min(0f)] private float normalEnemyDamageMax = 3f;
+    [SerializeField, Min(0f)] private float eliteEnemyDamageMin = 2f;
+    [SerializeField, Min(0f)] private float eliteEnemyDamageMax = 5f;
+    [SerializeField, Min(0f)] private float enemyDamageIncreasePerNight = 0.05f;
+    [SerializeField, Min(1f)] private float enemyDamageMultiplierCap = 1.75f;
+
     [Header("Tutorial map")]
     [SerializeField] private EnemyPoolSO tutorialEnemyPool;
 
@@ -70,15 +78,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     [Header("Wave count")]
     [SerializeField] private int wavesCount = 5;
-    [SerializeField] private float timeBetweenWaves = 90f;
+    [SerializeField] private float timeBetweenWaves = 60f;
     [SerializeField] private int baseEnemiesPerWave = 25;
     [SerializeField] private int additionalEnemiesPerWave = 5;
     [SerializeField] private float spawnDelay = 0.5f;
     
     [Header("Elite chances")]
-    [SerializeField] private float eliteChanceStart = 0f;
-    [SerializeField] private float eliteChanceIncreasePerWave = 0.08f;
-    [SerializeField] private float eliteChanceMax = 0.6f;
+    [SerializeField, Range(0f, 1f)] private float eliteChanceStart = 0.04f;
+    [SerializeField, Min(0f)] private float eliteChanceIncreasePerWave = 0.04f;
+    [Tooltip("Maximum final elite chance in a regular wave, including the moon bonus.")]
+    [SerializeField, Range(0f, 1f)] private float eliteChanceMax = 0.45f;
     
     [Header("Endless")]
     [SerializeField] private float endlessSpawnInterval = 2f;
@@ -120,6 +129,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
     public bool IsTutorialRun => _tutorialRun;
+    public bool IsNightRunning => _isNightRunning;
     public bool IsHeroNight => NightCycleStep == 3;
 
     private GameObject _defendTarget;
@@ -325,29 +335,118 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private List<NightReward> GetRandomRewards(NightLocationSO location)
     {
+        const int minCrystalReward = 3;
+        const int maxCrystalReward = 8;
         var rewards = new List<NightReward>();
 
-        if (location == null ||
-            location.Rewards == null ||
-            location.Rewards.Count == 0)
+        if (location != null &&
+            location.Rewards != null &&
+            location.Rewards.Count > 0)
         {
-            return rewards;
+            var rewardCount = GetRewardCount(currentHorde);
+
+            var availableRewards = location.Rewards
+                .Where(reward => reward != null && reward.Item != null && reward.Amount > 0)
+                // Crystal rewards are handled separately below so later-game
+                // crystals left in location lists cannot appear in the demo.
+                .Where(reward => !IsCrystalReward(reward.Item))
+                .OrderBy(_ => Random.value)
+                .ToList();
+
+            for (var i = 0;
+                 i < rewardCount && i < availableRewards.Count;
+                 i++)
+            {
+                rewards.Add(availableRewards[i]);
+            }
         }
 
-        var rewardCount = GetRewardCount(currentHorde);
+        // Keep the configured Aulla/Udros amount when the selected location has
+        // one; otherwise offer one of those two demo currencies as a bonus.
+        var configuredDemoCrystalReward = location != null && location.Rewards != null
+            ? location.Rewards.FirstOrDefault(reward =>
+                reward != null && reward.Item != null && reward.Amount > 0 &&
+                IsDemoCrystalReward(reward.Item))
+            : null;
 
-        var availableRewards = location.Rewards
-            .OrderBy(_ => Random.value)
-            .ToList();
-
-        for (var i = 0;
-             i < rewardCount && i < availableRewards.Count;
-             i++)
+        if (configuredDemoCrystalReward != null)
         {
-            rewards.Add(availableRewards[i]);
+            rewards.Add(new NightReward
+            {
+                Item = configuredDemoCrystalReward.Item,
+                Amount = Random.Range(minCrystalReward, maxCrystalReward + 1)
+            });
+        }
+        else
+        {
+            var crystalOptions = GetDemoCrystalRewardItems();
+            if (crystalOptions.Count > 0)
+            {
+                rewards.Add(new NightReward
+                {
+                    Item = crystalOptions[Random.Range(0, crystalOptions.Count)],
+                    Amount = Random.Range(minCrystalReward, maxCrystalReward + 1)
+                });
+            }
         }
 
         return rewards;
+    }
+
+    private List<ItemSO> GetDemoCrystalRewardItems()
+    {
+        var items = new List<ItemSO>();
+        var inventory = InventoryController.Instance;
+        if (inventory != null)
+        {
+            if (inventory.AullaCrystalItem != null)
+                items.Add(inventory.AullaCrystalItem);
+            if (inventory.UdrosCrystalItem != null)
+                items.Add(inventory.UdrosCrystalItem);
+        }
+
+        if (_nightDatabase != null && _nightDatabase.NormalNights != null)
+        {
+            items.AddRange(_nightDatabase.NormalNights
+                .Where(night => night != null && night.Rewards != null)
+                .SelectMany(night => night.Rewards)
+                .Where(reward => reward != null && reward.Item != null &&
+                                 IsDemoCrystalReward(reward.Item))
+                .Select(reward => reward.Item));
+        }
+
+        // Also cover scenes/database assets where the InventoryController
+        // currency fields are not assigned yet. The night database normally
+        // references these assets, but this fallback keeps reward previews safe.
+        items.AddRange(Resources.FindObjectsOfTypeAll<ItemSO>()
+            .Where(IsDemoCrystalReward));
+
+        return items.Distinct().ToList();
+    }
+
+    public ItemSO GetRandomDemoCrystalRewardItem()
+    {
+        var items = GetDemoCrystalRewardItems();
+        return items.Count > 0
+            ? items[Random.Range(0, items.Count)]
+            : null;
+    }
+
+    private static bool IsDemoCrystalReward(ItemSO item)
+    {
+        if (item == null || string.IsNullOrEmpty(item.Name))
+            return false;
+
+        return item.Name.Equals("Aulla crystal", StringComparison.OrdinalIgnoreCase) ||
+               item.Name.Equals("Udros crystal", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsCrystalReward(ItemSO item)
+    {
+        return item != null &&
+               (item.ItemType == ItemType.Crystal ||
+                (!string.IsNullOrEmpty(item.Name) &&
+                 item.Name.IndexOf("crystal", StringComparison.OrdinalIgnoreCase) >= 0));
     }
     
     public void SelectNightOption(int index)
@@ -590,12 +689,15 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     
     private bool ShouldSpawnElite()
     {
-        var chance = eliteChanceStart +
-                     (_currentWave - 1) * eliteChanceIncreasePerWave;
-
-        chance = Mathf.Min(chance, eliteChanceMax);
-
-        chance += CurrentMoon.EliteChanceBonus;
+        var baseChance = Mathf.Max(
+            0f,
+            eliteChanceStart +
+            (_currentWave - 1) * eliteChanceIncreasePerWave);
+        var moonBonus = CurrentMoon != null
+            ? Mathf.Max(0f, CurrentMoon.EliteChanceBonus)
+            : 0f;
+        var chance = baseChance * (1f + moonBonus);
+        chance = Mathf.Clamp(chance, 0f, eliteChanceMax);
 
         return Random.value < chance;
     }
@@ -1510,6 +1612,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.EliteEnemies,
                 pool == CurrentEnemyPool.BossEnemies
             );
+
+            ApplySharedDamageProfile(stats);
             
             ApplyMutation(stats);
             ApplyMoonObjectiveEffects(stats);
@@ -1752,6 +1856,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.BossEnemies
             );
 
+            ApplySharedDamageProfile(stats);
             ApplyMutation(stats);
         }
 
@@ -1819,6 +1924,8 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                     isElite,
                     isBoss
                 );
+
+                ApplySharedDamageProfile(stats);
 
                 if (isBoss)
                 {
@@ -1933,6 +2040,10 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
                 pool == CurrentEnemyPool.EliteEnemies,
                 false
             );
+
+            ApplySharedDamageProfile(
+                stats,
+                1f + _endlessStage * endlessDifficultyIncrease);
 
             ApplyMutation(stats);
             ApplyMoonObjectiveEffects(stats);
@@ -2105,6 +2216,36 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public int GetRemainEnemies() => _aliveEnemies;
 
     private MutationData GetRandomMutation() => _mutationDatabase.Mutations[Random.Range(0, _mutationDatabase.Mutations.Count)];
+
+    private void ApplySharedDamageProfile(
+        EnemyStatistics stats,
+        float additionalDamageMultiplier = 1f)
+    {
+        if (stats == null || stats.IsBoss)
+            return;
+
+        var minDamage = stats.IsElite
+            ? eliteEnemyDamageMin
+            : normalEnemyDamageMin;
+        var maxDamage = stats.IsElite
+            ? eliteEnemyDamageMax
+            : normalEnemyDamageMax;
+
+        if (maxDamage < minDamage)
+            (minDamage, maxDamage) = (maxDamage, minDamage);
+
+        var nightMultiplier = 1f +
+                              Mathf.Max(0, currentHorde - 1) *
+                              enemyDamageIncreasePerNight;
+        var multiplierCap = Mathf.Max(1f, enemyDamageMultiplierCap);
+        var finalMultiplier = Mathf.Min(
+            nightMultiplier * Mathf.Max(1f, additionalDamageMultiplier),
+            multiplierCap);
+
+        // Centralize base damage for normal enemies and elites. Their existing
+        // attacks and effects keep their own behavior and are not reconfigured here.
+        stats.Damage = Random.Range(minDamage, maxDamage) * finalMultiplier;
+    }
 
     private void ApplyMutation(EnemyStatistics stats)
     {
@@ -2284,12 +2425,13 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
 
             case MoonObjectiveType.CollectKnowledge:
             {
-                var amount =
-                    InventoryController.Instance.GetItemCount(
-                        CurrentMoon.RequiredItem
-                    );
-
-                CurrentObjectiveProgress = amount;
+                // Collection objectives are counted from pickups in this run.
+                // The player's persistent crystal balances must not complete a
+                // later map's objective automatically.
+                CurrentObjectiveProgress = Mathf.Clamp(
+                    CurrentObjectiveProgress,
+                    0,
+                    CurrentObjectiveTarget);
 
                 break;
             }
@@ -2335,6 +2477,16 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
             RemoveExit();
             CurrentObjectiveProgress = 0;
         }
+    }
+
+    public void RecordObjectiveItemCollected(ItemSO item, int amount = 1)
+    {
+        if (!_isNightRunning || _objectiveCompleted || amount <= 0 || CurrentMoon == null ||
+            CurrentMoon.ObjectiveType != MoonObjectiveType.CollectKnowledge ||
+            CurrentMoon.RequiredItem.item == null || CurrentMoon.RequiredItem.item != item)
+            return;
+
+        AddObjectiveProgress(amount);
     }
     
     private void SpawnCorruptedVillagers()

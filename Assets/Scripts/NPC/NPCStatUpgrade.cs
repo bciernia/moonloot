@@ -169,6 +169,7 @@ public class NPCStatUpgrade : MonoBehaviour
             BonusType.Damage => "Damage",
             BonusType.MoveSpeed => "Move Speed",
             BonusType.CritChance => "Critical Chance",
+            BonusType.HealthRegeneration => "Health Regeneration",
             BonusType.CritMultiplier => "Critical Damage",
             BonusType.MaxHp => "Maximum HP",
             BonusType.MaxMp => "Maximum Mana",

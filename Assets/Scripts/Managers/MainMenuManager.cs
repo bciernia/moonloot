@@ -127,6 +127,22 @@ public class MainMenuManager : MonoBehaviour
             return;
         }
 
+        if (SaveLoadManager.Instance == null ||
+            !SaveLoadManager.Instance.CreateNewSaveForNewGame(_selectedHero.Outfit, DEMO_START_SCENE))
+        {
+            const string message = "Save limit reached. Delete a save before starting a new game.";
+            if (_characterDescription != null)
+            {
+                if (LocalizationManager.Instance != null)
+                    LocalizationManager.Instance.SetLocalizedText(_characterDescription, message);
+                else
+                    _characterDescription.text = message;
+            }
+            else
+                Debug.LogWarning(message, this);
+            return;
+        }
+
         _isStartingGame = true;
         SelectedHeroForNewGame = _selectedHero;
         SelectedHeroForTutorialIntro = _selectedHero;
@@ -138,7 +154,6 @@ public class MainMenuManager : MonoBehaviour
         
         // ES3.DeleteFile();
         
-        SaveLoadManager.Instance.CreateNewSaveForNewGame(_selectedHero.Outfit, DEMO_START_SCENE);
         LoadingSceneManager.Instance.StartNewGame(DEMO_START_SCENE);
         ChangeButtonsVisibility(false);
     }
@@ -169,6 +184,8 @@ public class MainMenuManager : MonoBehaviour
 
         foreach (var card in _characterCardsContainer.GetComponentsInChildren<CharacterMenuUI>(true))
         {
+            if (card.Hero != null)
+                OutfitManager.RegisterHeroOutfit(card.Hero.Outfit);
             card.Setup(card.Hero);
             card.OnCharacterSelected += HandleCharacterSelected;
         }

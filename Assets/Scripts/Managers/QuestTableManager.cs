@@ -85,10 +85,15 @@ public class QuestTableManager : Singleton<QuestTableManager>
                 continue;
 
             var quantity = reward.item.quantity > 0 ? reward.item.quantity : Mathf.Max(1, reward.number);
-            sb.AppendLine($"{reward.item.item.Name} x{quantity}");
+            var itemName = LocalizationManager.Instance != null
+                ? reward.item.item.GetLocalizedName(LocalizationManager.Instance.CurrentLanguage)
+                : reward.item.item.Name;
+            sb.AppendLine($"{itemName} x{quantity}");
         }
 
-        return sb.ToString();
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(sb.ToString())
+            : sb.ToString();
     }
 
     private void GetTask(QuestSO quest)

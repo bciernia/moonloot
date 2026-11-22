@@ -46,7 +46,7 @@ public class ToastrPanelManager : Singleton<ToastrPanelManager>
             _panelRect.anchoredPosition,
             visiblePosition);
 
-        yield return new WaitForSeconds(
+        yield return new WaitForSecondsRealtime(
             displayDuration);
 
         yield return MovePanel(
@@ -64,7 +64,7 @@ public class ToastrPanelManager : Singleton<ToastrPanelManager>
 
         while (elapsed < animationDuration)
         {
-            elapsed += Time.deltaTime;
+            elapsed += Time.unscaledDeltaTime;
 
             var t = Mathf.Clamp01(
                 elapsed / animationDuration);

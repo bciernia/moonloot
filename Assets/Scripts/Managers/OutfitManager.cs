@@ -11,12 +11,22 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
     [SerializeField] private RuntimeAnimatorController _standardOutfit;
     [SerializeField] private OutfitItemSO _outfit;
     private OutfitItemSO _heroOutfit;
+    private string _unresolvedOutfitId;
     private readonly List<OutfitItemSO> _knownOutfits = new List<OutfitItemSO>();
+    private static readonly List<OutfitItemSO> HeroOutfitCatalog = new List<OutfitItemSO>();
+
+    public static void RegisterHeroOutfit(OutfitItemSO outfit)
+    {
+        if (outfit != null && !HeroOutfitCatalog.Contains(outfit))
+            HeroOutfitCatalog.Add(outfit);
+    }
     
     private PlayerAim _playerAim;
     
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        if (Instance != this) return;
         _playerAim = FindAnyObjectByType<PlayerAim>();
         CacheKnownOutfits();
     }
@@ -55,7 +65,10 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
     public static void ApplyHeroOutfit(OutfitItemSO heroOutfit)
     {
         if (Instance != null)
+        {
             Instance._heroOutfit = heroOutfit;
+            Instance._unresolvedOutfitId = null;
+        }
 
         var player = FindAnyObjectByType<Player>();
         if (player == null)
@@ -115,7 +128,7 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
         if (settings == null)
             return;
 
-        ES3.Save(HeroOutfitSaveKey, GetOutfitSaveId(_heroOutfit), settings);
+        ES3.Save(HeroOutfitSaveKey, _unresolvedOutfitId ?? GetOutfitSaveId(_heroOutfit), settings);
     }
 
     public void Load()
@@ -132,7 +145,9 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
 
         if (!string.IsNullOrEmpty(outfitSaveId) && _heroOutfit == null)
         {
-            Debug.LogWarning($"Saved hero outfit '{outfitSaveId}' was not found in the OutfitManager inventory catalog.", this);
+            _unresolvedOutfitId = outfitSaveId;
+            Debug.LogWarning($"Saved hero outfit '{outfitSaveId}' was not found. The saved ID will be preserved.", this);
+            return;
         }
 
         ApplyHeroOutfit(_heroOutfit);
@@ -142,14 +157,23 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
 
     private void CacheKnownOutfits()
     {
-        if (_inventoryData == null || _inventoryData.inventoryItems == null)
-            return;
-
-        foreach (var inventoryItem in _inventoryData.inventoryItems)
+        foreach (var outfit in HeroOutfitCatalog)
+            if (outfit != null && !_knownOutfits.Contains(outfit))
+                _knownOutfits.Add(outfit);
+        foreach (var database in FindObjectsByType<NpcDatabase>(FindObjectsInactive.Include, FindObjectsSortMode.None))
         {
+            if (database.NpcDatas == null) continue;
+            foreach (var npc in database.NpcDatas)
+                if (npc is NPCHero hero && hero.Outfit != null && !_knownOutfits.Contains(hero.Outfit))
+                    _knownOutfits.Add(hero.Outfit);
+        }
+        foreach (var hero in Resources.FindObjectsOfTypeAll<NPCHero>())
+            if (hero != null && hero.Outfit != null && !_knownOutfits.Contains(hero.Outfit))
+                _knownOutfits.Add(hero.Outfit);
+        if (_inventoryData == null || _inventoryData.inventoryItems == null) return;
+        foreach (var inventoryItem in _inventoryData.inventoryItems)
             if (inventoryItem.item is OutfitItemSO outfit && !_knownOutfits.Contains(outfit))
                 _knownOutfits.Add(outfit);
-        }
     }
 
     private OutfitItemSO FindOutfitBySaveId(string outfitSaveId)
@@ -157,8 +181,7 @@ public class OutfitManager : Singleton<OutfitManager>, ISaveable
         if (string.IsNullOrWhiteSpace(outfitSaveId))
             return null;
 
-        if (_knownOutfits.Count == 0)
-            CacheKnownOutfits();
+        CacheKnownOutfits();
 
         return _knownOutfits.Find(outfit => outfit != null && outfit.name == outfitSaveId);
     }

@@ -34,6 +34,9 @@ public class ItemInteraction : MonoBehaviour, IInteractable
         if (remaining > 0)
             return;
 
+        if (HordeManager.Instance != null)
+            HordeManager.Instance.RecordObjectiveItemCollected(_inventoryItem, 1);
+
         QuestObjectiveEvents.RaiseItemCollected(_inventoryItem, 1);
         SoundManager.Instance.PlayPickUpSFX();
         TriggerParticles();

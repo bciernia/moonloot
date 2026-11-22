@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
 
     private PlayerAnimations _playerAnimations;
 
-    public float CurrentHealth { get; private set; }
+    public float CurrentHealth => _playerStats != null ? _playerStats.HP : 0f;
 
     private Coroutine _shieldCoroutine;
     
@@ -20,14 +20,13 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
     
     private void Start()
     {
-        CurrentHealth = _playerStats.HP;
-        
         if (_playerStats.HP <= 0)
         {
             PlayerDead();
         }
 
         PrepareStatistics();
+        StartCoroutine(HealthRegenerationRoutine());
     }
 
     private void PrepareStatistics()
@@ -75,8 +74,42 @@ public class PlayerHealth : MonoBehaviour, IDamageable, IHealable, IShieldable, 
 
     public void RestoreHealth(float amount)
     {
-        _playerStats.HP = Mathf.Min(_playerStats.HP + amount, _playerStats.GetMaxHp());
-        FloatingTextManager.Instance.ShowHealText(amount, transform);
+        if (amount <= 0f || _playerStats.HP <= 0f)
+            return;
+
+        var previousHealth = _playerStats.HP;
+        _playerStats.HP = Mathf.Min(
+            _playerStats.HP + amount,
+            _playerStats.GetMaxHp());
+        var restoredAmount = _playerStats.HP - previousHealth;
+
+        if (restoredAmount > 0f && FloatingTextManager.Instance != null)
+            FloatingTextManager.Instance.ShowHealText(restoredAmount, transform);
+    }
+
+    private IEnumerator HealthRegenerationRoutine()
+    {
+        var accumulatedHealing = 0f;
+
+        while (true)
+        {
+            // Scaled time prevents regeneration while the game is paused.
+            yield return new WaitForSeconds(1f);
+
+            if (_playerStats.HP <= 0f || _playerStats.HP >= _playerStats.GetMaxHp())
+            {
+                accumulatedHealing = 0f;
+                continue;
+            }
+
+            accumulatedHealing += _playerStats.GetHealthRegenerationPerSecond();
+            var wholeHealingPoints = Mathf.Floor(accumulatedHealing);
+            if (wholeHealingPoints < 1f)
+                continue;
+
+            accumulatedHealing -= wholeHealingPoints;
+            RestoreHealth(wholeHealingPoints);
+        }
     }
 
     public void RestoreMana(float amount)

@@ -15,6 +15,9 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     [Header("Credits")]
     public Transform creditsCameraPoint;
     public CanvasGroup creditsCanvasGroup;
+    [SerializeField] private GameObject discordButton;
+    [SerializeField] private CanvasGroup discordCanvasGroup;
+    [SerializeField, Min(0.1f)] private float discordFadeDuration = 1.2f;
     public Vector3 creditsTitleOffset = new(0, .5f, 0);
 
     [Header("Camera")]
@@ -57,6 +60,12 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     {
         version.text = $"v{Application.version}";
 
+        if (discordCanvasGroup == null && discordButton != null)
+        {
+            discordCanvasGroup = discordButton.GetComponent<CanvasGroup>();
+            if (discordCanvasGroup == null)
+                discordCanvasGroup = discordButton.AddComponent<CanvasGroup>();
+        }
 
         cameraStartPos = menuCamera.transform.position;
 
@@ -79,6 +88,12 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
         creditsCanvasGroup.alpha = 0;
         creditsCanvasGroup.gameObject.SetActive(false);
 
+        if (discordCanvasGroup != null)
+        {
+            discordCanvasGroup.alpha = 0;
+            discordCanvasGroup.interactable = false;
+            discordCanvasGroup.blocksRaycasts = false;
+        }
 
         if(titleRenderer)
         {
@@ -134,7 +149,7 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
 
     public void OpenCredits()
     {
-        if(isAnimating) return;
+        if (isAnimating || isShowingCredits) return;
 
         StartCoroutine(OpenCreditsRoutine());
     }
@@ -145,6 +160,8 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
     {
         isAnimating = true;
         isShowingCredits = true;
+        if (discordCanvasGroup != null)
+            StartCoroutine(FadeDiscord(0f));
 
 
         creditsCanvasGroup.gameObject.SetActive(true);
@@ -255,6 +272,8 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
 
 
         isShowingCredits = false;
+        if (discordCanvasGroup != null)
+            StartCoroutine(FadeDiscord(1f));
         isAnimating = false;
     }
 
@@ -301,6 +320,9 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
+
+        if (discordCanvasGroup != null)
+            StartCoroutine(FadeDiscord(1f));
     }
 
 
@@ -326,6 +348,28 @@ public class TitleAndButtonsIntro2D : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
+    }
+
+    IEnumerator FadeDiscord(float targetAlpha)
+    {
+        if (discordCanvasGroup == null)
+            yield break;
+
+        discordCanvasGroup.interactable = targetAlpha > 0.99f;
+        discordCanvasGroup.blocksRaycasts = targetAlpha > 0.01f;
+        float startAlpha = discordCanvasGroup.alpha;
+        float elapsed = 0f;
+        float duration = Mathf.Max(0.1f, discordFadeDuration);
+
+        while (elapsed < duration)
+        {
+            float lerp = SmoothStep(elapsed / duration);
+            discordCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, lerp);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        discordCanvasGroup.alpha = targetAlpha;
     }
 
 

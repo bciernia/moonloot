@@ -9,6 +9,7 @@ public class PlayerStatsSO : ScriptableObject
 
     [Header("Health")] public float HP;
     public float MaxHP;
+    [Min(0f)] public float BaseHealthRegenerationPerSecond = 1f / 3f;
 
     [Header("Mana")] public float MP;
     public float MaxMP;
@@ -48,14 +49,73 @@ public class PlayerStatsSO : ScriptableObject
     private Dictionary<BonusType, float> _runFlatBonuses = new();
     private Dictionary<BonusType, float> _runFoodBonuses = new();
     private Dictionary<BonusType, float> _runFoodFlatBonuses = new();
+    private float _levelHealthRegenerationBonus;
+    private float _initialMaxHp, _initialMaxMp, _initialMaxStamina;
+    private float _initialBaseDamage, _initialPhysicalResistance, _initialMagicResistance, _initialShieldResistance;
+    private bool _initialValuesCaptured;
+
+    private void OnEnable()
+    {
+        _initialMaxHp = MaxHP;
+        _initialMaxMp = MaxMP;
+        _initialMaxStamina = MaxStamina;
+        _initialBaseDamage = BaseDamage;
+        _initialPhysicalResistance = PhysicalResistance;
+        _initialMagicResistance = MagicResistance;
+        _initialShieldResistance = ShieldResistance;
+        _initialValuesCaptured = true;
+    }
+
+    public void ResetForNewGame()
+    {
+        if (!_initialValuesCaptured)
+        {
+            Debug.LogError("Cannot reset player stats: initial values were not captured.", this);
+            return;
+        }
+
+        ResetNpcBonuses();
+        ResetTavernBonuses();
+        ResetEquipmentBonuses();
+        ResetEquipmentFlatBonuses();
+        ResetTemporaryBonuses();
+        ClearRunBonuses();
+
+        MaxHP = _initialMaxHp;
+        MaxMP = _initialMaxMp;
+        MaxStamina = _initialMaxStamina;
+        BaseDamage = _initialBaseDamage;
+        TotalDamage = _initialBaseDamage;
+        PhysicalResistance = _initialPhysicalResistance;
+        MagicResistance = _initialMagicResistance;
+        ShieldResistance = _initialShieldResistance;
+        AttackCooldownReduction = 1f;
+        currentWeapon = null;
+        ResetPlayerStats();
+        Stamina = MaxStamina;
+    }
+
+    public float LevelHealthRegenerationBonus => _levelHealthRegenerationBonus;
+
+    public Dictionary<BonusType, float> GetLevelBonuses() => new(_levelBonuses);
+    public Dictionary<BonusType, float> GetLevelFlatBonuses() => new(_levelFlatBonuses);
+
+    public void RestoreLevelBonuses(Dictionary<BonusType, float> bonuses, Dictionary<BonusType, float> flatBonuses)
+    {
+        _levelBonuses = bonuses != null ? new Dictionary<BonusType, float>(bonuses) : new Dictionary<BonusType, float>();
+        _levelFlatBonuses = flatBonuses != null ? new Dictionary<BonusType, float>(flatBonuses) : new Dictionary<BonusType, float>();
+    }
     
     public void ResetPlayerStats()
     {
+        _levelBonuses.Clear();
+        _levelFlatBonuses.Clear();
         HP = GetMaxHp();
         MP = GetMaxMp();
         Level = 1;
         Exp = 0;
         NextLevelExp = InitialNextLevelExp;
+        _levelHealthRegenerationBonus = 0f;
     }
 
     public void RecalculateResistances(float physical)
@@ -105,6 +165,14 @@ public class PlayerStatsSO : ScriptableObject
     
     public void AddLevelBonus(StatBonus bonus)
     {
+        if (bonus.Type == BonusType.HealthRegeneration)
+        {
+            _levelHealthRegenerationBonus = Mathf.Max(
+                0f,
+                _levelHealthRegenerationBonus + bonus.Value);
+            return;
+        }
+
         if (bonus.Type == BonusType.Damage ||
             bonus.Type == BonusType.MoveSpeed ||
             bonus.Type == BonusType.CritChance ||
@@ -231,6 +299,27 @@ public class PlayerStatsSO : ScriptableObject
 
     public float GetMaxHp() => MaxHP + GetNpcFlatBonus(BonusType.MaxHp) + GetEqFlatBonus(BonusType.MaxHp) + GetLevelFlatBonus(BonusType.MaxHp) + GetTavernFlatBonus(BonusType.MaxHp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f) + _runFoodFlatBonuses.GetValueOrDefault(BonusType.MaxHp, 0f);
     public float GetMaxMp() => MaxMP + GetNpcFlatBonus(BonusType.MaxMp) + _temporaryFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f) + _runFoodFlatBonuses.GetValueOrDefault(BonusType.MaxMp, 0f);
+
+    public float GetHealthRegenerationPerSecond()
+    {
+        var bonuses =
+            _npcFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f) +
+            _eqFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f) +
+            _tavernFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f) +
+            _temporaryFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f) +
+            _runFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f) +
+            _runFoodFlatBonuses.GetValueOrDefault(BonusType.HealthRegeneration, 0f);
+
+        return Mathf.Clamp(
+            BaseHealthRegenerationPerSecond + _levelHealthRegenerationBonus + bonuses,
+            0f,
+            1f);
+    }
+
+    public void SetLevelHealthRegenerationBonus(float value)
+    {
+        _levelHealthRegenerationBonus = Mathf.Max(0f, value);
+    }
 
     public bool HasRunFoodBonuses =>
         _runFoodBonuses.Count > 0 || _runFoodFlatBonuses.Count > 0;

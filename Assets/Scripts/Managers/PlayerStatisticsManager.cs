@@ -12,6 +12,7 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     [SerializeField] private TextMeshProUGUI CritMultiplier;
     [SerializeField] private TextMeshProUGUI MoveSpeed;
     [SerializeField] private TextMeshProUGUI AttackCooldown;
+    [SerializeField] private TextMeshProUGUI HPRegen;
 
     public void SetDamage(float dmg)
     {
@@ -46,5 +47,16 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
     public void SetAttackCooldownPercent(float percent)
     {
         AttackCooldown.text = percent.ToString("0") + "%";
+    }
+
+    public void SetHealthRegeneration(float healthPerSecond)
+    {
+        if (HPRegen == null)
+            return;
+
+        var unit = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate("HP/s")
+            : "HP/s";
+        HPRegen.text = healthPerSecond.ToString("0.##", CultureInfo.InvariantCulture) + " " + unit;
     }
 }

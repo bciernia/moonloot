@@ -26,6 +26,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthTMP;
     [SerializeField] private TextMeshProUGUI _levelTMP;
 
+    [Header("Crystal currency")]
+    [SerializeField] private TextMeshProUGUI AullaCrystalTMP;
+    [SerializeField] private TextMeshProUGUI UdrosCrystalTMP;
+
     [Header("Equipment Panel")]
     [SerializeField] private Image _healthBarEq;
     [SerializeField] private Image _manaBarEq;
@@ -127,6 +131,10 @@ public class UIManager : MonoBehaviour
     
     [Header("Minimap")]
     [SerializeField] private GameObject _minimapContainer;
+
+    [Header("Full Map")]
+    [SerializeField] private GameObject _mapPanel;
+    [SerializeField] private RawImage _fullMapImage;
     
     [Header("Find Portal")]
     [SerializeField] private RectTransform _findPortalPanel;
@@ -149,6 +157,21 @@ public class UIManager : MonoBehaviour
     private InputAction _skillsAction;
     private InputAction _journalAction;
     private InputAction _menuAction;
+    private InputAction _mapAction;
+
+    private Camera _fullMapCamera;
+    private MinimapFollow _minimapFollow;
+    private Vector3 _minimapCameraOriginalPosition;
+    private float _minimapCameraOriginalSize;
+    private float _minimapCameraOriginalAspect;
+    private int _minimapCameraOriginalCullingMask;
+    private RenderTexture _minimapCameraOriginalTargetTexture;
+    private RenderTexture _fullMapRenderTexture;
+    private bool _minimapFollowWasEnabled;
+    private bool _mapPanelLayoutSaved;
+    private Vector2 _mapPanelOriginalOffsetMin, _mapPanelOriginalOffsetMax;
+    private Vector2 _mapPanelParentSize;
+    private float _mapPanelAspect;
 
     private float _displayedHp;
     private float _displayedExp;
@@ -160,6 +183,8 @@ public class UIManager : MonoBehaviour
     private bool _equippedPanelWasVisible;
     
     private Coroutine _objectiveFlashRoutine;
+    private Color _objectiveOriginalColor;
+    private bool _objectiveColorCached;
     
     private GameObject MainMenuPanel =>
         PersistentMenuManager.Instance.MainMenuPanel;
@@ -175,6 +200,12 @@ public class UIManager : MonoBehaviour
     
     private void Awake()
     {
+        var childTexts = GetComponentsInChildren<TextMeshProUGUI>(true);
+        if (AullaCrystalTMP == null)
+            AullaCrystalTMP = childTexts.FirstOrDefault(text => text.name == "AullaCrystalTMP");
+        if (UdrosCrystalTMP == null)
+            UdrosCrystalTMP = childTexts.FirstOrDefault(text => text.name == "UdrosCrystalTMP");
+
         if (_playerStatsSo != null)
         {
             _displayedHp = _playerStatsSo.HP;
@@ -185,6 +216,9 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
+        if (_mapPanel != null)
+            _mapPanel.SetActive(false);
+
         LocalizeSummaryControls();
 
         if (_heroSelectionPanel != null)
@@ -214,6 +248,10 @@ public class UIManager : MonoBehaviour
 
         RefreshMoonObjective();
 
+        var inventory = InventoryController.Instance;
+        if (inventory != null)
+            UpdateCrystalAmounts(inventory.inventoryData.AullaCrystals, inventory.inventoryData.UdrosCrystals);
+
         HordeManager.Instance.OnObjectiveProgressChanged += UpdateMoonObjectiveUI;
         
         RefreshMinimapVisibility();
@@ -228,6 +266,15 @@ public class UIManager : MonoBehaviour
 
         _findPortalPanel.anchoredPosition = position;
         _findPortalPanel.gameObject.SetActive(false);
+    }
+
+    public void UpdateCrystalAmounts(int aullaAmount, int udrosAmount)
+    {
+        if (AullaCrystalTMP != null)
+            AullaCrystalTMP.text = aullaAmount.ToString();
+
+        if (UdrosCrystalTMP != null)
+            UdrosCrystalTMP.text = udrosAmount.ToString();
     }
 
     private void ShowEndlessUI()
@@ -254,6 +301,7 @@ public class UIManager : MonoBehaviour
     private void OnDestroy()
     {
         UnregisterInputCallbacks();
+        CloseFullMap();
         HordeManager.OnHordeStarted -= SetupHordeUI;
         HordeManager.OnHordeFinished -= ShowSummaryPanel;
         HordeManager.OnExitSpawned -= OnPortalSpawned;
@@ -278,6 +326,8 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        ResetObjectiveFlash();
+        CloseFullMap();
         GameManager.OnGameModeChanged -= OnGameModeChanged;
         HordeManager.OnHordeFinished -= UpdateNightUI;
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -287,6 +337,8 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        ResetObjectiveFlash();
+        CloseFullMap();
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
         
@@ -376,6 +428,7 @@ public class UIManager : MonoBehaviour
         _skillsAction = map.FindAction("Skills", false);
         _journalAction = map.FindAction("Journal", false);
         _menuAction = map.FindAction("Main menu", false);
+        _mapAction = map.FindAction("Map", false);
     }
 
     private void EnableInputActions()
@@ -390,6 +443,7 @@ public class UIManager : MonoBehaviour
         if (_skillsAction != null) _skillsAction.performed += OnSkillsPressed;
         if (_journalAction != null) _journalAction.performed += OnJournalPressed;
         if (_menuAction != null) _menuAction.performed += OnMenuPressed;
+        if (_mapAction != null) _mapAction.performed += OnMapPressed;
     }
 
     private void UnregisterInputCallbacks()
@@ -398,11 +452,13 @@ public class UIManager : MonoBehaviour
         if (_skillsAction != null) _skillsAction.performed -= OnSkillsPressed;
         if (_journalAction != null) _journalAction.performed -= OnJournalPressed;
         if (_menuAction != null) _menuAction.performed -= OnMenuPressed;
+        if (_mapAction != null) _mapAction.performed -= OnMapPressed;
     }
     #endregion
 
     private void Update()
     {
+        RefreshFullMapPanelSize();
         UpdatePlayerUI();
         // UpdateClock();
         UpdateHordeUI();
@@ -466,6 +522,7 @@ public class UIManager : MonoBehaviour
     private void OnSkillsPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(1);
     private void OnJournalPressed(InputAction.CallbackContext ctx) => OpenCloseTabPanel(2);
     private void OnMenuPressed(InputAction.CallbackContext ctx) => HandleEscapePressed();
+    private void OnMapPressed(InputAction.CallbackContext ctx) => ToggleFullMap();
     #endregion
 
     #region Menu & Panels
@@ -506,6 +563,12 @@ public class UIManager : MonoBehaviour
 
     private void HandleEscapePressed()
     {
+        if (_mapPanel != null && _mapPanel.activeSelf)
+        {
+            CloseFullMap();
+            return;
+        }
+
         if (DialogueManager.Instance != null && DialogueManager.Instance.IsInDialogue())
             return;
 
@@ -538,6 +601,7 @@ public class UIManager : MonoBehaviour
     }
     private void CloseAllPanels()
     {
+        CloseFullMap();
         GameObject[] panels = { _gameMenu, OptionsPanel, _taskTablePanel, LoadPanel, MainMenuPanel };
 
         foreach (var panel in panels)
@@ -552,6 +616,254 @@ public class UIManager : MonoBehaviour
     private void OpenClosePanel(GameObject panel)
     {
         panel.SetActive(!panel.activeSelf);
+    }
+
+    private void ToggleFullMap()
+    {
+        if (_mapPanel == null)
+            return;
+
+        if (_mapPanel.activeSelf)
+        {
+            CloseFullMap();
+            return;
+        }
+
+        if (DialogueManager.Instance != null && DialogueManager.Instance.IsInDialogue())
+            return;
+
+        if (!IsOnHordeMap())
+        {
+            if (ToastrPanelManager.Instance != null)
+                ToastrPanelManager.Instance.Show("The map is only available on horde maps.");
+            return;
+        }
+
+        _mapPanel.SetActive(true);
+        Canvas.ForceUpdateCanvases();
+        StretchFullMapImageToPanel();
+        PrepareFullMapCamera();
+
+        if (_fullMapImage != null && _fullMapCamera != null)
+            _fullMapImage.texture = _fullMapCamera.targetTexture;
+    }
+
+    private bool IsOnHordeMap()
+    {
+        var hordeManager = HordeManager.Instance;
+        if (hordeManager == null || !hordeManager.IsNightRunning)
+            return false;
+
+        var sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "START_MAP")
+            return true;
+
+        return hordeManager.CurrentNightLocation != null &&
+               sceneName == hordeManager.CurrentNightLocation.SceneName;
+    }
+
+    private void StretchFullMapImageToPanel()
+    {
+        if (_mapPanel == null)
+            return;
+
+        if (_fullMapImage == null)
+        {
+            _fullMapImage = _mapPanel.GetComponent<RawImage>() ??
+                            _mapPanel.GetComponentInChildren<RawImage>(true);
+        }
+
+        if (_fullMapImage == null)
+            return;
+
+        var imageRect = _fullMapImage.rectTransform;
+        var panelRect = _mapPanel.transform as RectTransform;
+        if (imageRect == null || panelRect == null || imageRect == panelRect)
+            return;
+
+        if (imageRect.parent != panelRect)
+        {
+            imageRect.SetParent(panelRect, false);
+            imageRect.SetAsFirstSibling();
+        }
+
+        imageRect.anchorMin = Vector2.zero;
+        imageRect.anchorMax = Vector2.one;
+        imageRect.pivot = new Vector2(0.5f, 0.5f);
+        imageRect.offsetMin = Vector2.zero;
+        imageRect.offsetMax = Vector2.zero;
+        _fullMapImage.uvRect = new Rect(0f, 0f, 1f, 1f);
+        Canvas.ForceUpdateCanvases();
+    }
+
+    private void PrepareFullMapCamera()
+    {
+        if (_fullMapImage == null && _mapPanel != null)
+        {
+            _fullMapImage = _mapPanel.GetComponent<RawImage>() ??
+                            _mapPanel.GetComponentInChildren<RawImage>(true);
+        }
+
+        var mapCameras = FindObjectsByType<Camera>(FindObjectsSortMode.None)
+            .Where(camera => camera != null &&
+                camera.targetTexture != null &&
+                camera.targetTexture.name.IndexOf("Minimap", StringComparison.OrdinalIgnoreCase) >= 0)
+            .ToArray();
+        _fullMapCamera = mapCameras.FirstOrDefault(camera => camera.GetComponent<MinimapFollow>() != null)
+                         ?? mapCameras.FirstOrDefault();
+
+        if (_fullMapCamera == null)
+        {
+            Debug.LogWarning("Full map could not find a camera rendering to the minimap texture.", this);
+            return;
+        }
+
+        if (_fullMapImage == null)
+        {
+            Debug.LogWarning("Assign a RawImage for the full map display.", this);
+            return;
+        }
+
+        _minimapCameraOriginalPosition = _fullMapCamera.transform.position;
+        _minimapCameraOriginalSize = _fullMapCamera.orthographicSize;
+        _minimapCameraOriginalAspect = _fullMapCamera.aspect;
+        _minimapCameraOriginalCullingMask = _fullMapCamera.cullingMask;
+        _minimapCameraOriginalTargetTexture = _fullMapCamera.targetTexture;
+        _minimapFollow = _fullMapCamera.GetComponent<MinimapFollow>();
+        _minimapFollowWasEnabled = _minimapFollow != null && _minimapFollow.enabled;
+
+        // The minimap has its own world-space map sprite on the minimap layer.
+        // Its bounds, rather than the scene's tilemaps, define the displayed map.
+        var mapSprite = FindObjectsByType<SpriteRenderer>(FindObjectsSortMode.None)
+            .Where(renderer => renderer != null && renderer.enabled && renderer.sprite != null &&
+                               renderer.gameObject.activeInHierarchy &&
+                               (_minimapCameraOriginalCullingMask & (1 << renderer.gameObject.layer)) != 0 &&
+                               renderer.gameObject.scene == SceneManager.GetActiveScene())
+            .OrderByDescending(renderer => renderer.bounds.size.x * renderer.bounds.size.y)
+            .FirstOrDefault();
+
+        if (mapSprite == null)
+        {
+            Debug.LogWarning("Full map could not find a map sprite on the minimap camera layers.", this);
+            _fullMapCamera = null;
+            return;
+        }
+
+        var bounds = mapSprite.bounds;
+        if (_minimapFollow != null)
+            _minimapFollow.enabled = false;
+
+        // Render the world bounds tightly into the texture. RawImage then stretches
+        // that complete texture to its own RectTransform, matching the panel width.
+        var mapAspect = Mathf.Max(0.1f, bounds.size.x / Mathf.Max(0.01f, bounds.size.y));
+        FitFullMapPanel(mapAspect);
+
+        // Match the render texture and camera viewport to the map Image's shape.
+        // Use the map's aspect ratio here, not the panel's. This prevents empty
+        // margins around the map; the RawImage stretches it to the panel shape.
+        const int renderTextureLongSide = 1024;
+        var textureWidth = mapAspect >= 1f
+            ? renderTextureLongSide
+            : Mathf.RoundToInt(renderTextureLongSide * mapAspect);
+        var textureHeight = mapAspect >= 1f
+            ? Mathf.RoundToInt(renderTextureLongSide / mapAspect)
+            : renderTextureLongSide;
+        textureWidth = Mathf.Max(128, textureWidth);
+        textureHeight = Mathf.Max(128, textureHeight);
+
+        _fullMapRenderTexture = new RenderTexture(textureWidth, textureHeight, 24, RenderTextureFormat.ARGB32)
+        {
+            name = "Full Map Runtime Texture"
+        };
+        _fullMapRenderTexture.Create();
+        _fullMapCamera.targetTexture = _fullMapRenderTexture;
+        _fullMapCamera.aspect = mapAspect;
+        _fullMapCamera.cullingMask = _minimapCameraOriginalCullingMask;
+        _fullMapCamera.orthographicSize = Mathf.Max(0.01f, bounds.extents.y);
+
+        var cameraPosition = _fullMapCamera.transform.position;
+        cameraPosition.x = bounds.center.x;
+        cameraPosition.y = bounds.center.y;
+        _fullMapCamera.transform.position = cameraPosition;
+    }
+
+    private void FitFullMapPanel(float aspect)
+    {
+        if (_mapPanel == null || !(_mapPanel.transform is RectTransform panel) ||
+            !(panel.parent is RectTransform parent))
+            return;
+
+        if (!_mapPanelLayoutSaved)
+        {
+            _mapPanelOriginalOffsetMin = panel.offsetMin;
+            _mapPanelOriginalOffsetMax = panel.offsetMax;
+            _mapPanelLayoutSaved = true;
+        }
+
+        _mapPanelAspect = aspect;
+        _mapPanelParentSize = parent.rect.size;
+        panel.offsetMin = _mapPanelOriginalOffsetMin;
+        panel.offsetMax = _mapPanelOriginalOffsetMax;
+
+        var available = panel.rect.size;
+        if (available.x <= 0f || available.y <= 0f)
+            return;
+
+        var size = available.x / available.y > aspect
+            ? new Vector2(available.y * aspect, available.y)
+            : new Vector2(available.x, available.x / aspect);
+        var inset = (available - size) * 0.5f;
+        panel.offsetMin = _mapPanelOriginalOffsetMin + inset;
+        panel.offsetMax = _mapPanelOriginalOffsetMax - inset;
+    }
+
+    private void RefreshFullMapPanelSize()
+    {
+        if (!_mapPanelLayoutSaved || _mapPanel == null || !_mapPanel.activeInHierarchy ||
+            !(_mapPanel.transform.parent is RectTransform parent))
+            return;
+
+        if (parent.rect.size != _mapPanelParentSize)
+            FitFullMapPanel(_mapPanelAspect);
+    }
+
+    private void CloseFullMap()
+    {
+        if (_mapPanelLayoutSaved && _mapPanel != null && _mapPanel.transform is RectTransform panelRect)
+        {
+            panelRect.offsetMin = _mapPanelOriginalOffsetMin;
+            panelRect.offsetMax = _mapPanelOriginalOffsetMax;
+        }
+        _mapPanelLayoutSaved = false;
+
+        if (_fullMapCamera != null)
+        {
+            _fullMapCamera.transform.position = _minimapCameraOriginalPosition;
+            _fullMapCamera.orthographicSize = _minimapCameraOriginalSize;
+            _fullMapCamera.aspect = _minimapCameraOriginalAspect;
+            _fullMapCamera.cullingMask = _minimapCameraOriginalCullingMask;
+            _fullMapCamera.targetTexture = _minimapCameraOriginalTargetTexture;
+        }
+
+        if (_minimapFollow != null)
+            _minimapFollow.enabled = _minimapFollowWasEnabled;
+
+        _fullMapCamera = null;
+        _minimapFollow = null;
+
+        if (_fullMapRenderTexture != null)
+        {
+            if (_fullMapImage != null && _fullMapImage.texture == _fullMapRenderTexture)
+                _fullMapImage.texture = null;
+
+            _fullMapRenderTexture.Release();
+            Destroy(_fullMapRenderTexture);
+            _fullMapRenderTexture = null;
+        }
+        _minimapCameraOriginalTargetTexture = null;
+
+        if (_mapPanel != null)
+            _mapPanel.SetActive(false);
     }
     #endregion
 
@@ -1459,6 +1771,8 @@ public class UIManager : MonoBehaviour
 
         var finalSpeed = movement.GetFinalSpeed();
         PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
+        PlayerStatisticsManager.Instance.SetHealthRegeneration(
+            _playerStatsSo.GetHealthRegenerationPerSecond());
 
         var attackCooldownReduction =
             _playerStatsSo.GetBonusValue(
@@ -1492,6 +1806,7 @@ public class UIManager : MonoBehaviour
             BonusType.CritMultiplier => $"+{bonus.Value:0} Crit Multiplier",
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
+            BonusType.HealthRegeneration => $"+{bonus.Value:0.##} HP/s Regeneration",
             BonusType.AttackCooldownReduction => $"+{bonus.Value:0}% Attack Speed",
             BonusType.DamageReduction => $"+{bonus.Value:0}% Damage Reduction",
             _ => bonus.Type.ToString()
@@ -1640,17 +1955,36 @@ public class UIManager : MonoBehaviour
     
     private void NotifyObjectiveChanged()
     {
+        if (_moonObjectiveText == null)
+            return;
+
+        if (!_objectiveColorCached)
+        {
+            _objectiveOriginalColor = _moonObjectiveText.color;
+            _objectiveColorCached = true;
+        }
+
         if (_objectiveFlashRoutine != null)
         {
             StopCoroutine(_objectiveFlashRoutine);
         }
 
+        _moonObjectiveText.color = _objectiveOriginalColor;
         _objectiveFlashRoutine = StartCoroutine(ObjectiveFlashRoutine());
+    }
+
+    private void ResetObjectiveFlash()
+    {
+        if (_objectiveFlashRoutine != null)
+            StopCoroutine(_objectiveFlashRoutine);
+        _objectiveFlashRoutine = null;
+        if (_objectiveColorCached && _moonObjectiveText != null)
+            _moonObjectiveText.color = _objectiveOriginalColor;
     }
 
     private IEnumerator ObjectiveFlashRoutine()
     {
-        var originalColor = _moonObjectiveText.color;
+        var originalColor = _objectiveOriginalColor;
 
         var flashColor = Color.yellow;
 
@@ -1690,6 +2024,7 @@ public class UIManager : MonoBehaviour
         }
 
         _moonObjectiveText.color = originalColor;
+        _objectiveFlashRoutine = null;
     }
     
     #endregion

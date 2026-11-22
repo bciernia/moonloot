@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SaveLoadManager : Singleton<SaveLoadManager>
 {
+    public const int MaxSaveSlots = 15;
     [SerializeField] private ES3SlotManager slotManager;
 
     private ES3Settings CurrentSettings
@@ -27,17 +28,39 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
 
     public ES3Settings GetSettings() =>  CurrentSettings;
 
-    public void CreateNewSaveForNewGame(
+    public bool CreateNewSaveForNewGame(
         OutfitItemSO startingHeroOutfit = null,
         string startingSceneName = "START_MAP")
     {
+        if (slotManager == null)
+        {
+            Debug.LogError("Cannot create a save: the slot manager is not assigned.", this);
+            return false;
+        }
+
+        if (ES3.DirectoryExists(slotManager.slotDirectory) &&
+            ES3.GetFiles(slotManager.slotDirectory).Count(file =>
+                file.EndsWith(slotManager.slotExtension, StringComparison.OrdinalIgnoreCase)) >= MaxSaveSlots)
+            return false;
+
         var slotName = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        var baseName = slotName;
+        var suffix = 1;
+        while (ES3.FileExists(slotManager.GetSlotPath(slotName)))
+            slotName = $"{baseName}_{suffix++}";
 
         var slot =
             slotManager.CreateNewSlot(slotName);
 
         ES3SlotManager.selectedSlotPath =
             slot.GetSlotPath();
+
+        // InventorySO is a shared runtime asset and may still hold values from
+        // the previously loaded save. A genuinely new game starts with no crystals.
+        InventoryController.ResetCrystalBalancesForNewGame();
+
+        ES3.Save("playerInventory_aullaCrystals", 0, CurrentSettings);
+        ES3.Save("playerInventory_udrosCrystals", 0, CurrentSettings);
 
         if (TutorialManager.Instance != null)
             TutorialManager.Instance.InitializeForNewSave();
@@ -69,6 +92,7 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
             OutfitManager.HeroOutfitSaveKey,
             OutfitManager.GetOutfitSaveId(startingHeroOutfit),
             CurrentSettings);
+        return true;
     }
 
     public void Save()
@@ -124,10 +148,13 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
             sceneName,
             true);
 
-        var saveables =
-            FindObjectsByType<MonoBehaviour>(
-                    FindObjectsSortMode.None)
-                .OfType<ISaveable>();
+        if (HordeManager.Instance != null && ES3.KeyExists("CurrentNight", settings))
+            HordeManager.Instance.currentHorde = ES3.Load<int>("CurrentNight", settings);
+
+        var saveables = FindObjectsByType<MonoBehaviour>(FindObjectsInactive.Include, FindObjectsSortMode.None)
+            .OfType<ISaveable>()
+            .OrderBy(GetLoadPriority)
+            .ToArray();
 
         foreach (var saveable in saveables)
         {
@@ -135,6 +162,22 @@ public class SaveLoadManager : Singleton<SaveLoadManager>
         }
 
         MigrateLegacyEquippedOutfitIfNeeded();
+
+        if (Player.Instance != null && Player.Instance.PlayerAttack != null)
+            Player.Instance.PlayerAttack.RecalculateDamage();
+    }
+
+    private static int GetLoadPriority(ISaveable saveable)
+    {
+        if (saveable is Player) return 0;
+        if (saveable is InventoryController) return 1;
+        if (saveable is OutfitManager) return 2;
+        if (saveable is PlayerSkillManager) return 3;
+        if (saveable is SkillsManager) return 4;
+        if (saveable is NPCManager) return 5;
+        if (saveable is TavernManager) return 6;
+        if (saveable is WorldManager) return 7;
+        return 8;
     }
 
     private void MigrateLegacyEquippedOutfitIfNeeded()

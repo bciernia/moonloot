@@ -43,7 +43,7 @@ public class QuestTooltipUI : MonoBehaviour
             {
                 rewardText += reward.number + " ";
             }
-            rewardText += reward.item.item.Name;
+            rewardText += GetLocalizedItemName(reward.item.item);
         }
 
         if (rewardText == "")
@@ -52,6 +52,15 @@ public class QuestTooltipUI : MonoBehaviour
         }
 
         rewardText += ".";
-        return rewardText;
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(rewardText)
+            : rewardText;
+    }
+
+    private static string GetLocalizedItemName(ItemSO item)
+    {
+        return item != null && LocalizationManager.Instance != null
+            ? item.GetLocalizedName(LocalizationManager.Instance.CurrentLanguage)
+            : item != null ? item.Name : string.Empty;
     }
 }

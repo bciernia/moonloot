@@ -91,6 +91,62 @@ public class Player : MonoBehaviour, ISaveable
 
     public bool HasRunFoodBonuses => _playerStats.HasRunFoodBonuses;
 
+    public void ApplyStartingHeroStats(NPCHero hero)
+    {
+        if (hero == null)
+            return;
+
+        var profession = hero.Profession?.Trim();
+        var maxHp = 0f;
+        var baseDamage = 0f;
+        var moveSpeedMultiplier = 1f;
+
+        if (string.Equals(profession, "Barbarian", StringComparison.OrdinalIgnoreCase))
+        {
+            maxHp = 130f;
+            baseDamage = 3.5f;
+            moveSpeedMultiplier = 0.8f;
+        }
+        else if (string.Equals(profession, "Ranger", StringComparison.OrdinalIgnoreCase))
+        {
+            maxHp = 75f;
+            baseDamage = 1.5f;
+            moveSpeedMultiplier = 1.15f;
+        }
+
+        if (hero.StartingMaxHp > 0f)
+            maxHp = hero.StartingMaxHp;
+        else if (hero.MaxHp > 0f)
+            maxHp = hero.MaxHp;
+
+        if (hero.StartingBaseDamage > 0f)
+            baseDamage = hero.StartingBaseDamage;
+
+        if (hero.StartingMoveSpeedMultiplier > 0f)
+            moveSpeedMultiplier = hero.StartingMoveSpeedMultiplier;
+
+        if (maxHp > 0f)
+            _playerStats.MaxHP = maxHp;
+        if (baseDamage > 0f)
+            _playerStats.BaseDamage = baseDamage;
+
+        if (moveSpeedMultiplier > 0f)
+            GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(moveSpeedMultiplier);
+
+        _playerStats.HP = _playerStats.GetMaxHp();
+    }
+
+    public void ResetForNewGame()
+    {
+        foreach (var effect in _timedStatEffects.Values)
+            if (effect != null) StopCoroutine(effect);
+        _timedStatEffects.Clear();
+        _hasRunBonuses = false;
+        _playerStats.ResetForNewGame();
+        GetComponent<PlayerMovement>()?.ResetTemporaryMovementModifiers();
+        GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(1f);
+    }
+
     public Dictionary<BonusType, float> GetRunFoodBonuses() =>
         _playerStats.GetRunFoodBonuses();
 
@@ -202,7 +258,10 @@ public class Player : MonoBehaviour, ISaveable
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Base_Demo")
+        {
             ClearRunStatBonuses();
+            _playerStats.HP = _playerStats.GetMaxHp();
+        }
     }
     
     public void Save()
@@ -230,6 +289,9 @@ public class Player : MonoBehaviour, ISaveable
 
             exp = _playerStats.Exp,
             nextLevelExp = _playerStats.NextLevelExp,
+            healthRegenerationLevelBonus = _playerStats.LevelHealthRegenerationBonus,
+            levelBonuses = _playerStats.GetLevelBonuses(),
+            levelFlatBonuses = _playerStats.GetLevelFlatBonuses(),
 
             baseDamage = _playerStats.BaseDamage,
             totalDamage = _playerStats.TotalDamage,
@@ -238,6 +300,9 @@ public class Player : MonoBehaviour, ISaveable
             magicResistance = _playerStats.MagicResistance,
 
             shieldResistance = _playerStats.ShieldResistance,
+            heroMoveSpeedMultiplier = GetComponent<PlayerMovement>() != null
+                ? GetComponent<PlayerMovement>().HeroSpeedMultiplier
+                : 1f,
 
             // weaponID = _playerStats.currentWeapon != null
             //     ? _playerStats.currentWeapon.Id
@@ -278,6 +343,9 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.NextLevelExp = data.level <= 1
             ? Mathf.Max(data.nextLevelExp, _playerStats.InitialNextLevelExp)
             : data.nextLevelExp;
+        _playerStats.SetLevelHealthRegenerationBonus(
+            data.healthRegenerationLevelBonus);
+        _playerStats.RestoreLevelBonuses(data.levelBonuses, data.levelFlatBonuses);
 
         _playerStats.BaseDamage = data.baseDamage;
         _playerStats.TotalDamage = data.totalDamage;
@@ -286,6 +354,11 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.MagicResistance = data.magicResistance;
 
         _playerStats.ShieldResistance = data.shieldResistance;
+
+        GetComponent<PlayerMovement>()?.SetHeroSpeedMultiplier(
+            data.heroMoveSpeedMultiplier > 0f
+                ? data.heroMoveSpeedMultiplier
+                : 1f);
         
         // if (!string.IsNullOrEmpty(data.weaponID))
         // {
@@ -312,6 +385,9 @@ public class PlayerStatsData
 
     public float exp;
     public float nextLevelExp;
+    public float healthRegenerationLevelBonus;
+    public Dictionary<BonusType, float> levelBonuses;
+    public Dictionary<BonusType, float> levelFlatBonuses;
 
     public float baseDamage;
     public float totalDamage;
@@ -320,6 +396,8 @@ public class PlayerStatsData
     public float magicResistance;
 
     public float shieldResistance;
+
+    public float heroMoveSpeedMultiplier;
 
     public string weaponID;
 }

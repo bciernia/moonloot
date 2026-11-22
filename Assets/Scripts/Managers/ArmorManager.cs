@@ -156,6 +156,15 @@ public class ArmorManager : Singleton<ArmorManager>
                 //ZMNIEJSZAMY PRĘDKOŚĆ, DLATEGO JEST "-"
                 Value = -_armor.MovementSpeedDisadvantage
             });
+
+            if (_armor.HealthRegenerationPerSecond > 0f)
+            {
+                GameManager.Instance.Player.PlayerStats.AddEquipmentBonus(new StatBonus
+                {
+                    Type = BonusType.HealthRegeneration,
+                    Value = _armor.HealthRegenerationPerSecond
+                });
+            }
         }
 
         if (_helmet != null)
