@@ -54,6 +54,9 @@ public class PlayerStatisticsManager : Singleton<PlayerStatisticsManager>
         if (HPRegen == null)
             return;
 
-        HPRegen.text = healthPerSecond.ToString("0.##", CultureInfo.InvariantCulture) + " HP/s";
+        var unit = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate("HP/s")
+            : "HP/s";
+        HPRegen.text = healthPerSecond.ToString("0.##", CultureInfo.InvariantCulture) + " " + unit;
     }
 }

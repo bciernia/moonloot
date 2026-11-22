@@ -82,7 +82,9 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
             {
                 rewardText += reward.number + " ";
             }
-            rewardText += reward.item.item.Name;
+            rewardText += LocalizationManager.Instance != null
+                ? reward.item.item.GetLocalizedName(LocalizationManager.Instance.CurrentLanguage)
+                : reward.item.item.Name;
         }
 
         if (rewardText == "")
@@ -91,6 +93,8 @@ public class QuestInfoManager : Singleton<QuestInfoManager>
         }
 
         rewardText += ".";
-        return rewardText;
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(rewardText)
+            : rewardText;
     }
 }

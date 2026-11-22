@@ -75,7 +75,7 @@ public sealed class LanguageDropdown : MonoBehaviour
             dropdown.onValueChanged.RemoveListener(_listener);
 
         var options = new List<TMP_Dropdown.OptionData>();
-        for (var i = 0; i <= (int)GameLanguage.Russian; i++)
+        for (var i = 0; i <= (int)GameLanguage.PortugueseBrazilian; i++)
             options.Add(new TMP_Dropdown.OptionData(LocalizationManager.GetLanguageName((GameLanguage)i)));
 
         dropdown.ClearOptions();
@@ -83,7 +83,7 @@ public sealed class LanguageDropdown : MonoBehaviour
         var selectedLanguage = LocalizationManager.Instance != null
             ? (int)LocalizationManager.Instance.CurrentLanguage
             : PlayerPrefs.GetInt("Moonloot.Language", (int)GameLanguage.Polish);
-        dropdown.SetValueWithoutNotify(Mathf.Clamp(selectedLanguage, 0, (int)GameLanguage.Russian));
+        dropdown.SetValueWithoutNotify(Mathf.Clamp(selectedLanguage, 0, (int)GameLanguage.PortugueseBrazilian));
         dropdown.RefreshShownValue();
 
         _listener = OnLanguageChanged;
@@ -99,10 +99,10 @@ public sealed class LanguageDropdown : MonoBehaviour
     private static void OnLanguageChanged(int value)
     {
         if (LocalizationManager.Instance != null)
-            LocalizationManager.Instance.SetLanguage((GameLanguage)Mathf.Clamp(value, 0, (int)GameLanguage.Russian));
+            LocalizationManager.Instance.SetLanguage((GameLanguage)Mathf.Clamp(value, 0, (int)GameLanguage.PortugueseBrazilian));
         else
         {
-            PlayerPrefs.SetInt("Moonloot.Language", Mathf.Clamp(value, 0, (int)GameLanguage.Russian));
+            PlayerPrefs.SetInt("Moonloot.Language", Mathf.Clamp(value, 0, (int)GameLanguage.PortugueseBrazilian));
             PlayerPrefs.Save();
         }
     }

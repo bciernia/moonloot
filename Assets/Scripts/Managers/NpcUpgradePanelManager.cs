@@ -168,13 +168,16 @@ public class NPCUpgradePanelManager : Singleton<NPCUpgradePanelManager>
         var item = _currentNpc.GetRequiredItem();
         var requiredItemAmount = _currentNpc.GetRequiredAmount();
         var ownedItemAmount = InventoryController.Instance.GetItemCount(new InventoryItem { item = item });
+        var localizedItemName = LocalizationManager.Instance != null
+            ? item.GetLocalizedName(LocalizationManager.Instance.CurrentLanguage)
+            : item.Name;
         var itemElement =
             Instantiate(pricePrefab, priceContainer.transform);
 
         itemElement.GetComponent<PriceElementUI>()
             .Setup(
                 item.Image,
-                item.Name,
+                localizedItemName,
                 requiredItemAmount,
                 ownedItemAmount
             );

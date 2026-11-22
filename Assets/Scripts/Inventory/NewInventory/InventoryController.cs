@@ -642,7 +642,11 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         }
         var item = inventoryItem.item;
         var description = PrepareDescription(inventoryItem, isInPlayerEquipment);
-        inventoryUI.UpdateDescription(itemIndex, isPlayerItem, item.Image, item.Name, description, inventoryItemUiName);
+        var language = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.CurrentLanguage
+            : GameLanguage.Polish;
+        inventoryUI.UpdateDescription(itemIndex, isPlayerItem, item.Image,
+            item.GetLocalizedName(language), description, inventoryItemUiName);
     }
 
     private string PrepareDescription(InventoryItem inventoryItem, bool isInPlayerEquipment)
@@ -675,7 +679,10 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
         
         sb.AppendLine();
         sb.AppendLine();
-        sb.Append(inventoryItem.item.Description);
+        var language = LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.CurrentLanguage
+            : GameLanguage.Polish;
+        sb.Append(inventoryItem.item.GetLocalizedDescription(language));
 
         if (Player.Instance.IsNearBlacksmith &&
             inventoryItem.item.ItemType == ItemType.Weapon)
@@ -715,7 +722,10 @@ public class InventoryController : Singleton<InventoryController>, ISaveable
             }
         }
         
-        return sb.ToString();
+        var preparedDescription = sb.ToString();
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(preparedDescription)
+            : preparedDescription;
     }
 
     private void GetDescriptionByType(StringBuilder sb, InventoryItem inventoryItem)

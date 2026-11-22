@@ -13,6 +13,34 @@ public abstract class ItemSO : ScriptableObject
     
     [field: SerializeField] 
     public string Name { get; set; }
+
+    [Header("Localization (Polish, English, French, Spanish, Italian, German, Russian, Brazilian Portuguese)")]
+    [SerializeField] private string[] localizedNames = new string[8];
+    [SerializeField, TextArea] private string[] localizedDescriptions = new string[8];
+
+    public string GetLocalizedName(GameLanguage language)
+    {
+        var index = (int)language;
+        if (localizedNames != null && index >= 0 && index < localizedNames.Length &&
+            !string.IsNullOrWhiteSpace(localizedNames[index]))
+            return localizedNames[index];
+
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(Name)
+            : Name;
+    }
+
+    public string GetLocalizedDescription(GameLanguage language)
+    {
+        var index = (int)language;
+        if (localizedDescriptions != null && index >= 0 && index < localizedDescriptions.Length &&
+            !string.IsNullOrWhiteSpace(localizedDescriptions[index]))
+            return localizedDescriptions[index];
+
+        return LocalizationManager.Instance != null
+            ? LocalizationManager.Instance.Translate(Description)
+            : Description;
+    }
     
     [field: TextArea]
     [field: SerializeField] 
