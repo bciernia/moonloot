@@ -183,6 +183,8 @@ public class UIManager : MonoBehaviour
     private bool _equippedPanelWasVisible;
     
     private Coroutine _objectiveFlashRoutine;
+    private Color _objectiveOriginalColor;
+    private bool _objectiveColorCached;
     
     private GameObject MainMenuPanel =>
         PersistentMenuManager.Instance.MainMenuPanel;
@@ -324,6 +326,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        ResetObjectiveFlash();
         CloseFullMap();
         GameManager.OnGameModeChanged -= OnGameModeChanged;
         HordeManager.OnHordeFinished -= UpdateNightUI;
@@ -334,6 +337,7 @@ public class UIManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene arg0, LoadSceneMode arg1)
     {
+        ResetObjectiveFlash();
         CloseFullMap();
         RefreshMinimapVisibility();
         RefreshHordeInfoVisibility();
@@ -1951,17 +1955,36 @@ public class UIManager : MonoBehaviour
     
     private void NotifyObjectiveChanged()
     {
+        if (_moonObjectiveText == null)
+            return;
+
+        if (!_objectiveColorCached)
+        {
+            _objectiveOriginalColor = _moonObjectiveText.color;
+            _objectiveColorCached = true;
+        }
+
         if (_objectiveFlashRoutine != null)
         {
             StopCoroutine(_objectiveFlashRoutine);
         }
 
+        _moonObjectiveText.color = _objectiveOriginalColor;
         _objectiveFlashRoutine = StartCoroutine(ObjectiveFlashRoutine());
+    }
+
+    private void ResetObjectiveFlash()
+    {
+        if (_objectiveFlashRoutine != null)
+            StopCoroutine(_objectiveFlashRoutine);
+        _objectiveFlashRoutine = null;
+        if (_objectiveColorCached && _moonObjectiveText != null)
+            _moonObjectiveText.color = _objectiveOriginalColor;
     }
 
     private IEnumerator ObjectiveFlashRoutine()
     {
-        var originalColor = _moonObjectiveText.color;
+        var originalColor = _objectiveOriginalColor;
 
         var flashColor = Color.yellow;
 
@@ -2001,6 +2024,7 @@ public class UIManager : MonoBehaviour
         }
 
         _moonObjectiveText.color = originalColor;
+        _objectiveFlashRoutine = null;
     }
     
     #endregion
