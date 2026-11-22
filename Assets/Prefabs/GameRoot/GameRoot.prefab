@@ -8213,6 +8213,10 @@ PrefabInstance:
       propertyPath: m_hasFontAssetChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6538619881599797242, guid: 51160a98f304142448adea906b02e116, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6653795162617772067, guid: 51160a98f304142448adea906b02e116, type: 3}
       propertyPath: m_fontSize
       value: 20
@@ -8985,7 +8989,8 @@ PrefabInstance:
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: -5187499894085129356, guid: 794bf0e1cfda764429aadc19f378c187, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6538619881599797242, guid: 51160a98f304142448adea906b02e116, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5055707637074763696, guid: 51160a98f304142448adea906b02e116, type: 3}
@@ -8998,6 +9003,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 466097637471861856, guid: 51160a98f304142448adea906b02e116, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4648366184382034919}
+    - targetCorrespondingSourceObject: {fileID: 5962866377294933337, guid: 51160a98f304142448adea906b02e116, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2192907278921507225}
   m_SourcePrefab: {fileID: 100100000, guid: 51160a98f304142448adea906b02e116, type: 3}
 --- !u!114 &62034552487860463 stripped
 MonoBehaviour:
@@ -9773,6 +9781,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bbcb6138ae57ee4fbae9101df7d068c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6318758933661997088 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9108704049674246300, guid: 51160a98f304142448adea906b02e116, type: 3}
+  m_PrefabInstance: {fileID: 3015199357432561852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6454165884432595839 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8091260414338120643, guid: 51160a98f304142448adea906b02e116, type: 3}
@@ -10060,6 +10073,38 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6002829249525891437, guid: 51160a98f304142448adea906b02e116, type: 3}
   m_PrefabInstance: {fileID: 3015199357432561852}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8869972195746115045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5962866377294933337, guid: 51160a98f304142448adea906b02e116, type: 3}
+  m_PrefabInstance: {fileID: 3015199357432561852}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2192907278921507225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8869972195746115045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &9003343227223181745 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6136839631973353741, guid: 51160a98f304142448adea906b02e116, type: 3}
@@ -10271,6 +10316,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1530119457794080137}
     - target: {fileID: 2141123913555673030, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: _mapPanel
+      value: 
+      objectReference: {fileID: 6318758933661997088}
+    - target: {fileID: 2141123913555673030, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
       propertyPath: _mutation
       value: 
       objectReference: {fileID: 7301410723974905371}
@@ -10322,6 +10371,10 @@ PrefabInstance:
       propertyPath: _npcDatabase
       value: 
       objectReference: {fileID: 8704339951890447261}
+    - target: {fileID: 2141123913555673030, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
+      propertyPath: _fullMapImage
+      value: 
+      objectReference: {fileID: 2192907278921507225}
     - target: {fileID: 2141123913555673030, guid: 271291d3fe8fe35429705d4ea7b0b69f, type: 3}
       propertyPath: _locationName
       value: 

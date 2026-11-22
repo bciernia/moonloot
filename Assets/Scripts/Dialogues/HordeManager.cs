@@ -129,6 +129,7 @@ public class HordeManager : Singleton<HordeManager>, ISaveable
     public Transform DefendTarget { get; private set; }
     public HordeObjective CurrentObjective => _currentObjective;
     public bool IsTutorialRun => _tutorialRun;
+    public bool IsNightRunning => _isNightRunning;
     public bool IsHeroNight => NightCycleStep == 3;
 
     private GameObject _defendTarget;

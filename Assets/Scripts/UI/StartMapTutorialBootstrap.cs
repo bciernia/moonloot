@@ -474,7 +474,7 @@ public sealed class StartMapTutorialBootstrap : MonoBehaviour
                 showOnce: true,
                 tutorialPages: new List<TutorialPageDefinition>
                 {
-                    new() { StepId = "find_crystals", Description = "Znajdź trzy kryształy Aulli.", Hint = "Niebieskie kropki na mapie wskazują kryształy." },
+                    new() { StepId = "find_crystals", Description = "Kryształy Aulli (niebieskie), pozwolą rozwijać Ci umiejętności. Znajdziesz je w celach mapy lub mogą wypaść z potworów.", Hint = "Niebieskie kropki na mapie wskazują kryształy." },
                     new() { StepId = "enemies_and_portal", Description = "Zbierz wszystkie trzy kryształy, aby pojawił się portal. Wejdź do niego, żeby wrócić do wioski.", Hint = "Czerwone kropki oznaczają przeciwników." },
                     new() { StepId = "stay_or_loot", Description = "Uważaj: im dłużej zostajesz na mapie, tym więcej potworów przybywa i tym silniejsze się stają.", Hint = "Zostając dłużej, zdobędziesz więcej łupów na dalszą przygodę." }
                 });
