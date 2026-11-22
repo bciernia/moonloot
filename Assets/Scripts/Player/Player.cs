@@ -202,7 +202,10 @@ public class Player : MonoBehaviour, ISaveable
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (scene.name == "Base_Demo")
+        {
             ClearRunStatBonuses();
+            _playerStats.HP = _playerStats.GetMaxHp();
+        }
     }
     
     public void Save()
@@ -230,6 +233,7 @@ public class Player : MonoBehaviour, ISaveable
 
             exp = _playerStats.Exp,
             nextLevelExp = _playerStats.NextLevelExp,
+            healthRegenerationLevelBonus = _playerStats.LevelHealthRegenerationBonus,
 
             baseDamage = _playerStats.BaseDamage,
             totalDamage = _playerStats.TotalDamage,
@@ -278,6 +282,8 @@ public class Player : MonoBehaviour, ISaveable
         _playerStats.NextLevelExp = data.level <= 1
             ? Mathf.Max(data.nextLevelExp, _playerStats.InitialNextLevelExp)
             : data.nextLevelExp;
+        _playerStats.SetLevelHealthRegenerationBonus(
+            data.healthRegenerationLevelBonus);
 
         _playerStats.BaseDamage = data.baseDamage;
         _playerStats.TotalDamage = data.totalDamage;
@@ -312,6 +318,7 @@ public class PlayerStatsData
 
     public float exp;
     public float nextLevelExp;
+    public float healthRegenerationLevelBonus;
 
     public float baseDamage;
     public float totalDamage;

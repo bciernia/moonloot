@@ -87,6 +87,7 @@ public class NPCSelectionButton : MonoBehaviour
             BonusType.MoveSpeed => "Move Speed",
             BonusType.MaxHp => "Max HP",
             BonusType.CritChance => "Crit Chance",
+            BonusType.HealthRegeneration => "Health Regeneration",
             BonusType.DamageReduction => "Damage Reduction",
             _ => type.ToString()
         };

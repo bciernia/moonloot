@@ -10,5 +10,8 @@ public enum BonusType
 
     AttackCooldownReduction,
     DamageReduction,
+
+    // Flat bonus measured in health points restored per second.
+    HealthRegeneration,
     
 }

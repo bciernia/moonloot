@@ -7,6 +7,7 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
     public float PhysicalResistance;
     public float AdditionalHp;
     public float MovementSpeedDisadvantage;
+    [Min(0f)] public float HealthRegenerationPerSecond;
     
     public AudioClip actionSfx { get; }
     public bool PerformAction(GameObject character, InventoryItem inventoryItem, bool isUsingItem = false, string slotName = "")
@@ -41,12 +42,17 @@ public class ArmorItemSO : EquippableItemSO, IItemAction
         
         if (AdditionalHp > 0)
         {
-            description = $"Health points: +{AdditionalHp} \n";
+            description += $"Health points: +{AdditionalHp} \n";
         }
 
         if (MovementSpeedDisadvantage > 0)
         {
             description += $"Movement speed reduction: {MovementSpeedDisadvantage}% \n";
+        }
+
+        if (HealthRegenerationPerSecond > 0f)
+        {
+            description += $"Health regeneration: +{HealthRegenerationPerSecond:0.##} HP/s \n";
         }
         
         return description;

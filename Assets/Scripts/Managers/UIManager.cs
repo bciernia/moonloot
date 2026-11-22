@@ -1459,6 +1459,8 @@ public class UIManager : MonoBehaviour
 
         var finalSpeed = movement.GetFinalSpeed();
         PlayerStatisticsManager.Instance.SetMoveSpeed(finalSpeed);
+        PlayerStatisticsManager.Instance.SetHealthRegeneration(
+            _playerStatsSo.GetHealthRegenerationPerSecond());
 
         var attackCooldownReduction =
             _playerStatsSo.GetBonusValue(
@@ -1492,6 +1494,7 @@ public class UIManager : MonoBehaviour
             BonusType.CritMultiplier => $"+{bonus.Value:0} Crit Multiplier",
             BonusType.MaxHp => $"+{bonus.Value:0} Max HP",
             BonusType.MaxMp => $"+{bonus.Value:0} Max Mana",
+            BonusType.HealthRegeneration => $"+{bonus.Value:0.##} HP/s Regeneration",
             BonusType.AttackCooldownReduction => $"+{bonus.Value:0}% Attack Speed",
             BonusType.DamageReduction => $"+{bonus.Value:0}% Damage Reduction",
             _ => bonus.Type.ToString()
