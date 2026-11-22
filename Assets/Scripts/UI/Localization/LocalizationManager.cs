@@ -393,10 +393,12 @@ public sealed class LocalizationManager : MonoBehaviour
         Add(result, "Nie masz wystarczającej liczby kryształów Aulli.", "You don't have enough Aulla Crystals.", "Vous n’avez pas assez de cristaux d’Aulla.", "No tienes suficientes cristales de Aulla.", "Non hai abbastanza cristalli di Aulla.", "Du hast nicht genug Aulla-Kristalle.", "Недостаточно кристаллов Ауллы.");
         Add(result, "Odblokowano umiejętność", "Skill unlocked", "Compétence débloquée", "Habilidad desbloqueada", "Abilità sbloccata", "Fertigkeit freigeschaltet", "Навык разблокирован");
         Add(result, "Twórcy", "Credits", "Crédits", "Créditos", "Crediti", "Mitwirkende", "Авторы");
+        Add(result, "Testerzy gry", "Playtesters", "Testeurs du jeu", "Pruebas de juego", "Tester di gioco", "Spieletester", "Тестировщики", "Testadores do jogo");
         Add(result, "Wyjście", "Exit", "Quitter", "Salir", "Esci", "Beenden", "Выход");
         Add(result, "Wyjdź z gry", "Exit game", "Quitter le jeu", "Salir del juego", "Esci dal gioco", "Spiel beenden", "Выйти из игры");
         Add(result, "Gra autorstwa", "Game by", "Jeu créé par", "Un juego de", "Gioco di", "Spiel von", "Игра создана");
-        Add(result, "Stworzenie i rozwój", "Created & Developed by", "Création et développement", "Creación y desarrollo", "Creazione e sviluppo", "Entwicklung", "Создание и разработка");
+        Add(result, "Twórca", "Creator", "Créateur", "Creador", "Creatore", "Entwickler", "Автор", "Criador");
+        Add(result, "Created & Developed by", "Creator", "Créateur", "Creador", "Creatore", "Entwickler", "Автор", "Criador");
         Add(result, "Grafika", "Art", "Illustrations", "Arte", "Grafica", "Grafik", "Графика");
         Add(result, "Muzyka i dźwięk", "Music & Audio", "Musique et audio", "Música y sonido", "Musica e audio", "Musik und Audio", "Музыка и звук");
         Add(result, "Silnik", "Engine", "Moteur", "Motor", "Motore", "Engine", "Движок");
